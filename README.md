@@ -2,6 +2,9 @@
 
 Build with Celo Hackathon is a three (3) phase hackathon event focused on Regenerative Finance (#ReFi) within DAOs, NFTs, Gaming (GameFi), Social Impact (SocialFI) and developer tooling/infrastructure on the Celo platform.
 
+## Hackathon Facilitation
+Celo selected Hackerearth to facilitate the hackathon expereince. To learn more information about the Build on Celo hackathon event and register, navigate to Hackerearth Build on Celo hackathon site: [link](https://build-with-celo.hackerearth.com/)
+
 ## Hackathon Tracks: 
 
  - __DAO Track:__ 
@@ -10,36 +13,36 @@ Build with Celo Hackathon is a three (3) phase hackathon event focused on Regene
  	- Build an application incorporating ReFi, ReFi creators tools, and ReFi creators infrastructure
  - __Social Impact Track:__ 
  	- Build a decentralized web applications focused on social impact within ReFi, Social impact ReFi Tools, and Social impact ReFi Infrastructure
- 
 
 ## Timeline
-Three (3) phase hackathon event starting August 24th, 2022 and ending in January 2023.
+
+#### Github commit schedule:
+
+- 9/1 - Fork this repo
+- 9/8 - Change README
+- 9/17 - 3 commits
+- 9/26 - 3 commits
+- 9/30 - 3 commits
+
+Three (3) phase hackathon event starting August 26th, 2022.
 ### Phase 1: Idea
- - Hackathon Phase 1 Kick-off - August 24th, 2022
+ - Hackathon Phase 1 Kick-off - August 26th, 2022
  - Project Idea Submissions Due - September 11th, 2022
- - Evaluations - September 12th-19th, 2022
- - Shortlisted projects with prize/award ceremony announced for phase 2, hack - September 20th, 2022
+ - Evaluations - September 12th-16th, 2022
  
 ### Phase 2: Hack/build MVP
- - Hackathon Phase 2 Kick off - September 20th, 2022
- - Project Submissions Due - October 30 11th, 2022
- - Evaluations - October 31st- November 11th, 2022
- - Shortlisted projects with prize/award ceremony announced for phase 3, pitch - November 12th, 2022
+ - Hackathon Phase 2 Kick off - September 19th, 2022
+ - Project Submissions Due - November 6th, 2022
+ - Evaluations - November 7th - December 4th, 2022
  
 ### Phase 3: Iterate & Pitch with Celo
- - Hackathon Phase 3 Kick off - November 12th, 2022
- - Project Submissions Due - December 12th, 2022
- - Evaluations - December 13th - December 20th, 2022
- - Prize/award ceremony announced - December 21st, 2022
- - Fast track Valora dApps listing event for phase 3 participants with dedicated mentorship hours with the Valora team - TBA Early January 2023
- - VC Demo day event - TBA Early January 2023
-  
+ - Hackathon Phase 3 Kick off - TBD 
  
 ## Process
 **Hackathon participants will need to:**
 
  1. [Fork this repo](#hackathon-repo-process)
- 2. Utilize [HackerEarth](https://www.hackerearth.com/challenges/hackathon/celo-hackathon) to:
+ 2. Utilize [HackerEarth](https://build-with-celo.hackerearth.com/) to:
 	 - Manage and collaborate with your team
 	 - Submit your project for final evaluation
 
