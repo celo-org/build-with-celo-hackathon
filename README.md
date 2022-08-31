@@ -82,27 +82,39 @@ For a comprehensive list of resources and information, review [Celo Docs.](https
 
 ### QUICK START GUIDES
 
-View the [Developer Code Examples page](https://docs.celo.org/developer-guide/start) to get started using the Celo SDKs with guided coding exercises.
+View the [Developer Code Examples page](https://docs.celo.org/developer#quickstart) to get started using the Celo SDKs with guided coding exercises.
+
+### Tutorials
+- [Tutorial - Celo Developer Blog](https://docs.celo.org/blog)
 
 ### TOOLS
 
+#### Boilerplates
+- [celo-composer](https://github.com/celo-org/celo-composer#celo-composer)
+	- Celo Composer allows you to quickly build, deploy, and iterate on decentralized applications using Celo. It provides a number of frameworks, examples, and Celo specific functionality to help you get started with your next dApp.
+
 #### SDKs
 
--   [ContractKit](https://docs.celo.org/developer-guide/contractkit)
--   Javascript package of Celo blockchain utilities
--   Manage connections to the Celo blockchain, accounts, send transactions, interact with smart contracts, etc.
--   A set of wrappers around the core protocol smart contracts to easily connect with contracts related to governance, validators, on-chain exchange, etc.
--   Includes [web3.js](https://web3js.readthedocs.io/en/v1.2.4/)
+-   [ContractKit](https://docs.celo.org/developer/contractkit#what-is-contractkit)
+	-   Javascript package of Celo blockchain utilities
+	-   Manage connections to the Celo blockchain, accounts, send transactions, interact with smart contracts, etc.
+	-   A set of wrappers around the core protocol smart contracts to easily connect with contracts related to governance, validators, on-chain exchange, etc.
+	-   Includes [web3.js](https://web3js.readthedocs.io/en/v1.2.4/)
 -   [Celo Ethers.js Wrapper](https://github.com/celo-tools/celo-ethers-wrapper) (experimental)
--   A minimal wrapper to make [ethers.js](https://docs.ethers.io/v5/) compatible with the Celo network
--   [use-contractkit](https://github.com/celo-tools/use-contractkit)
--   A [Web3Modal](https://web3modal.com/)-like experience that injects ContractKit into your web-based application. Supports a variety of different wallets, including but not limited to Valora, Ledger, Metamask (Celo compatible fork) and any WalletConnect compatible wallets
+	-   A minimal wrapper to make [ethers.js](https://docs.ethers.io/v5/) compatible with the Celo network
+-   [use-react](https://github.com/celo-org/react-celo)
+	- The easiest way to access Celo in your React applications 🔥. react-celo is a React hook for managing access to Celo with a built-in headless modal system for connecting to your users wallet of choice.
+	- Now your DApp can be made available to everyone in the Celo ecosystem, from Valora users to self custodied Ledger users.
+	- By default react-celo is styled so that you can drop it into your application and go, however it's fully customisable so you can maintain a consistent UX throughout your application.
 -   [DappKit](https://docs.celo.org/developer-guide/dappkit)
--   Easily connect to the [Valora](http://valoraapp.com/) wallet with your React Native mobile application
--   Valora manages user account, private keys and transaction signing, so you can focus on building your dapp
--   Learn more and see the code with the [Dappkit truffle box](https://github.com/critesjosh/celo-dappkit)
+	-   Easily connect to the [Valora](http://valoraapp.com/) wallet with your React Native mobile application
+	-   Valora manages user account, private keys and transaction signing, so you can focus on building your dapp
+	-   Learn more and see the code with the [Dappkit truffle box](https://github.com/critesjosh/celo-dappkit)
 -   [Python SDK](https://github.com/blaize-tech/celo-sdk-py)
 -   [Java SDK](https://github.com/blaize-tech/celo-sdk-java)
+	- [Android with Java SDK](https://github.com/bcamacho/celo-android-java-sdk-test-example)
+- [iOS SDK](https://github.com/heymateag/celoiossdk)
+
 
 
 #### Infrastructure
