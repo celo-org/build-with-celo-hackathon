@@ -1,4 +1,4 @@
-# ⚡ Build on Celo Hackathon ⚡ 
+# ⚡ Build with Celo Hackathon ⚡ 
 
 Build with Celo Hackathon is a three (3) phase hackathon event focused on Regenerative Finance (#ReFi) within DAOs, NFTs, Gaming (GameFi), Social Impact (SocialFI) and developer tooling/infrastructure on the Celo platform.
 
