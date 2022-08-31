@@ -55,14 +55,14 @@ Three (3) phase hackathon event starting August 26th, 2022.
 	 - Copy the folder named **Project_Name**
 	 - Rename the copied folder with your project name
 	 - Modify project details within your project folder **Readme.md**
-		 - Project Name
-		 - Brief Description
-		 - Team members & roles
-		 - Hackathon track
-		 - Project details
-		-- Demonstartion video _(*Phase 2 & 3, Required)_
-        -- Requirements _(*Phase 2 & 3, Required)_
-        -- Instructions to build & test _(*Phase 2 & 3, Required)_
+		- Project Name
+		- Brief Description
+		- Team members & roles
+		- Hackathon track
+		- Project details
+			- Demonstartion video _(*Phase 2 & 3, Required)_
+			- Requirements _(*Phase 2 & 3, Required)_
+			- Instructions to build & test _(*Phase 2 & 3, Required)_
 
  4. Add, commit, and push the changes
 	 - Add the files you've changed and commit them with a descriptive message.
