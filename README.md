@@ -2,7 +2,7 @@ CELO HACKATHON PROJECT: RINGNANCE (A CIRCULAR “LIKE A RING” FINANCE SYSTEM F
 
 TRACK: SOCIALFI
 
-Context and problem: 
+CONTEXT : 
 
 The project that wz propose consists of automating and increasing the reliability of a tontine system thanks to the Blockchain. 
 I live in a community where an activity called “tontine” is frequently practiced. This activity takes place in families, villages, companies, etc. 
@@ -41,7 +41,7 @@ as a way of savings not monitored by the banks and government and therefore diff
 an income generating activity which can make enough money to contribute every month, they have to integrate the tontine by a way of a guarantor who
 take full responsibility to contribute each month their parrainee don’t.
 
-Wzeqknesses:
+WEAKNESSES:
  
 The weakness of such a system is the need for a third party, usually a treasurer whom everyone “trusts” and who receive all the members contribution. 
 It is up to the latter to monitor the evolution of the contributions and pay the final amount to the beneficiary for the current period. This is a weakness
@@ -50,7 +50,7 @@ this money, putting in harm all the members of the tontine. He can also claim to
 it against him. For a fairly high contribution amount (a total of $100, 000 per month for example), the treasurer taken by the lure of gain can take to their heels,
 pocketing the contribution for a period with him. These are the problems that members of a tontine often face. 
 
-Our solution:
+OUR SOLUTION:
 
 The tontine is underrated because considered as a traditional system. Thanks to blockchain, we will make it at his true value by offering the possibility to have worldwide tontine.
 Contributions can be made more reliable by making them through a low-fee stable coin in which everyone trusts and can accept it against fiat currencies: like Celo USD; 
@@ -60,7 +60,7 @@ automatically transfer the food(1) to the beneficiary for a specified period. Th
 of the data, the traceability of the transactions carried out by the members and the reception assured to the beneficiary of his food.  
 
 
-Technological specificities : 
+TECHNOLOGICAL SPECIFICITIES : 
 
 -	We will build during this a community oriented web3 platform to fund project or save money. It will give the possibility to those who don't have enough fund or for community
     in poverty to access fund to launch an income generating activity and periodically return the "rotative money" in simplified way such as USSD/SMS.
