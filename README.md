@@ -1,6 +1,5 @@
 CELO HACKATHON PROJECT: RINGNANCE (A CIRCULAR “LIKE A RING” FINANCE SYSTEM FOR PROJECT FUNDING AND MONEY SAVING.)
 
-TRACK: SOCIALFI
 
 CONTEXT : 
 
@@ -68,4 +67,10 @@ TECHNOLOGICAL SPECIFICITIES :
 -	One advantage will be the opportunity to do the rotative money activity using trustable and low fee stable coin like Celo USD and make the onramp and offramp also possible with
     many fiat currencies to do deposit or withdrawal.
 
+TEAM MEMBERS AND ROLES
+
+We have below our actual project members and their role:
+- Arold TOUKO DANKOUE: A Blockchain Architect
+
+HACKATHON TRACK: SOCIALFI
 Food (1): total contribution of a period, act of receiving the total contribution of a period.
