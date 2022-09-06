@@ -1,164 +1,34 @@
-# ⚡ Build with Celo Hackathon ⚡ 
+CELO HACKATHON PROJECT: 
+RINGNANCE (A CIRCULAR “LIKE A RING” FINANCE SYSTEM FOR PROJECT FUNDING AND MONEY SAVING.)
+TRACK: SOCIALFI
 
-Build with Celo Hackathon is a three (3) phase hackathon event focused on Regenerative Finance (#ReFi) within DAOs, NFTs, Gaming (GameFi), Social Impact (SocialFI) and developer tooling/infrastructure on the Celo platform.
+Context and problem: 
 
-## Hackathon Facilitation
-Celo selected Hackerearth to facilitate the hackathon expereince. To learn more information about the Build on Celo hackathon event and register, navigate to Hackerearth Build on Celo hackathon site: [link](https://build-with-celo.hackerearth.com/)
+The project that wz propose consists of automating and increasing the reliability of a tontine system thanks to the Blockchain. I live in a community where an activity called “tontine” is frequently practiced. This activity takes place in families, villages, companies, etc. Its principle is as follows: a group of people (who frequently know each other) wishing either to save or to launch an income-generating activity meet and decide to contribute at very specific time intervals a sum of money, the total of which will be given to the beneficiary of the period. The order in which one benefits is fixed at the beginning of the tontine by unanimity between the members. To make it clearer, let's take for example a tontine of $500, with 10 participants (Franck, Dumas, Ezekiel, Olga, Jessie, Alfred, Bertrand, Hermann, Martha and Minerva) who decided to contribute this amount each week. At unanimity, they decide to benefit in this order:
 
-## Hackathon Tracks: 
+First week: Hermann
+Second week: Jessie
+Third week: Ezekiel
+Fourth week: Martha
+Fifth week: Alfred
+Sixth week: Bertrand
+Seventh week: Minerva
+Eighth week: Franck
+Ninth week: Olga
+Tenth week: Dumas 
 
- - __DAO Track:__ 
-    - Build decentralized web applications facilitating DAOs within ReFi, ReFi DAO Tools, and ReFi DAO Infrastructure.
- - __NFT, Gaming and Creator Track:__ 
- 	- Build an application incorporating ReFi, ReFi creators tools, and ReFi creators infrastructure
- - __Social Impact Track:__ 
- 	- Build a decentralized web applications focused on social impact within ReFi, Social impact ReFi Tools, and Social impact ReFi Infrastructure
+In this case, each week the beneficiary will benefit from 500 x 10 = $5,000. 
+We therefore understand the usefulness of this system for those who have a project and want to have enough funds to finance it immediately (they usually benefit first. In this case we have: Herman, Jessie, Ezekiel, etc.) and use the dividends to repay during the other tontine periods; and also, for those who do not need money immediately (they usually benefit at the end. In this case we have: Olga, Franck, etc.) and use tontines as a way of savings not monitored by the banks and government and therefore difficult to tax. For those who don’t have enough money but want to lunch an income generating activity which can make enough money to contribute every month, they have to integrate the tontine by a way of a guarantor who take full responsibility to contribute each month their parrainee don’t.
+The weakness of such a system is the need for a third party, usually a treasurer whom everyone “trusts” and who receive all the members contribution. It is up to the latter to monitor the evolution of the contributions and pay the final amount to the beneficiary for the current period. This is a weakness because the individual in question does not receive all the contributions the same day. Receiving these in a deferred way, he can face an emergency to spend this money, putting in harm all the members of the tontine. He can also claim to have been assaulted and appeal to the good hearts of the members not to hold it against him. For a fairly high contribution amount (a total of $100, 000 per month for example), the treasurer taken by the lure of gain can take to their heels, pocketing the contribution for a period with him. These are the problems that members of a tontine often face. 
 
-## Timeline
+Our solution:
 
-#### Github commit schedule:
+The tontine is underrated because considered as a traditional system. Thanks to blockchain, we will make it at his true value by offering the possibility to have worldwide tontine.
+Contributions can be made more reliable by making them through a low-fee stable coin in which everyone trusts and can accept it against fiat currencies: like Celo USD; and by setting up a platform on which, once a tontine has been created with its various parameters (name of the tontine’s members, contribution amount, contribution space and food(1) order), members will be able to contribute by just clicking on a button. The funds will be saved by a smart contract who will therefore, after everyone has contributed, automatically transfer the food(1) to the beneficiary for a specified period. The reliability of the smart contracts and the security of the Blockchain will ensure the integrity of the data, the traceability of the transactions carried out by the members and the reception assured to the beneficiary of his food.  
 
-- 9/1 - Fork this repo
-- 9/8 - Change README
-- 9/17 - 3 commits
-- 9/26 - 3 commits
-- 9/30 - 3 commits
+Technological specificities : 
 
-Three (3) phase hackathon event starting August 26th, 2022.
-### Phase 1: Idea
- - Hackathon Phase 1 Kick-off - August 26th, 2022
- - Project Idea Submissions Due - September 11th, 2022
- - Evaluations - September 12th-16th, 2022
- 
-### Phase 2: Hack/build MVP
- - Hackathon Phase 2 Kick off - September 19th, 2022
- - Project Submissions Due - November 6th, 2022
- - Evaluations - November 7th - December 4th, 2022
- 
-### Phase 3: Iterate & Pitch with Celo
- - Hackathon Phase 3 Kick off - TBD 
- 
-## Process
-**Hackathon participants will need to:**
+-	We will build during this a community oriented web3 platform to fund project or save money. It will give the possibility to those who don't have enough fund or for community in poverty to access fund to launch an income generating activity and periodically return the "rotative money" in simplified way such as USSD/SMS.
+-	One advantage will be the opportunity to do the rotative money activity using trustable and low fee stable coin like Celo USD and make the onramp and offramp also possible with many fiat currencies to do deposit or withdrawal.
 
- 1. [Fork this repo](#hackathon-repo-process)
- 2. Utilize [HackerEarth](https://build-with-celo.hackerearth.com/) to:
-	 - Manage and collaborate with your team
-	 - Submit your project for final evaluation
-
-## Hackathon Repo Process
-
- 1. Fork this repo
-    - Press the Fork button
- 2. Create project branch
- 3. Make your changes within new branch!
-	 - Copy the folder named **Project_Name**
-	 - Rename the copied folder with your project name
-	 - Modify project details within your project folder **Readme.md**
-		- Project Name
-		- Brief Description
-		- Team members & roles
-		- Hackathon track
-		- Project details
-			- Demonstartion video _(*Phase 2 & 3, Required)_
-			- Requirements _(*Phase 2 & 3, Required)_
-			- Instructions to build & test _(*Phase 2 & 3, Required)_
-
- 4. Add, commit, and push the changes
-	 - Add the files you've changed and commit them with a descriptive message.
- 5. Submit your pull request _(*Phase 2 & 3, Required)_
-    -  Submit to the maintainers for approval. Head over to the original repositories Pull Requests tab, you should see an automatic suggestion from GitHub to create a pull request from your new branch.
-    -  Utilize your project name as the title for your initial pull Requests
-    -  Provide a brief project description within the pull request comment
-
-***Congrats, your officially a Build with Celo Hackathon participant!***
-
-
-## Developer tools and resources
-
-This section contains information about some of the key tools and resources that will help developers start building applications on Celo.
-
-For a comprehensive list of resources and information, review [Celo Docs.](https://docs.celo.org/)
-
-### QUICK START GUIDES
-
-View the [Developer Code Examples page](https://docs.celo.org/developer#quickstart) to get started using the Celo SDKs with guided coding exercises.
-
-### Tutorials
-- [Tutorial - Celo Developer Blog](https://docs.celo.org/blog)
-
-### TOOLS
-
-#### Boilerplates
-- [celo-composer](https://github.com/celo-org/celo-composer#celo-composer)
-	- Celo Composer allows you to quickly build, deploy, and iterate on decentralized applications using Celo. It provides a number of frameworks, examples, and Celo specific functionality to help you get started with your next dApp.
-
-#### SDKs
-
--   [ContractKit](https://docs.celo.org/developer/contractkit#what-is-contractkit)
-	-   Javascript package of Celo blockchain utilities
-	-   Manage connections to the Celo blockchain, accounts, send transactions, interact with smart contracts, etc.
-	-   A set of wrappers around the core protocol smart contracts to easily connect with contracts related to governance, validators, on-chain exchange, etc.
-	-   Includes [web3.js](https://web3js.readthedocs.io/en/v1.2.4/)
--   [Celo Ethers.js Wrapper](https://github.com/celo-tools/celo-ethers-wrapper) (experimental)
-	-   A minimal wrapper to make [ethers.js](https://docs.ethers.io/v5/) compatible with the Celo network
--   [use-react](https://github.com/celo-org/react-celo)
-	- The easiest way to access Celo in your React applications 🔥. react-celo is a React hook for managing access to Celo with a built-in headless modal system for connecting to your users wallet of choice.
-	- Now your DApp can be made available to everyone in the Celo ecosystem, from Valora users to self custodied Ledger users.
-	- By default react-celo is styled so that you can drop it into your application and go, however it's fully customisable so you can maintain a consistent UX throughout your application.
--   [DappKit](https://docs.celo.org/developer-guide/dappkit)
-	-   Easily connect to the [Valora](http://valoraapp.com/) wallet with your React Native mobile application
-	-   Valora manages user account, private keys and transaction signing, so you can focus on building your dapp
-	-   Learn more and see the code with the [Dappkit truffle box](https://github.com/critesjosh/celo-dappkit)
--   [Python SDK](https://github.com/blaize-tech/celo-sdk-py)
--   [Java SDK](https://github.com/blaize-tech/celo-sdk-java)
-	- [Android with Java SDK](https://github.com/bcamacho/celo-android-java-sdk-test-example)
-- [iOS SDK](https://github.com/heymateag/celoiossdk)
-
-
-
-#### Infrastructure
-
--   [Valora](https://valoraapp.com/) provides a clean, intuitive UI where users can send transactions and interact with smart contracts
--   [Forno](https://stackedit.io/developer-guide/forno)
--   Node access service so you can connect your dapp to the Celo blockchain without having to run node infrastructure
--   [ODIS](https://stackedit.io/developer-resources/contractkit/odis.md)
--   Oblivious decentralized identity service
--   Lightweight identity layer that makes it easy to send cryptocurrency to a phone number
--   Blockscout block explorers
--   [Alfajores testnet](http://alfajores-blockscout.celo-testnet.org/) & [mainnet](http://explorer.celo.org/)
--   [Stats.celo.org](http://stats.celo.org/) to check network activity and health
-
-
-#### Networks
-
--   [Alfajores Testnet](https://docs.celo.org/getting-started/alfajores-testnet)
--   [Faucet](https://celo.org/developers/faucet) for free testnet CELO and cUSD
--   [Forno](https://docs.celo.org/developer-guide/forno) supports connections to alfajores
--   Requires Alfajores Celo wallet for mobile device testing (please request, support@clabs.co)
--   [Baklava testnet](https://docs.celo.org/getting-started/baklava-testnet) for validators and testing protocol changes
-
-
-#### Ethereum Tools
-
--   Similarities between Celo and Ethereum means you can use many of the most popular Ethereum developer tools.
--   Celo supports the EVM, so tools for writing smart contracts in Solidity (or any language that compiles to EVM bytecode) are compatible with Celo
--   ERC20, NFT (ERC721) and other smart contract interface standards are supported, see [Celo for Ethereum Developers](https://docs.celo.org/developer-guide/celo-for-eth-devs)
-- [Truffle](https://www.trufflesuite.com/)
-- [OpenZeppelin](https://openzeppelin.com/)
-- [Remix](https://remix.ethereum.org/)
-
-#### Ongoing projects
-
--   [Community projects](https://docs.celo.org/developer-guide/celo-dapp-gallery)
--   [Grant recipients](https://celo.org/experience/grants/directory)
-
-#### Web wallets
-  -  [celowallet.app](https://celowallet.app/)
-  -  [Celo Terminal](https://github.com/zviadm/celoterminal/)
-
-
-#### Community
-
--   Join our [Discord](https://chat.celo.org/)
--   [Discourse Forum](https://forum.celo.org/)
+Food (1): total contribution of a period, act of receiving the total contribution of a period.
