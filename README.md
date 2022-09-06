@@ -28,6 +28,7 @@ SOLUTION:
 
 
 Team members & roles ################
+
 Anirban Roy: Project Manager and Business Development Lead
 Tathagat Saha: Full-stack Blockchain Architect
 Sandeep Bhowmik: Full-stack UI Developer
