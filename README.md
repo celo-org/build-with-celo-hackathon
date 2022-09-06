@@ -12,3 +12,6 @@ Sandeep Bhowmik: Full-stack developer
 
 Hackathon track #############
 The theme is ReFi
+
+Tech Stack ############
+NextJS, TailwindCss, Solidity
