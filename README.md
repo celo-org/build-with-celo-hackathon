@@ -1,6 +1,6 @@
 ### Project Name:
 
-Grow A Child
+Grow A Child ($GCFI)
 
 Brief Description: ######
 
