@@ -6,14 +6,15 @@ Please [__fork this repo__](https://help.github.com/articles/fork-a-repo/) and u
 ## Project Name
    CarbonX
 ### Team name
-  Ikenna Gary
-  Malachi Chidera
-  Achigonye Johnpaul
+   - Ikenna Gary
+   - Malachi Chidera
+   - Achigonye Johnpaul
 
 
 #### Hackathon Track
 
 ##### Region location
+Africa, Nigeria
 
 ##### Team Members
 
