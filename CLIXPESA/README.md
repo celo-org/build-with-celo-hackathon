@@ -1,14 +1,12 @@
 
-# ⚡ [CLIXPESA](clixpesa.com) ⚡
+# ⚡ [Clixpesa](clixpesa.com) ⚡
 
 _Making money and crypto simple for everyone_
 
 ## Clixpesa P2P Microloans
 
-### Clixpesa
-
+#### Team: Clixpesa
 #### Hackathon Track: ReFi
-
 ##### Region location: KENYA
 
 ##### Team Members
