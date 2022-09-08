@@ -1,4 +1,3 @@
-
 # ⚡ CNFT -Hackathon Project⚡
 
 ## CNFT
@@ -8,7 +7,7 @@
 ##### CHENNAI,INDIA
 
 ##### Team Members
-1. SANKARAMOORTHY ,PROJECT MANAGER ,DEVELOPER,FOUNDER
+1. SANKARAMOORTHY (PROJECT MANAGER ,DEVELOPER,FOUNDER)
 
 
 #### Project Description
@@ -17,7 +16,7 @@
  PROBLEMS AND SOLUTIONS
  
 1.PROBLEMS:
-Any common fundraising campign the volunteers faces problems like ignoring and slight downlook on who raises the fund and it is great psycholigical
+Any common fundraising campign the volunteers faces problems like ignoring and slight downlook on who raises the fund and it is great psychological
 problem for the volunteer 
 
 SOLUTIONS:
@@ -37,7 +36,7 @@ Since these fundraised events are in large gathering the event stall struggle to
 SOLUTIONS:
 So we provide 3 Static tokens "food" for food in event stalls and shops,"pellets" for games,"winr" for swap
 
-4.PROBLELM:
+4.PROBLEM:
 All organization transaction's ledger statement commands are not shown to the members and it is not an open transaction so the donators are unsatisfied
 
 SOLUTIONS:
@@ -146,6 +145,23 @@ ALL LINKS IN THIS LINK
 http://cnft.epizy.com/link.html
                                                                       
 #### Next Steps
+PHASE 1: CELO HACKATHON 
+PLAN:
+1.To build a MVP in which user registered can connect their wallet and the org user can host the auction and play a donation campiagn
+2.student user get the compensation token balance after donation as nft as fixed value and can transfer into food token or keep it as collectable
+3.student compensation token value like loyalty points
+4.with blockscout broadcast integration
+5. creating a closed economic zone in eventstalls in order to pump more money using (loyaltypoints/thanks giving tokens) -> (QSR//POS)
 
-PHASE 1 PHASE 2 PHASE 3 Will be developed in upcomming MVP USING celo Blockchain
+PHASE 2 :
+PLAN:
+1.Completing all the above features in the idea phase commercially
+2.create a data analysis on college students interest and create pitch deck documents 
+3. fundraising by selling equidity to suitable scaling company
+4.conducting marketing campign
 
+PHASE 3:
+PLAN:
+1.TO Market our fundraising and loyalty point system to NPO's, NGO's all over the world
+2.build active service developers
+3.create a fundraising community
