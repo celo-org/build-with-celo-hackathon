@@ -24,7 +24,7 @@ We have found out that the “take it or leave it” approach to financial produ
 #### Summary
 
 During the course of this Hackathon, we intend to polish on our ROSCA feature and work on a **P2P lending/microloans** feature.
-While members of a chama can be able to borrow from each other within their savings group. We would like to extend lending/small loans to members outside of saving groups. Such that, a user can have access to cheap loans from already established Chamas. We believe this will be very useful to support low-income earners and struggling small businesses. Chamas that invest in the microloans pool are entitle to share of interest from the loans.
+While members of a chama can be able to borrow from each other within their savings group. We would like to extend lending/small loans to members outside of saving groups. Such that, a user can have access to cheap loans from already established Chamas. We believe this will be very useful to support low-income earners and struggling small businesses. Chamas that invest in the microloans pool are entitled a share of interest from the loans.
 
 ##### Positive outcomes
 - Interest for participating chamas.
