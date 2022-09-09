@@ -14,7 +14,7 @@ Mitchell Tucker, iOS/Smart Contract Developer
 ## Project Description
 
 
- Introducing Crypto ride, a new way to spend and earn cryptocurrecy while reducing traffic and pollution. Crypto ride upgrades the traditional ride share architecture into the world of web3. Rides will be managed and controlled by smart contracts hosted on the Celo network. Tapping into a multi billion dollar industry run by Uber and Lift. These companys control 99% of all ride sharing services (USA) taking a 30% fee or more from drivers. Crypto ride's decentralized architecture powered with the Celo Network would reduces fees and revolutionizes the ride share industry.
+ Introducing Crypto ride, a new way to spend and earn cryptocurrency while reducing traffic and pollution. Crypto ride upgrades the traditional ride share architecture into the world of web3. Rides will be managed and controlled by smart contracts hosted on the Celo network. Tapping into a multi billion dollar industry run by Uber and Lift. These companys control 99% of all ride sharing services (USA) taking a 30% fee or more from drivers. Crypto ride's decentralized architecture powered with the Celo Network would reduces fees and revolutionizes the ride share industry.
  
  
 [Check out the projected grow rate.](https://policyadvice.net/insurance/insights/ride-sharing-industry-statistics/#:~:text=How%20big%20is%20the%20ride,around%20%24220%20billion%20by%202025.)
