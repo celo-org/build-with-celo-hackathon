@@ -64,7 +64,11 @@ Interest charge | - | -
 Interval | Set at construction | Same as public
 Collateral Index | Sets at construction | Same as public
 
-
+Some basic functionalities:
+  - CreateBand
+  - JoinABand
+  - GetFinance
+  - Payback
 
 #### URLs
   **[Figma UI and prototype - Desktop & Mobile designs](https://www.figma.com/file/eAK52TVb7n0HTwlNvtb4gv/Quatre?node-id=0%3A1)**
