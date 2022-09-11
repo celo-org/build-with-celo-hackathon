@@ -1,9 +1,11 @@
-CELO HACKATHON PROJECT: RINGNANCE (A CIRCULAR “LIKE A RING” FINANCE SYSTEM FOR PROJECT FUNDING AND MONEY SAVING.)
+CELO HACKATHON PROJECT 
+
+RINGNANCE (PRONOUNCED "RING NANCE", A CIRCULAR “LIKE A RING” FINANCE SYSTEM FOR PROJECT FUNDING AND MONEY SAVING.)
 
 
 CONTEXT : 
 
-The project that we propose consists of automating and increasing the reliability of a tontine system thanks to the Blockchain. 
+The project that we propose first consists  in automating and increasing the reliability of a tontine system thanks to the Blockchain. 
 I live in a community where an activity called “tontine” is frequently practiced. This activity takes place in families, villages, companies, etc. 
 Its principle is as follows: a group of people (who frequently know each other) wishing either to save or to launch an income-generating activity 
 meet and decide to contribute at very specific time intervals a sum of money, the total of which will be given to the beneficiary of the period. 
