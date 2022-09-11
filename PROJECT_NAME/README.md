@@ -5,9 +5,9 @@ Please [__fork this repo__](https://help.github.com/articles/fork-a-repo/) and u
 
 ### Project Name : Deep Care - A Carbon Footprint Calculator website
 ### Team name : Team BP
-#### Hackathon Track - Theme: SocialFi
+#### Hackathon Track : SocialFi
 
-##### Region location
+##### Region location : Tamil Nadu
 
 ### Team Members
 - Teammate 1 : Pramila M, role: Leader
