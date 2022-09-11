@@ -3,13 +3,13 @@
 _This is a sample submission repository.
 Please [__fork this repo__](https://help.github.com/articles/fork-a-repo/) and use this as a starting point for your hackathon project._
 
-## Project Name : Deep Care - A Carbon Footprint Calculator website
+### Project Name : Deep Care - A Carbon Footprint Calculator website
 ### Team name : Team BP
 #### Hackathon Track - Theme: SocialFi
 
 ##### Region location
 
-##### Team Members
+### Team Members
 - Teammate 1 : Pramila M, role: Leader
 - Teammate 2 : Brindha M, role: Teammate
 
@@ -23,20 +23,21 @@ Please [__fork this repo__](https://help.github.com/articles/fork-a-repo/) and u
 * The main objective of the project is to estimate our footprint mainly caused because of home energy, transportation and waste. 
 * Such tools can help individuals to see the impact on their consumption on emissions and help promote alternative behaviors towards a sustainable environment.
 
-### IMPLEMENTATION Software Requirements: 
+### IMPLEMENTATION 
+## Software Requirements: 
 * Operating System: Windows versions 8 or 10.
 * Languages used to Develop: Python, HTML, CSS.
 * Technologies used: Streamlit (for frontend), web3 (for handling transactions).
 * Debugger and Emulator: Any Browser.
 
 ### Modules: 
-## 1.Prediction Module 
+## 1. Prediction Module 
 • User just needs to input their emission details like consumption (e.g., fuel, transport, project travel, energy, material use); waste (e.g., domestic waste, electrical and electronic equipment) with the questions asked. Therefore, the graphical user interface is user friendly and straightforward. 
 • The computation commences as soon as this data is made accessible to the model, and the needed result is produced. 
 • The server delivers the co2 equivalent outputs as a response to the request when the models give them, and these values are then presented in the User Interface. 
 • Users can download the reports of their emissions.
 
-## 2.Donation Module 
+## 2. Donation Module 
 • This module involves collecting funds to protect our amazing planet by building effective solutions to big environmental challenges. 
 • We haved used python web3 for making and deploying smart contract. Once we have deployed smart contract on the blockchain. We will interact with smart contract using streamlit API to store transactions.
 
