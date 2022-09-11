@@ -10,8 +10,8 @@ Please [__fork this repo__](https://help.github.com/articles/fork-a-repo/) and u
 ##### Region location : Tamil Nadu
 
 ### Team Members
-- Teammate 1 : Pramila M, role: Leader
-- Teammate 2 : Brindha M, role: Teammate
+- Teammate 1 : Pramila M, role: Backend development
+- Teammate 2 : Brindha M, role: Frontend development
 
 #### Project Description
 ### PROBLEM STATEMENT
