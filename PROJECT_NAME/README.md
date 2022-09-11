@@ -62,6 +62,10 @@ Figma link - [Design Link](https://www.figma.com/file/yerWjUSmBVOapMgrM29OCr/CEL
 
 ## Presentation
 
+![Desktop view](https://user-images.githubusercontent.com/74270500/189519552-3a727299-a617-4cf5-b1ad-9585195ddfc5.png)
+![total photos](https://user-images.githubusercontent.com/74270500/189519562-c0673990-fa20-4f29-87f9-0c337f569712.png)
+
+
 ## Next Steps
 
 We are planning to implement this project by using the following tech-stack :
