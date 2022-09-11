@@ -22,6 +22,11 @@ Defi
 #### Project Description
 The promise of blockchain technology was to create a revolutionary financial system that eliminates third-party and central control from transactions, and still guarantee trust, transparency, and true ownership. Thus the blockchain technology itself was a gateway for exchanging financial value in a relatively faster, secured, cheaper way. This was quite simple as bitcoin was perceived to be the medium for these transactions.  Today, the blockchain ecosystem has undergone several changes with newer goals and use cases identified for the technology. Also, various blockchain technology has been developed for specific use cases with each creating new assets or tokens. Further, these blockchain operate in their own silo ( without communicating with other existing blockchains, and make little attempt to make it easier for other blockchain to communicate with them). To also add up to the diverse nature is the fact that on each blockchains there are not just the native asset but also other high liquidity privately owned but open assets that have a high patronage.
 
+As the buzz of blockchain reaches far and wide, more people are interested in using the technology. It is expected that nearly 75% of retailers will accept either cryptocurrency or stablecoin payments within the next two years, according to a June (2022) survey conducted by Deloitte.  Starbucks began accepting crypto payments for its coffee, and Dallas Mavericks also sells tickets for crypto. According to Leon Buck, the National Retail Federation’s vice president of banking and financial services, in  Cryptocurrency and its role in retail, "All retailers are looking into it".
+Yet the diverse and technical nature of the blockchain ecosystem presents a challenge to them. 
+
+As  Eric Chason stated in the same article,  “Retailers that want to handle crypto directly would need to feel comfortable with the underlying technology and their ability to convert the crypto into U.S. dollars. They would also need to decide which cryptocurrencies to accept. Bitcoin, Ether and USD Coin would probably be on their list”.
+
 
 Although, we encourage diversity and decentralization in blockchain, we recognize that the current nature of the blockchain ecosystem presents challenges to existing and new users:
 
@@ -52,6 +57,8 @@ Payslice Protocol seeks to develop an open permissionless protocol that abstract
 - Payslice also will seek to make REFI aligned DEXs a daily experience for users, thereby dramatically increasing DEX usage and their client base.
 
 - As Payslice is a protocol and not a DApp, it can be used to power DApps that require payments or asset transfer. Thus relieving developers of DAOs, blockchain based and/or aligned E-commerce platforms, wallets, etc the headache of sophisticated payment integration, increasing the user experience in their DApps, while at the same time providing economic value to existing protocols such as REFI aligned DEXs.
+
+
 
 #### Summary
 Describe the basic functionality of your project. What are the features you were able to implement? What features would you like to implement?
