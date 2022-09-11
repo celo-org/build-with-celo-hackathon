@@ -11,7 +11,7 @@ _Eventnexo is platform where community builder can build, grow and scale their e
 ##### Region location
 
 ##### Team Members
-- Muhideen Mujeeb Adeoye 1, Software Dev/Web3 Enthusiat
+- Muhideen Mujeeb Adeoye 1, Software Dev/Web3 Enthusiast
 
 #### Project Description
 Eventnexo lets event organizers issue and handle programmable event passes as NFTs. They can use our frontend platform or build on top of our API to build custom software. End users can buy and resell tickets to their favorite artists’, team’s or corporate events.
