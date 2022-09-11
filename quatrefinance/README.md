@@ -13,6 +13,7 @@ Please [__fork this repo__](https://help.github.com/articles/fork-a-repo/) and u
 - Tserundede Godswill, *Project Administrator/engineer*.
 - Isaac J, Coordinator, *Full stack Developer - Solidity, Web2/Web3 development, Frontend, other*
 - Gbenga Olotu, *Frontend*
+- Progress Ojemeh, *Frontend*
 
 #### Project Description
 At Quatrefinance, we are building `Digesu` (Our first MVP) to launch on **[CELO](https://celo.org)**. Digesu picks after a well-known African financial culture (often called Esusu or Ajo), where two or more people usually between 2 to 10 form a group to raise capital for different purposes, with a view to make all participants benefit same way. The process involves funding each participant with equitably contributed funds in a rotational order usually on first-come-first-serve basis with no interest element. Alternatively, they would also use it as a method of saving. As simple as it sounds, it has become a subject of debate, and many people are afraid of committing to it due to the drawbacks.
