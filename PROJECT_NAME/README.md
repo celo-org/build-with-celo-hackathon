@@ -10,7 +10,13 @@
 1. SANKARAMOORTHY (PROJECT MANAGER ,DEVELOPER,FOUNDER)
 2. CHANDRAPRAKASH (FULL STACK,FRONT END, SYSTEM ADMIN)
 3. KAMALESH (BACKEND)
-
+#### Region 
+Chennai,Tamilnadu,India
+#### Theme
+1.ReFI
+2.DAO
+3.NFT
+4.GamiFI
 
 #### Project Description
  welcome to 🅲🅽🅵🆃! CNFT COLLEGE NON_FUNGIBLE TOKEN SYSTEM -This an auction based crowdfunding by nft assets for student organized events and clubs and transaction controlling platform and creates self economy zone like fun city into all colleges and our system collects tax from outside stalls for college managements during college events and during events and organizers (like rotaract,,NPO's,students organized clubs..) can set loyality points and our system provides an NFT trading platform with private tokens our tokens increases inter-college cash flows during events and promotes college events and create business opportunities for NFT traders, miners, designers,marketers,all college managements,students,stall merchants,students
@@ -106,8 +112,8 @@ Functionality
 8.ad revenue
 9.compensation hold as escrows
 10.QSR POS Solutions
-11. personalized Bank management system in wallets using (fiat & crypto) for students
-12. Event notifier for Students
+11.personalized Bank management system in wallets using (fiat & crypto) for students
+12.Event notifier for Students
 13.Mining,Minting
 14.Tax Collecting For Managements
 15.Ergonomic account management for NPO,ORG,CLUBs
@@ -167,3 +173,5 @@ PLAN:
 1.TO Market our fundraising and loyalty point system to NPO's, NGO's all over the world
 2.build active service developers
 3.create a fundraising community
+ #### License
+ yet to be licensed,licensable

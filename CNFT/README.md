@@ -12,6 +12,11 @@
 3. KAMALESH (BACKEND)
 #### Region 
 Chennai,Tamilnadu,India
+#### Theme
+1.ReFI
+2.DAO
+3.NFT
+4.GamiFI
 
 #### Project Description
  welcome to 🅲🅽🅵🆃! CNFT COLLEGE NON_FUNGIBLE TOKEN SYSTEM -This an auction based crowdfunding by nft assets for student organized events and clubs and transaction controlling platform and creates self economy zone like fun city into all colleges and our system collects tax from outside stalls for college managements during college events and during events and organizers (like rotaract,,NPO's,students organized clubs..) can set loyality points and our system provides an NFT trading platform with private tokens our tokens increases inter-college cash flows during events and promotes college events and create business opportunities for NFT traders, miners, designers,marketers,all college managements,students,stall merchants,students
