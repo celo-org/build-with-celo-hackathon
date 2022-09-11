@@ -9,6 +9,7 @@ _Eventnexo is platform where community builder can build, grow and scale their e
 #### Hackathon Track
 
 ##### Region location
+Africa, Nigeria
 
 ##### Team Members
 - Muhideen Mujeeb Adeoye 1, Software Dev/Web3 Enthusiast
