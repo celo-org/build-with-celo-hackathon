@@ -70,7 +70,7 @@ TECHNOLOGICAL SPECIFICITIES :
 TEAM MEMBERS AND ROLES
 
 We have below our actual project members and their role:
-- Arold TOUKO DANKOUE: A Blockchain Developer
+- Arold TOUKO DANKOUE: IT Engineer & Blockchain Developer
 - Roberto charel KOUEGOUA NINTCHEU : Frontend Developer
 
 HACKATHON TRACK: SOCIALFI
