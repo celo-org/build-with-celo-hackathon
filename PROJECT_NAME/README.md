@@ -42,14 +42,16 @@ Please [__fork this repo__](https://help.github.com/articles/fork-a-repo/) and u
 • We haved used python web3 for making and deploying smart contract. Once we have deployed smart contract on the blockchain. We will interact with smart contract using streamlit API to store transactions.
 
 ### FUTURE SCOPE 
-The proposed work can be used by individuals as well as public users. Hopefully, the power of footprint calculators would boost the knowledge of users over the years. Also much progress has been made in household areas , extending the field for corporate areas and multilingual support has to carried out as a future work.
+The proposed work can be used by individuals as well as public users. Hopefully, the power of footprint calculators would boost the knowledge of users over the years. Also much progress has been made in household areas , extending the field for corporate areas and multilingual support has to be carried out as a future work.
 
 #### URLs
 https://deep-wind-deep-care-carbon-footprint-bxgo6x.streamlitapp.com/
 
 #### Presentation
 https://docs.google.com/presentation/d/1qKZ6uPHA7x6PVtc9vpBVhOjyduHz1hZm/edit?usp=sharing&ouid=118209858332114255162&rtpof=true&sd=true
-VIDEO:https://vimeo.com/748544092
+
+####VIDEO:
+https://vimeo.com/748544092
 
 
 #### License
