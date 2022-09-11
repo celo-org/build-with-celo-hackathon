@@ -1,4 +1,3 @@
-
 import requests, time, random, datetime,ftplib
 import base64
 import os, re, matplotlib
@@ -52,16 +51,54 @@ def set_png_as_page_bg(png_file):
 
 try:
     st.sidebar.markdown("<h1 style='text-align: center; color: black;'>🧭 Navigation Bar🧭</h1>", unsafe_allow_html=True)
-    nav = st.sidebar.radio("",["Home 🏡","Prediction📟","Donate"])
+    nav = st.sidebar.radio("",["Home 🏡","Prediction📟","Donate 💰"])
     if nav == "Home 🏡":
       set_png_as_page_bg("back.jpg")
-      st.markdown("<h1 style='text-align: center;font-family:times new roman;'>CARBON FOOTPRINT CALCULATOR</h1>", unsafe_allow_html=True)
-      st.markdown("<h1 style='text-align: center;font-family:times new roman;'>Reduce your carbon footprint!</h1>", unsafe_allow_html=True)
+      st.markdown("<h1 style ='color:#BB1D3F; text_align:center;font-family:times new roman;font-weight: bold;font-size:35pt;'>DEEP CARE 🌍❤️️ </h1>", unsafe_allow_html=True)  
+      st.markdown("<h1 style='color:black;text_align:center;font-family:times new roman;font-size:20pt;font-weight: bold;'> A CARBON FOOTPRINT CALCULATOR</h1>", unsafe_allow_html=True)
+      st.markdown("<h1 style='color:green;text-align: center;font-family:times new roman;font-size:25pt;font-weight: bold;'>Reduce your carbon footprint!</h1>", unsafe_allow_html=True)
 
     
-    if nav == "Donate":
-        st.button("DONATE")
-      #set_png_as_page_bg(r"C:\Users\PRAMILA\Downloads\back.jpg")
+    if nav == "Donate 💰":
+        set_png_as_page_bg("earth.jpg")
+        st.markdown(f"""<h1 style='text-align: center; font-weight:bold;color:black;background-color:powderblue;font-size:20pt;'>Make a Donation </h1>""",unsafe_allow_html=True)
+        st.markdown(f"""<h1 style='text-align: center; font-weight:bold;color:red;font-size:12pt;'>We believe the Footprint Calculator serves a crucial purpose in the world: to help people explore what it means to live on our one planet.
+We need your support to keep it going. </h1>""",unsafe_allow_html=True)
+ 
+        st.markdown(f"""<h1 style='text-align: center; font-weight:bold;color:purple;font-size:12pt;'> When you donate, you’re supporting effective solutions to big environmental challenges—an investment for the future of our planet.
+ </h1>""",unsafe_allow_html=True)
+        st.markdown(f"""<h1 style='text-align: left; font-weight:bold;color:black;font-size:12pt;'>Connecting to demo account... </h1>""",unsafe_allow_html=True)
+        
+        temperature = st.slider('Donation Amount💰', min_value=1, step=1, max_value=5,value=1)
+        if(st.button("Donate Now")):
+            web3 = Web3(Web3.HTTPProvider('https://ropsten.infura.io/v3/47f01210553f44019e829a5534534aaa'))
+            print(web3.isConnected())
+            account1="0x19288ACB9D45a7bfa8836d523C2a4ad36f81C8ff"
+            account2="0x525E00CB588Faf1Cb59644f1eDBC1c5049fAE71b"
+            print(web3.eth.get_balance(account2))
+
+            privatekey="21d836a4415ccf11db9ccd6bbc929148bfbe000f4d073011e156fe245ed869e2"
+            nonce=web3.eth.getTransactionCount(account2)
+
+            tx={
+                'nonce': nonce,                      # transaction count
+                'to': account2,              # who to send the ETH to
+                'value': web3.toWei(1, 'ether'),       # the amount to transfer
+                'gas':21000,
+                'gasPrice': web3.toWei('50', 'gwei')        # get the price of gas
+
+                }
+            #signed_tx = w3.eth.account.sign_transaction(tx,account1_private_key)
+            signed_tx = web3.eth.account.signTransaction(tx,privatekey)
+            tx_hash = web3.eth.sendRawTransaction(signed_tx.rawTransaction)
+            print(web3.toHex(tx_hash))
+            print(web3.eth.get_balance(account1))
+            print(web3.eth.get_balance(account2))
+            st.balloons()
+            st.image("https://upload.wikimedia.org/wikipedia/commons/e/e1/Payment_Done.gif", width=300)
+           
+
+    
 
     
     
@@ -135,6 +172,7 @@ try:
         # 0.435 kg CO2/mile driving, 0.298 kg CO2/mile 50%/50% public transport and driving, and 0.161 kg CO2/mile (if public)
         # assume 220 working days/year (w/ vacation)
         try:
+            transportation_=0
             if answer_4 == 'yes' and answer_6 == 'no':
                 transportation_=float(answer_5)*1.61* 0.435*2*220
     
@@ -423,8 +461,10 @@ try:
     ##############################################################################
     #answer_1= answer_2= answer_3= answer_4= answer_5= answer_6= answer_7= answer_8= answer_9= answer_10= answer_11=""
     if nav == "Prediction📟":
-        st.write('please type answers to the following questions below')
-        email=st.text_input('what is your email? \n')
+        st.markdown(f"""<h1 style='text-align: center; font-weight:bold;color:white;background-color:green;font-size:20pt;'>Let's find your carbon footprint! 😉 </h1>""",unsafe_allow_html=True)
+        st.write("")
+        st.image("https://i.pinimg.com/originals/7e/69/ec/7e69eca344ca1465da94d698ded08e8e.gif", width=300)
+        email=st.text_input('What is your email? \n')
         # example = 2 
         if email:
             st.image("https://i.pinimg.com/originals/61/b2/d3/61b2d33f39927afa72e5f57a28cc7c83.gif", width=300)
@@ -434,7 +474,7 @@ try:
             if answer_1:
             # example = 50 
                 st.image("https://cdn.dribbble.com/users/282923/screenshots/11050247/paymentsbilling.gif", width=300)
-                answer_2 = st.text_input('What is your electric bill (in dollars) monthly?  (e.g. 50) \n')
+                answer_2 = st.text_input('What is your electric bill monthly?  (e.g.₹ 50) \n')
                 answer_2=clean_answer(answer_2)
                 # example = 5 
                 if answer_2:
@@ -453,11 +493,13 @@ try:
                             answer_5=clean_answer(answer_5)
                             if answer_5:
                             # example = yes
+                                st.image("https://cdn.dribbble.com/users/2374064/screenshots/4737393/bus-truning.gif",width=250)
                                 answer_6= st.text_input('Do you use public transportation? (e.g. y)\n')
                                 answer_6=clean_answer(answer_6)
                                 if answer_6:
                                 # example = yes 
-                                    answer_7 = st.text_input('Do you use uber or another ride sharing platform like Lyft? (e.g. y) \n')
+                                    st.image("https://thedutchdoor.in/wp-content/uploads/2019/08/rickshaw.gif",width=200)
+                                    answer_7 = st.text_input('Do you use uber/redtaxi/ola or another ride sharing platforms? (e.g. y) \n')
                                     answer_7=clean_answer(answer_7)
                                     
                                     if answer_7 == 'yes':
@@ -477,8 +519,10 @@ try:
                                             answer_10=clean_answer(answer_10)
                                             # example = 50
                                             if answer_10:     
-                                                answer_11 = st.text_input('How much money do you spend on Amazon per month in US dollars - for example, fifty dollars? (e.g. 150) \n')
+                                                answer_11 = st.text_input('How much money do you spend on stuffs per month ? (e.g. ₹150) \n')
                                                 answer_11=clean_answer(answer_11)
+                
+     
         
             answers=[answer_1, answer_2, answer_3, answer_4, answer_5,
                      answer_6, answer_7, answer_8, answer_9, answer_10, answer_11]
@@ -537,4 +581,3 @@ try:
 except:
   # Prevent the error from propagating into your Streamlit app.
   pass
-
