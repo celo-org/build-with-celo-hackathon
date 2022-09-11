@@ -3,7 +3,7 @@ CELO HACKATHON PROJECT: RINGNANCE (A CIRCULAR “LIKE A RING” FINANCE SYSTEM F
 
 CONTEXT : 
 
-The project that wz propose consists of automating and increasing the reliability of a tontine system thanks to the Blockchain. 
+The project that we propose consists of automating and increasing the reliability of a tontine system thanks to the Blockchain. 
 I live in a community where an activity called “tontine” is frequently practiced. This activity takes place in families, villages, companies, etc. 
 Its principle is as follows: a group of people (who frequently know each other) wishing either to save or to launch an income-generating activity 
 meet and decide to contribute at very specific time intervals a sum of money, the total of which will be given to the beneficiary of the period. 
@@ -70,7 +70,9 @@ TECHNOLOGICAL SPECIFICITIES :
 TEAM MEMBERS AND ROLES
 
 We have below our actual project members and their role:
-- Arold TOUKO DANKOUE: A Blockchain Architect
+- Arold TOUKO DANKOUE: A Blockchain Developer
+- Roberto charel KOUEGOUA NINTCHEU : Frontend Developer
 
 HACKATHON TRACK: SOCIALFI
+
 Food (1): total contribution of a period, act of receiving the total contribution of a period.
