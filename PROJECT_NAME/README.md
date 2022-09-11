@@ -45,13 +45,12 @@ Please [__fork this repo__](https://help.github.com/articles/fork-a-repo/) and u
 The proposed work can be used by individuals as well as public users. Hopefully, the power of footprint calculators would boost the knowledge of users over the years. Also much progress has been made in household areas , extending the field for corporate areas and multilingual support has to carried out as a future work.
 
 #### URLs
-List any URLs relevant to demonstrating your prototype
+https://deep-wind-deep-care-carbon-footprint-bxgo6x.streamlitapp.com/
 
 #### Presentation
-List any links to your presentation or any related visuals you want to share.
+https://docs.google.com/presentation/d/1qKZ6uPHA7x6PVtc9vpBVhOjyduHz1hZm/edit?usp=sharing&ouid=118209858332114255162&rtpof=true&sd=true
+VIDEO:https://vimeo.com/748544092
 
-#### Next Steps
-What do you need to do next to turn this prototype into a working solution?
 
 #### License
 This repository includes an [unlicensed](http://unlicense.org/) statement though you may want to [choose a different license](https://choosealicense.com/).
