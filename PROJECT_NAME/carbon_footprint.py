@@ -12,8 +12,8 @@ from PyPDF2 import PdfFileMerger, PdfFileReader
 import numpy as np 
 import pandas as pd
 from PIL import Image
-import streamlit as st
 from web3 import Web3
+import streamlit as st
 
 st.set_page_config(
 page_title="Carbon Footprint Calculator",
