@@ -1,0 +1,10 @@
+{
+  "name": "hardhat-project",
+  "devDependencies": {
+    "hardhat-celo": "^0.0.3"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.7.3",
+    "base-64": "^1.0.0"
+  }
+}
