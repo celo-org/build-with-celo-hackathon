@@ -1,7 +1,6 @@
 
-# ⚡ Hackathon Project Template ⚡
-_This is a sample submission repository.
-Please [__fork this repo__](https://help.github.com/articles/fork-a-repo/) and use this as a starting point for your hackathon project._
+# ⚡ Celo Hackathon '22 ⚡
+
 
 ## Arrow Catch
 ### @azizyano
@@ -25,17 +24,22 @@ to join the game you have Tow options:
 the NFT description :
 `
 {
+
     "name":"SVG NFT",
+
     "description":"archery shooting random",
-    "attributes":"radius ,angle ,
+
+    "attributes":"radius ,angle" ,
+
     "image":"imageURI"
+
 }       
 `
 using radius and angle as attributes you can calculate your point. point = angle(id) / radius. the last thing you need to do is to offer an amount so anyone can challenge you.
 
 - you can challenge players by selecting their NFTs and try to mint a new one that has more points. if you win you will receive the amount offered, if you lose you will lose the amount fee.
 
- 
+ ![challenge](https://github.com/azizyano/build-with-celo-hackathon/blob/main/Arrow_Catch/project/components/assets/challenge.png.png)
 
 #### Summary
 Describe the basic functionality of your project. What are the features you were able to implement? What features would you like to implement?
