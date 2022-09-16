@@ -20,7 +20,7 @@ Arrow catch is a Two-player NFT game.
 ## Game description
 to join the game you have Tow options:
 - mint on-chain NFT, the contract games will generate a random position on the dart board.
-![dart board](https://github.com/azizyano/build-with-celo-hackathon/tree/main/ARROW_CATCH/project/components/assets/dart_board.png)
+![dart board](https://github.com/azizyano/build-with-celo-hackathon/blob/main/Arrow_Catch/project/components/assets/dart_board.png)
 
 the NFT description :
 `
