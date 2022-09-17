@@ -1,5 +1,9 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'class/pomodoro_cycle.dart';
+import 'class/pomodoro_config.dart';
+import 'class/state/pomodoro.dart';
 
 void main() => runApp(const MyApp());
 
@@ -29,10 +33,51 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final int _duration = 5*60;
+  final int _duration = 2*60; //5*60;
   int _tasks = 1;
 
   final CountDownController _controller = CountDownController();
+
+  final PomodoroBase _pomodoro = PomodoroBase(Configuration()
+        .setFocusMinutes(2) //25
+        .setBreakMinutes(1) //1
+        .setLongerBreakMinutes(1) //15
+        .setCountUntilLongerBreak(4));
+
+  //final Timer _polling;// = Timer();
+
+  @override
+  void initState() {
+    super.initState();
+    //final Timer _polling = 
+    //Timer.periodic(const Duration(seconds: 1), (t) => _checkPomodoro(t));
+
+  }
+
+  // void _checkPomodoro(Timer t) {
+  //     int tick = t.tick;
+  //     debugPrint('Countdown Changed $tick');
+  void _checkPomodoro() {
+      //while (_pomodoro.performs()) {
+        if (_pomodoro.shouldStartBreak()) { //} && _pomodoro.state != PomodoroState.BREAK) {
+          debugPrint('Should Break');
+          _pomodoro.startBreak();
+        }
+        //debugPrint('On Break');
+
+        //if (_pomodoro.shouldEndBreak() && _pomodoro.state == PomodoroState.BREAK) {
+
+         // while (_pomodoro.isBreaking()) {
+         //   debugPrint('Breaking');
+            if (_pomodoro.shouldEndBreak()) {
+              _pomodoro.endBreak();
+              debugPrint('Breakended');
+            }
+          // }
+       // }
+      //}
+
+  }
 
   void _addTask() {
     setState(() {
@@ -119,6 +164,8 @@ class _MyHomePageState extends State<MyHomePage> {
           onStart: () {
             // Here, do whatever you want
             debugPrint('Countdown Started');
+            _pomodoro.reset();
+            _pomodoro.performs();
           },
 
           // This Callback will execute when the Countdown Ends.
@@ -129,8 +176,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
           // This Callback will execute when the Countdown Changes.
           onChange: (String timeStamp) {
+            PomodoroState state = _pomodoro.state;
             // Here, do whatever you want
-            debugPrint('Countdown Changed $timeStamp');
+            debugPrint('Countdown Changed $timeStamp, state: $state.');
+            _checkPomodoro();
           },
         ),
       ),
