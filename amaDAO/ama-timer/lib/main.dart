@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'class/pomodoro_cycle.dart';
@@ -33,8 +34,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final int _duration = 2*60; //5*60;
+
   int _tasks = 1;
+  static const int minSec = 1; //60
+  int _duration = 25 * minSec; 
+  PomodoroState? nextState = PomodoroState.INIT;
 
   final CountDownController _controller = CountDownController();
 
@@ -54,28 +58,104 @@ class _MyHomePageState extends State<MyHomePage> {
 
   }
 
-  // void _checkPomodoro(Timer t) {
-  //     int tick = t.tick;
-  //     debugPrint('Countdown Changed $tick');
+  // void _checkPomodoroStatus() {
+  //       if (_pomodoro.shouldStartBreak()) {
+  //         debugPrint('Should Break');
+  //         _pomodoro.startBreak();
+  //       }
+
+  //       if (_pomodoro.shouldEndBreak()) {
+  //         _pomodoro.endBreak();
+  //         debugPrint('Breakended');
+  //       }
+  // }
+
+
   void _checkPomodoro() {
-      //while (_pomodoro.performs()) {
-        if (_pomodoro.shouldStartBreak()) { //} && _pomodoro.state != PomodoroState.BREAK) {
-          debugPrint('Should Break');
-          _pomodoro.startBreak();
-        }
-        //debugPrint('On Break');
+      nextState = _pomodoro.nextState(); 
+      // _pomodoro.state;
 
-        //if (_pomodoro.shouldEndBreak() && _pomodoro.state == PomodoroState.BREAK) {
+      debugPrint('Next State: $nextState');
+      if (nextState == null) 
+      {
+        _pomodoro.endBreak();
+        _pomodoro.performs(); // resume
+      }
+      else
 
-         // while (_pomodoro.isBreaking()) {
-         //   debugPrint('Breaking');
-            if (_pomodoro.shouldEndBreak()) {
-              _pomodoro.endBreak();
-              debugPrint('Breakended');
-            }
-          // }
-       // }
-      //}
+      if (nextState == PomodoroState.BREAK)
+      {
+        _pomodoro.startBreak();
+      }
+      else 
+      if (nextState == PomodoroState.FOCUS)
+      {
+        _pomodoro.performs(); //?
+      }
+      else
+      if (nextState == PomodoroState.FINISHED || nextState == PomodoroState.INIT)
+      {
+        _pomodoro.reset(); //?
+        _pomodoro.performs(); 
+      }
+
+      _controllerSetup(nextState);
+      //return nextState;
+  }
+
+
+  void _controllerSetup(PomodoroState? state ) {
+    //PomodoroState state = _pomodoro.state;
+    debugPrint('duration calc state: $state');
+    int duration = 25 * minSec;
+    switch (state) {
+      case PomodoroState.BREAK:
+      {
+        duration = 5 * minSec;
+      }
+      break;
+      case PomodoroState.LONG_BREAK:
+      {
+        duration = 15 * minSec;
+      }
+      break;
+      default: //PomodoroState.FOCUS:
+      {
+        duration = 25 * minSec;
+      }
+      break;
+    }
+    _duration = duration;
+    debugPrint('duration: $duration');
+    //_controller.duration = duration; 
+    _controller.restart(duration: duration);
+  }
+
+  int _getDuration() {
+    return _duration;
+  }
+
+  Color _getStateColor() {
+    // Display colour
+    //return nextState;// _pomodoro.state; 
+
+    if (nextState != PomodoroState.FOCUS)
+    {
+      return Colors.greenAccent[100]!;
+    }
+    else  
+    {
+      return Colors.blueAccent[100]!;
+    }
+    //return //nextState != PomodoroState.FOCUS ?  : Colors.blueAccent[100]!;
+
+  }
+
+
+  void _skipStep() {
+
+    _checkPomodoro(); // changes staus eg: Long or short break or back to focus;
+
 
   }
 
@@ -100,7 +180,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: CircularCountDownTimer(
           // Countdown duration in Seconds.
-          duration: _duration,
+          duration: _getDuration(),
 
           // Countdown initial elapsed Duration in Seconds.
           initialDuration: 0,
@@ -121,7 +201,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ringGradient: null,
 
           // Filling Color for Countdown Widget.
-          fillColor: Colors.blueAccent[100]!,
+          fillColor: _getStateColor(),
 
           // Filling Gradient for Countdown Widget.
           fillGradient: null,
@@ -164,22 +244,26 @@ class _MyHomePageState extends State<MyHomePage> {
           onStart: () {
             // Here, do whatever you want
             debugPrint('Countdown Started');
-            _pomodoro.reset();
-            _pomodoro.performs();
+            // _checkPomodoro(); 
+            // _pomodoro.reset();
+            // _pomodoro.performs();
           },
 
           // This Callback will execute when the Countdown Ends.
           onComplete: () {
             // Here, do whatever you want
             debugPrint('Countdown Ended');
+            _checkPomodoro();
+            //_controllerSetup();
+
           },
 
           // This Callback will execute when the Countdown Changes.
           onChange: (String timeStamp) {
             PomodoroState state = _pomodoro.state;
             // Here, do whatever you want
-            debugPrint('Countdown Changed $timeStamp, state: $state.');
-            _checkPomodoro();
+            //debugPrint('Countdown Changed $timeStamp, state: $state.');
+            //**_checkPomodoroStatus();
           },
         ),
       ),
@@ -215,12 +299,25 @@ class _MyHomePageState extends State<MyHomePage> {
             title: "Resume",
             onPressed: () => _controller.resume(),
           ),
+          _button(
+            title: "Skip",
+            onPressed: () => {
+              _skipStep()
+              //Call _controller.restart(break or focus),
+            }
+                
+          ),
           const SizedBox(
             width: 10,
           ),
           _button(
             title: "Restart",
-            onPressed: () => _controller.restart(duration: _duration),
+            onPressed: () => {
+              _pomodoro.reset(),
+              _checkPomodoro(),
+              //_controllerSetup(),
+              //_controller.restart(duration: _duration)
+            }
           ),
         ],
       ),

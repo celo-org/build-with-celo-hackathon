@@ -5,6 +5,6 @@ enum PomodoroState {
   FOCUS,
   BREAK,
   LONG_BREAK,
-  STOPPED,
+  PAUSED,
   FINISHED
 }

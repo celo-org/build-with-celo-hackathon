@@ -12,6 +12,8 @@ abstract class PomodoroBase extends BreakSupport {
   /// Returns the pomodoro state
   PomodoroState get state;// => this._state;
 
+  PomodoroState? nextState(){return null;}
+
   /// Starts a pomodoro set and returns [true] as long as this pomodoro set is ongoing.
   bool performs();
 
@@ -23,11 +25,11 @@ abstract class PomodoroBase extends BreakSupport {
 }
 
 abstract class BreakSupport {
-  bool shouldStartBreak();
+  // bool shouldStartBreak();
 
   bool isBreaking();
 
-  bool shouldEndBreak();
+  // bool shouldEndBreak();
 
   ///  Starts the break.
   void startBreak();
@@ -42,14 +44,14 @@ abstract class BreakSupport {
 class PomodoroImpl implements PomodoroBase {
   final Configuration _configuration;
 
-  final Stopwatch _stopwatch = new Stopwatch();
+  // final Stopwatch _stopwatch = new Stopwatch();
 
   final BreakCounter _counter = BreakCounter.newInstance();
 
   PomodoroState _state = PomodoroState.INIT;
 
 
-  /// Returns the new instance of [PomodoroImpl] based on the [configuration] passed as an argument.
+  /// Returns the new instance of PomodoroImpl based on the configuration passed as an argument.
   PomodoroImpl.from(Configuration configuration)
       : this._configuration = configuration;
 
@@ -59,33 +61,64 @@ class PomodoroImpl implements PomodoroBase {
   @override
   bool performs() {
     if (this._state == PomodoroState.INIT) {
-      this._stopwatch.start();
+      // this._stopwatch.start();
       this._state = PomodoroState.FOCUS;
     }
-
-    return this._state != PomodoroState.INIT &&
-        this._state != PomodoroState.FINISHED;
+    return true;
   }
 
   @override
   void reset() {
-    this._stopwatch.reset();
+    // this._stopwatch.reset();
     this._counter.reset();
     this._state = PomodoroState.INIT;
   }
 
   @override
   void stop() {
-    this._stopwatch.stop();
-    this._state = PomodoroState.STOPPED;
+    // this._stopwatch.stop();
+    this._state = PomodoroState.PAUSED;
   }
 
   @override
-  bool shouldStartBreak() {
-    return Duration(microseconds: this._stopwatch.elapsedMicroseconds)
-            .inMinutes >=
-        this._configuration.getFocusMinutes();
-  }
+  PomodoroState? nextState(){
+    // On ending a current state
+    // considers the configuration with the current state and returns the next state to trigger
+  
+    print('Current State: ${this._state}');
+
+    switch(_state) { 
+      case PomodoroState.FOCUS: { 
+          // statements logic for which break 
+          //  BREAK,
+          //  LONG_BREAK,
+          return PomodoroState.BREAK;
+          // caller should call startBreak to determined which
+      } 
+
+      case PomodoroState.BREAK:  
+      case PomodoroState.LONG_BREAK: { 
+          endBreak();
+          return PomodoroState.FOCUS;
+      } 
+      
+      case PomodoroState.PAUSED: { 
+        // this case should not be called
+         return null; // resume what the prior state was eg: PAUSED BREAK i.e. resume
+      } 
+
+      case PomodoroState.FINISHED: { 
+        // this case should not be called
+         return PomodoroState.INIT; // resume what the prior state was eg: PAUSED BREAK i.e. resume
+      } 
+        
+      default: { 
+          //On INIT case
+          return PomodoroState.FOCUS;
+      }
+    } 
+} 
+
 
   @override
   bool isBreaking() {
@@ -93,18 +126,6 @@ class PomodoroImpl implements PomodoroBase {
         this._state == PomodoroState.LONG_BREAK;
   }
 
-  @override
-  bool shouldEndBreak() {
-    if (this._state == PomodoroState.LONG_BREAK) {
-      return Duration(microseconds: this._stopwatch.elapsedMicroseconds)
-              .inMinutes >=
-          this._configuration.getLongerBreakMinutes();
-    }
-
-    return Duration(microseconds: this._stopwatch.elapsedMicroseconds)
-            .inMinutes >=
-        this._configuration.getBreakMinutes();
-  }
 
   @override
   void startBreak() {
@@ -116,7 +137,7 @@ class PomodoroImpl implements PomodoroBase {
       this._state = PomodoroState.BREAK;
     }
 
-    this._restartStopwatch();
+    // this._restartStopwatch();
   }
 
   @override
@@ -128,11 +149,11 @@ class PomodoroImpl implements PomodoroBase {
       this._state = PomodoroState.FOCUS;
     }
 
-    this._restartStopwatch();
+    // this._restartStopwatch();
   }
 
-  void _restartStopwatch() {
-    this._stopwatch.reset();
-    this._stopwatch.start();
-  }
+  // void _restartStopwatch() {
+  //   this._stopwatch.reset();
+  //   this._stopwatch.start();
+  // }
 }
