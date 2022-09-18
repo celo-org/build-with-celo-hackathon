@@ -41,7 +41,7 @@ using radius and angle as attributes you can calculate your point. point = angle
 
 2 - You can challenge players by selecting their NFTs and try to mint a new one that has more points. if you win you will receive the amount offered, if you lose you will lose the amount fee.
 
- ![challenge](https://github.com/azizyano/build-with-celo-hackathon/blob/main/Arrow_Catch/project/components/assets/challenge.png.png)
+ ![challenge](https://github.com/azizyano/build-with-celo-hackathon/blob/main/Arrow_Catch/project/components/assets/challenge.png)
 
 #### Summary
 Describe the basic functionality of your project. What are the features you were able to implement? What features would you like to implement?
