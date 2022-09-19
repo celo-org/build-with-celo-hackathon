@@ -4,7 +4,7 @@
 
 pragma solidity 0.8.15;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "./access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "./data/SharedData.sol";
@@ -67,7 +67,7 @@ contract Slice is Ownable, SharedData {
         _;
     }
 
-    constructor(
+    function initialize(
         bytes32 _name,
         string memory _description,
         address _token,
@@ -75,13 +75,15 @@ contract Slice is Ownable, SharedData {
         address _exchangeAddress,
         uint _totalReceivable,
         SPayer[] memory _payers
-    ) {
+    ) external {
         name = _name;
         description = _description;
         targetToken = _token;
         recipientAddress = _recipientAddress;
         totalReceivable = _totalReceivable;
         exchangeAddress = _exchangeAddress;
+
+        _initializeOwnable();
 
         for (uint i = 0; i < _payers.length; i++) {
             addPayer(_payers[i].payeruid, _payers[i].amountDue);
@@ -206,7 +208,7 @@ contract Slice is Ownable, SharedData {
         refund = _refund;
     }
 
-    function addPayer(bytes memory _payeruid, uint _amountDue)
+    function _addPayer(bytes memory _payeruid, uint _amountDue)
         internal
         onlyOwner
         notPaused
