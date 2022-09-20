@@ -1,5 +1,9 @@
 # ⚡ CarbonX with Celo Hackathon ⚡                                                                                                                                                                                                        
-# CarbonX Decentralized Application: CarbonX  
+# CarbonX Decentralized Application: CarbonX (ReFi) 
+![banner](https://github.com/Achicago/build-with-celo-hackathon/blob/master/CarbonX/server/public/images/logo.png)
+
+- CarbonX Everything Regenerative Finance (ReFi)
+
 
   # Abstract 
 Decentralized applications developed using blockchain technology provide innovative business models to serve the human race 
