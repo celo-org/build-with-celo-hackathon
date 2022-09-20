@@ -10,6 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "@celo/contractkit": "^2.1.0",
+    "@celo/dappkit": "^2.1.0",
+    "node-libs-react-native": "^1.2.1",
+    "vm-browserify": "^1.1.2",
     "web3": "^1.8.0"
   }
 }
