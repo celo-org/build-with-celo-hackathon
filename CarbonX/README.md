@@ -48,10 +48,14 @@ Describe the basic functionality of your project. What are the features you were
 List any URLs relevant to demonstrating your prototype
 
 #### Presentation
-List any links to your presentation or any related visuals you want to share.
+Links to our presentation will be added at a later date.
 
 #### Next Steps
-What do you need to do next to turn this prototype into a working solution?
+
+- Designs
+- Architecure diagrams
+- T.B.D.
+
 
 #### License
 This repository includes an [unlicensed](http://unlicense.org/) statement though you may want to [choose a different license](https://choosealicense.com/).
