@@ -226,7 +226,29 @@ server.unifiedServer = function (req, res) {
 };
 
 // Define the request router
+server.router = {
+  
+    "": handlers.index,
+    ping: handlers.ping,
+  
+    getAddress: handlers.getAddress,
 
+    public: handlers.public,
+   
+    "favicon.ico": handlers.favicon,
+    "public/css": handlers.css,
+    "public/images": handlers.images,
+    "public/images/svg": handlers.svg,
+    "public/js": handlers.js,
+    "public/fonts": handlers.fonts,
+  
+    // user //
+    user: handlers.error_page,
+    "user/accounts": handlers.accounts,
+    "user/register": handlers.register,
+    "user/login": handlers.login,
+
+  };
 
 // Init script
 server.init = function () {
