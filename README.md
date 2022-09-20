@@ -5,7 +5,7 @@
 - CarbonX Everything Regenerative Finance (ReFi)
 
 
-  # Abstract 
+  # 💡 Where do we get ideas ?
 Decentralized applications developed using blockchain technology provide innovative business models to serve the human race 
 and solve existing challenges. Climate change is one of the biggest problems humanity is facing and there is a dearth of solutions in 
 tackling  this  grave  impediment to the long-term sustainability  of our  planet. Accountability,  greenwashing, traceability, impact 
