@@ -1,6 +1,6 @@
 
-# ⚡ Project Name ⚡
-SUStainability Tokens (SUST): Everyone's Crypto
+## ⚡ SUStainability Tokens (SUST): Everyone's Crypto ⚡
+
 ### Team name
 Catalyst Technologies Ltd
 #### Hackathon Track
