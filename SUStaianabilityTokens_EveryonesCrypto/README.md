@@ -23,8 +23,8 @@ For example, let us take the example of using reusable bags or avoiding plastic 
 #### URLs
 List any URLs relevant to demonstrating your prototype
 
-#### Presentation
-![What is this](SUST_system_design.png)
+#### System design
+![System design](SUST_system_design.png)
 
 #### Next Steps
 -	SUST ERC20 token. To reward regenerative behaviour, we need to design and implement the ERC20 token that can be exchanged for airdrop distributions. 
