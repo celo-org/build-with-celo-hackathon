@@ -5,7 +5,7 @@ Please [__fork this repo__](https://help.github.com/articles/fork-a-repo/) and u
 
 ## Project Name:  Succour DAO
 ### Team name: Team-Helpers
-#### Hackathon Track
+#### Hackathon Track: DAO Track
 
 ##### Region location: Lagos, Nigeria
 
