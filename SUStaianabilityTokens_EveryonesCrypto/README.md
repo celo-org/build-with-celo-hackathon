@@ -24,7 +24,7 @@ For example, let us take the example of using reusable bags or avoiding plastic 
 List any URLs relevant to demonstrating your prototype
 
 #### Presentation
-List any links to your presentation or any related visuals you want to share.
+![SUST system design] (https://github.com/munivenkateswarluk/build-with-celo-hackathon/blob/muni-catalyst-tech-sustainability-tokens/SUStaianabilityTokens_EveryonesCrypto/SUST_system_design.png)
 
 #### Next Steps
 -	SUST ERC20 token. To reward regenerative behaviour, we need to design and implement the ERC20 token that can be exchanged for airdrop distributions. 
