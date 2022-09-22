@@ -19,7 +19,7 @@ contract AMA_SponsorEscrow {
     enum State { PENDING, ACTIVE, DISPUTE, COMPLETE, CANCEL }
 
     // Drafting with cUSD until green partner is chosen
-    enum Asset { CELO, CUSD }
+    enum Asset { TREE }
 
     struct Escrow {
         address payable sponsor;
@@ -27,14 +27,14 @@ contract AMA_SponsorEscrow {
 
         string title;
 
-        // status for approval of stakeholders
+        // status for approval by stakeholders
         bool amaApproved;
         bool sponsorApproval;  // default to true 
 
         // Locked up funds
         Asset currency;     // Asset type: CELO, cUSD, Green token
         uint256 funds;      // in wei
-        uint256 fees;       // platform frees
+        uint256 fees;       // platform fees
 
         State escrowState;      // Status for escrow transaction
         uint256 settlementTime; // epoch time
@@ -46,7 +46,7 @@ contract AMA_SponsorEscrow {
     address payable ama_escrowAddr; // Our Fees are taken here
     address ama_contractAddr;
 
-    IERC20 cUSDToken = IERC20(0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1);  // Green partner contract address
+    IERC20 TREEToken = IERC20(0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1);  // AMA_TimeTreeToken contract address
 
     uint256 public nEscrow; 
     mapping (uint256 => Escrow) public escrows; // List of escrows the sponsor has
@@ -74,21 +74,16 @@ contract AMA_SponsorEscrow {
         //--- Later phase: make initially false to allow team to review
         newEscrow.sponsorApproval = false;
 
-        // Handling Funds and Fees
-        if(msg.value > 0) { // Using CELO Asset
-            newEscrow.currency = Asset.CELO;
-            newEscrow.fees = msg.value / 400;               // service fee of 0.25%
-            newEscrow.funds = msg.value - newEscrow.fees;   // Lock up funds, Not sure how to implement
-        } else { // Using cUSD Stablecoin
-            newEscrow.currency = Asset.CUSD;
-            newEscrow.fees = value / 400;               // service fee of 0.25%
-            newEscrow.funds = value - newEscrow.fees;   // Lock up funds, Not sure how to implement
 
-            // Front end should have allowance and approve _value via Web3  
-            uint256 cUSDbalance = cUSDToken.balanceOf(msg.sender);
-            require(value <= cUSDbalance, "Insufficient funds");
-            cUSDToken.transferFrom(msg.sender, address(this), value);  // Lock up cUSD to this SC addr
-        }
+        newEscrow.currency = Asset.TREE;
+        newEscrow.fees = value / 400;               // service fee of 0.25%
+        newEscrow.funds = value - newEscrow.fees;   // Lock up funds
+
+        // Front end should have allowance and approve _value via Web3  
+        uint256 treeBalance = TREEToken.balanceOf(msg.sender);
+        require(value <= treeBalance, "Insufficient funds");
+        TREEToken.transferFrom(msg.sender, address(this), value);  // Lock up cUSD to this SC addr
+    
 
         newEscrow.settlementTime = settlementTime;
         newEscrow.escrowState = State.ACTIVE; 
@@ -103,7 +98,7 @@ contract AMA_SponsorEscrow {
     }
 
     function setComplete(uint256 id) 
-    onlyAma(id) 
+    onlyAMA(id) 
     escrowStateCheck(id, State.ACTIVE) 
     public returns (bool) {
         escrows[id].sponsorApproval = true; // Siging that contract approves
@@ -138,14 +133,11 @@ contract AMA_SponsorEscrow {
     }
 
     function cancel(uint id) onlyClient public {
-        if(escrows[id].currency == Asset.CELO) {
-            payable(ama_addr).transfer(escrows[id].funds);    // Refund locked funds
-            ama_escrowAddr.transfer(escrows[id].fees);       // Transfer fees to Celoscrow Wallet
-        } else if(escrows[id].currency == Asset.CUSD) {
-            cUSDToken.allowance(address(this), payable(ama_addr));
-            cUSDToken.allowance(address(this), ama_escrowAddr);
-            cUSDToken.transfer(payable(ama_addr), escrows[id].funds);
-            cUSDToken.transfer(ama_escrowAddr, escrows[id].fees);
+        if(escrows[id].currency == Asset.TREE) {
+            TREEToken.allowance(address(this), payable(ama_addr));
+            TREEToken.allowance(address(this), ama_escrowAddr);
+            TREEToken.transfer(payable(ama_addr), escrows[id].funds);
+            TREEToken.transfer(ama_escrowAddr, escrows[id].fees);
         }
 
         // Reset funds
@@ -156,14 +148,11 @@ contract AMA_SponsorEscrow {
 
     function releaseFunds(uint256 id) onlyClient escrowStateCheck(id, State.ACTIVE) public {
         if(escrows[id].amaApproved && escrows[id].sponsorApproval) { // Everyone must Approve
-            if(escrows[id].currency == Asset.CELO) {
-                escrows[id].partner.transfer(escrows[id].funds); // Release funds to partner
-                ama_escrowAddr.transfer(escrows[id].fees); // Transfer fees to Celoscrow Wallet
-            } else if(escrows[id].currency == Asset.CUSD) {
-                cUSDToken.allowance(address(this), escrows[id].partner);
-                cUSDToken.allowance(address(this), ama_escrowAddr);
-                cUSDToken.transfer(escrows[id].partner, escrows[id].funds);
-                cUSDToken.transfer(ama_escrowAddr, escrows[id].fees);
+            if(escrows[id].currency == Asset.TREE) {
+                TREEToken.allowance(address(this), escrows[id].partner);
+                TREEToken.allowance(address(this), ama_escrowAddr);
+                TREEToken.transfer(escrows[id].partner, escrows[id].funds);
+                TREEToken.transfer(ama_escrowAddr, escrows[id].fees);
             }
 
             escrows[id].funds = 0;
@@ -171,6 +160,12 @@ contract AMA_SponsorEscrow {
             escrows[id].escrowState = State.COMPLETE;
         }
     }
+
+    // function userFaucet() onlyUsers public {
+
+    // }
+
+
 
     modifier onlyClient() {
         require(msg.sender == ama_addr, "Only client can call this method");
@@ -182,7 +177,7 @@ contract AMA_SponsorEscrow {
         _;
     }
 
-    modifier onlyAma(uint256 id) {
+    modifier onlyAMA(uint256 id) {
         require(ama_addr == msg.sender, "Only AMA platform can call this method");
         _;
     }
@@ -198,11 +193,5 @@ contract AMA_SponsorEscrow {
     modifier escrowStateCheck(uint id, State _state) {
         require(escrows[id].escrowState == _state, "Wrong state.");
         _;
-    }
-
-
-    // Stablecoin checking
-    function cUSDBalanceOf(address addr) public view returns (uint256) {
-        return cUSDToken.balanceOf(addr);
     }
 }
