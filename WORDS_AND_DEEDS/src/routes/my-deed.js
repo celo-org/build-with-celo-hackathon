@@ -4,6 +4,8 @@ import DeedListScreen from '../screens/mydeed/deed/deed-list-screen.js';
 import ClauseHomeScreen from '../screens/mydeed/clause/clause-home.js';
 import ClauseListScreen from '../screens/mydeed/clause/clause-list-screen.js';
 
+import CeloHomeScreen from '../screens/remote-wallet/celo/celo-home.js';
+
 import '../css/mydeed.css';
 class Routes {
 
@@ -30,6 +32,11 @@ class Routes {
 				path: '/clause',
 				dataobject_back: {type: 'clause', path: 'clause', action: 'view', params: ['txhash', 'currencyuuid', 'minter', 'tokenid', 'index']},
 				screen: ClauseHomeScreen
+			},	
+			{
+				name: 'celo',
+				path: '/celo',
+				screen: CeloHomeScreen
 			}
 		];
 	}

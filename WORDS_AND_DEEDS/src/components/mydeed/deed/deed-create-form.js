@@ -12,6 +12,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {CurrencyCardIcon} from '@primusmoney/react_pwa/react-js-ui';
 
+import RemoteWalletConnectForm from '../../remote-wallet/remote-wallet-connect-form.js'
+
 
 
 class DeedCreateForm extends React.Component {
@@ -34,6 +36,9 @@ class DeedCreateForm extends React.Component {
 		let balance = '';
 		
 		this.closing = false;
+
+		this.remotewallet = false;
+		this.rpc = null;
 		
 		this.state = {
 			mintername,
@@ -515,6 +520,27 @@ class DeedCreateForm extends React.Component {
 		}
 	}
 
+	async _changeCurrency(currency) {
+		if (currency) {
+			// check if corresponding currency is set for remote
+			let config = this.app.getConfig('remotewallet');	
+
+			if (config && config.rpc && config.rpc[currency.uuid]) {
+				let curr_rpc_config = config.rpc[currency.uuid];
+
+				if (curr_rpc_config.enabled === true) {
+					this.remotewallet = true;
+					this.rpc = curr_rpc_config.rpc;
+				}
+			}
+
+			// change state
+			this._setState({currency});
+
+		}
+
+	}
+
 	async onChangeCurrency(e) {
 		var cur = e.target.value;
 
@@ -528,9 +554,7 @@ class DeedCreateForm extends React.Component {
 			}
 		}
 
-		if (currency) {
-			this._setState({currency});
-		}
+		this._changeCurrency(currency);
 	}
 
 	async onSelectCurrency(uuid) {
@@ -544,8 +568,7 @@ class DeedCreateForm extends React.Component {
 			}
 		}
 
-		if (currency)
-		this._setState({currency});
+		this._changeCurrency(currency);
 	}
 
 	async onShowCurrencyCard() {
@@ -556,6 +579,17 @@ class DeedCreateForm extends React.Component {
 
 	
 	// rendering
+	renderRemoteWalletConnection() {
+		return (
+			<RemoteWalletConnectForm 
+				app = {this.app}
+				parent={this}
+				rpc={this.rpc}
+			/>
+		);
+	}
+
+
 
 	renderMainCardPart() {
 		let { currency, currentcard, signingkey, balance } = this.state;
@@ -625,7 +659,7 @@ class DeedCreateForm extends React.Component {
 			  </FormGroup>
 			  </FormGroup>
 
-				{this.renderMainCardPart()}
+				{(this.remotewallet ? this.renderRemoteWalletConnection() : this.renderMainCardPart())}
 
 			</div>
 		  );
