@@ -1,0 +1,3 @@
+[submodule "LIFELOOP/lifeloop"]
+	path = LIFELOOP/lifeloop
+	url = https://github.com/ricCap/projectz.git
