@@ -1,13 +1,34 @@
 {
 	"name": "my-deed",
 	"updatetime": "September 19, 2022",
-	"env": "dev",
+	"env": "prod",
 	"privacy_url": "https://www.primusmoney.com/privacy_en",
 	"routes": {
+		"xtra_routes": {
+			"mydeed": {
+				"disabled": false,
+				"name": "mydeed"
+			}
+		}
+
+	},
+	"menulinks": {
+		"xtra_menulinks": [
+			{"disabled": false, "type": "separator"},
+			{"disabled": false, "type": "link", "route": "deed", "label": "Create Deed"},
+			{"disabled": false, "type": "link", "route": "deeds", "label": "Deeds"}
+		]
+	},
+	"homelinks": {
+		"xtra_homelinks": [
+			{"type":"link", "pathname": "/deed", "label": "Create a Deed"},
+			{"type":"link", "pathname": "/deeds", "label": "Deeds"}
+		]
 	},
 	"currencies": {
 		"disable": []
 	},
 	"schemes": {
+
 	}
 }
