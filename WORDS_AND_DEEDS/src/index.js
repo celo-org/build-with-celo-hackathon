@@ -33,6 +33,18 @@ async function afterAppLoad() {
 	var app = App.getAppObject();
 	app.current_version += ' - mydeed: ' + PWA_APP_VERSION;
 
+	try {
+		// initialize deed client module
+		var Client = require('./js/src/deed-client.js').default;
+		var clientmodule = Client.getObject();
+
+		await clientmodule.init();
+
+	}
+	catch(e) {
+		console.log('exception in afterAppLoad: ' + e);
+	}
+
 }
 
 
