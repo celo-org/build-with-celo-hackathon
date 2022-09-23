@@ -1,0 +1,217 @@
+{
+	"gooddollar": {
+		"name": "GoodDollar",
+		"symbol": "G$",
+		"decimals": 2,
+		"uuid": "cee281bd-0bae-d866-4115-0987f90aeb03", 
+		"description": "GoodDollar on Fuse",
+		"address": "0x495d133b938596c9984d462f007b676bdc57ecec", 
+		"web3providerurl": "https://gooddollar-rpc.fuse.io/",
+		"scheme_uuid": "d32c5dad-1da1-bc28-58e0-b49a84698a48",
+		"ops": {"canpay": true, "cantopup": false, "canswap": true, "canregisterdeeds": true},
+		"uniswap_v2": {"factory": "0x1d1f1A7280D67246665Bb196F38553b469294f3a",
+					"router": "0xFB76e9E7d88E308aB530330eD90e84a952570319",
+					"gas_address": "0x0BE9e53fd7EDaC9F859882AfdDa116645287C629",
+					"gas_decimals": 18,
+					"gas_name": "Wrapped Fuse",
+					"gas_symbol": "WFUSE",
+					"swap_max_cost_units": 10
+				},
+		"deeds_v1": {
+			"locker": "0x8a8cAA630d93AA9DFf19E5C8Cc90D542bA705A84",
+			"basetokenuri": "https://mytokens-rest.primusmoney.com/mytokens-dapp/api/mytokens/web3/token_metadata",
+			"create_minter_cost_units": 305,
+			"create_deed_cost_units": 8,
+			"transfer_deed_cost_units": 4,
+			"add_clause_cost_units": 56
+		},
+		"provider": "provider.js",
+		"pretrade_scheme_uuid": "b1a18ba9-1609-3f66-c1fd-42ae0073efac"
+	},
+	"fusd": {
+		"name": "Fuse Dollar",
+		"symbol": "fUSD",
+		"decimals": 18,
+		"uuid": "50062c72-1c08-7fe8-9a7f-c755d41e0a82", 
+		"description": "fUSD on Fuse",
+		"address": "0x249BE57637D8B013Ad64785404b24aeBaE9B098B", 
+		"web3providerurl": "https://rpc.fuse.io/",
+		"scheme_uuid": "7af9a2e8-ef9f-3504-882d-53838dbba480",
+		"ops": {"canpay": true, "cantopup": false, "canswap": true, "canregisterdeeds": true},
+		"uniswap_v2": {"factory": "0x1d1f1A7280D67246665Bb196F38553b469294f3a",
+					"router": "0xFB76e9E7d88E308aB530330eD90e84a952570319",
+					"gas_address": "0x0BE9e53fd7EDaC9F859882AfdDa116645287C629",
+					"gas_decimals": 18,
+					"gas_name": "Wrapped Fuse",
+					"gas_symbol": "WFUSE",
+					"swap_max_cost_units": 10
+				},
+		"deeds_v1": {
+			"locker": "0x8a8cAA630d93AA9DFf19E5C8Cc90D542bA705A84",
+			"basetokenuri": "https://mytokens-rest.primusmoney.com/mytokens-dapp/api/mytokens/web3/token_metadata",
+			"create_minter_cost_units": 305,
+			"create_deed_cost_units": 8,
+			"transfer_deed_cost_units": 4,
+			"add_clause_cost_units": 56
+		},
+		"provider": "provider.js"
+	},
+	"wfuse": {
+		"name": "wrapped fuse",
+		"symbol": "WFUSE",
+		"decimals": 18,
+		"uuid": "4a3e1cbe-4d0f-9f1a-744a-669781e4783a", 
+		"description": "wrapped fuse",
+		"address": "0x0BE9e53fd7EDaC9F859882AfdDa116645287C629", 
+		"web3providerurl": "https://rpc.fuse.io/",
+		"scheme_uuid": "7af9a2e8-ef9f-3504-882d-53838dbba480",
+		"ops": {"canpay": true, "cantopup": false, "canswap": true, "canregisterdeeds": true},
+		"uniswap_v2": {"factory": "0x1d1f1A7280D67246665Bb196F38553b469294f3a",
+					"router": "0xFB76e9E7d88E308aB530330eD90e84a952570319",
+					"gas_address": "0x0BE9e53fd7EDaC9F859882AfdDa116645287C629",
+					"gas_decimals": 18,
+					"gas_name": "Wrapped Fuse",
+					"gas_symbol": "WFUSE",
+					"swap_max_cost_units": 10
+				},
+		"deeds_v1": {
+			"locker": "0x8a8cAA630d93AA9DFf19E5C8Cc90D542bA705A84",
+			"basetokenuri": "https://mytokens-rest.primusmoney.com/mytokens-dapp/api/mytokens/web3/token_metadata",
+			"create_minter_cost_units": 305,
+			"create_deed_cost_units": 8,
+			"transfer_deed_cost_units": 4,
+			"add_clause_cost_units": 56
+		},
+		"provider": "provider.js"
+	},
+	"xdai_stake": {
+		"name": "STAKE on xDAI",
+		"symbol": "STAKE",
+		"decimals":18,
+		"uuid": "05ca48cf-bfab-dfe8-aa98-599d7b25be13", 
+		"description": "STAKE on xDAI",
+		"address": "0xb7D311E2Eb55F2f68a9440da38e7989210b9A05e", 
+		"web3providerurl": "https://dai.poa.network"
+	},
+	"xdai_USDC": {
+		"name": "USD//C on xDai",
+		"symbol": "USDC",
+		"decimals":6,
+		"uuid": "a6cb3c5a-ea18-4d8f-b850-d3aeb437cd53", 
+		"description": "USDC on xDAI",
+		"address": "0xDDAfbb505ad214D7b80b1f830fcCc89B60fb7A83", 
+		"web3providerurl": "https://dai.poa.network",
+		"scheme_uuid": "82ec85d7-2859-ce1a-6527-4a639bae77ca",
+		"ops": {"canpay": true, "cantopup": false, "canswap": false, "canregisterdeeds": true},
+		"deeds_v1": {
+			"locker": "0xa3aef7358d25d8d571e40edef7b7dbf675bf7bb5",
+			"basetokenuri": "https://mytokens-rest.primusmoney.com/mytokens-dapp/api/mytokens/web3/token_metadata",
+			"create_minter_cost_units": 260,
+			"create_deed_cost_units": 8,
+			"transfer_deed_cost_units": 4,
+			"add_clause_cost_units": 56
+		},
+		"provider": "provider.js"
+	},
+	"ducat": {
+		"name": "ducat",
+		"symbol": "Dct",
+		"decimals": 2,
+		"uuid": "a29c3fdd-9117-5eb1-bb1d-bc879a7065ee", 
+		"description": "ducat",
+		"address": "0x4A60F740fF043670E079D8eB6505E9B2916D3d59", 
+		"scheme_uuid": "62ef4792-4ba6-0c27-c992-572684e9f9f5",
+		"ops": {"canpay": true, "cantxfree": true, "cantopup": true, "canswap": false, "canregisterdeeds": true},
+		"deeds_v1": {
+			"locker": "0xFb80256A9006295A422b9558875510834E6cae52",
+			"basetokenuri": "https://mytokens-rest.primusmoney.com/mytokens-dapp/api/mytokens/web3/token_metadata",
+			"create_minter_cost_units": 260,
+			"create_deed_cost_units": 8,
+			"transfer_deed_cost_units": 4,
+			"add_clause_cost_units": 56
+		},
+		"provider": "provider.js",
+		"pretrade_scheme_uuid": "62ef4792-4ba6-0c27-c992-572684e9f9f5"
+	},
+	"lira": {
+		"name": "lira",
+		"symbol": "IT£",
+		"decimals": 2,
+		"uuid": "aa02903b-ac95-ca9f-2be6-964c581460c1", 
+		"description": "lira",
+		"address": "0x50DfE28637Aeb73D20575990Df74bCAb215671Ad", 
+		"scheme_uuid": "19d97186-a8c9-378a-6897-cdab74b654aa",
+		"ops": {"canpay": true, "cantxfree": true, "cantopup": true},
+		"provider": "provider.js",
+		"pretrade_scheme_uuid": "19d97186-a8c9-378a-6897-cdab74b654aa"
+	},
+	"WBNB": {
+		"name": "Wrapped BNB",
+		"symbol": "WBNB",
+		"decimals": 18,
+		"uuid": "4487f6ce-05c0-3b1d-9380-0bc1c34aa577", 
+		"description": "Wrapped BNB",
+		"address": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c", 
+		"web3providerurl": "https://bsc-dataseed.binance.org/",
+		"scheme_uuid": "97b653fb-23e7-bb44-55e3-e8add129b13f",
+		"ops": {"canpay": false, "cantopup": false, "canswap": false}
+	},
+	"busd": {
+		"name": "BUSD Token",
+		"symbol": "BUSD",
+		"decimals": 18,
+		"uuid": "850a8f08-5c0a-fd4e-752a-ebd9368a97de", 
+		"description": "BUSD on Binance Smart Chain",
+		"address": "0xe9e7cea3dedca5984780bafc599bd69add087d56", 
+		"scheme_uuid": "97b653fb-23e7-bb44-55e3-e8add129b13f",
+		"ops": {"canpay": true, "cantopup": false},
+		"provider": "provider.js",
+		"pretrade_scheme_uuid": "b1a18ba9-1609-3f66-c1fd-42ae0073efac"
+	},
+	"busd-t": {
+		"name": "Tether USD",
+		"symbol": "USDT",
+		"decimals": 18,
+		"uuid": "6ce89698-f8ee-ccf8-a48f-99ced0d14a67", 
+		"description": "USD-T on Binance Smart Chain",
+		"address": "0x55d398326f99059ff775485246999027b3197955", 
+		"scheme_uuid": "97b653fb-23e7-bb44-55e3-e8add129b13f",
+		"ops": {"canpay": true, "cantopup": false},
+		"provider": "provider.js",
+		"pretrade_scheme_uuid": "b1a18ba9-1609-3f66-c1fd-42ae0073efac"
+	},
+	"busd-c": {
+		"name": "USD Coin",
+		"symbol": "USDC",
+		"decimals": 18,
+		"uuid": "157215b9-b085-978d-5894-1fcf6ef4dd42", 
+		"description": "USD Coin on Binance Smart Chain",
+		"address": "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d", 
+		"scheme_uuid": "97b653fb-23e7-bb44-55e3-e8add129b13f",
+		"ops": {"canpay": true, "cantopup": false},
+		"provider": "provider.js",
+		"pretrade_scheme_uuid": "b1a18ba9-1609-3f66-c1fd-42ae0073efac"
+	},	
+	"cEUR": {
+		"name": "Celo Euro",
+		"symbol": "cEUR",
+		"decimals": 18,
+		"uuid": "1eeca51e-ba3a-5956-bdf4-41d13f5e12c9", 
+		"description": "cEUR on Celo",
+		"address": "0xd8763cba276a3738e6de85b4b3bf5fded6d6ca73", 
+		"web3providerurl": "https://forno.celo.org",
+		"scheme_uuid": "41053643-0139-655c-691d-213009a58e87",
+		"ops": {"canpay": true, "cantopup": false, "canswap": false}
+	},
+	"cUSD": {
+		"name": "Celo Dollar",
+		"symbol": "cUSD",
+		"decimals": 18,
+		"uuid": "c8d24e2f-6aa4-1b70-5853-3cb8f67167b1", 
+		"description": "cUSD on Celo",
+		"address": "0x765de816845861e75a25fca122bb6898b8b1282a", 
+		"web3providerurl": "https://forno.celo.org",
+		"scheme_uuid": "41053643-0139-655c-691d-213009a58e87",
+		"ops": {"canpay": true, "cantopup": false, "canswap": false}
+	}
+}

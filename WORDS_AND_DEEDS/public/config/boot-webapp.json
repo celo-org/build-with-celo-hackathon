@@ -1,0 +1,13 @@
+{
+	"name": "my-deed",
+	"updatetime": "September 19, 2022",
+	"env": "dev",
+	"privacy_url": "https://www.primusmoney.com/privacy_en",
+	"routes": {
+	},
+	"currencies": {
+		"disable": []
+	},
+	"schemes": {
+	}
+}
