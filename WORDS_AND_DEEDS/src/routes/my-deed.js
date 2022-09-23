@@ -17,6 +17,7 @@ class Routes {
 			{
 				name: 'deed',
 				path: '/deed',
+				dataobject: {type: 'deed', path: 'deed', action: 'view', params: ['txhash', 'currencyuuid', 'minter', 'tokenid']},
 				screen: DeedHomeScreen
 			},
 			{
@@ -27,6 +28,7 @@ class Routes {
 			{
 				name: 'clause',
 				path: '/clause',
+				dataobject_back: {type: 'clause', path: 'clause', action: 'view', params: ['txhash', 'currencyuuid', 'minter', 'tokenid', 'index']},
 				screen: ClauseHomeScreen
 			}
 		];
