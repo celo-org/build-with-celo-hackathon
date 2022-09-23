@@ -26,6 +26,15 @@ Through blockchain, we solve the classic transparency issue of donation systems 
 
 You can find a draft of the application flow in the project's GitHub wiki. More details will be added to the wiki over the next week. https://github.com/ricCap/projectz/wiki/Flowchart
 
+#### Getting started
+This repository contains a submodule named `lifeloop` that points to https://github.com/ricCap/projectz. The other repository contains automation, code scanning and a deployment on Github Pages that we wanted to keep during development. Hence changes will be committed to that repository.
+
+A preview of the project MVP can be found [here](https://riccap.github.io/projectz/).
+
+Please refer to the project [wiki](https://github.com/ricCap/projectz/wiki) for an in-depth description of the project value proposition and business model.
+
+You can initialize the submodule using `git submodule init` in the lifeloop folder. Then run `git submodule update`. You can then follow the instructions in the submodule [README](lifeloop/README.md).
+
 <!-- #### Project Description
 Provide a clear statement of the challenges/issues/problems/gaps your project engages as well as a brief, high-level description of how your project engages the areas you've identified. What is the value of your approach? Who are the intended users?
 
