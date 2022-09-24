@@ -8,6 +8,7 @@ Please [__fork this repo__](https://help.github.com/articles/fork-a-repo/) and u
 ### Team name
   Team Eagle
 #### Hackathon Track
+socialFi
 
 
 ##### Region location
