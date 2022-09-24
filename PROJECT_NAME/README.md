@@ -60,7 +60,9 @@ Describe the basic functionality of your project. What are the features you were
 
 #### URLs
 List any URLs relevant to demonstrating your prototype
-https://docs.intotheverse.xyz/
+- https://docs.intotheverse.xyz/
+- Follow us on [Twitter](https://twitter.com/IntoTheVerse_)
+- Our [website](https://intotheverse.xyz/)  
 
 #### Presentation
 List any links to your presentation or any related visuals you want to share.
