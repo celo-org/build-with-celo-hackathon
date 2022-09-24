@@ -63,6 +63,7 @@ List any URLs relevant to demonstrating your prototype
 - https://docs.intotheverse.xyz/
 - Follow us on [Twitter](https://twitter.com/IntoTheVerse_)
 - Our [website](https://intotheverse.xyz/)  
+- Our [discord](http://discord.gg/w94EVQRPRf)
 
 #### Presentation
 List any links to your presentation or any related visuals you want to share.
