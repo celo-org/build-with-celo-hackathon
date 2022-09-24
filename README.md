@@ -18,17 +18,22 @@ Celo selected Hackerearth to facilitate the hackathon expereince. To learn more 
 
 #### Github commit schedule:
 
-- 9/1 - Fork this repo
-- 9/8 - Change README
-- 9/17 - 3 commits
-- 9/26 - 3 commits
-- 9/30 - 3 commits
+- 9/26 - Idea submission open until 9/26
+
+- 9/19 - Fork this repo
+- 9/23 - Change README
+- 9/30 - At least 3 commits
+- 10/7 - At least 3 commits
+- 10/14 - At least 3 commits
+- 10/21 - At least 3 commits
+- 10/28 - At least 3 commits
+- 11/4 - At least 3 commits
 
 Three (3) phase hackathon event starting August 26th, 2022.
 ### Phase 1: Idea
  - Hackathon Phase 1 Kick-off - August 26th, 2022
- - Project Idea Submissions Due - September 11th, 2022
- - Evaluations - September 12th-16th, 2022
+ - Project Idea Submissions Due - September 26, 2022
+ - Idea Submissions Evaluated on rolling basis
  
 ### Phase 2: Hack/build MVP
  - Hackathon Phase 2 Kick off - September 19th, 2022
