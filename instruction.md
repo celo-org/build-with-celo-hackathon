@@ -12,7 +12,7 @@ npx hardhat node
 npx hardhat run scripts/deploy.js
 ```
 # ⚡ CNFT with Celo Hackathon ⚡                                                                                                                                                                                                        
-# CNFT Decentralized Application: CarbonX (ReFi) 
+# CNFT Decentralized Application: 
 ![banner](https://user-images.githubusercontent.com/78921146/192164558-64ede5a9-3a55-49ed-a1ef-0ff83115eb9c.png)
 
 - CNFT Everything Regenerative Finance (ReFi)
