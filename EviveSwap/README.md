@@ -12,7 +12,19 @@
 - Shubham Gupta, Blockchain Developer
 
 #### Project Description
-Provide a clear statement of the challenges/issues/problems/gaps your project engages as well as a brief, high-level description of how your project engages the areas you've identified. What is the value of your approach? Who are the intended users?
+
+##### Idea
+- People put their money in banks thinking they have control over it, but in actuality, banks control the money.
+- 'Your Money, Your Control,' is the core of Blockchain Technology which is how Decentralized Exchange work under the hood and this has long attracted me. As laws tighten, more people are turning to decentralised exchanges, discovering the actual value of blockchain and decentralised exchanges.
+- Banks have unlimited control over money and can even refuse to enable customers to withdraw it in an emergency.
+- There is no transparency in the operations of the Banks and everingthing is Centralized
+- What's a better way to exchange your money while still having the ability to contribute to the global problems in the form of the fees which you anyhow have to pay to the big Institutions and banks.
+- Evive = Evolution + Revive
+
+##### Implementation
+- We will fork UniswapV2 and deploy it on the Celo(Alfajores) Blockchain, as well as render our own UI, which will be hosted using Spheron Protocol, and link the smart contracts with the UI, allowing users to interact with the protocol.
+- We will also make some modifications to the Uniswap's smart contracts to automatically transmit 0.02% of the total fees each to the four causes, for a total of 0.08% to the global causes, 0.02% to the protocol for continued development and improvement of the protocol, and 0.2% to the liquidity providers for their contribution.
+- Solidity, Remix, Celo Blockchain, React, and Metamask will be used as tools.
 
 #### Summary
 Describe the basic functionality of your project. What are the features you were able to implement? What features would you like to implement?
