@@ -13,27 +13,30 @@ npx hardhat run scripts/deploy.js
 ```
 # ⚡ CNFT with Celo Hackathon ⚡                                                                                                                                                                                                        
 # CNFT Decentralized Application: 
-![banner](https://user-images.githubusercontent.com/78921146/192164558-64ede5a9-3a55-49ed-a1ef-0ff83115eb9c.png)
-
+<img src="https://user-images.githubusercontent.com/78921146/192164558-64ede5a9-3a55-49ed-a1ef-0ff83115eb9c.png" width="800"/>
 - CNFT Everything Regenerative Finance (ReFi)
 
 # Index Terms 
 CNFT, blockchain, dapps, PELLETS, Celo, FOOD, WINR, Web 3.0,  fundraing, BUBBLE, FLOOR, NFT
 
-TYPES OF TOKENS USED IN OUR SYSTEM
-(DYNAMIC)
+## TYPES OF TOKENS USED IN OUR SYSTEM
+# (DYNAMIC)
+```
 BUBBLE
 GAS
 FLOOR
-PELLETS
 NFT
-(STATIC)
+```
+# (STATIC)
+```
 WINR
 FOOD
+PELLETS
+```
 
 
-TERMINOLOGY USED
-MERCHANTS - Food Stall Keepers, Game Stall Keepers,Or any product or service based stalls during events
+# TERMINOLOGY USED
+```MERCHANTS - Food Stall Keepers, Game Stall Keepers,Or any product or service based stalls during events
 End Users -All Students
 U1 - Student 1 
 U2 - Student 2
@@ -46,4 +49,4 @@ Mint - Initial Pumping Of Token Using Algorithm Using Data Of( Demand ,Supply Vo
 Hike - The Bidding Amount More Than The Base Value Is Called Hike
 Gas Fee -This Fee Is The Total Transaction Fee
 Royalty- This Is An Amount Awarded For  Designers ,Developers Using Royalty Algorithm
-
+```
