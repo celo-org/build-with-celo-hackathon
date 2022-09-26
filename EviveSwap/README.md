@@ -42,7 +42,9 @@ List any URLs relevant to demonstrating your prototype
 List any links to your presentation or any related visuals you want to share.
 
 #### Next Steps
-What do you need to do next to turn this prototype into a working solution?
+- More features will be introduced, such as farming, staking, and limit orders to make EviveSwap more accessible to everyone and a common destination for everyone's needs.
+- Creating a fully community-driven protocol in which the community votes on all protocol-related decisions.
+- Planning to make it live in the Q4 of 2022, after successfully auditing the smart contracts and other functinalities.
 
 #### License
 This repository includes an [unlicensed](http://unlicense.org/) statement though you may want to [choose a different license](https://choosealicense.com/).
