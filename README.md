@@ -35,7 +35,9 @@
       }
 
 - Deployment of CarbonX ("CabX") on Alfajores Testnet Successful ✅
+
 ![top](https://github.com/Achicago/build-with-celo-hackathon/blob/master/CarbonX/server/public/images/Screenshot%20(103).png)   
+
 ![top](https://github.com/Achicago/build-with-celo-hackathon/blob/master/CarbonX/server/public/images/Screenshot%20(104).png)   
 
 
