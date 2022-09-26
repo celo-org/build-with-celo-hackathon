@@ -12,7 +12,7 @@ console.log('loading index.js');
 
 // app config
 var EXEC_ENV = 'prod';
-var PWA_APP_VERSION = '0.15.33.2022.09.20';
+var PWA_APP_VERSION = '0.15.34.2022.09.26';
 
 
 App.EXEC_ENV = EXEC_ENV;
@@ -29,11 +29,20 @@ async function beforeAppLoad() {
 }
 
 async function afterAppLoad() {
+	// load mvc-mydeed module
+	require('./model/module-load.js');
 
 	var app = App.getAppObject();
 	app.current_version += ' - mydeed: ' + PWA_APP_VERSION;
 
 	try {
+		// get mydeed api
+		var react_pwa = ReactPWA.getObject();
+		var clientglobal = react_pwa.getGlobalObject();
+		var mvcmydeed = clientglobal.getModuleObject('mvc-mydeed');
+
+		app.getMvcMyDeedObject = () => { return mvcmydeed};
+
 		// initialize deed client module
 		var Client = require('./js/src/deed-client.js').default;
 		var clientmodule = Client.getObject();

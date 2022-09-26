@@ -201,7 +201,16 @@
 		"address": "0xd8763cba276a3738e6de85b4b3bf5fded6d6ca73", 
 		"web3providerurl": "https://forno.celo.org",
 		"scheme_uuid": "41053643-0139-655c-691d-213009a58e87",
-		"ops": {"canpay": true, "cantopup": false, "canswap": false}
+		"ops": {"canpay": true, "cantopup": false, "canswap": false, "canregisterdeeds": true},
+		"deeds_v1": {
+			"locker": "0x3B29B4322204283995195ED914856418A5ac2e87",
+			"basetokenuri": "https://mytokens-rest.primusmoney.com/mytokens-dapp/api/mytokens/web3/token_metadata",
+			"locker_put_cost_units": 8,
+			"create_minter_cost_units": 260,
+			"create_deed_cost_units": 8,
+			"transfer_deed_cost_units": 4,
+			"add_clause_cost_units": 56
+		}
 	},
 	"cUSD": {
 		"name": "Celo Dollar",
@@ -212,6 +221,15 @@
 		"address": "0x765de816845861e75a25fca122bb6898b8b1282a", 
 		"web3providerurl": "https://forno.celo.org",
 		"scheme_uuid": "41053643-0139-655c-691d-213009a58e87",
-		"ops": {"canpay": true, "cantopup": false, "canswap": false}
+		"ops": {"canpay": true, "cantopup": false, "canswap": false, "canregisterdeeds": true},
+		"deeds_v1": {
+			"locker": "0x3B29B4322204283995195ED914856418A5ac2e87",
+			"basetokenuri": "https://mytokens-rest.primusmoney.com/mytokens-dapp/api/mytokens/web3/token_metadata",
+			"locker_put_cost_units": 8,
+			"create_minter_cost_units": 260,
+			"create_deed_cost_units": 8,
+			"transfer_deed_cost_units": 4,
+			"add_clause_cost_units": 56
+		}
 	}
 }

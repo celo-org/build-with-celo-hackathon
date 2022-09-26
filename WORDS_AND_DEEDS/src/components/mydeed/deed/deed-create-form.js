@@ -22,8 +22,8 @@ class DeedCreateForm extends React.Component {
 		super(props);
 		
 		this.app = this.props.app;
-		this.getMvcModuleObject = this.app.getMvcModuleObject;
 		this.getMvcMyPWAObject = this.app.getMvcMyPWAObject;
+		this.getMvcMyDeedObject = this.app.getMvcMyDeedObject;
 		
 		let mintername = '';
 		let title = '';
@@ -306,6 +306,7 @@ class DeedCreateForm extends React.Component {
 		console.log('onSubmit pressed!');
 		
 		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
 
 		let rootsessionuuid = this.props.rootsessionuuid;
 		let walletuuid = this.props.currentwalletuuid;
@@ -394,6 +395,7 @@ class DeedCreateForm extends React.Component {
 
 				// need a higher feelevel than standard this.app.getCurrencyFeeLevel(currencyuuuid)
 				let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, card.uuid, tx_fee);
+				let connection = {type: 'local', feelevel: _feelevel};
 
 				var canspend = await mvcmypwa.canCompleteTransaction(rootsessionuuid, walletuuid, card.uuid, tx_fee, _feelevel).catch(err => {});
 		
@@ -414,7 +416,7 @@ class DeedCreateForm extends React.Component {
 				// build tokenuri
 				minter.basetokenuri = await this.app.getBaseTokenURI(currency.uuid, currentcard.address);
 				
-				minter = await mvcmypwa.deployDeedMinter(rootsessionuuid, walletuuid, currency.uuid, currentcard.uuid, minter, _feelevel)
+				minter = await mvcmydeed.deployDeedMinter(rootsessionuuid, walletuuid, currency.uuid, currentcard.uuid, minter, connection)
 				.catch(err => {
 					console.log('error in DeedCreateForm.onSubmit: ' + err);
 					stop = true;
@@ -437,6 +439,7 @@ class DeedCreateForm extends React.Component {
 			tx_fee.estimated_cost_units = mint_deed_cost_units + add_clause_cost_units;
 
 			let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, currentcard.uuid, tx_fee);
+			let connection = {type: 'local', feelevel: _feelevel};
 
 			var canspend = await mvcmypwa.canCompleteTransaction(rootsessionuuid, walletuuid, currentcard.uuid, tx_fee, _feelevel)
 			.catch(err => {
@@ -465,7 +468,7 @@ class DeedCreateForm extends React.Component {
 
 			_feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, currentcard.uuid, tx_fee);
 			
-			const deed = await mvcmypwa.mintDeed(rootsessionuuid, walletuuid, currency.uuid, minter, _feelevel)
+			const deed = await mvcmydeed.mintDeed(rootsessionuuid, walletuuid, currency.uuid, minter, connection)
 			.catch(err => {
 				console.log('error in DeedCreateForm.onSubmit: ' + err);
 				stop = true;
@@ -489,7 +492,7 @@ class DeedCreateForm extends React.Component {
 
 			_feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, currentcard.uuid, tx_fee);
 
-			const metadata_txhash = await mvcmypwa.registerClause(rootsessionuuid, walletuuid, currency.uuid, minter, deed, metadata_clause, _feelevel)
+			const metadata_txhash = await mvcmydeed.registerClause(rootsessionuuid, walletuuid, currency.uuid, minter, deed, metadata_clause, connection)
 			.catch(err => {
 				console.log('error in DeedCreateForm.onSubmit: ' + err);
 				stop = true;
