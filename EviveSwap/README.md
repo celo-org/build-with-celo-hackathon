@@ -47,4 +47,4 @@ List any links to your presentation or any related visuals you want to share.
 - Planning to make it live in the Q4 of 2022, after successfully auditing the smart contracts and other functinalities.
 
 #### License
-This repository includes an [unlicensed](http://unlicense.org/) statement though you may want to [choose a different license](https://choosealicense.com/).
+This repository includes an [unlicensed](http://unlicense.org/) statement.
