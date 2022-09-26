@@ -26,8 +26,14 @@
 - We will also make some modifications to the Uniswap's smart contracts to automatically transmit 0.02% of the total fees each to the four causes, for a total of 0.08% to the global causes, 0.02% to the protocol for continued development and improvement of the protocol, and 0.2% to the liquidity providers for their contribution.
 - Solidity, Remix, Celo Blockchain, React, and Metamask will be used as tools.
 
+##### Intended Users
+- People who wnat complete authority and transparency over their assets are the intended users as DEXs are decentralized and provides complete transparency and record which is publicaly avaliable to everyone on the Blockchain
+
 #### Summary
-Describe the basic functionality of your project. What are the features you were able to implement? What features would you like to implement?
+- EviveSwap will enable anyone from anywhere in the globe to purchase and sell cryptocurrencies immediately using Celo Blockchain.
+- EviveSwap will contribute to four different causes i.e. combating war, fighting biodiversity collapse, climate change and projects working towards ReFi.
+- It will not discriminate and will be open to everyone.
+- EviveToken can be earned by providing liquidity and earning a steady passive income.
 
 #### URLs
 List any URLs relevant to demonstrating your prototype
