@@ -2,8 +2,6 @@
 import React from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 
-import WalletConnectProvider from '@walletconnect/web3-provider';
-
 class RemoteWalletConnectForm extends React.Component {
 	constructor(props) {
 		super(props);
@@ -14,6 +12,9 @@ class RemoteWalletConnectForm extends React.Component {
 		this.rpc = this.props.rpc;
 
 		this.getMvcMyPWAObject = this.app.getMvcMyPWAObject;
+
+		this.deed_client = this.app.getDeedClientObject();
+		this.walletconnect_client = this.deed_client.getWalletConnectClient();
 		
 		this.uuid = this.app.guid();
 
@@ -107,69 +108,19 @@ class RemoteWalletConnectForm extends React.Component {
 		return ret;
 	}
 
-	// called by wallet connect
-	async onAccountsChanged(accounts) {
-		console.log("WallectConnect account changed: " + accounts);
-
-		let mvcmypwa = this.getMvcMyPWAObject();
-
-		mvcmypwa.signalEvent('on_walletconnect_accounts_changed', {accounts});
-	}
-
-	async onChainIdChanged(chainId) {
-		console.log("WallectConnect chain changed: " + chainId);
-
-		let mvcmypwa = this.getMvcMyPWAObject();
-
-		mvcmypwa.signalEvent('on_walletconnect_chainid_changed', {chainId});
-	}
-
-	async onDisconnected(code, reason) {
-		console.log("WallectConnect disconnect: " + code + " - " + reason);
-
-		return this.disconnect();
-	}
-
 	// actions
 	async connect() {
 		try {
-			const provider = new WalletConnectProvider({
-				rpc: this.rpc,
-			});
-			let account = null;
-		
-			// handshake
-			let res = await provider.enable();
+			await this.walletconnect_client.connect(this.rpc);
 
-			if (provider.connected) {
-				account = provider.accounts[0];
-
-				// Suscribe to account changed
-				provider.on("accountsChanged", (accounts) => {
-					this.onAccountsChanged(accounts);
-				});
-	
-				// Subscribe to chainId change
-				provider.on("chainChanged", (chainId) => {
-					this.onChainIdChanged(chainId);
-				});
-				
-				// Subscribe to session disconnection
-				provider.on("disconnect", (code, reason) => {
-					this.onDisconnected(code, reason);
-				});
-			}
-			else {
-				this.app.alert('could not connect to wallet');
-			}
+			let provider = this.walletconnect_client.getProvider();
+			let account = this.walletconnect_client.getRemoteAccount();
 		
 			let mvcmypwa = this.getMvcMyPWAObject();
 			let now = Date.now();
 			let time_string = mvcmypwa.formatDate(now/1000, 'YYYY-mm-dd HH:MM:SS');
 
-			// dispatch the new provider and account
-			mvcmypwa.signalEvent('on_walletconnect_connected', {provider, account});
-
+			// set state
 			this.setState({
 				message: 'returning from connect at ' + time_string,
 
@@ -185,27 +136,7 @@ class RemoteWalletConnectForm extends React.Component {
 	async disconnect() {
 
 		try {
-			if (this.state.provider)
-			await this.state.provider.disconnect();
-			else {
-				// look if we have an entry left from previous connection
-				const entry = window.localStorage.getItem('walletconnect');
-
-				if (entry) {
-					const provider = new WalletConnectProvider({
-						rpc: this.rpc,
-					});
-					let account = null;
-				
-					// enable to clean through disconnect
-					await provider.enable();
-					
-					await provider.disconnect();
-
-					// apparently provider.disconnect does not remove entry fast enough
-					window.localStorage.removeItem('walletconnect');
-				}
-			}
+			await this.walletconnect_client.disconnect();
 
 		}
 		catch(e) {
@@ -325,7 +256,7 @@ class RemoteWalletConnectForm extends React.Component {
 							disabled
 							autoFocus
 							type="text"
-							value={(account ? account : 'no account')}
+							value={(account ? account : 'not connected')}
 						/>
 						{(provider ?
 						<Button 

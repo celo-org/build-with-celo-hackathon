@@ -10,6 +10,19 @@ class DeedClient {
 		this.isloading = false;
 
 		this.globalscope = window;
+
+		this.mvcmypwa = null;
+
+		this.walletconnect_client = null;
+	}
+
+	getMvcMyPWAObject() {
+		if (this.mvcmypwa)
+			return this.mvcmypwa;
+
+		this.mvcmypwa = this.global.getModuleObject('mvc-myquote');
+
+		return this.mvcmypwa;
 	}
 
 	async init() {
@@ -21,6 +34,14 @@ class DeedClient {
 			
 			// register this module
 			clientglobal.registerModuleObject(this);
+
+
+			// init wallet connect client
+			const WalletConnectClient = require('./walletconnect/walletconnect-client.js').default;
+			this.walletconnect_client = WalletConnectClient.getObject();
+
+			await this.walletconnect_client.init(clientglobal);
+	
 		}
 		catch(e) {
 			console.log('exception in DeedClient.init: ' + e);
@@ -194,15 +215,6 @@ class DeedClient {
 
 	}
 
-	getMvcMyPWAObject() {
-		if (this.mvcmypwa)
-			return this.mvcmypwa;
-
-		this.mvcmypwa = this.global.getModuleObject('mvc-myquote');
-
-		return this.mvcmypwa;
-	}
-
 	async _getDeedDataObjectFromMinter(sessionuuid, walletuuid, currencyuuid, minteraddress, tokenid) {
 		let mvcmypwa = this.getMvcMyPWAObject();
 
@@ -222,7 +234,38 @@ class DeedClient {
 		}		
 	}
 
+	// wallet connect
+	getWalletConnectClient() {
+		return this.walletconnect_client;
+	}
+
+	// actions
+	async connectToWallet() {
+		let mvcmypwa = this.getMvcMyPWAObject();
+
+		let res = await new Promise((resolve, reject) => {
+			mvcmypwa.signalEvent('on_walletconnect_connect', {
+				callback: (err,res) => {if (res) resolve(res); else reject(err);}
+			});
+		});
+
+		return res;
+	}
+
+	async disconnectFromWallet() {
+		let mvcmypwa = this.getMvcMyPWAObject();
+
+		let res = await new Promise((resolve, reject) => {
+			mvcmypwa.signalEvent('on_walletconnect_disconnect', {
+				callback: (err,res) => {if (res) resolve(res); else reject(err);}
+			});
+		});
+
+		return res;
+	}
+		
 	
+
 	// static
 	static getObject() {
 		if (DeedClient.webclient)

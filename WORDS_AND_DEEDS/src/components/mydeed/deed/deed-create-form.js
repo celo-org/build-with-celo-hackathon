@@ -317,6 +317,9 @@ class DeedCreateForm extends React.Component {
 		
 		let { currentminter, mintername, title, description, external_url, currency, currentcard, signingkey } = this.state;
 
+		let remotewallet = this.remotewallet;
+		let remoteaccount;
+
 		this._setState({processing: true});
 
 		try {
@@ -336,6 +339,18 @@ class DeedCreateForm extends React.Component {
 			if (!currency || !currency.uuid) {
 				this.app.alert('You need to specify a valid currency');
 				this._setState({processing: false});
+				return;
+			}
+
+			if (remotewallet === true) {
+				let deedclient = this.app.getDeedClientObject();
+				remoteaccount = deedclient.getRemoteAccount();
+
+				if (!remoteaccount) {
+					this.app.alert('You need to be connected to a remote wallet');
+					this._setState({processing: false});
+					return;
+				}
 				return;
 			}
 	

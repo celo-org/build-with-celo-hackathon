@@ -49,6 +49,8 @@ async function afterAppLoad() {
 
 		await clientmodule.init();
 
+		app.getDeedClientObject = () => { return clientmodule};
+
 	}
 	catch(e) {
 		console.log('exception in afterAppLoad: ' + e);
