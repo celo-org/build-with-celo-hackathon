@@ -17,10 +17,10 @@ DAO / DEFI
 
 Nigeria
 
-##### Team Members
-
 
 #### Project Description
+
+The first algorithmic stablecoin on Celo Blockchain, pegged to the price of 1 Celo via seigniorage. Fisherman Dao believes in the potential of Celo Blockchain and aims to become the main medium of exchange on Celo Network: this will be achieved by providing a mirrored, liquid asset to $Celo.
 
 #### Summary
 
