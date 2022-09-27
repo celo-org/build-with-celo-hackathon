@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{858D21CD-279B-4B67-8821-0A09FA684529}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B9B7C734-720D-4C09-B451-2F045CCBCF1D}"
 EndProject
@@ -53,7 +56,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Celo", "Celo", "{6E4A01D0-E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{6891AFFC-427D-4013-BF1B-606EF6F12908}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nomis.Utils", "src\Nomis.Utils\Nomis.Utils.csproj", "{D3188B2D-63B4-4C21-9B72-5E2D766E62D3}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D3188B2D-63B4-4C21-9B72-5E2D766E62D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3188B2D-63B4-4C21-9B72-5E2D766E62D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3188B2D-63B4-4C21-9B72-5E2D766E62D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3188B2D-63B4-4C21-9B72-5E2D766E62D3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
@@ -81,6 +96,7 @@ Global
 		{C478A66F-F96B-4DF4-9EC6-A0324E3AD499} = {7928A626-FC8E-4571-BF3E-3C3A6C692D5C}
 		{6E4A01D0-E967-4D29-AAAA-7F4E1A6D36D2} = {C478A66F-F96B-4DF4-9EC6-A0324E3AD499}
 		{6891AFFC-427D-4013-BF1B-606EF6F12908} = {7928A626-FC8E-4571-BF3E-3C3A6C692D5C}
+		{D3188B2D-63B4-4C21-9B72-5E2D766E62D3} = {9DE8A938-704E-4CCB-9A4A-1DDB1F26757B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A242BD00-A0A0-4259-8324-37DB6A09C076}
