@@ -20,7 +20,9 @@ Sarau is a dApp that enable users to collect NFTs that represent moments in a re
 Describe the basic functionality of your project. What are the features you were able to implement? What features would you like to implement?
 
 #### URLs
-List any URLs relevant to demonstrating your prototype
+- dApp repository: https://github.com/sarau-xyz/sarau-dapp
+- contracts repository: https://github.com/sarau-xyz/sarau-contracts
+- live demo: https://sarau.xyz
 
 #### Presentation
 List any links to your presentation or any related visuals you want to share.
