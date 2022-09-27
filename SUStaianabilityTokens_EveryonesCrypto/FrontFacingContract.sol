@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 interface SUSTokenFactory {
-    function sendSUST(string memory, address) external view;
+    function mintSUST(address, uint256) external;
 }
 
 contract FrontFace {
@@ -25,9 +25,9 @@ contract FrontFace {
         tokenFactoryAddress = _tokenFactoryAddress;
     }
 
-    function sendReceipt(string memory receiptNum, address pubKey) public view {
+    function sendReceipt(address walletAddress, uint256 amount) public {
         //require(receiptNum != 0, "Input Error: Receipt number is zero or invalid!");
-        require(pubKey != address(0), "Input Error: Recepient address is zero or invalid!");
-        SUSTokenFactory(tokenFactoryAddress).sendSUST(receiptNum, pubKey);
+        require(walletAddress != address(0), "Input Error: Recepient address is zero or invalid!");
+        SUSTokenFactory(tokenFactoryAddress).mintSUST((walletAddress), amount);
     }
 }

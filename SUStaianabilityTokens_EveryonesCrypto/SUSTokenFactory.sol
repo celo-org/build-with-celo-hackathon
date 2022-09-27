@@ -1,45 +1,38 @@
 // SPDX-License-Identifier: MIT
+pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts@4.7.3/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts@4.7.3/token/ERC20/extensions/ERC20Burnable.sol";
+import "@openzeppelin/contracts@4.7.3/security/Pausable.sol";
+import "@openzeppelin/contracts@4.7.3/access/AccessControl.sol";
 
-pragma solidity ^0.8.0;
+contract SUStaianablilityTokens is ERC20, ERC20Burnable, Pausable, AccessControl {
+    bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-contract SUSTokenFactory is ERC20, ERC20Burnable, Pausable, ReentrancyGuard {
-    
-    event MintEvent(string, address, uint256);
-
-    constructor() ERC20("SUStainability Tokens", "SUST") Pausable() {}
-
-//----------------- MINT FUNCTION ----------------//
-
-    function sendSUST(string memory receiptNum, address walletAddress) public whenNotPaused nonReentrant {
-        
-        //Mint tokens and transfer them to toWalletAddress
-        _mint(walletAddress,1*10**18);
-
-        emit MintEvent(receiptNum, walletAddress, 1*10**18);     
+    constructor() ERC20("SUStaianable Tokens", "SUST") {
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(PAUSER_ROLE, msg.sender);
+        _grantRole(MINTER_ROLE, msg.sender);
     }
 
-   
-//----------------- PAUSER FUNCTION ----------------//
-
-    function pauseContract() public whenNotPaused {
+    function pause() public onlyRole(PAUSER_ROLE) {
         _pause();
     }
 
-    function unpauseContract() public whenPaused {
+    function unpause() public onlyRole(PAUSER_ROLE) {
         _unpause();
     }
 
-//----------------- KILL FUNCTION ----------------//
+    function mintSUST(address to, uint256 amount) public { //onlyRole(MINTER_ROLE) {
+        _mint(to, amount);
+    }
 
-    //KILL THE ERC20-SMART-CONTRACT
-    function killSUSTokenContract() public {
-		selfdestruct(payable(msg.sender));
-	}
+    function _beforeTokenTransfer(address from, address to, uint256 amount)
+        internal
+        whenNotPaused
+        override
+    {
+        super._beforeTokenTransfer(from, to, amount);
+    }
 }
-
