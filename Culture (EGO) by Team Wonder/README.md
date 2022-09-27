@@ -3,16 +3,18 @@
 _This is a sample submission repository.
 Please [__fork this repo__](https://help.github.com/articles/fork-a-repo/) and use this as a starting point for your hackathon project._
 
-## Project Name
-### Team name
-#### Hackathon Track
+## Project Culture (EGO)
+### Team WONDER
+#### REFI in DAO's
 
 ##### Region location
 
 ##### Team Members
-- Teammate 1, role
-- Teammate 2, role
-- Teammate 3, role
+- Anosike Mmerichukwu, Frontend and Business Developer / Team Lead
+- Glory Amadife, Project Manager and Business Developer
+- Samuel Oziegbe, Full stack Developer
+- Anthony Nweke, Full stack and Blockchain Developer
+
 
 #### Project Description
 Provide a clear statement of the challenges/issues/problems/gaps your project engages as well as a brief, high-level description of how your project engages the areas you've identified. What is the value of your approach? Who are the intended users?
@@ -22,6 +24,7 @@ Describe the basic functionality of your project. What are the features you were
 
 #### URLs
 List any URLs relevant to demonstrating your prototype
+coming soon....
 
 #### Presentation
 List any links to your presentation or any related visuals you want to share.
