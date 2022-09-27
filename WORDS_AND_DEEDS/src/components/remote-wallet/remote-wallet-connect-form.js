@@ -23,7 +23,6 @@ class RemoteWalletConnectForm extends React.Component {
 		this.state = {
 			loaded: false,
 
-			provider: null,
 			account: null,
 
 			message: null
@@ -35,8 +34,9 @@ class RemoteWalletConnectForm extends React.Component {
 		this.checking = true;
 
 		try {
+			let account = this.walletconnect_client.getRemoteAccount();
 
-			this.setState({loaded: true});
+			this.setState({loaded: true, account});
 
 		}
 		catch(e) {
@@ -44,8 +44,6 @@ class RemoteWalletConnectForm extends React.Component {
 		}
 		finally {
 			this.checking = false;
-
-			this.parent.initializationStatus('wc_ready');
 		}
 
 
@@ -85,7 +83,7 @@ class RemoteWalletConnectForm extends React.Component {
 
 		await this.connect();
 
-		let ret = {provider: this.state.provider, account: this.state.account};
+		let ret = {connected: true, account: this.state.account};
 
 		if (params && params.callback) {
 			params.callback(null, ret);
@@ -113,7 +111,6 @@ class RemoteWalletConnectForm extends React.Component {
 		try {
 			await this.walletconnect_client.connect(this.rpc);
 
-			let provider = this.walletconnect_client.getProvider();
 			let account = this.walletconnect_client.getRemoteAccount();
 		
 			let mvcmypwa = this.getMvcMyPWAObject();
@@ -123,10 +120,9 @@ class RemoteWalletConnectForm extends React.Component {
 			// set state
 			this.setState({
 				message: 'returning from connect at ' + time_string,
+				account});
 
-				provider, account});
-
-			return {provider, account}
+			return {account};
 		}
 		catch(e) {
 			console.log('exception in RemoteWalletConnectForm.connect: '+ e);
@@ -143,7 +139,7 @@ class RemoteWalletConnectForm extends React.Component {
 			console.log('exception in RemoteWalletConnectForm.disconnect: '+ e);
 		}
 
-		this.setState({provider: null, account: null});
+		this.setState({account: null});
 
 		// dispatch disconnection
 		let mvcmypwa = this.getMvcMyPWAObject();
@@ -211,7 +207,7 @@ class RemoteWalletConnectForm extends React.Component {
 						};
 					})
 					.catch(err => {
-						console.log('error in CurrencyCardView.onTransfer notifying callback: ' + err);
+						console.log('error in RemoteWalletConnectForm.addConnectedAccount notifying callback: ' + err);
 					});
 
 					let ret = {success: true, account};
@@ -223,7 +219,7 @@ class RemoteWalletConnectForm extends React.Component {
 					return ret;
 				}
 				catch(e) {
-					console.log('exception in CurrencyCardView.onTransfer notifying callback: ' + e);
+					console.log('exception in RemoteWalletConnectForm.addConnectedAccount notifying callback: ' + e);
 				}
 			}
 
@@ -243,7 +239,7 @@ class RemoteWalletConnectForm extends React.Component {
 
 	// rendering
 	render() {
-		let {account, provider, message} = this.state;
+		let {account, message} = this.state;
 
 		return(
 
@@ -258,7 +254,7 @@ class RemoteWalletConnectForm extends React.Component {
 							type="text"
 							value={(account ? account : 'not connected')}
 						/>
-						{(provider ?
+						{(account ?
 						<Button 
 						onClick={this.disconnect.bind(this)} 
 						type="submit">

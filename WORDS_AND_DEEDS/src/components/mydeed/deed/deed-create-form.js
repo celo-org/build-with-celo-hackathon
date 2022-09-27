@@ -301,6 +301,21 @@ class DeedCreateForm extends React.Component {
 
 	
 	// user actions
+	_getConnection(feelevel) {
+		let connection = {type: 'local', feelevel: feelevel};	
+		
+		if (this.remotewallet) {
+			let deedclient = this.app.getDeedClientObject();
+			let walletconnectclient = deedclient.getWalletConnectClient();
+
+			connection.type = 'remote';
+
+			connection.provider = walletconnectclient.getProvider();
+			connection.account = walletconnectclient.getRemoteAccount();
+		}
+
+		return connection;
+	}
 	
 	async onSubmit() {
 		console.log('onSubmit pressed!');
@@ -344,14 +359,23 @@ class DeedCreateForm extends React.Component {
 
 			if (remotewallet === true) {
 				let deedclient = this.app.getDeedClientObject();
-				remoteaccount = deedclient.getRemoteAccount();
+				let walletconnectclient = deedclient.getWalletConnectClient();
+
+				remoteaccount = walletconnectclient.getRemoteAccount();
 
 				if (!remoteaccount) {
 					this.app.alert('You need to be connected to a remote wallet');
 					this._setState({processing: false});
 					return;
 				}
-				return;
+
+				// get card for remoteaccount
+				currentcard = await mvcmypwa.getCurrencyCardWithAddress(rootsessionuuid, walletuuid, currency.uuid,
+					remoteaccount); // creates read-only card if necessary
+
+				// check corresponding minter
+				currentminter = await mvcmypwa.fetchDeedMinter(rootsessionuuid, walletuuid, currency.uuid, currentcard.uuid).catch(err => {});
+
 			}
 	
 			// get wallet details
@@ -388,7 +412,7 @@ class DeedCreateForm extends React.Component {
 			let _privkey = await  mvcmypwa.getCardPrivateKey(rootsessionuuid, walletuuid, currentcard.uuid).catch(err => {});
 			let cansign = (_privkey ? true : false);
 
-			if (cansign !== true) {
+			if ((remotewallet !== true) && (cansign !== true)) {
 				this.app.alert('Current card for the currency is read-only');
 				this._setState({processing: false});
 				return;
@@ -410,9 +434,16 @@ class DeedCreateForm extends React.Component {
 
 				// need a higher feelevel than standard this.app.getCurrencyFeeLevel(currencyuuuid)
 				let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, card.uuid, tx_fee);
-				let connection = {type: 'local', feelevel: _feelevel};
+				let connection = this._getConnection(_feelevel);
 
-				var canspend = await mvcmypwa.canCompleteTransaction(rootsessionuuid, walletuuid, card.uuid, tx_fee, _feelevel).catch(err => {});
+				let canspend;
+				
+				if (remotewallet === true) {
+					canspend = true; //TODO: do a check based on a read-only card
+				}
+				else {
+					canspend = await mvcmypwa.canCompleteTransaction(rootsessionuuid, walletuuid, card.uuid, tx_fee, _feelevel).catch(err => {});
+				}
 		
 				if (!canspend) {
 					if (tx_fee.estimated_fee.execution_credits > tx_fee.estimated_fee.max_credits) {
@@ -454,12 +485,19 @@ class DeedCreateForm extends React.Component {
 			tx_fee.estimated_cost_units = mint_deed_cost_units + add_clause_cost_units;
 
 			let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, currentcard.uuid, tx_fee);
-			let connection = {type: 'local', feelevel: _feelevel};
+			let connection = this._getConnection(_feelevel);
 
-			var canspend = await mvcmypwa.canCompleteTransaction(rootsessionuuid, walletuuid, currentcard.uuid, tx_fee, _feelevel)
-			.catch(err => {
-				console.log('error in DeedCreateForm.onSubmit: ' + err);
-			});
+			let canspend;
+				
+			if (remotewallet === true) {
+				canspend = true; //TODO: do a check based on a read-only card
+			}
+			else {
+				canspend = await mvcmypwa.canCompleteTransaction(rootsessionuuid, walletuuid, currentcard.uuid, tx_fee, _feelevel)
+				.catch(err => {
+					console.log('error in DeedCreateForm.onSubmit: ' + err);
+				});
+			}
 	
 			if (!canspend) {
 				if (tx_fee.estimated_fee.execution_credits > tx_fee.estimated_fee.max_credits) {

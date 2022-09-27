@@ -40,6 +40,7 @@ async function afterAppLoad() {
 		var react_pwa = ReactPWA.getObject();
 		var clientglobal = react_pwa.getGlobalObject();
 		var mvcmydeed = clientglobal.getModuleObject('mvc-mydeed');
+		mvcmydeed.current_version = PWA_APP_VERSION;
 
 		app.getMvcMyDeedObject = () => { return mvcmydeed};
 

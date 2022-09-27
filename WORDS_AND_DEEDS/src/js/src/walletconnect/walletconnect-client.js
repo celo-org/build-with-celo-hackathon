@@ -35,14 +35,44 @@ class WalletConnectClient {
 			mvcmypwa.registerEventListener('on_walletconnect_disconnected', null, this.onWalletDisconnected.bind(this));
 	
 			// remove any traces of a previous session to restart on a clean slate
-			await this.disconnectFromWallet();
+			//await this.disconnectFromWallet();
 	
 		}
 		catch(e) {
-			console.log('exception in DeedClient.init: ' + e);
+			console.log('exception in WalletConnectClient.init: ' + e);
 		}	
 
 	}
+
+	// called by other components like WalletConnectWidget
+	async onConnect(eventname, params) {
+		console.log('WalletConnectWidget.onConnect called');
+
+		await this.connect();
+
+		let ret = {provider: this.state.provider, account: this.state.account};
+
+		if (params && params.callback) {
+			params.callback(null, ret);
+		}
+
+		return ret;
+	}
+
+	async onDisconnect(eventname, params) {
+		console.log('WalletConnectWidget.onDisconnect called');
+
+		await this.disconnect();
+
+		let ret = {disconnected: true};
+
+		if (params && params.callback) {
+			params.callback(null, ret);
+		}
+
+		return ret;
+	}
+	
 
 	// actions
 	async connect(rpc) {
@@ -137,21 +167,21 @@ class WalletConnectClient {
 	}
 	
 
-	// events coming from wallet connect widget
+	// events coming from another client in case it is doing the connect/disconnect
 	async onWalletConnected(eventname, params) {
-		console.log('DeedClient.onWalletConnected called');
+		console.log('WalletConnectClient.onWalletConnected called');
 		try {
 			this.account = params.account;
 		}
 		catch(e) {
-			console.log('exception in DeedClient.onWalletConnected: '+ e);
+			console.log('exception in WalletConnectClient.onWalletConnected: '+ e);
 		}
 
 		return;
 	}
 
 	async onWalletDisconnected(eventname, params) {
-		console.log('CeloHomeScreen.onWalletDisconnected called');
+		console.log('WalletConnectClient.onWalletDisconnected called');
 
 		this.account = null;
 
