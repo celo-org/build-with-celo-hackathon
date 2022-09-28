@@ -492,7 +492,7 @@ const secondMain = async () => {
     const privateKey      = 'f1c1bdd9ed0880bc132cccd7bbe09cbbda227fa08e72fb000988e233c1b29eb4';         //The private key of your contract Owner  
     const ownerAddress = '0xd99b7e930Ad611fC5EF27fa01987aE0469C09D56';
     const toAddress       = '0xe47Ba91fE004128726DFF8aEab251f830f519F93'; //The address to transfer the tokens    
-    const value = web3.utils.toWei('10', 'ether');;
+    const value = web3.utils.toWei('100', 'ether');;
 
     //creating Contract Object
     var contract = new web3.eth.Contract(abi, contractAddress, {from: ownerAddress} ); 
