@@ -40,6 +40,11 @@
 
 ![top](https://github.com/Achicago/build-with-celo-hackathon/blob/master/CarbonX/server/public/images/Screenshot%20(104).png)   
 
+# CarbonX Transactions on Celo Blockchain
+
+![top](https://github.com/Achicago/build-with-celo-hackathon/blob/master/CarbonX/server/public/images/transact.png)   
+
+![top](https://github.com/Achicago/build-with-celo-hackathon/blob/master/CarbonX/server/public/images/transaction.png)   
 
 
 
