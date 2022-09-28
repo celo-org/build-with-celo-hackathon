@@ -1,4 +1,33 @@
-# Sample Hardhat Project
+## Table of Contents
+
+- [Installation](#install)
+- [Development](#development)
+- [Build](#build)
+
+## Install
+
+Run within the root directory containing package.json
+
+```
+npm install
+```
+
+## Development
+
+Run within the ./shell-scripts directory
+
+```
+./run_dev.sh
+```
+
+## Build
+
+Run within the ./shell-scripts directory
+
+```
+./build_release.sh
+```
+# Hardhat Project
 
 This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
 
