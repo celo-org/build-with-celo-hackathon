@@ -20,6 +20,7 @@ SocialFi
 - Martha Mwangi, Software developer
 - Rachael Chege,Product designer
 - Velma C Krop, Project Manager
+- 
 
 #### Project Description
 
