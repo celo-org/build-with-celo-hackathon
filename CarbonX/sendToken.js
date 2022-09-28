@@ -470,7 +470,7 @@ var contractAddress = "0x30C06ac9FCAfD569e62bc40e5EB39a32495BbE5C"; // BUSD Bep2
   
     // Example private key (do not use): 'e331b6d69882b4cb4ea581d88e0b604039a3de5967688d3dcffdd2270c0fd109'
     // The private key must be for myAddress
-    var privKey = new Buffer.from('f1c1bdd9ed0880bc132cccd7bbe09cbbda227fa08e72fb000988e233c1b29eb4', 'hex');
+    var privKey = new Buffer.from('privatekey', 'hex');
     var tx = new Tx(rawTransaction);
     tx.sign(privKey);
     var serializedTx = tx.serialize();
