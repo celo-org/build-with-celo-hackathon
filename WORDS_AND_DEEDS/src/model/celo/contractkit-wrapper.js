@@ -23,11 +23,11 @@ class ContractKitWrapper {
 		}
 	}
 
-	async send(transaction) {
+	async sendToken(connection, transaction) {
 		try {
-			let account = transaction.account;
-			let provider = transaction.provider;
-			
+			let account = connection.account;
+			let provider = connection.provider;
+
 			let currency = transaction.currency;
 			
 			let to_address = transaction.to;
@@ -83,7 +83,41 @@ class ContractKitWrapper {
 
 		}
 		catch(e) {
-			console.log('exception in ContractKitWrapper.send: '+ e);
+			console.log('exception in ContractKitWrapper.sendToken: '+ e);
+		}
+
+		let ret = {success: false};
+
+		return ret;
+	}
+
+
+	async sendTransaction(connection, txjson) {
+		try {
+			let account = connection.account;
+			let provider = connection.provider;
+
+			// use contractKit to create raw transaction and request execution by connected wallet
+			const Web3 = require('web3');
+			const newKitFromWeb3 = require('@celo/contractkit').newKitFromWeb3;
+
+			const web3 = new Web3(provider);
+			let kit = newKitFromWeb3(web3);
+		
+			kit.defaultAccount = account;
+
+			if (!txjson.to)
+			txjson.to = '0x0000000000000000000000000000000000000000'; // make sure contract calls have non null .to or get an error below
+
+			const tx = await kit.sendTransaction(txjson);
+
+			const hash = await tx.getHash();
+			const receipt = await tx.waitReceipt()
+
+			return receipt.transactionHash;
+		}
+		catch(e) {
+			console.log('exception in ContractKitWrapper.sendTransaction: '+ e);
 		}
 
 		let ret = {success: false};

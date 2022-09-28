@@ -23,6 +23,8 @@ var Module = class {
 
 		this.Linker = global.getModuleClass('common', 'Linker');
 
+		require('./celo/contractkit-wrapper.js');
+		this.ContractKitWrapper = global.getModuleClass('common', 'ContractKitWrapper');
 	}
 	
 	// compulsory  module functions
@@ -116,7 +118,7 @@ var Module = class {
 	// Deeds
 	//
 
-	async _getMonitoredRemoteWalletSession(session, wallet, currency) {
+	async _getMonitoredRemoteWalletSession(session, wallet, currency, connection) {
 		var global = this.global;
 		var _apicontrollers = this._getClientAPI();
 
@@ -132,7 +134,6 @@ var Module = class {
 			return remotesession;
 		
 		// otherwise create a child session
-
 		var currencyscheme = await mvcpwa._getCurrencyScheme(session, currency);
 		var childsession = await mvcpwa._getMonitoredSchemeSession(session, wallet, currencyscheme);
 
@@ -151,8 +152,24 @@ var Module = class {
 		var web3 = ethereum_node_access_instance._getWeb3Instance();
 
 		// replace standard sendTransaction
+		debugger;
+
+		var contractkitwrapper = new this.ContractKitWrapper(session);
 		web3.eth.sendTransaction = (txjson, callback) => {
-			return web3.eth.sendTransaction(txjson, callback);
+			//return web3.eth.sendTransaction(txjson, callback);
+			return contractkitwrapper.sendTransaction(connection, txjson)
+			.then(res => {
+				if (callback)
+					return callback(null, res);
+				
+				return res;
+			})
+			.catch(err => {
+				if (callback)
+					return callback(err, null);
+
+				throw err;
+			});
 		};
 
 		walletsession.setSessionVariable('remotesession', childsession);
@@ -178,7 +195,7 @@ var Module = class {
 			fromaccount = card._getSessionAccountObject();
 		}
 		else {
-			childsession = await this._getMonitoredRemoteWalletSession(session, wallet, currency);
+			childsession = await this._getMonitoredRemoteWalletSession(session, wallet, currency, connection);
 			fromaccount = card._getAccountObject(); // read-only card
 		}
 
@@ -292,7 +309,7 @@ var Module = class {
 			fromaccount = card._getSessionAccountObject();
 		}
 		else {
-			childsession = await this._getMonitoredRemoteWalletSession(session, wallet, currency);
+			childsession = await this._getMonitoredRemoteWalletSession(session, wallet, currency, connection);
 			fromaccount = card._getAccountObject(); // read-only card
 		}
 		
@@ -399,7 +416,7 @@ var Module = class {
 			fromaccount = card._getSessionAccountObject();
 		}
 		else {
-			childsession = await this._getMonitoredRemoteWalletSession(session, wallet, currency);
+			childsession = await this._getMonitoredRemoteWalletSession(session, wallet, currency, connection);
 			fromaccount = card._getAccountObject(); // read-only card
 		}
 		
@@ -508,7 +525,7 @@ var Module = class {
 			fromaccount = card._getSessionAccountObject();
 		}
 		else {
-			childsession = await this._getMonitoredRemoteWalletSession(session, wallet, currency);
+			childsession = await this._getMonitoredRemoteWalletSession(session, wallet, currency, connection);
 			fromaccount = card._getAccountObject(); // read-only card
 		}
 	
