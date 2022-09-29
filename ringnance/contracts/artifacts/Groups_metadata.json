@@ -1,0 +1,109 @@
+{
+	"compiler": {
+		"version": "0.8.7+commit.e28d00a7"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_tontineId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_numberOfMembers",
+						"type": "uint256"
+					}
+				],
+				"name": "createGroup",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getNumberOfGroups",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_groupId",
+						"type": "uint256"
+					}
+				],
+				"name": "showGroup",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/Groups.sol": "Groups"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/Groups.sol": {
+			"keccak256": "0x62b148e11a5a098f3dd40afb40ce626e61e9c681194059c482e16c58eb192f6f",
+			"license": "GPL-3.0",
+			"urls": [
+				"bzz-raw://b09f9c017b5a87dc5d77b66f929b16102ef51d7f85ad69ba0e275b296d40e989",
+				"dweb:/ipfs/Qmdn8oV7cauyrusve6Y56QgYH6nArau5LMUGNSbXRhtYha"
+			]
+		},
+		"contracts/Members.sol": {
+			"keccak256": "0xf232888a6bed562cb9dcf48998a75a0e3d568738cbd854cdddef4e8ed4b7c784",
+			"license": "GPL-3.0",
+			"urls": [
+				"bzz-raw://b601912860b529f2ad664e8bac95aa055cf09c49328bc822f452ba12badf54ea",
+				"dweb:/ipfs/QmPjYSsWxgMaEhnwFjXJxvN8BGQirCQ4mDBet2iNC1UcB9"
+			]
+		}
+	},
+	"version": 1
+}

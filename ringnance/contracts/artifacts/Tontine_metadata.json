@@ -1,0 +1,69 @@
+{
+	"compiler": {
+		"version": "0.8.7+commit.e28d00a7"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "beneficyingTimeInterval",
+						"type": "uint256"
+					}
+				],
+				"name": "createTontine",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/Tontine.sol": "Tontine"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/Tontine.sol": {
+			"keccak256": "0xa40e1c49ce533bb9a78b083246015f68e433ffebf1aeffb9d9aa7160840baf8b",
+			"license": "GPL-3.0",
+			"urls": [
+				"bzz-raw://ca9a634da35b918e9830eba9b8b1a836df106e33457354a52c1410407a0fd391",
+				"dweb:/ipfs/QmPwTpAuspZrALD1YtHso7X1FPBr9qRqu9gHDP5bfhBjWT"
+			]
+		}
+	},
+	"version": 1
+}
