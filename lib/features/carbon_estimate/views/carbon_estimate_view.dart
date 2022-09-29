@@ -1,14 +1,31 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sustain/common/app/views/bottom_navigation_bar.dart';
 import 'package:sustain/common/utils/media_query.dart';
 import 'package:sustain/features/carbon_estimate/widgets/carbon_circle.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CarbonEstimateView extends StatelessWidget {
   const CarbonEstimateView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+    Future<void> addUser() {
+      // Call the user's CollectionReference to add a new user
+      return users
+          .add({
+            'full_name': 'charith', // John Doe
+            'company': 'none', // Stokes and Sons
+            'age': 23 // 42
+          })
+          .then((value) => log('user added'))
+          .catchError((error) => log("Failed to add user: $error"));
+    }
+
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: Column(
@@ -105,12 +122,15 @@ class CarbonEstimateView extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10), // <-- Radius
                         ),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (BuildContext context) =>
                                     const BottomNav()));
+
+                        // Need to send this to firestore here
+                        await addUser();
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

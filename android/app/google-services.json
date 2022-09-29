@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "725880310658",
+    "project_id": "earth-protocol-celo-hackathon",
+    "storage_bucket": "earth-protocol-celo-hackathon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:725880310658:android:75a59410491651cf7ddd9b",
+        "android_client_info": {
+          "package_name": "com.example.sustain"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "725880310658-9jdambphn7896i3inu4vnabrjkck65dn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoHy9mnTYSi5P7G1bR2Qs5gEjYIbnGZuU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "725880310658-9jdambphn7896i3inu4vnabrjkck65dn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
