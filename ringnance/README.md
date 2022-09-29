@@ -78,3 +78,4 @@ We have below our actual project members and their role:
 HACKATHON TRACK: SOCIALFI
 
 Food (1): total contribution of a period, act of receiving the total contribution of a period.
+Figma Link : https://www.figma.com/file/Nduu1hFblEjNESi68QwBZD/Untitled?node-id=0%3A1
