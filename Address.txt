@@ -1,0 +1,7 @@
+### EviveSwap (chainId : 44787)
+
+- Factory: 0x9717d1a562fd96f1b30feadfd184808517455327
+- Router: 0xfd5d487c50fc17d09973f52818ac1fad3fd89aef
+- Init_Code_hash: 0xba615556c6ec3e7be820f14808f8b8cbb32acfd24ba3725469803ce89bdbd98c
+- WCELO Address : 0x524d97A67f50F4A062C28c74F60703Aec9028a94
+- Multicall contract Address : 0x387ce7960b5DA5381De08Ea4967b13a7c8cAB3f6
