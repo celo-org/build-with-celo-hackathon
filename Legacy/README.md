@@ -24,7 +24,7 @@ These decentralised assets which includes cryptocurrencies, NFTs e.t.c cannot be
 or a secondary wallet in case of wallet misplacement.
 
 #### URLs
-     - https://legacy-ruddy.vercel.app/demo
+     - https://legacy-ruddy.vercel.app
 
 #### Presentation
 List any links to your presentation or any related visuals you want to share.
