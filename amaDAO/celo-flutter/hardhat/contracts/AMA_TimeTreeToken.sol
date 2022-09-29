@@ -8,17 +8,17 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
  */
 contract AMA_TimeTreeToken is ERC20 {
     uint planted;
-    address payable owner;
+    address payable ownerAddress;
 
     modifier onlyOwner() {
-        require(msg.sender == owner);
+        require(msg.sender == ownerAddress);
         _;
     }
 
     constructor() ERC20("AMA Time Tree Token", "TREE") {
         /// @notice mint 1,000,000 tokens to the owner (AMA) for 1M tree fund
         _mint(msg.sender, 1000000e18);
-        owner = payable(msg.sender);
+        ownerAddress = payable(msg.sender);
         planted = 0;
     }
 
@@ -35,7 +35,7 @@ contract AMA_TimeTreeToken is ERC20 {
     }
 
     function fundBalance() public onlyOwner returns (bool) {
-        bool success = owner.send(address(this).balance);
+        bool success = ownerAddress.send(address(this).balance);
 
         if (success) return true;
 

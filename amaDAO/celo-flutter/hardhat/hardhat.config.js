@@ -22,16 +22,20 @@ const DEVCHAIN_MNEMONIC =
 module.exports = {
   defaultNetwork,
   networks: {
+    // hardhat test-local
     localhost: {
       url: "http://127.0.0.1:8545",
       accounts: {
         mnemonic: DEVCHAIN_MNEMONIC,
       },
+      from: "0x23cb7121166b9a2f93ae0b7c05bde02eae50d64449b2cbb42bc84e9d38d6cc89",
+      gas: 2100000, gasPrice: 8000000000
     },
     alfajores: {
       url: "https://alfajores-forno.celo-testnet.org",
       accounts: [process.env.PRIVATE_KEY],
       chainId: 44787,
+      gas: 2100000, gasPrice: 8000000000
     },
     alfajoresDatahub: {
       url: "https://celo-alfajores--rpc.datahub.figment.io/apikey/<API KEY>",
@@ -50,8 +54,9 @@ module.exports = {
     },
   },
   solidity: {
-    version: "0.8.4",
+    version: "0.8.8",
   },
+  allowUnlimitedContractSize: true,
   namedAccounts: {
     deployer: 0,
   },
