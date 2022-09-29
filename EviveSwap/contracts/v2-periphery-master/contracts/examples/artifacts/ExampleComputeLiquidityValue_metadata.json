@@ -1,0 +1,270 @@
+{
+	"compiler": {
+		"version": "0.6.6+commit.6c089d02"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "factory_",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "factory",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "tokenA",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "tokenB",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "truePriceTokenA",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "truePriceTokenB",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "liquidityAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "getGasCostOfGetLiquidityValueAfterArbitrageToPrice",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "tokenA",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "tokenB",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "liquidityAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "getLiquidityValue",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenAAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenBAmount",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "tokenA",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "tokenB",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "truePriceTokenA",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "truePriceTokenB",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "liquidityAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "getLiquidityValueAfterArbitrageToPrice",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenAAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenBAmount",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "tokenA",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "tokenB",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "truePriceTokenA",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "truePriceTokenB",
+						"type": "uint256"
+					}
+				],
+				"name": "getReservesAfterArbitrage",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "reserveA",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "reserveB",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/examples/ExampleComputeLiquidityValue.sol": "ExampleComputeLiquidityValue"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@uniswap/lib/contracts/libraries/Babylonian.sol": {
+			"keccak256": "0xeb1c2a281a00f4660775f75ccfa1e51fbe1d75f86aeb9d0d297151ecdb900177",
+			"urls": [
+				"bzz-raw://68515f0265381bddfb1d1356ea10ce4e5784276fc09f197fcdcedfa5c75cc069",
+				"dweb:/ipfs/QmXWVVPnuJwRUAu3Qpu1s7Fyc5WPQxmZPczVEe5cJ5wVHZ"
+			]
+		},
+		"@uniswap/lib/contracts/libraries/FullMath.sol": {
+			"keccak256": "0xc4ffcf28169f73fc9fdd1f82345d6d4fcccf3fd5aea83c133437c25e4e0950a9",
+			"urls": [
+				"bzz-raw://c9257a47501005f0a648bc4801ef4abc33843681aaf03a6d0c43d46b69e37407",
+				"dweb:/ipfs/QmciHvDrqhxs5fjsrm9aNq29FZXpunMn17n2wWj83Zsh3B"
+			]
+		},
+		"@uniswap/v2-core/contracts/interfaces/IUniswapV2Factory.sol": {
+			"keccak256": "0xe5905c0989cf5a865ed9bb7b9252536ca011c5b744017a82a7d4443b9c00a891",
+			"urls": [
+				"bzz-raw://5d2a90a0a796491507462a3da18c3f8819721d571572d765a2207c35bf0a0389",
+				"dweb:/ipfs/Qmf9ACYiT3qzjgsYuhm866FBdiBpRMXAPpQhSFbgqcyhHt"
+			]
+		},
+		"@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol": {
+			"keccak256": "0x7c9bc70e5996c763e02ff38905282bc24fb242b0ef2519a003b36824fc524a4b",
+			"urls": [
+				"bzz-raw://85d5ad2dd23ee127f40907a12865a1e8cb5828814f6f2480285e1827dd72dedf",
+				"dweb:/ipfs/QmayKQWJgWmr46DqWseADyUanmqxh662hPNdAkdHRjiQQH"
+			]
+		},
+		"contracts/examples/ExampleComputeLiquidityValue.sol": {
+			"keccak256": "0xcb595901f38f931cc08ff6173028624e20e21c9812d59cb8b9067ca99186f351",
+			"urls": [
+				"bzz-raw://47a74e9587e38a1e606e56b0b34076094583a831e68afcbf82247593d4b87102",
+				"dweb:/ipfs/QmVvzQFp6zKs8zc6TBsXZCAasP3hpUz4Bx5g3kmUDS5862"
+			]
+		},
+		"contracts/libraries/SafeMath.sol": {
+			"keccak256": "0x27f0ea82f879b3b01387b583e6d9d0ec858dca3b22b0aad173f8fbda06e761e1",
+			"urls": [
+				"bzz-raw://0db9cf37793eb7035f0bfced36323d240f0212150009c39a3a108701d9b50b6c",
+				"dweb:/ipfs/QmUAdiG9XNcieXkKfiMB49zQqD34FbXFE15csV2KQzwEqg"
+			]
+		},
+		"contracts/libraries/UniswapV2Library.sol": {
+			"keccak256": "0x943fee68a27654e77f7a37f95f86c29c5bc31dd863ede2fbcf04fdbfb3da0c5d",
+			"urls": [
+				"bzz-raw://972c95cac903996c033170906ccf39f124cd3655ad15429dec9934d5b54f3a59",
+				"dweb:/ipfs/QmV41FnC3jyA48sPrukZ6iVVn3V7vWrR76BGkoKuPo3Yb2"
+			]
+		},
+		"contracts/libraries/UniswapV2LiquidityMathLibrary.sol": {
+			"keccak256": "0x61664f03d4f36cfd99bd4b3b874c7a090937a8921ec21c883b155cf22624cc1b",
+			"urls": [
+				"bzz-raw://571d4797fc11b11288de656361b2a5c01c7df3fba4be2309de83e23a8374b221",
+				"dweb:/ipfs/QmPCSC2eX6URTMQ4zoFJPL4uj1d2tKhNMYQWrTVBcqm1UL"
+			]
+		}
+	},
+	"version": 1
+}
