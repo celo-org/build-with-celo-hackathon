@@ -2,19 +2,19 @@
 Telimed Dapp
 
 ### Team name
-- Telimed
+- Telimed 
 
-#### Hackathon Track
+## Hackathon Track
 Defi
 
-##### Region location
+## Region location
 Nigeria
 
-##### Team Members
+## Team Members
 - Glory Agatevure, founder/Blockchain Engineer
 
 
-#### Project Description
+## Project Description
 
 ## Project Overview
 Telimed Dapp is a decentralised medical application. Telimed brings the power of the blockchain technology into the medical field.
@@ -28,19 +28,19 @@ This will be handled by ensuring that all lines of communication pass through th
 ## Final Result of Telimed
 The final result of Telimed is to ensure that the Dapp meet the usecase of the earlier mentioned enities.
 
-#### Summary
+## Summary
 The Telimed Dapp will be designed to handle medical related issues which will be used by medical personnels (doctor and pharmacist), patients and financial personnel(insurer).
 
 The development plan is to do some user research,white paper, UI design mockup, frontend and smart contract implementation. When all of this is done, the app will be launched on the testnet for user testing. And then deployed on mainnet.of this is done, the app will be launched on the testnet for user testing. And then deployed on mainnet. of this is done, the app will be launched on the testnet for user testing. And then deployed on mainnet.
 
-#### URLs
+## URLs
 List any URLs relevant to demonstrating your prototype
 
-#### Presentation
+## Presentation
 List any links to your presentation or any related visuals you want to share.
 
-#### Next Steps
+## Next Steps
 What do you need to do next to turn this prototype into a working solution?
 
-#### License
+## License
 This repository includes an [unlicensed](http://unlicense.org/) statement though you may want to [choose a different license](https://choosealicense.com/).
