@@ -36,8 +36,12 @@ The development plan is to do some user research,white paper, UI design mockup, 
 ## URLs
 List any URLs relevant to demonstrating your prototype
 
-## Presentation
+## Presentation/ Demo Video
 List any links to your presentation or any related visuals you want to share.
+
+## Requirements 
+
+## Instructions to build & test 
 
 ## Next Steps
 What do you need to do next to turn this prototype into a working solution?
