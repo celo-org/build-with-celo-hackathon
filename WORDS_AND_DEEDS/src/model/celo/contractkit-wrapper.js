@@ -3,6 +3,21 @@ class ContractKitWrapper {
 		this.session = session;
 	}
 
+	async _getContractKit(connection) {
+		let account = connection.account;
+		let provider = connection.provider;
+
+		const Web3 = require('web3');
+		const newKitFromWeb3 = require('@celo/contractkit').newKitFromWeb3;
+
+		const web3 = new Web3(provider);
+		let kit = newKitFromWeb3(web3);
+	
+		kit.defaultAccount = account;
+
+		return kit;
+	}
+
 	_getCTokenCode(currency) {
 		if (!currency)
 			return 'cUSD';
@@ -25,8 +40,6 @@ class ContractKitWrapper {
 
 	async sendToken(connection, transaction) {
 		try {
-			let account = connection.account;
-			let provider = connection.provider;
 
 			let currency = transaction.currency;
 			
@@ -49,13 +62,7 @@ class ContractKitWrapper {
 			}
 			
 			// use contractKit to create raw transaction and request execution by connected wallet
-			const Web3 = require('web3');
-			const newKitFromWeb3 = require('@celo/contractkit').newKitFromWeb3;
-
-			const web3 = new Web3(provider);
-			let kit = newKitFromWeb3(web3);
-		
-			kit.defaultAccount = account;
+			let kit = await this._getContractKit(connection);
 
 			let stable_amount = kit.web3.utils.toWei(decimalamount_string, 'ether');
 
@@ -94,25 +101,21 @@ class ContractKitWrapper {
 
 	async sendTransaction(connection, txjson) {
 		try {
-			let account = connection.account;
-			let provider = connection.provider;
-
 			// use contractKit to create raw transaction and request execution by connected wallet
-			const Web3 = require('web3');
-			const newKitFromWeb3 = require('@celo/contractkit').newKitFromWeb3;
+			let kit = await this._getContractKit(connection);
+			let tx;
 
-			const web3 = new Web3(provider);
-			let kit = newKitFromWeb3(web3);
-		
-			kit.defaultAccount = account;
-
-			if (!txjson.to)
-			txjson.to = '0x0000000000000000000000000000000000000000'; // make sure contract calls have non null .to or get an error below
-
-			const tx = await kit.sendTransaction(txjson);
-
-			const hash = await tx.getHash();
-			const receipt = await tx.waitReceipt()
+			if (!txjson.to && txjson.data) {
+				// contract call
+				tx = await kit.sendTransaction({
+					data: txjson.data
+				});
+			}
+			else {
+				tx = await kit.sendTransaction(txjson);
+			}
+	
+			let receipt = await tx.waitReceipt()
 
 			return receipt.transactionHash;
 		}

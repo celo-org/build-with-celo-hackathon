@@ -335,6 +335,8 @@ class DeedCreateForm extends React.Component {
 		let remotewallet = this.remotewallet;
 		let remoteaccount;
 
+		let localcard = currentcard;
+
 		this._setState({processing: true});
 
 		try {
@@ -369,6 +371,12 @@ class DeedCreateForm extends React.Component {
 					return;
 				}
 
+				if (!localcard) {
+					this.app.alert('You need to have a local card for this currency');
+					this._setState({processing: false});
+					return;
+				}
+
 				// get card for remoteaccount
 				currentcard = await mvcmypwa.getCurrencyCardWithAddress(rootsessionuuid, walletuuid, currency.uuid,
 					remoteaccount); // creates read-only card if necessary
@@ -399,6 +407,9 @@ class DeedCreateForm extends React.Component {
 						this._setState({processing: false});
 						return;
 					}
+
+					currentcard = card;
+					localcard = card;
 				}
 				else {
 					this.app.alert('You need to provide your private key for ' + currency.name + ' in order to sign and fund your deed');
@@ -535,8 +546,9 @@ class DeedCreateForm extends React.Component {
 
 			// add metadata as a clause
 			const metadata_clause = {subtype: 'metadata', title, description, external_url, time: Date.now()};
-			metadata_clause.signature = await mvcmypwa.signString(rootsessionuuid, walletuuid, currentcard.uuid, JSON.stringify(metadata_clause));
-			metadata_clause.signer = currentcard.address;
+			const signingcard = (remotewallet !== true ? currentcard : localcard); // sign clause with local currency card
+			metadata_clause.signature = await mvcmypwa.signString(rootsessionuuid, walletuuid, signingcard.uuid, JSON.stringify(metadata_clause));
+			metadata_clause.signer = signingcard.address;
 
 			// need a higher feelevel than standard feelevel
 			tx_fee = {};

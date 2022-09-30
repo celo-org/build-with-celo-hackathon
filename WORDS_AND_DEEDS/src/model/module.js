@@ -112,6 +112,48 @@ var Module = class {
 	}
 
 	// API
+	async _putAddressLockerContent(session, wallet, currency, card, contentstring, connection) {
+		var global = this.global;
+		var _apicontrollers = this._getClientAPI();
+
+		var mvcpwa = this._getMvcPWAObject();
+
+		var childsession;
+		var fromaccount;
+
+		if (!connection || !connection.type || (connection.type == 'local')) {
+			// get proper session to access erc721token for currency
+			childsession = await mvcpwa._getMonitoredERC721TokenSession(session, wallet, currency);
+			fromaccount = card._getSessionAccountObject();
+		}
+		else {
+			childsession = await this._getMonitoredRemoteWalletSession(session, wallet, currency, connection);
+			fromaccount = card._getAccountObject(); // read-only card
+		}
+
+		var mvcerc721module = global.getModuleObject('mvc-erc721');
+
+		var from_card_scheme = card.getScheme();
+
+		var ethereumnodeaccessmodule = global.getModuleObject('ethereum-node-access');
+
+		var ethereumtransaction = ethereumnodeaccessmodule.getEthereumTransactionObject(childsession, fromaccount);
+		
+		// compute feelevel then create fee
+		let tx_fee = {};
+		tx_fee.transferred_credit_units = 0;
+		let minter_cost_units = (currency.deeds_v1.locker_put_cost_units ? parseInt(currency.deeds_v1.locker_put_cost_units) : 2);
+		tx_fee.estimated_cost_units = minter_cost_units;
+
+		var _feelevel = await mvcpwa._getRecommendedFeeLevel(session, wallet, card, tx_fee);
+
+		var fee = await _apicontrollers.createSchemeFee(from_card_scheme, _feelevel);
+
+		ethereumtransaction.setGas(fee.gaslimit);
+		ethereumtransaction.setGasPrice(fee.gasPrice);
+
+		return mvcerc721module.putLockerContent(childsession, currency, contentstring, ethereumtransaction);
+	}
 
 
 	//
@@ -152,8 +194,6 @@ var Module = class {
 		var web3 = ethereum_node_access_instance._getWeb3Instance();
 
 		// replace standard sendTransaction
-		debugger;
-
 		var contractkitwrapper = new this.ContractKitWrapper(session);
 		web3.eth.sendTransaction = (txjson, callback) => {
 			//return web3.eth.sendTransaction(txjson, callback);
@@ -233,7 +273,7 @@ var Module = class {
 		minter.card_address = card.getAddress();
 
 		// we save the mapping
-		var txhash = await this._putAddressLockerContent(session, wallet, currency, card, erc721tokenaddress);
+		var txhash = await this._putAddressLockerContent(childsession, wallet, currency, card, erc721tokenaddress, connection);
 
 		minter.txhash = txhash;
 	

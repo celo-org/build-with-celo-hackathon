@@ -35,7 +35,7 @@ class WalletConnectClient {
 			mvcmypwa.registerEventListener('on_walletconnect_disconnected', null, this.onWalletDisconnected.bind(this));
 	
 			// remove any traces of a previous session to restart on a clean slate
-			//await this.disconnectFromWallet();
+			await this.disconnect();
 	
 		}
 		catch(e) {
@@ -124,44 +124,48 @@ class WalletConnectClient {
 		}
 	}
 
-	async disconnect() {
+	async disconnect(rpc) {
+		let _rpc = (rpc ? rpc : this.rpc);
 
 		try {
-			if (this.provider)
-			await this.provider.disconnect();
+			if (rpc) {
+				console.log('WalletConnectClient.connect: calling with rpc, should not really happen for the moment')
+
+				const provider = new WalletConnectProvider({
+					rpc,
+				});
+			
+				// enable to clean through disconnect
+				await provider.enable();
+				
+				await provider.disconnect();
+			}
 			else {
+				if (this.provider)
+				await this.provider.disconnect();
+
 				// look if we have an entry left from previous connection
 				const entry = window.localStorage.getItem('walletconnect');
 
 				if (entry) {
-					const provider = new WalletConnectProvider({
-						rpc: this.rpc,
-					});
-					let account = null;
-				
-					// enable to clean through disconnect
-					await provider.enable();
-					
-					await provider.disconnect();
-
 					// apparently provider.disconnect does not remove entry fast enough
 					window.localStorage.removeItem('walletconnect');
 				}
 			}
 
+			this.rpc = null;
+			this.provider = null
+			this.account = null;
+	
 		}
 		catch(e) {
 			console.log('exception in WalletConnectClient.disconnect: '+ e);
 		}
 
-		this.rpc = null;
-		this.provider = null
-		this.account = null;
-
 		// dispatch disconnection
 		let mvcmypwa = this.getMvcMyPWAObject();
 
-		mvcmypwa.signalEvent('on_walletconnect_disconnected');
+		mvcmypwa.signalEvent('on_walletconnect_disconnected', {rpc: _rpc});
 
 		return {disconnected: true};
 	}

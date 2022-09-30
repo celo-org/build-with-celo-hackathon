@@ -153,6 +153,20 @@ class DeedView extends React.Component {
 				if (deedcard) {
 					isOwner = true;
 				}
+				else {
+					// check if we are connected to a remote wallet
+					let deedclient = this.app.getDeedClientObject();
+					let walletconnectclient = deedclient.getWalletConnectClient();
+		
+					let remoteaccount = walletconnectclient.getRemoteAccount();
+
+					if (remoteaccount) {
+						let areequal = await mvcmypwa.areAddressesEqual(rootsessionuuid, remoteaccount, deed.owner);
+
+						if (areequal)
+							isOwner = true;
+					}
+				}
 
 				this._setState({currency, mintername, isOwner, deedcard, 
 					registration_text, registration_signature, sharelink});

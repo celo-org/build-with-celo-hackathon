@@ -458,7 +458,7 @@ class ClauseCreateForm extends React.Component {
 						</span>
 					</FormGroup> :
 					<FormGroup controlId="signingkey">
-						<FormLabel>'Your Private Key '{(currency && currency.name ? 'for ' + currency.name : '')}</FormLabel>
+						<FormLabel>Your Private Key {(currency && currency.name ? 'for ' + currency.name : '')}</FormLabel>
 						<FormGroup>
 							<FormControl
 								autoFocus
