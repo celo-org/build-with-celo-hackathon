@@ -256,7 +256,7 @@ server.init = function () {
   server.httpServer.listen(config.httpPort, function () {
     console.log(
       "\x1b[36m%s\x1b[0m",
-      "Coinazer is running on port " + config.httpPort
+      "CarbonX is running on port " + config.httpPort
     );
   });
 

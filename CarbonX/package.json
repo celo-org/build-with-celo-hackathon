@@ -12,8 +12,21 @@
   "dependencies": {
     "@celo/contractkit": "^2.1.0",
     "@celo/dappkit": "^2.1.0",
+    "@solana/web3.js": "^1.63.1",
+    "axios": "^0.27.2",
+    "bip32": "^3.1.0",
+    "bip39": "^3.0.4",
+    "bitcoinjs-lib": "^6.0.2",
+    "coininfo": "^5.2.1",
+    "coinkey": "^3.0.0",
+    "ethereumjs-wallet": "^1.0.2",
+    "ethers": "^5.7.1",
+    "mysql": "^2.18.1",
     "node-libs-react-native": "^1.2.1",
+    "nodemailer": "^6.8.0",
     "nodemon": "^2.0.20",
+    "ripple-lib": "^1.10.1",
+    "sniffr": "^1.2.0",
     "vm-browserify": "^1.1.2",
     "web3": "^1.8.0"
   }
