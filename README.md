@@ -1,5 +1,9 @@
 # Construction of a new building can cause harm to the environment in many ways. Things negatively impact the environment include: 
 
+	1. CO2 emissions – According to an article published in Bold Business, the construction sector contributes to 25% – 40% of the world’s carbon emissions. 
+	2. Waste – The process of constructing new infrastructure produces a lot of waste that ends up in landfills.
+	3. Burning of fossil fuels – The construction process requires the burning of fossil fuels which produces greenhouse gases and harms the environment. 
+	4. Harming wildlife – During construction, clearing vegetation and excavating can destroy wildlife and habitats.
 
 
 # ⚡ Build with Celo Hackathon ⚡ 
