@@ -1,19 +1,36 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sustain/common/app/providers/user_provider.dart';
+import 'package:sustain/common/app/providers/wrapper_provider.dart';
 import 'package:sustain/common/app/views/bottom_navigation_bar.dart';
 import 'package:sustain/common/utils/media_query.dart';
 import 'package:sustain/features/carbon_estimate/widgets/carbon_circle.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class CarbonEstimateView extends StatelessWidget {
+class CarbonEstimateView extends ConsumerWidget {
   const CarbonEstimateView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
 
+    // global carbon footprint -> change to whatever number you like
+    const int globalAverageCarbonFootprint = 530;
+
+    // your carbon footprint
+    final int estimatedCarbonFootprint =
+        ref.watch(userProvider.notifier).calculateCarbonFootprint();
+
+    List<double> sizeOfContainers = ref
+        .watch(userProvider.notifier)
+        .calculateSizeOfContainers(
+            estimatedCarbonFootprint, globalAverageCarbonFootprint);
+    double sizeOfYours = sizeOfContainers[0];
+    double sizeOfGlobal = sizeOfContainers[1];
+
+    // need to removve this
     Future<void> addUser() {
       // Call the user's CollectionReference to add a new user
       return users
@@ -27,11 +44,13 @@ class CarbonEstimateView extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      // backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Colors.grey[900],
+      // backgroundColor: Colors.deepPurple[500],
       body: Column(
         children: [
           SizedBox(
-            height: SizeData.screenHeight * 0.28,
+            height: SizeData.screenHeight * 0.38,
             width: 200,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -52,8 +71,8 @@ class CarbonEstimateView extends StatelessWidget {
                         .headline2!
                         .copyWith(color: Colors.white),
                     children: [
-                      const TextSpan(
-                        text: '156 kg CO',
+                      TextSpan(
+                        text: '$estimatedCarbonFootprint kg CO',
                       ),
                       WidgetSpan(
                         child: Transform.translate(
@@ -99,18 +118,25 @@ class CarbonEstimateView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       // textBaseline: TextBaseline.alphabetic,
                       children: [
+                        const SizedBox(width: 10),
                         CarbonCircle(
                           caption: 'YOU',
-                          carbonFootprint: '156',
-                          containerSize: SizeData.screenWidth * 0.3,
+                          carbonFootprint: estimatedCarbonFootprint.toString(),
+                          // containerSize: SizeData.screenWidth * 0.3,
+                          containerSize: sizeOfYours,
                           color: Theme.of(context).primaryColor,
                         ),
+                        const SizedBox(width: 30),
                         CarbonCircle(
                           caption: 'GLOBAL AVERAGE',
-                          carbonFootprint: '432',
-                          containerSize: SizeData.screenWidth * 0.45,
-                          color: Theme.of(context).highlightColor,
+                          carbonFootprint:
+                              globalAverageCarbonFootprint.toString(),
+                          // containerSize: SizeData.screenWidth * 0.45,
+                          containerSize: sizeOfGlobal,
+                          // color: Theme.of(context).highlightColor,
+                          color: Colors.deepPurple[500]!,
                         ),
+                        const SizedBox(width: 10),
                       ],
                     ),
                     ElevatedButton(
@@ -123,6 +149,7 @@ class CarbonEstimateView extends StatelessWidget {
                         ),
                       ),
                       onPressed: () async {
+                        ref.read(wrapperProvider.notifier).updateOnboarding();
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -131,6 +158,9 @@ class CarbonEstimateView extends StatelessWidget {
 
                         // Need to send this to firestore here
                         await addUser();
+                        // remove the above line later.
+
+                        // change the wrapper to direct us to home always
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

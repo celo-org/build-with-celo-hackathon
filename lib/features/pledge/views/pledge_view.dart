@@ -100,6 +100,7 @@ class PledgeView extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 ListView(
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   children: [
                     const Divider(),

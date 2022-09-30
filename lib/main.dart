@@ -1,14 +1,15 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sustain/common/app/widgets/wrapper.dart';
 import 'package:sustain/common/theme/theme.dart';
 import 'package:sustain/common/utils/media_query.dart';
-import 'package:sustain/features/onboarding/views/onboarding_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -37,7 +38,8 @@ class MyApp extends StatelessWidget {
               log('Error loading futurebuilder in the main.dart file');
               return const Text('Something went wrong');
             } else if (snapshot.hasData) {
-              return const OnboardingView();
+              // return const OnboardingView();
+              return const Wrapper();
             } else {
               return const Center(
                 child: CircularProgressIndicator(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:sustain/features/carbon_estimate/views/carbon_estimate_view.dart';
 import 'package:sustain/features/questionnaire/features/flights/views/flights_view.dart';
@@ -8,22 +9,24 @@ import 'package:sustain/features/questionnaire/features/journey_mode/views/journ
 import 'package:sustain/features/questionnaire/features/journey_time/views/journey_time_view.dart';
 import 'package:sustain/features/questionnaire/features/residents/views/people_count_view.dart';
 
-class AllQuestions extends StatefulWidget {
+class AllQuestions extends ConsumerStatefulWidget {
   const AllQuestions({super.key});
 
   @override
-  State<AllQuestions> createState() => _AllQuestionsState();
+  AllQuestionsState createState() => AllQuestionsState();
 }
 
-class _AllQuestionsState extends State<AllQuestions> {
+class AllQuestionsState extends ConsumerState<AllQuestions> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   // when you press get started this runs.
   void _onIntroEnd(context) {
+    // make sure all questions are answered before pusing to the next screen
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
             builder: (BuildContext context) => const CarbonEstimateView()));
+    // ref.read(userProvider.notifier).calculateCarbonFootprint();
   }
 
   @override

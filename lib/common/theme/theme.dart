@@ -5,22 +5,22 @@ import 'package:google_fonts/google_fonts.dart';
 
 /*
  headline 6 - Appbar title  (got to find this)
- headline 5 - not used.
+ headline 5 - not used yet.
  headline 4 - Semi bold header
  headline 3 - Bold Header (sub headings)
  headline 2 - Large bold header (main headings)
- headline 1 = not used.
+ headline 1 = not used yet.
 
  bodytext 1 - non bold paragh
  bodytext 2 = bold paragh
 
  caption - for captions
 
- labelLarge, labelMedium, labelSmall - not used
- bodyLarge, bodyMedium, bodySmall - not used
+ labelLarge, labelMedium, labelSmall - not used yet
+ bodyLarge, bodyMedium, bodySmall - not used yet
 
- subtitle 1 - not used
- subtitle 2 - not used
+ subtitle 1 - not used yet
+ subtitle 2 - not used yet
 
 */
 

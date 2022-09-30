@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sustain/common/app/providers/user_provider.dart';
 import 'package:sustain/features/questionnaire/features/food/widgets/food_icon_selector.dart';
 
-class CustomFoodTile extends StatelessWidget {
+class CustomFoodTile extends ConsumerWidget {
   const CustomFoodTile({
     required this.title,
     required this.subtitle,
@@ -18,10 +20,11 @@ class CustomFoodTile extends StatelessWidget {
   final int individualFoodTileIndex;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () {
         callbackFunction(individualFoodTileIndex);
+        ref.read(userProvider.notifier).editFoodType(title);
       },
       child: ListTile(
         leading: Container(

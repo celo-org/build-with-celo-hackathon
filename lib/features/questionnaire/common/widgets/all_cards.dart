@@ -30,6 +30,7 @@ class _AllCardsState extends State<AllCards> {
           selectedCardIndex: selectedCardIndex,
           callbackFunction: callback,
           individualCardIndex: 1,
+          type: widget.cardType,
         ),
         IndividualCard(
           title: widget.cardType == 'RoomCard' ? '2 rooms' : '2 people',
@@ -37,6 +38,7 @@ class _AllCardsState extends State<AllCards> {
           selectedCardIndex: selectedCardIndex,
           callbackFunction: callback,
           individualCardIndex: 2,
+          type: widget.cardType,
         ),
         IndividualCard(
           title: widget.cardType == 'RoomCard' ? '3 rooms' : '3 people',
@@ -44,6 +46,7 @@ class _AllCardsState extends State<AllCards> {
           selectedCardIndex: selectedCardIndex,
           callbackFunction: callback,
           individualCardIndex: 3,
+          type: widget.cardType,
         ),
         IndividualCard(
           title: widget.cardType == 'RoomCard' ? '4 rooms' : '4 people',
@@ -51,6 +54,7 @@ class _AllCardsState extends State<AllCards> {
           selectedCardIndex: selectedCardIndex,
           callbackFunction: callback,
           individualCardIndex: 4,
+          type: widget.cardType,
         ),
         IndividualCard(
           title: widget.cardType == 'RoomCard' ? '5 rooms' : '5 people',
@@ -58,6 +62,7 @@ class _AllCardsState extends State<AllCards> {
           selectedCardIndex: selectedCardIndex,
           callbackFunction: callback,
           individualCardIndex: 5,
+          type: widget.cardType,
         ),
         IndividualCard(
           title: widget.cardType == 'RoomCard' ? '6 rooms' : '6 people',
@@ -65,6 +70,7 @@ class _AllCardsState extends State<AllCards> {
           selectedCardIndex: selectedCardIndex,
           callbackFunction: callback,
           individualCardIndex: 6,
+          type: widget.cardType,
         ),
       ],
     );

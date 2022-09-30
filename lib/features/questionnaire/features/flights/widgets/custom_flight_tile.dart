@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sustain/common/app/providers/user_provider.dart';
 
-class CustomFlightTile extends StatefulWidget {
+class CustomFlightTile extends ConsumerStatefulWidget {
   const CustomFlightTile({
     required this.title,
     required this.subtitle,
@@ -14,10 +16,10 @@ class CustomFlightTile extends StatefulWidget {
   final int count;
 
   @override
-  State<CustomFlightTile> createState() => _CustomFlightTileState();
+  CustomFlightTileState createState() => CustomFlightTileState();
 }
 
-class _CustomFlightTileState extends State<CustomFlightTile> {
+class CustomFlightTileState extends ConsumerState<CustomFlightTile> {
   int count = 0;
 
   @override
@@ -57,6 +59,25 @@ class _CustomFlightTileState extends State<CustomFlightTile> {
                 setState(() {
                   count--;
                 });
+                // update
+                switch (widget.title) {
+                  case "Short":
+                    ref
+                        .read(userProvider.notifier)
+                        .editFlights(shortFlights: count);
+                    break;
+                  case "Medium":
+                    ref
+                        .read(userProvider.notifier)
+                        .editFlights(mediumFlights: count);
+                    break;
+                  case "Long":
+                    ref
+                        .read(userProvider.notifier)
+                        .editFlights(longFlights: count);
+                    break;
+                  default:
+                }
               }
             },
             child: Container(
@@ -80,6 +101,25 @@ class _CustomFlightTileState extends State<CustomFlightTile> {
               setState(() {
                 count++;
               });
+              // update
+              switch (widget.title) {
+                case "Short":
+                  ref
+                      .read(userProvider.notifier)
+                      .editFlights(shortFlights: count);
+                  break;
+                case "Medium":
+                  ref
+                      .read(userProvider.notifier)
+                      .editFlights(mediumFlights: count);
+                  break;
+                case "Long":
+                  ref
+                      .read(userProvider.notifier)
+                      .editFlights(longFlights: count);
+                  break;
+                default:
+              }
             },
             child: Container(
               decoration: BoxDecoration(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:sustain/common/app/providers/user_provider.dart';
 
 PageViewModel journeyTimeView(
     PageDecoration pageDecoration, BuildContext context) {
@@ -33,18 +35,18 @@ PageViewModel journeyTimeView(
   );
 }
 
-class JourneyTimeSelectionSlider extends StatefulWidget {
+class JourneyTimeSelectionSlider extends ConsumerStatefulWidget {
   const JourneyTimeSelectionSlider({required this.title, super.key});
 
   final String title;
 
   @override
-  State<JourneyTimeSelectionSlider> createState() =>
-      _JourneyTimeSelectionSliderState();
+  JourneyTimeSelectionSliderState createState() =>
+      JourneyTimeSelectionSliderState();
 }
 
-class _JourneyTimeSelectionSliderState
-    extends State<JourneyTimeSelectionSlider> {
+class JourneyTimeSelectionSliderState
+    extends ConsumerState<JourneyTimeSelectionSlider> {
   int _value = 0;
 
   @override
@@ -89,6 +91,15 @@ class _JourneyTimeSelectionSliderState
                         setState(() {
                           _value = newValue.round();
                         });
+                        // update here
+                        String trimmedTitle = widget.title.trim();
+                        trimmedTitle == 'Hours:'
+                            ? ref.read(userProvider.notifier).editJourneyTime(
+                                  hours: _value,
+                                )
+                            : ref.read(userProvider.notifier).editJourneyTime(
+                                  minutes: _value,
+                                );
                       },
                       semanticFormatterCallback: (double newValue) {
                         return '${newValue.round()} dollars';
