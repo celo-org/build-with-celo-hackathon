@@ -1,14 +1,19 @@
-# Construction of a new building can cause harm to the environment in many ways. Things negatively impact the environment include: 
+# ⚡ Build with Celo Hackathon ⚡ 
+
+Build with Celo Hackathon is a three (3) phase hackathon event focused on Regenerative Finance (#ReFi) within DAOs, NFTs, Gaming (GameFi), Social Impact (SocialFI) and developer tooling/infrastructure on the Celo platform.
+
+## Construction of a new building can cause harm to the environment in many ways. Things negatively impact the environment include: 
 
 	1. CO2 emissions – According to an article published in Bold Business, the construction sector contributes to 25% – 40% of the world’s carbon emissions. 
 	2. Waste – The process of constructing new infrastructure produces a lot of waste that ends up in landfills.
 	3. Burning of fossil fuels – The construction process requires the burning of fossil fuels which produces greenhouse gases and harms the environment. 
 	4. Harming wildlife – During construction, clearing vegetation and excavating can destroy wildlife and habitats.
+	
+## EcoConstruct addresses the primary issues in maintaining a strong environment friendly construction industry. Some of the features that will be implemented with Celo Block chain are :
 
-
-# ⚡ Build with Celo Hackathon ⚡ 
-
-Build with Celo Hackathon is a three (3) phase hackathon event focused on Regenerative Finance (#ReFi) within DAOs, NFTs, Gaming (GameFi), Social Impact (SocialFI) and developer tooling/infrastructure on the Celo platform.
+	1. Tracking  energy efficiency of buildings
+	2. Setting and Tracking emission reduction targets
+	3. Tracking and Minimizing the discharge of pollutants (waste)
 
 ## Hackathon Facilitation
 Celo selected Hackerearth to facilitate the hackathon expereince. To learn more information about the Build on Celo hackathon event and register, navigate to Hackerearth Build on Celo hackathon site: [link](https://build-with-celo.hackerearth.com/)
