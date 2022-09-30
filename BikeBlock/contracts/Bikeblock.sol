@@ -12,31 +12,76 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 /**
  * @title Counters
  * @author Mitchell Tucker (@MitchTODO)
- * @dev Modified ERC721
+ * @dev Modified ERC721 
  *
- * TODO add bike recovery program (bounties)
+ *
  */
 
-contract BikeBlock is  ERC721, ERC721URIStorage, Pausable, Ownable, ERC721Burnable{
+contract BikeBlock is  ERC721, ERC721URIStorage, Pausable, Ownable{
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
     // States for a token
+
     enum State {
         None,
         Normal, 
-        Stolen
+        Stolen,
+        Found
     }
-    // Maps tokenId to state of tokenId
+    // Coordinate for last known location
+    struct Coordinate {
+        uint256 lat;
+        uint256 long;
+    }
+
+    // Stolen for details of the stolen bike
+    struct Stolen{
+        uint256 time;
+        Coordinate location;
+        uint256 bountyPayOut;
+        uint256 index;
+    }
+
+    struct Recovery {
+        address rescuers; // Who reported a stolen bike
+        bytes assetURI;   // Where the stolen bike is
+    }
+
+
+    // Maps tokenId to state of bike
     mapping(uint256 => State) public bikeState;
-    // Map bikes serial hash to tokenId
+
+    // Map bikes serial hash to tokenId (NFT)
     mapping(bytes32 =>  uint256) public bikes;
 
+    // Array of stolen bikes 
+    Stolen[] stolenBikes;
+    mapping(uint256 => Recovery) public recovery;
+
+    // TODO Make into functions
+    modifier checkIfRegistered(bytes32 bikeId) {
+        require(bikes[bikeId] != 0, "Bike is already registered"); 
+        _;
+    }
+
+    modifier isTokenOwner(uint256 tokenId) {
+        require(msg.sender == ownerOf(tokenId),"You are not NFT owner");
+        _;
+    }
+
+    modifier isStolen(uint256 tokenId) {
+        require(bikeState[tokenId] == State.Stolen,"Bike is not stolen.");
+        _;
+    }
+
     constructor() 
-    ERC721("BikeBlock", "Bike") {}
+    ERC721("BikeBlock", "Bike") {
+
+    }
 
     /**
-     * @dev SafeMint for new bike Tokens 
+     * @dev SafeMint for new bike token
      *
      * Requirements:
      *
@@ -46,6 +91,7 @@ contract BikeBlock is  ERC721, ERC721URIStorage, Pausable, Ownable, ERC721Burnab
      */
     function safeMint(bytes32 serialHash, address to, string memory uri)
         public
+        checkIfRegistered(serialHash)
     {
         // Increment tokenId
         uint256 newItemId = _tokenIds.current();
@@ -92,18 +138,58 @@ contract BikeBlock is  ERC721, ERC721URIStorage, Pausable, Ownable, ERC721Burnab
     }
 
     /**
-     * @dev getBikeState returns state for a given tokenId
+     * @dev setStolenBike allow bike owner to set bike as stolen
+     *
+     * TODO add time base reward system
+     * If bike was not found within a certain time frame reward is returned back to owner
      *
      * Requirements:
      *
-     * - `tokenId` id of token to check
-     * Sender must be token owner
+     * - `tokenId` id of token (NFT)
+     * - `_time` time bike was stolen
+     * - `_location` location bike was stolen (Might change to address)
+     * - `_bountyPayOut` amount set for bike bounty
+     *
      */
-    function changeBikeState(uint256 tokenId, State _newState) 
-    public 
+    function setStolenBike(uint256 tokenId,uint256 _time,Coordinate memory _location, uint256 _bountyPayOut) 
+    public
+    isTokenOwner(tokenId)
     {
-        require(msg.sender == ownerOf(tokenId),"You are not token owner");
-        bikeState[tokenId] = _newState;
+        Stolen memory stolenInfo;
+        stolenInfo.time = _time;
+        stolenInfo.location = _location;
+        stolenInfo.bountyPayOut = _bountyPayOut;
+        stolenInfo.index = stolenBikes.length;
+        stolenBikes.push(stolenInfo);
+    }
+
+
+    /**
+     * @dev reportStolenBike allows a user to report a stolen bike
+     *
+     * Requirements:
+     *
+     * - `serialNumber` serial number for a registered bike
+     * - `stolenAssetUri` URI containg info on the where abouts of the bike
+     * 
+     */
+    function reportStolenBike(string memory _serialNumber, bytes memory stolenAssetUri) 
+    public
+    {
+        // Check if serial number matches with a registered bike
+        bytes32 bikeId = keccak256(abi.encodePacked(_serialNumber));
+        uint256 tokenId = bikes[bikeId];
+        State state = bikeState[tokenId];
+        // TODO make into modifiers or util functions
+        require(state != State.None,"Bike isn't registered");
+        require(state == State.Stolen,"Bike isn't stolen");
+        // Create recovery struct with the address who report bike
+        Recovery memory details;
+        details.assetURI = stolenAssetUri;
+        details.rescuers = msg.sender;
+        recovery[tokenId] = details;
+        // TODO emit event & notifiy owner
+        //return(tokenId);
     }
 
     // Pause for admin control
