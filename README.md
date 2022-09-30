@@ -1,3 +1,7 @@
+# Construction of a new building can cause harm to the environment in many ways. Things negatively impact the environment include: 
+
+
+
 # ⚡ Build with Celo Hackathon ⚡ 
 
 Build with Celo Hackathon is a three (3) phase hackathon event focused on Regenerative Finance (#ReFi) within DAOs, NFTs, Gaming (GameFi), Social Impact (SocialFI) and developer tooling/infrastructure on the Celo platform.
