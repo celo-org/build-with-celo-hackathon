@@ -48,7 +48,7 @@ List any URLs relevant to demonstrating your prototype
 List any links to your presentation or any related visuals you want to share.
 
 #### Next Steps
-WhAfter this campaign, I intend to do more marketing for adoption of the project
+After this campaign, I intend to do more marketing for adoption of the project
 
 #### License
-This repository includes an [unlicensed](http://unlicense.org/) statement though you may want to [choose a different license](https://choosealicense.com/).
+This repository includes an [Apache License 2.0](https://github.com/cjustinobi/build-with-celo-hackathon/blob/event-hub/LICENSE/).
