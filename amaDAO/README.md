@@ -86,5 +86,20 @@ Links to our presentation will be added at a later date.
 - T.B.D.
 
 
+### Week Ending: 30 Sept 22
+
+- [x] Interaction & Swimlanes Diagrams - https://github.com/celo-org/build-with-celo-hackathon/commit/84dcc37f969f437971c67445bef21de275d4a641
+- [x] Draft of Tree Token - https://github.com/celo-org/build-with-celo-hackathon/commit/bed6bb69373f7c896eb00a24a85c6c445b6d75e6
+- [x] Draft Sponsor Escrow Contract with Faucet - https://github.com/celo-org/build-with-celo-hackathon/commit/0cfeee47a7eadef0e7fa7e7a27b47193bfa216c6
+- [x] Draft of Pomodoro App logic - https://github.com/celo-org/build-with-celo-hackathon/commit/6c55446341430ccdc58bc09daeecd9ad9f6ecf28
+
+
+This week we plan to complete the following:
+- [ ] Test cases for Token 
+- [ ] Test cases for Sponsor Contract
+- [ ] Attempt connection from dApp to contract.
+
+
+
 #### License
 GPLv3
