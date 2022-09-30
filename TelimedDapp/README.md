@@ -43,4 +43,7 @@ List any links to your presentation or any related visuals you want to share.
 What do you need to do next to turn this prototype into a working solution?
 
 ## License
-This repository includes an [unlicensed](http://unlicense.org/) statement though you may want to [choose a different license](https://choosealicense.com/).
+Distributed under the MIT License. See for more information. [LICENSE](https://github.com/gconnect/build-with-celo-hackathon/blob/telemed-dapp/TelimedDapp/LICENSE)
+
+## Warning
+This project is not audited and should not be used in a production environment.
