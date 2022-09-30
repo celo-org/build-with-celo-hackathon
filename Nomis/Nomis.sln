@@ -56,11 +56,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Celo", "Celo", "{6E4A01D0-E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{6891AFFC-427D-4013-BF1B-606EF6F12908}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nomis.Utils", "src\Nomis.Utils\Nomis.Utils.csproj", "{D3188B2D-63B4-4C21-9B72-5E2D766E62D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nomis.Utils", "src\Nomis.Utils\Nomis.Utils.csproj", "{D3188B2D-63B4-4C21-9B72-5E2D766E62D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nomis.Celoscan.Interfaces", "src\Nomis.Celoscan.Interfaces\Nomis.Celoscan.Interfaces.csproj", "{EF595EA8-9B82-4A5D-97A6-B036BEBE73B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nomis.Celoscan.Interfaces", "src\Nomis.Celoscan.Interfaces\Nomis.Celoscan.Interfaces.csproj", "{EF595EA8-9B82-4A5D-97A6-B036BEBE73B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nomis.Blockchain.Abstractions", "src\Nomis.Blockchain.Abstractions\Nomis.Blockchain.Abstractions.csproj", "{590D536E-B22B-42DF-B569-83F95A344600}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nomis.Blockchain.Abstractions", "src\Nomis.Blockchain.Abstractions\Nomis.Blockchain.Abstractions.csproj", "{590D536E-B22B-42DF-B569-83F95A344600}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nomis.Celoscan", "src\Nomis.Celoscan\Nomis.Celoscan.csproj", "{A730C128-D8D0-4E86-A565-4CB0D5A61A28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,6 +82,10 @@ Global
 		{590D536E-B22B-42DF-B569-83F95A344600}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{590D536E-B22B-42DF-B569-83F95A344600}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{590D536E-B22B-42DF-B569-83F95A344600}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A730C128-D8D0-4E86-A565-4CB0D5A61A28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A730C128-D8D0-4E86-A565-4CB0D5A61A28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A730C128-D8D0-4E86-A565-4CB0D5A61A28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A730C128-D8D0-4E86-A565-4CB0D5A61A28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,6 +117,7 @@ Global
 		{D3188B2D-63B4-4C21-9B72-5E2D766E62D3} = {9DE8A938-704E-4CCB-9A4A-1DDB1F26757B}
 		{EF595EA8-9B82-4A5D-97A6-B036BEBE73B8} = {21591FD7-DE27-48DF-B588-720AA0FF2B5E}
 		{590D536E-B22B-42DF-B569-83F95A344600} = {5961379E-46E1-4321-82FA-A399DAD08E93}
+		{A730C128-D8D0-4E86-A565-4CB0D5A61A28} = {245F622C-F35F-4777-A951-D79597A74831}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A242BD00-A0A0-4259-8324-37DB6A09C076}
