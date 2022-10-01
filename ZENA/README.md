@@ -1,8 +1,3 @@
-
-# ⚡ Hackathon Project Template ⚡
-_This is a sample submission repository.
-Please [__fork this repo__](https://help.github.com/articles/fork-a-repo/) and use this as a starting point for your hackathon project._
-
 ## Project Name
 ZENA
 ### Team name
@@ -18,9 +13,7 @@ Berlin and Barcelona
 - Astrid, Frontend/Fullstack Engineer
 
 #### Project Description
-Finacial and Technical education does not exist sufficiently in German schools.
-The Web3 space can bring financial as well as technological topics to the table.
-This is why the idea for ZENA came up.
+Finacial and Technical education does not exist sufficiently in German schools. The Web3 space can bring financial as well as technological topics to the table. This is why the idea for ZENA came up.
 
 ZENA is a web3 online/mobile-first education and onboarding tool for (German) teenagers that reduces the complexity of web3 concepts and enables them to build open source collaborative problem solving tools for their future.
 
@@ -41,4 +34,4 @@ List any links to your presentation or any related visuals you want to share.
 What do you need to do next to turn this prototype into a working solution?
 
 #### License
-This repository includes an [unlicensed](http://unlicense.org/) statement though you may want to [choose a different license](https://choosealicense.com/).
+MIT
