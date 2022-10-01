@@ -1,0 +1,130 @@
+// SPDX-License-Identifier: MIT
+ 
+pragma solidity ^0.8.2;
+ 
+import '@openzeppelin/contracts/utils/Counters.sol';
+import '@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol';
+import '@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol';
+import '@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol';
+import 'hardhat/console.sol';
+import '@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol';
+import '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
+ 
+contract Growachild is
+  Initializable,
+  ERC20Upgradeable,
+  ReentrancyGuardUpgradeable,
+  OwnableUpgradeable
+{
+
+    uint256 private totalKidsCount;
+    using Counters for Counters.Counter;
+    Counters.Counter public _campaignID;
+    Counters.Counter public _userid;
+
+    struct NGO {
+        string name;
+        string description;
+        string registrationNo;
+        string registeredByGovt;
+        uint256 serviceSince;
+        string ngoAddress;
+        string country;
+        uint256 campaignCount;
+    }
+
+    struct Campaign {
+        uint256 campaignID;
+        address ngo;
+        string name;
+        string description;
+        uint256 noOfBeneficiaries;
+        uint256 dailyFundNeed;
+        uint256 availableBalance;
+    }
+
+    struct Users {
+        uint256 campaignID;
+        address userAddress;
+        uint256 depositAmount;
+    }
+ 
+  mapping(address => NGO) public ngoDetails;
+  address[] private ngoKeys;
+  mapping(uint256 => Campaign) public campaignDetails;
+  mapping(uint256 => Users) public userDetails;
+
+     function initialize() public initializer {
+    __ERC20_init('', '');
+    __ReentrancyGuard_init();
+    __Ownable_init();
+  }
+
+  function checkRegistration() public view returns (bool){
+      if(ngoDetails[msg.sender].serviceSince == 0){
+          return false;
+      }else{
+          return true;
+      }
+  }
+
+  function registerNGO(string memory _name, string memory _description, string memory _registrationNo, string memory _registeredByGovt, uint256 _serviceSince, string memory ngoAddress, string memory _country) external nonReentrant {
+      require(!checkRegistration(),"You are already registered.");
+      ngoDetails[msg.sender] = NGO(_name,_description,_registrationNo,_registeredByGovt,_serviceSince,ngoAddress,_country,0);
+      ngoKeys.push(msg.sender);
+  }
+
+  function registerCampign(string memory _name, string memory _description,uint256 _noOfBeneficiaries, uint256 _dailyFundNeed) external nonReentrant {
+      _campaignID.increment();
+      uint256 slno = _campaignID.current();
+      campaignDetails[slno] = Campaign(slno,msg.sender,_name,_description,_noOfBeneficiaries,_dailyFundNeed,0);
+      ngoDetails[msg.sender].campaignCount += 1;
+      totalKidsCount += _noOfBeneficiaries;
+  }
+
+  function getAllCampaigns()
+    external
+    view
+    returns (Campaign[] memory)
+  {
+    uint256 totalCampaignCount = _campaignID.current();
+    uint256 currentIndex = 0;
+    Campaign[] memory items = new Campaign[](totalCampaignCount);
+
+        for(uint256 i = 1; i <= totalCampaignCount; i++){
+            Campaign storage currentItem = campaignDetails[i];
+            items[currentIndex] = currentItem;
+            currentIndex += 1;
+        }
+    
+    return items;
+  }
+
+  function getCampaignDetails(uint256 id) external view returns (Campaign[] memory){
+    
+    Campaign[] memory items = new Campaign[](1);
+    Campaign storage currentItem = campaignDetails[id];
+    items[0] = currentItem;
+    return items;
+  }
+
+  function deposit(uint256 _campaignid, uint256 amount, address _token) external payable nonReentrant {
+      IERC20Upgradeable(_token).transferFrom(payable(msg.sender),payable(address(this)),amount);
+      uint256 slno = _userid.current();
+      bool matchFound = false;
+
+      for (uint256 i = 1; i <= slno; i++){
+          if(userDetails[i].userAddress == msg.sender && userDetails[i].campaignID == _campaignid){
+            userDetails[i].depositAmount += amount;
+            matchFound = true;
+            break;
+          }
+      }
+
+      if(matchFound == false){
+          _userid.increment();
+          userDetails[_userid.current()] = Users(_campaignid, msg.sender,amount);
+      }
+  }
+  
+}

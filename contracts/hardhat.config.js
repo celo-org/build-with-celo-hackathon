@@ -26,6 +26,6 @@ module.exports = {
   },
   solidity: '0.8.2',
   paths: {
-    artifacts: '../web/artifacts',
+    artifacts: '../frontend/artifacts',
   },
 }
