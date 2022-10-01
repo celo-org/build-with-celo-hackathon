@@ -6,7 +6,7 @@ import {
   BiImage,
   BiCheckbox,
 } from "react-icons/bi";
-
+import { RiPlantLine } from "react-icons/ri";
 const iconSize = "3em";
 
 export default function Chapters() {
@@ -26,7 +26,14 @@ export default function Chapters() {
       enabled: false,
     },
     {
-      name: "NFT minten",
+      name: "ReFi",
+      path: "/4",
+      url: "/kachel-4_mint.jpg",
+      icon: <RiPlantLine size={iconSize} />,
+      enabled: false,
+    },
+    {
+      name: "NFTs",
       path: "/3",
       url: "/kachel-4_mint.jpg",
       icon: <BiImage size={iconSize} />,
@@ -34,14 +41,14 @@ export default function Chapters() {
     },
     {
       name: "Wallets / Schlüssel-verwahrung",
-      path: "/4",
+      path: "/5",
       url: "/kachel-3_wallet.jpg",
       icon: <BiKey size={iconSize} />,
       enabled: false,
     },
     {
       name: "DAOs",
-      path: "/5",
+      path: "/6",
       url: "/Kachel-5_Dao.jpg",
       icon: <BiGroup size={iconSize} />,
       enabled: false,
