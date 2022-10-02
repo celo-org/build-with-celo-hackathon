@@ -2,7 +2,7 @@
 
 ### Team
 
-Green Digital Guardians (DGGuardians)
+Green Digital Guardians
 
 #### Hackathon Track
 
