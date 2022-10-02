@@ -4,8 +4,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useAccount } from 'wagmi';
 
 
-const CampaignSummery = () => {
-    const [value, setValue] = useState(1234567)
+const CampaignSummery = ({ details }) => {
     const formatValue = (value) => value.toLocaleString('en-US');
     const { address } = useAccount()
     const [registered, setRegistered] = useState(true)
@@ -19,7 +18,7 @@ const CampaignSummery = () => {
                             <div class="text">
                                 <strong class="number served-child">
                                     <AnimatedNumber
-                                        value={value}
+                                        value={details.noOfBeneficiaries}
                                         formatValue={formatValue}
                                     />
                                 </strong>
@@ -31,13 +30,13 @@ const CampaignSummery = () => {
                         <div class="block-18 color-2 align-items-stretch">
                             <div class="text">
                                 <h3 class="mb-2">NGO Profile</h3>
-                                <div>Name: NGO name goes here</div>
-                                <div>Address: NGO Address goes here</div>
-                                <div>Reg No: NGO Reg No goes here</div>
-                                <div>Reg With: Govt of West Bengal</div>
-                                <div>Country: NGO Country goes here</div>
-                                <div>Live Campaigns: Count of NGO campaigns</div>
-                                <div>Serving since: 1971</div>
+                                <div>Name: {details.ngoName}</div>
+                                <div>Address: {details.ngoAddress}</div>
+                                <div>Reg No: {details.ngoregistrationNo}</div>
+                                <div>Reg With: {details.ngoregisteredByGovt}</div>
+                                <div>Country: {details.ngocountry}</div>
+                                <div>Live Campaigns: {details.ngocampaignCount}</div>
+                                <div>Serving since: {details.ngoserviceSince}</div>
                             </div>
                         </div>
                     </div>
@@ -47,8 +46,8 @@ const CampaignSummery = () => {
                                 {address ? (
                                     <>
                                         <>
-                                            <h3 class="mb-4">Donate</h3>
-                                            <p>Donate in this campaign with the coin of your choice.</p>
+                                            <h3 class="mb-4">Available Fuds</h3>
+                                            <p>The campaign has ${details.availableBalance} left.</p>
                                             <p class="btn btn-white py-2 mt-2">
                                                 Donate
                                             </p>

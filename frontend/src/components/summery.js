@@ -1,14 +1,38 @@
-import React, { Component, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AnimatedNumber from "animated-number-react";
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { useAccount } from 'wagmi';
+import { useAccount, useNetwork } from 'wagmi';
+import { ethers } from 'ethers';
+import { getConfigByChain } from '../config'
+import GrowAChild from '../artifacts/contracts/Growachild.sol/Growachild.json'
 
 
 const Summery = () => {
-    const [value, setValue] = useState(1234567)
+    const [value, setValue] = useState(0)
     const formatValue = (value) => value.toLocaleString('en-US');
     const { address } = useAccount()
-    const [registered, setRegistered] = useState(true)
+    const { chain } = useNetwork()
+    const [registered, setRegistered] = useState(false)
+
+    useEffect(() => {
+        checkStatus()
+    }, [address, chain])
+
+    async function checkStatus() {
+        await (window).ethereum.send('eth_requestAccounts') // opens up metamask extension and connects Web2 to Web3
+        const provider = new ethers.providers.Web3Provider(window.ethereum) //create provider
+        const network = await provider.getNetwork()
+        const signer = provider.getSigner()
+        const gacContract = new ethers.Contract(
+            getConfigByChain(network.chainId)[0].contractProxyAddress,
+            GrowAChild.abi,
+            signer
+        )
+        const tx = await gacContract.checkRegistration()
+        const kids = await gacContract.getTotalKidsCount()
+        setRegistered(tx)
+        setValue(kids)
+    }
 
     return (
         <section class="ftco-counter ftco-intro" id="section-counter">

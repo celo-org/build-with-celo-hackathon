@@ -17,7 +17,7 @@ export default class Dashboard extends Component {
                                 <a class="nav-link active" id="campaigns-tab" data-toggle="tab" href="#campaigns" role="tab" aria-controls="campaigns" aria-selected="true">Active Campaigns</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="donations-tab" data-toggle="tab" href="#donations" role="tab" aria-controls="donations" aria-selected="false">Donations</a>
+                                <a class="nav-link" id="donations-tab" data-toggle="tab" href="#donations" role="tab" aria-controls="donations" aria-selected="false">My Donations</a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -30,11 +30,11 @@ export default class Dashboard extends Component {
 
                             </div>
                             <div class="tab-pane fade" id="donations" role="tabpanel" aria-labelledby="donations-tab">
-                                <Donations amount="100"/>
-                                <Donations amount="8000"/>
-                                <Donations amount="600"/>
-                                <Donations amount="250"/>
-                                <Donations amount="950"/>
+                                <Donations amount="100" />
+                                <Donations amount="8000" />
+                                <Donations amount="600" />
+                                <Donations amount="250" />
+                                <Donations amount="950" />
                             </div>
 
                         </div>

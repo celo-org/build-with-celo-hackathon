@@ -12,12 +12,16 @@ module.exports = {
       chainId: 1337,
     },
 
-    celo_testnet: {
+    alfajores: {
       url: `https://alfajores-forno.celo-testnet.org`,
       accounts: [privateKey],
     },
     celo_mainnet: {
       url: `https://forno.celo.org`,
+      accounts: [privateKey],
+    },
+    baklava: {
+      url: `https://baklava-forno.celo-testnet.org`,
       accounts: [privateKey],
     }
   },
@@ -26,6 +30,6 @@ module.exports = {
   },
   solidity: '0.8.2',
   paths: {
-    artifacts: '../frontend/artifacts',
+    artifacts: '../frontend/src/artifacts',
   },
 }

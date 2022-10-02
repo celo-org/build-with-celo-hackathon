@@ -36,6 +36,7 @@ contract Growachild is
     struct Campaign {
         uint256 campaignID;
         address ngo;
+        string campaignPic;
         string name;
         string description;
         uint256 noOfBeneficiaries;
@@ -60,6 +61,8 @@ contract Growachild is
     __Ownable_init();
   }
 
+  
+
   function checkRegistration() public view returns (bool){
       if(ngoDetails[msg.sender].serviceSince == 0){
           return false;
@@ -74,12 +77,16 @@ contract Growachild is
       ngoKeys.push(msg.sender);
   }
 
-  function registerCampign(string memory _name, string memory _description,uint256 _noOfBeneficiaries, uint256 _dailyFundNeed) external nonReentrant {
+  function registerCampign(string memory _name, string memory _campaignPic, string memory _description,uint256 _noOfBeneficiaries, uint256 _dailyFundNeed) external nonReentrant {
       _campaignID.increment();
       uint256 slno = _campaignID.current();
-      campaignDetails[slno] = Campaign(slno,msg.sender,_name,_description,_noOfBeneficiaries,_dailyFundNeed,0);
+      campaignDetails[slno] = Campaign(slno,msg.sender,_campaignPic,_name,_description,_noOfBeneficiaries,_dailyFundNeed,0);
       ngoDetails[msg.sender].campaignCount += 1;
       totalKidsCount += _noOfBeneficiaries;
+  }
+
+  function getTotalKidsCount() external view returns(uint256){
+    return totalKidsCount;
   }
 
   function getAllCampaigns()
@@ -98,6 +105,14 @@ contract Growachild is
         }
     
     return items;
+  }
+  function getNGODetails(address _addr) public view returns(NGO[] memory){
+      
+      NGO[] memory items = new NGO[](1);
+      NGO storage currentItem = ngoDetails[_addr];
+      items[0]= currentItem;
+      return  items;
+      
   }
 
   function getCampaignDetails(uint256 id) external view returns (Campaign[] memory){

@@ -12,54 +12,77 @@ import {
 import '@rainbow-me/rainbowkit/styles.css'
 import * as CONSTANTS from './constants';
 
-const Kardiachain_testNet = {
-  id: CONSTANTS.KARDIACHAIN_TESTNET.ID,
-  name: CONSTANTS.KARDIACHAIN_TESTNET.NAME,
-  network: CONSTANTS.KARDIACHAIN_TESTNET.NETWORK,
-  iconUrl: CONSTANTS.KARDIACHAIN_TESTNET.ICONURL,
-  iconBackground: '#fff',
+const Baklava = {
+  id: CONSTANTS.Baklava.ID,
+  name: CONSTANTS.Baklava.NAME,
+  network: CONSTANTS.Baklava.NETWORK,
+  iconUrl: CONSTANTS.Baklava.ICONURL,
+  iconBackground: CONSTANTS.Baklava.ICON_BG,
   nativeCurrency: {
-    decimals: CONSTANTS.KARDIACHAIN_TESTNET.NATIVECURRENCT_NAME,
-    name: CONSTANTS.KARDIACHAIN_TESTNET.NATIVECURRENCT_NAME,
-    symbol: CONSTANTS.KARDIACHAIN_TESTNET.NATIVECURRENCT_SYMBOLS,
+    decimals: CONSTANTS.Baklava.NATIVECURRENCT_NAME,
+    name: CONSTANTS.Baklava.NATIVECURRENCT_NAME,
+    symbol: CONSTANTS.Baklava.NATIVECURRENCT_SYMBOLS,
   },
   rpcUrls: {
-    default: CONSTANTS.KARDIACHAIN_TESTNET.NATIVECURRENCT_RPCURL_DEFAULT,
+    default: CONSTANTS.Baklava.NATIVECURRENCT_RPCURL_DEFAULT,
   },
   blockExplorers: {
     default: {
-      name: CONSTANTS.KARDIACHAIN_TESTNET.NATIVECURRENCT_BLOCKEXPLORER_DEFAULT_NAME,
-      url: CONSTANTS.KARDIACHAIN_TESTNET.NATIVECURRENCT_BLOCKEXPLORER_DEFAULT_URL,
+      name: CONSTANTS.Baklava.NATIVECURRENCT_BLOCKEXPLORER_DEFAULT_NAME,
+      url: CONSTANTS.Baklava.NATIVECURRENCT_BLOCKEXPLORER_DEFAULT_URL,
     },
   },
-  testnet: CONSTANTS.KARDIACHAIN_TESTNET.TESTNET,
+  testnet: CONSTANTS.Baklava.TESTNET,
 }
 
-const Kardiachain_mainnet = {
-  id: CONSTANTS.KARDIACHAIN_MAINNET.ID,
-  name: CONSTANTS.KARDIACHAIN_MAINNET.NAME,
-  network: CONSTANTS.KARDIACHAIN_MAINNET.NETWORK,
-  iconUrl: CONSTANTS.KARDIACHAIN_MAINNET.ICONURL,
-  iconBackground: '#fff',
+const Alfajores = {
+  id: CONSTANTS.Alfajores.ID,
+  name: CONSTANTS.Alfajores.NAME,
+  network: CONSTANTS.Alfajores.NETWORK,
+  iconUrl: CONSTANTS.Alfajores.ICONURL,
+  iconBackground: CONSTANTS.Alfajores.ICON_BG,
   nativeCurrency: {
-    decimals: CONSTANTS.KARDIACHAIN_MAINNET.NATIVECURRENCT_NAME,
-    name: CONSTANTS.KARDIACHAIN_MAINNET.NATIVECURRENCT_NAME,
-    symbol: CONSTANTS.KARDIACHAIN_MAINNET.NATIVECURRENCT_SYMBOLS,
+    decimals: CONSTANTS.Alfajores.NATIVECURRENCT_NAME,
+    name: CONSTANTS.Alfajores.NATIVECURRENCT_NAME,
+    symbol: CONSTANTS.Alfajores.NATIVECURRENCT_SYMBOLS,
   },
   rpcUrls: {
-    default: CONSTANTS.KARDIACHAIN_MAINNET.NATIVECURRENCT_RPCURL_DEFAULT,
+    default: CONSTANTS.Alfajores.NATIVECURRENCT_RPCURL_DEFAULT,
   },
   blockExplorers: {
     default: {
-      name: CONSTANTS.KARDIACHAIN_MAINNET.NATIVECURRENCT_BLOCKEXPLORER_DEFAULT_NAME,
-      url: CONSTANTS.KARDIACHAIN_MAINNET.NATIVECURRENCT_BLOCKEXPLORER_DEFAULT_URL,
+      name: CONSTANTS.Alfajores.NATIVECURRENCT_BLOCKEXPLORER_DEFAULT_NAME,
+      url: CONSTANTS.Alfajores.NATIVECURRENCT_BLOCKEXPLORER_DEFAULT_URL,
     },
   },
-  testnet: CONSTANTS.KARDIACHAIN_MAINNET.TESTNET,
+  testnet: CONSTANTS.Alfajores.TESTNET,
+}
+
+const Celo = {
+  id: CONSTANTS.Celo.ID,
+  name: CONSTANTS.Celo.NAME,
+  network: CONSTANTS.Celo.NETWORK,
+  iconUrl: CONSTANTS.Celo.ICONURL,
+  iconBackground: '#fff',
+  nativeCurrency: {
+    decimals: CONSTANTS.Celo.NATIVECURRENCT_NAME,
+    name: CONSTANTS.Celo.NATIVECURRENCT_NAME,
+    symbol: CONSTANTS.Celo.NATIVECURRENCT_SYMBOLS,
+  },
+  rpcUrls: {
+    default: CONSTANTS.Celo.NATIVECURRENCT_RPCURL_DEFAULT,
+  },
+  blockExplorers: {
+    default: {
+      name: CONSTANTS.Celo.NATIVECURRENCT_BLOCKEXPLORER_DEFAULT_NAME,
+      url: CONSTANTS.Celo.NATIVECURRENCT_BLOCKEXPLORER_DEFAULT_URL,
+    },
+  },
+  testnet: CONSTANTS.Celo.TESTNET,
 }
 
 const { chains, provider } = configureChains(
-  [Kardiachain_mainnet, Kardiachain_testNet, chain.polygon],
+  [Celo, Alfajores],
   [jsonRpcProvider({ rpc: (chain) => ({ http: chain.rpcUrls.default }) })]
 )
 
