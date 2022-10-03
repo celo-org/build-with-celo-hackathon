@@ -6,7 +6,10 @@ import PropTypes from 'prop-types';
 import {Header} from '@primusmoney/react_pwa/react-js-ui';
 
 import RemoteWalletConnectForm from '../../../components/remote-wallet/remote-wallet-connect-form.js';
-import CeloWalletView from '../../../components/remote-wallet/celo/contractkit-widget.js';
+
+import CeloWalletView from '../../../components/remote-wallet/celo/celo-wallet-view.js';
+//import CeloWalletView from '../../../components/remote-wallet/celo/test.js';
+import CeloTransactionView from '../../../components/remote-wallet/celo/celo-transaction-view.js';
 
 
 
@@ -139,20 +142,14 @@ class CeloHomeScreen extends React.Component {
 
 
 	// rendering
-	renderRemoteWalletConnection() {
-		return (
-			<RemoteWalletConnectForm 
-				app = {this.app}
-				parent={this}
-				rpc={this.rpc}
-			/>
-		);
-	}
-
 	renderWalletView() {
 		return (
 			<div>
-				{this.renderRemoteWalletConnection()}
+				<RemoteWalletConnectForm 
+					app = {this.app}
+					parent={this}
+					rpc={this.rpc}
+				/>
 				<div className="Separator">&nbsp;</div>
 				<CeloWalletView
 					app = {this.app}

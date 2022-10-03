@@ -7,11 +7,7 @@ import PropTypes from 'prop-types';
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 
 
-
-import Web3 from 'web3';
-import { newKitFromWeb3 } from '@celo/contractkit';
-
-class ContractKitWidget extends React.Component {
+class CeloTransactionView extends React.Component {
 	constructor(props) {
 		super(props);
 		
@@ -88,7 +84,7 @@ class ContractKitWidget extends React.Component {
 
 		}
 		catch(e) {
-			console.log('exception in ContractKitWidget.checkNavigationState: '+ e);
+			console.log('exception in CeloTransactionView.checkNavigationState: '+ e);
 		}
 		finally {
 			this.checking = false;
@@ -99,7 +95,7 @@ class ContractKitWidget extends React.Component {
 
 
 	componentDidMount() {
-		console.log('ContractKitWidget.componentDidMount called');
+		console.log('CeloTransactionView.componentDidMount called');
 
 		let mvcmypwa = this.getMvcMyPWAObject();
 
@@ -113,7 +109,7 @@ class ContractKitWidget extends React.Component {
 
 	// end of life
 	componentWillUnmount() {
-		console.log('ContractKitWidget.componentWillUnmount called');
+		console.log('CeloTransactionView.componentWillUnmount called');
 
 		let mvcmypwa = this.getMvcMyPWAObject();
 
@@ -126,7 +122,7 @@ class ContractKitWidget extends React.Component {
 		
 	// events coming from wallet connect diget
 	async onWalletConnected(eventname, params) {
-		console.log('ContractKitWidget.onWalletConnected called');
+		console.log('CeloTransactionView.onWalletConnected called');
 
 		let balances = {};
 
@@ -156,7 +152,7 @@ class ContractKitWidget extends React.Component {
 			}
 		}
 		catch(e) {
-			console.log('exception in ContractKitWidget.onWalletConnected: '+ e);
+			console.log('exception in CeloTransactionView.onWalletConnected: '+ e);
 		}
 
 
@@ -166,7 +162,7 @@ class ContractKitWidget extends React.Component {
 	}
 
 	async onWalletDisconnected(eventname, params) {
-		console.log('ContractKitWidget.onWalletDisconnected called');
+		console.log('CeloTransactionView.onWalletDisconnected called');
 
 		this.setState( {kit: null, provider: null, account: null, balances: {}, message: 'waiting for connection...'});
 
@@ -188,7 +184,7 @@ class ContractKitWidget extends React.Component {
 				message: 'returning from connect at ' + time_string});
 		}
 		catch(e) {
-			console.log('exception in ContractKitWidget.connect: '+ e);
+			console.log('exception in CeloTransactionView.connect: '+ e);
 		}
 	}
 
@@ -205,7 +201,7 @@ class ContractKitWidget extends React.Component {
 				message: 'returning from disconnect at ' + time_string});
 		}
 		catch(e) {
-			console.log('exception in ContractKitWidget.connect: '+ e);
+			console.log('exception in CeloTransactionView.connect: '+ e);
 		}
 	}
 
@@ -389,7 +385,7 @@ class ContractKitWidget extends React.Component {
 
 		}
 		catch(e) {
-			console.log('exception in ContractKitWidget.send: '+ e);
+			console.log('exception in CeloTransactionView.send: '+ e);
 		}
 
 		let ret = {success: false};
@@ -496,7 +492,7 @@ class ContractKitWidget extends React.Component {
 }
 
 // propTypes validation
-ContractKitWidget.propTypes = {
+CeloTransactionView.propTypes = {
 	app: PropTypes.object.isRequired,
 	rootsessionuuid: PropTypes.string,
 	currentwalletuuid: PropTypes.string,
@@ -516,5 +512,5 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-export {ContractKitWidget};
-export default connect(mapStateToProps, mapDispatchToProps)(ContractKitWidget);
+export {CeloTransactionView};
+export default connect(mapStateToProps, mapDispatchToProps)(CeloTransactionView);

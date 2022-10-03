@@ -11,11 +11,10 @@ class RemoteWalletConnectForm extends React.Component {
 
 		this.rpc = this.props.rpc;
 
+		this.uuid = this.app.guid();
+
 		this.getMvcMyPWAObject = this.app.getMvcMyPWAObject;
 
-		this.deed_client = this.app.getDeedClientObject();
-		this.walletconnect_client = this.deed_client.getWalletConnectClient();
-		
 		this.uuid = this.app.guid();
 
 		this.checking = false;
@@ -34,7 +33,11 @@ class RemoteWalletConnectForm extends React.Component {
 		this.checking = true;
 
 		try {
-			let account = this.walletconnect_client.getRemoteAccount();
+			// !!!: This component needs a wallet connect client to answer its signalEvent
+			let connection_status = await this._retrieveWalletConnectionStatus();
+
+			let account = connection_status.account;
+
 
 			this.setState({loaded: true, account});
 
@@ -55,10 +58,10 @@ class RemoteWalletConnectForm extends React.Component {
 
 		let mvcmypwa = this.getMvcMyPWAObject();
 
-		mvcmypwa.registerEventListener('on_walletconnect_connect', this.uuid, this.onConnect.bind(this));
+/* 		mvcmypwa.registerEventListener('on_walletconnect_connect', this.uuid, this.onConnect.bind(this));
 		mvcmypwa.registerEventListener('on_walletconnect_disconnect', this.uuid, this.onDisconnect.bind(this));
-
-		mvcmypwa.registerEventListener('on_walletconnect_add_connected_account', this.uuid, this.addConnectedAccount.bind(this));
+ 
+		mvcmypwa.registerEventListener('on_walletconnect_add_connected_account', this.uuid, this.addConnectedAccount.bind(this));*/
 
 
 		this.checkNavigationState().catch(err => {console.log('error in checkNavigationState: ' + err);});
@@ -70,20 +73,66 @@ class RemoteWalletConnectForm extends React.Component {
 
 		let mvcmypwa = this.getMvcMyPWAObject();
 
-		mvcmypwa.unregisterEventListener('on_walletconnect_add_connected_account', this.uuid);
+/*		mvcmypwa.unregisterEventListener('on_walletconnect_add_connected_account', this.uuid);
 
-		mvcmypwa.unregisterEventListener('on_walletconnect_disconnect', this.uuid);
-		mvcmypwa.unregisterEventListener('on_walletconnect_connect', this.uuid);
+ 		mvcmypwa.unregisterEventListener('on_walletconnect_disconnect', this.uuid);
+		mvcmypwa.unregisterEventListener('on_walletconnect_connect', this.uuid); */
+	}
+
+	// calling a wallet connect client
+	async _connectToWallet() {
+		let mvcmypwa = this.getMvcMyPWAObject();
+
+		let res = await new Promise((resolve, reject) => {
+			mvcmypwa.signalEvent('on_walletconnect_connect', {
+				emitter: this.uuid,
+				rpc: this.rpc,
+				callback: (err,res) => {if (res) resolve(res); else reject(err);}
+			});
+		});
+
+		return res;
+	}
+
+	async _disconnectFromWallet() {
+		let mvcmypwa = this.getMvcMyPWAObject();
+
+		let res = await new Promise((resolve, reject) => {
+			mvcmypwa.signalEvent('on_walletconnect_disconnect', {
+				emitter: this.uuid,
+				rpc: this.rpc,
+				callback: (err,res) => {if (res) resolve(res); else reject(err);}
+			});
+		});
+
+		return res;
+	}
+
+	async _retrieveWalletConnectionStatus() {
+		let mvcmypwa = this.getMvcMyPWAObject();
+
+		let res = await new Promise((resolve, reject) => {
+			mvcmypwa.signalEvent('on_walletconnect_status_requested', {
+				emitter: this.uuid,
+				rpc: this.rpc,
+				callback: (err,res) => {if (res) resolve(res); else reject(err);}
+			});
+		});
+
+		return res;
 	}
 			
 		
 	// called by other components
-	async onConnect(eventname, params) {
+/* 	async onConnect(eventname, params) {
 		console.log('RemoteWalletConnectForm.onConnect called');
+
+		if (params.emitter == this.uuid)
+			return; // sent by us
 
 		await this.connect();
 
-		let ret = {connected: true, account: this.state.account};
+		let ret = {emitter: this.uuid, connected: true, account: this.state.account};
 
 		if (params && params.callback) {
 			params.callback(null, ret);
@@ -95,6 +144,9 @@ class RemoteWalletConnectForm extends React.Component {
 	async onDisconnect(eventname, params) {
 		console.log('RemoteWalletConnectForm.onDisconnect called');
 
+		if (params.emitter == this.uuid)
+			return; // sent by us
+
 		await this.disconnect();
 
 		let ret = {disconnected: true};
@@ -105,51 +157,8 @@ class RemoteWalletConnectForm extends React.Component {
 
 		return ret;
 	}
-
-	// actions
-	async connect() {
-		try {
-			await this.walletconnect_client.connect(this.rpc);
-
-			let account = this.walletconnect_client.getRemoteAccount();
-		
-			let mvcmypwa = this.getMvcMyPWAObject();
-			let now = Date.now();
-			let time_string = mvcmypwa.formatDate(now/1000, 'YYYY-mm-dd HH:MM:SS');
-
-			// set state
-			this.setState({
-				message: 'returning from connect at ' + time_string,
-				account});
-
-			return {account};
-		}
-		catch(e) {
-			console.log('exception in RemoteWalletConnectForm.connect: '+ e);
-		}
-	}
-
-	async disconnect() {
-
-		try {
-			await this.walletconnect_client.disconnect();
-
-		}
-		catch(e) {
-			console.log('exception in RemoteWalletConnectForm.disconnect: '+ e);
-		}
-
-		this.setState({account: null});
-
-		// dispatch disconnection
-		let mvcmypwa = this.getMvcMyPWAObject();
-
-		mvcmypwa.signalEvent('on_walletconnect_disconnected');
-
-		return {disconnected: true};
-	}
-
-	async addConnectedAccount(eventname, params) {
+	
+		async addConnectedAccount(eventname, params) {
 		try {
 			let mvcmypwa = this.getMvcMyPWAObject();
 
@@ -236,6 +245,48 @@ class RemoteWalletConnectForm extends React.Component {
 
 		return ret;
 	}
+*/
+
+	// actions
+	async connect() {
+		try {
+			await this._connectToWallet();
+
+			let connection_status = await this._retrieveWalletConnectionStatus();
+
+			let account = connection_status.account;
+		
+			let mvcmypwa = this.getMvcMyPWAObject();
+			let now = Date.now();
+			let time_string = mvcmypwa.formatDate(now/1000, 'YYYY-mm-dd HH:MM:SS');
+
+			// set state
+			this.setState({
+				message: 'returning from connect at ' + time_string,
+				account});
+
+			return {account};
+		}
+		catch(e) {
+			console.log('exception in RemoteWalletConnectForm.connect: '+ e);
+		}
+	}
+
+	async disconnect() {
+
+		try {
+			await this._disconnectFromWallet();
+
+		}
+		catch(e) {
+			console.log('exception in RemoteWalletConnectForm.disconnect: '+ e);
+		}
+
+		this.setState({account: null});
+
+		return {disconnected: true};
+	}
+
 
 	// rendering
 	render() {

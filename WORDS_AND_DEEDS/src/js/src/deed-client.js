@@ -87,6 +87,8 @@ class DeedClient {
 		global.registerHook('getDataObjectFromComposedHash_asynchook', this.name, this.getDataObjectFromComposedHash_asynchook);
 		global.registerHook('getDataObjectFromCurrencyTransaction_asynchook', this.name, this.getDataObjectFromCurrencyTransaction_asynchook);
 		global.registerHook('getDataObjectFromCard_asynchook', this.name, this.getDataObjectFromCard_asynchook);
+
+		global.registerHook('getLoginCredentials_asynchook', this.name, this.getLoginCredentials_asynchook);
 	}
 	
 	postRegisterModule() {
@@ -233,6 +235,107 @@ class DeedClient {
 			return dataobject;
 		}		
 	}
+
+	// login through connection to a remote wallet login
+	async getLoginCredentials_asynchook(result, params) {
+		console.log('getLoginCredentials_asynchook called for ' + this.name);
+
+		var rootsessionuuid = params[0];
+		var item = params[1];
+
+		if ((item.type === 0) && (item.mode == 'walletconnect')) {
+			let global = this.global;
+			let mvcmyquote = global.getModuleObject('mvc-myquote');
+
+			let connectedwllts = await mvcmyquote.readSettings('wc_wallets');
+
+			connectedwllts = (connectedwllts ? connectedwllts : []);
+
+			let walletname = 'remotewallet';
+			let walletuuid;
+
+			// get passphrase from connected account address
+
+			// check if we are connected
+			let walletconnectclient = this.getWalletConnectClient();
+			let account = walletconnectclient.getRemoteAccount();
+
+			if (!account) {
+				// connect now
+				let ret = await walletconnectclient.connect(item.rpc);
+
+				if (!ret || !ret.account) {
+					result.push({module: this.name, handled: true});
+					return false;
+				}
+
+				account = ret.account;
+			}
+			
+			
+			let passphrase = account;
+
+			let wallet;
+	
+			// go through the list of wallets to see if can open a wallet with this passphrase
+
+			for (var i = 0; i < connectedwllts.length; i++) {
+				let _walletuuid = connectedwllts[i].walletuuid;
+				let unlocked = await mvcmyquote.unlockWallet(rootsessionuuid, _walletuuid, passphrase).catch(err => {});
+
+				if (unlocked) {
+					walletuuid = _walletuuid;
+					break;
+				}
+			}
+
+			if (walletuuid) {
+				// open wallet
+				wallet = await mvcmyquote.getWalletInfo(rootsessionuuid, walletuuid);
+
+				if (!wallet)
+					return Promise.reject('could not open wallet: ' + walletuuid);
+			}
+			else {
+				// we create a wallet
+				let localscheme = await mvcmyquote.getDefaultLocalSchemeInfo(rootsessionuuid);
+				let walletschemeuuid = localscheme.uuid;
+
+				// !!!: if we use automatic_submit = false, we need to use another scheme than local defaut
+				//let walletschemeuuid = item.uuid;
+
+				wallet = await mvcmyquote.makeWallet(rootsessionuuid, walletname, walletschemeuuid, passphrase)
+				.catch(err => {
+					console.log('error in Root._openDeviceWallet: ' + err);
+				});
+
+				if (!wallet)
+					return Promise.reject('could not create wallet for celo');
+
+				walletuuid = wallet.uuid;
+
+				// save in our list
+				let connectedwllt = {};
+				connectedwllt.walletuuid = walletuuid;
+				connectedwllt.walletname = walletname;
+				connectedwllt.created_on = Date.now();
+
+				connectedwllts.push(connectedwllt);
+				
+				await mvcmyquote.putSettings('wc_wallets', connectedwllts);
+		
+			}
+
+	
+			result.credentials = {username: walletuuid, password: passphrase, schemeuuid: wallet.schemeuuid, automatic_submit: true};
+		}
+
+
+		result.push({module: this.name, handled: true});
+		
+		return true;
+	}
+	
 
 	// wallet connect
 	getWalletConnectClient() {

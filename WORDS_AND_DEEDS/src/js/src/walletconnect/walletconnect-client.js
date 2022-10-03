@@ -5,6 +5,8 @@ class WalletConnectClient {
 		this.global = null;
 		this.mvcmypwa = null;
 
+		this.uuid = null;
+
 		this.rpc = null;
 		this.provider = null;
 		this.account = null;
@@ -19,11 +21,26 @@ class WalletConnectClient {
 		return this.mvcmypwa;
 	}
 
+	getClientAPI() {
+		var global = this.global;
+
+		var clientmodules =  global.getModuleObject('clientmodules');
+		
+		this.clientcontrollers = clientmodules.getControllersObject();
+		
+		return this.clientcontrollers;
+	}
 
 	async init(global) {
 
 		try {
+			// get session object and a uuid for our client
 			this.global = global;
+
+			var clientapicontrollers = this.getClientAPI();
+
+			var session = clientapicontrollers.getCurrentSessionObject();
+			this.uuid = session.guid();
 			
 			// listen to wallet connect events
 			let mvcmypwa = this.getMvcMyPWAObject();
@@ -33,6 +50,7 @@ class WalletConnectClient {
 	
 			mvcmypwa.registerEventListener('on_walletconnect_connected', null, this.onWalletConnected.bind(this));
 			mvcmypwa.registerEventListener('on_walletconnect_disconnected', null, this.onWalletDisconnected.bind(this));
+			mvcmypwa.registerEventListener('on_walletconnect_status_requested', null, this.onWalletConnectionStatusRequested.bind(this));
 	
 			// remove any traces of a previous session to restart on a clean slate
 			await this.disconnect();
@@ -48,9 +66,12 @@ class WalletConnectClient {
 	async onConnect(eventname, params) {
 		console.log('WalletConnectWidget.onConnect called');
 
-		await this.connect();
+		if (params.emitter == this.uuid)
+			return; // sent by us
 
-		let ret = {provider: this.state.provider, account: this.state.account};
+		await this.connect(params.rpc);
+
+		let ret = {provider: this.provider, account: this.account};
 
 		if (params && params.callback) {
 			params.callback(null, ret);
@@ -62,7 +83,10 @@ class WalletConnectClient {
 	async onDisconnect(eventname, params) {
 		console.log('WalletConnectWidget.onDisconnect called');
 
-		await this.disconnect();
+		if (params.emitter == this.uuid)
+			return; // sent by us
+
+		await this.disconnect(params.rpc);
 
 		let ret = {disconnected: true};
 
@@ -115,7 +139,9 @@ class WalletConnectClient {
 			let mvcmypwa = this.getMvcMyPWAObject();
 
 			// dispatch the new provider and account
-			mvcmypwa.signalEvent('on_walletconnect_connected', {provider, account});
+			let params = {emitter: this.uuid, provider, account}
+
+			mvcmypwa.signalEvent('on_walletconnect_connected', params);
 
 			return {provider, account};
 		}
@@ -165,7 +191,9 @@ class WalletConnectClient {
 		// dispatch disconnection
 		let mvcmypwa = this.getMvcMyPWAObject();
 
-		mvcmypwa.signalEvent('on_walletconnect_disconnected', {rpc: _rpc});
+		let params = {emitter: this.uuid, rpc: _rpc}
+
+		mvcmypwa.signalEvent('on_walletconnect_disconnected', params);
 
 		return {disconnected: true};
 	}
@@ -175,6 +203,11 @@ class WalletConnectClient {
 	async onWalletConnected(eventname, params) {
 		console.log('WalletConnectClient.onWalletConnected called');
 		try {
+			if (params.emitter == this.uuid)
+				return; // sent by us
+
+			this.rpc = params.rpc;
+			this.provider = params.provider;
 			this.account = params.account;
 		}
 		catch(e) {
@@ -187,9 +220,26 @@ class WalletConnectClient {
 	async onWalletDisconnected(eventname, params) {
 		console.log('WalletConnectClient.onWalletDisconnected called');
 
+		if (params.emitter == this.uuid)
+			return; // sent by us
+
+		this.rpc = null;
+		this.provider = null;
 		this.account = null;
 
 		return;
+	}
+	
+	async onWalletConnectionStatusRequested(eventname, params) {
+		console.log('WalletConnectClient.onWalletConnectionStatusRequested called');
+
+		let ret = {emitter: this.uuid, rpc: this.rpc, provider: this.provider, account: this.account};
+
+		if (params && params.callback) {
+			params.callback(null, ret);
+		}
+
+		return ret;
 	}
 	
 	getProvider() {
@@ -206,7 +256,9 @@ class WalletConnectClient {
 
 		let mvcmypwa = this.getMvcMyPWAObject();
 
-		mvcmypwa.signalEvent('on_walletconnect_accounts_changed', {accounts});
+		let params = {emitter: this.uuid, accounts};
+
+		mvcmypwa.signalEvent('on_walletconnect_accounts_changed', params);
 	}
 
 	async onChainIdChanged(chainId) {
@@ -214,11 +266,19 @@ class WalletConnectClient {
 
 		let mvcmypwa = this.getMvcMyPWAObject();
 
-		mvcmypwa.signalEvent('on_walletconnect_chainid_changed', {chainId});
+		let params = {emitter: this.uuid, chainId};
+
+		mvcmypwa.signalEvent('on_walletconnect_chainid_changed', params);
 	}
 
 	async onDisconnected(code, reason) {
 		console.log("WallectConnect disconnect: " + code + " - " + reason);
+
+		let mvcmypwa = this.getMvcMyPWAObject();
+
+		let params = {emitter: this.uuid, code ,reason};
+
+		mvcmypwa.signalEvent('on_walletconnect_connection_changed', params);
 
 		return this.disconnect();
 	}
