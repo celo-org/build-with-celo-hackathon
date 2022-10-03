@@ -1,9 +1,6 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-  ],
+  purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
+  darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
       colors: {
@@ -21,6 +18,9 @@ module.exports = {
         secondary: "#A6A0BB",
       },
     },
+  },
+  variants: {
+    extend: {},
   },
   plugins: [],
 };

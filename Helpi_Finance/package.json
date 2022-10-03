@@ -1,36 +1,113 @@
 {
   "name": "helpi-finance",
-  "private": true,
   "version": "0.1.0",
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
+  "private": true,
   "dependencies": {
-    "@headlessui/react": "^1.7.0",
-    "@rainbow-me/rainbowkit": "^0.5.1",
-    "@uniswap/sdk-core": "^3.0.2",
-    "@uniswap/smart-order-router": "^2.10.0",
-    "ethers": "^5.0.0",
-    "jsbi": "3.2.5",
-    "next": "^12.1.6",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
-    "react-icons": "^4.4.0",
-    "react-spinners": "^0.13.4",
-    "react-toastify": "^9.0.8",
-    "wagmi": "^0.6.0"
+    "@apollo/client": "3.5.6",
+    "@craco/craco": "^6.4.5",
+    "@davatar/react": "1.8.1",
+    "@ethersproject/providers": "5.5.1",
+    "@ethersproject/units": "5.5.0",
+    "@headlessui/react": "1.6.1",
+    "@lingui/core": "3.13.3",
+    "@lingui/react": "3.13.3",
+    "@testing-library/jest-dom": "5.16.1",
+    "@testing-library/react": "11.2.7",
+    "@testing-library/user-event": "12.8.3",
+    "@types/node": "18.7.13",
+    "@types/react": "18.0.17",
+    "@types/react-dom": "18.0.6",
+    "@types/react-router-dom": "5.3.3",
+    "@uniswap/sdk-core": "3.0.1",
+    "@uniswap/v3-sdk": "3.7.1",
+    "@web3-react/core": "6.1.9",
+    "@web3-react/injected-connector": "6.0.7",
+    "@web3-react/walletconnect-connector": "6.2.8",
+    "bigdecimal": "0.6.1",
+    "body-scroll-lock": "4.0.0-beta.0",
+    "classnames": "2.3.1",
+    "date-fns": "2.27.0",
+    "env-cmd": "^10.1.0",
+    "ethers": "5.6.8",
+    "framer-motion": "4.1.17",
+    "graphql": "15.8.0",
+    "hex-to-rgba": "2.0.1",
+    "html-to-image": "^1.9.0",
+    "krasulya-lightweight-charts": "3.4.3",
+    "lodash": "4.17.21",
+    "qrcode.react": "^3.1.0",
+    "rc-slider": "9.7.5",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-helmet": "6.1.0",
+    "react-hot-toast": "2.2.0",
+    "react-icons": "4.3.1",
+    "react-router-dom": "5.3.0",
+    "craco": "4.0.3",
+    "react-select": "5.2.1",
+    "react-tabs": "3.2.3",
+    "react-toastify": "6.0.9",
+    "react-use": "17.3.1",
+    "recharts": "2.1.8",
+    "swr": "0.4.2",
+    "typescript": "4.7.4",
+    "web-vitals": "1.1.2"
+  },
+  "resolutions": {
+    "react-error-overlay": "6.0.9"
+  },
+  "scripts": {
+    "start": "PORT=3010 craco start",
+    "start-home": "yarn lingui:prepare && PORT=3010 env-cmd -e development-home craco start",
+    "start-app": "yarn lingui:prepare && PORT=3011 env-cmd -e development-app craco start",
+    "start-win": "set PORT=3010&craco start",
+    "build": "INLINE_RUNTIME_CHUNK=false craco build",
+    "build-home": "INLINE_RUNTIME_CHUNK=false env-cmd -e production-home craco build",
+    "build-app": "INLINE_RUNTIME_CHUNK=false env-cmd -e production-app craco build",
+    "test": "craco test",
+    "eject": "craco eject",
+    "lint": "node node_modules/.bin/eslint src",
+    "pre-commit": "npm run test -- --watchAll=false && npm run lint",
+    "prepare": "husky install && yarn lingui:prepare",
+    "extract": "NODE_ENV=development lingui extract",
+    "compile": "lingui compile",
+    "lingui:prepare": "yarn extract && yarn compile"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "devDependencies": {
-    "@types/node": "^17.0.35",
-    "@types/react": "^18.0.9",
-    "autoprefixer": "^10.4.8",
-    "eslint": "^8.15.0",
-    "eslint-config-next": "^12.1.6",
-    "postcss": "^8.4.16",
-    "tailwindcss": "^3.1.8",
-    "typescript": "^4.7.2"
-  }
+    "@lingui/cli": "^3.13.3",
+    "@lingui/loader": "3.14.0",
+    "@lingui/macro": "3.13.3",
+    "autoprefixer": "^9.8.8",
+    "eslint": "7.32.0",
+    "husky": "7.0.4",
+    "lint-staged": "12.3.4",
+    "postcss": "^7.0.39",
+    "prettier": "2.5.1",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17"
+  },
+  "lint-staged": {
+    "**/*.js?(x)": [
+      "eslint --fix ./src",
+      "prettier --write"
+    ]
+  },
+  "packageManager": "yarn@3.1.0"
 }

@@ -1,0 +1,103 @@
+a.btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+.btn-center {
+  justify-content: center;
+}
+.btn-left {
+  justify-content: start;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  color: white;
+  font-size: 1.4rem;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.btn-sm {
+  padding: 0.5rem 1.4rem;
+}
+
+.btn-lg,
+.btn-xl {
+  padding: 0.8rem 1.5rem;
+}
+
+.btn-sm .btn-label {
+  font-weight: 400;
+  font-size: 1.4rem;
+  margin-left: 0.8rem;
+  letter-spacing: 0;
+}
+.btn-lg .btn-label {
+  margin-left: 1.1625rem;
+  font-size: 1.85rem;
+  font-weight: normal;
+  line-height: 2.325rem;
+  letter-spacing: 0;
+}
+.btn-xl .btn-label {
+  margin-left: 1.1625rem;
+  font-size: 1.85rem;
+  font-weight: normal;
+  line-height: 2.325rem;
+  letter-spacing: 0;
+}
+
+.btn-sm .btn-image {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+}
+.btn-lg .btn-image {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.3rem;
+  height: 2.3rem;
+}
+.btn-xl .btn-image {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.7rem;
+  height: 2.7rem;
+}
+
+.btn-primary {
+  background: transparent;
+  border: 1px solid var(--dark-blue-border);
+  border-radius: var(--border-radius-sm);
+}
+
+.btn-primary:hover {
+  background: var(--dark-blue-hover);
+}
+.btn-primary:active {
+  background: var(--dark-blue-active);
+}
+
+@media (max-width: 450px) {
+  .connect-wallet {
+    padding: 0.5rem 0.8rem;
+  }
+}
+@media (max-width: 350px) {
+  .connect-wallet .btn-image {
+    display: none;
+  }
+  .connect-wallet .btn-label {
+    margin-left: 0px;
+  }
+  .connect-wallet {
+    height: 3.6rem;
+  }
+}
