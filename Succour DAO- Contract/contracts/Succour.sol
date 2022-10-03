@@ -258,6 +258,66 @@ contract Succour is Proxiable{
         return approvedProposals;
     }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                            /////// Gooooo FUNDMEEEEEEEE ////////////////////
+
+
+        struct individualFundMe {
+            uint goFundID;
+            string name;
+            string reasonForFund;
+            uint amountNeeded;
+            uint amountGotten;
+            bool status;
+        } 
+        uint GOFUNDId = 1;
+        mapping (address => individualFundMe) GoFunds;
+        individualFundMe[] public goFunds;
+        individualFundMe[] public sucessfulGoFunds;
+
+
+        function createGofund (string memory _name, string memory _reasonForFund, uint _amountNeeded ) public {
+            individualFundMe storage GOFUND = GoFunds[msg.sender];
+            GOFUND.name = _name;
+            GOFUND.reasonForFund = _reasonForFund;
+            GOFUND.amountNeeded = _amountNeeded;
+            GOFUND.goFundID = GOFUNDId;
+            goFunds.push(GOFUND);
+            GOFUNDId++;
+        }
+
+
+        function fundGoFund (uint amount, address addr)public {
+            individualFundMe storage GOFUND = GoFunds[addr];
+            depositIntoDAO(amount);
+            uint idOfGoFund = GOFUND.goFundID;
+            GOFUND.amountGotten += amount;
+            goFunds[idOfGoFund - 1].amountGotten += amount;
+        }
+
+        function withdrawFromGoFund (address addr)public {
+            individualFundMe storage GOFUND = GoFunds[msg.sender];
+            require (addr != address(0), "Can't withdraw to this address");
+            uint fundsGotten = GoFunds[msg.sender].amountGotten;
+            uint neededFund = GoFunds[msg.sender].amountNeeded;
+            require(fundsGotten >= neededFund, "You can't withDraw until fund is complete");
+            uint idOfGoFund = GoFunds[msg.sender].goFundID;
+            goFunds[idOfGoFund - 1].amountGotten = 0;
+            GoFunds[msg.sender].amountGotten = 0;
+            goFunds[idOfGoFund - 1].status = true;
+            GoFunds[msg.sender].status = true;
+            IERC20(celoTokenAddress).transferFrom(address(this), addr, fundsGotten);
+            sucessfulGoFunds.push(GOFUND);
+        }
+        function returnAllGoFunds () public view returns(individualFundMe[] memory) {
+            return goFunds;
+        }
+
+        function returnAllSuccessFulGoFunds () public view returns(individualFundMe[] memory) {
+            return sucessfulGoFunds;
+        }
+
 
     
 }
