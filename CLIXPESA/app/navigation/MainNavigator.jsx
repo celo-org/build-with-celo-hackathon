@@ -12,6 +12,8 @@ import { AccountScreen } from 'clixpesa/features/account'
 import { LoansHomeScreen } from 'clixpesa/features/microloans'
 import { SpacesHomeScreen } from 'clixpesa/features/spaces'
 
+import { DP_LINK } from '../constants'
+
 const MainStack = createNativeStackNavigator()
 
 export default function MainNavigator() {
@@ -69,7 +71,7 @@ function BottomTabNavigator() {
           title: 'Spaces',
           tabBarIcon: ({ focused }) => (
             <TabBarIcon
-              name={focused ? 'wallet-3-fill' : 'wallet-3-line'}
+              name={focused ? 'safe-2-fill' : 'safe-2-line'}
               bgc={focused ? '#99F6E4' : '#fff'}
               color="#0F766E"
             />
@@ -90,7 +92,7 @@ function BottomTabNavigator() {
           title: 'Loans',
           tabBarIcon: ({ focused }) => (
             <TabBarIcon
-              name={focused ? 'bar-chart-2-fill' : 'bar-chart-2-line'}
+              name={focused ? 'hand-coin-fill' : 'hand-coin-line'}
               bgc={focused ? 'primary.200' : '#fff'}
               color="#0F766E"
             />
@@ -98,6 +100,27 @@ function BottomTabNavigator() {
           tabBarLabel: () => (
             <Text _light={{ color: '#0F766E' }} fontSize="xs" mb="0.5">
               Loans
+            </Text>
+          ),
+          headerLeft: () => <AccPressable />,
+          headerRight: () => <HeaderRightIcons />,
+        })}
+      />
+      <BottomTab.Screen
+        name="Account"
+        component={AccountScreen}
+        options={() => ({
+          title: 'My Account',
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon
+              name={focused ? 'user-3-fill' : 'user-3-line'}
+              bgc={focused ? 'primary.200' : '#fff'}
+              color="#0F766E"
+            />
+          ),
+          tabBarLabel: () => (
+            <Text _light={{ color: '#0F766E' }} fontSize="xs" mb="0.5">
+              Account
             </Text>
           ),
           headerLeft: () => <AccPressable />,
@@ -130,7 +153,7 @@ function AccPressable() {
         bg="#0F766E"
         ml="2"
         source={{
-          uri: 'https://images.unsplash.com/photo-1592598015799-35c84b09394c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+          uri: DP_LINK,
         }}
         size="sm"
       >

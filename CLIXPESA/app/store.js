@@ -2,6 +2,8 @@ import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit'
 
 import essentialReducer from '../features/essentials/essentialSlice'
 
+import { essentialListeners } from '../features/essentials/essentialEffects'
+
 const listenerMiddleware = createListenerMiddleware()
 
 export default configureStore({
@@ -13,3 +15,4 @@ export default configureStore({
 })
 
 //Listeners
+essentialListeners(listenerMiddleware.startListening)
