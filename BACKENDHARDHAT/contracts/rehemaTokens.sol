@@ -8,7 +8,7 @@ import "../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract RehemaTokens is ERC20 ,Ownable{
     
     
-    constructor() ERC20("Rehema","RH"){
+   constructor() ERC20("Rehema","RH"){
    
 
     }
@@ -23,4 +23,14 @@ _mint(msg.sender,10**18*_rehemaTokens);
  
  return totalSupply();
     }
+    function joinCommunity(address payable  _receiver) public payable{
+        require(transfer(_receiver, 1*10**18),"Failed to transact");
+    }
+    function getBalanceofMember(address _receiver)public view returns(uint){
+        return balanceOf(_receiver);
+    }
+    function shareRehemaTokens(address payable _receiver,uint amount) public payable{
+        require(transferFrom(msg.sender, _receiver, amount*10**18),"Failed to transfer Rehema Tokens");
+        emit Transfer(msg.sender,_receiver, amount*10**18);
+    } 
 }
