@@ -8,7 +8,6 @@ import {Header} from '@primusmoney/react_pwa/react-js-ui';
 import RemoteWalletConnectForm from '../../../components/remote-wallet/remote-wallet-connect-form.js';
 
 import CeloWalletView from '../../../components/remote-wallet/celo/celo-wallet-view.js';
-//import CeloWalletView from '../../../components/remote-wallet/celo/test.js';
 import CeloTransactionView from '../../../components/remote-wallet/celo/celo-transaction-view.js';
 
 

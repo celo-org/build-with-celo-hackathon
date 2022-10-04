@@ -102,7 +102,7 @@ class CeloWalletView extends React.Component {
 	}
 
 
-
+	// post render commit phase
 	async checkNavigationState() {
 		this.checking = true;
 
@@ -111,8 +111,14 @@ class CeloWalletView extends React.Component {
 			// get list of currencies for celo
 			this.currencies = await this._getCurrencies();
 
+			// is connected?
+			let connection_status = await this._retrieveWalletConnectionStatus();
+
+			this.account = connection_status.account;
+
 			// check balances
-			let balances = await this._getBalances()
+			let balances = await this._getBalances();
+
 
 			this.setState({loaded: true, balances});
 
@@ -124,9 +130,7 @@ class CeloWalletView extends React.Component {
 			this.checking = false;
 		}
 
-
 	}
-
 
 	componentDidMount() {
 		console.log('CeloWalletView.componentDidMount called');
@@ -149,6 +153,23 @@ class CeloWalletView extends React.Component {
 		mvcmypwa.unregisterEventListener('on_walletconnect_connected', this.uuid);
 
 	}
+
+
+	// calling a wallet connect client
+	async _retrieveWalletConnectionStatus() {
+		let mvcmypwa = this.getMvcMyPWAObject();
+
+		let res = await new Promise((resolve, reject) => {
+			mvcmypwa.signalEvent('on_walletconnect_status_requested', {
+				emitter: this.uuid,
+				rpc: this.rpc,
+				callback: (err,res) => {if (res) resolve(res); else reject(err);}
+			});
+		});
+
+		return res;
+	}
+			
 		
 	// events coming from wallet connect diget
 	async onWalletConnected(eventname, params) {

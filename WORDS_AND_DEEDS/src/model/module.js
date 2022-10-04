@@ -112,6 +112,10 @@ var Module = class {
 	}
 
 	// API
+
+	//
+	// Storage
+	//
 	async _putAddressLockerContent(session, wallet, currency, card, contentstring, connection) {
 		var global = this.global;
 		var _apicontrollers = this._getClientAPI();
@@ -155,6 +159,15 @@ var Module = class {
 		return mvcerc721module.putLockerContent(childsession, currency, contentstring, ethereumtransaction);
 	}
 
+	//
+	// Wallet functions
+	//
+	async setWalletLabel(sessionuuid, walletuuid, label) {
+		var global = this.global;
+		var mvcclientwalletmodule = global.getModuleObject('mvc-client-wallet');
+		return mvcclientwalletmodule.setWalletLabel(sessionuuid, walletuuid, label);
+	}
+	
 
 	//
 	// Deeds

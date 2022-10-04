@@ -245,9 +245,10 @@ class DeedClient {
 
 		if ((item.type === 0) && (item.mode == 'walletconnect')) {
 			let global = this.global;
-			let mvcmyquote = global.getModuleObject('mvc-myquote');
+			let mvcmypwa = global.getModuleObject('mvc-myquote');
+			let mvcmydeed = global.getModuleObject('mvc-mydeed');
 
-			let connectedwllts = await mvcmyquote.readSettings('wc_wallets');
+			let connectedwllts = await mvcmypwa.readSettings('wc_wallets');
 
 			connectedwllts = (connectedwllts ? connectedwllts : []);
 
@@ -281,7 +282,7 @@ class DeedClient {
 
 			for (var i = 0; i < connectedwllts.length; i++) {
 				let _walletuuid = connectedwllts[i].walletuuid;
-				let unlocked = await mvcmyquote.unlockWallet(rootsessionuuid, _walletuuid, passphrase).catch(err => {});
+				let unlocked = await mvcmypwa.unlockWallet(rootsessionuuid, _walletuuid, passphrase).catch(err => {});
 
 				if (unlocked) {
 					walletuuid = _walletuuid;
@@ -291,20 +292,21 @@ class DeedClient {
 
 			if (walletuuid) {
 				// open wallet
-				wallet = await mvcmyquote.getWalletInfo(rootsessionuuid, walletuuid);
+				wallet = await mvcmypwa.getWalletInfo(rootsessionuuid, walletuuid);
 
 				if (!wallet)
 					return Promise.reject('could not open wallet: ' + walletuuid);
 			}
 			else {
 				// we create a wallet
-				let localscheme = await mvcmyquote.getDefaultLocalSchemeInfo(rootsessionuuid);
-				let walletschemeuuid = localscheme.uuid;
+				
+				let localscheme = await mvcmypwa.getDefaultLocalSchemeInfo(rootsessionuuid);
+				let localschemeuuid = localscheme.uuid;
+				// !!!: for the moment (mvc-client-wallet version 0.30.10) local wallet are only created on default-0
 
-				// !!!: if we use automatic_submit = false, we need to use another scheme than local defaut
 				//let walletschemeuuid = item.uuid;
 
-				wallet = await mvcmyquote.makeWallet(rootsessionuuid, walletname, walletschemeuuid, passphrase)
+				wallet = await mvcmypwa.makeWallet(rootsessionuuid, walletname, localschemeuuid, passphrase)
 				.catch(err => {
 					console.log('error in Root._openDeviceWallet: ' + err);
 				});
@@ -314,15 +316,18 @@ class DeedClient {
 
 				walletuuid = wallet.uuid;
 
+				// we change name of wallet, so that login find it from the username
+				await mvcmydeed.setWalletLabel(rootsessionuuid, walletuuid, walletuuid); 
+					// TODO: use mvcmypwa for @primusmoney/react_pwa > 0.30.20
+
 				// save in our list
 				let connectedwllt = {};
 				connectedwllt.walletuuid = walletuuid;
-				connectedwllt.walletname = walletname;
 				connectedwllt.created_on = Date.now();
 
 				connectedwllts.push(connectedwllt);
 				
-				await mvcmyquote.putSettings('wc_wallets', connectedwllts);
+				await mvcmypwa.putSettings('wc_wallets', connectedwllts);
 		
 			}
 
