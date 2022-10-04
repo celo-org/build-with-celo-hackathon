@@ -23,59 +23,59 @@ const NETWORK_ICON_ALTS = {
 export default function Ecosystem() {
   const gmxPages = [
     {
-      title: "GMX Governance",
+      title: "HLP Governance",
       link: "https://gov.gmx.io/",
       linkLabel: "gov.gmx.io",
-      about: "GMX Governance Page",
+      about: "HLP Governance Page",
       chainIds: [ARBITRUM, AVALANCHE],
     },
     {
-      title: "GMX Stats",
+      title: "HLP Stats",
       link: "https://stats.gmx.io/",
       linkLabel: "stats.gmx.io",
-      about: "GMX Stats Page",
+      about: "HLP Stats Page",
       chainIds: [ARBITRUM, AVALANCHE],
     },
     {
-      title: "GMX Proposals",
+      title: "HLP Proposals",
       link: "https://snapshot.org/#/gmx.eth",
       linkLabel: "snapshot.org",
-      about: "GMX Proposals Voting page",
+      about: "HLP Proposals Voting page",
       chainIds: [ARBITRUM, AVALANCHE],
     },
     {
-      title: "GMX Announcements",
-      link: "https://t.me/GMX_Announcements",
+      title: "HLP Announcements",
+      link: "https://t.me/HLP_Announcements",
       linkLabel: "t.me",
-      about: "GMX Announcements and Updates",
+      about: "HLP Announcements and Updates",
       chainIds: [ARBITRUM, AVALANCHE],
     },
   ];
 
   const communityProjects = [
     {
-      title: "GMX Blueberry Club",
+      title: "HLP Blueberry Club",
       link: "https://www.blueberry.club/",
       linkLabel: "blueberry.club",
-      about: "GMX Blueberry NFTs",
+      about: "HLP Blueberry NFTs",
       creatorLabel: "@xm92boi",
       creatorLink: "https://t.me/xm92boi",
       chainIds: [ARBITRUM],
     },
     {
-      title: "GMX Leaderboard",
+      title: "HLP Leaderboard",
       link: "https://www.gmx.house/",
       linkLabel: "gmx.house",
-      about: "Leaderboard for GMX traders",
+      about: "Leaderboard for HLP traders",
       creatorLabel: "@Itburnz",
       creatorLink: "https://t.me/Itburnz",
       chainIds: [ARBITRUM, AVALANCHE],
     },
     {
-      title: "GMX Positions Bot",
-      link: "https://t.me/GMXPositions",
+      title: "HLP Positions Bot",
+      link: "https://t.me/HLPPositions",
       linkLabel: "t.me",
-      about: "Telegram bot for GMX position updates",
+      about: "Telegram bot for HLP position updates",
       creatorLabel: "@zhongfu",
       creatorLink: "https://t.me/zhongfu",
       chainIds: [ARBITRUM, AVALANCHE],
@@ -84,7 +84,7 @@ export default function Ecosystem() {
       title: "Blueberry Pulse",
       link: "https://blueberrypulse.substack.com/",
       linkLabel: "substack.com",
-      about: "GMX Weekly Updates",
+      about: "HLP Weekly Updates",
       creatorLabel: "@puroscohiba",
       creatorLink: "https://t.me/puroscohiba",
       chainIds: [ARBITRUM, AVALANCHE],
@@ -99,25 +99,25 @@ export default function Ecosystem() {
       chainIds: [ARBITRUM, AVALANCHE],
     },
     {
-      title: "GMX Yield Simulator",
+      title: "HLP Yield Simulator",
       link: "https://gmx.defisims.com/",
       linkLabel: "defisims.com",
-      about: "Yield simulator for GMX",
+      about: "Yield simulator for HLP",
       creatorLabel: "@kyzoeth",
       creatorLink: "https://twitter.com/kyzoeth",
       chainIds: [ARBITRUM, AVALANCHE],
     },
     {
-      title: "GMX Returns Calculator",
+      title: "HLP Returns Calculator",
       link: "https://docs.google.com/spreadsheets/u/4/d/1mQZlztz_NpTg5qQiYIzc_Ls1OTLfMOUtmEQN-WW8jj4/copy",
       linkLabel: "docs.google.com",
-      about: "Returns calculator for GMX and GLP",
+      about: "Returns calculator for HLP and THLP",
       creatorLabel: "@AStoicTrader1",
       creatorLink: "https://twitter.com/AStoicTrader1",
       chainIds: [ARBITRUM, AVALANCHE],
     },
     {
-      title: "GMX Compound Calculator",
+      title: "HLP Compound Calculator",
       link: "https://docs.google.com/spreadsheets/d/14DiIE1wZkK9-Y5xSx1PzIgmpcj4ccz1YVw5nwzIWLgI/edit#gid=0",
       linkLabel: "docs.google.com",
       about: "Optimal compound interval calculator",
@@ -126,28 +126,28 @@ export default function Ecosystem() {
       chainIds: [AVALANCHE],
     },
     {
-      title: "GMX Trading Stats",
-      link: "https://t.me/GMXTradingStats",
+      title: "HLP Trading Stats",
+      link: "https://t.me/HLPTradingStats",
       linkLabel: "t.me",
-      about: "Telegram bot for Open Interest on GMX",
+      about: "Telegram bot for Open Interest on HLP",
       creatorLabel: "@SniperMonke01",
       creatorLink: "https://twitter.com/SniperMonke01",
       chainIds: [ARBITRUM, AVALANCHE],
     },
     {
-      title: "GMX Staking Bot",
-      link: "https://t.me/GMX_Staking_bot",
+      title: "HLP Staking Bot",
+      link: "https://t.me/HLP_Staking_bot",
       linkLabel: "t.me",
-      about: "GMX staking rewards updates and insights",
-      creatorLabel: "@GMX_Staking_bot",
-      creatorLink: "https://twitter.com/GMX_Staking_bot",
+      about: "HLP staking rewards updates and insights",
+      creatorLabel: "@HLP_Staking_bot",
+      creatorLink: "https://twitter.com/HLP_Staking_bot",
       chainIds: [ARBITRUM, AVALANCHE],
     },
     {
-      title: "GMX Staking Calculator",
+      title: "HLP Staking Calculator",
       link: "https://gmxstaking.com",
       linkLabel: "gmxstaking.com",
-      about: "GMX staking calculator",
+      about: "HLP staking calculator",
       creatorLabel: "@n1njawtf",
       creatorLink: "https://t.me/n1njawtf",
       chainIds: [ARBITRUM, AVALANCHE],
@@ -156,25 +156,25 @@ export default function Ecosystem() {
 
   const dashboardProjects = [
     {
-      title: "GMX Referrals Dashboard",
+      title: "HLP Referrals Dashboard",
       link: "https://www.gmxreferrals.com/",
       linkLabel: "gmxreferrals.com",
-      about: "Dashboard for GMX referral stats",
+      about: "Dashboard for HLP referral stats",
       creatorLabel: "@kyzoeth",
       creatorLink: "https://twitter.com/kyzoeth",
       chainIds: [ARBITRUM, AVALANCHE],
     },
     {
-      title: "GMX Terminal",
+      title: "HLP Terminal",
       link: "https://gmxterminal.com",
       linkLabel: "gmxterminal.com",
-      about: "GMX explorer for stats and traders",
+      about: "HLP explorer for stats and traders",
       creatorLabel: "@vipineth",
       creatorLink: "https://t.me/vipineth",
       chainIds: [ARBITRUM],
     },
     {
-      title: "GMX Analytics",
+      title: "HLP Analytics",
       link: "https://gmxstats.com/",
       linkLabel: "gmxstats.com",
       about: "Financial reports and protocol analytics",
@@ -186,7 +186,7 @@ export default function Ecosystem() {
       title: "TokenTerminal",
       link: "https://tokenterminal.com/terminal/projects/gmx",
       linkLabel: "tokenterminal.com",
-      about: "GMX fundamentals",
+      about: "HLP fundamentals",
       creatorLabel: "@tokenterminal",
       creatorLink: "https://twitter.com/tokenterminal",
       chainIds: [ARBITRUM, AVALANCHE],
@@ -195,7 +195,7 @@ export default function Ecosystem() {
       title: "CryptoFees",
       link: "https://cryptofees.info",
       linkLabel: "cryptofees.info",
-      about: "Fees generated by GMX",
+      about: "Fees generated by HLP",
       creatorLabel: "@CryptoFeesInfo",
       creatorLink: "https://twitter.com/CryptoFeesInfo",
       chainIds: [ARBITRUM, AVALANCHE],
@@ -219,10 +219,10 @@ export default function Ecosystem() {
       chainIds: [AVALANCHE],
     },
     {
-      title: "GMX Perpetuals Data",
-      link: "https://app.laevitas.ch/altsderivs/GMX/perpetualswaps",
+      title: "HLP Perpetuals Data",
+      link: "https://app.laevitas.ch/altsderivs/HLP/perpetualswaps",
       linkLabel: "laevitas.ch",
-      about: "GMX Perpetuals Data",
+      about: "HLP Perpetuals Data",
       creatorLabel: "@laevitas1",
       creatorLink: "https://twitter.com/laevitas1",
       chainIds: [ARBITRUM],
@@ -236,7 +236,7 @@ export default function Ecosystem() {
       linkLabe: "debank.com",
       about: "DeFi Portfolio Tracker",
       announcementLabel: "twitter.com",
-      announcementLink: "https://twitter.com/GMX_IO/status/1439711532884152324",
+      announcementLink: "https://twitter.com/HLP_IO/status/1439711532884152324",
       chainIds: [ARBITRUM, AVALANCHE],
     },
     {
@@ -245,7 +245,7 @@ export default function Ecosystem() {
       linkLabel: "defillama.com",
       about: "Decentralized Finance Dashboard",
       announcementLabel: "twitter.com",
-      announcementLink: "https://twitter.com/GMX_IO/status/1438124768033660938",
+      announcementLink: "https://twitter.com/HLP_IO/status/1438124768033660938",
       chainIds: [ARBITRUM, AVALANCHE],
     },
     {
@@ -254,7 +254,7 @@ export default function Ecosystem() {
       linkLabel: "dopex.io",
       about: "Decentralized Options Protocol",
       announcementLabel: "twitter.com",
-      announcementLink: "https://twitter.com/GMX_IO/status/1482445801523716099",
+      announcementLink: "https://twitter.com/HLP_IO/status/1482445801523716099",
       chainIds: [ARBITRUM, AVALANCHE],
     },
     {
@@ -272,7 +272,7 @@ export default function Ecosystem() {
       linkLabel: "jonesdao.io",
       about: "Decentralized Options Strategies",
       announcementLabel: "twitter.com",
-      announcementLink: "https://twitter.com/GMX_IO/status/1482788805635678212",
+      announcementLink: "https://twitter.com/HLP_IO/status/1482788805635678212",
       chainIds: [ARBITRUM],
     },
     {
@@ -281,7 +281,7 @@ export default function Ecosystem() {
       linkLabel: "yieldyak.com",
       about: "Yield Optimizer on Avalanche",
       announcementLabel: "twitter.com",
-      announcementLink: "https://twitter.com/GMX_IO/status/1484601407378378754",
+      announcementLink: "https://twitter.com/HLP_IO/status/1484601407378378754",
       chainIds: [AVALANCHE],
     },
     {
@@ -308,7 +308,7 @@ export default function Ecosystem() {
       linkLabel: "dodoex.io",
       about: "Decentralized Trading Protocol",
       announcementLabel: "twitter.com",
-      announcementLink: "https://twitter.com/GMX_IO/status/1438899138549145605",
+      announcementLink: "https://twitter.com/HLP_IO/status/1438899138549145605",
       chainIds: [ARBITRUM, AVALANCHE],
     },
     {
@@ -317,7 +317,7 @@ export default function Ecosystem() {
       linkLabel: "openocean.finance",
       about: "DEX Aggregator",
       announcementLabel: "twitter.com",
-      announcementLink: "https://twitter.com/GMX_IO/status/1495780826016989191",
+      announcementLink: "https://twitter.com/HLP_IO/status/1495780826016989191",
       chainIds: [ARBITRUM, AVALANCHE],
     },
     {
@@ -335,7 +335,7 @@ export default function Ecosystem() {
       linkLabel: "1inch.io",
       about: "DEX Aggregator",
       announcementLabel: "twitter.com",
-      announcementLink: "https://twitter.com/GMX_IO/status/1522247451410845696",
+      announcementLink: "https://twitter.com/HLP_IO/status/1522247451410845696",
       chainIds: [ARBITRUM, AVALANCHE],
     },
     {
@@ -351,28 +351,28 @@ export default function Ecosystem() {
 
   const telegramGroups = [
     {
-      title: "GMX",
-      link: "https://t.me/GMX_IO",
+      title: "HLP",
+      link: "https://t.me/HLP_IO",
       linkLabel: "t.me",
       about: "Telegram Group",
     },
     {
-      title: "GMX (Chinese)",
+      title: "HLP (Chinese)",
       link: "https://t.me/gmxch",
       linkLabel: "t.me",
       about: "Telegram Group (Chinese)",
     },
     {
-      title: "GMX (Portuguese)",
-      link: "https://t.me/GMX_Portuguese",
+      title: "HLP (Portuguese)",
+      link: "https://t.me/HLP_Portuguese",
       linkLabel: "t.me",
       about: "Telegram Group (Portuguese)",
     },
     {
-      title: "GMX Trading Chat",
+      title: "HLP Trading Chat",
       link: "https://t.me/gambittradingchat",
       linkLabel: "t.me",
-      about: "GMX community discussion",
+      about: "HLP community discussion",
     },
   ];
 
@@ -384,10 +384,10 @@ export default function Ecosystem() {
             <div className="section-title-icon"></div>
             <div className="section-title-content">
               <div className="Page-title">
-                <Trans>GMX Pages</Trans>
+                <Trans>HLP Pages</Trans>
               </div>
               <div className="Page-description">
-                <Trans>GMX ecosystem pages.</Trans>
+                <Trans>HLP ecosystem pages.</Trans>
               </div>
             </div>
           </div>
@@ -432,7 +432,7 @@ export default function Ecosystem() {
               <Trans>Community Projects</Trans>
             </div>
             <div className="Page-description">
-              <Trans>Projects developed by the GMX community.</Trans>
+              <Trans>Projects developed by the HLP community.</Trans>
             </div>
           </div>
           <div className="DashboardV2-projects">
@@ -486,7 +486,7 @@ export default function Ecosystem() {
               <Trans>Dashboards</Trans>
             </div>
             <div className="Page-description">
-              <Trans>GMX dashboards and analytics.</Trans>
+              <Trans>HLP dashboards and analytics.</Trans>
             </div>
           </div>
           <div className="DashboardV2-projects">
@@ -541,7 +541,7 @@ export default function Ecosystem() {
               <Trans>Partnerships and Integrations</Trans>
             </div>
             <div className="Page-description">
-              <Trans>Projects integrated with GMX.</Trans>
+              <Trans>Projects integrated with HLP.</Trans>
             </div>
           </div>
           <div className="DashboardV2-projects">

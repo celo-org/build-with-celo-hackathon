@@ -24,12 +24,12 @@ import {
   getChainName,
   useChainId,
   USD_DECIMALS,
-  GMX_DECIMALS,
-  GLP_DECIMALS,
+  HLP_DECIMALS,
+  THLP_DECIMALS,
   BASIS_POINTS_DIVISOR,
   ARBITRUM,
   AVALANCHE,
-  GLPPOOLCOLORS,
+  THLPPOOLCOLORS,
   DEFAULT_MAX_USDG_AMOUNT,
   getPageTitle,
   importImage,
@@ -52,7 +52,7 @@ import Footer from "../../components/Footer/Footer";
 
 import "./DashboardV2.css";
 
-import gmx40Icon from "../../img/ic_gmx_40.svg";
+import gmx40Icon from "../../img/ic_helpi_40.png";
 import glp40Icon from "../../img/ic_glp_40.svg";
 import avalanche16Icon from "../../img/ic_avalanche_16.svg";
 import arbitrum16Icon from "../../img/ic_arbitrum_16.svg";
@@ -181,8 +181,8 @@ export default function DashboardV2() {
   const vaultAddress = getContract(chainId, "Vault");
   const glpManagerAddress = getContract(chainId, "GlpManager");
 
-  const gmxAddress = getContract(chainId, "GMX");
-  const glpAddress = getContract(chainId, "GLP");
+  const gmxAddress = getContract(chainId, "HLP");
+  const glpAddress = getContract(chainId, "THLP");
   const usdgAddress = getContract(chainId, "USDG");
 
   const tokensForSupplyQuery = [gmxAddress, glpAddress, usdgAddress];
@@ -281,12 +281,12 @@ export default function DashboardV2() {
 
   let gmxMarketCap;
   if (gmxPrice && totalGmxSupply) {
-    gmxMarketCap = gmxPrice.mul(totalGmxSupply).div(expandDecimals(1, GMX_DECIMALS));
+    gmxMarketCap = gmxPrice.mul(totalGmxSupply).div(expandDecimals(1, HLP_DECIMALS));
   }
 
   let stakedGmxSupplyUsd;
   if (gmxPrice && totalStakedGmx) {
-    stakedGmxSupplyUsd = totalStakedGmx.mul(gmxPrice).div(expandDecimals(1, GMX_DECIMALS));
+    stakedGmxSupplyUsd = totalStakedGmx.mul(gmxPrice).div(expandDecimals(1, HLP_DECIMALS));
   }
 
   let aum;
@@ -301,14 +301,14 @@ export default function DashboardV2() {
     glpSupply = totalSupplies[3];
     glpPrice =
       aum && aum.gt(0) && glpSupply.gt(0)
-        ? aum.mul(expandDecimals(1, GLP_DECIMALS)).div(glpSupply)
+        ? aum.mul(expandDecimals(1, THLP_DECIMALS)).div(glpSupply)
         : expandDecimals(1, USD_DECIMALS);
-    glpMarketCap = glpPrice.mul(glpSupply).div(expandDecimals(1, GLP_DECIMALS));
+    glpMarketCap = glpPrice.mul(glpSupply).div(expandDecimals(1, THLP_DECIMALS));
   }
 
   let tvl;
   if (glpMarketCap && gmxPrice && totalStakedGmx) {
-    tvl = glpMarketCap.add(gmxPrice.mul(totalStakedGmx).div(expandDecimals(1, GMX_DECIMALS)));
+    tvl = glpMarketCap.add(gmxPrice.mul(totalStakedGmx).div(expandDecimals(1, HLP_DECIMALS)));
   }
 
   const ethFloorPriceFund = expandDecimals(350 + 148 + 384, 18);
@@ -381,7 +381,7 @@ export default function DashboardV2() {
                   <br />
                   Get lower fees to{" "}
                   <Link to="/buy_glp" target="_blank" rel="noopener noreferrer">
-                    buy GLP
+                    buy THLP
                   </Link>{" "}
                   with {tokenInfo.symbol},&nbsp; and to{" "}
                   <Link to="/trade" target="_blank" rel="noopener noreferrer">
@@ -485,24 +485,24 @@ export default function DashboardV2() {
     else return -1;
   });
 
-  const [gmxActiveIndex, setGMXActiveIndex] = useState(null);
+  const [gmxActiveIndex, setHLPActiveIndex] = useState(null);
 
-  const onGMXDistributionChartEnter = (_, index) => {
-    setGMXActiveIndex(index);
+  const onHLPDistributionChartEnter = (_, index) => {
+    setHLPActiveIndex(index);
   };
 
-  const onGMXDistributionChartLeave = (_, index) => {
-    setGMXActiveIndex(null);
+  const onHLPDistributionChartLeave = (_, index) => {
+    setHLPActiveIndex(null);
   };
 
-  const [glpActiveIndex, setGLPActiveIndex] = useState(null);
+  const [glpActiveIndex, setTHLPActiveIndex] = useState(null);
 
-  const onGLPPoolChartEnter = (_, index) => {
-    setGLPActiveIndex(index);
+  const onTHLPPoolChartEnter = (_, index) => {
+    setTHLPActiveIndex(index);
   };
 
-  const onGLPPoolChartLeave = (_, index) => {
-    setGLPActiveIndex(null);
+  const onTHLPPoolChartLeave = (_, index) => {
+    setTHLPActiveIndex(null);
   };
 
   const CustomTooltip = ({ active, payload }) => {
@@ -561,19 +561,19 @@ export default function DashboardV2() {
                       handle={`$${formatAmount(tvl, USD_DECIMALS, 0, true)}`}
                       position="right-bottom"
                       renderContent={() => (
-                        <span className="label">{t`Assets Under Management: GMX staked (All chains) + GLP pool (${chainName})`}</span>
+                        <span className="label">{t`Assets Under Management: HLP staked (All chains) + THLP pool (${chainName})`}</span>
                       )}
                     />
                   </div>
                 </div>
                 <div className="App-card-row">
-                  <div className="label">GLP Pool</div>
+                  <div className="label">THLP Pool</div>
                   <div>
                     <TooltipComponent
                       handle={`$${formatAmount(aum, USD_DECIMALS, 0, true)}`}
                       position="right-bottom"
                       renderContent={() => (
-                        <span className="label">{t`Total value of tokens in GLP pool (${chainName})`}</span>
+                        <span className="label">{t`Total value of tokens in THLP pool (${chainName})`}</span>
                       )}
                     />
                   </div>
@@ -734,7 +734,7 @@ export default function DashboardV2() {
               {chainId === ARBITRUM && <img src={arbitrum24Icon} alt="arbitrum24Icon" />}
             </div>
             <div className="Page-description">
-              <Trans>Platform and GLP index tokens.</Trans>
+              <Trans>Platform and THLP index tokens.</Trans>
             </div>
           </div>
           <div className="DashboardV2-token-cards">
@@ -747,11 +747,11 @@ export default function DashboardV2() {
                         <img src={gmx40Icon} alt="gmx40Icon" />
                       </div>
                       <div className="App-card-title-mark-info">
-                        <div className="App-card-title-mark-title">GMX</div>
-                        <div className="App-card-title-mark-subtitle">GMX</div>
+                        <div className="App-card-title-mark-title">HLP</div>
+                        <div className="App-card-title-mark-subtitle">HLP</div>
                       </div>
                       <div>
-                        <AssetDropdown assetSymbol="GMX" />
+                        <AssetDropdown assetSymbol="HLP" />
                       </div>
                     </div>
                   </div>
@@ -788,7 +788,7 @@ export default function DashboardV2() {
                       <div className="label">
                         <Trans>Supply</Trans>
                       </div>
-                      <div>{formatAmount(totalGmxSupply, GMX_DECIMALS, 0, true)} GMX</div>
+                      <div>{formatAmount(totalGmxSupply, HLP_DECIMALS, 0, true)} HLP</div>
                     </div>
                     <div className="App-card-row">
                       <div className="label">
@@ -805,7 +805,7 @@ export default function DashboardV2() {
                               arbitrum={arbitrumStakedGmx}
                               avax={avaxStakedGmx}
                               total={totalStakedGmx}
-                              decimalsForConversion={GMX_DECIMALS}
+                              decimalsForConversion={HLP_DECIMALS}
                               showDollar={false}
                             />
                           )}
@@ -820,7 +820,7 @@ export default function DashboardV2() {
                     </div>
                   </div>
                 </div>
-                <div className="stats-piechart" onMouseLeave={onGMXDistributionChartLeave}>
+                <div className="stats-piechart" onMouseLeave={onHLPDistributionChartLeave}>
                   {gmxDistributionData.length > 0 && (
                     <PieChart width={210} height={210}>
                       <Pie
@@ -834,9 +834,9 @@ export default function DashboardV2() {
                         startAngle={90}
                         endAngle={-270}
                         paddingAngle={2}
-                        onMouseEnter={onGMXDistributionChartEnter}
-                        onMouseOut={onGMXDistributionChartLeave}
-                        onMouseLeave={onGMXDistributionChartLeave}
+                        onMouseEnter={onHLPDistributionChartEnter}
+                        onMouseOut={onHLPDistributionChartLeave}
+                        onMouseLeave={onHLPDistributionChartLeave}
                       >
                         {gmxDistributionData.map((entry, index) => (
                           <Cell
@@ -875,11 +875,11 @@ export default function DashboardV2() {
                         )}
                       </div>
                       <div className="App-card-title-mark-info">
-                        <div className="App-card-title-mark-title">GLP</div>
-                        <div className="App-card-title-mark-subtitle">GLP</div>
+                        <div className="App-card-title-mark-title">THLP</div>
+                        <div className="App-card-title-mark-subtitle">THLP</div>
                       </div>
                       <div>
-                        <AssetDropdown assetSymbol="GLP" />
+                        <AssetDropdown assetSymbol="THLP" />
                       </div>
                     </div>
                   </div>
@@ -895,7 +895,7 @@ export default function DashboardV2() {
                       <div className="label">
                         <Trans>Supply</Trans>
                       </div>
-                      <div>{formatAmount(glpSupply, GLP_DECIMALS, 0, true)} GLP</div>
+                      <div>{formatAmount(glpSupply, THLP_DECIMALS, 0, true)} THLP</div>
                     </div>
                     <div className="App-card-row">
                       <div className="label">
@@ -917,7 +917,7 @@ export default function DashboardV2() {
                     </div>
                   </div>
                 </div>
-                <div className="stats-piechart" onMouseOut={onGLPPoolChartLeave}>
+                <div className="stats-piechart" onMouseOut={onTHLPPoolChartLeave}>
                   {glpPool.length > 0 && (
                     <PieChart width={210} height={210}>
                       <Pie
@@ -930,29 +930,29 @@ export default function DashboardV2() {
                         dataKey="value"
                         startAngle={90}
                         endAngle={-270}
-                        onMouseEnter={onGLPPoolChartEnter}
-                        onMouseOut={onGLPPoolChartLeave}
-                        onMouseLeave={onGLPPoolChartLeave}
+                        onMouseEnter={onTHLPPoolChartEnter}
+                        onMouseOut={onTHLPPoolChartLeave}
+                        onMouseLeave={onTHLPPoolChartLeave}
                         paddingAngle={2}
                       >
                         {glpPool.map((entry, index) => (
                           <Cell
                             key={`cell-${index}`}
-                            fill={GLPPOOLCOLORS[entry.name]}
+                            fill={THLPPOOLCOLORS[entry.name]}
                             style={{
                               filter:
                                 glpActiveIndex === index
-                                  ? `drop-shadow(0px 0px 6px ${hexToRgba(GLPPOOLCOLORS[entry.name], 0.7)})`
+                                  ? `drop-shadow(0px 0px 6px ${hexToRgba(THLPPOOLCOLORS[entry.name], 0.7)})`
                                   : "none",
                               cursor: "pointer",
                             }}
-                            stroke={GLPPOOLCOLORS[entry.name]}
+                            stroke={THLPPOOLCOLORS[entry.name]}
                             strokeWidth={glpActiveIndex === index ? 1 : 1}
                           />
                         ))}
                       </Pie>
                       <text x={"50%"} y={"50%"} fill="white" textAnchor="middle" dominantBaseline="middle">
-                        GLP Pool
+                        THLP Pool
                       </text>
                       <Tooltip content={<CustomTooltip />} />
                     </PieChart>
@@ -962,7 +962,7 @@ export default function DashboardV2() {
             </div>
             <div className="token-table-wrapper App-card">
               <div className="App-card-title">
-                <Trans>GLP Index Composition</Trans>{" "}
+                <Trans>THLP Index Composition</Trans>{" "}
                 {chainId === AVALANCHE && <img src={avalanche16Icon} alt="avalanche16Icon" />}
                 {chainId === ARBITRUM && <img src={arbitrum16Icon} alt="arbitrum16Icon" />}
               </div>

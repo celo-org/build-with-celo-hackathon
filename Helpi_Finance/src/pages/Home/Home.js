@@ -40,20 +40,20 @@ export default function Home({ showRedirectModal, redirectPopupTimestamp }) {
   // const [openedFAQIndex, setOpenedFAQIndex] = useState(null)
   // const faqContent = [{
   //   id: 1,
-  //   question: "What is GMX?",
-  //   answer: "GMX is a decentralized spot and perpetual exchange that supports low swap fees and zero price impact trades.<br><br>Trading is supported by a unique multi-asset pool that earns liquidity providers fees from market making, swap fees, leverage trading (spreads, funding fees & liquidations), and asset rebalancing.<br><br>Dynamic pricing is supported by Chainlink Oracles along with TWAP pricing from leading volume DEXs."
+  //   question: "What is HLP?",
+  //   answer: "HLP is a decentralized spot and perpetual exchange that supports low swap fees and zero price impact trades.<br><br>Trading is supported by a unique multi-asset pool that earns liquidity providers fees from market making, swap fees, leverage trading (spreads, funding fees & liquidations), and asset rebalancing.<br><br>Dynamic pricing is supported by Chainlink Oracles along with TWAP pricing from leading volume DEXs."
   // }, {
   //   id: 2,
-  //   question: "What is the GMX Governance Token? ",
-  //   answer: "The GMX token is the governance token of the GMX ecosystem, it provides the token owner voting rights on the direction of the GMX platform.<br><br>Additionally, when GMX is staked you will earn 30% of the platform-generated fees, you will also earn Escrowed GMX tokens and Multiplier Points."
+  //   question: "What is the HLP Governance Token? ",
+  //   answer: "The HLP token is the governance token of the HLP ecosystem, it provides the token owner voting rights on the direction of the HLP platform.<br><br>Additionally, when HLP is staked you will earn 30% of the platform-generated fees, you will also earn Escrowed HLP tokens and Multiplier Points."
   // }, {
   //   id: 3,
-  //   question: "What is the GLP Token? ",
-  //   answer: "The GLP token represents the liquidity users provide to the GMX platform for Swaps and Margin Trading.<br><br>To provide liquidity to GLP you <a href='https://gmx.io/buy_glp' target='_blank'>trade</a> your crypto asset BTC, ETH, LINK, UNI, USDC, USDT, MIM, or FRAX to the liquidity pool, in exchange, you gain exposure to a diversified index of tokens while earning 50% of the platform trading fees and esGMX."
+  //   question: "What is the THLP Token? ",
+  //   answer: "The THLP token represents the liquidity users provide to the HLP platform for Swaps and Margin Trading.<br><br>To provide liquidity to THLP you <a href='https://gmx.io/buy_glp' target='_blank'>trade</a> your crypto asset BTC, ETH, LINK, UNI, USDC, USDT, MIM, or FRAX to the liquidity pool, in exchange, you gain exposure to a diversified index of tokens while earning 50% of the platform trading fees and esHLP."
   // }, {
   //   id: 4,
-  //   question: "What can I trade on GMX? ",
-  //   answer: "On GMX you can swap or margin trade any of the following assets: ETH, BTC, LINK, UNI, USDC, USDT, MIM, FRAX, with others to be added. "
+  //   question: "What can I trade on HLP? ",
+  //   answer: "On HLP you can swap or margin trade any of the following assets: ETH, BTC, LINK, UNI, USDC, USDT, MIM, FRAX, with others to be added. "
   // }]
 
   // const toggleFAQContent = function(index) {
@@ -250,7 +250,7 @@ export default function Home({ showRedirectModal, redirectPopupTimestamp }) {
               <Trans>Available on your preferred network</Trans>
             </div>
             <div className="Home-cta-info__description">
-              <Trans>GMX is currently live on Arbitrum and Avalanche.</Trans>
+              <Trans>HLP is currently live on Arbitrum and Avalanche.</Trans>
             </div>
           </div>
           <div className="Home-cta-options">

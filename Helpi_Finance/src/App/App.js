@@ -65,10 +65,10 @@ import "react-toastify/dist/ReactToastify.css";
 import Modal from "../components/Modal/Modal";
 import Checkbox from "../components/Checkbox/Checkbox";
 
-import "../styles/Shared.css";
 import "../styles/Font.css";
-import "./App.css"; 
 import "../styles/Input.css";
+import "../styles/Shared.css";
+import "./App.css";
 
 import metamaskImg from "../img/metamask.png";
 import coinbaseImg from "../img/coinbaseWallet.png";
@@ -206,9 +206,9 @@ function FullApp() {
             <Trans>Install MetaMask</Trans>
           </a>
           {userOnMobileDevice ? (
-            <Trans>, and use GMX with its built-in browser</Trans>
+            <Trans>, and use HLP with its built-in browser</Trans>
           ) : (
-            <Trans> to start using GMX</Trans>
+            <Trans> to start using HLP</Trans>
           )}
           .
         </div>
@@ -228,9 +228,9 @@ function FullApp() {
             <Trans>Install Coinbase Wallet</Trans>
           </a>
           {userOnMobileDevice ? (
-            <Trans>, and use GMX with its built-in browser</Trans>
+            <Trans>, and use HLP with its built-in browser</Trans>
           ) : (
-            <Trans> to start using GMX</Trans>
+            <Trans> to start using HLP</Trans>
           )}
           .
         </div>
@@ -459,7 +459,7 @@ function FullApp() {
             <Switch>
               <Route exact path="/">
                 {/* <Redirect to="/dashboard" /> */}
-                <Home/>
+                <Home />
               </Route>
               <Route exact path="/trade">
                 <Exchange

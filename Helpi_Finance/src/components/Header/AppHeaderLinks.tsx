@@ -1,6 +1,6 @@
 import { FiX } from "react-icons/fi";
 import { HeaderLink } from "./HeaderLink";
-import logoImg from "../../img/logo_GMX.svg";
+import logoImg from "../../img/logo_helpi.png";
 
 import "./Header.css";
 import { isHomeSite } from "../../lib/legacy";
@@ -28,7 +28,7 @@ export function AppHeaderLinks({
       {small && (
         <div className="App-header-links-header">
           <Link className="App-header-link-main" to="/">
-            <img src={logoImg} alt="GMX Logo" />
+            <img src={logoImg} alt="HLP Logo" />
           </Link>
           <div
             className="App-header-menu-icon-block mobile-cross-menu"
@@ -75,11 +75,11 @@ export function AppHeaderLinks({
           <Trans>Ecosystem</Trans>
         </HeaderLink>
       </div>
-      <div className="App-header-link-container">
+      {/* <div className="App-header-link-container">
         <a href="https://gmxio.gitbook.io/gmx/" target="_blank" rel="noopener noreferrer">
           <Trans>About</Trans>
         </a>
-      </div>
+      </div> */}
       {small && !isHomeSite() && (
         <div className="App-header-link-container">
           {/* eslint-disable-next-line */}

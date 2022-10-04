@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Trans } from "@lingui/macro";
 
-import gmxBigIcon from "../../img/ic_gmx_custom.svg";
+import gmxBigIcon from "../../img/ic_helpi_custom.png";
 import glpBigIcon from "../../img/ic_glp_custom.svg";
 
 import { ARBITRUM, AVALANCHE, switchNetwork, useChainId, isHomeSite } from "../../lib/legacy";
@@ -58,11 +58,11 @@ export default function TokenCard({ showRedirectModal, redirectPopupTimestamp })
     <div className="Home-token-card-options">
       <div className="Home-token-card-option">
         <div className="Home-token-card-option-icon">
-          <img src={gmxBigIcon} alt="gmxBigIcon" /> GMX
+          <img src={gmxBigIcon} alt="gmxBigIcon" /> HLP
         </div>
         <div className="Home-token-card-option-info">
           <div className="Home-token-card-option-title">
-            <Trans>GMX is the utility and governance token. Accrues 30% of the platform's generated fees.</Trans>
+            <Trans>HLP is the utility and governance token. Accrues 30% of the platform's generated fees.</Trans>
           </div>
           <div className="Home-token-card-option-apr">
             <Trans>Arbitrum APR:</Trans> <APRLabel chainId={ARBITRUM} label="gmxAprTotal" />,{" "}
@@ -90,11 +90,11 @@ export default function TokenCard({ showRedirectModal, redirectPopupTimestamp })
       </div>
       <div className="Home-token-card-option">
         <div className="Home-token-card-option-icon">
-          <img src={glpBigIcon} alt="glpBigIcon" /> GLP
+          <img src={glpBigIcon} alt="glpBigIcon" /> THLP
         </div>
         <div className="Home-token-card-option-info">
           <div className="Home-token-card-option-title">
-            <Trans>GLP is the liquidity provider token. Accrues 70% of the platform's generated fees.</Trans>
+            <Trans>THLP is the liquidity provider token. Accrues 70% of the platform's generated fees.</Trans>
           </div>
           <div className="Home-token-card-option-apr">
             <Trans>Arbitrum APR:</Trans> <APRLabel chainId={ARBITRUM} label="glpAprTotal" key="ARBITRUM" />,{" "}

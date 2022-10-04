@@ -3,22 +3,22 @@ import { Trans } from "@lingui/macro";
 import Footer from "../../components/Footer/Footer";
 import "./Buy.css";
 import TokenCard from "../../components/TokenCard/TokenCard";
-import buyGMXIcon from "../../img/buy_gmx.svg";
+import buyHLPIcon from "../../img/buy_gmx.svg";
 import SEO from "../../components/Common/SEO";
 import { getPageTitle } from "../../lib/legacy";
 
-export default function BuyGMXGLP() {
+export default function BuyHLPTHLP() {
   return (
-    <SEO title={getPageTitle("Buy GLP or GMX")}>
-      <div className="BuyGMXGLP page-layout">
-        <div className="BuyGMXGLP-container default-container">
+    <SEO title={getPageTitle("Buy THLP or HLP")}>
+      <div className="BuyHLPTHLP page-layout">
+        <div className="BuyHLPTHLP-container default-container">
           <div className="section-title-block">
             <div className="section-title-icon">
-              <img src={buyGMXIcon} alt="buyGMXIcon" />
+              <img src={buyHLPIcon} alt="buyHLPIcon" />
             </div>
             <div className="section-title-content">
               <div className="Page-title">
-                <Trans>Buy GMX or GLP</Trans>
+                <Trans>Buy HLP or THLP</Trans>
               </div>
             </div>
           </div>

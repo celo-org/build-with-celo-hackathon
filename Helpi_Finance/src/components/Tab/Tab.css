@@ -12,6 +12,8 @@
 .Tab-option-icon {
   margin-right: 0.465rem;
   opacity: 0.7;
+  color: #000000 !important;
+  
 }
 
 .Tab.block .Tab-option {
@@ -24,18 +26,20 @@
 }
 
 .Tab.block .Tab-option:hover {
-  color: rgba(255, 255, 255, 1);
-  background: linear-gradient(90deg, rgba(35, 57, 172, 1) 0%, rgba(43, 59, 147, 1) 100%);
+  color: #000000 !important;
+  background: linear-gradient(90deg, rgba(45, 252, 142, 1) 0%, rgba(0, 255, 119, 1) 100%);
+
 }
 
 .Tab.block .Tab-option.active {
   opacity: 1;
   pointer-events: none;
-  background: linear-gradient(90deg, rgba(45, 66, 252, 1) 0%, rgba(46, 61, 205, 1) 100%);
-  color: rgba(255, 255, 255, 1);
+  background: linear-gradient(90deg, rgba(45, 252, 142, 1) 0%, rgba(0, 255, 119, 1) 100%);
+  color: #000000 !important;
 }
 
 .Tab.block .Tab-option.active .Tab-option-icon {
+  color: #000000 !important;
   opacity: 1;
 }
 

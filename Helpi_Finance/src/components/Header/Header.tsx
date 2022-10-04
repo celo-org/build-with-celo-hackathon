@@ -4,8 +4,8 @@ import cx from "classnames";
 import { AppHeaderUser } from "./AppHeaderUser";
 import { AppHeaderLinks } from "./AppHeaderLinks";
 
-import logoImg from "../../img/logo_GMX.svg";
-import logoSmallImg from "../../img/logo_GMX_small.svg";
+import logoImg from "../../img/logo_helpi.png";
+import logoSmallImg from "../../img/logo_helpi_small.png";
 import { RiMenuLine } from "react-icons/ri";
 import { FaTimes } from "react-icons/fa";
 import { AnimatePresence as FramerAnimatePresence, motion } from "framer-motion";
@@ -94,8 +94,8 @@ export function Header({
         <div className="App-header large">
           <div className="App-header-container-left">
             <Link className="App-header-link-main" to="/">
-              <img src={logoImg} className="big" alt="GMX Logo" />
-              <img src={logoSmallImg} className="small" alt="GMX Logo" />
+              <img src={logoImg} className="big" alt="HLP Logo" />
+              <img src={logoSmallImg} className="small" alt="HLP Logo" />
             </Link>
             <AppHeaderLinks redirectPopupTimestamp={redirectPopupTimestamp} showRedirectModal={showRedirectModal} />
           </div>
@@ -121,8 +121,8 @@ export function Header({
                 {isDrawerVisible && <FaTimes className="App-header-menu-icon" />}
               </div>
               <div className="App-header-link-main clickable" onClick={() => setIsDrawerVisible(!isDrawerVisible)}>
-                <img src={logoImg} className="big" alt="GMX Logo" />
-                <img src={logoSmallImg} className="small" alt="GMX Logo" />
+                <img src={logoImg} className="big" alt="HLP Logo" />
+                <img src={logoSmallImg} className="small" alt="HLP Logo" />
               </div>
             </div>
             <div className="App-header-container-right">

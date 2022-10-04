@@ -481,7 +481,7 @@ export function useMinExecutionFee(library, active, chainId, infoTokens) {
 }
 
 export function useStakedGmxSupply(library, active) {
-  const gmxAddressArb = getContract(ARBITRUM, "GMX");
+  const gmxAddressArb = getContract(ARBITRUM, "HLP");
   const stakedGmxTrackerAddressArb = getContract(ARBITRUM, "StakedGmxTracker");
 
   const { data: arbData, mutate: arbMutate } = useSWR(
@@ -491,7 +491,7 @@ export function useStakedGmxSupply(library, active) {
     }
   );
 
-  const gmxAddressAvax = getContract(AVALANCHE, "GMX");
+  const gmxAddressAvax = getContract(AVALANCHE, "HLP");
   const stakedGmxTrackerAddressAvax = getContract(AVALANCHE, "StakedGmxTracker");
 
   const { data: avaxData, mutate: avaxMutate } = useSWR(
@@ -570,7 +570,7 @@ export function useTotalGmxStaked() {
     [
       `StakeV2:stakedGmxSupply:${ARBITRUM}`,
       ARBITRUM,
-      getContract(ARBITRUM, "GMX"),
+      getContract(ARBITRUM, "HLP"),
       "balanceOf",
       stakedGmxTrackerAddressArbitrum,
     ],
@@ -582,7 +582,7 @@ export function useTotalGmxStaked() {
     [
       `StakeV2:stakedGmxSupply:${AVALANCHE}`,
       AVALANCHE,
-      getContract(AVALANCHE, "GMX"),
+      getContract(AVALANCHE, "HLP"),
       "balanceOf",
       stakedGmxTrackerAddressAvax,
     ],
@@ -612,33 +612,33 @@ export function useTotalGmxStaked() {
 export function useTotalGmxInLiquidity() {
   let poolAddressArbitrum = getContract(ARBITRUM, "UniswapGmxEthPool");
   let poolAddressAvax = getContract(AVALANCHE, "TraderJoeGmxAvaxPool");
-  let totalGMX = useRef(bigNumberify(0));
+  let totalHLP = useRef(bigNumberify(0));
 
-  const { data: gmxInLiquidityOnArbitrum, mutate: mutateGMXInLiquidityOnArbitrum } = useSWR(
-    [`StakeV2:gmxInLiquidity:${ARBITRUM}`, ARBITRUM, getContract(ARBITRUM, "GMX"), "balanceOf", poolAddressArbitrum],
+  const { data: gmxInLiquidityOnArbitrum, mutate: mutateHLPInLiquidityOnArbitrum } = useSWR(
+    [`StakeV2:gmxInLiquidity:${ARBITRUM}`, ARBITRUM, getContract(ARBITRUM, "HLP"), "balanceOf", poolAddressArbitrum],
     {
       fetcher: fetcher(undefined, Token),
     }
   );
-  const { data: gmxInLiquidityOnAvax, mutate: mutateGMXInLiquidityOnAvax } = useSWR(
-    [`StakeV2:gmxInLiquidity:${AVALANCHE}`, AVALANCHE, getContract(AVALANCHE, "GMX"), "balanceOf", poolAddressAvax],
+  const { data: gmxInLiquidityOnAvax, mutate: mutateHLPInLiquidityOnAvax } = useSWR(
+    [`StakeV2:gmxInLiquidity:${AVALANCHE}`, AVALANCHE, getContract(AVALANCHE, "HLP"), "balanceOf", poolAddressAvax],
     {
       fetcher: fetcher(undefined, Token),
     }
   );
   const mutate = useCallback(() => {
-    mutateGMXInLiquidityOnArbitrum();
-    mutateGMXInLiquidityOnAvax();
-  }, [mutateGMXInLiquidityOnArbitrum, mutateGMXInLiquidityOnAvax]);
+    mutateHLPInLiquidityOnArbitrum();
+    mutateHLPInLiquidityOnAvax();
+  }, [mutateHLPInLiquidityOnArbitrum, mutateHLPInLiquidityOnAvax]);
 
   if (gmxInLiquidityOnAvax && gmxInLiquidityOnArbitrum) {
     let total = bigNumberify(gmxInLiquidityOnArbitrum).add(gmxInLiquidityOnAvax);
-    totalGMX.current = total;
+    totalHLP.current = total;
   }
   return {
     avax: gmxInLiquidityOnAvax,
     arbitrum: gmxInLiquidityOnArbitrum,
-    total: totalGMX.current,
+    total: totalHLP.current,
     mutate,
   };
 }
@@ -696,7 +696,7 @@ function useGmxPriceFromArbitrum(library, active) {
     if (uniPoolSlot0 && ethPrice) {
       const tokenA = new UniToken(ARBITRUM, ethAddress, 18, "SYMBOL", "NAME");
 
-      const gmxAddress = getContract(ARBITRUM, "GMX");
+      const gmxAddress = getContract(ARBITRUM, "HLP");
       const tokenB = new UniToken(ARBITRUM, gmxAddress, 18, "SYMBOL", "NAME");
 
       const pool = new Pool(

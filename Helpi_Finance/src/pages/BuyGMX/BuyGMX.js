@@ -19,7 +19,7 @@ import ohmArbitrum from "../../img/ic_olympus_arbitrum.svg";
 import { Trans } from "@lingui/macro";
 import Button from "../../components/Common/Button";
 
-export default function BuyGMX() {
+export default function BuyHLP() {
   const { chainId } = useChainId();
   const { active } = useWeb3React();
 
@@ -34,8 +34,8 @@ export default function BuyGMX() {
   );
 
   return (
-    <div className="BuyGMXGLP default-container page-layout">
-      <div className="BuyGMXGLP-container">
+    <div className="BuyHLPTHLP default-container page-layout">
+      <div className="BuyHLPTHLP-container">
         {chainId === ARBITRUM && (
           <div className="section-title-block">
             <div className="section-title-content">
@@ -43,10 +43,10 @@ export default function BuyGMX() {
                 <Trans>Buy / Transfer ETH</Trans>
               </div>
               <div className="Page-description">
-                <Trans>ETH is needed on Arbitrum to purchase GMX.</Trans>
+                <Trans>ETH is needed on Arbitrum to purchase HLP.</Trans>
                 <br />
                 <Trans>
-                  To purchase GMX on <span onClick={() => onNetworkSelect(AVALANCHE)}>Avalanche</span>, please change
+                  To purchase HLP on <span onClick={() => onNetworkSelect(AVALANCHE)}>Avalanche</span>, please change
                   your network.
                 </Trans>
               </div>
@@ -54,14 +54,14 @@ export default function BuyGMX() {
           </div>
         )}
         {chainId === ARBITRUM && (
-          <div className="BuyGMXGLP-panel">
+          <div className="BuyHLPTHLP-panel">
             <div className="App-card no-height">
               <div className="App-card-title">
                 <Trans>Buy ETH</Trans>
               </div>
               <div className="App-card-divider"></div>
               <div className="App-card-content">
-                <div className="BuyGMXGLP-description">
+                <div className="BuyHLPTHLP-description">
                   <Trans>
                     You can buy ETH directly on{" "}
                     <a href="https://arbitrum.io/" target="_blank" rel="noopener noreferrer">
@@ -86,7 +86,7 @@ export default function BuyGMX() {
               </div>
               <div className="App-card-divider"></div>
               <div className="App-card-content">
-                <div className="BuyGMXGLP-description">
+                <div className="BuyHLPTHLP-description">
                   <Trans>You can transfer ETH from other networks to Arbitrum using any of the below options:</Trans>
                 </div>
                 <div className="bridge-options">
@@ -122,11 +122,11 @@ export default function BuyGMX() {
                 <Trans>Buy / Transfer AVAX</Trans>
               </div>
               <div className="Page-description">
-                <Trans>Avax is needed on Avalanche to purchase GMX.</Trans>
+                <Trans>Avax is needed on Avalanche to purchase HLP.</Trans>
                 <br />
                 <Trans>
                   {" "}
-                  To purchase GMX on <span onClick={() => onNetworkSelect(ARBITRUM)}>Arbitrum</span>, please change your
+                  To purchase HLP on <span onClick={() => onNetworkSelect(ARBITRUM)}>Arbitrum</span>, please change your
                   network.
                 </Trans>
               </div>
@@ -134,14 +134,14 @@ export default function BuyGMX() {
           </div>
         )}
         {chainId === AVALANCHE && (
-          <div className="BuyGMXGLP-panel">
+          <div className="BuyHLPTHLP-panel">
             <div className="App-card no-height">
               <div className="App-card-title">
                 <Trans>Buy AVAX</Trans>
               </div>
               <div className="App-card-divider"></div>
               <div className="App-card-content">
-                <div className="BuyGMXGLP-description">
+                <div className="BuyHLPTHLP-description">
                   <Trans>
                     You can buy AVAX directly on{" "}
                     <a href="https://www.avax.network/" target="_blank" rel="noopener noreferrer">
@@ -166,7 +166,7 @@ export default function BuyGMX() {
               </div>
               <div className="App-card-divider"></div>
               <div className="App-card-content">
-                <div className="BuyGMXGLP-description">
+                <div className="BuyHLPTHLP-description">
                   <Trans>You can transfer AVAX to Avalanche using any of the below options.</Trans> <br />
                   <br />
                   <Trans>
@@ -193,16 +193,16 @@ export default function BuyGMX() {
           </div>
         )}
         {chainId === AVALANCHE && (
-          <div className="BuyGMXGLP-panel">
+          <div className="BuyHLPTHLP-panel">
             <div className="buy-card">
               <div className="section-title-content">
                 <div className="card-title">
-                  <Trans>Buy GMX</Trans>
+                  <Trans>Buy HLP</Trans>
                 </div>
               </div>
               <div className="App-card no-height">
                 <div className="App-card-content no-title">
-                  <div className="BuyGMXGLP-description better-rates-description">
+                  <div className="BuyHLPTHLP-description better-rates-description">
                     <Trans>
                       After you have ETH, set your network to{" "}
                       <a href="https://arbitrum.io/bridge-tutorial/" target="_blank" rel="noopener noreferrer">
@@ -217,7 +217,7 @@ export default function BuyGMX() {
                       imgSrc={gmxAvax}
                       href="https://traderjoexyz.com/trade?outputCurrency=0x62edc0692BD897D2295872a9FFCac5425011c661#/"
                     >
-                      <Trans>Purchase GMX</Trans>
+                      <Trans>Purchase HLP</Trans>
                     </Button>
                   </div>
                 </div>
@@ -227,16 +227,16 @@ export default function BuyGMX() {
         )}
 
         {chainId === ARBITRUM && (
-          <div className="BuyGMXGLP-panel">
+          <div className="BuyHLPTHLP-panel">
             <div className="buy-card">
               <div className="section-title-content">
                 <div className="card-title">
-                  <Trans>Buy GMX</Trans>
+                  <Trans>Buy HLP</Trans>
                 </div>
               </div>
               <div className="App-card no-height">
                 <div className="App-card-content no-title">
-                  <div className="BuyGMXGLP-description better-rates-description">
+                  <div className="BuyHLPTHLP-description better-rates-description">
                     <Trans>
                       After you have ETH, set your network to{" "}
                       <a href="https://arbitrum.io/bridge-tutorial/" target="_blank" rel="noopener noreferrer">
@@ -251,7 +251,7 @@ export default function BuyGMX() {
                       imgSrc={gmxArbitrum}
                       href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a"
                     >
-                      <Trans>Purchase GMX</Trans>
+                      <Trans>Purchase HLP</Trans>
                     </Button>
                   </div>
                 </div>
@@ -260,16 +260,16 @@ export default function BuyGMX() {
             <div className="buy-card">
               <div className="section-title-content">
                 <div className="card-title">
-                  <Trans>Buy GMX Bonds</Trans>
+                  <Trans>Buy HLP Bonds</Trans>
                 </div>
               </div>
               <div className="App-card no-height">
                 <div className="App-card-content no-title">
-                  <div className="BuyGMXGLP-description">
-                    <Trans>GMX bonds can be bought on Olympus Pro with a discount and a small vesting period:</Trans>
+                  <div className="BuyHLPTHLP-description">
+                    <Trans>HLP bonds can be bought on Olympus Pro with a discount and a small vesting period:</Trans>
                   </div>
                   <div className="buy-gmx">
-                    <Button size="xl" imgSrc={ohmArbitrum} href="https://pro.olympusdao.finance/#/partners/GMX">
+                    <Button size="xl" imgSrc={ohmArbitrum} href="https://pro.olympusdao.finance/#/partners/HLP">
                       <Trans>Olympus Pro</Trans>
                     </Button>
                   </div>

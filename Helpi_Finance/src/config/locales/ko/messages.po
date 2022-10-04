@@ -15,8 +15,8 @@ msgstr ""
 
 #: src/App/App.js:208
 #: src/App/App.js:230
-msgid ", and use GMX with its built-in browser"
-msgstr ", 그 후 지갑이 내장된 브라우저로 GMX를 이용해주세요"
+msgid ", and use HLP with its built-in browser"
+msgstr ", 그 후 지갑이 내장된 브라우저로 HLP를 이용해주세요"
 
 #: src/pages/Dashboard/DashboardV2.js:583
 msgid "24h Volume"
@@ -27,8 +27,8 @@ msgid "<0>Insufficient liquidity to execute the order</0><1>The mark price which
 msgstr "<0>주문을 체결하기 위한 유동성이 부족합니다</0><1>시장 평균가가 지정된 가격에 도달하지 않았습니다</1><2>지정된 가격에 도달했지만 실행하기에 충분한 시간이 지나지 않았습니다</2>주문을 체결할 수 있는 키퍼가 없습니다.<3>"
 
 #: src/pages/Stake/StakeV2.js:566
-msgid "<0>This will withdraw and unreserve all tokens as well as pause vesting.<1/><2/>esGMX tokens that have been converted to GMX will remain as GMX tokens.<3/><4/>To claim GMX tokens without withdrawing, use the \"Claim\" button under the Total Rewards section.<5/><6/></0>"
-msgstr "<0>모든 토큰이 인출되고 취소되며 베스팅이 중지됩니다.<1/><2/>GMX로 변환된 esGMX 토큰은 GMX 토큰으로 유지됩니다.<3/><4/>인출하지 않고 GMX 토큰을 수령하기 위해서는 총 보상 섹션 아래의 \"수령하기\" 버튼을 사용해주세요."
+msgid "<0>This will withdraw and unreserve all tokens as well as pause vesting.<1/><2/>esHLP tokens that have been converted to HLP will remain as HLP tokens.<3/><4/>To claim HLP tokens without withdrawing, use the \"Claim\" button under the Total Rewards section.<5/><6/></0>"
+msgstr "<0>모든 토큰이 인출되고 취소되며 베스팅이 중지됩니다.<1/><2/>HLP로 변환된 esHLP 토큰은 HLP 토큰으로 유지됩니다.<3/><4/>인출하지 않고 HLP 토큰을 수령하기 위해서는 총 보상 섹션 아래의 \"수령하기\" 버튼을 사용해주세요."
 
 #: src/components/Exchange/SwapBox.js:2101
 msgid "A snapshot of the USD value of your collateral is taken when the position is opened."
@@ -102,15 +102,15 @@ msgid "Affiliates"
 msgstr "제휴"
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:441
-msgid "After claiming you will be able to vest a maximum of {0} esGMX at a ratio of {1} {stakingToken} to 1 esGMX."
-msgstr "수령 후 {1} {stake} 대 1 esGMX 비율로 최대 {0}개의 esGMX를 베스팅 할 수 있습니다."
+msgid "After claiming you will be able to vest a maximum of {0} esHLP at a ratio of {1} {stakingToken} to 1 esHLP."
+msgstr "수령 후 {1} {stake} 대 1 esHLP 비율로 최대 {0}개의 esHLP를 베스팅 할 수 있습니다."
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:366
-msgid "After claiming, the esGMX tokens will be airdropped to your account on the selected network within 7 days."
-msgstr "수령 후, esGMX 토큰은 7일 이내에 선택한 네트워크의 계정으로 에어드랍됩니다."
+msgid "After claiming, the esHLP tokens will be airdropped to your account on the selected network within 7 days."
+msgstr "수령 후, esHLP 토큰은 7일 이내에 선택한 네트워크의 계정으로 에어드랍됩니다."
 
-#: src/pages/BuyGMX/BuyGMX.js:206
-#: src/pages/BuyGMX/BuyGMX.js:240
+#: src/pages/BuyHLP/BuyHLP.js:206
+#: src/pages/BuyHLP/BuyHLP.js:240
 msgid "After you have ETH, set your network to <0>Arbitrum</0> then click the button below:"
 msgstr "ETH를 소지한 후 네트워크를 <0>Arbitrum</0>으로 설정한 뒤 아래의 버튼을 클릭합니다."
 
@@ -141,8 +141,8 @@ msgstr "공지"
 
 #: src/pages/BeginAccountTransfer/BeginAccountTransfer.js:174
 #: src/pages/Stake/StakeV2.js:654
-msgid "Approve GMX"
-msgstr "GMX 승인"
+msgid "Approve HLP"
+msgstr "HLP 승인"
 
 #: src/components/Exchange/PositionEditor.js:256
 #: src/components/Exchange/SwapBox.js:1173
@@ -155,8 +155,8 @@ msgid "Approve {stakingTokenSymbol}"
 msgstr "{stakingTokenSymbol} 승인"
 
 #: src/pages/Stake/StakeV2.js:651
-msgid "Approving GMX..."
-msgstr "GMX 승인중..."
+msgid "Approving HLP..."
+msgstr "HLP 승인중..."
 
 #: src/components/Exchange/PositionEditor.js:253
 #: src/components/Exchange/SwapBox.js:1170
@@ -183,8 +183,8 @@ msgid "Arbitrum APR:"
 msgstr "Arbitrum APR:"
 
 #: src/pages/Dashboard/DashboardV2.js:564
-msgid "Assets Under Management: GMX staked (All chains) + GLP pool ({chainName})"
-msgstr "자산운용규모: 스테이킹된 GMX + GLP 풀 ({chainName})"
+msgid "Assets Under Management: HLP staked (All chains) + THLP pool ({chainName})"
+msgstr "자산운용규모: 스테이킹된 HLP + THLP 풀 ({chainName})"
 
 #: src/components/Glp/GlpSwap.js:1311
 msgid "Available"
@@ -198,13 +198,13 @@ msgstr "사용가능 유동성"
 
 #: src/components/Glp/GlpSwap.js:983
 #: src/components/Glp/GlpSwap.js:1286
-msgid "Available amount to deposit into GLP."
-msgstr "GLP에 예치할 수 있는 양"
+msgid "Available amount to deposit into THLP."
+msgstr "THLP에 예치할 수 있는 양"
 
 #: src/components/Glp/GlpSwap.js:994
 #: src/components/Glp/GlpSwap.js:1317
-msgid "Available amount to withdraw from GLP."
-msgstr "GLP에서 인출할 수 있는 양"
+msgid "Available amount to withdraw from THLP."
+msgstr "THLP에서 인출할 수 있는 양"
 
 #: src/pages/Home/Home.js:250
 msgid "Available on your preferred network"
@@ -214,7 +214,7 @@ msgstr "선택한 네트워크에서 이용가능"
 msgid "Available:"
 msgstr "사용가능"
 
-#: src/pages/BuyGMX/BuyGMX.js:179
+#: src/pages/BuyHLP/BuyHLP.js:179
 msgid "Avalanche"
 msgstr "Avalanche"
 
@@ -223,9 +223,9 @@ msgstr "Avalanche"
 msgid "Avalanche APR:"
 msgstr "Avalanche APR:"
 
-#: src/pages/BuyGMX/BuyGMX.js:125
-msgid "Avax is needed on Avalanche to purchase GMX."
-msgstr "Avalanche에서 GMX를 구입하기 위해서는 Avax가 필요합니다."
+#: src/pages/BuyHLP/BuyHLP.js:125
+msgid "Avax is needed on Avalanche to purchase HLP."
+msgstr "Avalanche에서 HLP를 구입하기 위해서는 Avax가 필요합니다."
 
 #: src/components/Exchange/SwapBox.js:1917
 msgid "Balance"
@@ -237,8 +237,8 @@ msgstr "잔고"
 msgid "Balance:"
 msgstr "잔고:"
 
-#: src/pages/BuyGMX/BuyGMX.js:78
-#: src/pages/BuyGMX/BuyGMX.js:158
+#: src/pages/BuyHLP/BuyHLP.js:78
+#: src/pages/BuyHLP/BuyHLP.js:158
 msgid "Banxa"
 msgstr "Banxa"
 
@@ -246,8 +246,8 @@ msgstr "Banxa"
 msgid "Begin Transfer"
 msgstr "전송시작"
 
-#: src/pages/BuyGMX/BuyGMX.js:111
-#: src/pages/BuyGMX/BuyGMX.js:188
+#: src/pages/BuyHLP/BuyHLP.js:111
+#: src/pages/BuyHLP/BuyHLP.js:188
 msgid "Binance"
 msgstr "Binance"
 
@@ -276,22 +276,22 @@ msgid "Buy"
 msgstr "구매"
 
 #: src/pages/BuyGlp/BuyGlp.js:34
-msgid "Buy / Sell GLP"
-msgstr "GLP 구매 / 판매"
+msgid "Buy / Sell THLP"
+msgstr "THLP 구매 / 판매"
 
-#: src/pages/BuyGMX/BuyGMX.js:122
+#: src/pages/BuyHLP/BuyHLP.js:122
 msgid "Buy / Transfer AVAX"
 msgstr ""
 
-#: src/pages/BuyGMX/BuyGMX.js:43
+#: src/pages/BuyHLP/BuyHLP.js:43
 msgid "Buy / Transfer ETH"
 msgstr "ETH 구매 / 전송"
 
-#: src/pages/BuyGMX/BuyGMX.js:140
+#: src/pages/BuyHLP/BuyHLP.js:140
 msgid "Buy AVAX"
 msgstr "AVAX 구매 "
 
-#: src/pages/BuyGMX/BuyGMX.js:60
+#: src/pages/BuyHLP/BuyHLP.js:60
 msgid "Buy ETH"
 msgstr "ETH 구매 "
 
@@ -299,21 +299,21 @@ msgstr "ETH 구매 "
 #: src/components/Glp/GlpSwap.js:520
 #: src/components/Glp/GlpSwap.js:792
 #: src/pages/Stake/StakeV2.js:1890
-msgid "Buy GLP"
-msgstr "GLP 구매"
+msgid "Buy THLP"
+msgstr "THLP 구매"
 
-#: src/pages/BuyGMX/BuyGMX.js:200
-#: src/pages/BuyGMX/BuyGMX.js:234
-msgid "Buy GMX"
-msgstr "GMX 구매"
+#: src/pages/BuyHLP/BuyHLP.js:200
+#: src/pages/BuyHLP/BuyHLP.js:234
+msgid "Buy HLP"
+msgstr "HLP 구매"
 
-#: src/pages/BuyGMX/BuyGMX.js:263
-msgid "Buy GMX Bonds"
-msgstr "GMX 채권 구매"
+#: src/pages/BuyHLP/BuyHLP.js:263
+msgid "Buy HLP Bonds"
+msgstr "HLP 채권 구매"
 
 #: src/pages/Buy/Buy.js:21
-msgid "Buy GMX or GLP"
-msgstr "GMX 혹은 GLP 구매"
+msgid "Buy HLP or THLP"
+msgstr "HLP 혹은 THLP 구매"
 
 #: src/components/Glp/GlpSwap.js:551
 msgid "Buy failed."
@@ -383,8 +383,8 @@ msgstr "수령하기"
 
 #: src/pages/Stake/StakeV2.js:741
 #: src/pages/Stake/StakeV2.js:865
-msgid "Claim GMX Rewards"
-msgstr "GMX 보상 수령하기"
+msgid "Claim HLP Rewards"
+msgstr "HLP 보상 수령하기"
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:328
 #: src/pages/Stake/StakeV2.js:840
@@ -392,13 +392,13 @@ msgid "Claim completed!"
 msgstr "수령 완료!"
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:341
-msgid "Claim esGMX"
-msgstr "esGMX 수령하기"
+msgid "Claim esHLP"
+msgstr "esHLP 수령하기"
 
 #: src/pages/Stake/StakeV2.js:751
 #: src/pages/Stake/StakeV2.js:870
-msgid "Claim esGMX Rewards"
-msgstr "esGMX 보상 수령하기"
+msgid "Claim esHLP Rewards"
+msgstr "esHLP 보상 수령하기"
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:327
 #: src/pages/Stake/StakeV2.js:839
@@ -539,8 +539,8 @@ msgid "Continue"
 msgstr "계속하기"
 
 #: src/pages/Stake/StakeV2.js:2022
-msgid "Convert esGMX tokens to GMX tokens.<0/>Please read the <1>vesting details</1> before using the vaults."
-msgstr "esGMX 토큰을 GMX 토큰으로 변환합니다.<0/>볼트를 사용하기 전 <1>베스팅 세부정보</1>를 읽어주세요."
+msgid "Convert esHLP tokens to HLP tokens.<0/>Please read the <1>vesting details</1> before using the vaults."
+msgstr "esHLP 토큰을 HLP 토큰으로 변환합니다.<0/>볼트를 사용하기 전 <1>베스팅 세부정보</1>를 읽어주세요."
 
 #: src/pages/Stake/StakeV2.js:880
 msgid "Convert {wrappedTokenSymbol} to {nativeTokenSymbol}"
@@ -669,9 +669,9 @@ msgstr "배분"
 msgid "Download"
 msgstr "다운로드"
 
-#: src/pages/BuyGMX/BuyGMX.js:46
-msgid "ETH is needed on Arbitrum to purchase GMX."
-msgstr "Arbitrum에서 GMX를 구매하기 위해서는 ETH가 필요합니다."
+#: src/pages/BuyHLP/BuyHLP.js:46
+msgid "ETH is needed on Arbitrum to purchase HLP."
+msgstr "Arbitrum에서 HLP를 구매하기 위해서는 ETH가 필요합니다."
 
 #: src/components/Header/AppHeaderLinks.tsx:66
 #: src/pages/Stake/StakeV2.js:1444
@@ -812,12 +812,12 @@ msgid "Enter and exit positions with minimal spread and zero price impact. Get t
 msgstr "최소한의 스프레드 및 가격 영향 없이 포지션을 열고 닫을 수 있습니다. 추가 비용 없이 최적의 가격에서 시작하세요."
 
 #: src/components/Glp/GlpSwap.js:951
-msgid "Enter the amount of GLP you want to purchase in the order form, then check here to compare fees."
-msgstr "구매하고자 하는 GLP 양을 입력한 후 수수료를 비교하려면 여기를 확인하세요."
+msgid "Enter the amount of THLP you want to purchase in the order form, then check here to compare fees."
+msgstr "구매하고자 하는 THLP 양을 입력한 후 수수료를 비교하려면 여기를 확인하세요."
 
 #: src/components/Glp/GlpSwap.js:960
-msgid "Enter the amount of GLP you want to redeem in the order form, then check here to compare fees."
-msgstr "판매하고자 하는 GLP 양을 입력한 후 수수료를 비교하려면 여기를 확인하세요."
+msgid "Enter the amount of THLP you want to redeem in the order form, then check here to compare fees."
+msgstr "판매하고자 하는 THLP 양을 입력한 후 수수료를 비교하려면 여기를 확인하세요."
 
 #: src/components/Exchange/PositionSeller.js:1007
 #: src/components/Exchange/PositionsList.js:398
@@ -828,8 +828,8 @@ msgid "Entry Price"
 msgstr "진입 가격"
 
 #: src/components/Glp/GlpSwap.js:767
-msgid "Escrowed GMX APR"
-msgstr "esGMX APR"
+msgid "Escrowed HLP APR"
+msgstr "esHLP APR"
 
 #: src/components/Exchange/PositionEditor.js:572
 msgid "Execution Fee"
@@ -852,12 +852,12 @@ msgid "Fees"
 msgstr "수수료"
 
 #: src/components/Glp/GlpSwap.js:958
-msgid "Fees may vary depending on which asset you sell GLP for."
-msgstr "수수료는 GLP를 판매하는 자산에 따라 달라질 수 있습니다."
+msgid "Fees may vary depending on which asset you sell THLP for."
+msgstr "수수료는 THLP를 판매하는 자산에 따라 달라질 수 있습니다."
 
 #: src/components/Glp/GlpSwap.js:949
-msgid "Fees may vary depending on which asset you use to buy GLP."
-msgstr "수수료는 GLP를 구입하는 자산에 따라 달라질 수 있습니다."
+msgid "Fees may vary depending on which asset you use to buy THLP."
+msgstr "수수료는 THLP를 구입하는 자산에 따라 달라질 수 있습니다."
 
 #: src/pages/Dashboard/DashboardV2.js:654
 msgid "Fees since"
@@ -889,66 +889,66 @@ msgid "Funds not utilized by current open positions."
 msgstr "현재 열린 포지션에서 사용되지 않는 자금입니다."
 
 #: src/pages/Dashboard/DashboardV2.js:965
-msgid "GLP Index Composition"
-msgstr "GLP 인덱스 구성"
+msgid "THLP Index Composition"
+msgstr "THLP 인덱스 구성"
 
 #: src/components/Glp/GlpSwap.js:418
-msgid "GLP buy disabled, pending {0} upgrade"
+msgid "THLP buy disabled, pending {0} upgrade"
 msgstr ""
 
 #: src/components/TokenCard/TokenCard.js:97
-msgid "GLP is the liquidity provider token. Accrues 70% of the platform's generated fees."
-msgstr "GLP는 유동성 공급 토큰입니다. 플랫폼에서 생성되는 수수료의 70%를 축적하세요."
+msgid "THLP is the liquidity provider token. Accrues 70% of the platform's generated fees."
+msgstr "THLP는 유동성 공급 토큰입니다. 플랫폼에서 생성되는 수수료의 70%를 축적하세요."
 
 #: src/components/Glp/GlpSwap.js:419
-msgid "GLP sell disabled, pending {0} upgrade"
+msgid "THLP sell disabled, pending {0} upgrade"
 msgstr ""
 
 #: src/pages/Ecosystem/Ecosystem.js:387
-msgid "GMX Pages"
-msgstr "GMX 페이지"
+msgid "HLP Pages"
+msgstr "HLP 페이지"
 
-#: src/pages/BuyGMX/BuyGMX.js:269
-msgid "GMX bonds can be bought on Olympus Pro with a discount and a small vesting period:"
-msgstr "GMX 채권은 Olympus Pro에서 약간의 베스팅 기간과 함께 할인된 가격으로 구매할 수 있습니다."
+#: src/pages/BuyHLP/BuyHLP.js:269
+msgid "HLP bonds can be bought on Olympus Pro with a discount and a small vesting period:"
+msgstr "HLP 채권은 Olympus Pro에서 약간의 베스팅 기간과 함께 할인된 가격으로 구매할 수 있습니다."
 
 #: src/pages/Ecosystem/Ecosystem.js:489
-msgid "GMX dashboards and analytics."
-msgstr "GMX 대시보드 및 통계"
+msgid "HLP dashboards and analytics."
+msgstr "HLP 대시보드 및 통계"
 
 #: src/pages/Ecosystem/Ecosystem.js:390
-msgid "GMX ecosystem pages."
-msgstr "GMX 이코시스템 페이지"
+msgid "HLP ecosystem pages."
+msgstr "HLP 이코시스템 페이지"
 
 #: src/pages/Home/Home.js:253
-msgid "GMX is currently live on Arbitrum and Avalanche."
-msgstr "GMX는 현재 Arbitrum과 Avalanche에서 이용할 수 있습니다."
+msgid "HLP is currently live on Arbitrum and Avalanche."
+msgstr "HLP는 현재 Arbitrum과 Avalanche에서 이용할 수 있습니다."
 
 #: src/components/TokenCard/TokenCard.js:65
-msgid "GMX is the utility and governance token. Accrues 30% of the platform's generated fees."
-msgstr "GMX는 유틸리티 및 거버넌스 토큰입니다. 플랫폼에서 생성되는 수수료의 30%를 축적하세요."
+msgid "HLP is the utility and governance token. Accrues 30% of the platform's generated fees."
+msgstr "HLP는 유틸리티 및 거버넌스 토큰입니다. 플랫폼에서 생성되는 수수료의 30%를 축적하세요."
 
 #: src/pages/Stake/StakeV2.js:2112
 #: src/pages/Stake/StakeV2.js:2196
-msgid "GMX tokens can be claimed, use the options under the Total Rewards section to claim them."
-msgstr "GMX를 수령할 수 있습니다. 총 보상 섹션 아래의 옵션을 사용해 수령하세요."
+msgid "HLP tokens can be claimed, use the options under the Total Rewards section to claim them."
+msgstr "HLP를 수령할 수 있습니다. 총 보상 섹션 아래의 옵션을 사용해 수령하세요."
 
 #: src/pages/Stake/StakeV2.js:1158
 #: src/pages/Stake/StakeV2.js:1249
-msgid "GMX transfers not yet enabled"
-msgstr "GMX 전송이 아직 불가능합니다."
+msgid "HLP transfers not yet enabled"
+msgstr "HLP 전송이 아직 불가능합니다."
 
 #: src/components/Common/SEO.js:8
-msgid "GMX | Decentralized Perpetual Exchange"
-msgstr "GMX | 탈중화 퍼페추얼 거래소"
+msgid "HLP | Decentralized Perpetual Exchange"
+msgstr "HLP | 탈중화 퍼페추얼 거래소"
 
 #: src/components/Referrals/AddAffiliateCode.js:18
 msgid "Generate Referral Code"
 msgstr "추천 코드 생성"
 
 #: src/pages/Referrals/Referrals.js:124
-msgid "Get fee discounts and earn rebates through the GMX referral program.<0/>For more information, please read the <1>referral program details</1>."
-msgstr "GMX 추천 프로그램을 통해 수수료 할인 및 리베이트를 받으세요.<0/>자세한 내용은 <1>추천 프로그램 세부 정보를 참조하세요."
+msgid "Get fee discounts and earn rebates through the HLP referral program.<0/>For more information, please read the <1>referral program details</1>."
+msgstr "HLP 추천 프로그램을 통해 수수료 할인 및 리베이트를 받으세요.<0/>자세한 내용은 <1>추천 프로그램 세부 정보를 참조하세요."
 
 #: src/components/Exchange/SwapBox.js:1190
 msgid "High Slippage, Swap Anyway"
@@ -962,7 +962,7 @@ msgstr "높은 USDG 슬리피지 상관 없이 롱 포지션 체결"
 msgid "Home"
 msgstr "홈"
 
-#: src/pages/BuyGMX/BuyGMX.js:108
+#: src/pages/BuyHLP/BuyHLP.js:108
 msgid "Hop"
 msgstr "Hop"
 
@@ -995,8 +995,8 @@ msgid "Install MetaMask"
 msgstr "메타마스크를 설치하세요"
 
 #: src/components/Glp/GlpSwap.js:450
-msgid "Insufficient GLP balance"
-msgstr "GLP 잔고 부족"
+msgid "Insufficient THLP balance"
+msgstr "THLP 잔고 부족"
 
 #: src/components/Exchange/SwapBox.js:817
 #: src/components/Exchange/SwapBox.js:826
@@ -1209,7 +1209,7 @@ msgid "Max pool capacity reached for {0}"
 msgstr "{0}의 최대 풀 수용량에 도달했습니다"
 
 #: src/components/Glp/GlpSwap.js:1252
-msgid "Max pool capacity reached for {0}. Please mint GLP using another token"
+msgid "Max pool capacity reached for {0}. Please mint THLP using another token"
 msgstr "{0}의 최대 풀 수용량에 도달했습니다"
 
 #: src/App/App.js:308
@@ -1253,8 +1253,8 @@ msgstr "최소 주문: 10 USD"
 msgid "Multiplier Points APR"
 msgstr "멀티플라이어 포인트 APR"
 
-#: src/pages/BuyGMX/BuyGMX.js:101
-#: src/pages/BuyGMX/BuyGMX.js:185
+#: src/pages/BuyHLP/BuyHLP.js:101
+#: src/pages/BuyHLP/BuyHLP.js:185
 msgid "Multiswap"
 msgstr "멀티스왑"
 
@@ -1276,8 +1276,8 @@ msgid "No PnLs found"
 msgstr "손익을 찾지 못했습니다."
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:271
-msgid "No esGMX to claim"
-msgstr "수령할 수 있는 esGMX가 없습니다"
+msgid "No esHLP to claim"
+msgstr "수령할 수 있는 esHLP가 없습니다"
 
 #: src/components/Exchange/OrdersList.js:116
 msgid "No open orders"
@@ -1300,7 +1300,7 @@ msgstr "주문 실행은 보장되지 않습니다.<0/><1/>이것은 다음과 �
 msgid "Note that there is a minimum holding time of 15 minutes after a purchase."
 msgstr "구매 후 최소 15분의 락업 시간이 있습니다."
 
-#: src/pages/BuyGMX/BuyGMX.js:273
+#: src/pages/BuyHLP/BuyHLP.js:273
 msgid "Olympus Pro"
 msgstr "Olympus Pro"
 
@@ -1378,8 +1378,8 @@ msgid "Pay"
 msgstr "지불액"
 
 #: src/pages/Dashboard/DashboardV2.js:737
-msgid "Platform and GLP index tokens."
-msgstr "플랫폼과 GLP 지수 토큰."
+msgid "Platform and THLP index tokens."
+msgstr "플랫폼과 THLP 지수 토큰."
 
 #: src/components/Glp/GlpSwap.js:1367
 msgid "Please enter an amount to see fee percentages"
@@ -1390,8 +1390,8 @@ msgid "Please input a referral code to benefit from fee discounts."
 msgstr "수수료 할인의 혜택을 받으려면 추천 코드를 입력해주세요."
 
 #: src/components/Glp/GlpSwap.js:1091
-msgid "Please mint GLP using another token"
-msgstr "다른 토큰을 사용하여 GLP를 발행해주세요."
+msgid "Please mint THLP using another token"
+msgstr "다른 토큰을 사용하여 THLP를 발행해주세요."
 
 #: src/pages/BeginAccountTransfer/BeginAccountTransfer.js:236
 msgid "Please only use this for full account transfers."
@@ -1462,21 +1462,21 @@ msgstr "수익"
 #~ msgstr "수익"
 
 #: src/pages/Ecosystem/Ecosystem.js:435
-msgid "Projects developed by the GMX community."
-msgstr "GMX 커뮤니티가 개발한 프로젝트"
+msgid "Projects developed by the HLP community."
+msgstr "HLP 커뮤니티가 개발한 프로젝트"
 
 #: src/pages/Ecosystem/Ecosystem.js:544
-msgid "Projects integrated with GMX."
-msgstr "GMX와 통합된 프로젝트"
+msgid "Projects integrated with HLP."
+msgstr "HLP와 통합된 프로젝트"
 
 #: src/pages/BuyGlp/BuyGlp.js:37
-msgid "Purchase <0>GLP tokens</0> to earn {nativeTokenSymbol} fees from swaps and leverages trading."
-msgstr "<0>GLP 토큰<0/>을 구입해서, 스왑 및 레버리지 트레이딩을 통해 생성되는 {nativeTokenSymbol} 수수료를 획득하세요."
+msgid "Purchase <0>THLP tokens</0> to earn {nativeTokenSymbol} fees from swaps and leverages trading."
+msgstr "<0>THLP 토큰<0/>을 구입해서, 스왑 및 레버리지 트레이딩을 통해 생성되는 {nativeTokenSymbol} 수수료를 획득하세요."
 
-#: src/pages/BuyGMX/BuyGMX.js:220
-#: src/pages/BuyGMX/BuyGMX.js:254
-msgid "Purchase GMX"
-msgstr "GMX 구입"
+#: src/pages/BuyHLP/BuyHLP.js:220
+#: src/pages/BuyHLP/BuyHLP.js:254
+msgid "Purchase HLP"
+msgstr "HLP 구입"
 
 #: src/pages/Stake/StakeV2.js:1902
 msgid "Purchase Insurance"
@@ -1513,12 +1513,12 @@ msgid "Receiver Address"
 msgstr "수령할 주소"
 
 #: src/pages/BeginAccountTransfer/BeginAccountTransfer.js:280
-msgid "Receiver has not staked GLP tokens before"
-msgstr "수취인은 지금까지 GLP 토큰을 스테이킹한 적이 없습니다."
+msgid "Receiver has not staked THLP tokens before"
+msgstr "수취인은 지금까지 THLP 토큰을 스테이킹한 적이 없습니다."
 
 #: src/pages/BeginAccountTransfer/BeginAccountTransfer.js:277
-msgid "Receiver has not staked GMX tokens before"
-msgstr "수취인은 지금까지 GMX 토큰을 스테이킹한 적이 없습니다."
+msgid "Receiver has not staked HLP tokens before"
+msgstr "수취인은 지금까지 HLP 토큰을 스테이킹한 적이 없습니다."
 
 #: src/components/Glp/GlpSwap.js:423
 msgid "Redemption time not yet reached"
@@ -1648,8 +1648,8 @@ msgstr "자신에게 전송하는 것은 지원되지 않습니다"
 #: src/components/Glp/GlpSwap.js:652
 #: src/components/Glp/GlpSwap.js:792
 #: src/pages/Stake/StakeV2.js:1893
-msgid "Sell GLP"
-msgstr "GLP 판매"
+msgid "Sell THLP"
+msgstr "THLP 판매"
 
 #: src/components/Glp/GlpSwap.js:578
 msgid "Sell failed."
@@ -1669,12 +1669,12 @@ msgid "Selling..."
 msgstr "판매중..."
 
 #: src/pages/BeginAccountTransfer/BeginAccountTransfer.js:274
-msgid "Sender has withdrawn all tokens from GLP Vesting Vault"
-msgstr "GLP의 베스팅 볼트에서 모든 토큰을 인출했습니다."
+msgid "Sender has withdrawn all tokens from THLP Vesting Vault"
+msgstr "THLP의 베스팅 볼트에서 모든 토큰을 인출했습니다."
 
 #: src/pages/BeginAccountTransfer/BeginAccountTransfer.js:271
-msgid "Sender has withdrawn all tokens from GMX Vesting Vault"
-msgstr "GMX의 베스팅 볼트에서 모든 토큰을 인출했습니다."
+msgid "Sender has withdrawn all tokens from HLP Vesting Vault"
+msgstr "HLP의 베스팅 볼트에서 모든 토큰을 인출했습니다."
 
 #: src/components/Header/AppHeaderLinks.tsx:101
 msgid "Settings"
@@ -1739,20 +1739,20 @@ msgid "Stake"
 msgstr "스테이킹"
 
 #: src/pages/Stake/StakeV2.js:1447
-msgid "Stake <0>GMX</0> and <1>GLP</1> to earn rewards."
-msgstr "<0>GMX</0>과 <1>GLP</1>를 스테이킹하여 보상을 획득하세요."
+msgid "Stake <0>HLP</0> and <1>THLP</1> to earn rewards."
+msgstr "<0>HLP</0>과 <1>THLP</1>를 스테이킹하여 보상을 획득하세요."
 
 #: src/pages/Stake/StakeV2.js:746
-msgid "Stake GMX Rewards"
-msgstr "GMX 보상 스테이킹"
+msgid "Stake HLP Rewards"
+msgstr "HLP 보상 스테이킹"
 
 #: src/pages/Stake/StakeV2.js:736
 msgid "Stake Multiplier Points"
 msgstr "멀티플라이어 포인트 스테이킹"
 
 #: src/pages/Stake/StakeV2.js:756
-msgid "Stake esGMX Rewards"
-msgstr "esGMX 보상 스테이킹"
+msgid "Stake esHLP Rewards"
+msgstr "esHLP 보상 스테이킹"
 
 #: src/pages/Stake/StakeV2.js:116
 msgid "Stake failed."
@@ -1828,8 +1828,8 @@ msgstr ""
 #~ msgid "Switch Network"
 #~ msgstr "네트워크 변경"
 
-#: src/pages/BuyGMX/BuyGMX.js:98
-#: src/pages/BuyGMX/BuyGMX.js:182
+#: src/pages/BuyHLP/BuyHLP.js:98
+#: src/pages/BuyHLP/BuyHLP.js:182
 msgid "Synapse"
 msgstr "Synapse"
 
@@ -1851,16 +1851,16 @@ msgid "The Boosted APR is from your staked Multiplier Points."
 msgstr "\"APR 부스트는 스테이킹된 멀티플라이어 포인트로부터 적용됩니다."
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:356
-msgid "The address of the esGMX (IOU) token is {esGmxIouAddress}."
+msgid "The address of the esHLP (IOU) token is {esGmxIouAddress}."
 msgstr ""
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:358
-msgid "The esGMX (IOU) token is transferrable. You can add the token to your wallet and send it to another address to claim if you'd like."
-msgstr "\"esGMX (IOU) 토큰의 주소는 {esGmxIouAddress} 입니다."
+msgid "The esHLP (IOU) token is transferrable. You can add the token to your wallet and send it to another address to claim if you'd like."
+msgstr "\"esHLP (IOU) 토큰의 주소는 {esGmxIouAddress} 입니다."
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:371
-msgid "The esGMX tokens can be staked or vested at any time."
-msgstr "esGMX는 언제든지 스테이킹하거나 베스팅 할 수 있습니다."
+msgid "The esHLP tokens can be staked or vested at any time."
+msgstr "esHLP는 언제든지 스테이킹하거나 베스팅 할 수 있습니다."
 
 #: src/components/Exchange/OrdersList.js:288
 msgid "The price that orders can be executed at may differ slightly from the chart price, as market orders update oracle prices, while limit/trigger orders do not."
@@ -1871,8 +1871,8 @@ msgid "The price that the order can be executed at may differ slightly from the 
 msgstr "주문이 실행될 수 있는 가격은 차트에 표시된 가격과 조금 다를 수 있습니다. 그 이유는 시장가 주문이 가격을 바꿀 수 있는 반면 지정가 주문이나 트리거 주문이 가격을 바꾸지는 않기 때문입니다."
 
 #: src/pages/BeginAccountTransfer/BeginAccountTransfer.js:238
-msgid "This will transfer all your GMX, esGMX, GLP and Multiplier Points to your new account."
-msgstr "이것은 귀하의 모든 GMX, esGMX, GLP, 멀티플라이어 포인트를 새로운 계정으로 전송합니다."
+msgid "This will transfer all your HLP, esHLP, THLP and Multiplier Points to your new account."
+msgstr "이것은 귀하의 모든 HLP, esHLP, THLP, 멀티플라이어 포인트를 새로운 계정으로 전송합니다."
 
 #: src/components/Referrals/TradersStats.js:44
 msgid "Tier {0} ({1}% discount)"
@@ -1882,13 +1882,13 @@ msgstr "티어 {0} ({1}% 할인)"
 msgid "To complete the transfer, you must switch your connected account to {receiver}."
 msgstr "전송을 완료하려면 {receiver} 계정에 다시 연결해야 합니다."
 
-#: src/pages/BuyGMX/BuyGMX.js:127
-msgid "To purchase GMX on <0>Arbitrum</0>, please change your network."
-msgstr "<0>Arbitrum</0>에서 GMX를 구입하려면 네트워크를 변경해주세요."
+#: src/pages/BuyHLP/BuyHLP.js:127
+msgid "To purchase HLP on <0>Arbitrum</0>, please change your network."
+msgstr "<0>Arbitrum</0>에서 HLP를 구입하려면 네트워크를 변경해주세요."
 
-#: src/pages/BuyGMX/BuyGMX.js:48
-msgid "To purchase GMX on <0>Avalanche</0>, please change your network."
-msgstr "<0>Avalanche</0>에서 GMX를 구입하려면 네트워크를 변경해주세요."
+#: src/pages/BuyHLP/BuyHLP.js:48
+msgid "To purchase HLP on <0>Avalanche</0>, please change your network."
+msgstr "<0>Avalanche</0>에서 HLP를 구입하려면 네트워크를 변경해주세요."
 
 #: src/components/Glp/GlpSwap.js:908
 msgid "To reduce fees, select a different asset to pay with."
@@ -1957,8 +1957,8 @@ msgid "Total Volume"
 msgstr "총 거래량"
 
 #: src/pages/Dashboard/DashboardV2.js:576
-msgid "Total value of tokens in GLP pool ({chainName})"
-msgstr "GLP 풀 ({chainName})의 토큰 총액"
+msgid "Total value of tokens in THLP pool ({chainName})"
+msgstr "THLP 풀 ({chainName})의 토큰 총액"
 
 #: src/components/Header/AppHeaderUser.tsx:96
 #: src/components/Header/AppHeaderUser.tsx:131
@@ -1998,7 +1998,7 @@ msgstr "트레이딩 가이드"
 msgid "Transaction"
 msgstr "거래"
 
-#: src/pages/BuyGMX/BuyGMX.js:165
+#: src/pages/BuyHLP/BuyHLP.js:165
 msgid "Transfer AVAX"
 msgstr "AVAX 전송"
 
@@ -2006,7 +2006,7 @@ msgstr "AVAX 전송"
 msgid "Transfer Account"
 msgstr "계정 이전"
 
-#: src/pages/BuyGMX/BuyGMX.js:85
+#: src/pages/BuyHLP/BuyHLP.js:85
 msgid "Transfer ETH"
 msgstr "ETH 전송"
 
@@ -2033,8 +2033,8 @@ msgid "Transfers are one-way, you will not be able to transfer staked tokens bac
 msgstr "이전은 일방향이며, 스테이킹된 토큰을 발신인 계정으로 되돌릴 수 없습니다."
 
 #: src/pages/BeginAccountTransfer/BeginAccountTransfer.js:240
-msgid "Transfers are only supported if the receiving account has not staked GMX or GLP tokens before."
-msgstr "이전은 수취 계정이 지금까지 GMX나 GLP 토큰을 스테이킹한 적이 없는 경우에만 가능합니다."
+msgid "Transfers are only supported if the receiving account has not staked HLP or THLP tokens before."
+msgstr "이전은 수취 계정이 지금까지 HLP나 THLP 토큰을 스테이킹한 적이 없는 경우에만 가능합니다."
 
 #: src/components/Exchange/PositionSeller.js:991
 msgid "Trigger Price"
@@ -2071,8 +2071,8 @@ msgid "Unstake"
 msgstr "언스테이킹"
 
 #: src/pages/Stake/StakeV2.js:1253
-msgid "Unstake GMX"
-msgstr "GMX 언스테이킹"
+msgid "Unstake HLP"
+msgstr "HLP 언스테이킹"
 
 #: src/pages/Stake/StakeV2.js:250
 msgid "Unstake completed!"
@@ -2106,7 +2106,7 @@ msgstr "담보를 예치 또는 인출하시려면 \"편집\" 버튼을 사용�
 msgid "Useful Links"
 msgstr "유용한 링크"
 
-#: src/pages/BuyGMX/BuyGMX.js:172
+#: src/pages/BuyHLP/BuyHLP.js:172
 msgid "Using the Avalanche or Synapse bridges, you can also transfer any other supported cryptocurrency, and receive free AVAX to pay for the network's fees."
 msgstr "Avalanche나 Synapse 브리지를 사용하면 지원되는 어떤 암호화폐든 이전할 수 있으며 네트워크 수수료 지불을 위한 AVAX를 무료로 받을 수 있습니다."
 
@@ -2115,32 +2115,32 @@ msgid "Vault Capacity"
 msgstr "볼트 수용량"
 
 #: src/pages/Stake/StakeV2.js:480
-msgid "Vault Capacity for your Account<0/><1/>Deposited: {0} esGMX<2/>Max Capacity: {1} esGMX<3/>"
-msgstr "귀하의 계정의 볼트 수용량<0/><1/>예치량: {0} esGMX<2/>최대 수용량: {1} esGMX<3/>"
+msgid "Vault Capacity for your Account<0/><1/>Deposited: {0} esHLP<2/>Max Capacity: {1} esHLP<3/>"
+msgstr "귀하의 계정의 볼트 수용량<0/><1/>예치량: {0} esHLP<2/>최대 수용량: {1} esHLP<3/>"
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:407
-msgid "Vest with GLP on Arbitrum"
-msgstr "Arbitrum에서 GLP로 베스팅하기"
+msgid "Vest with THLP on Arbitrum"
+msgstr "Arbitrum에서 THLP로 베스팅하기"
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:427
-msgid "Vest with GLP on Avalanche"
-msgstr "Avalanche에서 GMX로 베스팅하기"
+msgid "Vest with THLP on Avalanche"
+msgstr "Avalanche에서 HLP로 베스팅하기"
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:397
-msgid "Vest with GMX on Arbitrum"
-msgstr "Arbitrum에서 GMX로 베스팅하기"
+msgid "Vest with HLP on Arbitrum"
+msgstr "Arbitrum에서 HLP로 베스팅하기"
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:417
-msgid "Vest with GMX on Avalanche"
-msgstr "Avalanche에서 GMX로 베스팅하기"
+msgid "Vest with HLP on Avalanche"
+msgstr "Avalanche에서 HLP로 베스팅하기"
 
 #: src/pages/BeginAccountTransfer/BeginAccountTransfer.js:131
-msgid "Vested GLP not withdrawn"
-msgstr "베스트팅된 GLP에서 인출되지 않은 양"
+msgid "Vested THLP not withdrawn"
+msgstr "베스트팅된 THLP에서 인출되지 않은 양"
 
 #: src/pages/BeginAccountTransfer/BeginAccountTransfer.js:128
-msgid "Vested GMX not withdrawn"
-msgstr "베스트팅된 GMX에서 인출되지 않은 양"
+msgid "Vested HLP not withdrawn"
+msgstr "베스트팅된 HLP에서 인출되지 않은 양"
 
 #: src/pages/Stake/StakeV2.js:2072
 #: src/pages/Stake/StakeV2.js:2158
@@ -2236,12 +2236,12 @@ msgid "Withdraw failed."
 msgstr "인출 실패."
 
 #: src/pages/Stake/StakeV2.js:1243
-msgid "Withdraw from GLP Vault"
-msgstr "GLP 볼트에서 인출"
+msgid "Withdraw from THLP Vault"
+msgstr "THLP 볼트에서 인출"
 
 #: src/pages/Stake/StakeV2.js:1232
-msgid "Withdraw from GMX Vault"
-msgstr "GMX 볼트에서 인출"
+msgid "Withdraw from HLP Vault"
+msgstr "HLP 볼트에서 인출"
 
 #: src/pages/Stake/StakeV2.js:550
 msgid "Withdraw submitted."
@@ -2267,11 +2267,11 @@ msgstr "인출 완료!"
 msgid "You are earning {nativeTokenSymbol} rewards with {0} tokens.<0/>Tokens: {amountStr}."
 msgstr "귀하는 {nativeTokenSymbol} 보상을 {0} 토큰으로 얻고 있습니다.<0/> 토큰: {amountStr}"
 
-#: src/pages/BuyGMX/BuyGMX.js:145
+#: src/pages/BuyHLP/BuyHLP.js:145
 msgid "You can buy AVAX directly on <0>Avalanche</0> using Banxa:"
 msgstr "Banxa를 사용하여 <0>Avalanche</0>상에서 직접 AVAX를 구입:"
 
-#: src/pages/BuyGMX/BuyGMX.js:65
+#: src/pages/BuyHLP/BuyHLP.js:65
 msgid "You can buy ETH directly on <0>Arbitrum</0> using Banxa:"
 msgstr "Banxa를 사용하여 <0>Arbitrum</0>상에서 직접 ETH를 구입:"
 
@@ -2280,14 +2280,14 @@ msgid "You can check your claim history <0>here</0>."
 msgstr "<0>여기</0>에서 수령한 내역을 확인할 수 있습니다."
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:435
-msgid "You can currently vest a maximum of {0} esGMX tokens at a ratio of {1} {stakingToken} to 1 esGMX."
-msgstr "{1} {stakingToken} 대 1 esGMX 비율로 최대 {0} esGMX 토큰을 현재 베스팅 할 수 있습니다."
+msgid "You can currently vest a maximum of {0} esHLP tokens at a ratio of {1} {stakingToken} to 1 esHLP."
+msgstr "{1} {stakingToken} 대 1 esHLP 비율로 최대 {0} esHLP 토큰을 현재 베스팅 할 수 있습니다."
 
-#: src/pages/BuyGMX/BuyGMX.js:170
+#: src/pages/BuyHLP/BuyHLP.js:170
 msgid "You can transfer AVAX to Avalanche using any of the below options."
 msgstr "아래의 옵션중 하나를 사용해, AVAX를 Avalanche에 보낼 수 있습니다."
 
-#: src/pages/BuyGMX/BuyGMX.js:90
+#: src/pages/BuyHLP/BuyHLP.js:90
 msgid "You can transfer ETH from other networks to Arbitrum using any of the below options:"
 msgstr "아래의 옵션중 하나를 사용해, ETH를 Arbitrum에 보낼 수 있습니다."
 
@@ -2305,7 +2305,7 @@ msgid "You have not deposited any tokens for vesting."
 msgstr "베스트팅을 위한 토큰이 예치되지 않았습니다."
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:353
-msgid "You have {0} esGMX (IOU) tokens."
+msgid "You have {0} esHLP (IOU) tokens."
 msgstr "귀하는 {0} esGMx (IOU) 토큰을 보유하고 있습니다."
 
 #: src/pages/CompleteAccountTransfer/CompleteAccountTransfer.js:103
@@ -2317,8 +2317,8 @@ msgid "You will receive a {0}% discount on your opening and closing fees, this d
 msgstr "포지션을 열고 닫을 때 {0}% 할인을 받을 수 있습니다. 이 할인분은 매주 수요일 귀하의 계정으로 에어드랍됩니다."
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:373
-msgid "Your esGMX (IOU) balance will decrease by your claim amount after claiming, this is expected behaviour."
-msgstr "귀하의 esGMX(IOU) 잔액은 수령 후 수령액만큼 감소하는데 이는 상정된 행동입니다."
+msgid "Your esHLP (IOU) balance will decrease by your claim amount after claiming, this is expected behaviour."
+msgstr "귀하의 esHLP(IOU) 잔액은 수령 후 수령액만큼 감소하는데 이는 상정된 행동입니다."
 
 #: src/pages/CompleteAccountTransfer/CompleteAccountTransfer.js:87
 msgid "Your transfer has been completed."
@@ -2342,28 +2342,28 @@ msgstr "주문"
 
 #: src/App/App.js:210
 #: src/App/App.js:232
-msgid "to start using GMX"
-msgstr "GMX를 시작하기 위해서는"
+msgid "to start using HLP"
+msgstr "HLP를 시작하기 위해서는"
 
 #: src/components/SettingDropdown/SettingDropdown.js:102
 #~ msgid "{0}"
 #~ msgstr "{0}"
 
 #: src/components/Glp/GlpSwap.js:782
-msgid "{0} GLP (${1})"
-msgstr "{0} GLP (${1})"
+msgid "{0} THLP (${1})"
+msgstr "{0} THLP (${1})"
 
 #: src/components/Glp/GlpSwap.js:552
-msgid "{0} GLP bought with {1} {2}!"
-msgstr "{1} {2}로 GLP를 구매하였습니다!"
+msgid "{0} THLP bought with {1} {2}!"
+msgstr "{1} {2}로 THLP를 구매하였습니다!"
 
 #: src/components/Glp/GlpSwap.js:740
-msgid "{0} GLP have been reserved for vesting."
-msgstr "{0} GLP가 베스팅을 위해 리저브되었습니다."
+msgid "{0} THLP have been reserved for vesting."
+msgstr "{0} THLP가 베스팅을 위해 리저브되었습니다."
 
 #: src/components/Glp/GlpSwap.js:579
-msgid "{0} GLP sold for {1} {2}!"
-msgstr "{0} GLP를 {1} {2}로 판매하였습니다!"
+msgid "{0} THLP sold for {1} {2}!"
+msgstr "{0} THLP를 {1} {2}로 판매하였습니다!"
 
 #: src/components/Exchange/SwapBox.js:941
 #: src/components/Exchange/SwapBox.js:997

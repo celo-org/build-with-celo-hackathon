@@ -34,10 +34,10 @@ export default function APRLabel({ chainId, label }) {
 
   const vaultAddress = getContract(chainId, "Vault");
   const nativeTokenAddress = getContract(chainId, "NATIVE_TOKEN");
-  const gmxAddress = getContract(chainId, "GMX");
-  const esGmxAddress = getContract(chainId, "ES_GMX");
-  const bnGmxAddress = getContract(chainId, "BN_GMX");
-  const glpAddress = getContract(chainId, "GLP");
+  const gmxAddress = getContract(chainId, "HLP");
+  const esGmxAddress = getContract(chainId, "ES_HLP");
+  const bnGmxAddress = getContract(chainId, "BN_HLP");
+  const glpAddress = getContract(chainId, "THLP");
 
   const stakedGmxTrackerAddress = getContract(chainId, "StakedGmxTracker");
   const bonusGmxTrackerAddress = getContract(chainId, "BonusGmxTracker");

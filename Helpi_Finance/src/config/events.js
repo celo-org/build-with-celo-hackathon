@@ -7,7 +7,7 @@ export const homeEventsData = [
     isActive: true,
     validTill: "10 Jul 2022, 12:00",
     bodyText:
-      "Updates have been applied to the GMX frontend to inform users of the separation between gmx.io and app.gmx.io",
+      "Updates have been applied to the HLP frontend to inform users of the separation between gmx.io and app.gmx.io",
     buttons: [
       {
         text: "Read More",
@@ -83,7 +83,7 @@ export const appEventsData = [
   //   title: "Referral Program Launch",
   //   isActive: true,
   //   validTill: "4 May 2022, 12:00",
-  //   bodyText: "The GMX referral program is now live! Get fee discounts and refer traders to earn rewards.",
+  //   bodyText: "The HLP referral program is now live! Get fee discounts and refer traders to earn rewards.",
   //   buttons: [
   //     {
   //       text: "Read More",
@@ -97,11 +97,11 @@ export const appEventsData = [
   // },
   // {
   //   id: "gmx-arbitrum-odyssey",
-  //   title: "GMX Arbitrum Odyssey",
+  //   title: "HLP Arbitrum Odyssey",
   //   isActive: true,
   //   validTill: "3 Jul 2022, 12:00",
   //   bodyText:
-  //     "The GMX Arbitrum Odyssey is taking place this week, all participants will receive prizes. Read on to find out more.",
+  //     "The HLP Arbitrum Odyssey is taking place this week, all participants will receive prizes. Read on to find out more.",
   //   buttons: [
   //     {
   //       text: "Read More",
@@ -126,14 +126,14 @@ export const appEventsData = [
   // },
   // {
   //   id: "gmx-arbitrum-odyssey-paused",
-  //   title: "GMX Arbitrum Odyssey Paused",
+  //   title: "HLP Arbitrum Odyssey Paused",
   //   isActive: true,
   //   validTill: "3 Jul 2022, 12:00",
-  //   bodyText: "The GMX Arbitrum Odyssey has been paused. Please read the linked post for more information.",
+  //   bodyText: "The HLP Arbitrum Odyssey has been paused. Please read the linked post for more information.",
   //   buttons: [
   //     {
   //       text: "Read More",
-  //       link: "https://twitter.com/GMX_IO/status/1542163585111150592",
+  //       link: "https://twitter.com/HLP_IO/status/1542163585111150592",
   //       newTab: true,
   //     },
   //   ],
@@ -144,7 +144,7 @@ export const appEventsData = [
   //   isActive: true,
   //   validTill: "6 Jul 2022, 12:00",
   //   bodyText:
-  //     "On 6 Jul 2022, updates will be applied to the GMX frontend to inform users of the separation between gmx.io and app.gmx.io",
+  //     "On 6 Jul 2022, updates will be applied to the HLP frontend to inform users of the separation between gmx.io and app.gmx.io",
   //   buttons: [
   //     {
   //       text: "Read More",

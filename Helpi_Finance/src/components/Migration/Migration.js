@@ -42,7 +42,7 @@ const tokens = [
     symbol: "GMT",
     address: getContract(CHAIN_ID, "GMT"),
     price: bigNumberify(10.97 * precision),
-    iouToken: getContract(CHAIN_ID, "GMT_GMX_IOU"),
+    iouToken: getContract(CHAIN_ID, "GMT_HLP_IOU"),
     cap: MaxUint256,
     bonus: 0,
   },
@@ -51,7 +51,7 @@ const tokens = [
     symbol: "xGMT",
     address: getContract(CHAIN_ID, "XGMT"),
     price: bigNumberify(90.31 * precision),
-    iouToken: getContract(CHAIN_ID, "XGMT_GMX_IOU"),
+    iouToken: getContract(CHAIN_ID, "XGMT_HLP_IOU"),
     cap: MaxUint256,
     bonus: 0,
   },
@@ -60,7 +60,7 @@ const tokens = [
     symbol: "LP",
     address: getContract(CHAIN_ID, "GMT_USDG_PAIR"),
     price: bigNumberify(parseInt(6.68 * precision)),
-    iouToken: getContract(CHAIN_ID, "GMT_USDG_GMX_IOU"),
+    iouToken: getContract(CHAIN_ID, "GMT_USDG_HLP_IOU"),
     cap: expandDecimals(483129, 18),
     bonus: 10,
   },
@@ -69,7 +69,7 @@ const tokens = [
     symbol: "LP",
     address: getContract(CHAIN_ID, "XGMT_USDG_PAIR"),
     price: bigNumberify(parseInt(19.27 * precision)),
-    iouToken: getContract(CHAIN_ID, "XGMT_USDG_GMX_IOU"),
+    iouToken: getContract(CHAIN_ID, "XGMT_USDG_HLP_IOU"),
     cap: expandDecimals(150191, 18),
     bonus: 10,
   },
@@ -257,7 +257,7 @@ function MigrationModal(props) {
             <div className="App-info-label">{token.bonus > 0 ? "Base Tokens" : "To Receive"}</div>
             <div className="align-right">
               {baseAmount &&
-                `${formatAmount(baseAmount, 18, 4, true)} GMX ($${formatAmount(
+                `${formatAmount(baseAmount, 18, 4, true)} HLP ($${formatAmount(
                   baseAmountUsd,
                   18 + decimals,
                   2,
@@ -271,7 +271,7 @@ function MigrationModal(props) {
               <div className="App-info-label">Bonus Tokens</div>
               <div className="align-right">
                 {bonusAmount &&
-                  `${formatAmount(bonusAmount, 18, 4, true)} GMX ($${formatAmount(
+                  `${formatAmount(bonusAmount, 18, 4, true)} HLP ($${formatAmount(
                     bonusAmountUsd,
                     18 + decimals,
                     2,
@@ -286,7 +286,7 @@ function MigrationModal(props) {
               <div className="App-info-label">To Receive</div>
               <div className="align-right">
                 {totalAmount &&
-                  `${formatAmount(totalAmount, 18, 4, true)} GMX ($${formatAmount(
+                  `${formatAmount(totalAmount, 18, 4, true)} HLP ($${formatAmount(
                     totalAmountUsd,
                     18 + decimals,
                     2,
@@ -407,7 +407,7 @@ export default function Migration() {
           <div className="Stake-title-secondary">Total Assets Migrated</div>
         </div>
       </div>
-      <div className="Migration-note">Your wallet: {formatAmount(gmxBalance, 18, 4, true)} GMX</div>
+      <div className="Migration-note">Your wallet: {formatAmount(gmxBalance, 18, 4, true)} HLP</div>
       <div className="Migration-note">
         Please read the&nbsp;
         <a

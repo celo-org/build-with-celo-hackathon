@@ -106,8 +106,8 @@ export const DEPOSIT_FEE = 30;
 export const DUST_BNB = "2000000000000000";
 export const DUST_USD = expandDecimals(1, USD_DECIMALS);
 export const PRECISION = expandDecimals(1, 30);
-export const GLP_DECIMALS = 18;
-export const GMX_DECIMALS = 18;
+export const THLP_DECIMALS = 18;
+export const HLP_DECIMALS = 18;
 export const DEFAULT_MAX_USDG_AMOUNT = expandDecimals(200 * 1000 * 1000, 18);
 
 export const TAX_BASIS_POINTS = 50;
@@ -121,7 +121,7 @@ export const LIQUIDATION_FEE = expandDecimals(5, USD_DECIMALS);
 
 export const TRADES_PAGE_SIZE = 100;
 
-export const GLP_COOLDOWN_DURATION = 15 * 60;
+export const THLP_COOLDOWN_DURATION = 15 * 60;
 export const THRESHOLD_REDEMPTION_VALUE = expandDecimals(993, 27); // 0.993
 export const FUNDING_RATE_PRECISION = 1000000;
 
@@ -146,7 +146,7 @@ export const IS_PNL_IN_LEVERAGE_KEY = "Exchange-swap-is-pnl-in-leverage";
 export const SHOW_PNL_AFTER_FEES_KEY = "Exchange-swap-show-pnl-after-fees";
 export const DISABLE_ORDER_VALIDATION_KEY = "disable-order-validation";
 export const SHOULD_SHOW_POSITION_LINES_KEY = "Exchange-swap-should-show-position-lines";
-export const REFERRAL_CODE_KEY = "GMX-referralCode";
+export const REFERRAL_CODE_KEY = "HLP-referralCode";
 export const REFERRAL_CODE_QUERY_PARAM = "ref";
 export const REFERRALS_SELECTED_TAB_KEY = "Referrals-selected-tab";
 export const MAX_REFERRAL_CODE_LENGTH = 20;
@@ -156,7 +156,7 @@ export const TRIGGER_PREFIX_BELOW = "<";
 
 export const MIN_PROFIT_BIPS = 0;
 
-export const GLPPOOLCOLORS = {
+export const THLPPOOLCOLORS = {
   ETH: "#6062a6",
   BTC: "#F7931A",
   "BTC.b": "#F7931A",
@@ -182,20 +182,20 @@ export function getHighExecutionFee(chainId) {
 
 export const ICONLINKS = {
   [ARBITRUM_TESTNET]: {
-    GMX: {
+    HLP: {
       coingecko: "https://www.coingecko.com/en/coins/gmx",
       arbitrum: "https://arbiscan.io/address/0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a",
     },
-    GLP: {
+    THLP: {
       arbitrum: "https://testnet.arbiscan.io/token/0xb4f81Fa74e06b5f762A104e47276BA9b2929cb27",
     },
   },
   [ARBITRUM]: {
-    GMX: {
+    HLP: {
       coingecko: "https://www.coingecko.com/en/coins/gmx",
       arbitrum: "https://arbiscan.io/address/0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a",
     },
-    GLP: {
+    THLP: {
       arbitrum: "https://arbiscan.io/token/0x1aDDD80E6039594eE970E5872D247bf0414C8903",
     },
     ETH: {
@@ -235,11 +235,11 @@ export const ICONLINKS = {
     },
   },
   [AVALANCHE]: {
-    GMX: {
+    HLP: {
       coingecko: "https://www.coingecko.com/en/coins/gmx",
       avalanche: "https://snowtrace.io/address/0x62edc0692bd897d2295872a9ffcac5425011c661",
     },
-    GLP: {
+    THLP: {
       avalanche: "https://snowtrace.io/address/0x9e295B5B976a184B14aD8cd72413aD846C299660",
     },
     AVAX: {
@@ -275,36 +275,36 @@ export const ICONLINKS = {
 export const platformTokens = {
   42161: {
     // arbitrum
-    GMX: {
-      name: "GMX",
-      symbol: "GMX",
+    HLP: {
+      name: "HLP",
+      symbol: "HLP",
       decimals: 18,
-      address: getContract(ARBITRUM, "GMX"),
+      address: getContract(ARBITRUM, "HLP"),
       imageUrl: "https://assets.coingecko.com/coins/images/18323/small/arbit.png?1631532468",
     },
-    GLP: {
-      name: "GMX LP",
-      symbol: "GLP",
+    THLP: {
+      name: "HLP LP",
+      symbol: "THLP",
       decimals: 18,
-      address: getContract(ARBITRUM, "StakedGlpTracker"), // address of fsGLP token because user only holds fsGLP
-      imageUrl: "https://github.com/gmx-io/gmx-assets/blob/main/GMX-Assets/PNG/GLP_LOGO%20ONLY.png?raw=true",
+      address: getContract(ARBITRUM, "StakedGlpTracker"), // address of fsTHLP token because user only holds fsTHLP
+      imageUrl: "https://github.com/gmx-io/gmx-assets/blob/main/HLP-Assets/PNG/THLP_LOGO%20ONLY.png?raw=true",
     },
   },
   43114: {
     // avalanche
-    GMX: {
-      name: "GMX",
-      symbol: "GMX",
+    HLP: {
+      name: "HLP",
+      symbol: "HLP",
       decimals: 18,
-      address: getContract(AVALANCHE, "GMX"),
+      address: getContract(AVALANCHE, "HLP"),
       imageUrl: "https://assets.coingecko.com/coins/images/18323/small/arbit.png?1631532468",
     },
-    GLP: {
-      name: "GMX LP",
-      symbol: "GLP",
+    THLP: {
+      name: "HLP LP",
+      symbol: "THLP",
       decimals: 18,
-      address: getContract(AVALANCHE, "StakedGlpTracker"), // address of fsGLP token because user only holds fsGLP
-      imageUrl: "https://github.com/gmx-io/gmx-assets/blob/main/GMX-Assets/PNG/GLP_LOGO%20ONLY.png?raw=true",
+      address: getContract(AVALANCHE, "StakedGlpTracker"), // address of fsTHLP token because user only holds fsTHLP
+      imageUrl: "https://github.com/gmx-io/gmx-assets/blob/main/HLP-Assets/PNG/THLP_LOGO%20ONLY.png?raw=true",
     },
   },
 };
@@ -679,7 +679,7 @@ export function getBuyGlpFromAmount(toAmount, fromTokenAddress, infoTokens, glpP
   }
 
   let fromAmount = toAmount.mul(glpPrice).div(fromToken.minPrice);
-  fromAmount = adjustForDecimals(fromAmount, GLP_DECIMALS, fromToken.decimals);
+  fromAmount = adjustForDecimals(fromAmount, THLP_DECIMALS, fromToken.decimals);
 
   const usdgAmount = toAmount.mul(glpPrice).div(PRECISION);
   const feeBasisPoints = getFeeBasisPoints(
@@ -709,7 +709,7 @@ export function getSellGlpToAmount(toAmount, fromTokenAddress, infoTokens, glpPr
   }
 
   let fromAmount = toAmount.mul(glpPrice).div(fromToken.maxPrice);
-  fromAmount = adjustForDecimals(fromAmount, GLP_DECIMALS, fromToken.decimals);
+  fromAmount = adjustForDecimals(fromAmount, THLP_DECIMALS, fromToken.decimals);
 
   const usdgAmount = toAmount.mul(glpPrice).div(PRECISION);
   const feeBasisPoints = getFeeBasisPoints(
@@ -2615,13 +2615,13 @@ export function getProcessedData(
   data.glpSupply = supplyData.glp;
   data.glpPrice =
     data.glpSupply && data.glpSupply.gt(0)
-      ? aum.mul(expandDecimals(1, GLP_DECIMALS)).div(data.glpSupply)
+      ? aum.mul(expandDecimals(1, THLP_DECIMALS)).div(data.glpSupply)
       : bigNumberify(0);
 
   data.glpSupplyUsd = supplyData.glp.mul(data.glpPrice).div(expandDecimals(1, 18));
 
   data.glpBalance = depositBalanceData.glpInStakedGlp;
-  data.glpBalanceUsd = depositBalanceData.glpInStakedGlp.mul(data.glpPrice).div(expandDecimals(1, GLP_DECIMALS));
+  data.glpBalanceUsd = depositBalanceData.glpInStakedGlp.mul(data.glpPrice).div(expandDecimals(1, THLP_DECIMALS));
 
   data.stakedGlpTrackerRewards = stakingData.stakedGlpTracker.claimable;
   data.stakedGlpTrackerRewardsUsd = stakingData.stakedGlpTracker.claimable.mul(gmxPrice).div(expandDecimals(1, 18));
@@ -2694,7 +2694,7 @@ export function sleep(ms) {
 
 export function getPageTitle(data) {
   return `${data} | Decentralized
-  Perpetual Exchange | GMX`;
+  Perpetual Exchange | HLP`;
 }
 
 export function isHashZero(value) {

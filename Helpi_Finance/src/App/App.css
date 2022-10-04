@@ -796,15 +796,15 @@ button.App-connect-wallet:hover {
 
 a.App-cta,
 button.App-cta {
-  color: white;
+  color: #000000 !important;
   text-decoration: none;
-  background: linear-gradient(90deg, rgba(45, 66, 252, 1) 0%, rgba(46, 61, 205, 1) 100%);
+  background: linear-gradient(90deg, rgba(45, 252, 142, 1) 0%, rgba(0, 255, 119, 1) 100%);
   /* box-shadow: 0 0 0.4rem 0.6rem rgba(45,66,252,0.15); */
 }
 
 a.App-cta:hover,
 button.App-cta:hover:enabled {
-  background: linear-gradient(90deg, rgba(58, 78, 252, 1) 0%, rgba(51, 68, 222, 1) 100%);
+  background: linear-gradient(90deg, rgb(0, 255, 119) 0%, rgb(1, 211, 99) 100%);
   box-shadow: 0 0 0.4rem 0.6rem rgba(45, 66, 252, 0.2);
 }
 
@@ -856,7 +856,7 @@ button.App-button-option {
 
 a.App-button-option:hover,
 button.App-button-option:hover:enabled {
-  background: linear-gradient(90deg, rgba(58, 78, 252, 1) 0%, rgba(51, 68, 222, 1) 100%);
+  background: linear-gradient(90deg, rgb(0, 255, 119) 0%, rgb(1, 211, 99) 100%);
   box-shadow: 0 0 0.4rem 0.6rem rgba(45, 66, 252, 0.2);
 }
 
@@ -1116,7 +1116,7 @@ button.App-button {
 }
 
 .App-slider .rc-slider-track {
-  background: linear-gradient(90deg, rgba(46, 61, 205, 1) 0%, rgba(45, 66, 252, 1) 100%);
+  background: linear-gradient(90deg, rgba(46, 61, 205, 1) 0%, rgba(45, 252, 142, 1) 100%);
 }
 
 .App-slider .rc-slider-dot {
@@ -1128,12 +1128,12 @@ button.App-button {
 }
 
 .App-slider .rc-slider-dot-active {
-  background: #3d51ff;
+  background: rgba(45, 252, 142, 1);
 }
 
 .App-slider .rc-slider-handle {
   background: #303652;
-  border: solid 2px rgba(45, 66, 252, 1);
+  border: solid 2px rgba(45, 252, 142, 1);
 }
 
 .App-slider .rc-slider-handle:active {

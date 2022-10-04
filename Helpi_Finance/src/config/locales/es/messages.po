@@ -15,8 +15,8 @@ msgstr ""
 
 #: src/App/App.js:208
 #: src/App/App.js:230
-msgid ", and use GMX with its built-in browser"
-msgstr ", y utiliza GMX con el navegador incorporado"
+msgid ", and use HLP with its built-in browser"
+msgstr ", y utiliza HLP con el navegador incorporado"
 
 #: src/pages/Dashboard/DashboardV2.js:583
 msgid "24h Volume"
@@ -27,8 +27,8 @@ msgid "<0>Insufficient liquidity to execute the order</0><1>The mark price which
 msgstr "<0>Insuficiente liquidez para ejecutar la orden</0><1>El precio de referencia, que es un agregado de precios de mercado, no alcanzó el precio especificado</1><2>Se alcanzó el precio especificado pero no lo suficiente como para ejecutarlo</2><3>Ningún guardián recogió la orden para ejecutarla</3>"
 
 #: src/pages/Stake/StakeV2.js:566
-msgid "<0>This will withdraw and unreserve all tokens as well as pause vesting.<1/><2/>esGMX tokens that have been converted to GMX will remain as GMX tokens.<3/><4/>To claim GMX tokens without withdrawing, use the \"Claim\" button under the Total Rewards section.<5/><6/></0>"
-msgstr "<0>Esto retirará y desreservará todos los tokens y pausará la adquisición.<1/><2/>Los tokens de esGMX que han sido convertidos a GMX permanecerán como tokens de GMX.<3/><4/>Para reclamar tokens de GMX sin retirarlos, utilice el botón \"Reclamar\" bajo la sección de Recompensas Totales.<5/><6/></0>"
+msgid "<0>This will withdraw and unreserve all tokens as well as pause vesting.<1/><2/>esHLP tokens that have been converted to HLP will remain as HLP tokens.<3/><4/>To claim HLP tokens without withdrawing, use the \"Claim\" button under the Total Rewards section.<5/><6/></0>"
+msgstr "<0>Esto retirará y desreservará todos los tokens y pausará la adquisición.<1/><2/>Los tokens de esHLP que han sido convertidos a HLP permanecerán como tokens de HLP.<3/><4/>Para reclamar tokens de HLP sin retirarlos, utilice el botón \"Reclamar\" bajo la sección de Recompensas Totales.<5/><6/></0>"
 
 #: src/components/Exchange/SwapBox.js:2101
 msgid "A snapshot of the USD value of your collateral is taken when the position is opened."
@@ -106,15 +106,15 @@ msgid "Affiliates"
 msgstr "Afiliados"
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:441
-msgid "After claiming you will be able to vest a maximum of {0} esGMX at a ratio of {1} {stakingToken} to 1 esGMX."
-msgstr "Tras reclamar podrás adquirir un máximo de {0} esGMX en una relación de {1} {stakingToken} por 1 esGMX"
+msgid "After claiming you will be able to vest a maximum of {0} esHLP at a ratio of {1} {stakingToken} to 1 esHLP."
+msgstr "Tras reclamar podrás adquirir un máximo de {0} esHLP en una relación de {1} {stakingToken} por 1 esHLP"
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:366
-msgid "After claiming, the esGMX tokens will be airdropped to your account on the selected network within 7 days."
-msgstr "Tras reclamar, los tokens esGMX serán enviados a su cuenta en la red seleccionada dentro de 7 días."
+msgid "After claiming, the esHLP tokens will be airdropped to your account on the selected network within 7 days."
+msgstr "Tras reclamar, los tokens esHLP serán enviados a su cuenta en la red seleccionada dentro de 7 días."
 
-#: src/pages/BuyGMX/BuyGMX.js:206
-#: src/pages/BuyGMX/BuyGMX.js:240
+#: src/pages/BuyHLP/BuyHLP.js:206
+#: src/pages/BuyHLP/BuyHLP.js:240
 msgid "After you have ETH, set your network to <0>Arbitrum</0> then click the button below:"
 msgstr "Después de tener ETH, establece tu red a <0>Arbitrum</0> y luego haz clic en el botón de abajo:"
 
@@ -145,8 +145,8 @@ msgstr "Anuncio"
 
 #: src/pages/BeginAccountTransfer/BeginAccountTransfer.js:174
 #: src/pages/Stake/StakeV2.js:654
-msgid "Approve GMX"
-msgstr "Aprobar GMX"
+msgid "Approve HLP"
+msgstr "Aprobar HLP"
 
 #: src/components/Exchange/PositionEditor.js:256
 #: src/components/Exchange/SwapBox.js:1173
@@ -159,8 +159,8 @@ msgid "Approve {stakingTokenSymbol}"
 msgstr "Aprobar {stakingTokenSymbol}"
 
 #: src/pages/Stake/StakeV2.js:651
-msgid "Approving GMX..."
-msgstr "Aprobando GMX..."
+msgid "Approving HLP..."
+msgstr "Aprobando HLP..."
 
 #: src/components/Exchange/PositionEditor.js:253
 #: src/components/Exchange/SwapBox.js:1170
@@ -187,8 +187,8 @@ msgid "Arbitrum APR:"
 msgstr "Arbitrum APR:"
 
 #: src/pages/Dashboard/DashboardV2.js:564
-msgid "Assets Under Management: GMX staked (All chains) + GLP pool ({chainName})"
-msgstr "Activos bajo gestión: GMX stakeados (Todas las cadenas) + Reserva GLP ({chainName})"
+msgid "Assets Under Management: HLP staked (All chains) + THLP pool ({chainName})"
+msgstr "Activos bajo gestión: HLP stakeados (Todas las cadenas) + Reserva THLP ({chainName})"
 
 #: src/components/Glp/GlpSwap.js:1311
 msgid "Available"
@@ -202,13 +202,13 @@ msgstr "Liquidez Disponible"
 
 #: src/components/Glp/GlpSwap.js:983
 #: src/components/Glp/GlpSwap.js:1286
-msgid "Available amount to deposit into GLP."
-msgstr "Cantidad disponible para depositar en GLP."
+msgid "Available amount to deposit into THLP."
+msgstr "Cantidad disponible para depositar en THLP."
 
 #: src/components/Glp/GlpSwap.js:994
 #: src/components/Glp/GlpSwap.js:1317
-msgid "Available amount to withdraw from GLP."
-msgstr "Cantidad disponible para retirar de GLP."
+msgid "Available amount to withdraw from THLP."
+msgstr "Cantidad disponible para retirar de THLP."
 
 #: src/pages/Home/Home.js:250
 msgid "Available on your preferred network"
@@ -218,7 +218,7 @@ msgstr "Disponible en su red preferida"
 msgid "Available:"
 msgstr "Disponible:"
 
-#: src/pages/BuyGMX/BuyGMX.js:179
+#: src/pages/BuyHLP/BuyHLP.js:179
 msgid "Avalanche"
 msgstr "Avalanche"
 
@@ -227,9 +227,9 @@ msgstr "Avalanche"
 msgid "Avalanche APR:"
 msgstr "Avalanche APR"
 
-#: src/pages/BuyGMX/BuyGMX.js:125
-msgid "Avax is needed on Avalanche to purchase GMX."
-msgstr "Se necesita Avax en Avalanche para comprar GMX."
+#: src/pages/BuyHLP/BuyHLP.js:125
+msgid "Avax is needed on Avalanche to purchase HLP."
+msgstr "Se necesita Avax en Avalanche para comprar HLP."
 
 #: src/components/Exchange/SwapBox.js:1917
 msgid "Balance"
@@ -241,8 +241,8 @@ msgstr "Balance"
 msgid "Balance:"
 msgstr "Balance:"
 
-#: src/pages/BuyGMX/BuyGMX.js:78
-#: src/pages/BuyGMX/BuyGMX.js:158
+#: src/pages/BuyHLP/BuyHLP.js:78
+#: src/pages/BuyHLP/BuyHLP.js:158
 msgid "Banxa"
 msgstr "Banxa"
 
@@ -250,8 +250,8 @@ msgstr "Banxa"
 msgid "Begin Transfer"
 msgstr "Comenzar Transferencia"
 
-#: src/pages/BuyGMX/BuyGMX.js:111
-#: src/pages/BuyGMX/BuyGMX.js:188
+#: src/pages/BuyHLP/BuyHLP.js:111
+#: src/pages/BuyHLP/BuyHLP.js:188
 msgid "Binance"
 msgstr "Binance"
 
@@ -280,22 +280,22 @@ msgid "Buy"
 msgstr "Comprar"
 
 #: src/pages/BuyGlp/BuyGlp.js:34
-msgid "Buy / Sell GLP"
-msgstr "Comprar / Vender GLP"
+msgid "Buy / Sell THLP"
+msgstr "Comprar / Vender THLP"
 
-#: src/pages/BuyGMX/BuyGMX.js:122
+#: src/pages/BuyHLP/BuyHLP.js:122
 msgid "Buy / Transfer AVAX"
 msgstr "Comprar / Transferir AVAX"
 
-#: src/pages/BuyGMX/BuyGMX.js:43
+#: src/pages/BuyHLP/BuyHLP.js:43
 msgid "Buy / Transfer ETH"
 msgstr "Comprar / Transferir ETH"
 
-#: src/pages/BuyGMX/BuyGMX.js:140
+#: src/pages/BuyHLP/BuyHLP.js:140
 msgid "Buy AVAX"
 msgstr "Comprar AVAX"
 
-#: src/pages/BuyGMX/BuyGMX.js:60
+#: src/pages/BuyHLP/BuyHLP.js:60
 msgid "Buy ETH"
 msgstr "Comprar ETH"
 
@@ -303,21 +303,21 @@ msgstr "Comprar ETH"
 #: src/components/Glp/GlpSwap.js:520
 #: src/components/Glp/GlpSwap.js:792
 #: src/pages/Stake/StakeV2.js:1890
-msgid "Buy GLP"
-msgstr "Comprar GLP"
+msgid "Buy THLP"
+msgstr "Comprar THLP"
 
-#: src/pages/BuyGMX/BuyGMX.js:200
-#: src/pages/BuyGMX/BuyGMX.js:234
-msgid "Buy GMX"
-msgstr "Comprar GMX"
+#: src/pages/BuyHLP/BuyHLP.js:200
+#: src/pages/BuyHLP/BuyHLP.js:234
+msgid "Buy HLP"
+msgstr "Comprar HLP"
 
-#: src/pages/BuyGMX/BuyGMX.js:263
-msgid "Buy GMX Bonds"
-msgstr "Comprar Bonos GMX"
+#: src/pages/BuyHLP/BuyHLP.js:263
+msgid "Buy HLP Bonds"
+msgstr "Comprar Bonos HLP"
 
 #: src/pages/Buy/Buy.js:21
-msgid "Buy GMX or GLP"
-msgstr "Comprar GMX o GLP"
+msgid "Buy HLP or THLP"
+msgstr "Comprar HLP o THLP"
 
 #: src/components/Glp/GlpSwap.js:551
 msgid "Buy failed."
@@ -387,8 +387,8 @@ msgstr "Reclamar"
 
 #: src/pages/Stake/StakeV2.js:741
 #: src/pages/Stake/StakeV2.js:865
-msgid "Claim GMX Rewards"
-msgstr "Reclamar Recompensas GMX"
+msgid "Claim HLP Rewards"
+msgstr "Reclamar Recompensas HLP"
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:328
 #: src/pages/Stake/StakeV2.js:840
@@ -396,13 +396,13 @@ msgid "Claim completed!"
 msgstr "¡Reclamación completada!"
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:341
-msgid "Claim esGMX"
-msgstr "Reclamar esGMX"
+msgid "Claim esHLP"
+msgstr "Reclamar esHLP"
 
 #: src/pages/Stake/StakeV2.js:751
 #: src/pages/Stake/StakeV2.js:870
-msgid "Claim esGMX Rewards"
-msgstr "Reclamar Recompensas esGMX"
+msgid "Claim esHLP Rewards"
+msgstr "Reclamar Recompensas esHLP"
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:327
 #: src/pages/Stake/StakeV2.js:839
@@ -543,8 +543,8 @@ msgid "Continue"
 msgstr "Continuar"
 
 #: src/pages/Stake/StakeV2.js:2022
-msgid "Convert esGMX tokens to GMX tokens.<0/>Please read the <1>vesting details</1> before using the vaults."
-msgstr "Convertir los tokens esGMX en tokens GMX.<0/>Por favor, lea los <1>detalles de adquisición</1> antes de utilizar las cajas."
+msgid "Convert esHLP tokens to HLP tokens.<0/>Please read the <1>vesting details</1> before using the vaults."
+msgstr "Convertir los tokens esHLP en tokens HLP.<0/>Por favor, lea los <1>detalles de adquisición</1> antes de utilizar las cajas."
 
 #: src/pages/Stake/StakeV2.js:880
 msgid "Convert {wrappedTokenSymbol} to {nativeTokenSymbol}"
@@ -677,9 +677,9 @@ msgstr "Descargar"
 #~ msgid "EARN"
 #~ msgstr "GANAR"
 
-#: src/pages/BuyGMX/BuyGMX.js:46
-msgid "ETH is needed on Arbitrum to purchase GMX."
-msgstr "Se necesita ETH en Arbitrum para comprar GMX."
+#: src/pages/BuyHLP/BuyHLP.js:46
+msgid "ETH is needed on Arbitrum to purchase HLP."
+msgstr "Se necesita ETH en Arbitrum para comprar HLP."
 
 #: src/components/Header/AppHeaderLinks.tsx:66
 #: src/pages/Stake/StakeV2.js:1444
@@ -820,12 +820,12 @@ msgid "Enter and exit positions with minimal spread and zero price impact. Get t
 msgstr "Entre y salga de posiciones con un deslizamiento mínimo y sin impacto de precio. Obtenga el precio óptimo sin incurrir en costes adicionales."
 
 #: src/components/Glp/GlpSwap.js:951
-msgid "Enter the amount of GLP you want to purchase in the order form, then check here to compare fees."
-msgstr "Introduce la cantidad de GLP que quieres comprar en el formulario de pedido, luego comprueba aquí para comparar las tarifas."
+msgid "Enter the amount of THLP you want to purchase in the order form, then check here to compare fees."
+msgstr "Introduce la cantidad de THLP que quieres comprar en el formulario de pedido, luego comprueba aquí para comparar las tarifas."
 
 #: src/components/Glp/GlpSwap.js:960
-msgid "Enter the amount of GLP you want to redeem in the order form, then check here to compare fees."
-msgstr "Introduzca la cantidad de GLP que desea canjear en el formulario de pedido, luego marque aquí para comparar las tarifas."
+msgid "Enter the amount of THLP you want to redeem in the order form, then check here to compare fees."
+msgstr "Introduzca la cantidad de THLP que desea canjear en el formulario de pedido, luego marque aquí para comparar las tarifas."
 
 #: src/components/Exchange/PositionSeller.js:1007
 #: src/components/Exchange/PositionsList.js:398
@@ -836,8 +836,8 @@ msgid "Entry Price"
 msgstr "Precio de Entrada"
 
 #: src/components/Glp/GlpSwap.js:767
-msgid "Escrowed GMX APR"
-msgstr "Escrowded GMX APR"
+msgid "Escrowed HLP APR"
+msgstr "Escrowded HLP APR"
 
 #: src/components/Exchange/PositionEditor.js:572
 msgid "Execution Fee"
@@ -860,12 +860,12 @@ msgid "Fees"
 msgstr "Comisiones"
 
 #: src/components/Glp/GlpSwap.js:958
-msgid "Fees may vary depending on which asset you sell GLP for."
-msgstr "Las comisiones pueden variar dependiendo del activo por el que se venda GLP."
+msgid "Fees may vary depending on which asset you sell THLP for."
+msgstr "Las comisiones pueden variar dependiendo del activo por el que se venda THLP."
 
 #: src/components/Glp/GlpSwap.js:949
-msgid "Fees may vary depending on which asset you use to buy GLP."
-msgstr "Las comisiones pueden variar dependiendo del activo por el que se compre GLP."
+msgid "Fees may vary depending on which asset you use to buy THLP."
+msgstr "Las comisiones pueden variar dependiendo del activo por el que se compre THLP."
 
 #: src/pages/Dashboard/DashboardV2.js:654
 msgid "Fees since"
@@ -897,74 +897,74 @@ msgid "Funds not utilized by current open positions."
 msgstr "Fondos no utilizados por las posiciones abiertas actuales."
 
 #: src/pages/Dashboard/DashboardV2.js:965
-msgid "GLP Index Composition"
-msgstr "Composición Índice GLP"
+msgid "THLP Index Composition"
+msgstr "Composición Índice THLP"
 
 #: src/components/Glp/GlpSwap.js:418
-msgid "GLP buy disabled, pending {0} upgrade"
+msgid "THLP buy disabled, pending {0} upgrade"
 msgstr ""
 
 #: src/components/TokenCard/TokenCard.js:97
-msgid "GLP is the liquidity provider token. Accrues 70% of the platform's generated fees."
-msgstr "GLP es el token proveedor de liquidez. Acumula el 70% de las comisiones generadas por la plataforma."
+msgid "THLP is the liquidity provider token. Accrues 70% of the platform's generated fees."
+msgstr "THLP es el token proveedor de liquidez. Acumula el 70% de las comisiones generadas por la plataforma."
 
 #: src/components/TokenCard/TokenCard.js:75
-#~ msgid "GLP is the platform's liquidity provider token. Accrues 70% of its generated fees."
-#~ msgstr "GLP es el token proveedor de liquidez de la plataforma. Acumula el 70% de las comisiones generadas."
+#~ msgid "THLP is the platform's liquidity provider token. Accrues 70% of its generated fees."
+#~ msgstr "THLP es el token proveedor de liquidez de la plataforma. Acumula el 70% de las comisiones generadas."
 
 #: src/components/Glp/GlpSwap.js:419
-msgid "GLP sell disabled, pending {0} upgrade"
+msgid "THLP sell disabled, pending {0} upgrade"
 msgstr ""
 
 #: src/pages/Ecosystem/Ecosystem.js:387
-msgid "GMX Pages"
-msgstr "Páginas GMX"
+msgid "HLP Pages"
+msgstr "Páginas HLP"
 
-#: src/pages/BuyGMX/BuyGMX.js:269
-msgid "GMX bonds can be bought on Olympus Pro with a discount and a small vesting period:"
-msgstr "Los bonos GMX pueden ser comprados en Olympus Pro con un descuento y un pequeño periodo de adquisición:"
+#: src/pages/BuyHLP/BuyHLP.js:269
+msgid "HLP bonds can be bought on Olympus Pro with a discount and a small vesting period:"
+msgstr "Los bonos HLP pueden ser comprados en Olympus Pro con un descuento y un pequeño periodo de adquisición:"
 
 #: src/pages/Ecosystem/Ecosystem.js:489
-msgid "GMX dashboards and analytics."
-msgstr "Paneles y análisis de GMX."
+msgid "HLP dashboards and analytics."
+msgstr "Paneles y análisis de HLP."
 
 #: src/pages/Ecosystem/Ecosystem.js:390
-msgid "GMX ecosystem pages."
-msgstr "Páginas del ecosistema GMX."
+msgid "HLP ecosystem pages."
+msgstr "Páginas del ecosistema HLP."
 
 #: src/pages/Home/Home.js:253
-msgid "GMX is currently live on Arbitrum and Avalanche."
-msgstr "GMX esta actualmente en vivo en Arbitrum y Avalanche."
+msgid "HLP is currently live on Arbitrum and Avalanche."
+msgstr "HLP esta actualmente en vivo en Arbitrum y Avalanche."
 
 #: src/components/TokenCard/TokenCard.js:43
-#~ msgid "GMX is the utility and governance token, and also accrues 30% of the platform's generated fees."
-#~ msgstr "GMX es el token de utilidad y gobierno, y también acumula el 30% de las comisiones generadas por la plataforma."
+#~ msgid "HLP is the utility and governance token, and also accrues 30% of the platform's generated fees."
+#~ msgstr "HLP es el token de utilidad y gobierno, y también acumula el 30% de las comisiones generadas por la plataforma."
 
 #: src/components/TokenCard/TokenCard.js:65
-msgid "GMX is the utility and governance token. Accrues 30% of the platform's generated fees."
-msgstr "GMX es el token de utilidad y gobierno, y también acumula el 30% de las comisiones generadas por la plataforma."
+msgid "HLP is the utility and governance token. Accrues 30% of the platform's generated fees."
+msgstr "HLP es el token de utilidad y gobierno, y también acumula el 30% de las comisiones generadas por la plataforma."
 
 #: src/pages/Stake/StakeV2.js:2112
 #: src/pages/Stake/StakeV2.js:2196
-msgid "GMX tokens can be claimed, use the options under the Total Rewards section to claim them."
-msgstr "Los tokens GMX pueden ser reclamados, utilice las opciones de la sección de Recompensas Totales para reclamarlos."
+msgid "HLP tokens can be claimed, use the options under the Total Rewards section to claim them."
+msgstr "Los tokens HLP pueden ser reclamados, utilice las opciones de la sección de Recompensas Totales para reclamarlos."
 
 #: src/pages/Stake/StakeV2.js:1158
 #: src/pages/Stake/StakeV2.js:1249
-msgid "GMX transfers not yet enabled"
-msgstr "Las transferencias GMX aún no están habilitadas"
+msgid "HLP transfers not yet enabled"
+msgstr "Las transferencias HLP aún no están habilitadas"
 
 #: src/components/Common/SEO.js:8
-msgid "GMX | Decentralized Perpetual Exchange"
-msgstr "GMX | Exchange Perpetuo Descentralizado"
+msgid "HLP | Decentralized Perpetual Exchange"
+msgstr "HLP | Exchange Perpetuo Descentralizado"
 
 #: src/components/Referrals/AddAffiliateCode.js:18
 msgid "Generate Referral Code"
 msgstr "Generar Código de Referido"
 
 #: src/pages/Referrals/Referrals.js:124
-msgid "Get fee discounts and earn rebates through the GMX referral program.<0/>For more information, please read the <1>referral program details</1>."
-msgstr "Obtenga descuentos en las comisiones y gane reembolsos a través del programa de referidos de GMX.<0/>Para más información, por favor lea los <1>detalles del programa de referidos</1>."
+msgid "Get fee discounts and earn rebates through the HLP referral program.<0/>For more information, please read the <1>referral program details</1>."
+msgstr "Obtenga descuentos en las comisiones y gane reembolsos a través del programa de referidos de HLP.<0/>Para más información, por favor lea los <1>detalles del programa de referidos</1>."
 
 #: src/App.js:160
 #~ msgid "HOME"
@@ -982,7 +982,7 @@ msgstr "Alto Deslizamiento de USDG, ir Largo de todas formas"
 msgid "Home"
 msgstr "Inicio"
 
-#: src/pages/BuyGMX/BuyGMX.js:108
+#: src/pages/BuyHLP/BuyHLP.js:108
 msgid "Hop"
 msgstr "Hop"
 
@@ -1015,8 +1015,8 @@ msgid "Install MetaMask"
 msgstr "Instalar MetaMask"
 
 #: src/components/Glp/GlpSwap.js:450
-msgid "Insufficient GLP balance"
-msgstr "Balance GLP insuficiente"
+msgid "Insufficient THLP balance"
+msgstr "Balance THLP insuficiente"
 
 #: src/components/Exchange/SwapBox.js:817
 #: src/components/Exchange/SwapBox.js:826
@@ -1229,8 +1229,8 @@ msgid "Max pool capacity reached for {0}"
 msgstr "Capacidad máxima de reserva alcanzada para {0}"
 
 #: src/components/Glp/GlpSwap.js:1252
-msgid "Max pool capacity reached for {0}. Please mint GLP using another token"
-msgstr "Capacidad máxima de reserva alcanzada para {0}. Por favor, acuñe GLP usando otro token."
+msgid "Max pool capacity reached for {0}. Please mint THLP using another token"
+msgstr "Capacidad máxima de reserva alcanzada para {0}. Por favor, acuñe THLP usando otro token."
 
 #: src/App/App.js:308
 msgid "Max slippage precision is 0.01%"
@@ -1273,8 +1273,8 @@ msgstr "Orden Mín. 10 USD"
 msgid "Multiplier Points APR"
 msgstr "APR de Puntos Multiplicadores"
 
-#: src/pages/BuyGMX/BuyGMX.js:101
-#: src/pages/BuyGMX/BuyGMX.js:185
+#: src/pages/BuyHLP/BuyHLP.js:101
+#: src/pages/BuyHLP/BuyHLP.js:185
 msgid "Multiswap"
 msgstr "Multi-intercambio"
 
@@ -1296,8 +1296,8 @@ msgid "No PnLs found"
 msgstr "No se han encontrado GyPs"
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:271
-msgid "No esGMX to claim"
-msgstr "No hay esGMX para reclamar"
+msgid "No esHLP to claim"
+msgstr "No hay esHLP para reclamar"
 
 #: src/components/Exchange/OrdersList.js:116
 msgid "No open orders"
@@ -1320,7 +1320,7 @@ msgstr "Tenga en cuenta que no se garantiza la ejecución de las órdenes.<0/><1
 msgid "Note that there is a minimum holding time of 15 minutes after a purchase."
 msgstr "Tenga en cuenta que hay un tiempo mínimo de espera de 15 minutos después de una compra."
 
-#: src/pages/BuyGMX/BuyGMX.js:273
+#: src/pages/BuyHLP/BuyHLP.js:273
 msgid "Olympus Pro"
 msgstr "Olympus Pro"
 
@@ -1398,8 +1398,8 @@ msgid "Pay"
 msgstr "Pagar"
 
 #: src/pages/Dashboard/DashboardV2.js:737
-msgid "Platform and GLP index tokens."
-msgstr "Plataforma y tokens del índice GLP"
+msgid "Platform and THLP index tokens."
+msgstr "Plataforma y tokens del índice THLP"
 
 #: src/components/Glp/GlpSwap.js:1367
 msgid "Please enter an amount to see fee percentages"
@@ -1410,8 +1410,8 @@ msgid "Please input a referral code to benefit from fee discounts."
 msgstr "Por favor, introduzca un código de referido para beneficiarse de los descuentos en las comisiones."
 
 #: src/components/Glp/GlpSwap.js:1091
-msgid "Please mint GLP using another token"
-msgstr "Por favor, acuñe GLP usando otro token"
+msgid "Please mint THLP using another token"
+msgstr "Por favor, acuñe THLP usando otro token"
 
 #: src/pages/BeginAccountTransfer/BeginAccountTransfer.js:236
 msgid "Please only use this for full account transfers."
@@ -1482,21 +1482,21 @@ msgstr "Ganancia"
 #~ msgstr "Ganancias En"
 
 #: src/pages/Ecosystem/Ecosystem.js:435
-msgid "Projects developed by the GMX community."
-msgstr "Proyectos desarrollados por la comunidad de GMX."
+msgid "Projects developed by the HLP community."
+msgstr "Proyectos desarrollados por la comunidad de HLP."
 
 #: src/pages/Ecosystem/Ecosystem.js:544
-msgid "Projects integrated with GMX."
-msgstr "Proyectos integrados con GMX."
+msgid "Projects integrated with HLP."
+msgstr "Proyectos integrados con HLP."
 
 #: src/pages/BuyGlp/BuyGlp.js:37
-msgid "Purchase <0>GLP tokens</0> to earn {nativeTokenSymbol} fees from swaps and leverages trading."
-msgstr "Compra <0>tokens GLP</0> para ganar {nativeTokenSymbol} comisiones por operaciones de intercambio y apalancamiento."
+msgid "Purchase <0>THLP tokens</0> to earn {nativeTokenSymbol} fees from swaps and leverages trading."
+msgstr "Compra <0>tokens THLP</0> para ganar {nativeTokenSymbol} comisiones por operaciones de intercambio y apalancamiento."
 
-#: src/pages/BuyGMX/BuyGMX.js:220
-#: src/pages/BuyGMX/BuyGMX.js:254
-msgid "Purchase GMX"
-msgstr "Comprar GMX"
+#: src/pages/BuyHLP/BuyHLP.js:220
+#: src/pages/BuyHLP/BuyHLP.js:254
+msgid "Purchase HLP"
+msgstr "Comprar HLP"
 
 #: src/pages/Stake/StakeV2.js:1902
 msgid "Purchase Insurance"
@@ -1533,12 +1533,12 @@ msgid "Receiver Address"
 msgstr "Dirección del receptor"
 
 #: src/pages/BeginAccountTransfer/BeginAccountTransfer.js:280
-msgid "Receiver has not staked GLP tokens before"
-msgstr "El receptor no ha stakeado tokens GLP antes."
+msgid "Receiver has not staked THLP tokens before"
+msgstr "El receptor no ha stakeado tokens THLP antes."
 
 #: src/pages/BeginAccountTransfer/BeginAccountTransfer.js:277
-msgid "Receiver has not staked GMX tokens before"
-msgstr "El receptor no ha stakeado tokens GMX antes."
+msgid "Receiver has not staked HLP tokens before"
+msgstr "El receptor no ha stakeado tokens HLP antes."
 
 #: src/components/Glp/GlpSwap.js:423
 msgid "Redemption time not yet reached"
@@ -1668,8 +1668,8 @@ msgstr "No se admite la autotransferencia"
 #: src/components/Glp/GlpSwap.js:652
 #: src/components/Glp/GlpSwap.js:792
 #: src/pages/Stake/StakeV2.js:1893
-msgid "Sell GLP"
-msgstr "Vender GLP"
+msgid "Sell THLP"
+msgstr "Vender THLP"
 
 #: src/components/Glp/GlpSwap.js:578
 msgid "Sell failed."
@@ -1689,16 +1689,16 @@ msgid "Selling..."
 msgstr "Vendiendo..."
 
 #: src/views/BeginAccountTransfer/BeginAccountTransfer.js:266
-#~ msgid "Sender has withdrawn all tokens from GLP"
-#~ msgstr "El remitente ha retirado todos los tokens del Baúl de Adquisición GLP"
+#~ msgid "Sender has withdrawn all tokens from THLP"
+#~ msgstr "El remitente ha retirado todos los tokens del Baúl de Adquisición THLP"
 
 #: src/pages/BeginAccountTransfer/BeginAccountTransfer.js:274
-msgid "Sender has withdrawn all tokens from GLP Vesting Vault"
-msgstr "El remitente ha retirado todos los tokens del Baúl de Adquisición GLP"
+msgid "Sender has withdrawn all tokens from THLP Vesting Vault"
+msgstr "El remitente ha retirado todos los tokens del Baúl de Adquisición THLP"
 
 #: src/pages/BeginAccountTransfer/BeginAccountTransfer.js:271
-msgid "Sender has withdrawn all tokens from GMX Vesting Vault"
-msgstr "El remitente ha retirado todos los tokens del Cajas de Adquisición GMX"
+msgid "Sender has withdrawn all tokens from HLP Vesting Vault"
+msgstr "El remitente ha retirado todos los tokens del Cajas de Adquisición HLP"
 
 #: src/components/Header/AppHeaderLinks.tsx:101
 msgid "Settings"
@@ -1763,20 +1763,20 @@ msgid "Stake"
 msgstr "Stake"
 
 #: src/pages/Stake/StakeV2.js:1447
-msgid "Stake <0>GMX</0> and <1>GLP</1> to earn rewards."
-msgstr "Stakea <0>GMX</0> y <1>GLP</1> para ganar recompensas."
+msgid "Stake <0>HLP</0> and <1>THLP</1> to earn rewards."
+msgstr "Stakea <0>HLP</0> y <1>THLP</1> para ganar recompensas."
 
 #: src/pages/Stake/StakeV2.js:746
-msgid "Stake GMX Rewards"
-msgstr "Stakea Recompensas GMX"
+msgid "Stake HLP Rewards"
+msgstr "Stakea Recompensas HLP"
 
 #: src/pages/Stake/StakeV2.js:736
 msgid "Stake Multiplier Points"
 msgstr "Stakea Puntos Multiplicadores"
 
 #: src/pages/Stake/StakeV2.js:756
-msgid "Stake esGMX Rewards"
-msgstr "Stakea Recompensas esGMX"
+msgid "Stake esHLP Rewards"
+msgstr "Stakea Recompensas esHLP"
 
 #: src/pages/Stake/StakeV2.js:116
 msgid "Stake failed."
@@ -1852,8 +1852,8 @@ msgstr ""
 #~ msgid "Switch Network"
 #~ msgstr "Cambiar Red"
 
-#: src/pages/BuyGMX/BuyGMX.js:98
-#: src/pages/BuyGMX/BuyGMX.js:182
+#: src/pages/BuyHLP/BuyHLP.js:98
+#: src/pages/BuyHLP/BuyHLP.js:182
 msgid "Synapse"
 msgstr "Synapse"
 
@@ -1875,16 +1875,16 @@ msgid "The Boosted APR is from your staked Multiplier Points."
 msgstr "El APR aumentado es de sus Puntos Multiplicadores stakeados."
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:356
-msgid "The address of the esGMX (IOU) token is {esGmxIouAddress}."
-msgstr "La dirección del token esGMX (IOU) es {esGmxIouAddress}."
+msgid "The address of the esHLP (IOU) token is {esGmxIouAddress}."
+msgstr "La dirección del token esHLP (IOU) es {esGmxIouAddress}."
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:358
-msgid "The esGMX (IOU) token is transferrable. You can add the token to your wallet and send it to another address to claim if you'd like."
-msgstr "El token esGMX (IOU) es transferible. Puedes agregar el token a tu cartera y enviarlo a otra dirección para reclamarlo si lo deseas."
+msgid "The esHLP (IOU) token is transferrable. You can add the token to your wallet and send it to another address to claim if you'd like."
+msgstr "El token esHLP (IOU) es transferible. Puedes agregar el token a tu cartera y enviarlo a otra dirección para reclamarlo si lo deseas."
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:371
-msgid "The esGMX tokens can be staked or vested at any time."
-msgstr "Los tokens esGMX pueden ser stakeados o adquiridos en cualquier momento."
+msgid "The esHLP tokens can be staked or vested at any time."
+msgstr "Los tokens esHLP pueden ser stakeados o adquiridos en cualquier momento."
 
 #: src/components/Exchange/OrdersList.js:288
 msgid "The price that orders can be executed at may differ slightly from the chart price, as market orders update oracle prices, while limit/trigger orders do not."
@@ -1895,8 +1895,8 @@ msgid "The price that the order can be executed at may differ slightly from the 
 msgstr "El precio al que se puede ejecutar la orden puede diferir ligeramente del precio del gráfico, ya que las órdenes de mercado pueden cambiar el precio mientras que las órdenes de límite/activación no."
 
 #: src/pages/BeginAccountTransfer/BeginAccountTransfer.js:238
-msgid "This will transfer all your GMX, esGMX, GLP and Multiplier Points to your new account."
-msgstr "Esto transferirá todos sus GMX, esGMX, GLP y Puntos Multiplicadores a su nueva cuenta."
+msgid "This will transfer all your HLP, esHLP, THLP and Multiplier Points to your new account."
+msgstr "Esto transferirá todos sus HLP, esHLP, THLP y Puntos Multiplicadores a su nueva cuenta."
 
 #: src/components/Referrals/TradersStats.js:44
 msgid "Tier {0} ({1}% discount)"
@@ -1906,21 +1906,21 @@ msgstr "Nivel {0} ({1}% de descuento)"
 msgid "To complete the transfer, you must switch your connected account to {receiver}."
 msgstr "Para completar la transferencia, debes cambiar tu cuenta conectada a {receiver}."
 
-#: src/views/BuyGMX/BuyGMX.js:128
-#~ msgid "To purchase GMX on <0>Arbitrum <1/></0>, please change your network."
-#~ msgstr "Para comprar GMX en <0>Arbitrum <1/></0>, por favor cambie su red."
+#: src/views/BuyHLP/BuyHLP.js:128
+#~ msgid "To purchase HLP on <0>Arbitrum <1/></0>, please change your network."
+#~ msgstr "Para comprar HLP en <0>Arbitrum <1/></0>, por favor cambie su red."
 
-#: src/pages/BuyGMX/BuyGMX.js:127
-msgid "To purchase GMX on <0>Arbitrum</0>, please change your network."
-msgstr "Para comprar GMX en <0>Arbitrum</0>, por favor cambie su red."
+#: src/pages/BuyHLP/BuyHLP.js:127
+msgid "To purchase HLP on <0>Arbitrum</0>, please change your network."
+msgstr "Para comprar HLP en <0>Arbitrum</0>, por favor cambie su red."
 
-#: src/views/BuyGMX/BuyGMX.js:52
-#~ msgid "To purchase GMX on <0>Avalanche <1/></0>, please change your network."
-#~ msgstr "Para comprar GMX en <0>Avalanche <1/></0>, por favor cambie su red."
+#: src/views/BuyHLP/BuyHLP.js:52
+#~ msgid "To purchase HLP on <0>Avalanche <1/></0>, please change your network."
+#~ msgstr "Para comprar HLP en <0>Avalanche <1/></0>, por favor cambie su red."
 
-#: src/pages/BuyGMX/BuyGMX.js:48
-msgid "To purchase GMX on <0>Avalanche</0>, please change your network."
-msgstr "Para comprar GMX en <0>Avalanche<1/></0>, por favor cambie su red."
+#: src/pages/BuyHLP/BuyHLP.js:48
+msgid "To purchase HLP on <0>Avalanche</0>, please change your network."
+msgstr "Para comprar HLP en <0>Avalanche<1/></0>, por favor cambie su red."
 
 #: src/components/Glp/GlpSwap.js:908
 msgid "To reduce fees, select a different asset to pay with."
@@ -1989,8 +1989,8 @@ msgid "Total Volume"
 msgstr "Volumen Total"
 
 #: src/pages/Dashboard/DashboardV2.js:576
-msgid "Total value of tokens in GLP pool ({chainName})"
-msgstr "Valor total de los tokens en la reserva de GLP ({chainName})"
+msgid "Total value of tokens in THLP pool ({chainName})"
+msgstr "Valor total de los tokens en la reserva de THLP ({chainName})"
 
 #: src/components/Header/AppHeaderUser.tsx:96
 #: src/components/Header/AppHeaderUser.tsx:131
@@ -2030,7 +2030,7 @@ msgstr "Guía de Trading"
 msgid "Transaction"
 msgstr "Transacción"
 
-#: src/pages/BuyGMX/BuyGMX.js:165
+#: src/pages/BuyHLP/BuyHLP.js:165
 msgid "Transfer AVAX"
 msgstr "Transferir AVAX"
 
@@ -2038,7 +2038,7 @@ msgstr "Transferir AVAX"
 msgid "Transfer Account"
 msgstr "Transferir Cuenta"
 
-#: src/pages/BuyGMX/BuyGMX.js:85
+#: src/pages/BuyHLP/BuyHLP.js:85
 msgid "Transfer ETH"
 msgstr "Transferir ETH"
 
@@ -2065,8 +2065,8 @@ msgid "Transfers are one-way, you will not be able to transfer staked tokens bac
 msgstr "Las transferencias son unidireccionales, no podrás transferir tokens stakeados de vuelta a la cuenta de envío."
 
 #: src/pages/BeginAccountTransfer/BeginAccountTransfer.js:240
-msgid "Transfers are only supported if the receiving account has not staked GMX or GLP tokens before."
-msgstr "Las transferencias solo son soportadas si la cuenta receptora no ha stakeado tokens GMX o GLP antes."
+msgid "Transfers are only supported if the receiving account has not staked HLP or THLP tokens before."
+msgstr "Las transferencias solo son soportadas si la cuenta receptora no ha stakeado tokens HLP o THLP antes."
 
 #: src/components/Exchange/PositionSeller.js:991
 msgid "Trigger Price"
@@ -2103,8 +2103,8 @@ msgid "Unstake"
 msgstr "Destakear"
 
 #: src/pages/Stake/StakeV2.js:1253
-msgid "Unstake GMX"
-msgstr "Destakear GMX"
+msgid "Unstake HLP"
+msgstr "Destakear HLP"
 
 #: src/pages/Stake/StakeV2.js:250
 msgid "Unstake completed!"
@@ -2138,7 +2138,7 @@ msgstr "Utilice el botón \"Editar\" para depositar o retirar la garantía.\""
 msgid "Useful Links"
 msgstr "Enlaces útiles"
 
-#: src/pages/BuyGMX/BuyGMX.js:172
+#: src/pages/BuyHLP/BuyHLP.js:172
 msgid "Using the Avalanche or Synapse bridges, you can also transfer any other supported cryptocurrency, and receive free AVAX to pay for the network's fees."
 msgstr "Usando los puentes Avalanche o Synapse, tambien puedes transferir cualquier otra criptodivisa soportada, y recibir AVAX gratis para pagar las tarifas de la red."
 
@@ -2147,32 +2147,32 @@ msgid "Vault Capacity"
 msgstr "Capacidad del Baúl"
 
 #: src/pages/Stake/StakeV2.js:480
-msgid "Vault Capacity for your Account<0/><1/>Deposited: {0} esGMX<2/>Max Capacity: {1} esGMX<3/>"
-msgstr "Capacidad del Baúl para su cuenta<0/><1/>Depositado: {0} esGMX<2/>Capacidad máxima: {1} esGMX<3/>"
+msgid "Vault Capacity for your Account<0/><1/>Deposited: {0} esHLP<2/>Max Capacity: {1} esHLP<3/>"
+msgstr "Capacidad del Baúl para su cuenta<0/><1/>Depositado: {0} esHLP<2/>Capacidad máxima: {1} esHLP<3/>"
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:407
-msgid "Vest with GLP on Arbitrum"
-msgstr "Adquiera con GLP en Arbitrum"
+msgid "Vest with THLP on Arbitrum"
+msgstr "Adquiera con THLP en Arbitrum"
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:427
-msgid "Vest with GLP on Avalanche"
-msgstr "Adquiera con GLP en Avalanche"
+msgid "Vest with THLP on Avalanche"
+msgstr "Adquiera con THLP en Avalanche"
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:397
-msgid "Vest with GMX on Arbitrum"
-msgstr "Adquiera con GMX en Arbitrum"
+msgid "Vest with HLP on Arbitrum"
+msgstr "Adquiera con HLP en Arbitrum"
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:417
-msgid "Vest with GMX on Avalanche"
-msgstr "Adquiera con GMX en Avalanche"
+msgid "Vest with HLP on Avalanche"
+msgstr "Adquiera con HLP en Avalanche"
 
 #: src/pages/BeginAccountTransfer/BeginAccountTransfer.js:131
-msgid "Vested GLP not withdrawn"
-msgstr "GLP adquirido no retirado."
+msgid "Vested THLP not withdrawn"
+msgstr "THLP adquirido no retirado."
 
 #: src/pages/BeginAccountTransfer/BeginAccountTransfer.js:128
-msgid "Vested GMX not withdrawn"
-msgstr "GMX adquirido no retirado."
+msgid "Vested HLP not withdrawn"
+msgstr "HLP adquirido no retirado."
 
 #: src/pages/Stake/StakeV2.js:2072
 #: src/pages/Stake/StakeV2.js:2158
@@ -2268,12 +2268,12 @@ msgid "Withdraw failed."
 msgstr "Retiro fallido."
 
 #: src/pages/Stake/StakeV2.js:1243
-msgid "Withdraw from GLP Vault"
-msgstr "Retirar del Baúl GLP"
+msgid "Withdraw from THLP Vault"
+msgstr "Retirar del Baúl THLP"
 
 #: src/pages/Stake/StakeV2.js:1232
-msgid "Withdraw from GMX Vault"
-msgstr "Retirar del Baúl GMX"
+msgid "Withdraw from HLP Vault"
+msgstr "Retirar del Baúl HLP"
 
 #: src/pages/Stake/StakeV2.js:550
 msgid "Withdraw submitted."
@@ -2299,11 +2299,11 @@ msgstr "¡Retirado!"
 msgid "You are earning {nativeTokenSymbol} rewards with {0} tokens.<0/>Tokens: {amountStr}."
 msgstr "Estás ganando {nativeTokenSymbol} recompensas con {0} tokens.<0/>Tokens: {amountStr}."
 
-#: src/pages/BuyGMX/BuyGMX.js:145
+#: src/pages/BuyHLP/BuyHLP.js:145
 msgid "You can buy AVAX directly on <0>Avalanche</0> using Banxa:"
 msgstr "Puedes comprar AVAX directamente en <0>Avalanche</0> usando Banxa:"
 
-#: src/pages/BuyGMX/BuyGMX.js:65
+#: src/pages/BuyHLP/BuyHLP.js:65
 msgid "You can buy ETH directly on <0>Arbitrum</0> using Banxa:"
 msgstr "Puedes comprar ETH directamente en <0>Arbitrum</0> usando Banxa:"
 
@@ -2312,14 +2312,14 @@ msgid "You can check your claim history <0>here</0>."
 msgstr "Puede consultar su historial de reclamaciones <0>aquí</0>."
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:435
-msgid "You can currently vest a maximum of {0} esGMX tokens at a ratio of {1} {stakingToken} to 1 esGMX."
-msgstr "Actualmente puede adquirir un máximo de {0} tokens esGMX a razón de {1} {stakingToken} por 1 esGMX\"."
+msgid "You can currently vest a maximum of {0} esHLP tokens at a ratio of {1} {stakingToken} to 1 esHLP."
+msgstr "Actualmente puede adquirir un máximo de {0} tokens esHLP a razón de {1} {stakingToken} por 1 esHLP\"."
 
-#: src/pages/BuyGMX/BuyGMX.js:170
+#: src/pages/BuyHLP/BuyHLP.js:170
 msgid "You can transfer AVAX to Avalanche using any of the below options."
 msgstr "Puedes transferir AVAX a Avalanche usando cualquiera de las siguientes opciones."
 
-#: src/pages/BuyGMX/BuyGMX.js:90
+#: src/pages/BuyHLP/BuyHLP.js:90
 msgid "You can transfer ETH from other networks to Arbitrum using any of the below options:"
 msgstr "Puedes transferir ETH desde otras redes a Arbitrum usando cualquiera de las siguientes opciones:"
 
@@ -2337,8 +2337,8 @@ msgid "You have not deposited any tokens for vesting."
 msgstr "No has depositado ningún token para su adquisición."
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:353
-msgid "You have {0} esGMX (IOU) tokens."
-msgstr "Tienes {0} tokens esGMX (IOU)."
+msgid "You have {0} esHLP (IOU) tokens."
+msgstr "Tienes {0} tokens esHLP (IOU)."
 
 #: src/pages/CompleteAccountTransfer/CompleteAccountTransfer.js:103
 msgid "You will need to be on this page to accept the transfer, <0>click here</0> to copy the link to this page if needed."
@@ -2349,8 +2349,8 @@ msgid "You will receive a {0}% discount on your opening and closing fees, this d
 msgstr "Recibirá un descuento del {0}% en sus comisiones de apertura y cierre, este descuento será enviado a su cuenta cada miércoles"
 
 #: src/pages/ClaimEsGmx/ClaimEsGmx.js:373
-msgid "Your esGMX (IOU) balance will decrease by your claim amount after claiming, this is expected behaviour."
-msgstr "El saldo de su esGMX (IOU) disminuirá en la cantidad de su reclamación después de reclamar, este es el comportamiento esperado."
+msgid "Your esHLP (IOU) balance will decrease by your claim amount after claiming, this is expected behaviour."
+msgstr "El saldo de su esHLP (IOU) disminuirá en la cantidad de su reclamación después de reclamar, este es el comportamiento esperado."
 
 #: src/pages/CompleteAccountTransfer/CompleteAccountTransfer.js:87
 msgid "Your transfer has been completed."
@@ -2374,28 +2374,28 @@ msgstr "órdenes"
 
 #: src/App/App.js:210
 #: src/App/App.js:232
-msgid "to start using GMX"
-msgstr "para empezar a usar GMX"
+msgid "to start using HLP"
+msgstr "para empezar a usar HLP"
 
 #: src/components/SettingDropdown/SettingDropdown.js:102
 #~ msgid "{0}"
 #~ msgstr "{0}"
 
 #: src/components/Glp/GlpSwap.js:782
-msgid "{0} GLP (${1})"
-msgstr "{0} GLP (${1})"
+msgid "{0} THLP (${1})"
+msgstr "{0} THLP (${1})"
 
 #: src/components/Glp/GlpSwap.js:552
-msgid "{0} GLP bought with {1} {2}!"
-msgstr "{0} GLP comprado con {1} {2}!"
+msgid "{0} THLP bought with {1} {2}!"
+msgstr "{0} THLP comprado con {1} {2}!"
 
 #: src/components/Glp/GlpSwap.js:740
-msgid "{0} GLP have been reserved for vesting."
-msgstr "{0} GLP se han reservado para adquisiciones."
+msgid "{0} THLP have been reserved for vesting."
+msgstr "{0} THLP se han reservado para adquisiciones."
 
 #: src/components/Glp/GlpSwap.js:579
-msgid "{0} GLP sold for {1} {2}!"
-msgstr "¡{0} GLP vendido por {1} {2}!"
+msgid "{0} THLP sold for {1} {2}!"
+msgstr "¡{0} THLP vendido por {1} {2}!"
 
 #: src/components/Exchange/SwapBox.js:941
 #: src/components/Exchange/SwapBox.js:997

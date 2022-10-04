@@ -704,18 +704,18 @@ table.Exchange-list th {
   right: 1.25rem;
   top: 0;
   padding: 0.465rem 0.8rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: #000000 !important;
   outline: 1rem solid rgba(33, 37, 64, 1);
   border-radius: 3px;
   z-index: 1;
   cursor: pointer;
   font-size: 1.5rem;
-  background: linear-gradient(90deg, rgba(45, 66, 252, 1) 0%, rgba(46, 61, 205, 1) 100%);
+  background: linear-gradient(90deg, rgba(45, 252, 142, 1) 0%, rgba(0, 255, 119, 1) 100%);
 }
 
 .Exchange-swap-max:hover {
-  color: rgba(255, 255, 255, 1);
-  background: linear-gradient(90deg, rgba(58, 78, 252, 1) 0%, rgba(51, 68, 222, 1) 100%);
+  color: #000000 !important;
+  background: linear-gradient(90deg, rgb(0, 255, 119) 0%, rgb(1, 211, 99) 100%);
 }
 
 .Exchange-swap-section-bottom .TokenSelector-box {
@@ -770,14 +770,16 @@ input.Exchange-swap-input.small {
   border-radius: 3.1rem;
   cursor: pointer;
   user-select: none;
-  background: linear-gradient(90deg, rgba(45, 66, 252, 1) 0%, rgba(46, 61, 205, 1) 100%);
+  background: linear-gradient(90deg, rgba(45, 252, 142, 1) 0%, rgba(0, 255, 119, 1) 100%);
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #000000 !important;
 }
 
 .Exchange-swap-ball:hover {
-  background: linear-gradient(90deg, rgba(58, 78, 252, 1) 0%, rgba(51, 68, 222, 1) 100%);
+  background: linear-gradient(90deg, rgb(0, 255, 119) 0%, rgb(1, 211, 99) 100%);
+  color: #000000 !important;
 }
 
 .Exchange-swap-ball:hover .Exchange-swap-ball-icon {
