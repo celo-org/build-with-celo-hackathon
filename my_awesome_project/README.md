@@ -5,7 +5,7 @@ Please [**fork this repo**](https://help.github.com/articles/fork-a-repo/) and u
 
 ## My Awesome Project
 
-### Team name
+### Awesome Team
 
 #### Hackathon Track
 
