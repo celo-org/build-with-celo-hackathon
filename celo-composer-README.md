@@ -71,11 +71,11 @@ npx @celo/celo-composer create
 
 #### Output
 
-![Output-1](./images/readme/image-1.png)
+![Output-1](../images/readme/image-1.png)
 
 - Select the framework you like and please enter.
 
-![Output-2](./images/readme/image-2.png)
+![Output-2](../images/readme/image-2.png)
 
 - Enter the project name and the starter project will the create in present working directory.
 
