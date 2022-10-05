@@ -13,6 +13,7 @@ import { LoansHomeScreen } from 'clixpesa/features/microloans'
 import { SpacesHomeScreen } from 'clixpesa/features/spaces'
 
 import { DP_LINK } from '../constants'
+import { useSelector } from 'react-redux'
 
 const MainStack = createNativeStackNavigator()
 
@@ -48,6 +49,7 @@ function BottomTabNavigator() {
         component={HomeScreen}
         options={() => ({
           title: 'Home',
+          unmountOnBlur: true,
           tabBarIcon: ({ focused }) => (
             <TabBarIcon
               name={focused ? 'home-3-fill' : 'home-3-line'}
@@ -140,6 +142,7 @@ function TabBarIcon(props) {
 }
 
 function AccPressable() {
+  const { initials } = useSelector((s) => s.essential.userDetails)
   const navigation = useNavigation()
   return (
     // fix avatar text color to primary.700
@@ -149,15 +152,8 @@ function AccPressable() {
         opacity: pressed ? 0.5 : 1,
       })}
     >
-      <Avatar
-        bg="#0F766E"
-        ml="2"
-        source={{
-          uri: DP_LINK,
-        }}
-        size="sm"
-      >
-        AK
+      <Avatar bg="#0F766E" ml="2" size="sm">
+        {initials}
       </Avatar>
     </Pressable>
   )

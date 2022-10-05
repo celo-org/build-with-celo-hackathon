@@ -1,4 +1,5 @@
 import { NativeBaseProvider } from 'native-base'
+import { Wallet } from 'ethers'
 import { Provider } from 'react-redux'
 import { StatusBar } from 'expo-status-bar'
 import { useState, useEffect } from 'react'
@@ -9,10 +10,25 @@ import store from './store'
 import AppNavigator from './navigation/AppNavigation'
 import { USER_STORE } from './constants'
 import { getUserDetails } from './storage'
-import { setUserDetails, setToken } from '../features/essentials/essentialSlice'
+import { connectToProvider } from '../blockchain/provider'
+import { setUserDetails, setToken, setIsConnected } from '../features/essentials/essentialSlice'
 
 export default function App() {
   const [isInitComplete, setIsInitComplete] = useState()
+  // Start Provider
+  useEffect(() => {
+    async function initProvider() {
+      try {
+        await connectToProvider()
+        store.dispatch(setIsConnected(true))
+      } catch (error) {
+        console.log('Unable to connect to provider', error)
+        store.dispatch(setIsConnected(false))
+      }
+    }
+    initProvider()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   //Load Resources during splash screen
   useEffect(() => {
     async function loadResourcesAndDataAsync() {

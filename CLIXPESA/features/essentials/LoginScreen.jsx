@@ -1,8 +1,8 @@
-import { Box, Text, VStack, Avatar } from 'native-base'
+import { Box, Text, VStack, Avatar, Spinner } from 'native-base'
 import { View } from 'react-native'
 import CodeInput from 'clixpesa/components/CodeInput'
 import { useDispatch, useSelector } from 'react-redux'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { setLoggedIn } from './essentialSlice'
 import { saltyPasscode } from 'clixpesa/utils/encryption'
 
@@ -12,18 +12,26 @@ export default function LoginScreen({ navigation }) {
   const firstName = names.split(' ')[0]
   const [code, setCode] = useState('')
   const [isValid, setIsValid] = useState(true)
+  const [isLoading, setLoading] = useState(false)
 
   const handleFullFill = (code) => {
     const token = saltyPasscode(code)
     if (token === userToken) {
       setIsValid(true)
-      dispatch(setLoggedIn(true))
+      setLoading(true)
     } else {
       console.log('LoggedIn Failed')
       setIsValid(false)
+      setLoading(false)
       setCode('')
     }
   }
+
+  useEffect(() => {
+    if (isLoading) {
+      dispatch(setLoggedIn(true))
+    }
+  }, [isLoading])
 
   return (
     <Box flex={1} bg="#fff" justifyContent="center">
@@ -34,36 +42,40 @@ export default function LoginScreen({ navigation }) {
         <Text fontSize="md" mb="3">
           Welcome back, {firstName}
         </Text>
-        <CodeInput
-          placeholder={
-            <View
-              style={{
-                width: 15,
-                height: 15,
-                borderRadius: 25,
-                backgroundColor: '#99F6E4',
-              }}
-            ></View>
-          }
-          mask={
-            <View
-              style={{
-                width: 15,
-                height: 15,
-                borderRadius: 25,
-                backgroundColor: '#0D9488',
-              }}
-            ></View>
-          }
-          maskDelay={300}
-          password={true}
-          autoFocus={true}
-          cellStyle={null}
-          cellStyleFocused={null}
-          value={code}
-          onTextChange={(code) => setCode(code)}
-          onFulfill={(code) => handleFullFill(code)}
-        />
+        {isLoading ? (
+          <Spinner size="lg" />
+        ) : (
+          <CodeInput
+            placeholder={
+              <View
+                style={{
+                  width: 15,
+                  height: 15,
+                  borderRadius: 25,
+                  backgroundColor: '#99F6E4',
+                }}
+              ></View>
+            }
+            mask={
+              <View
+                style={{
+                  width: 15,
+                  height: 15,
+                  borderRadius: 25,
+                  backgroundColor: '#0D9488',
+                }}
+              ></View>
+            }
+            maskDelay={300}
+            password={true}
+            autoFocus={true}
+            cellStyle={null}
+            cellStyleFocused={null}
+            value={code}
+            onTextChange={(code) => setCode(code)}
+            onFulfill={(code) => handleFullFill(code)}
+          />
+        )}
         {isValid ? null : <Text>Forgot passcode? See how to reset here!</Text>}
       </VStack>
     </Box>
