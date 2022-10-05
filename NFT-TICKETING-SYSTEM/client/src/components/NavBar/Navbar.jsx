@@ -7,6 +7,8 @@ import {
   Typography,
 } from "@mui/material";
 
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+
 const Navbar = () => {
   return (
     <AppBar sx={{ backgroundColor: "#E9F9DA" }}>
@@ -30,7 +32,7 @@ const Navbar = () => {
             <Typography fontWeight="bold">Resources</Typography>
           </Box>
           <Box>
-            <Button>Connect Wallet</Button>
+            <ConnectButton />
           </Box>
         </Toolbar>
       </Container>
