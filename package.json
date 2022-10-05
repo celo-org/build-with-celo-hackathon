@@ -1,34 +1,34 @@
 {
-  "name": "@celo-composer/monorepo",
+  "name": "@pauloladimeji/gidiscrap",
   "version": "1.0.0",
-  "description": "Get started building PWAs on Celo",
+  "description": "In order to fight plastic pollution, GidiScrap is an open marketplace that connects buyers of used and recycled plastics with individuals and businesses who want to donate or sell them.",
   "private": true,
   "scripts": {
-    "react-app:dev": "yarn workspace @celo-composer/react-app dev",
-    "react-app:build": "yarn workspace @celo-composer/react-app build",
-    "react-app:start": "yarn workspace @celo-composer/react-app start",
-    "react-app:lint": "yarn workspace @celo-composer/react-app lint",
-    "hardhat:test": "yarn workspace @celo-composer/hardhat test",
-    "hardhat:deploy": "yarn workspace @celo-composer/hardhat deploy",
-    "hardhat:watch": "yarn workspace @celo-composer/hardhat watch",
-    "hardhat:accounts": "yarn workspace @celo-composer/hardhat accounts",
-    "hardhat:devchain": "yarn workspace @celo-composer/hardhat devchain",
-    "hardhat:fork-mainnet": "yarn workspace @celo-composer/hardhat fork-mainnet",
-    "hardhat:deploy-reset-watch": "yarn workspace @celo-composer/hardhat deploy-reset-watch",
+    "react-app:dev": "yarn workspace @pauloladimeji/react-app dev",
+    "react-app:build": "yarn workspace @pauloladimeji/react-app build",
+    "react-app:start": "yarn workspace @pauloladimeji/react-app start",
+    "react-app:lint": "yarn workspace @pauloladimeji/react-app lint",
+    "hardhat:test": "yarn workspace @pauloladimeji/hardhat test",
+    "hardhat:deploy": "yarn workspace @pauloladimeji/hardhat deploy",
+    "hardhat:watch": "yarn workspace @pauloladimeji/hardhat watch",
+    "hardhat:accounts": "yarn workspace @pauloladimeji/hardhat accounts",
+    "hardhat:devchain": "yarn workspace @pauloladimeji/hardhat devchain",
+    "hardhat:fork-mainnet": "yarn workspace @pauloladimeji/hardhat fork-mainnet",
+    "hardhat:deploy-reset-watch": "yarn workspace @pauloladimeji/hardhat deploy-reset-watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare-hardhat": "cd packages/hardhat && yarn && npx hardhat typechain && yarn deploy",
     "build-ui": "yarn prepare-hardhat && cd packages/react-app && yarn && yarn build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/celo-org/celo-progressive-dapp-starter.git"
+    "url": "git+https://github.com/pauloladimeji/gidiscrap-build-with-celo-hackathon.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/celo-org/celo-progressive-dapp-starter/issues"
+    "url": "https://github.com/pauloladimeji/gidiscrap-build-with-celo-hackathon/issues"
   },
-  "homepage": "https://github.com/celo-org/celo-progressive-dapp-starter#readme",
+  "homepage": "https://github.com/pauloladimeji/gidiscrap-build-with-celo-hackathon#readme",
   "workspaces": {
     "packages": [
       "packages/*"
