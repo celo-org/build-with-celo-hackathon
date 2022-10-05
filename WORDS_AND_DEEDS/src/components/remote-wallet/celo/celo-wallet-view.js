@@ -29,6 +29,7 @@ class CeloWalletView extends React.Component {
 		this.state = {
 			loaded: false,
 
+			hasOpenWallet: false,
 			balances: {},
 
 			message: 'waiting for connection...',
@@ -55,7 +56,7 @@ class CeloWalletView extends React.Component {
 				let curr_rpc_config = config.rpc[arr[i]];
 
 				if (curr_rpc_config.enabled === true) {
-					let currency = await  mvcmypwa.getCurrencyFromUUID(rootsessionuuid, arr[i]);
+					let currency = await mvcmypwa.getCurrencyFromUUID(rootsessionuuid, arr[i]);
 
 					if (currency)
 					currencies.push(currency);
@@ -73,6 +74,9 @@ class CeloWalletView extends React.Component {
 
 		let rootsessionuuid = this.props.rootsessionuuid;
 		let walletuuid = this.props.currentwalletuuid;
+
+		if (!walletuuid)
+			return balances;
 
 		try {
 			let card_address = this.account;
@@ -103,6 +107,20 @@ class CeloWalletView extends React.Component {
 
 
 	// post render commit phase
+	componentDidUpdate(prevProps, prevState) {
+		console.log('CeloWalletView.componentDidUpdate called');
+
+		if ( this.state.hasOpenWallet != prevState.hasOpenWallet) {
+			let message =  ( this.state.hasOpenWallet ? 'waiting for action...' : 'waiting for connection...')
+			this._getBalances()
+			.then(balances => {
+				this.setState({balances})
+			})
+			.catch(err => {});
+		}
+
+	}
+
 	async checkNavigationState() {
 		this.checking = true;
 
@@ -111,7 +129,14 @@ class CeloWalletView extends React.Component {
 			// get list of currencies for celo
 			this.currencies = await this._getCurrencies();
 
-			// is connected?
+			// check local wallet is unlocked
+			let unlocked = await this.app.checkWalletUnlocked()
+			.catch(err => {
+			});
+			
+			let hasOpenWallet = (unlocked ? true : false);
+
+			// is connected to remote?
 			let connection_status = await this._retrieveWalletConnectionStatus();
 
 			this.account = connection_status.account;
@@ -120,7 +145,7 @@ class CeloWalletView extends React.Component {
 			let balances = await this._getBalances();
 
 
-			this.setState({loaded: true, balances});
+			this.setState({loaded: true, hasOpenWallet, balances});
 
 		}
 		catch(e) {
@@ -196,11 +221,11 @@ class CeloWalletView extends React.Component {
 
 	// rendering
 	renderRemoteCardPart() {
-		const {balances} = this.state;
+		const {hasOpenWallet, balances} = this.state;
 
 		return (
 			<div>
-				{(this.account ? 
+				{(this.account && hasOpenWallet ? 
 				this.currencies.map((currency, index) => {
 					let balance = balances[currency.uuid];
 					return (
@@ -256,6 +281,14 @@ class CeloWalletView extends React.Component {
 
 		);
 	}
+
+	// static functions	 
+	static getDerivedStateFromProps(nextProps, prevState) {
+		// fill state
+		return {
+			hasOpenWallet: ((nextProps.currentwalletuuid) && (nextProps.iswalletlocked === false) ? true : false),
+		};
+	}	
 }
 
 // propTypes validation
@@ -263,6 +296,7 @@ CeloWalletView.propTypes = {
 	app: PropTypes.object.isRequired,
 	rootsessionuuid: PropTypes.string,
 	currentwalletuuid: PropTypes.string,
+	iswalletlocked: PropTypes.bool,
 };
 
 //redux
@@ -270,6 +304,7 @@ const mapStateToProps = (state) => {
 	return {
 		rootsessionuuid: state.session.sessionuuid,
 		currentwalletuuid: state.wallets.walletuuid,
+		iswalletlocked: state.wallets.islocked,
 	};
 } 
 

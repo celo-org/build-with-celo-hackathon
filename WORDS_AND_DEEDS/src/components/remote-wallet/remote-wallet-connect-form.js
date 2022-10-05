@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 
 import PropTypes from 'prop-types';
 
+import { doOpenWallet, doSetWallet } from '@primusmoney/react_client_wallet/imports/view/actions/wallet/wallet-actions.js';
+
+
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 
 class RemoteWalletConnectForm extends React.Component {
@@ -43,7 +46,7 @@ class RemoteWalletConnectForm extends React.Component {
 			let connection_status = await this._retrieveWalletConnectionStatus();
 
 			let account = connection_status.account;
-			let connectionuuid = connection_status.account;
+			let connectionuuid = connection_status.connectionuuid;
 
 			this.setState({loaded: true, connectionuuid, account});
 
@@ -63,11 +66,6 @@ class RemoteWalletConnectForm extends React.Component {
 
 		let mvcmypwa = this.getMvcMyPWAObject();
 
-/* 		mvcmypwa.registerEventListener('on_walletconnect_connect', this.uuid, this.onConnect.bind(this));
-		mvcmypwa.registerEventListener('on_walletconnect_disconnect', this.uuid, this.onDisconnect.bind(this));
- 
-		mvcmypwa.registerEventListener('on_walletconnect_add_connected_account', this.uuid, this.addConnectedAccount.bind(this));*/
-
 		mvcmypwa.registerEventListener('on_walletconnect_connected', null, this.onWalletConnected.bind(this));
 		mvcmypwa.registerEventListener('on_walletconnect_disconnected', null, this.onWalletDisconnected.bind(this));
 
@@ -80,16 +78,33 @@ class RemoteWalletConnectForm extends React.Component {
 
 		let mvcmypwa = this.getMvcMyPWAObject();
 
-/*		mvcmypwa.unregisterEventListener('on_walletconnect_add_connected_account', this.uuid);
-
- 		mvcmypwa.unregisterEventListener('on_walletconnect_disconnect', this.uuid);
-		mvcmypwa.unregisterEventListener('on_walletconnect_connect', this.uuid); */
-
-
 		mvcmypwa.unregisterEventListener('on_walletconnect_connected', this.uuid);
 		mvcmypwa.unregisterEventListener('on_walletconnect_disconnected', this.uuid);
 
 	}
+
+	// redux actions
+	async _doSetWallet(walletname, walletuuid) {
+		const result = new Promise((resolve, reject) => { 
+			this.props.doSetWallet(walletname, walletuuid, (err, res) => {
+				if (err) reject(err); else resolve(res);
+			});
+		});
+		
+		return result;
+	}
+
+	async _doOpenWallet(mvcmodule, sessionuuid, walletuuid, walletname, password) {
+		const result = new Promise((resolve, reject) => { 
+			this.props.doOpenWallet(mvcmodule, sessionuuid, walletuuid, walletname, password, (err, res) => {
+				if (err) reject(err); else resolve(res);
+			});
+		});
+		
+		return result;
+	}
+
+
 
 	// calling a wallet connect client
 	async _connectToWallet() {
@@ -127,46 +142,129 @@ class RemoteWalletConnectForm extends React.Component {
 			mvcmypwa.signalEvent('on_walletconnect_status_requested', {
 				emitter: this.uuid,
 				connectionuuid: this.state.connectionuuid,
+				rpc: this.rpc,
 				callback: (err,res) => {if (res) resolve(res); else reject(err);}
 			});
 		});
 
 		return res;
 	}
-			
-	// events coming from walletconnect client in case it is doing the connect/disconnect
-	async _isWalletConnectWallet(walletuuid) {
-		if (!walletuuid)
-			return false;
-		
+
+	async _openConnectionWallet() {
 		let mvcmypwa = this.getMvcMyPWAObject();
 
-		let connectedwllts = await mvcmypwa.readSettings('wc_wallets');
+		let res = await new Promise((resolve, reject) => {
+			mvcmypwa.signalEvent('on_walletconnect_status_requested', {
+				emitter: this.uuid,
+				connectionuuid: this.state.connectionuuid,
+				rpc: this.rpc,
+				callback: (err,res) => {if (res) resolve(res); else reject(err);}
+			});
+		});
 
-		for (var i = 0; i < connectedwllts.length; i++) {
-			let _walletuuid = connectedwllts[i].walletuuid;
-
-			if (_walletuuid == walletuuid)
-				return true;
-		}
-
-		return false;
+		return (res && res.walletinfo ? res.walletinfo : null);
 	}
 
+	async _isWalletConnectWallet(walletuuid) {
+		let mvcmypwa = this.getMvcMyPWAObject();
+
+		let res = await new Promise((resolve, reject) => {
+			mvcmypwa.signalEvent('on_walletconnect_is_connected_wallet', {
+				emitter: this.uuid,
+				connectionuuid: this.state.connectionuuid,
+				rpc: this.rpc,
+				walletuuid,
+				callback: (err,res) => {if (res) resolve(res); else reject(err);}
+			});
+		});
+
+		return (res && res.isconnectedwallet ? true : false);
+	}
+
+
+
+			
+	// events coming from walletconnect client in case it is doing the connect/disconnect
+	_doMatchRpc(rpc, newrpc) {
+		let rpc_string = JSON.stringify(rpc);
+		let newrpc_string = JSON.stringify(newrpc);
+
+		if (rpc_string == newrpc_string)
+			return true; // perfect match
+
+		// otherwise, we look if chain ids are included in rpc
+		let is_included = true;
+		let newrpc_keys = Object.keys(newrpc);
+
+		for (var i = 0; i < newrpc_keys.length; i++) {
+			let chainid = newrpc_keys[i];
+
+			if (!rpc[chainid] || (rpc[chainid] != newrpc[chainid])) {
+				is_included = false;
+				break;
+			}
+		}
+
+		return is_included;
+	}
+
+
 	async onWalletConnected(eventname, params) {
-		console.log('RemoteWaletProxy.onWalletConnected called');
+		console.log('RemoteWalletConnectForm.onWalletConnected called');
 		try {
+			if (!params.rpc)
+				return;
+
+			let domatch = this._doMatchRpc(params.rpc, this.rpc);
+
+			if (!domatch)
+				return; // nothing to do with our connection
+
+			let mvcmypwa = this.getMvcMyPWAObject();
+
+			let rootsessionuuid = this.props.rootsessionuuid;
+			let walletuuid = this.props.currentwalletuuid;
+
+			if (!walletuuid) {
+				// we don't have a wallet open, not even the device wallet
+				// we then open the connection wallet for this walletconnect connection
+				let walletinfo = await this._openConnectionWallet();
+
+				// and set it in redux
+				if (walletinfo) {
+					//let res = await this._doSetWallet(walletinfo.label, walletinfo.uuid); // does not unlock wallet
+
+					// note: for @primusmoney/react_pwa > 0.30.20, we can use this.app.openWallet
+
+					let mvcmodule = this.app.getMvcModuleObject();
+					let password = params.account;
+					let unlocked =  await this._doOpenWallet(mvcmodule, rootsessionuuid, walletinfo.uuid, walletinfo.label, password)
+					.catch(err => {
+						console.log('error in RemoteWalletConnectForm.onWalletConnected:' + err);
+					});
+
+					if (!unlocked) {
+						this.app.error('could not unlock connection wallet: ' + walletinfo.uuid);
+					}
+				}
+			}
+
+			// set state
+			this.setState({
+				connectionuuid: params.connectionuuid,
+				account: params.account});
+
 
 		}
 		catch(e) {
-			console.log('exception in RemoteWaletProxy.onWalletConnected: '+ e);
+			console.log('exception in RemoteWalletConnectForm.onWalletConnected: '+ e);
 		}
 
 		return;
 	}
 
 	async onWalletDisconnected(eventname, params) {
-		console.log('RemoteWaletProxy.onWalletDisconnected called');
+		console.log('RemoteWalletConnectForm.onWalletDisconnected called');
 
 		try {
 			let mvcmypwa = this.getMvcMyPWAObject();
@@ -186,137 +284,15 @@ class RemoteWalletConnectForm extends React.Component {
 	
 		}
 		catch(e) {
-			console.log('exception in RemoteWaletProxy.onWalletConnected: '+ e);
+			console.log('exception in RemoteWalletConnectForm.onWalletConnected: '+ e);
 		}
+
+		this.setState({connectionuuid: null, account: null});
 
 		return;
 	}
 	
 		
-	// called by other components
-/* 	async onConnect(eventname, params) {
-		console.log('RemoteWalletConnectForm.onConnect called');
-
-		if (params.emitter == this.uuid)
-			return; // sent by us
-
-		await this.connect();
-
-		let ret = {emitter: this.uuid, connected: true, account: this.state.account};
-
-		if (params && params.callback) {
-			params.callback(null, ret);
-		}
-
-		return ret;
-	}
-
-	async onDisconnect(eventname, params) {
-		console.log('RemoteWalletConnectForm.onDisconnect called');
-
-		if (params.emitter == this.uuid)
-			return; // sent by us
-
-		await this.disconnect();
-
-		let ret = {disconnected: true};
-
-		if (params && params.callback) {
-			params.callback(null, ret);
-		}
-
-		return ret;
-	}
-	
-		async addConnectedAccount(eventname, params) {
-		try {
-			let mvcmypwa = this.getMvcMyPWAObject();
-
-			let res = await this.connect();
-
-			let {account} = this.state;
-			let {callback_url, sessiontoken} = params;
-			let vendorname = 'celo wallet';
-
-			if (account && callback_url) {
-				try {
-					// transaction hash
-					let _url = callback_url;
-
-					if (_url.includes('?') !== true) {
-						_url += '?action=add_vendor_account';
-					}
-					else {
-						// transaction hash
-						_url += '&action=add_vendor_account';
-					}
-
-					_url += '&vendoraddress=' + account;
-					_url += '&vendorname=' + vendorname;
-
-					_url += '&sessiontoken=' + sessiontoken;
-
-					let res = await new Promise((resolve, reject) => {
-
-						// make an XHttpRequest call (simle call, no check on return)
-						var xhttp = new XMLHttpRequest();
-					
-						xhttp.open('GET', _url, true);
-						
-						xhttp.send();
-						xhttp.onload = function(e) {
-							if (xhttp.status == 200) {
-								var res = {};
-								
-								try {
-									res = JSON.parse(xhttp.responseText);
-								}
-								catch(e) {
-								}
-			
-								resolve(res);
-							}
-							else {
-								reject('wrong result');
-							}
-						};
-						
-						xhttp.onerror = function (e) {
-							reject('rest error is ' + xhttp.statusText);
-						};
-					})
-					.catch(err => {
-						console.log('error in RemoteWalletConnectForm.addConnectedAccount notifying callback: ' + err);
-					});
-
-					let ret = {success: true, account};
-
-					if (params && params.callback) {
-						params.callback(null, ret);
-					}
-			
-					return ret;
-				}
-				catch(e) {
-					console.log('exception in RemoteWalletConnectForm.addConnectedAccount notifying callback: ' + e);
-				}
-			}
-
-		}
-		catch(e) {
-			console.log('exception in RemoteWalletConnectForm.addConnectedAccount: '+ e);
-		}
-
-		let ret = {success: false};
-
-		if (params && params.callback) {
-			params.callback(null, ret);
-		}
-
-		return ret;
-	}
-*/
-
 	// actions
 	async connect() {
 		try {
@@ -333,11 +309,9 @@ class RemoteWalletConnectForm extends React.Component {
 
 			// set state
 			this.setState({
-				message: 'returning from connect at ' + time_string,
-				connectionuuid,
-				account});
+				message: 'returning from connect at ' + time_string});
 
-			return {account};
+			return {account, connectionuuid};
 		}
 		catch(e) {
 			console.log('exception in RemoteWalletConnectForm.connect: '+ e);
@@ -348,13 +322,10 @@ class RemoteWalletConnectForm extends React.Component {
 
 		try {
 			await this._disconnectFromWallet();
-
 		}
 		catch(e) {
 			console.log('exception in RemoteWalletConnectForm.disconnect: '+ e);
 		}
-
-		this.setState({connectionuuid: null, account: null});
 
 		return {disconnected: true};
 	}
@@ -368,7 +339,7 @@ class RemoteWalletConnectForm extends React.Component {
 
 			<div className="Form">
 				<FormGroup controlId="address">
-					<FormLabel>Wallet Address</FormLabel>
+					<FormLabel>Remote Wallet Address</FormLabel>
 					<FormGroup className="ClaimerCardLine">
 						<FormControl
 							className="CurrencyCardAddress"
@@ -403,6 +374,8 @@ RemoteWalletConnectForm.propTypes = {
 	app: PropTypes.object.isRequired,
 	rootsessionuuid: PropTypes.string,
 	currentwalletuuid: PropTypes.string,
+	doOpenWallet: PropTypes.func.isRequired,
+	doSetWallet: PropTypes.func.isRequired
 };
 
 //redux
@@ -415,6 +388,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
+		doOpenWallet: (mvcmodule, session, walletuuid, walletname, password, callback) => dispatch(doOpenWallet(mvcmodule, session, walletuuid, walletname, password, callback)),
+		doSetWallet: (walletname, walletuuid) => dispatch(doSetWallet(walletname, walletuuid)),
 	};
 }
 export {RemoteWalletConnectForm};

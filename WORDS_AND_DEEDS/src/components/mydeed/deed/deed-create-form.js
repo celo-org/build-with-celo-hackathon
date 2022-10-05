@@ -37,9 +37,6 @@ class DeedCreateForm extends React.Component {
 		
 		this.closing = false;
 
-		this.remotewallet = false;
-		this.rpc = null;
-		
 		this.state = {
 			mintername,
 			title,
@@ -47,6 +44,8 @@ class DeedCreateForm extends React.Component {
 			external_url,
 			currency,
 			currencies,
+			remotewallet: false,
+			rpc: null,
 			signingkey,
 			currentcard,
 			balance,
@@ -304,14 +303,16 @@ class DeedCreateForm extends React.Component {
 	_getConnection(feelevel) {
 		let connection = {type: 'local', feelevel: feelevel};	
 		
-		if (this.remotewallet) {
+		if (this.state.remotewallet) {
 			let deedclient = this.app.getDeedClientObject();
 			let walletconnectclient = deedclient.getWalletConnectClient();
+			let walletconnection = walletconnectclient.getConnectionFromRpc(this.state.rpc);
 
 			connection.type = 'remote';
 
-			connection.provider = walletconnectclient.getProvider();
-			connection.account = walletconnectclient.getRemoteAccount();
+			connection.connectionuuid = walletconnection.uuid;
+			connection.provider = walletconnection.provider;
+			connection.account = walletconnection.account;
 		}
 
 		return connection;
@@ -330,9 +331,8 @@ class DeedCreateForm extends React.Component {
 		let carduuid;
 		let card;
 		
-		let { currentminter, mintername, title, description, external_url, currency, currentcard, signingkey } = this.state;
+		let { currentminter, mintername, title, description, external_url, currency, remotewallet, currentcard, signingkey } = this.state;
 
-		let remotewallet = this.remotewallet;
 		let remoteaccount;
 
 		let localcard = currentcard;
@@ -589,6 +589,9 @@ class DeedCreateForm extends React.Component {
 	}
 
 	async _changeCurrency(currency) {
+		let remotewallet = false;
+		let rpc = null;
+
 		if (currency) {
 			// check if corresponding currency is set for remote
 			let config = this.app.getConfig('remotewallet');	
@@ -597,16 +600,16 @@ class DeedCreateForm extends React.Component {
 				let curr_rpc_config = config.rpc[currency.uuid];
 
 				if (curr_rpc_config.enabled === true) {
-					this.remotewallet = true;
-					this.rpc = curr_rpc_config.rpc;
+					remotewallet = true;
+					rpc = curr_rpc_config.rpc;
 				}
 			}
 
 			// change state
 			this._setState({currency});
-
 		}
 
+		this._setState({remotewallet, rpc});
 	}
 
 	async onChangeCurrency(e) {
@@ -648,11 +651,13 @@ class DeedCreateForm extends React.Component {
 	
 	// rendering
 	renderRemoteWalletConnection() {
+		let {rpc} = this.state;
+
 		return (
 			<RemoteWalletConnectForm 
 				app = {this.app}
 				parent={this}
-				rpc={this.rpc}
+				rpc={rpc}
 			/>
 		);
 	}
@@ -700,7 +705,7 @@ class DeedCreateForm extends React.Component {
 	}
 
 	renderCurrencyPickForm() {
-		let { currencies, currency, } = this.state;
+		let { currencies, currency, remotewallet} = this.state;
 		
 		return (
 			<div className="Form">
@@ -727,7 +732,7 @@ class DeedCreateForm extends React.Component {
 			  </FormGroup>
 			  </FormGroup>
 
-				{(this.remotewallet ? this.renderRemoteWalletConnection() : this.renderMainCardPart())}
+				{(remotewallet ? this.renderRemoteWalletConnection() : this.renderMainCardPart())}
 
 			</div>
 		  );

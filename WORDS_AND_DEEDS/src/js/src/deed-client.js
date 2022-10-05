@@ -244,95 +244,25 @@ class DeedClient {
 		var item = params[1];
 
 		if ((item.type === 0) && (item.mode == 'walletconnect')) {
-			let global = this.global;
-			let mvcmypwa = global.getModuleObject('mvc-myquote');
-			let mvcmydeed = global.getModuleObject('mvc-mydeed');
-
-			let connectedwllts = await mvcmypwa.readSettings('wc_wallets');
-
-			connectedwllts = (connectedwllts ? connectedwllts : []);
-
-			let walletname = 'remotewallet';
-			let walletuuid;
-
-			// get passphrase from connected account address
-
-			// check if we are connected
 			let walletconnectclient = this.getWalletConnectClient();
-			let account = walletconnectclient.getRemoteAccount();
+			let connection = walletconnectclient.getConnectionFromRpc(item.rpc);
 
-			if (!account) {
-				// connect now
-				let ret = await walletconnectclient.connect(item.rpc);
-
-				if (!ret || !ret.account) {
-					result.push({module: this.name, handled: true});
-					return false;
-				}
-
-				account = ret.account;
+			if (!connection) {
+				result.push({module: this.name, handled: true});
+				return false;
 			}
+
 			
-			
-			let passphrase = account;
+			let walletinfo = await walletconnectclient.openConnectionWallet(rootsessionuuid, connection.uuid).catch(err => {});
 
-			let wallet;
+			if (!walletinfo) {
+				result.push({module: this.name, handled: true});
+				return false;
+			}
+
+			let account = walletconnectclient.getRemoteAccount(connection.uuid);
 	
-			// go through the list of wallets to see if can open a wallet with this passphrase
-
-			for (var i = 0; i < connectedwllts.length; i++) {
-				let _walletuuid = connectedwllts[i].walletuuid;
-				let unlocked = await mvcmypwa.unlockWallet(rootsessionuuid, _walletuuid, passphrase).catch(err => {});
-
-				if (unlocked) {
-					walletuuid = _walletuuid;
-					break;
-				}
-			}
-
-			if (walletuuid) {
-				// open wallet
-				wallet = await mvcmypwa.getWalletInfo(rootsessionuuid, walletuuid);
-
-				if (!wallet)
-					return Promise.reject('could not open wallet: ' + walletuuid);
-			}
-			else {
-				// we create a wallet
-				
-				let localscheme = await mvcmypwa.getDefaultLocalSchemeInfo(rootsessionuuid);
-				let localschemeuuid = localscheme.uuid;
-				// !!!: for the moment (mvc-client-wallet version 0.30.10) local wallet are only created on default-0
-
-				//let walletschemeuuid = item.uuid;
-
-				wallet = await mvcmypwa.makeWallet(rootsessionuuid, walletname, localschemeuuid, passphrase)
-				.catch(err => {
-					console.log('error in Root._openDeviceWallet: ' + err);
-				});
-
-				if (!wallet)
-					return Promise.reject('could not create wallet for celo');
-
-				walletuuid = wallet.uuid;
-
-				// we change name of wallet, so that login find it from the username
-				await mvcmydeed.setWalletLabel(rootsessionuuid, walletuuid, walletuuid); 
-					// TODO: use mvcmypwa for @primusmoney/react_pwa > 0.30.20
-
-				// save in our list
-				let connectedwllt = {};
-				connectedwllt.walletuuid = walletuuid;
-				connectedwllt.created_on = Date.now();
-
-				connectedwllts.push(connectedwllt);
-				
-				await mvcmypwa.putSettings('wc_wallets', connectedwllts);
-		
-			}
-
-	
-			result.credentials = {username: walletuuid, password: passphrase, schemeuuid: wallet.schemeuuid, automatic_submit: true};
+			result.credentials = {username: walletinfo.uuid, password: account, schemeuuid: walletinfo.schemeuuid, automatic_submit: true};
 		}
 
 
