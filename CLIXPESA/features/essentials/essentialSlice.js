@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   isLoggedIn: false,
+  isConnected: false,
+  isSignerSet: false,
   userDetails: {
     names: null,
     initials: null,
@@ -40,9 +42,27 @@ const essentialSlice = createSlice({
     setToken: (state, action) => {
       state.userDetails.userToken = action.payload
     },
+    setIsConnected: (state, action) => {
+      state.isConnected = action.payload
+    },
+    setStatus: (state, action) => {
+      state.status.isLoading = action.payload
+    },
+    setIsSignered: (state, action) => {
+      state.isSignerSet = action.payload
+    },
   },
+  extraReducers: {},
 })
 
-export const { setLoggedIn, setUserDetails, setUserToken, setToken } = essentialSlice.actions
+export const {
+  setLoggedIn,
+  setUserDetails,
+  setUserToken,
+  setToken,
+  setIsConnected,
+  setStatus,
+  setIsSignered,
+} = essentialSlice.actions
 
 export default essentialSlice.reducer
