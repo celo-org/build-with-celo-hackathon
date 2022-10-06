@@ -1,32 +1,74 @@
-require("@nomiclabs/hardhat-waffle");
-require("dotenv").config({ path: ".env" });
-require("hardhat-deploy");
-const fs = require("fs");
-const { task } = require("hardhat/config");
-require("@nomiclabs/hardhat-ethers");
-require("@typechain/hardhat");
-
-const defaultNetwork = "alfajores";
-const mnemonicPath = "m/44'/52752'/0'/0"; // derivation path used by Celo
-
-// This is the mnemonic used by celo-devchain
-const DEVCHAIN_MNEMONIC =
-  "concert load couple harbor equip island argue ramp clarify fence smart topic";
-
-// You need to export an object to set up your config
-// Go to https://hardhat.org/config/ to learn more
+require("@nomiclabs/hardhat-waffle")
+require("@nomiclabs/hardhat-etherscan")
+require("hardhat-deploy")
+require("solidity-coverage")
+require("hardhat-gas-reporter")
+require("hardhat-contract-sizer")
+require("./tasks")
+require("@appliedblockchain/chainlink-plugins-fund-link")
+require("dotenv").config()
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
+
+const MAINNET_RPC_URL =
+  process.env.MAINNET_RPC_URL ||
+  process.env.ALCHEMY_MAINNET_RPC_URL ||
+  "https://eth-mainnet.alchemyapi.io/v2/your-api-key"
+const POLYGON_MAINNET_RPC_URL =
+  process.env.POLYGON_MAINNET_RPC_URL || "https://polygon-mainnet.alchemyapi.io/v2/your-api-key"
+const GOERLI_RPC_URL =
+  process.env.GOERLI_RPC_URL || "https://eth-goerli.alchemyapi.io/v2/your-api-key"
+const PRIVATE_KEY = process.env.PRIVATE_KEY
+// optional
+const MNEMONIC = process.env.MNEMONIC || "Your mnemonic"
+const FORKING_BLOCK_NUMBER = process.env.FORKING_BLOCK_NUMBER
+
+// Your API key for Etherscan, obtain one at https://etherscan.io/
+const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "Your etherscan API key"
+const POLYGONSCAN_API_KEY = process.env.POLYGONSCAN_API_KEY || "Your polygonscan API key"
+const REPORT_GAS = process.env.REPORT_GAS || false
+
 module.exports = {
-  defaultNetwork,
+  defaultNetwork: "hardhat",
   networks: {
-    localhost: {
-      url: "http://127.0.0.1:8545",
-      accounts: {
-        mnemonic: DEVCHAIN_MNEMONIC,
+    hardhat: {
+      hardfork: "merge",
+      // If you want to do some forking set `enabled` to true
+      forking: {
+        url: MAINNET_RPC_URL,
+        blockNumber: FORKING_BLOCK_NUMBER,
+        enabled: false,
       },
+      chainId: 31337,
+    },
+    localhost: {
+      chainId: 31337,
+    },
+    goerli: {
+      url: GOERLI_RPC_URL,
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      //   accounts: {
+      //     mnemonic: MNEMONIC,
+      //   },
+      saveDeployments: true,
+      chainId: 5,
+    },
+    mainnet: {
+      url: MAINNET_RPC_URL,
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      //   accounts: {
+      //     mnemonic: MNEMONIC,
+      //   },
+      saveDeployments: true,
+      chainId: 1,
+    },
+    polygon: {
+      url: POLYGON_MAINNET_RPC_URL,
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      saveDeployments: true,
+      chainId: 137,
     },
     alfajores: {
       url: "https://alfajores-forno.celo-testnet.org",
@@ -49,45 +91,51 @@ module.exports = {
       chainId: 42220,
     },
   },
-  solidity: {
-    version: "0.8.4",
+  etherscan: {
+    // yarn hardhat verify --network <NETWORK> <CONTRACT_ADDRESS> <CONSTRUCTOR_PARAMETERS>
+    apiKey: {
+      polygon: POLYGONSCAN_API_KEY,
+      goerli: ETHERSCAN_API_KEY
+    },
+  },
+  gasReporter: {
+    enabled: REPORT_GAS,
+    currency: "USD",
+    outputFile: "gas-report.txt",
+    noColors: true,
+    // coinmarketcap: process.env.COINMARKETCAP_API_KEY,
+  },
+  contractSizer: {
+    runOnCompile: false,
+    only: ["APIConsumer", "KeepersCounter", "PriceConsumerV3", "RandomNumberConsumerV2"],
   },
   namedAccounts: {
-    deployer: 0,
+    deployer: {
+      default: 0, // here this will by default take the first account as deployer
+      1: 0, // similarly on mainnet it will take the first account as deployer. Note though that depending on how hardhat network are configured, the account 0 on one network can be different than on another
+    },
+    feeCollector: {
+      default: 1,
+    },
   },
-  typechain: {
-    outDir: "types",
-    target: "web3-v1",
-    alwaysGenerateOverloads: false, // should overloads with full signatures like deposit(uint256) be generated always, even if there are no overloads?
-    externalArtifacts: ["externalArtifacts/*.json"], // optional array of glob patterns with external artifacts to process (for example external libs from node_modules)
+  solidity: {
+    compilers: [
+      {
+        version: "0.8.13",
+      },
+      {
+        version: "0.6.6",
+      },
+      {
+        version: "0.4.24",
+      },
+    ],
   },
-};
+  mocha: {
+    timeout: 200000, // 200 seconds max for running tests
+  },
+}
 
-// This is a sample Hardhat task. To learn how to create your own go to
-// https://hardhat.org/guides/create-task.html
-
-task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
-  const accounts = await hre.ethers.getSigners();
-
-  for (const account of accounts) {
-    console.log(account.address);
-  }
-});
-
-task(
-  "devchain-keys",
-  "Prints the private keys associated with the devchain",
-  async (taskArgs, hre) => {
-    const accounts = await hre.ethers.getSigners();
-    const hdNode = hre.ethers.utils.HDNode.fromMnemonic(DEVCHAIN_MNEMONIC);
-    for (let i = 0; i < accounts.length; i++) {
-      const account = hdNode.derivePath(`m/44'/60'/0'/0/${i}`);
-      console.log(
-        `Account ${i}\nAddress: ${account.address}\nKey: ${account.privateKey}`
-      );
-    }
-  }
-);
 
 task("create-account", "Prints a new private key", async (taskArgs, hre) => {
   const wallet = new hre.ethers.Wallet.createRandom();
