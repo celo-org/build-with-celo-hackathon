@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 
+:root{
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+}
+
 
 
 /* ===== GLOBAL ===== */
@@ -10,26 +15,36 @@
 @media (min-width: 576px){
     .container {
         max-width: 540px;
+        padding-right: calc(var(--bs-gutter-x) * 0.5);
+        padding-left: calc(var(--bs-gutter-x) * 0.5);
     }
 }
 @media (min-width: 768px){
     .container {
         max-width: 720px;
+        padding-right: calc(var(--bs-gutter-x) * 0.5);
+padding-left: calc(var(--bs-gutter-x) * 0.5);
     }
 }
 @media (min-width: 992px){
     .container {
         max-width: 960px;
+        padding-right: calc(var(--bs-gutter-x) * 0.5);
+padding-left: calc(var(--bs-gutter-x) * 0.5);
     }
 }
 @media (min-width: 1200px){
     .container {
         max-width: 1140px;
+        padding-right: calc(var(--bs-gutter-x) * 0.5);
+padding-left: calc(var(--bs-gutter-x) * 0.5);
     }
 }
 @media (min-width: 1400px){
     .container {
         max-width: 1320px;
+        padding-right: calc(var(--bs-gutter-x) * 0.5);
+padding-left: calc(var(--bs-gutter-x) * 0.5);
     }
 }
     
@@ -42,6 +57,7 @@
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
     background: #ffffff;
 }
+
 
 
 
