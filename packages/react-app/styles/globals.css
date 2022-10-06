@@ -3,11 +3,6 @@
 @tailwind utilities;
 
 
-:root{
-    --bs-gutter-x: 1.5rem;
-    --bs-gutter-y: 0;
-}
-
 
 
 /* ===== GLOBAL ===== */
@@ -50,7 +45,8 @@
 
 
 width: 100%;
-
+padding-right: calc(var(--bs-gutter-x) * 0.5);
+padding-left: calc(var(--bs-gutter-x) * 0.5);
 margin-right: auto;
 margin-left: auto;
 }
