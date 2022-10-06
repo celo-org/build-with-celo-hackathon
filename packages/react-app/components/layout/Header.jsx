@@ -4,7 +4,7 @@ const Header = () => {
   return (
     <>
 
-    <header className='bg-indigo-400 shadow-header'>
+    <header className='bg-indigo-400 shadow-header sticky top-0'>
         <div className='container mx-auto'>
                 <nav class="flex  flex-wrap items-center justify-between p-4">
                 <div class="lg:order-1 w-auto lg:w-1/5 lg:text-center">
@@ -12,7 +12,7 @@ const Header = () => {
                         <img src='/images/logo.svg'/>
                     </a>
                 </div>
-                {/* <div class="block lg:hidden">
+                <div class="block lg:hidden">
                     <button class="navbar-burger flex items-center py-2 px-3 text-indigo-500 rounded border border-indigo-500">
                         <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <title>
@@ -22,7 +22,7 @@ const Header = () => {
                             </path>
                         </svg>
                     </button>
-                </div> */}
+                </div>
                 <div className='hidden lg:order-2 lg:block w-full lg:w-1/2 lg:text-center'>
 
                     <div class="navbar-menu   ">

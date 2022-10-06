@@ -45,6 +45,16 @@
 
 
 
+/* FEATURES */
+.features-img{
+    width: 579px;
+    height: 456px;
+    background: #FCE4D3;
+    border-radius: 16px;
+}
+
+
+
 /* MEET THE TEAM */
 .square{
     width: 323px;

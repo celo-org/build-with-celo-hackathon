@@ -52,7 +52,7 @@ const Home = () => {
                             </div>
 
                             <div className='tab-content py-10'>
-                                <div className='grid grid-cols-4'>
+                                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 '>
                                     <div className='px-5'>
                                         <div>
                                             <div className='circle'></div>
@@ -98,6 +98,62 @@ const Home = () => {
                 </div>
             </section>
 
+            <section className='bg-[#F8F7F7] py-20'>
+                <div className='container mx-auto'>
+                    <div>
+                        <div className='mb-9'>
+                            <h3 className='text-center text-xl '>Features</h3>
+                        </div>
+                        <div className='grid grid-cols-1 py-14 gap-10 md:grid-cols-2'>
+                            <div className='order-last md:order-first'>
+                                <div className='pr-16'>
+                                    <h3 className='mb-4 text-[#351F0F]'>
+                                    GidiScrap Credit
+                                    </h3>
+                                    <p>Tempor cursus nec orci pharetra. Est velit dictum sed lacus. Arcu maecenas pretium arcu nunc condimentum augue diam. Tortor nulla in quis senectus facilisi quam nibh vulputate. Lectus cursus maecenas nibh sit pellentesque auctor elementum. Adipiscing ipsum in nulla ultrices eget. Cursus porta in mauris mi dui placerat mi. Mauris tincidunt vulputate tincidunt eget congue.</p>
+                                </div>
+                                
+                            </div>
+
+                            <div className='flex items-center justify-end'>
+                                <div className='features-img'></div>
+                            </div>
+
+                        </div>
+                        <div className='grid grid-cols-1 md:grid-cols-2 py-14 gap-10'>
+                            <div className='flex items-center justify-start'>
+                                <div className='features-img'></div>
+                            </div>
+                            <div>
+                                <div className='pl-16'>
+                                    <h3 className='mb-4 text-[#351F0F]'>
+                                    GidiScrap Credit
+                                    </h3>
+                                    <p>Tempor cursus nec orci pharetra. Est velit dictum sed lacus. Arcu maecenas pretium arcu nunc condimentum augue diam. Tortor nulla in quis senectus facilisi quam nibh vulputate. Lectus cursus maecenas nibh sit pellentesque auctor elementum. Adipiscing ipsum in nulla ultrices eget. Cursus porta in mauris mi dui placerat mi. Mauris tincidunt vulputate tincidunt eget congue.</p>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div className='grid grid-cols-1 md:grid-cols-2 py-14 gap-10'>
+                            <div className='order-last md:order-first'>
+                                <div className='pr-16'>
+                                    <h3 className='mb-4 text-[#351F0F]'>
+                                    GidiScrap Credit
+                                    </h3>
+                                    <p>Tempor cursus nec orci pharetra. Est velit dictum sed lacus. Arcu maecenas pretium arcu nunc condimentum augue diam. Tortor nulla in quis senectus facilisi quam nibh vulputate. Lectus cursus maecenas nibh sit pellentesque auctor elementum. Adipiscing ipsum in nulla ultrices eget. Cursus porta in mauris mi dui placerat mi. Mauris tincidunt vulputate tincidunt eget congue.</p>
+                                </div>
+                                
+                            </div>
+
+                            <div className='flex items-center justify-end'>
+                                <div className='features-img'></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
 
             <section className='py-4 bg-[#FFFBF9]'>
                 <div className='container mx-auto'>
@@ -108,7 +164,7 @@ const Home = () => {
                         
                         <div>
 
-                            <div className='grid grid-cols-4 gap-5'>
+                            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 gap-y-9'>
                                 <div className='px-5 shadow-sm py-3'>
                                     <div>
                                         <div className='w-full h-56'>
