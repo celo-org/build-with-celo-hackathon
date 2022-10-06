@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.shadow-header{
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+    background: #ffffff;
+}
+
+
+
+
+
+
+
+@media (min-width: 576px){
+    .container {
+        max-width: 540px;
+    }
+}
+@media (min-width: 768px){
+    .container {
+        max-width: 720px;
+    }
+}
+@media (min-width: 992px){
+    .container {
+        max-width: 960px;
+    }
+}
+@media (min-width: 1200px){
+    .container {
+        max-width: 1140px;
+    }
+}
+@media (min-width: 1400px){
+    .container {
+        max-width: 1320px;
+    }
+}
+    

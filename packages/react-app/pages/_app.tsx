@@ -1,4 +1,5 @@
 import React from "react";
+import '../styles/globals.css'
 import '@celo/react-celo/lib/styles.css';
 import { SnackbarProvider } from "notistack";
 import { ApolloProvider } from "@apollo/client";
