@@ -3,23 +3,22 @@
 _This is a sample submission repository.
 Please [__fork this repo__](https://help.github.com/articles/fork-a-repo/) and use this as a starting point for your hackathon project._
 
-## Project Name
-### Team name
-#### Hackathon Track
+## Bound
+### Un0x Labs
+#### First hackathon
 
-##### Region location
+##### France
 
 ##### Team Members
-- Teammate 1, role
-- Teammate 2, role
-- Teammate 3, role
+- Sidoux, full stack dev web3
+- TLM, Project Manager and tokenomics
 
 #### Project Description
-Provide a clear statement of the challenges/issues/problems/gaps your project engages as well as a brief, high-level description of how your project engages the areas you've identified. What is the value of your approach? Who are the intended users?
+Major challenges will be : 
+-
 
 #### Summary
-Describe the basic functionality of your project. What are the features you were able to implement? What features would you like to implement?
-
+We would like to build a social network based on Poap. It will enable users to create a social bubble around them divided in several layers based on Poaps acquired. Each poap importance would be given a multiplying factor custom able by the user. While aggregating all weighted coefficients, users will order their social bubble and have access to a 3 layers social map ( by proximity). This could allow them to get in touch with people next to them in Direct Message. In addition, we would add a feed like twitter that could allow creators of poaps to share contents to a targeted audience. In the same feed, users will see reactions and posts from users within the same social bubble, ordered by proximity with the weighted coefficients. Furthermore, we would like to add a governance tool which would enable members detaining a Poap to initiate a governance vote. This tool could be useful for DAOs and we want it to be unstoppable.
 #### URLs
 List any URLs relevant to demonstrating your prototype
 
