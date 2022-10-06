@@ -1,0 +1,31 @@
+{
+  "name": "pesapay",
+  "version": "1.0.0",
+  "description": "cash out crpto for fiat",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eliashezron/pesapay.git"
+  },
+  "keywords": [
+    "celo",
+    "blockchain",
+    "money",
+    "defi",
+    "hackathon",
+    "chainlink"
+  ],
+  "author": "eliashezron",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eliashezron/pesapay/issues"
+  },
+  "homepage": "https://github.com/eliashezron/pesapay#readme",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "hardhat": "^2.11.2"
+  }
+}
