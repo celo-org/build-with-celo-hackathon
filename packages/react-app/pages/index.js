@@ -8,7 +8,7 @@ const Home = () => {
 
             <section className='bg-white py-14'>
                 <div className='container mx-auto'>
-                     <div className='grid grid-cols-2 items-center '>
+                     <div className='grid grid-cols-1 md:grid-cols-2 items-center '>
                         <div className='w-5/6'>
                             <div>
                                 <h1 className='text-4xl '>
@@ -27,7 +27,7 @@ const Home = () => {
                                 <a href='' className='rounded-full px-5 py-4 text-md bg-[#DD7D37] text-white' >Sign up for free</a>
                             </div>
                         </div>
-                        <div>
+                        <div className='hidden md:block'>
                             <div>
                                 <img src='/images/hero_image.svg' />
                             </div>
@@ -164,7 +164,7 @@ const Home = () => {
                         
                         <div>
 
-                            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 gap-y-9'>
+                            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 gap-y-9'>
                                 <div className='px-5 shadow-sm py-3'>
                                     <div>
                                         <div className='w-full h-56'>
@@ -385,7 +385,7 @@ const Home = () => {
                         </div>
 
                         <div>
-                            <div className='grid grid-cols-3'>
+                            <div className='grid grid-cols-1 md:grid-cols-3 gap-7'>
                                 <div className=''>
                                     <div className='mb-4 flex items-center justify-center'>
                                         <div className='square'></div>
