@@ -108,21 +108,21 @@ const Home = () => {
                         
                         <div>
 
-                            <div className='grid grid-cols-4 gap-4'>
-                                <div className='px-5'>
+                            <div className='grid grid-cols-4 gap-5'>
+                                <div className='px-5 shadow-sm py-3'>
                                     <div>
                                         <div className='w-full h-56'>
                                             <img src='/images/water_bottle.png' className='w-full h-full'/>
                                         </div>
                                     </div>
-                                    <div className=' flex items-start justify-between'>
+                                    <div className=' flex items-start justify-between mt-3'>
                                        <div>
-                                            <h4>PET Bottles</h4>
-                                            <div>
-                                                <img src=''/>
+                                            <h4 className='mb-2'>PET Bottles</h4>
+                                            <div className='flex items-start justify-start gap-2'>
+                                                <img src='/images/location.svg'/>
                                                 <div>
-                                                    <p className=''>Ikeja, Lagos</p>
-                                                    <p>20 mins away from you</p>
+                                                    <p className='text-base text-[#6D747D]'>Ikeja, Lagos</p>
+                                                    <p className='text-sm text-[#6D747D]'>20 mins away from you</p>
                                                 </div>
                                             
                                             </div> 
@@ -134,20 +134,20 @@ const Home = () => {
                                         
                                     </div>
                                 </div>
-                                <div className='px-5'>
+                                <div className='px-5 shadow-sm py-3'>
                                     <div>
                                         <div className='w-full h-56'>
                                             <img src='/images/water_bottle.png' className='w-full h-full'/>
                                         </div>
                                     </div>
-                                    <div className=' flex items-start justify-between'>
+                                    <div className=' flex items-start justify-between mt-3'>
                                        <div>
-                                            <h4>PET Bottles</h4>
-                                            <div>
-                                                <img src=''/>
+                                            <h4 className='mb-2'>PET Bottles</h4>
+                                            <div className='flex items-start justify-start gap-2'>
+                                                <img src='/images/location.svg'/>
                                                 <div>
-                                                    <p className=''>Ikeja, Lagos</p>
-                                                    <p>20 mins away from you</p>
+                                                    <p className='text-base text-[#6D747D]'>Ikeja, Lagos</p>
+                                                    <p className='text-sm text-[#6D747D]'>20 mins away from you</p>
                                                 </div>
                                             
                                             </div> 
@@ -159,20 +159,20 @@ const Home = () => {
                                         
                                     </div>
                                 </div>
-                                <div className='px-5'>
+                                <div className='px-5 shadow-sm py-3'>
                                     <div>
                                         <div className='w-full h-56'>
                                             <img src='/images/water_bottle.png' className='w-full h-full'/>
                                         </div>
                                     </div>
-                                    <div className=' flex items-start justify-between'>
+                                    <div className=' flex items-start justify-between mt-3'>
                                        <div>
-                                            <h4>PET Bottles</h4>
-                                            <div>
-                                                <img src=''/>
+                                            <h4 className='mb-2'>PET Bottles</h4>
+                                            <div className='flex items-start justify-start gap-2'>
+                                                <img src='/images/location.svg'/>
                                                 <div>
-                                                    <p className=''>Ikeja, Lagos</p>
-                                                    <p>20 mins away from you</p>
+                                                    <p className='text-base text-[#6D747D]'>Ikeja, Lagos</p>
+                                                    <p className='text-sm text-[#6D747D]'>20 mins away from you</p>
                                                 </div>
                                             
                                             </div> 
@@ -184,20 +184,20 @@ const Home = () => {
                                         
                                     </div>
                                 </div>
-                                <div className='px-5'>
+                                <div className='px-5 shadow-sm py-3'>
                                     <div>
                                         <div className='w-full h-56'>
                                             <img src='/images/water_bottle.png' className='w-full h-full'/>
                                         </div>
                                     </div>
-                                    <div className=' flex items-start justify-between'>
+                                    <div className=' flex items-start justify-between mt-3'>
                                        <div>
-                                            <h4>PET Bottles</h4>
-                                            <div>
-                                                <img src=''/>
+                                            <h4 className='mb-2'>PET Bottles</h4>
+                                            <div className='flex items-start justify-start gap-2'>
+                                                <img src='/images/location.svg'/>
                                                 <div>
-                                                    <p className=''>Ikeja, Lagos</p>
-                                                    <p>20 mins away from you</p>
+                                                    <p className='text-base text-[#6D747D]'>Ikeja, Lagos</p>
+                                                    <p className='text-sm text-[#6D747D]'>20 mins away from you</p>
                                                 </div>
                                             
                                             </div> 
@@ -209,20 +209,20 @@ const Home = () => {
                                         
                                     </div>
                                 </div>
-                                <div className='px-5'>
+                                <div className='px-5 shadow-sm py-3'>
                                     <div>
                                         <div className='w-full h-56'>
                                             <img src='/images/water_bottle.png' className='w-full h-full'/>
                                         </div>
                                     </div>
-                                    <div className=' flex items-start justify-between'>
+                                    <div className=' flex items-start justify-between mt-3'>
                                        <div>
-                                            <h4>PET Bottles</h4>
-                                            <div>
-                                                <img src=''/>
+                                            <h4 className='mb-2'>PET Bottles</h4>
+                                            <div className='flex items-start justify-start gap-2'>
+                                                <img src='/images/location.svg'/>
                                                 <div>
-                                                    <p className=''>Ikeja, Lagos</p>
-                                                    <p>20 mins away from you</p>
+                                                    <p className='text-base text-[#6D747D]'>Ikeja, Lagos</p>
+                                                    <p className='text-sm text-[#6D747D]'>20 mins away from you</p>
                                                 </div>
                                             
                                             </div> 
@@ -234,20 +234,20 @@ const Home = () => {
                                         
                                     </div>
                                 </div>
-                                <div className='px-5'>
+                                <div className='px-5 shadow-sm py-3'>
                                     <div>
                                         <div className='w-full h-56'>
                                             <img src='/images/water_bottle.png' className='w-full h-full'/>
                                         </div>
                                     </div>
-                                    <div className=' flex items-start justify-between'>
+                                    <div className=' flex items-start justify-between mt-3'>
                                        <div>
-                                            <h4>PET Bottles</h4>
-                                            <div>
-                                                <img src=''/>
+                                            <h4 className='mb-2'>PET Bottles</h4>
+                                            <div className='flex items-start justify-start gap-2'>
+                                                <img src='/images/location.svg'/>
                                                 <div>
-                                                    <p className=''>Ikeja, Lagos</p>
-                                                    <p>20 mins away from you</p>
+                                                    <p className='text-base text-[#6D747D]'>Ikeja, Lagos</p>
+                                                    <p className='text-sm text-[#6D747D]'>20 mins away from you</p>
                                                 </div>
                                             
                                             </div> 
@@ -259,20 +259,20 @@ const Home = () => {
                                         
                                     </div>
                                 </div>
-                                <div className='px-5'>
+                                <div className='px-5 shadow-sm py-3'>
                                     <div>
                                         <div className='w-full h-56'>
                                             <img src='/images/water_bottle.png' className='w-full h-full'/>
                                         </div>
                                     </div>
-                                    <div className=' flex items-start justify-between'>
+                                    <div className=' flex items-start justify-between mt-3'>
                                        <div>
-                                            <h4>PET Bottles</h4>
-                                            <div>
-                                                <img src=''/>
+                                            <h4 className='mb-2'>PET Bottles</h4>
+                                            <div className='flex items-start justify-start gap-2'>
+                                                <img src='/images/location.svg'/>
                                                 <div>
-                                                    <p className=''>Ikeja, Lagos</p>
-                                                    <p>20 mins away from you</p>
+                                                    <p className='text-base text-[#6D747D]'>Ikeja, Lagos</p>
+                                                    <p className='text-sm text-[#6D747D]'>20 mins away from you</p>
                                                 </div>
                                             
                                             </div> 
@@ -284,20 +284,20 @@ const Home = () => {
                                         
                                     </div>
                                 </div>
-                                <div className='px-5'>
+                                <div className='px-5 shadow-sm py-3'>
                                     <div>
                                         <div className='w-full h-56'>
                                             <img src='/images/water_bottle.png' className='w-full h-full'/>
                                         </div>
                                     </div>
-                                    <div className=' flex items-start justify-between'>
+                                    <div className=' flex items-start justify-between mt-3'>
                                        <div>
-                                            <h4>PET Bottles</h4>
-                                            <div>
-                                                <img src=''/>
+                                            <h4 className='mb-2'>PET Bottles</h4>
+                                            <div className='flex items-start justify-start gap-2'>
+                                                <img src='/images/location.svg'/>
                                                 <div>
-                                                    <p className=''>Ikeja, Lagos</p>
-                                                    <p>20 mins away from you</p>
+                                                    <p className='text-base text-[#6D747D]'>Ikeja, Lagos</p>
+                                                    <p className='text-sm text-[#6D747D]'>20 mins away from you</p>
                                                 </div>
                                             
                                             </div> 
@@ -321,33 +321,35 @@ const Home = () => {
                 </div>
             </section>
 
-            <section>
+            <section className='py-4'>
                 <div className='container mx-auto'>
-                    <div>
+                    <div className='py-14'>
                         <div className='mb-9'>
-                            <h3 className='text-center text-xl'>Recent Requests</h3>
+                            <h3 className='text-center text-xl'>Meet the team</h3>
                         </div>
 
                         <div>
                             <div className='grid grid-cols-3'>
-                                <div>
-                                    <div>
-
+                                <div className=''>
+                                    <div className='mb-4 flex items-center justify-center'>
+                                        <div className='square'></div>
                                     </div>
-                                    <h5>Paul Oladimeji</h5>
+                                    <h5 className='text-center'>Paul Oladimeji</h5>
                                 </div>
-                                <div>
-                                    <div>
-
+                                <div className=''>
+                                    <div className='mb-4 flex items-center justify-center'>
+                                        <div className='square'></div>
                                     </div>
-                                    <h5>Paul Oladimeji</h5>
+                                    <h5 className='text-center'>Paul Oladimeji</h5>
                                 </div>
-                                <div>
-                                    <div>
-
+                                <div className=''>
+                                    <div className='mb-4 flex items-center justify-center'>
+                                        <div className='square'></div>
                                     </div>
-                                    <h5>Paul Oladimeji</h5>
+                                    <h5 className='text-center'>Paul Oladimeji</h5>
                                 </div>
+                                
+                                
 
                             </div>
                         </div>

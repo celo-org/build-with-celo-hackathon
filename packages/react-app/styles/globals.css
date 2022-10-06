@@ -3,16 +3,9 @@
 @tailwind utilities;
 
 
-.shadow-header{
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
-    background: #ffffff;
-}
 
 
-
-
-
-
+/* ===== GLOBAL ===== */
 
 @media (min-width: 576px){
     .container {
@@ -40,3 +33,24 @@
     }
 }
     
+
+
+
+
+/* ===== HEADER ===== */
+.shadow-header{
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+    background: #ffffff;
+}
+
+
+
+/* MEET THE TEAM */
+.square{
+    width: 323px;
+    height: 271px;
+    border-radius: 16px;
+
+    background: #FCE4D3;
+
+}
