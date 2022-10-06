@@ -1,31 +1,51 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
-// will compile your contracts, add the Hardhat Runtime Environment's members to the
-// global scope, and execute the script.
-const hre = require("hardhat");
 
-async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-  const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
+// const { ethers, run, network } = require("hardhat")
 
-  const lockedAmount = hre.ethers.utils.parseEther("1");
+async function main(contractName, contractAddress) {
+  let contractFactory
+  let contract
 
-  const Lock = await hre.ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+  if (contractAddress == "0") {
+    console.log("Deploying contract...");
+    contractFactory = await ethers.getContractFactory(contractName)
+    contract = await contractFactory.deploy("Sidoux NFT", "SDXNFT", "ipfs://QmQLn1HcBHMLq545Ye23mYBVNURUZevhPEkU9hcSjR8vTC/")
 
-  await lock.deployed();
+    await contract.deployed()
 
-  console.log(
-    `Lock with 1 ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
-  );
+    console.log(`Contract deployed to ${contract.address}`)
+  } else {
+    console.log("Getting deployed contract...");
+    contractFactory = await ethers.getContractFactory(contractName);
+    contract = await contractFactory.attach(contractAddress);
+  }
+
+
+  // console.log(network.config)
+  if (network.config.chainId === 5 && process.env.ETHERSCAN_API_KEY) {
+    console.log("Verifying contract...");
+    await verify(contract.address, ["Sidoux NFT", "SDXNFT", "ipfs://QmQLn1HcBHMLq545Ye23mYBVNURUZevhPEkU9hcSjR8vTC/"])
+  }
+
+}
+async function verify(contractAddress, args) {
+  console.log("Verifying contract...")
+  try {
+    await run("verify:verify", {
+      address: contractAddress,
+      constructorArguments: args,
+    })
+  } catch (e) {
+    if (e.message.toLowerCase().includes("already verified")) {
+      console.log("Already Verified!")
+    } else {
+      console.log(e)
+    }
+  }
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+main("SimpleBadge", "0x0A93A232DEBde76151D454A721EDD81e3CF38114")
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error)
+    process.exit(1)
+  })
