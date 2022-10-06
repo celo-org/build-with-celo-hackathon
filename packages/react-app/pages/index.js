@@ -108,7 +108,182 @@ const Home = () => {
                         
                         <div>
 
-                            <div className='grid grid-cols-4'>
+                            <div className='grid grid-cols-4 gap-4'>
+                                <div className='px-5'>
+                                    <div>
+                                        <div className='w-full h-56'>
+                                            <img src='/images/water_bottle.png' className='w-full h-full'/>
+                                        </div>
+                                    </div>
+                                    <div className=' flex items-start justify-between'>
+                                       <div>
+                                            <h4>PET Bottles</h4>
+                                            <div>
+                                                <img src=''/>
+                                                <div>
+                                                    <p className=''>Ikeja, Lagos</p>
+                                                    <p>20 mins away from you</p>
+                                                </div>
+                                            
+                                            </div> 
+                                            
+                                       </div>
+                                        <div>
+                                            circle
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div className='px-5'>
+                                    <div>
+                                        <div className='w-full h-56'>
+                                            <img src='/images/water_bottle.png' className='w-full h-full'/>
+                                        </div>
+                                    </div>
+                                    <div className=' flex items-start justify-between'>
+                                       <div>
+                                            <h4>PET Bottles</h4>
+                                            <div>
+                                                <img src=''/>
+                                                <div>
+                                                    <p className=''>Ikeja, Lagos</p>
+                                                    <p>20 mins away from you</p>
+                                                </div>
+                                            
+                                            </div> 
+                                            
+                                       </div>
+                                        <div>
+                                            circle
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div className='px-5'>
+                                    <div>
+                                        <div className='w-full h-56'>
+                                            <img src='/images/water_bottle.png' className='w-full h-full'/>
+                                        </div>
+                                    </div>
+                                    <div className=' flex items-start justify-between'>
+                                       <div>
+                                            <h4>PET Bottles</h4>
+                                            <div>
+                                                <img src=''/>
+                                                <div>
+                                                    <p className=''>Ikeja, Lagos</p>
+                                                    <p>20 mins away from you</p>
+                                                </div>
+                                            
+                                            </div> 
+                                            
+                                       </div>
+                                        <div>
+                                            circle
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div className='px-5'>
+                                    <div>
+                                        <div className='w-full h-56'>
+                                            <img src='/images/water_bottle.png' className='w-full h-full'/>
+                                        </div>
+                                    </div>
+                                    <div className=' flex items-start justify-between'>
+                                       <div>
+                                            <h4>PET Bottles</h4>
+                                            <div>
+                                                <img src=''/>
+                                                <div>
+                                                    <p className=''>Ikeja, Lagos</p>
+                                                    <p>20 mins away from you</p>
+                                                </div>
+                                            
+                                            </div> 
+                                            
+                                       </div>
+                                        <div>
+                                            circle
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div className='px-5'>
+                                    <div>
+                                        <div className='w-full h-56'>
+                                            <img src='/images/water_bottle.png' className='w-full h-full'/>
+                                        </div>
+                                    </div>
+                                    <div className=' flex items-start justify-between'>
+                                       <div>
+                                            <h4>PET Bottles</h4>
+                                            <div>
+                                                <img src=''/>
+                                                <div>
+                                                    <p className=''>Ikeja, Lagos</p>
+                                                    <p>20 mins away from you</p>
+                                                </div>
+                                            
+                                            </div> 
+                                            
+                                       </div>
+                                        <div>
+                                            circle
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div className='px-5'>
+                                    <div>
+                                        <div className='w-full h-56'>
+                                            <img src='/images/water_bottle.png' className='w-full h-full'/>
+                                        </div>
+                                    </div>
+                                    <div className=' flex items-start justify-between'>
+                                       <div>
+                                            <h4>PET Bottles</h4>
+                                            <div>
+                                                <img src=''/>
+                                                <div>
+                                                    <p className=''>Ikeja, Lagos</p>
+                                                    <p>20 mins away from you</p>
+                                                </div>
+                                            
+                                            </div> 
+                                            
+                                       </div>
+                                        <div>
+                                            circle
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div className='px-5'>
+                                    <div>
+                                        <div className='w-full h-56'>
+                                            <img src='/images/water_bottle.png' className='w-full h-full'/>
+                                        </div>
+                                    </div>
+                                    <div className=' flex items-start justify-between'>
+                                       <div>
+                                            <h4>PET Bottles</h4>
+                                            <div>
+                                                <img src=''/>
+                                                <div>
+                                                    <p className=''>Ikeja, Lagos</p>
+                                                    <p>20 mins away from you</p>
+                                                </div>
+                                            
+                                            </div> 
+                                            
+                                       </div>
+                                        <div>
+                                            circle
+                                        </div>
+                                        
+                                    </div>
+                                </div>
                                 <div className='px-5'>
                                     <div>
                                         <div className='w-full h-56'>
@@ -136,9 +311,48 @@ const Home = () => {
                                 </div>
                             </div>
 
+                            <div className='flex items-center justify-center mt-8'>
+                                <a href='' className='text-[#DD7D37] px-12 py-2 text-sm border border-[#DD7D37] rounded-full'>View all Requests</a>
+                            </div>
+
                         </div>
                     </div>
                     
+                </div>
+            </section>
+
+            <section>
+                <div className='container mx-auto'>
+                    <div>
+                        <div className='mb-9'>
+                            <h3 className='text-center text-xl'>Recent Requests</h3>
+                        </div>
+
+                        <div>
+                            <div className='grid grid-cols-3'>
+                                <div>
+                                    <div>
+
+                                    </div>
+                                    <h5>Paul Oladimeji</h5>
+                                </div>
+                                <div>
+                                    <div>
+
+                                    </div>
+                                    <h5>Paul Oladimeji</h5>
+                                </div>
+                                <div>
+                                    <div>
+
+                                    </div>
+                                    <h5>Paul Oladimeji</h5>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </section>
         
