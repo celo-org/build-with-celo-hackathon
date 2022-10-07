@@ -1,0 +1,11 @@
+{
+  "name": "crypto-ventures",
+  "version": "1.0.0",
+  "description": "Backend for a web3 Fundraising platform for VC firms",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ian Kibandi",
+  "license": "ISC"
+}
