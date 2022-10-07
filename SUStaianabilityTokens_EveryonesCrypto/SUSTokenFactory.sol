@@ -35,4 +35,9 @@ contract SUStaianablilityTokens is ERC20, ERC20Burnable, Pausable, AccessControl
     {
         super._beforeTokenTransfer(from, to, amount);
     }
+
+    function killContract() public {
+        //require(IRoles(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT SUPER ADMIN!");
+		selfdestruct(payable(msg.sender));
+	}
 }
