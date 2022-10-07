@@ -1778,7 +1778,7 @@ pragma solidity >=0.7.0 <0.9.0;
 abstract contract PriceOFCeloTOUSD{
     AggregatorV3Interface priceFeed;
     // 18 decimals
-    uint256 requiredPriceInUsd = 10 * 1e18 ;
+    uint256 requiredPriceInUsd = 1000 * 1e18 ;
 
     constructor() {
         priceFeed = AggregatorV3Interface();
