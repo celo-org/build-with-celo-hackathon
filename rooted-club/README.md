@@ -35,7 +35,9 @@ List any URLs relevant to demonstrating your prototype
 - Overview: https://docs.google.com/document/d/1wJ2aEzYthi8n9om_v7OOH9G-rx1eAVBeunSycdNODCE/edit?usp=sharing
 - NFT´s Modeling(under development): https://docs.google.com/document/d/1RdLvzrpKisVdqb0hnpavYcXcTHZ25PX_FiboZLJlL6A/edit?usp=sharing
 - Brainstorm document: https://docs.google.com/document/d/1EUwTheQROEKy6tkPzFHen4PpqjemIoCkevxHadIqDqE/edit?usp=sharing
+- Agroforest Real Template with data(to be included in NFT´s metadata): https://docs.google.com/document/d/14-i1bPY9zhyk9daLFMh8wNRj358wZVqlsElKD8Xi1b0/edit?usp=sharing
 - Gitbook(under development): https://rooted-club.gitbook.io/product-docs/
+
 
 #### What we already have done
 - In a partnership with local educational institutes Diogo Jorge has been teaching how to plan, build and manage agroforest systems to many goups of aprentices.
