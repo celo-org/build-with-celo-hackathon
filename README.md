@@ -1,6 +1,7 @@
 # ⚡ Build with Celo Hackathon ⚡ 
 
-Build with Celo Hackathon is a three (3) phase hackathon event focused on Regenerative Finance (#ReFi) within DAOs, NFTs, Gaming (GameFi), Social Impact (SocialFI) and developer tooling/infrastructure on the Celo platform.
+
+Our project name is EcoConstruct - Reduce, Track and Comply with Carbon Footprint in the Construction Industry
 
 ## Construction of a new building can cause harm to the environment in many ways. Things negatively impact the environment include: 
 
@@ -14,9 +15,14 @@ Build with Celo Hackathon is a three (3) phase hackathon event focused on Regene
 	1. Tracking  energy efficiency of buildings
 	2. Setting and Tracking emission reduction targets
 	3. Tracking and Minimizing the discharge of pollutants (waste)
+	
+Build with Celo Hackathon is a three (3) phase hackathon event focused on Regenerative Finance (#ReFi) within DAOs, NFTs, Gaming (GameFi), Social Impact (SocialFI) and developer tooling/infrastructure on the Celo platform.
 
 ## Hackathon Facilitation
+
 Celo selected Hackerearth to facilitate the hackathon expereince. To learn more information about the Build on Celo hackathon event and register, navigate to Hackerearth Build on Celo hackathon site: [link](https://build-with-celo.hackerearth.com/)
+
+
 
 ## Hackathon Tracks: 
 
