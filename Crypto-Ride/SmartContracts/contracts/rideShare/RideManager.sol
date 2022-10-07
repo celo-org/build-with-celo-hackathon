@@ -6,7 +6,7 @@ import '../reputationManager/ReputationManager.sol';
 import './AdminControls.sol';
 // Modulars 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-
+import "@openzeppelin/contracts/utils/escrow/Escrow.sol";
 
 /**
  * @title RideManager
@@ -14,13 +14,14 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
  * @dev 
  *
  * TODO make contract ownable 
- *
+ * TODO could add time base escrow for drivers
  */
 
-contract RideManager is ReputationManager, AdminControls {
+contract RideManager is ReputationManager, AdminControls, Escrow {
 
     //address constant private cUSD = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
     IERC20 _token;
+
 
     event DriversForRide(bytes32 rideId,address[] drivers);
     event DriverAcceptedRide(bytes32 rideId,address driver);
@@ -72,6 +73,13 @@ contract RideManager is ReputationManager, AdminControls {
         _token = IERC20(token);
     }
 
+
+
+    /**
+    * @dev returns rideId for msg.sender
+    *
+    * @return bytes32 keccak hash of the ride
+    */
     function getActiveRide()
     public
     view 
@@ -80,6 +88,16 @@ contract RideManager is ReputationManager, AdminControls {
         return(activeRides[msg.sender]);
     }
 
+
+
+    /**
+    * @dev returns ride struct given a rideId
+    *
+    * @param rideId Bytes32 keccak hash of the ride 
+    * 
+    * @return Ride struct 
+    *
+    */
     function getRide(bytes32 rideId) 
     public
     view
@@ -88,23 +106,31 @@ contract RideManager is ReputationManager, AdminControls {
         return(rides[rideId]);
     }
 
+    function isCancled(bytes32 rideId)
+    public
+    view 
+    returns(bool)
+    {
+        return(rides[rideId].state == RideState.Canceled);
+    }
+
+
 
     /**
-     * announceRide passenger ride on the network
+     *@dev announce a passenger ride on the network
      *  
-     * 
-     * _startLocation: starting coordinate point
-     * _endLocation: ending coordinate point
-     * _drivers: address array, drivers selected for the ride
-     * _price: price for the ride in ETH
+     *@param _startLocation: starting coordinate point
+     *@param _endLocation: ending coordinate point
+     *@param _drivers: address array, drivers selected for the ride
+     *@param _price: price for the ride in ETH
      *
      * TODO add ride share ability 
      * TODO ride price cant be zero
      */
 
     function announceRide(Coordinate memory _startLocation, Coordinate memory _endLocation,address[] memory _drivers, uint256 _price, bool _shared)
-    public 
     whenNotPaused
+    public 
     _inRide
     {        
         // Check msg.sender allowance vs ride price
@@ -136,152 +162,189 @@ contract RideManager is ReputationManager, AdminControls {
         emit DriversForRide(rideId,_drivers);
     }
 
+
+
     /**
-     * driverAcceptsRide
-     * Drivers have a 30 second window to accept a ride
+     * @dev allows drivers to accept a ride 
      *
-     * rideId: Bytes32 hash of the ride
-     * Only callable by driver
-     * TODO make driver window time adjustable by contractOwner
+     * @param _rideId: Bytes32 keccak hash of the ride
+     *
+     * note  Only callable by a driver within the announceRide driver array
+     * note `driverAcceptanceTime` is how long each driver has to accept the ride
+     * 
+     *TODO might need to use time oracle
      */
 
-    function driverAcceptsRide(bytes32 rideId) 
+    function driverAcceptsRide(bytes32 _rideId) 
     public 
     {   
-        Ride memory ride = rides[rideId];
+        require(!isCancled(_rideId),"Ride was canceled");
+        Ride memory ride = rides[_rideId];
         require(ride.state == RideState.Announced,"Check ride state"); // Check ride state 
         
         uint256 timeElapsed = block.timestamp - ride.time;
         uint256 driverIndex = timeElapsed / driverAcceptanceTime;  
-        
-        address[] memory drivers = proposedDrivers[rideId];
+        // get drivers index 
+        address[] memory drivers = proposedDrivers[_rideId];
         require(driverIndex < drivers.length,"Time exceeded drivers");
-        require(msg.sender == drivers[driverIndex],"Driver not listed"); // Check if msg.sender is driver at index
+        // Check if msg.sender is driver at index
+        require(msg.sender == drivers[driverIndex],"Driver not listed"); 
 
         // Set driver state to current ride
         ride.acceptedDriver = drivers[driverIndex];
         ride.state = RideState.DriverAccepted;
-        rides[rideId] = ride;
-        activeRides[msg.sender] = rideId; // Driver is in a activeRide 
+        rides[_rideId] = ride;
+        activeRides[msg.sender] = _rideId; // Driver is in a activeRide 
         // Emit the ride has been accepted
-        emit DriverAcceptedRide(rideId, drivers[driverIndex]);
+        emit DriverAcceptedRide(_rideId, drivers[driverIndex]);
 
     }
 
+
+
     /**
-     * @dev passengerConfirmsPickUp Update ride state to PassengerAcceptedPickUp
+     * @dev updates ride state to PassengerAcceptedPickUp
      * 
+     * @param _rideId: Bytes32 keccak hash of the ride
+     *
+     * note only callable from ride passenger
      */
 
-    function passengerConfirmsPickUp(bytes32 rideId)
+    function passengerConfirmsPickUp(bytes32 _rideId)
     public
-
     {
-        Ride memory ride = rides[rideId];
+        require(!isCancled(_rideId),"Ride was canceled");
+
+        Ride memory ride = rides[_rideId];
         require(ride.state == RideState.DriverAccepted);
         require(ride.passenger == msg.sender);
         ride.state = RideState.PassengerPickUp;
-        rides[rideId] = ride;
-        emit StateChanged(rideId);
+        rides[_rideId] = ride;
+        emit StateChanged(_rideId);
     }
 
+
+
     /**
-     * @dev driverConfirmsDropOff Update ride state to driverConfirmsDropOff
-     * 
+     * @dev Updates ride state to driverConfirmsDropOff
+     *
+     * @param _rideId Bytes32 keccak hash of the ride
+     * @param _passengerRating rating of passenger by driver
+     * TODO could add time based dropOff if passenger never confirms dropOff
      */
 
-    function driverConfirmsDropOff(bytes32 rideId,uint256 _passengerRating)
+    function driverConfirmsDropOff(bytes32 _rideId,uint256 _passengerRating)
     public
-
+    withinRange(_passengerRating)
     {
-        Ride memory ride = rides[rideId];
+        require(!isCancled(_rideId),"Ride was canceled");
+        Ride memory ride = rides[_rideId];
 
-        //require(ride.passenger.length != 0,"No ride exist"); // Check if ride state 
-        require(ride.state == RideState.PassengerPickUp);
-        require(ride.acceptedDriver == msg.sender); // Only callable by driver 
+        require(ride.state == RideState.PassengerPickUp,"Incorrect ridestate.");
+        require(ride.acceptedDriver == msg.sender,"Only callable by driver."); // Only callable by driver 
 
         ride.state = RideState.DriverDropOff;
-        rides[rideId] = ride;
+        rides[_rideId] = ride;
         updateReputation(ride.passenger,_passengerRating,10,false);
         // Emit state
-        emit StateChanged(rideId);
+        emit StateChanged(_rideId);
     }
 
+
+
     /**
-     * @dev passengerConfirmsDropOff
+     * @dev Updates ride state to passengerConfirmsDropOff
      * 
-     * Update ride state to passengerConfirmsDropOff
+     * @param _rideId Bytes32 keccak hash of the ride
+     * @param _driverRating rating of driver by passenger
+     * 
      */
 
-    function passengerConfirmsDropOff(bytes32 rideId,uint256 driverRating) 
+    function passengerConfirmsDropOff(bytes32 _rideId,uint256 _driverRating) 
     public
-
+    withinRange(_driverRating)
     {
-        // Update ridestate passenger confirms dropoff
-        Ride memory ride = rides[rideId];
+        require(!isCancled(_rideId),"Ride was canceled");
 
-        //require(ride.passenger.length != 0,"No ride exist"); // Check if ride state 
-        require(ride.state == RideState.DriverDropOff,"Driver must confirm dropOff");
-        require(ride.passenger == msg.sender); // Only callable the passenger
+        // Update ridestate passenger confirms dropoff
+        Ride memory ride = rides[_rideId];
+
+        require(ride.state == RideState.DriverDropOff,"Driver must confirm dropOff.");
+        require(ride.passenger == msg.sender,"Only callable by passenger."); // Only callable the passenger
 
         ride.state = RideState.Complete;
-
+        rides[_rideId] = ride;
         // transfer tokens from passenger to driver 
  
         //require(token.allowance(address(this), ride.acceptedDriver) >= ride.price,"Contract is broke");
         // TODO transfer cUSD from msg.sender to CELOS escrow 
-        require(_token.transferFrom(address(this),ride.acceptedDriver ,ride.price),"transfer Failed");
+        require(_token.transfer(ride.acceptedDriver ,ride.price),"transfer Failed");
 
         // Update passenger and driver R&R 
-        updateReputation(ride.acceptedDriver,driverRating,10,false);
+        updateReputation(ride.acceptedDriver,_driverRating,10,false);
 
-        emit StateChanged(rideId);
+        // Set active ride back to empty
+        activeRides[ride.passenger] = 0;
+        activeRides[ride.acceptedDriver] = 0;
+
+        emit StateChanged(_rideId);
     }
 
+
+
     /**
-     * @dev cancelRide
+     * @dev Allows driver or passenger to cancel ride 
      * 
-     * Allows driver or passenger to cancel a ride 
+     * @param _rideId Bytes32 keccak hash of the ride
      * 
      * 
      * TODO Implment refund amounts and optimize
      */
-    function cancelRide(bytes32 rideId)
+    function cancelRide(bytes32 _rideId)
     public
     {
+        require(!isCancled(_rideId),"Ride was canceled");
 
-        Ride memory ride = rides[rideId];
+        Ride memory ride = rides[_rideId];
         require(ride.state != RideState.None || ride.state != RideState.Canceled,"No ride exist");
         // Only callable by passenger and driver 
         require(ride.passenger == msg.sender ||ride.acceptedDriver == msg.sender , "Method is only callable by driver or passenger");
+        // Set ride to canceled 
+        ride.state = RideState.Canceled;
+        rides[_rideId] = ride; 
+
+        // Set active ride to zero
+        activeRides[ride.passenger] = 0;
+        activeRides[ride.acceptedDriver] = 0;
 
         // Check what state the ride is in and refund 
         if(ride.state == RideState.Announced){
             // refund all tokens back to passenger
-            require(_token.transferFrom(address(this),ride.passenger,ride.price),"transfer Failed");
+            require(_token.transfer(ride.passenger,ride.price),"transfer Failed");
             
         }else if(ride.state == RideState.DriverAccepted){
-            // Passenger 90
-            require(_token.transferFrom(address(this),ride.passenger ,ride.price),"transfer Failed");
-            // Driver 10
-            require(_token.transferFrom(address(this),ride.acceptedDriver ,ride.price),"transfer Failed");
+            // Passenger 80%
+            require(_token.transfer(ride.passenger ,(ride.price / 5) * 4),"transfer Failed");
+            // Driver 20%
+            require(_token.transfer(ride.acceptedDriver ,ride.price / 5),"transfer Failed");
 
         }else if(ride.state == RideState.PassengerPickUp){
-            // Passenger 50
-            require(_token.transferFrom(address(this),ride.passenger ,ride.price),"transfer Failed");
-            // Driver 50
-            require(_token.transferFrom(address(this),ride.acceptedDriver ,ride.price),"transfer Failed");
+            uint256 half = ride.price / 2;
+            // Passenger 50%
+            require(_token.transfer(ride.passenger ,half),"transfer Failed");
+            // Driver 50%
+            require(_token.transfer(ride.acceptedDriver ,half),"transfer Failed");
 
-        }else if(ride.state == RideState.DriverDropOff){
-            // Passenger 30
-            require(_token.transferFrom(address(this),ride.passenger ,ride.price),"transfer Failed");
-            // Driver 80
-            require(_token.transferFrom(address(this),ride.acceptedDriver ,ride.price),"transfer Failed");
+        }else if(ride.state == RideState.DriverDropOff){  // Driver confirms drop off but passenger hasn't
+            // Passenger 20%
+            require(_token.transfer(ride.passenger ,ride.price / 5),"transfer Failed");
+            // Driver 80%
+            require(_token.transfer(ride.acceptedDriver ,(ride.price / 5) * 4),"transfer Failed");
 
         }   
         // Decrease R&R from msg.sender
         updateReputation(msg.sender,0,10,true);
-        emit RideCanceled(rideId);
+        emit RideCanceled(_rideId);
     }
 
 
