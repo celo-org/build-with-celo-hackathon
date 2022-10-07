@@ -15,7 +15,7 @@ Please [__fork this repo__](https://help.github.com/articles/fork-a-repo/) and u
 
 
 #### Overview
-In order to promote the development of sustainable and regenerative initiatives, AgroforestDAO, in partnership with organic producers, educational institutions, content producers and land owners, we´re currently using Web3 tools to build on chain governance of Agroforestry Commons supported by the following pillars:
+In order to promote the development of sustainable and regenerative initiatives, AgroforestDAO, in partnership with organic producers, educational institutions, content producers and land owners, using Web3 tools to build on chain governance of Agroforestry Commons supported by the following pillars:
 - ReFi by concept;
 - DAO for governance;
 - Blockchain for transparency;
