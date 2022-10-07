@@ -52,6 +52,7 @@ List any URLs relevant to demonstrating your prototype
 #### Join us
 - Telegram: https://t.me/+TNwrhRCyCxQ4Zjcx
 - Discord: https://discord.gg/FfFpk99k
+- Twitter: https://twitter.com/agroforestDAO
 
 #### License
 This repository includes an [unlicensed](http://unlicense.org/) statement though you may want to [choose a different license](https://choosealicense.com/).
