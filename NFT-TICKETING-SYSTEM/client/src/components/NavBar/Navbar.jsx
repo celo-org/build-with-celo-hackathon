@@ -7,20 +7,20 @@ import {
   Typography,
 } from "@mui/material";
 
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const Navbar = () => {
   return (
-    <AppBar sx={{ backgroundColor: "#E9F9DA" }}>
+    <AppBar sx={{ background: "linear-gradient(to right, #000, #7228BB)" }}>
       <Container maxWidth="xl">
         <Toolbar>
           <Box sx={{ width: "30%" }}>
-            <Typography color="#000" fontWeight="bold">
+            <Typography color="#fff" fontWeight="bold">
               LetsGo
             </Typography>
           </Box>
           <Box
-            color="#000"
+            color="#fff"
             sx={{
               display: { xs: "none", md: "flex" },
               width: "55%",

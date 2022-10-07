@@ -11,11 +11,17 @@ import banner from "../../assets/ticketbanner.svg";
 
 const Banner = () => {
   return (
-    <Box sx={{ backgroundColor: "#E9F9DA", pt: "5%" }}>
+    <Box
+      sx={{
+        background: "linear-gradient(to right, #000, #7228BB)",
+
+        pt: "5%",
+      }}
+    >
       <Container maxWidth="xl">
         <Grid container>
           <Grid item xs={12} md={6}>
-            <Box>
+            <Box color="#fff">
               <Typography
                 fontWeight={600}
                 fontSize={{ xs: "28px", md: "48px" }}
@@ -38,7 +44,7 @@ const Banner = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <Card
-              sx={{ maxWidth: 647, backgroundColor: "#E9F9DA", boxShadow: 0 }}
+              sx={{ maxWidth: 647, backgroundColor: "inherit", boxShadow: 0 }}
             >
               <CardMedia component="img" image={banner} alt="ticket" />
             </Card>
