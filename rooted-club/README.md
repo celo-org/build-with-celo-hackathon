@@ -35,11 +35,11 @@ List any URLs relevant to demonstrating your prototype
 
 
 #### Presentation
-Website: https://rooted-club.web.app/
-Overview: https://docs.google.com/document/d/1wJ2aEzYthi8n9om_v7OOH9G-rx1eAVBeunSycdNODCE/edit?usp=sharing
-NFT´s Modeling(under development): https://docs.google.com/document/d/1RdLvzrpKisVdqb0hnpavYcXcTHZ25PX_FiboZLJlL6A/edit?usp=sharing
-Brainstorm document: https://docs.google.com/document/d/1EUwTheQROEKy6tkPzFHen4PpqjemIoCkevxHadIqDqE/edit?usp=sharing
-Gitbook(under development): https://rooted-club.gitbook.io/product-docs/
+- Website: https://rooted-club.web.app/
+- Overview: https://docs.google.com/document/d/1wJ2aEzYthi8n9om_v7OOH9G-rx1eAVBeunSycdNODCE/edit?usp=sharing
+- NFT´s Modeling(under development): https://docs.google.com/document/d/1RdLvzrpKisVdqb0hnpavYcXcTHZ25PX_FiboZLJlL6A/edit?usp=sharing
+- Brainstorm document: https://docs.google.com/document/d/1EUwTheQROEKy6tkPzFHen4PpqjemIoCkevxHadIqDqE/edit?usp=sharing
+- Gitbook(under development): https://rooted-club.gitbook.io/product-docs/
 
 #### What we already have done
 - In a partnership with local educational institutes Diogo Jorge has been teaching how to plan, build and manage agroforest systems to many goups of aprentices.
@@ -52,8 +52,8 @@ Gitbook(under development): https://rooted-club.gitbook.io/product-docs/
 - Build the frontend
 
 #### Join us
-Telegram: https://t.me/+TNwrhRCyCxQ4Zjcx
-Discord: https://discord.gg/FfFpk99k
+- Telegram: https://t.me/+TNwrhRCyCxQ4Zjcx
+- Discord: https://discord.gg/FfFpk99k
 
 #### License
 This repository includes an [unlicensed](http://unlicense.org/) statement though you may want to [choose a different license](https://choosealicense.com/).
