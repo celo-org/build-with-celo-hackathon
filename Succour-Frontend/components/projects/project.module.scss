@@ -1,0 +1,64 @@
+.project {
+   padding-top: 120px;
+   padding-bottom: 120px;
+   position: relative;
+   background-image: url(../../assets//background-section.png);
+
+   .wrapper {
+    margin: 0 auto;
+    max-width: calc(100% - 2.875rem);
+    width: 100%;
+
+    @media (min-width: 1024px) {
+     max-width: calc(100% - 7.5rem);
+    }
+
+    @media (min-width: 480px) {
+     max-width: calc(100% - 3.75rem);
+   }
+
+   .container {
+     display: flex;
+     gap: 250px;
+     padding-top: 80px;
+     padding-left: 100px;
+     padding-right: 100px;
+
+
+     .left {
+           max-width: 50%;
+           width: 100%;
+
+          .title {
+               font-weight: 600;
+               font-size: 48px;
+               line-height: 145%;
+               color: #FFFFFF;
+          }
+     }
+
+
+     .right {
+          // display: flex;
+          // justify-content: flex-end;
+               
+          .controller_link {
+               border: 3px solid #804D80;
+               border-radius: 30px;
+               padding: 12px 50px;
+               font-weight: 500;
+               font-size: 20px;
+               line-height: 165%;
+               color: #FFFEFE;
+          }
+
+
+     }
+     
+      
+   }
+
+}
+
+
+}
