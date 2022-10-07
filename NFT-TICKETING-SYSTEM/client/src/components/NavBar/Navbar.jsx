@@ -11,7 +11,9 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const Navbar = () => {
   return (
-    <AppBar sx={{ background: "linear-gradient(to right, #000, #7228BB)" }}>
+    <AppBar
+      sx={{ background: "linear-gradient(to right, #000 20%, #7228BB, #000 )" }}
+    >
       <Container maxWidth="xl">
         <Toolbar>
           <Box sx={{ width: "30%" }}>
