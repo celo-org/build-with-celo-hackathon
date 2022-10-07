@@ -13,6 +13,11 @@ module.exports = {
   defaultNetwork: "hardhat",
   networks: {
     hardhat: {},
+    alfajores: {
+      url: "https://alfajores-forno.celo-testnet.org",
+      accounts: [process.env.PRIVATE_KEY],
+      chainId: 44787,
+   },
     goerli: {
       url: GOERLI_RPC_URL,
       accounts: [PRIVATE_KEY],

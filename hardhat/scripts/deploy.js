@@ -43,7 +43,7 @@ async function verify(contractAddress, args) {
   }
 }
 
-main("SimpleBadge", "0x0A93A232DEBde76151D454A721EDD81e3CF38114")
+main("SimpleBadge", 0)
   .then(() => process.exit(0))
   .catch((error) => {
     console.error(error)
