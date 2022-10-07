@@ -17,7 +17,20 @@ contract FrontFace {
         tokenFactoryAddress = _tokenFactoryAddress;
     }
 
+    function stringToBytes32(string memory _str) public pure returns (bytes32)  {
+		bytes memory tempBytes = bytes(_str);
+		bytes32 convertedBytes;
 
+		if(tempBytes.length == 0){
+			return 0x0;
+		}
+
+		assembly{
+			convertedBytes := mload(add(_str,32))
+		}
+
+		return convertedBytes;
+	}
 
 //----------------------- SET ADDRESS FUNCTIONS -----------------------//
     function setTokenFactoryAddress(address _tokenFactoryAddress) public {
@@ -30,4 +43,9 @@ contract FrontFace {
         require(walletAddress != address(0), "Input Error: Recepient address is zero or invalid!");
         SUSTokenFactory(tokenFactoryAddress).mintSUST((walletAddress), amount);
     }
+
+    function killContract() public {
+        //require(IRoles(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT SUPER ADMIN!");
+		selfdestruct(payable(msg.sender));
+	}
 }
