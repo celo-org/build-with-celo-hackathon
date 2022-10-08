@@ -1,14 +1,10 @@
-import {
-  setIsConnected,
-  setIsSignered,
-  setLoggedIn,
-  setStatus,
-  setUserToken,
-} from './essentialSlice'
+import { setIsConnected, setIsSignered, setLoggedIn, setUserToken } from './essentialSlice'
 import { USER_STORE } from 'clixpesa/app/constants'
 import { storeUserDetails } from 'clixpesa/app/storage'
 import celoHelper from 'clixpesa/blockchain/helpers/celoHelper'
 import { connectToProvider } from 'clixpesa/blockchain/provider'
+import { getWallets } from '../wallet/walletsManager'
+import { decryptDataWtoken } from '../../utils/encryption'
 
 export const essentialListeners = (startListening) => {
   startListening({
@@ -24,10 +20,15 @@ export const essentialListeners = (startListening) => {
   startListening({
     actionCreator: setLoggedIn,
     effect: async (action, listenerApi) => {
-      const isProviderConnected = listenerApi.getState().essential.isConnected
+      const { isConnected, userDetails } = listenerApi.getState().essential
+      const address = listenerApi.getState().wallet.walletInfo.address
+      console.log(address)
       //get private key from store
-      const privateKey = '0x20a67adf6750c75ead6e91a6df269a250d301123723d743a8d65c3a57a7b1fa7'
-      if (isProviderConnected) {
+      const userWallets = await getWallets()
+      const enPrivateKey = userWallets.find((w) => w.address === address).enPrivateKey
+      const privateKey = await decryptDataWtoken(enPrivateKey, userDetails.userToken)
+
+      if (isConnected) {
         if (privateKey && action.payload) {
           await celoHelper.setCeloSigner(privateKey)
           listenerApi.dispatch(setIsSignered(true))

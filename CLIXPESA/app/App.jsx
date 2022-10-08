@@ -8,10 +8,12 @@ import * as SplashScreen from 'expo-splash-screen'
 import { theme } from './theme'
 import store from './store'
 import AppNavigator from './navigation/AppNavigation'
-import { USER_STORE } from './constants'
+import { USER_STORE, WALLETS_STORE } from './constants'
 import { getUserDetails } from './storage'
 import { connectToProvider } from '../blockchain/provider'
 import { setUserDetails, setToken, setIsConnected } from '../features/essentials/essentialSlice'
+import { getWallets } from '../features/wallet/walletsManager'
+import { updateWalletAddress } from '../features/wallet/walletSlice'
 
 export default function App() {
   const [isInitComplete, setIsInitComplete] = useState()
@@ -36,12 +38,17 @@ export default function App() {
         SplashScreen.preventAutoHideAsync()
         //Check Accounts
         const result = await getUserDetails(USER_STORE)
+        const wallets = await getWallets(WALLETS_STORE)
+        if (wallets.length > 0) {
+          store.dispatch(updateWalletAddress(wallets[0].address))
+        }
         if (result.userToken) {
           const userNames = result.names
           const phoneNumber = result.phoneNo
           store.dispatch(setUserDetails({ userNames, phoneNumber }))
           store.dispatch(setToken(result.userToken))
         }
+
         // Load fonts
       } catch (e) {
         // We might want to provide this error information to an error reporting service

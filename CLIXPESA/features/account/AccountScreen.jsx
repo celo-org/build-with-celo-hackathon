@@ -16,10 +16,15 @@ import Remixicon from 'react-native-remix-icon' //Fix/Add types
 import { useNavigation } from '@react-navigation/native'
 
 import { SectionHeader } from 'clixpesa/components'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+
+import { USER_STORE, WALLETS_STORE } from 'clixpesa/app/constants'
+import { deleteAccount } from 'clixpesa/app/storage'
+import { resetUserDetails } from '../essentials/essentialSlice'
 
 export default function AccountScreen() {
   const userDetails = useSelector((s) => s.essential.userDetails)
+  const dispatch = useDispatch()
   const USER = {
     fullName: userDetails.names,
     nameInitials: userDetails.initials,
@@ -141,6 +146,11 @@ export default function AccountScreen() {
       ],
     },
   ]
+
+  const handleCloseAccount = async () => {
+    await deleteAccount(WALLETS_STORE, USER_STORE)
+    dispatch(resetUserDetails())
+  }
   return (
     <SectionList
       bg="muted.50"
@@ -234,7 +244,7 @@ export default function AccountScreen() {
             pr="4"
             minW="75%"
             _text={{ color: 'primary.600', fontWeight: 'semibold', mb: '0.5' }}
-            onPress={() => console.log('Close account')}
+            onPress={() => handleCloseAccount()}
           >
             Close account
           </Button>

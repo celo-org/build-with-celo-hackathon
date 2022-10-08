@@ -9,56 +9,75 @@ import {
   Image,
   ScrollView,
   Spinner,
+  Pressable,
 } from 'native-base'
 import { Feather } from '@expo/vector-icons'
+import RIcons from 'react-native-remix-icon'
 import celoHelper from '../../blockchain/helpers/celoHelper'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { NativeTokensByAddress } from '../wallet/tokens'
 import { fetchBalances } from '../wallet/walletSlice'
+import { getWallets } from '../wallet/walletsManager'
+import { shortenAddress } from '../../blockchain/utils/addresses'
 
 export default function HomeScreen({ navigation }) {
   const dispatch = useDispatch()
   const tokenAddrs = Object.keys(NativeTokensByAddress)
-  const isLoading = useSelector((s) => s.essential.status.isLoading)
+  const { isSignerSet } = useSelector((s) => s.essential)
+  const walletAddress = useSelector((s) => s.wallet.walletInfo.address)
   const balances = useSelector((s) => s.wallet.walletBalances.tokenAddrToValue)
-  const [tempBal, setTempBal] = useState({})
-  const [address, setAddress] = useState('0x8E912eE99bfaECAe8364Ba6604612FfDfE46afd2')
-
+  const [tempBal, setTempBal] = useState({ [tokenAddrs[1]]: 0.0 })
+  const shortAddr = shortenAddress(walletAddress, true)
   useEffect(() => {
-    //dispatch(setCeloSigner(wallet.privateKey))
     if (!balances) {
-      console.log('No balances yet')
-      handleGetBalances()
-      dispatch(fetchBalances())
+      if (isSignerSet) {
+        //handleGetBalances()
+        dispatch(fetchBalances())
+      }
     }
-  }, [])
+  }, [isSignerSet])
 
   const handleGetBalances = async () => {
     try {
-      const result = await celoHelper.getBalances(address, NativeTokensByAddress)
+      const result = await celoHelper.getBalances(walletAddress, NativeTokensByAddress)
       setTempBal(result)
     } catch (e) {
       console.log(e)
     }
   }
 
-  console.log(tokenAddrs[1] + ':' + balances[tokenAddrs[1]])
-  console.log('Local' + tempBal)
+  const handleGetWallets = async () => {
+    const result = await getWallets()
+    console.log(result)
+  }
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <Box flex={1} bg="#F5F5F5" alignItems="center">
+      <Box flex={1} bg="muted.100" alignItems="center">
         <Box mt="2" bg="#fff" width="95%" rounded="2xl" shadow="none">
-          <Stack mx="4" my="3">
-            <Text _light={{ color: 'muted.700' }}>Actual Balance (KES)</Text>
-            <Heading size="xl" letterSpacing="0.5" _light={{ color: 'muted.800' }}>
-              {balances ? balances[tokenAddrs[1]] * 120.75 : tempBal[tokenAddrs[1]] * 120.75}
-            </Heading>
-            <Text _light={{ color: 'muted.700' }} lineHeight="sm">
-              ≈ {balances ? balances[tokenAddrs[1]] : tempBal[tokenAddrs[1]]} cUSD
-            </Text>
-          </Stack>
-          <HStack mx="4" mb="2.5" space="3">
+          <HStack justifyContent="space-between">
+            <Stack mx="4" my="3">
+              <Text _light={{ color: 'muted.700' }}>Actual Balance (KES)</Text>
+              <Heading size="xl" letterSpacing="0.5" _light={{ color: 'muted.800' }}>
+                {balances ? balances[tokenAddrs[1]] * 120.75 : tempBal[tokenAddrs[1]] * 120.75}
+              </Heading>
+              <Text _light={{ color: 'muted.700' }} lineHeight="sm">
+                ≈ {balances ? balances[tokenAddrs[1]] : tempBal[tokenAddrs[1]]} cUSD
+              </Text>
+            </Stack>
+            <Pressable
+              width="20%"
+              m={4}
+              onPress={() => navigation.navigate('AllTokens', { tempBal: tempBal })}
+            >
+              <Box bg="muted.50" borderRadius="full" p={2} width="2/3" ml="1/3" alignItems="center">
+                <RIcons size={32} name="qr-code-line" color="#737373" />
+              </Box>
+            </Pressable>
+          </HStack>
+          {balances ? null : <Spinner right="1/2" top={10} position="absolute" size="lg" />}
+          <HStack mx="4" mb="2.5" space="2">
             <Button
               leftIcon={<Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />}
               variant="subtle"
@@ -82,15 +101,18 @@ export default function HomeScreen({ navigation }) {
               Transfer
             </Button>
             <Button
-              leftIcon={<Icon as={Feather} name="more-horizontal" size="lg" color="primary.600" />}
-              variant="subtle"
+              //leftIcon={<Icon as={Feather} name="more-horizontal" size="lg" color="primary.600" />}
+              variant="outline"
               rounded="3xl"
-              px="5"
-              _text={{ color: 'primary.600', fontWeight: 'semibold', mb: '0.5' }}
-              onPress={() => console.log('more')}
-            />
+              px="4"
+              _text={{ color: 'primary.500', fontWeight: 'semibold', mb: '0.5' }}
+              onPress={() => navigation.navigate('AllTokens', { tempBal: tempBal })}
+            >
+              {shortAddr}
+            </Button>
           </HStack>
         </Box>
+
         {/*Dummy shadow effect */}
         <Box bg="#fff" height={10} rounded="2xl" width="94.5%" shadow={1} mt="-10" zIndex={-1}>
           <Text color="#fff">Find a better way</Text>
@@ -115,6 +137,9 @@ export default function HomeScreen({ navigation }) {
         {/* Nuggets */}
         {/* Saving Spaces/Vault/Earnings */}
         {/* Rewards and Offers */}
+
+        {/* Test buttons 
+        <Button onPress={() => handleGetWallets()}>Show Wallet List</Button>*/}
       </Box>
     </ScrollView>
   )

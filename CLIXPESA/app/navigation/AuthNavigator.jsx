@@ -10,6 +10,7 @@ import {
   SetPasscodeScreen,
   LoginScreen,
 } from 'clixpesa/features/essentials'
+import { ImportWalletScreen } from 'clixpesa/features/wallet'
 import { useSelector } from 'react-redux'
 
 const AuthStack = createNativeStackNavigator()
@@ -30,6 +31,7 @@ export default function AuthNavigator() {
 
       <AuthStack.Group screenOptions={{ presentation: 'modal' }}>
         <AuthStack.Screen name="DummyModal" component={DummyScreen} />
+        <AuthStack.Screen name="importWallet" component={ImportWalletScreen} />
         <AuthStack.Screen name="getUserDetails" component={UserDetailsScreen} />
         <AuthStack.Screen name="verifyPhoneNo" component={VerificationScreen} />
         <AuthStack.Screen name="setPasscode" component={SetPasscodeScreen} />
