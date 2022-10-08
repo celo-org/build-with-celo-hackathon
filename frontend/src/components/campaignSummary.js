@@ -52,7 +52,7 @@ const CampaignSummery = ({ details }) => {
                                     <>
                                         <>
                                             <h3 class="mb-4">Available Funds</h3>
-                                            <p>The campaign has ${Number(ethers.utils.formatUnits(details.availableBalance.toString(), 'ether'))} left.</p>
+                                            <p>The campaign has ${details.availableBalance} left.</p>
                                             <Donate campaignId={details.campaignID} />
                                         </>
                                     </>

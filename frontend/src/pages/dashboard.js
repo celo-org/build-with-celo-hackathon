@@ -91,7 +91,7 @@ const Dashboard = () => {
                     dailyFundNeed: Number(ethers.utils.formatUnits(campaignDetails[0].dailyFundNeed.toString(), 'ether')),
                     availableBalance: Number(ethers.utils.formatUnits(campaignDetails[0].availableBalance.toString(), 'ether')) * 10 ** 18,
                     totalReceived: Number(ethers.utils.formatUnits(campaignDetails[0].totalReceived.toString(), 'ether')),
-                    totalUsed: Number(ethers.utils.formatUnits(campaignDetails[0].totalUsed.toString(), 'ether')) * 10 ** 18,
+                    totalUsed: Number(ethers.utils.formatUnits(campaignDetails[0].totalUsed.toString(), 'ether')),
                     ngoName: ngoDetails[0].name,
                     ngoregistrationNo: ngoDetails[0].registrationNo,
                     ngoregisteredByGovt: ngoDetails[0].registeredByGovt,

@@ -40,7 +40,7 @@ const Campaigns = () => {
                     description: i.description,
                     noOfBeneficiaries: Number(ethers.utils.formatUnits(i.noOfBeneficiaries.toString(), 'ether')) * 10 ** 18,
                     dailyFundNeed: Number(ethers.utils.formatUnits(i.dailyFundNeed.toString(), 'ether')),
-                    availableBalance: Number(ethers.utils.formatUnits(i.availableBalance.toString(), 'ether')) * 10 ** 18,
+                    availableBalance: Number(ethers.utils.formatUnits(i.availableBalance.toString(), 'ether')),
                     totalReceived: Number(ethers.utils.formatUnits(i.totalReceived.toString(), 'ether')) * 10 ** 18,
                     totalUsed: Number(ethers.utils.formatUnits(i.totalUsed.toString(), 'ether')) * 10 ** 18,
                     ngoName: ngoDetails[0].name,
@@ -54,6 +54,7 @@ const Campaigns = () => {
                 return item;
             })
         );
+        console.log("data", items)
         setCampaign(items)
         setLoadingState(false)
     }

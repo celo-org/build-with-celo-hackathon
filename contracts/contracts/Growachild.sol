@@ -59,6 +59,10 @@ contract Growachild is
   mapping(uint256 => Users) public userDetails;
   mapping(uint256 => bool) private campaignStatus;
 
+  //campaignid => block.timestamp
+  mapping(uint256 => uint) private taskCompleted;
+  mapping(uint256 => uint) private lastWithdrawn;
+
      function initialize() public initializer 
      {
     __ERC20_init('', '');
@@ -70,8 +74,33 @@ contract Growachild is
     _;
   }
   
-  function freezeUnfreezeCampaign(uint256 _campaignID) external onlyOwner nonReentrant{
-    campaignStatus[_campaignID] = !campaignStatus[_campaignID];
+  function completedTask(uint256 campId) external {
+    taskCompleted[campId] = block.timestamp;
+  }
+  function freezeUnfreezeCampaign(uint256 campainId) external onlyOwner nonReentrant{
+    campaignStatus[campainId] = !campaignStatus[campainId];
+  }
+
+  function withdrawDailyFund(uint256 campainId,address _token) external onlyLiveCampaign(campainId){
+    require(msg.sender == campaignDetails[campainId].ngo,"Access Denied");
+    require(campaignDetails[campainId].availableBalance > 0,"Insufficient Balance");
+    require(taskCompleted[campainId] >= block.timestamp - 1 days,"Daily Task Pending");
+    require(lastWithdrawn[campainId] < block.timestamp - 1 days,"Exhausted daily withdrawal limit");
+
+    uint256 dailyLimit = campaignDetails[campainId].dailyFundNeed;
+    uint256 available = campaignDetails[campainId].availableBalance;
+    lastWithdrawn[campainId] = block.timestamp; 
+
+    if(dailyLimit <= available){
+      campaignDetails[campainId].availableBalance -= dailyLimit;
+      campaignDetails[campainId].totalUsed += dailyLimit;
+      
+      IERC20Upgradeable(_token).transfer(payable(msg.sender),dailyLimit);
+    }else{
+      campaignDetails[campainId].availableBalance = 0;
+      campaignDetails[campainId].totalUsed += available;
+      IERC20Upgradeable(_token).transfer(payable(msg.sender),available);
+    } 
   }
 
   function checkRegistration() public view returns (bool){

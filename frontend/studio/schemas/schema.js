@@ -12,101 +12,26 @@ export default createSchema({
   // to the ones provided by any plugins that are installed
   types: schemaTypes.concat([
     {
-      name: 'ngoDetails',
-      title: 'NGO Data',
+      name: 'task',
+      title: 'Daily Task',
       type: 'document',
       fields: [
         {
-          name: 'ngoname',
-          title: 'NGO Nmae',
-          type: 'string'
-        },
-        {
-          name: 'description',
-          title: 'NGO Description',
-          type: 'string'
-        },
-        {
-          name: 'registeredByGovt',
-          title: 'Registered By',
-          type: 'string'
-        },
-        {
-          name: 'serviceSince',
-          title: 'serviceSince',
+          name: 'campaignid',
+          title: 'Campaign ID',
           type: 'number'
         },
         {
-          name: 'ngoAddress',
-          title: 'ngoAddress',
-          type: 'string'
-        },
-
-        {
-          name: 'country',
-          title: 'country',
-          type: 'string'
-        },
-        {
-          name: 'campaignCount',
-          title: 'campaignCount',
-          type: 'number'
-        },
-        {
-          name: 'campaignCount',
-          title: 'campaignCount',
-          type: 'number'
+          name: 'dailytask',
+          title: 'Daily Proof',
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
         },
         {
           name: 'date',
-          title: 'System Time',
-          type: 'datetime'
-        }
-      ]
-    },
-    {
-      name: 'userData',
-      title: 'User Master Data',
-      type: 'document',
-      fields: [
-        {
-          name: 'name',
-          title: 'Name of Business',
-          type: 'string'
-        },
-        {
-          name: 'description',
-          title: 'Description',
-          type: 'string'
-        },
-        {
-          name: 'domain',
-          title: 'Domain',
-          type: 'string'
-        },
-        {
-          name: 'apiKey',
-          title: 'API Key',
-          type: 'string'
-        },
-        {
-          name: 'phone',
-          title: 'Phone',
-          type: 'string'
-        },
-        {
-          name: 'email',
-          title: 'Email',
-          type: 'string'
-        },
-        {
-          name: 'walletAddress',
-          title: 'Registered Wallet Address',
-          type: 'string'
-        },
-        {
-          name: 'date',
-          title: 'Registered on',
+          title: 'Upload Date',
           type: 'datetime'
         }
       ]

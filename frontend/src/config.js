@@ -2,8 +2,8 @@ export const networkConfig = {
 
     "44787": [
         {
-            contractProxyAddress: "0xdDd21F1357AD10D89e8AFa7FbDa248718c007a2d", //proxy deployment
-            cUSDAddress: "0xE14F49b259863Bc9E3264d1909444EaF82528DcD",
+            contractProxyAddress: "0x0021926f723cbf8f13158Db2bFfB89c82a49F78F", //proxy deployment
+            cUSDAddress: "0xE14F49b259863Bc9E3264d1909444EaF82528DcD", //my custom cUSD
             networkName: "alfajores"
         },
     ],

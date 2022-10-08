@@ -10,15 +10,43 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from 'react-responsive-carousel';
 import { LoaderIcon } from 'react-hot-toast';
 import Donate from '../components/donate';
+import { client, urlFor } from "../lib/sanityClient";
 
 const CampaignDetails = () => {
     const { search } = useLocation()
     const { campId } = queryString.parse(search)
     const [campaign, setCampaign] = useState([])
+    const [photos, setPhotos] = useState([])
 
     useEffect(() => {
+        loadPhotos()
         load()
+
     }, [])
+
+    async function loadPhotos() {
+        const query = '*[_type == "task" && campaignid == $id] {dailytask}'
+        const params = { id: Number(campId) } //TODO:  req.url used twice
+        const result = await client.fetch(query, params)
+        const baseUrl = urlFor(result[0]["dailytask"]["asset"]["_ref"].slice(6,))["options"].baseUrl
+        const dataset = urlFor(result[0]["dailytask"]["asset"]["_ref"].slice(6,))["options"].dataset
+        const projectId = urlFor(result[0]["dailytask"]["asset"]["_ref"].slice(6,))["options"].projectId
+
+        const items = await Promise.all(
+            result.map(async (i) => {
+                let item = {
+                    url:
+                        `${baseUrl}/images/${projectId}/${dataset}/${i["dailytask"]["asset"]["_ref"]
+                            .slice(6,).slice(0, -4) + '.'}png`
+
+                };
+                return item;
+            })
+        )
+
+        setPhotos(items)
+
+    }
     async function load() {
         await (window).ethereum.send('eth_requestAccounts') // opens up metamask extension and connects Web2 to Web3
         const provider = new ethers.providers.Web3Provider(window.ethereum) //create provider
@@ -43,7 +71,7 @@ const CampaignDetails = () => {
                     dailyFundNeed: Number(ethers.utils.formatUnits(i.dailyFundNeed.toString(), 'ether')),
                     availableBalance: Number(ethers.utils.formatUnits(i.availableBalance.toString(), 'ether')) * 10 ** 18,
                     totalReceived: Number(ethers.utils.formatUnits(i.totalReceived.toString(), 'ether')),
-                    totalUsed: Number(ethers.utils.formatUnits(i.totalUsed.toString(), 'ether')) * 10 ** 18,
+                    totalUsed: Number(ethers.utils.formatUnits(i.totalUsed.toString(), 'ether')),
                     ngoName: ngoDetails[0].name,
                     ngoregistrationNo: ngoDetails[0].registrationNo,
                     ngoregisteredByGovt: ngoDetails[0].registeredByGovt,
@@ -58,6 +86,7 @@ const CampaignDetails = () => {
         console.log("it", items)
         setCampaign(items[0])
     }
+
     return (
         <div>
             <BreadCrumb imageURL="/asssets/images/bg_7.jpg" pagename={`${campaign.name}`} pageURL="details" />
@@ -72,21 +101,12 @@ const CampaignDetails = () => {
                             <div class="row">
                                 <div class="col-md-6 pr-md-5">
                                     <Carousel autoPlay="true" >
-                                        <div>
-                                            <img src={process.env.PUBLIC_URL + '/asssets/images/cause-6.jpg'} alt='' />
-                                        </div>
-                                        <div>
-                                            <img src={process.env.PUBLIC_URL + '/asssets/images/cause-5.jpg'} alt='' />
-                                        </div>
-                                        <div>
-                                            <img src={process.env.PUBLIC_URL + '/asssets/images/cause-4.jpg'} alt='' />
-                                        </div>
-                                        <div>
-                                            <img src={process.env.PUBLIC_URL + '/asssets/images/cause-3.jpg'} alt='' />
-                                        </div>
-                                        <div>
-                                            <img src={process.env.PUBLIC_URL + '/asssets/images/cause-1.jpg'} alt='' />
-                                        </div>
+
+                                        {photos.map((el, i) => {
+                                            <div>
+                                                <img src={el.url} alt="" />
+                                            </div>
+                                        })}
                                     </Carousel>
 
                                 </div>
@@ -143,9 +163,9 @@ const CampaignDetails = () => {
                             </p>
                         </div>
                     </div>
-                </div>
-            </section>
-        </div>
+                </div >
+            </section >
+        </div >
     )
 
 }

@@ -64,7 +64,10 @@ const CreateCampaign = () => {
 
     async function onChange(e) {
         const file = e.target.files[0]
-        if (e.target.files[0].size <= 100000 && e.target.files[0].size >= 50000) {
+        if
+            (1 == 1)
+        //(e.target.files[0].size <= 100000 && e.target.files[0].size >= 50000) 
+        {
             setLoadingState(true)
             console.log("file", client)
 
