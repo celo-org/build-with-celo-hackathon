@@ -80,12 +80,6 @@ https://build-with-celo.hackerearth.com/challenges/hackathon/celo-hackathon/dash
 Links to our presentation will be added at a later date.
 
 
-#### Next Steps
-- Designs  
-- Architecure diagrams
-- T.B.D.
-
-
 ### Week Ending: 30 Sept 22
 
 - [x] Interaction & Swimlanes Diagrams - https://github.com/celo-org/build-with-celo-hackathon/commit/84dcc37f969f437971c67445bef21de275d4a641
@@ -93,10 +87,16 @@ Links to our presentation will be added at a later date.
 - [x] Draft Sponsor Escrow Contract with Faucet - https://github.com/celo-org/build-with-celo-hackathon/commit/0cfeee47a7eadef0e7fa7e7a27b47193bfa216c6
 - [x] Draft of Pomodoro App logic - https://github.com/celo-org/build-with-celo-hackathon/commit/6c55446341430ccdc58bc09daeecd9ad9f6ecf28
 
+### Week Ending: 06 Oct 22
+
+- [x] Designs for App - https://github.com/celo-org/build-with-celo-hackathon/pull/10/commits/18a2964b2e2df986a0f4b08c4c9d6c7329011d08
+- [x] New hardhat TS setup - https://github.com/celo-org/build-with-celo-hackathon/pull/10/commits/3549ead3ebdd3f896c83aa99626f7a23af0778d7
+- [x] Test case coverage 50% - https://github.com/celo-org/build-with-celo-hackathon/pull/10/commits/7187452ccd3ee2f5f650d41f8ef54350a65f3e48
+- [x] Started evaluation of Toucan 
 
 This week we plan to complete the following:
-- [ ] Test cases for Token 
-- [ ] Test cases for Sponsor Contract
+- [ ] Improve Test cases coverage for Token 
+- [ ] Improve Test cases coverage for Sponsor Contract
 - [ ] Attempt connection from dApp to contract.
 
 
