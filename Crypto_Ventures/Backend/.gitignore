@@ -12,6 +12,7 @@
 
 # production
 /build
+/abis
 
 # misc
 .DS_Store
