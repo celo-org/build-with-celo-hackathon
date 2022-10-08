@@ -37,7 +37,7 @@ contract Game {
     ///@param _answer hashed answer to the question
     ///@param _reward amount of cUSD reward it should be greater than 5 cUSD
     function create(bytes32 _answer, uint _reward) public {
-        require(_reward >= 5, "reward should be greater than 5 cUSD!");
+        require(_reward >= 5, "reward should be greater than 4 cUSD!");
         require(cUSD.allowance(msg.sender, address(this)) >= _reward, "allowance should more than reward!");
 
         cUSD.transferFrom(msg.sender, address(this), _reward);
@@ -57,6 +57,8 @@ contract Game {
             questions[_id].reward = 0;
             cUSD.transfer(msg.sender, _reward);
             emit solved(msg.sender, _id, _reward);
+        } else {
+            revert("Wrong answer!");
         }
     }
 }
