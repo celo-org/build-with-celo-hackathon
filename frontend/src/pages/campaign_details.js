@@ -1,14 +1,66 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { ethers } from 'ethers';
+import { getConfigByChain } from '../config'
+import GrowAChild from '../artifacts/contracts/Growachild.sol/Growachild.json'
 import BreadCrumb from '../components/breadcrumb';
+import { useLocation } from 'react-router-dom'
 import { useAccount } from 'wagmi';
+import queryString from 'query-string'
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
+import { LoaderIcon } from 'react-hot-toast';
+import Donate from '../components/donate';
 
 const CampaignDetails = () => {
-    const { address } = useAccount()
+    const { search } = useLocation()
+    const { campId } = queryString.parse(search)
+    const [campaign, setCampaign] = useState([])
+
+    useEffect(() => {
+        load()
+    }, [])
+    async function load() {
+        await (window).ethereum.send('eth_requestAccounts') // opens up metamask extension and connects Web2 to Web3
+        const provider = new ethers.providers.Web3Provider(window.ethereum) //create provider
+        const network = await provider.getNetwork()
+        const signer = provider.getSigner()
+        const gacContract = new ethers.Contract(
+            getConfigByChain(network.chainId)[0].contractProxyAddress,
+            GrowAChild.abi,
+            signer
+        )
+        const data = await gacContract.getCampaignDetails(campId)
+        const items = await Promise.all(
+            data.map(async (i) => {
+                const ngoDetails = await gacContract.getNGODetails(i.ngo)
+                let item = {
+                    campaignID: Number(ethers.utils.formatUnits(i.campaignID.toString(), 'ether')) * 10 ** 18,
+                    ngo: i.ngo,
+                    campaignPic: i.campaignPic,
+                    name: i.name,
+                    description: i.description,
+                    noOfBeneficiaries: Number(ethers.utils.formatUnits(i.noOfBeneficiaries.toString(), 'ether')) * 10 ** 18,
+                    dailyFundNeed: Number(ethers.utils.formatUnits(i.dailyFundNeed.toString(), 'ether')),
+                    availableBalance: Number(ethers.utils.formatUnits(i.availableBalance.toString(), 'ether')) * 10 ** 18,
+                    totalReceived: Number(ethers.utils.formatUnits(i.totalReceived.toString(), 'ether')),
+                    totalUsed: Number(ethers.utils.formatUnits(i.totalUsed.toString(), 'ether')) * 10 ** 18,
+                    ngoName: ngoDetails[0].name,
+                    ngoregistrationNo: ngoDetails[0].registrationNo,
+                    ngoregisteredByGovt: ngoDetails[0].registeredByGovt,
+                    ngoserviceSince: Number(ethers.utils.formatUnits(ngoDetails[0].serviceSince.toString(), 'ether')) * 10 ** 18,
+                    ngoAddress: ngoDetails[0].ngoAddress,
+                    ngocountry: ngoDetails[0].country,
+                    ngocampaignCount: Number(ethers.utils.formatUnits(ngoDetails[0].campaignCount.toString(), 'ether')) * 10 ** 18,
+                };
+                return item;
+            })
+        );
+        console.log("it", items)
+        setCampaign(items[0])
+    }
     return (
         <div>
-            <BreadCrumb imageURL="/asssets/images/bg_7.jpg" pagename="Campaign Title" pageURL="details" />
+            <BreadCrumb imageURL="/asssets/images/bg_7.jpg" pagename={`${campaign.name}`} pageURL="details" />
             <section class="ftco-section contact-section ftco-degree-bg">
 
                 <div class="container">
@@ -41,43 +93,43 @@ const CampaignDetails = () => {
                                 <div class="col-md-6 pr-md-5">
                                     <div class="row">
                                         <div class="col-md-12 pl-md-5">
-                                            <p class="mb-1"><h5 class="mb-0">Minimum Daily requirement:<span class="value"> $234 </span></h5></p>
-                                            <p class="mb-1"><h5 class="mb-0">Funds Received till date:<span class="value"> $23400 </span></h5></p>
-                                            <p class="mb-1"><h5 class="mb-0">Funds Utilised till date:<span class="value"> $2340 </span></h5></p>
-                                            <p class="mb-3"><h5 class="mb-0">Total children benifited:<span class="value"> 1122334</span></h5></p>
+                                            <p class="mb-1"><h5 class="mb-0">Minimum Daily requirement:<span class="value"> ${campaign.dailyFundNeed} </span></h5></p>
+                                            <p class="mb-1"><h5 class="mb-0">Funds Received till date:<span class="value">  ${campaign.totalReceived} </span></h5></p>
+                                            <p class="mb-1"><h5 class="mb-0">Funds Utilised till date:<span class="value">  ${campaign.totalUsed}</span></h5></p>
+                                            <p class="mb-3"><h5 class="mb-0">Total children benifited:<span class="value">  {campaign.noOfBeneficiaries}</span></h5></p>
                                             <p class="mb-1"><h5 class="mb-0">NGO Profile:</h5></p>
                                             <div class="col-md-12 pl-0 pr-0">
                                                 <div class="row mr-0 ml-0">
                                                     <div class="col-4 pl-0 pr-0"> Name: </div>
-                                                    <div class="col-8 pl-0 pr-0"> NGO name goes here </div>
+                                                    <div class="col-8 pl-0 pr-0"> {campaign.ngoName} </div>
                                                 </div>
                                                 <div class="row mr-0 ml-0">
                                                     <div class="col-4 pl-0 pr-0"> Address: </div>
-                                                    <div class="col-8 pl-0 pr-0"> NGO address goes here </div>
+                                                    <div class="col-8 pl-0 pr-0"> {campaign.ngoAddress}</div>
                                                 </div>
                                                 <div class="row mr-0 ml-0">
                                                     <div class="col-4 pl-0 pr-0"> Reg No: </div>
-                                                    <div class="col-8 pl-0 pr-0"> NGO Reg No goes here </div>
+                                                    <div class="col-8 pl-0 pr-0"> {campaign.ngoregistrationNo} </div>
                                                 </div>
                                                 <div class="row mr-0 ml-0">
-                                                    <div class="col-4 pl-0 pr-0"> Reg With:: </div>
-                                                    <div class="col-8 pl-0 pr-0"> Govt of West Bengal </div>
+                                                    <div class="col-4 pl-0 pr-0"> Reg With: </div>
+                                                    <div class="col-8 pl-0 pr-0"> {campaign.ngoregisteredByGovt} </div>
                                                 </div>
                                                 <div class="row mr-0 ml-0">
                                                     <div class="col-4 pl-0 pr-0"> Country: </div>
-                                                    <div class="col-8 pl-0 pr-0"> NGO Country goes here </div>
+                                                    <div class="col-8 pl-0 pr-0"> {campaign.ngocountry} </div>
                                                 </div>
                                                 <div class="row mr-0 ml-0">
                                                     <div class="col-4 pl-0 pr-0"> Live Campaigns: </div>
-                                                    <div class="col-8 pl-0 pr-0">24 Campigns </div>
+                                                    <div class="col-8 pl-0 pr-0">{campaign.ngocampaignCount} campaigns </div>
                                                 </div>
                                                 <div class="row mr-0 ml-0">
                                                     <div class="col-4 pl-0 pr-0"> Serving since: </div>
-                                                    <div class="col-8 pl-0 pr-0"> 1999 </div>
+                                                    <div class="col-8 pl-0 pr-0"> {campaign.ngoserviceSince} </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 pl-0 pr-0 mt-3 d-flex flex-row-reverse">
-                                                <input type="button" value="Donate now" class="btn btn-primary py-2 px-4" />
+                                                <Donate campaignId={campaign.campaignID} />
                                             </div>
                                         </div>
                                     </div>
@@ -87,7 +139,7 @@ const CampaignDetails = () => {
                         <div class="col-md-12 mb-4">
                             <p class="mb-1"><h5 class="mb-0">Desciption:</h5></p>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc a accumsan magna, vel porttitor sapien. Curabitur ullamcorper mauris at congue varius. Etiam a pharetra justo. Vestibulum blandit dui mi, et mollis ligula malesuada non. Proin scelerisque et eros quis blandit. Integer sed ipsum tristique, sagittis nulla semper, vestibulum erat. Nulla rutrum interdum nisi, a finibus metus luctus ut. Maecenas suscipit dolor urna, a porta felis dignissim eget. Vestibulum eu dolor facilisis, tincidunt odio sed, finibus metus. Nullam enim tortor, ultrices at fermentum vitae, auctor id nisi. Curabitur sit amet fermentum diam, id imperdiet arcu. Duis blandit neque eget blandit mollis. Mauris tincidunt, neque a pharetra maximus, lacus est pulvinar ex, sed scelerisque augue tellus id augue. Praesent ut dolor ac nisl lacinia blandit. Duis at convallis mi, in dictum nunc.
+                                {campaign.description}
                             </p>
                         </div>
                     </div>

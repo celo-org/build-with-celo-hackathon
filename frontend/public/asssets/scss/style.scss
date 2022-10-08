@@ -523,6 +523,7 @@ h5,
     background: $white;
     border: 1px solid $white;
     color: $black;
+    width: 100%;
     @include border-radius(0);
     // box-shadow: 0 5px 20px -5px rgba(0,0,0,.5) !important;
     &:hover {

@@ -1,8 +1,8 @@
 import React from 'react';
 import AnimatedNumber from "animated-number-react";
 
-const Donations = ({ amount }) => {
-    const value = amount
+const Donations = ({ details }) => {
+    const value = details.myDonation
     const formatValue = (value) => value.toLocaleString('en-US');
 
     return (
@@ -26,9 +26,11 @@ const Donations = ({ amount }) => {
                         <div class="col-md-4 d-flex justify-content-center counter-wrap">
                             <div class="block-18 color-2 align-items-stretch">
                                 <div class="text">
-                                    <h3 class="mb-2">Campaign Title</h3>
-                                    <div>Description: Campaign Details goes here</div>
-                                    <div>Kids benefitted: Campaign kids count here</div><br />
+                                    <h2 class="mb-1">
+                                        <a href={`/campaign-details?campId=${details.campaignID}`} class="campaignTitle">{details.name}</a>
+                                    </h2>
+                                    <div>Description: {details.description}</div>
+                                    <div><b>Kids benefitted: {details.noOfBeneficiaries}</b></div><br />
 
                                 </div>
                             </div>
@@ -37,12 +39,12 @@ const Donations = ({ amount }) => {
                             <div class="block-18 color-3 align-items-stretch">
                                 <div class="text">
                                     <h3 class="mb-2">NGO Profile</h3>
-                                    <div>Name: NGO name goes here</div>
-                                    <div>Reg No: Registration no</div>
-                                    <div>Reg With: Govt of West Bengal</div>
-                                    <div>Country: NGO Country goes here</div>
-                                    <div>Live Campaigns: Count of NGO campaigns</div>
-                                    <div>Serving since: 1971</div>
+                                    <div>Name: {details.ngoName}</div>
+                                    <div>Reg No: {details.ngoregistrationNo}</div>
+                                    <div>Reg With: {details.ngoregisteredByGovt}</div>
+                                    <div>Country: {details.ngocountry}</div>
+                                    <div>Live Campaigns: {details.ngocampaignCount}</div>
+                                    <div>Serving since: {details.ngoserviceSince}</div>
                                 </div>
                             </div>
                         </div>

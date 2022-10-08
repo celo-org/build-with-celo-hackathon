@@ -41,6 +41,8 @@ const Campaigns = () => {
                     noOfBeneficiaries: Number(ethers.utils.formatUnits(i.noOfBeneficiaries.toString(), 'ether')) * 10 ** 18,
                     dailyFundNeed: Number(ethers.utils.formatUnits(i.dailyFundNeed.toString(), 'ether')),
                     availableBalance: Number(ethers.utils.formatUnits(i.availableBalance.toString(), 'ether')) * 10 ** 18,
+                    totalReceived: Number(ethers.utils.formatUnits(i.totalReceived.toString(), 'ether')) * 10 ** 18,
+                    totalUsed: Number(ethers.utils.formatUnits(i.totalUsed.toString(), 'ether')) * 10 ** 18,
                     ngoName: ngoDetails[0].name,
                     ngoregistrationNo: ngoDetails[0].registrationNo,
                     ngoregisteredByGovt: ngoDetails[0].registeredByGovt,

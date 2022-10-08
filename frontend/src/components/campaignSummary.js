@@ -1,7 +1,9 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import AnimatedNumber from "animated-number-react";
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useAccount } from 'wagmi';
+import Donate from './donate';
+import { ethers } from 'ethers';
 
 
 const CampaignSummery = ({ details }) => {
@@ -9,6 +11,9 @@ const CampaignSummery = ({ details }) => {
     const { address } = useAccount()
     const [registered, setRegistered] = useState(true)
 
+    useEffect(() => {
+        console.log("details", details)
+    }, [])
     return (
         <section class="ftco-counter ftco-intro" id="section-counter">
             <div class="container">
@@ -46,11 +51,9 @@ const CampaignSummery = ({ details }) => {
                                 {address ? (
                                     <>
                                         <>
-                                            <h3 class="mb-4">Available Fuds</h3>
-                                            <p>The campaign has ${details.availableBalance} left.</p>
-                                            <p class="btn btn-white py-2 mt-2">
-                                                Donate
-                                            </p>
+                                            <h3 class="mb-4">Available Funds</h3>
+                                            <p>The campaign has ${Number(ethers.utils.formatUnits(details.availableBalance.toString(), 'ether'))} left.</p>
+                                            <Donate campaignId={details.campaignID} />
                                         </>
                                     </>
                                 ) : (

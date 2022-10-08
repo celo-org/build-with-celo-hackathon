@@ -42,26 +42,37 @@ contract Growachild is
         uint256 noOfBeneficiaries;
         uint256 dailyFundNeed;
         uint256 availableBalance;
+        uint256 totalReceived;
+        uint256 totalUsed;
     }
 
     struct Users {
         uint256 campaignID;
         address userAddress;
         uint256 depositAmount;
+        address ngoAddress;
     }
  
   mapping(address => NGO) public ngoDetails;
   address[] private ngoKeys;
   mapping(uint256 => Campaign) public campaignDetails;
   mapping(uint256 => Users) public userDetails;
+  mapping(uint256 => bool) private campaignStatus;
 
-     function initialize() public initializer {
+     function initialize() public initializer 
+     {
     __ERC20_init('', '');
     __ReentrancyGuard_init();
     __Ownable_init();
+      }
+  modifier onlyLiveCampaign(uint256 _campaignID){
+    require(campaignStatus[_campaignID],"Campaign forzen.");
+    _;
   }
-
   
+  function freezeUnfreezeCampaign(uint256 _campaignID) external onlyOwner nonReentrant{
+    campaignStatus[_campaignID] = !campaignStatus[_campaignID];
+  }
 
   function checkRegistration() public view returns (bool){
       if(ngoDetails[msg.sender].serviceSince == 0){
@@ -80,9 +91,10 @@ contract Growachild is
   function registerCampign(string memory _name, string memory _campaignPic, string memory _description,uint256 _noOfBeneficiaries, uint256 _dailyFundNeed) external nonReentrant {
       _campaignID.increment();
       uint256 slno = _campaignID.current();
-      campaignDetails[slno] = Campaign(slno,msg.sender,_campaignPic,_name,_description,_noOfBeneficiaries,_dailyFundNeed,0);
+      campaignDetails[slno] = Campaign(slno,msg.sender,_campaignPic,_name,_description,_noOfBeneficiaries,_dailyFundNeed,0,0,0);
       ngoDetails[msg.sender].campaignCount += 1;
       totalKidsCount += _noOfBeneficiaries;
+      campaignStatus[slno] = true;
   }
 
   function getTotalKidsCount() external view returns(uint256){
@@ -123,13 +135,13 @@ contract Growachild is
     return items;
   }
 
-  function deposit(uint256 _campaignid, uint256 amount, address _token) external payable nonReentrant {
+  function deposit(uint256 _ids, uint256 amount, address _token) external payable onlyLiveCampaign(_ids) nonReentrant {
       IERC20Upgradeable(_token).transferFrom(payable(msg.sender),payable(address(this)),amount);
       uint256 slno = _userid.current();
       bool matchFound = false;
 
       for (uint256 i = 1; i <= slno; i++){
-          if(userDetails[i].userAddress == msg.sender && userDetails[i].campaignID == _campaignid){
+          if(userDetails[i].userAddress == msg.sender && userDetails[i].campaignID == _ids){
             userDetails[i].depositAmount += amount;
             matchFound = true;
             break;
@@ -138,8 +150,44 @@ contract Growachild is
 
       if(matchFound == false){
           _userid.increment();
-          userDetails[_userid.current()] = Users(_campaignid, msg.sender,amount);
+          userDetails[_userid.current()] = Users(_ids,msg.sender,amount,campaignDetails[_ids].ngo );
       }
+      campaignDetails[_ids].availableBalance += amount;
+      campaignDetails[_ids].totalReceived += amount;
+  }
+
+  function getMyCampaigns() external view returns (Campaign[] memory){
+    uint256 liveCampaignsCount = ngoDetails[msg.sender].campaignCount;
+
+    uint256 totalCampaignCount = _campaignID.current();
+    uint256 currentIndex = 0;
+    Campaign[] memory items = new Campaign[](liveCampaignsCount);
+
+        for(uint256 i = 1; i <= totalCampaignCount; i++){
+          if(campaignDetails[i].ngo == msg.sender){
+            Campaign storage currentItem = campaignDetails[i];
+            items[currentIndex] = currentItem;
+            currentIndex += 1;
+          }
+        }
+    
+    return items;
+  }
+
+  function getMyDonations() external view returns(Users[] memory){
+    uint256 totalUserCount = _userid.current();
+    uint256 currentIndex = 0;
+    Users[] memory items = new Users[](totalUserCount);
+
+        for(uint256 i = 1; i <= totalUserCount; i++){
+          if(userDetails[i].userAddress == msg.sender){
+            Users storage currentItem = userDetails[i];
+            items[currentIndex] = currentItem;
+            currentIndex += 1;
+          }
+        }
+    
+    return items;
   }
   
 }
