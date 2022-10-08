@@ -6,9 +6,14 @@ export async function encryptData(data, passcode) {
   return Crypto.AES.encrypt(data, saltedPasscode).toString()
 }
 
-export async function decryptData(encryptedData, passcode) {
+export async function decryptDataWpasscode(encryptedData, passcode) {
   const saltedPasscode = saltyPasscode(passcode)
   const bytes = Crypto.AES.decrypt(encryptedData.toString(), saltedPasscode)
+  return bytes.toString(Crypto.enc.Utf8)
+}
+
+export async function decryptDataWtoken(encryptedData, token) {
+  const bytes = Crypto.AES.decrypt(encryptedData.toString(), token)
   return bytes.toString(Crypto.enc.Utf8)
 }
 

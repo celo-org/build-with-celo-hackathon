@@ -4,6 +4,7 @@ const initialState = {
   isLoggedIn: false,
   isConnected: false,
   isSignerSet: false,
+  isImporting: false,
   userDetails: {
     names: null,
     initials: null,
@@ -45,12 +46,13 @@ const essentialSlice = createSlice({
     setIsConnected: (state, action) => {
       state.isConnected = action.payload
     },
-    setStatus: (state, action) => {
-      state.status.isLoading = action.payload
+    setIsImporting: (state, action) => {
+      state.status.isImporting = action.payload
     },
     setIsSignered: (state, action) => {
       state.isSignerSet = action.payload
     },
+    resetUserDetails: () => initialState,
   },
   extraReducers: {},
 })
@@ -61,8 +63,9 @@ export const {
   setUserToken,
   setToken,
   setIsConnected,
-  setStatus,
+  setIsImporting,
   setIsSignered,
+  resetUserDetails,
 } = essentialSlice.actions
 
 export default essentialSlice.reducer

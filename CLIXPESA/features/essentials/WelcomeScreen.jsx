@@ -1,5 +1,5 @@
 import { Box, VStack, Button, Heading, Spacer } from 'native-base'
-
+import { getWallets } from '../wallet/walletsManager'
 export default function WelcomeScreen({ navigation }) {
   return (
     <Box flex={1} bg="#fff" alignItems="center" justifyContent="flex-end">
@@ -25,7 +25,7 @@ export default function WelcomeScreen({ navigation }) {
           pr="4"
           minW="75%"
           _text={{ color: 'primary.600', fontWeight: 'semibold', mb: '0.5' }}
-          onPress={() => navigation.navigate('importAccount')}
+          onPress={() => navigation.navigate('importWallet')}
         >
           Use Existing Account
         </Button>

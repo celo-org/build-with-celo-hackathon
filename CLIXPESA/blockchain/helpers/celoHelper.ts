@@ -78,12 +78,9 @@ const getTokenBalance = async (address: Address, tokenAddress: Address) => {
 
 const createWallet = async (derivationPath?: string) => {
   const path = derivationPath || CELO_DERIVATION_PATH
-  const provider = getProvider()
   const entropy = utils.randomBytes(32)
   const mnemonic = utils.entropyToMnemonic(entropy)
   const wallet = Wallet.fromMnemonic(mnemonic, path)
-  const signer = new CeloWallet(wallet, provider)
-  setSigner(signer)
   return successResponse({
     address: wallet.address,
     privateKey: wallet.privateKey,

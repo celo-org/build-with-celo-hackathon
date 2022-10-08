@@ -2,7 +2,7 @@ import { createAction, createSlice } from '@reduxjs/toolkit'
 
 const walletInitialState = {
   walletInfo: {
-    address: '0x8E912eE99bfaECAe8364Ba6604612FfDfE46afd2',
+    address: null,
     isUnlocked: false,
     isRegistered: false,
     voteSignerFor: null,
@@ -24,14 +24,21 @@ const walletSlice = createSlice({
   initialState: walletInitialState,
   reducers: {
     updateBalances: (state, action) => {
-      state.walletBalances.tokenAddrToValue = action.payload
+      const { tokenAddrToValue, lastUpdated } = action.payload
+      state.walletBalances.tokenAddrToValue = tokenAddrToValue
+      state.walletBalances.lastUpdated = lastUpdated
+    },
+    updateWalletAddress: (state, action) => {
+      state.walletInfo.address = action.payload
     },
   },
 })
 
-export const { updateBalances } = walletSlice.actions
+export const { updateBalances, updateWalletAddress } = walletSlice.actions
 
 //Created action
+export const createWallet = createAction('wallet/createWallet')
+export const importWallet = createAction('wallet/importWallet')
 export const fetchBalances = createAction('wallet/fetchBalances')
 
 export default walletSlice.reducer

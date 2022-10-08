@@ -26,7 +26,8 @@ export function normalizeAddress(address: Address) {
 
 export function shortenAddress(address: Address, elipsis?: boolean, capitalize?: boolean) {
   validateAddress(address, 'shorten')
-  const shortened = normalizeAddress(address).substr(0, 8) + (elipsis ? '...' : '')
+  const addr = normalizeAddress(address)
+  const shortened = addr.slice(0, 4) + (elipsis ? '...' : '') + addr.slice(38, 42)
   return capitalize ? capitalizeAddress(shortened) : shortened
 }
 
