@@ -3,7 +3,7 @@
 Build with Celo Hackathon is a three (3) phase hackathon event focused on Regenerative Finance (#ReFi) within DAOs, NFTs, Gaming (GameFi), Social Impact (SocialFI) and developer tooling/infrastructure on the Celo platform.
 
 ## Hackathon Facilitation
-Celo selected Hackerearth to facilitate the hackathon expereince. To learn more information about the Build on Celo hackathon event and register, navigate to Hackerearth Build on Celo hackathon site: [link](https://build-with-celo.hackerearth.com/)
+Celo selected Hackerearth to facilitate the hackathon experienceexperience. To learn more information about the Build on Celo hackathon event and register, navigate to Hackerearth Build on Celo hackathon site: [link](https://build-with-celo.hackerearth.com/)
 
 ## Hackathon Tracks: 
 
@@ -12,13 +12,13 @@ Celo selected Hackerearth to facilitate the hackathon expereince. To learn more 
  - __NFT, Gaming and Creator Track:__ 
  	- Build an application incorporating ReFi, ReFi creators tools, and ReFi creators infrastructure
  - __Social Impact Track:__ 
- 	- Build a decentralized web applications focused on social impact within ReFi, Social impact ReFi Tools, and Social impact ReFi Infrastructure
+ 	- Build a decentralized web application focused on social impact within ReFi, Social impact ReFi Tools, and Social impact ReFi Infrastructure
 
 ## Timeline
 
-#### Github commit schedule:
+#### Github commits schedule:
 
-- 9/26 - Idea submission open until 9/26
+- 9/26 - Idea submission is open until 9/26
 
 - 9/19 - Fork this repo
 - 9/23 - Change README
@@ -33,7 +33,7 @@ Three (3) phase hackathon event starting August 26th, 2022.
 ### Phase 1: Idea
  - Hackathon Phase 1 Kick-off - August 26th, 2022
  - Project Idea Submissions Due - September 26, 2022
- - Idea Submissions Evaluated on rolling basis
+ - Idea Submissions Evaluated on a rolling basis
  
 ### Phase 2: Hack/build MVP
  - Hackathon Phase 2 Kick off - September 19th, 2022
@@ -55,8 +55,8 @@ Three (3) phase hackathon event starting August 26th, 2022.
 
  1. Fork this repo
     - Press the Fork button
- 2. Create project branch
- 3. Make your changes within new branch!
+ 2. Create a project branch
+ 3. Make your changes within the new branch!
 	 - Copy the folder named **Project_Name**
 	 - Rename the copied folder with your project name
 	 - Modify project details within your project folder **Readme.md**
@@ -65,7 +65,7 @@ Three (3) phase hackathon event starting August 26th, 2022.
 		- Team members & roles
 		- Hackathon track
 		- Project details
-			- Demonstartion video _(*Phase 2 & 3, Required)_
+			- Demonstration video _(*Phase 2 & 3, Required)_
 			- Requirements _(*Phase 2 & 3, Required)_
 			- Instructions to build & test _(*Phase 2 & 3, Required)_
 
@@ -76,7 +76,7 @@ Three (3) phase hackathon event starting August 26th, 2022.
     -  Utilize your project name as the title for your initial pull Requests
     -  Provide a brief project description within the pull request comment
 
-***Congrats, your officially a Build with Celo Hackathon participant!***
+***Congrats, you officially a Build with Celo Hackathon participant!***
 
 
 ## Developer tools and resources
@@ -110,10 +110,10 @@ View the [Developer Code Examples page](https://docs.celo.org/developer#quicksta
 -   [use-react](https://github.com/celo-org/react-celo)
 	- The easiest way to access Celo in your React applications 🔥. react-celo is a React hook for managing access to Celo with a built-in headless modal system for connecting to your users wallet of choice.
 	- Now your DApp can be made available to everyone in the Celo ecosystem, from Valora users to self custodied Ledger users.
-	- By default react-celo is styled so that you can drop it into your application and go, however it's fully customisable so you can maintain a consistent UX throughout your application.
+	- By default react-celo is styled so that you can drop it into your application and go, however, it's fully customisable so you can maintain a consistent UX throughout your application.
 -   [DappKit](https://docs.celo.org/developer-guide/dappkit)
 	-   Easily connect to the [Valora](http://valoraapp.com/) wallet with your React Native mobile application
-	-   Valora manages user account, private keys and transaction signing, so you can focus on building your dapp
+	-   Valora manages user accounts, private keys and transaction signing, so you can focus on building your dapp
 	-   Learn more and see the code with the [Dappkit truffle box](https://github.com/critesjosh/celo-dappkit)
 -   [Python SDK](https://github.com/blaize-tech/celo-sdk-py)
 -   [Java SDK](https://github.com/blaize-tech/celo-sdk-java)
@@ -146,7 +146,7 @@ View the [Developer Code Examples page](https://docs.celo.org/developer#quicksta
 
 #### Ethereum Tools
 
--   Similarities between Celo and Ethereum means you can use many of the most popular Ethereum developer tools.
+-   Similarities between Celo and Ethereum mean you can use many of the most popular Ethereum developer tools.
 -   Celo supports the EVM, so tools for writing smart contracts in Solidity (or any language that compiles to EVM bytecode) are compatible with Celo
 -   ERC20, NFT (ERC721) and other smart contract interface standards are supported, see [Celo for Ethereum Developers](https://docs.celo.org/developer-guide/celo-for-eth-devs)
 - [Truffle](https://www.trufflesuite.com/)
