@@ -1,0 +1,102 @@
+{
+  "env": {
+    "browser": true,
+    "react-native/react-native": true,
+    "es2021": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb",
+    "@react-native-community",
+    "airbnb-typescript"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "src/features/**/*.js"
+      ],
+      "rules": {
+        "no-use-before-define": "off",
+        "no-param-reassign": "off"
+      }
+    }
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+      "tsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": [
+      "./tsconfig.json"
+    ]
+  },
+  "plugins": [
+    "react",
+    "react-native"
+  ],
+  "rules": {
+    "react/function-component-definition": "off",
+    "react/style-prop-object": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/require-default-props": "off",
+    "@typescript-eslint/comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "never"
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [
+          [
+            "@assets",
+            "./assets"
+          ],
+          [
+            "@components",
+            "./src/components"
+          ],
+          [
+            "@features",
+            "./src/features"
+          ],
+          [
+            "@hocs",
+            "./src/hocs/index.js"
+          ],
+          [
+            "@hooks",
+            "./src/hooks/index.js"
+          ],
+          [
+            "@library",
+            "./src/components/library/index.js"
+          ],
+          [
+            "@services",
+            "./src/services"
+          ],
+          [
+            "@utils",
+            "./src/utils"
+          ]
+        ],
+        "extensions": [
+          ".ts",
+          ".js",
+          ".jsx",
+          ".json",
+          ".tsx"
+        ]
+      }
+    }
+  }
+}
