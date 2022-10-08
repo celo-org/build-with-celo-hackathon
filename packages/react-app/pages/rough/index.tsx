@@ -106,7 +106,7 @@ export default function App() {
                 padding: "0.5rem",
                 overflowY: "scroll",
                 background: "black",
-                height: "25rem",
+                // height: "25rem",
               }}
             >
               <ContractEventListener config={eventConfig} />
