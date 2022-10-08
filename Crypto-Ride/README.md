@@ -72,6 +72,7 @@ Adding [identities](https://docs.celo.org/protocol/identity) could mitigate the 
         - Used as payment for the ride service. 
         
         Celo's three stable tokens.
+        
             - cUSD
             - cEUR
             - cREAL
@@ -167,9 +168,27 @@ Simply the ride has four steps from start to finish, anywhere within the ride is
 ![Important State Diagram](ReadMeAssets/RideStates.png)
 
 
-## Next Steps
+## Completed
 
-Time and critical thinking. The next phase of this hackathon will gives us the perfect time frame to accomplished a working solution.
+General smart contract structure 
+
+Firebase server configuration for location services.
+
+Testing and implentatation of location services in iOS apps.
+
+## TODO
+
+- iOS apps
+
+Both driver and passenger iOS apps have been started but are a still work in progress. Both apps currently allow passengers to find drivers through Firebase. This was one of the first steps to complete, making sure it was possible. Both apps need `web3swift` library to carry out wallet creation and contract calls.
+
+- Improved escrow contract 
+
+As of now the `rideManager` contract is treated as the escrow contract. Allows for testing of base functionality.
+
+- Full contract testing and static security audit
+    - Truffle suit for testing
+    - Slither Static Analysis Tool for audit
 
 
 ## Licence
