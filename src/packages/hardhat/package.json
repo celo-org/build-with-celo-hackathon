@@ -13,6 +13,10 @@
     "fork-mainnet": "ganache --fork.url https://forno.celo.org --wallet.mnemonic 'concert load couple harbor equip island argue ramp clarify fence smart topic' --wallet.accountKeysPath './account_keys.json' --gasPrice 875000000"
   },
   "devDependencies": {
+    "@openzeppelin/contracts": "^4.1.0",
+    "@openzeppelin/contracts-upgradeable": "^4.3.2",
+    "@openzeppelin/test-helpers": "^0.5.11",
+    "@ubeswap/governance": "ubeswap/ubeswap-governance",
     "@nomiclabs/hardhat-ethers": "^2.0.4",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
     "@terminal-fi/celo-devchain": "^3.4.0",
