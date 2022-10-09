@@ -3,7 +3,7 @@
     {
       "id": 1,
       "name": "Blue1",
-      "pubKey": 123,
+      "pubKey": "0x03D28Df4b4c3a4bb1eA5D0a518E4D045172a6559",
       "privKey": 456,
       "stats": {
         "quiz1": 0,

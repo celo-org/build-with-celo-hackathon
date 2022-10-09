@@ -12,8 +12,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@celo-tools/celo-ethers-wrapper": "^0.3.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.0.2",
+    "dotenv": "^16.0.3",
     "envalid": "^7.3.1",
     "ethers": "^5.7.1",
     "express": "^4.18.1",
