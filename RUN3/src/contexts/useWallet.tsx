@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const useWallet = () => {
-  const [walletWithProvider, setWalletWithProvider] = useState<ethers.Wallet>()
+  const [walletWithProvider, setWalletWithProvider] = useState<ethers.Wallet>({} as any)
 
   useEffect(() => {
     const getWallet = async () => {
@@ -20,6 +20,6 @@ export const useWallet = () => {
 }
 
 export type WalletWithProvider = {
-  walletWithProvider: ethers.Wallet | undefined
-  setWalletWithProvider: Dispatch<SetStateAction<ethers.Wallet | undefined>>
+  walletWithProvider: ethers.Wallet
+  setWalletWithProvider: Dispatch<SetStateAction<ethers.Wallet>>
 }

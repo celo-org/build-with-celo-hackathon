@@ -2,7 +2,7 @@
 import React from 'react'
 import { useWallet, WalletWithProvider } from './useWallet'
 
-const WalletContext = React.createContext<WalletWithProvider | null>(null)
+const WalletContext = React.createContext<WalletWithProvider>({} as any)
 
 export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
   const { walletWithProvider, setWalletWithProvider } = useWallet()
