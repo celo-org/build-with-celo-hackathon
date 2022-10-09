@@ -1,6 +1,10 @@
 import React from 'react'
 import Layout from '../components/layout/Layout';
 
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import Link from 'next/link';
+// import 'react-tabs/style/react-tabs.css';
+
 const Home = () => {
   return (
     <>
@@ -11,7 +15,7 @@ const Home = () => {
                      <div className='grid grid-cols-1 md:grid-cols-2 items-center '>
                         <div className='w-5/6'>
                             <div>
-                                <h1 className='text-4xl '>
+                                <h1 className='text-4xl font-extrabold '>
                                 Open Marketplace for Recycled Plastics
                                 </h1>
                             </div>
@@ -24,7 +28,10 @@ const Home = () => {
                             </div>
 
                             <div>
-                                <a href='' className='rounded-full px-5 py-4 text-md bg-[#DD7D37] text-white' >Explore the Marketplace</a>
+                                <Link href='/marketplace'>
+                                    <a  className='rounded-full px-5 py-4 text-md bg-[#DD7D37] text-white' >Explore the Marketplace</a>
+                                </Link>
+                                
                             </div>
                         </div>
                         <div className='hidden md:block'>
@@ -42,67 +49,86 @@ const Home = () => {
                 <div className='container mx-auto px-6'>
                     <div className='py-14'>
                         <div className='mb-9'>
-                            <h3 className='text-center text-xl'>How it Works</h3>
+                            <h2 className='h2 text-center text-xl'>How it Works</h2>
                         </div>
                         
                         <div>
-                            <div className='flex items-center justify-center gap-10 mb-9'>
-                                <button className="p-6 border-b-4 border-[#DD7D37]">Company</button>
-                                <button className="p-6">Individual</button>
-                            </div>
+                            {/* <div className='flex items-center justify-center gap-10 mb-9'>
+                                <button className="">Company</button>
+                                <button className="p-6"></button>
+                            </div> */}
 
-                            <div className='tab-content py-10'>
-                                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-y-8'>
-                                    <div className='px-5'>
-                                        <div className='flex items-center justify-center mb-5'>
-                                            <div className='circle border-4 border-[#E2DFDD] w-24 h-24 rounded-full relative '>
-                                                <span className='absolute top-0 left-0 text-white rounded-full bg-[#DD7D37] p-3 w-3 h-3 z-10 flex items-center justify-center text-sm'>6</span>
-                                            </div>
-                                        </div>
-                                        <div className='text-center'>
-                                            <h4>Create Account</h4>
-                                            <p className='text-sm'>Company Staff creates an account on GidiScrap with MetaMask (or Valora)</p>
-                                        </div>
-                                    </div>
-                                    <div className='px-5'>
-                                        <div className='flex items-center justify-center mb-5'>
-                                            <div className='circle border-4 border-[#E2DFDD] w-24 h-24 rounded-full relative '>
-                                                <span className='absolute top-0 left-0 text-white rounded-full bg-[#DD7D37] p-3 w-3 h-3 z-10 flex items-center justify-center text-sm'>7</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <div className='text-center'>
-                                            <h4>Create Account</h4>
-                                            <p className='text-sm'>Company Staff creates an account on GidiScrap with MetaMask (or Valora)</p>
-                                        </div>
-                                    </div>
-                                    <div className='px-5'>
-                                        <div className='flex items-center justify-center mb-5'>
+                            <Tabs>
+                                <TabList className='flex md:flex-row flex-col items-center justify-center w-full tabs-header rounded-md gap-2'>
+                                    <Tab className='p-6 border-b-4 outline-none cursor-pointer'>Company</Tab>
+                                    <Tab className='p-6 border-b-4 outline-none cursor-pointer'>Individual</Tab>
+                                </TabList>
 
-                                            <div className='circle border-4 border-[#E2DFDD] w-24 h-24 rounded-full relative '>
-                                                <span className='absolute top-0 left-0 text-white rounded-full bg-[#DD7D37] p-3 w-3 h-3 z-10 flex items-center justify-center text-sm'>8</span>
-                                            </div>
-                                        </div>
-                                        <div className='text-center'>
-                                            <h4>Create Account</h4>
-                                            <p className='text-sm'>Company Staff creates an account on GidiScrap with MetaMask (or Valora)</p>
-                                        </div>
-                                    </div>
-                                    <div className='px-5'>
-                                        <div className='flex items-center justify-center mb-5'>
+                                <div className='tab-content py-10'>
+                                    <TabPanel>
+                                        <div className='fade-in'>
+                                            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-y-8'>
+                                                <div className='px-5'>
+                                                    <div className='flex items-center justify-center mb-5'>
+                                                        <div className='circle border-4 border-[#E2DFDD] w-24 h-24 rounded-full relative '>
+                                                            <span className='absolute top-0 left-0 text-white rounded-full bg-[#DD7D37] p-3 w-3 h-3 z-10 flex items-center justify-center text-sm'>6</span>
+                                                        </div>
+                                                    </div>
+                                                    <div className='text-center'>
+                                                        <h4>Create Account</h4>
+                                                        <p className='text-sm'>Company Staff creates an account on GidiScrap with MetaMask (or Valora)</p>
+                                                    </div>
+                                                </div>
+                                                <div className='px-5'>
+                                                    <div className='flex items-center justify-center mb-5'>
+                                                        <div className='circle border-4 border-[#E2DFDD] w-24 h-24 rounded-full relative '>
+                                                            <span className='absolute top-0 left-0 text-white rounded-full bg-[#DD7D37] p-3 w-3 h-3 z-10 flex items-center justify-center text-sm'>7</span>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div className='text-center'>
+                                                        <h4>Create Account</h4>
+                                                        <p className='text-sm'>Company Staff creates an account on GidiScrap with MetaMask (or Valora)</p>
+                                                    </div>
+                                                </div>
+                                                <div className='px-5'>
+                                                    <div className='flex items-center justify-center mb-5'>
 
-                                            <div className='circle border-4 border-[#E2DFDD] w-24 h-24 rounded-full relative '>
-                                                <span className='absolute top-0 left-0 text-white rounded-full bg-[#DD7D37] p-3 w-3 h-3 z-10 flex items-center justify-center text-sm'>9</span>
+                                                        <div className='circle border-4 border-[#E2DFDD] w-24 h-24 rounded-full relative '>
+                                                            <span className='absolute top-0 left-0 text-white rounded-full bg-[#DD7D37] p-3 w-3 h-3 z-10 flex items-center justify-center text-sm'>8</span>
+                                                        </div>
+                                                    </div>
+                                                    <div className='text-center'>
+                                                        <h4>Create Account</h4>
+                                                        <p className='text-sm'>Company Staff creates an account on GidiScrap with MetaMask (or Valora)</p>
+                                                    </div>
+                                                </div>
+                                                <div className='px-5'>
+                                                    <div className='flex items-center justify-center mb-5'>
+
+                                                        <div className='circle border-4 border-[#E2DFDD] w-24 h-24 rounded-full relative '>
+                                                            <span className='absolute top-0 left-0 text-white rounded-full bg-[#DD7D37] p-3 w-3 h-3 z-10 flex items-center justify-center text-sm'>9</span>
+                                                        </div>
+                                                    </div>
+                                                    <div className='text-center'>
+                                                        <h4>Create Account</h4>
+                                                        <p className='text-sm'>Company Staff creates an account on GidiScrap with MetaMask (or Valora)</p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className='text-center'>
-                                            <h4>Create Account</h4>
-                                            <p className='text-sm'>Company Staff creates an account on GidiScrap with MetaMask (or Valora)</p>
+
+                                    </TabPanel>
+                                    <TabPanel>
+                                        <div className='fade-in'>
+                                            heyy
                                         </div>
-                                    </div>
+                                    </TabPanel>
                                 </div>
+                            
+                            </Tabs>
 
-                            </div>
+                            
                         </div>
                     </div>
                     
@@ -114,7 +140,7 @@ const Home = () => {
                 <div className='container mx-auto px-6'>
                     <div className='py-14'>
                         <div className='mb-9'>
-                            <h3 className='text-center text-xl'>Recent Requests</h3>
+                            <h2 className='text-center text-xl h2'>Recent Requests</h2>
                         </div>
                         
                         <div>
@@ -137,10 +163,13 @@ const Home = () => {
                                                 </div>
                                             
                                             </div> 
-                                            
+                                        
                                        </div>
                                         <div>
-                                            circle
+                                            <div class="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
+                                                
+                                                <span className='text-[#6D747D]'><span className='font-semibold text-[#3D4044]'>25%</span> gotten</span> 
+                                            </div>
                                         </div>
                                         
                                     </div>
@@ -165,7 +194,10 @@ const Home = () => {
                                             
                                        </div>
                                         <div>
-                                            circle
+                                            <div class="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
+                                                
+                                                <span className='text-[#6D747D]'><span className='font-semibold text-[#3D4044]'>25%</span> gotten</span> 
+                                            </div>
                                         </div>
                                         
                                     </div>
@@ -190,7 +222,10 @@ const Home = () => {
                                             
                                        </div>
                                         <div>
-                                            circle
+                                            <div class="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value': `${25}`, '--size': '4rem'}}>
+                                                
+                                                <span className='text-[#6D747D]'><span className='font-semibold text-[#3D4044]'>25%</span> gotten</span> 
+                                            </div>
                                         </div>
                                         
                                     </div>
@@ -215,7 +250,10 @@ const Home = () => {
                                             
                                        </div>
                                         <div>
-                                            circle
+                                            <div class="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
+                                                
+                                                <span className='text-[#6D747D]'><span className='font-semibold text-[#3D4044]'>25%</span> gotten</span> 
+                                            </div>
                                         </div>
                                         
                                     </div>
@@ -240,7 +278,10 @@ const Home = () => {
                                             
                                        </div>
                                         <div>
-                                            circle
+                                            <div class="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
+                                                
+                                                <span className='text-[#6D747D]'><span className='font-semibold text-[#3D4044]'>25%</span> gotten</span> 
+                                            </div>
                                         </div>
                                         
                                     </div>
@@ -265,7 +306,10 @@ const Home = () => {
                                             
                                        </div>
                                         <div>
-                                            circle
+                                            <div class="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
+                                                
+                                                <span className='text-[#6D747D]'><span className='font-semibold text-[#3D4044]'>25%</span> gotten</span> 
+                                            </div>
                                         </div>
                                         
                                     </div>
@@ -290,7 +334,10 @@ const Home = () => {
                                             
                                        </div>
                                         <div>
-                                            circle
+                                            <div class="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
+                                                
+                                                <span className='text-[#6D747D]'><span className='font-semibold text-[#3D4044]'>25%</span> gotten</span> 
+                                            </div>
                                         </div>
                                         
                                     </div>
@@ -315,7 +362,10 @@ const Home = () => {
                                             
                                        </div>
                                         <div>
-                                            circle
+                                            <div class="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
+                                                
+                                                <span className='text-[#6D747D]'><span className='font-semibold text-[#3D4044]'>25%</span> gotten</span> 
+                                            </div>
                                         </div>
                                         
                                     </div>
@@ -333,11 +383,11 @@ const Home = () => {
                 </div>
             </section>
 
-            <section className='bg-[#F8F7F7] py-20'>
+            <section className='bg-[#F8F7F7] py-20 features__section'>
                 <div className='container mx-auto px-6'>
                     <div>
                         <div className='mb-9'>
-                            <h3 className='text-center text-xl '>Features</h3>
+                            <h2 className='text-center text-xl h2'>Features</h2>
                         </div>
                         <div className='grid grid-cols-1 py-14 gap-10 md:grid-cols-2'>
                             <div className='order-last md:order-first'>
@@ -424,7 +474,7 @@ const Home = () => {
                 <div className="container mx-auto px-6">
 
                     <div className='mb-9'>
-                        <h3 className='text-center text-xl '>Future Roadmap</h3>
+                        <h2 className='text-center text-xl h2'>Future Roadmap</h2>
                     </div>
 
                     <div className='flex items-center justify-center mx-auto max-w-3xl'>
@@ -650,7 +700,7 @@ const Home = () => {
                 <div className='container mx-auto px-6'>
                     <div className='py-14'>
                         <div className='mb-9'>
-                            <h3 className='text-center text-xl'>Meet the team</h3>
+                            <h2 className='h2 text-center text-xl'>Meet the team</h2>
                         </div>
 
                         <div>

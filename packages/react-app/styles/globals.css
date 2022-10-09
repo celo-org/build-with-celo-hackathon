@@ -73,6 +73,22 @@ a {
 }
 
 
+.h2{
+    color: #351F0F;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 34px;
+    line-height: 44px;
+}
+
+.features__section h3{
+    font-weight: 800;
+    font-size: 34px;
+    line-height: 44px;
+
+    color: #351F0F;
+}
+
 
 @media (min-width: 576px){
     .container {
@@ -100,6 +116,40 @@ a {
     }
 }
     
+.fade-in {
+    animation: fadeIn 300ms;
+    -webkit-animation: fadeIn 300ms;
+    -moz-animation: fadeIn 300ms;
+    -o-animation: fadeIn 300ms;
+    -ms-animation: fadeIn 300ms;
+  }
+  
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @-moz-keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @-webkit-keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @-o-keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @-ms-keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+
 
 
 
@@ -108,6 +158,13 @@ a {
 .shadow-header{
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
     background: #ffffff;
+}
+
+
+/* HOW IT WORKS */
+
+.react-tabs li.react-tabs__tab--selected{
+    border-color: #DD7D37;
 }
 
 

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Demo = () => {
+const MarketPlace = () => {
   return (
     <div>
       <h1 className="text-3xl font-bold underline">
@@ -10,4 +10,4 @@ const Demo = () => {
   )
 }
 
-export default Demo
+export default MarketPlace

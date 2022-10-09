@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 
 const Header = () => {
+
   return (
     <>
 
@@ -28,9 +29,12 @@ const Header = () => {
 
                     <div className="navbar-menu   ">
                         
-                        <a className="block lg:inline-block mt-4 lg:mt-0 mr-10 text-blue-900 hover:text-indigo-600" href="#">
-                            MarketPlace
-                        </a>
+                        <Link href="/marketplace">
+                            <a className="block lg:inline-block mt-4 lg:mt-0 mr-10 text-blue-900 hover:text-indigo-600" >
+                                MarketPlace
+                            </a>
+                        </Link>
+                        
                         <a className="block lg:inline-block mt-4 lg:mt-0 mr-10 text-blue-900 hover:text-indigo-600" href="#">
                         Features
                         </a>
