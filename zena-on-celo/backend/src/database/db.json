@@ -1,0 +1,16 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Blue1",
+      "pubKey": 123,
+      "privKey": 456,
+      "stats": {
+        "quiz1": 0,
+        "quiz2": 0,
+        "quiz3": 0,
+        "quiz4": 0
+      }
+    }
+  ]
+}
