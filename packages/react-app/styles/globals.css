@@ -3,9 +3,76 @@
 @tailwind utilities;
 
 
+@font-face {
+    font-family: "K2D";
+    src: url('../fonts/K2D/K2D-Regular.ttf');
+    font-weight: normal;
+    font-style: normal;
+    }
+    
+    @font-face {
+    font-family: "K2D";
+    src: url('../fonts/K2D/K2D-Bold.ttf');
+    font-weight: bold;
+    font-style: normal;
+    }
+    
+    @font-face {
+    font-family: "K2D";
+    src: url('../fonts/K2D/K2D-Italic.ttf');
+    font-weight: normal;
+    font-style: italic;
+    }
+
+
+
+
+@layer components {
+    .timeline-img{
+        @apply h-16 w-16 object-cover rounded-full border-4 border-white xs:absolute md:mx-auto md:left-0 md:right-0
+    }
+
+    .timeline-container{
+        @apply relative pt-2 xs:pl-28 xs:pt-0 md:w-1/2 md:ml-auto md:pl-16
+    }
+
+    .timeline-container-left{
+        @apply md:ml-0 md:mr-auto md:pl-0 md:pr-16  
+    }
+
+    .timeline-pointer{
+        @apply absolute inset-0 left-10 h-4 w-4 transform rotate-45 bg-white xs:top-11 xs:left-26 md:left-14
+    }
+
+    .timeline-pointer-left{
+        @apply md:left-auto md:right-14
+    }
+}
+
+
+
 
 
 /* ===== GLOBAL ===== */
+
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'K2D', Helvetica Neue, sans-serif !important;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
 
 @media (min-width: 576px){
     .container {
