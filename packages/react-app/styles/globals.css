@@ -3,6 +3,30 @@
 @tailwind utilities;
 
 
+@font-face {
+    font-family: "K2D";
+    src: url('../fonts/K2D/K2D-Regular.ttf');
+    font-weight: normal;
+    font-style: normal;
+    }
+    
+    @font-face {
+    font-family: "K2D";
+    src: url('../fonts/K2D/K2D-Bold.ttf');
+    font-weight: bold;
+    font-style: normal;
+    }
+    
+    @font-face {
+    font-family: "K2D";
+    src: url('../fonts/K2D/K2D-Italic.ttf');
+    font-weight: normal;
+    font-style: italic;
+    }
+
+
+
+
 @layer components {
     .timeline-img{
         @apply h-16 w-16 object-cover rounded-full border-4 border-white xs:absolute md:mx-auto md:left-0 md:right-0
@@ -27,7 +51,28 @@
 
 
 
+
+
 /* ===== GLOBAL ===== */
+
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'K2D', Helvetica Neue, sans-serif !important;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
 
 @media (min-width: 576px){
     .container {
