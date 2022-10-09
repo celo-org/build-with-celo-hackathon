@@ -32,10 +32,10 @@ const Header = () => {
                             MarketPlace
                         </a>
                         <a className="block lg:inline-block mt-4 lg:mt-0 mr-10 text-blue-900 hover:text-indigo-600" href="#">
-                        Features
+                        How it works
                         </a>
                         <a className="block lg:inline-block mt-4 lg:mt-0 mr-10 text-blue-900 hover:text-indigo-600" href="#">
-                        How it works
+                        Features
                         </a>
 
                         {/* <a  class="block lg:inline-block mt-4 lg:mt-0 mr-10 text-blue-900 hover:text-indigo-600" href="#">

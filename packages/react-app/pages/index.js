@@ -665,13 +665,13 @@ const Home = () => {
                                     <div className='mb-4 flex items-center justify-center'>
                                         <div className='square'></div>
                                     </div>
-                                    <h5 className='text-center'>Paul Oladimeji</h5>
+                                    <h5 className='text-center'>Bose May</h5>
                                 </div>
                                 <div className=''>
                                     <div className='mb-4 flex items-center justify-center'>
                                         <div className='square'></div>
                                     </div>
-                                    <h5 className='text-center'>Paul Oladimeji</h5>
+                                    <h5 className='text-center'>PraiseGod Udeh</h5>
                                 </div>
                                 
                                 
