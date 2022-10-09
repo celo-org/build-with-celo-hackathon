@@ -36,11 +36,11 @@ const Header = () => {
                         How it works
                         </a>
 
-                        <a class="block lg:inline-block mt-4 lg:mt-0 mr-10 text-blue-900 hover:text-indigo-600" href="#">
+                        {/* <a  class="block lg:inline-block mt-4 lg:mt-0 mr-10 text-blue-900 hover:text-indigo-600" href="#">
                         Log In
-                        </a>
+                        </a> */}
                         <a class="block lg:inline-block mt-4 lg:mt-0 text-blue-900 hover:text-indigo-600 border rounded-full px-5 py-4" href="#">
-                        Sign Up for Free
+                        Get Started
                         </a>
                     </div>
 

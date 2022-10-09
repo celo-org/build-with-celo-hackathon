@@ -24,7 +24,7 @@ const Home = () => {
                             </div>
 
                             <div>
-                                <a href='' className='rounded-full px-5 py-4 text-md bg-[#DD7D37] text-white' >Sign up for free</a>
+                                <a href='' className='rounded-full px-5 py-4 text-md bg-[#DD7D37] text-white' >Explore the Marketplace</a>
                             </div>
                         </div>
                         <div className='hidden md:block'>
@@ -108,9 +108,13 @@ const Home = () => {
                             <div className='order-last md:order-first'>
                                 <div className='pr-16'>
                                     <h3 className='mb-4 text-[#351F0F]'>
-                                    GidiScrap Credit
+                                    GidiScrap Marketplace
                                     </h3>
-                                    <p>Tempor cursus nec orci pharetra. Est velit dictum sed lacus. Arcu maecenas pretium arcu nunc condimentum augue diam. Tortor nulla in quis senectus facilisi quam nibh vulputate. Lectus cursus maecenas nibh sit pellentesque auctor elementum. Adipiscing ipsum in nulla ultrices eget. Cursus porta in mauris mi dui placerat mi. Mauris tincidunt vulputate tincidunt eget congue.</p>
+                                    <p className='mb-3'>Plastic pollution has become such a serious problem in Nigeria and other developing countries. Consumers tend to re-use or dump products rather than recycle, and the majority of waste plastic collection is done by small, local enterprises.</p>
+                                    <p className='mb-3'>Because these local collectors only have access to their local market, much of the plastic waste that’s harder to recycle has remained in the environment.</p>
+                                    <p className='mb-3'>At the same time, large manufacturers and processors are unable to meet their demands for waste plastic.</p>
+                                    <p className='mb-3'>GidiScrap bridges this divide by providing an open marketplace where local collectors can earn crypto rewards directly from fulfilling requests for plastic feedstock from large organizations.</p>
+                                    <p className='mb-3'>We are also encouraging active citizen participation in recycling by providing token rewards for collecting and depositing clean plastic waste.</p>
                                 </div>
                                 
                             </div>
@@ -127,9 +131,12 @@ const Home = () => {
                             <div>
                                 <div className='pl-16'>
                                     <h3 className='mb-4 text-[#351F0F]'>
-                                    GidiScrap Credit
+                                    GidiScrap NFT - GSCredit
                                     </h3>
-                                    <p>Tempor cursus nec orci pharetra. Est velit dictum sed lacus. Arcu maecenas pretium arcu nunc condimentum augue diam. Tortor nulla in quis senectus facilisi quam nibh vulputate. Lectus cursus maecenas nibh sit pellentesque auctor elementum. Adipiscing ipsum in nulla ultrices eget. Cursus porta in mauris mi dui placerat mi. Mauris tincidunt vulputate tincidunt eget congue.</p>
+                                    <p className='mb-3'></p>
+                                    <p className='mb-3'></p>
+                                    <p className='mb-3'></p>
+                                    <p className='mb-3'>Get Started</p>
                                 </div>
                                 
                             </div>
@@ -138,9 +145,12 @@ const Home = () => {
                             <div className='order-last md:order-first'>
                                 <div className='pr-16'>
                                     <h3 className='mb-4 text-[#351F0F]'>
-                                    GidiScrap Credit
+                                    GidiScrap Tracking
                                     </h3>
-                                    <p>Tempor cursus nec orci pharetra. Est velit dictum sed lacus. Arcu maecenas pretium arcu nunc condimentum augue diam. Tortor nulla in quis senectus facilisi quam nibh vulputate. Lectus cursus maecenas nibh sit pellentesque auctor elementum. Adipiscing ipsum in nulla ultrices eget. Cursus porta in mauris mi dui placerat mi. Mauris tincidunt vulputate tincidunt eget congue.</p>
+                                    <p className='mb-3'>GidiScrap provides digital tracking functionality for recyclers and large organizations, from deposit to distribution and processing.</p>
+                                    <p className='mb-3'>The details of every waste plastic deposited in a GidiScrap collection center are uploaded and stored forever on the blockchain.</p>
+                                    <p className='mb-3'>By using the blockchain, the tracking data can't be modified or deleted, thus ensuring that companies can completely trust and verify the source and validity of the recycled plastics they receive.</p>
+                                    <p className='mb-3'>Coming Soon button</p>
                                 </div>
                                 
                             </div>
@@ -149,6 +159,22 @@ const Home = () => {
                                 <div className='features-img'></div>
                             </div>
 
+                        </div>
+                        <div className='grid grid-cols-1 md:grid-cols-2 py-14 gap-10'>
+                            <div className='flex items-center justify-start'>
+                                <div className='features-img'></div>
+                            </div>
+                            <div>
+                                <div className='pl-16'>
+                                    <h3 className='mb-4 text-[#351F0F]'>
+                                    GidiScrap Governance
+                                    </h3>
+                                    <p className='mb-3'>While the GidiScrap platform works in a decentralized manner, to resolve disputes, we have </p>
+                                    <p className='mb-3'>In the near future, we will launch a governance token, which enables owners to have voting </p>
+                                    <p>Tempor cursus nec orci pharetra. Est velit dictum sed lacus. Arcu maecenas pretium arcu nunc condimentum augue diam. Tortor nulla in quis senectus facilisi quam nibh vulputate. Lectus cursus maecenas nibh sit pellentesque auctor elementum. Adipiscing ipsum in nulla ultrices eget. Cursus porta in mauris mi dui placerat mi. Mauris tincidunt vulputate tincidunt eget congue.</p>
+                                </div>
+                                
+                            </div>
                         </div>
                     </div>
                 </div>
