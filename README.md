@@ -191,7 +191,6 @@ View the [Developer Code Examples page](https://docs.celo.org/developer#quicksta
 	- [ ] Audit smart contract
 	- [ ] Infrasctructure schema
 	- [ ] Scalable infrasctructure schema
-	- [ ] 
 
 	
 
