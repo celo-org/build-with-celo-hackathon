@@ -81,6 +81,8 @@ a {
     line-height: 44px;
 }
 
+
+
 .features__section h3{
     font-weight: 800;
     font-size: 34px;
@@ -88,6 +90,8 @@ a {
 
     color: #351F0F;
 }
+
+
 
 
 @media (min-width: 576px){
@@ -163,10 +167,36 @@ a {
 
 /* HOW IT WORKS */
 
+
+.how__it__works .tablist__header{
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 34px;
+    color: #3F3F3F;
+}
+
+
 .react-tabs li.react-tabs__tab--selected{
     border-color: #DD7D37;
 }
 
+.tab-content h4 {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 23px;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #3F3F3F;
+
+}
+.tab-content p {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 26px;
+    text-align: center;
+    color: #3F3F3F;
+
+}
 
 
 /* FEATURES */
@@ -188,3 +218,17 @@ a {
     background: #FCE4D3;
 
 }
+
+.meet__team h5{
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 31px;
+    color: #3F3F3F;
+}
+.meet__team P{
+    font-size: 18px;
+    line-height: 31px;
+    color: #6D747D;
+}
+
+ol {list-style:decimal;}

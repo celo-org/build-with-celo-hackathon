@@ -45,7 +45,7 @@ const Home = () => {
                
             </section>  
 
-            <section className='py-4 bg-[#FFFBF9]'>
+            <section className='py-4 bg-[#FFF4EE] how__it__works'>
                 <div className='container mx-auto px-6'>
                     <div className='py-14'>
                         <div className='mb-9'>
@@ -59,9 +59,9 @@ const Home = () => {
                             </div> */}
 
                             <Tabs>
-                                <TabList className='flex md:flex-row flex-col items-center justify-center w-full tabs-header rounded-md gap-2'>
-                                    <Tab className='p-6 border-b-4 outline-none cursor-pointer'>Company</Tab>
-                                    <Tab className='p-6 border-b-4 outline-none cursor-pointer'>Individual</Tab>
+                                <TabList className='flex flex-row items-center justify-center w-full tabs-header rounded-md gap-16 mb-6'>
+                                    <Tab className='p-6 border-b-4 outline-none cursor-pointer tablist__header'>Company</Tab>
+                                    <Tab className='p-6 border-b-4 outline-none cursor-pointer tablist__header'>Individual</Tab>
                                 </TabList>
 
                                 <div className='tab-content py-10'>
@@ -71,48 +71,48 @@ const Home = () => {
                                                 <div className='px-5'>
                                                     <div className='flex items-center justify-center mb-5'>
                                                         <div className='circle border-4 border-[#E2DFDD] w-24 h-24 rounded-full relative '>
-                                                            <span className='absolute top-0 left-0 text-white rounded-full bg-[#DD7D37] p-3 w-3 h-3 z-10 flex items-center justify-center text-sm'>6</span>
+                                                            <span className='absolute top-0 left-0 text-white rounded-full bg-[#DD7D37] p-3 w-3 h-3 z-10 flex items-center justify-center text-sm'>1</span>
                                                         </div>
                                                     </div>
                                                     <div className='text-center'>
                                                         <h4>Create Account</h4>
-                                                        <p className='text-sm'>Company Staff creates an account on GidiScrap with MetaMask (or Valora)</p>
+                                                        <p className='text-sm'>Create a GidiScrap account with MetaMask and set up your company profile.</p>
                                                     </div>
                                                 </div>
                                                 <div className='px-5'>
                                                     <div className='flex items-center justify-center mb-5'>
                                                         <div className='circle border-4 border-[#E2DFDD] w-24 h-24 rounded-full relative '>
-                                                            <span className='absolute top-0 left-0 text-white rounded-full bg-[#DD7D37] p-3 w-3 h-3 z-10 flex items-center justify-center text-sm'>7</span>
+                                                            <span className='absolute top-0 left-0 text-white rounded-full bg-[#DD7D37] p-3 w-3 h-3 z-10 flex items-center justify-center text-sm'>2</span>
                                                         </div>
                                                     </div>
                                                     
                                                     <div className='text-center'>
-                                                        <h4>Create Account</h4>
-                                                        <p className='text-sm'>Company Staff creates an account on GidiScrap with MetaMask (or Valora)</p>
+                                                        <h4>Submit Request</h4>
+                                                        <p className='text-sm'>Submit Requests for recycled and scrap plastics, specifying the type, weight and location.</p>
                                                     </div>
                                                 </div>
                                                 <div className='px-5'>
                                                     <div className='flex items-center justify-center mb-5'>
 
                                                         <div className='circle border-4 border-[#E2DFDD] w-24 h-24 rounded-full relative '>
-                                                            <span className='absolute top-0 left-0 text-white rounded-full bg-[#DD7D37] p-3 w-3 h-3 z-10 flex items-center justify-center text-sm'>8</span>
+                                                            <span className='absolute top-0 left-0 text-white rounded-full bg-[#DD7D37] p-3 w-3 h-3 z-10 flex items-center justify-center text-sm'>3</span>
                                                         </div>
                                                     </div>
                                                     <div className='text-center'>
-                                                        <h4>Create Account</h4>
-                                                        <p className='text-sm'>Company Staff creates an account on GidiScrap with MetaMask (or Valora)</p>
+                                                        <h4>Make Payment</h4>
+                                                        <p className='text-sm'>GidiScrap places your cUSD in escrow, paying out only to collectors who successfully fulfill your requests without disputes.</p>
                                                     </div>
                                                 </div>
                                                 <div className='px-5'>
                                                     <div className='flex items-center justify-center mb-5'>
 
                                                         <div className='circle border-4 border-[#E2DFDD] w-24 h-24 rounded-full relative '>
-                                                            <span className='absolute top-0 left-0 text-white rounded-full bg-[#DD7D37] p-3 w-3 h-3 z-10 flex items-center justify-center text-sm'>9</span>
+                                                            <span className='absolute top-0 left-0 text-white rounded-full bg-[#DD7D37] p-3 w-3 h-3 z-10 flex items-center justify-center text-sm'>4</span>
                                                         </div>
                                                     </div>
                                                     <div className='text-center'>
-                                                        <h4>Create Account</h4>
-                                                        <p className='text-sm'>Company Staff creates an account on GidiScrap with MetaMask (or Valora)</p>
+                                                        <h4>Get GS Credits</h4>
+                                                        <p className='text-sm'>Earn the GS Credit NFT, which proves the amount of plastic waste recovered by your company, thus verifying your commitment to sustainability.</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -121,12 +121,60 @@ const Home = () => {
                                     </TabPanel>
                                     <TabPanel>
                                         <div className='fade-in'>
-                                            heyy
+                                            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-y-8'>
+                                                <div className='px-5'>
+                                                    <div className='flex items-center justify-center mb-5'>
+                                                        <div className='circle border-4 border-[#E2DFDD] w-24 h-24 rounded-full relative '>
+                                                            <span className='absolute top-0 left-0 text-white rounded-full bg-[#DD7D37] p-3 w-3 h-3 z-10 flex items-center justify-center text-sm'>1</span>
+                                                        </div>
+                                                    </div>
+                                                    <div className='text-center'>
+                                                        <h4>Join GidiScrap</h4>
+                                                        <p className='text-sm'>Sign up on GidiScrap using your phone number, and get assigned a wallet automatically.</p>
+                                                    </div>
+                                                </div>
+                                                <div className='px-5'>
+                                                    <div className='flex items-center justify-center mb-5'>
+                                                        <div className='circle border-4 border-[#E2DFDD] w-24 h-24 rounded-full relative '>
+                                                            <span className='absolute top-0 left-0 text-white rounded-full bg-[#DD7D37] p-3 w-3 h-3 z-10 flex items-center justify-center text-sm'>2</span>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div className='text-center'>
+                                                        <h4>Fulfill Requests</h4>
+                                                        <p className='text-sm'>Get notified whenever new requests for plastic waste are made in your locality, and gather plastics to fulfill the requests.</p>
+                                                    </div>
+                                                </div>
+                                                <div className='px-5'>
+                                                    <div className='flex items-center justify-center mb-5'>
+
+                                                        <div className='circle border-4 border-[#E2DFDD] w-24 h-24 rounded-full relative '>
+                                                            <span className='absolute top-0 left-0 text-white rounded-full bg-[#DD7D37] p-3 w-3 h-3 z-10 flex items-center justify-center text-sm'>3</span>
+                                                        </div>
+                                                    </div>
+                                                    <div className='text-center'>
+                                                        <h4>Dropoff Plastics</h4>
+                                                        <p className='text-sm'>Dropoff the plastics at the collection center, and upload proof of weight and dropoff to GidiScrap.</p>
+                                                    </div>
+                                                </div>
+                                                <div className='px-5'>
+                                                    <div className='flex items-center justify-center mb-5'>
+
+                                                        <div className='circle border-4 border-[#E2DFDD] w-24 h-24 rounded-full relative '>
+                                                            <span className='absolute top-0 left-0 text-white rounded-full bg-[#DD7D37] p-3 w-3 h-3 z-10 flex items-center justify-center text-sm'>4</span>
+                                                        </div>
+                                                    </div>
+                                                    <div className='text-center'>
+                                                        <h4>Get Rewards</h4>
+                                                        <p className='text-sm'>After the 48-hour cooldown period has elapsed without any disputes, you can claim your payment into your GidiScrap Celo wallet.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                            
                                         </div>
                                     </TabPanel>
                                 </div>
-                            
-                            </Tabs>
+                        </Tabs>
 
                             
                         </div>
@@ -134,7 +182,6 @@ const Home = () => {
                     
                 </div>
             </section>
-
 
             <section className='py-4 bg-white'>
                 <div className='container mx-auto px-6'>
@@ -418,8 +465,9 @@ const Home = () => {
                                     <h3 className='mb-4 text-[#351F0F]'>
                                     GidiScrap NFT - GSCredit
                                     </h3>
-                                    <p className='mb-3'></p>
-                                    <p className='mb-3'></p>
+                                    <p className='mb-3'>For brands who are looking for ways to make impact and meet their environmental pledges, GidiScrap's GSCredit NFT provides a publicly verifiable way to showcase your organization's commitment to sustainability.</p>
+                                    <p className='mb-3'>Each NFT engages you and your customers through a narrative journey - taking them from the cleanup and deposit operations that makes up the plastic content - to the final destination in their hands.</p>
+                                    <p className='mb-3'>Each of our NFTs is backed by a GidiScrap Guarantee that proves the plastic has been recovered somewhere in the world.</p>
                                     <p className='mb-3'></p>
                                     <p className='mb-3'>Get Started</p>
                                 </div>
@@ -454,8 +502,9 @@ const Home = () => {
                                     <h3 className='mb-4 text-[#351F0F]'>
                                     Token-based Governance
                                     </h3>
-                                    <p className='mb-3'>While the GidiScrap platform works in a decentralized manner, to resolve disputes, we have </p>
-                                    <p className='mb-3'>In the near future, we will launch a governance token, which enables owners to have voting </p>
+                                    <p className='mb-3'>While the GidiScrap platform works in a decentralized manner, to resolve disputes, we have temporarily set up a 12-person governance committee to vote on disputes. This committe consists of environmental experts, as well as representatives of organizations and consumer bodies.</p>
+                                    <p className='mb-3'>For every dispute being managed, the governance committee publicly publishes the rationale for decisions made on the outcomes of disputes.</p>
+                                    <p className='mb-3'>In the near future, GidiScrap will fully operate as a DAO. We will launch a governance token $GSC, whose owners will have voting and proposal rights on disputes as well as the future roadmap of the GidiScrap platform.</p>
                                     <p className=''>Coming Soon button</p>
                                 </div>
                                 
@@ -464,9 +513,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-
-
-            
+   
 
             <section className='antialised bg-[#FFFBF9] py-12'>
 
@@ -696,7 +743,7 @@ const Home = () => {
 
             </section>
 
-            <section className='py-4'>
+            <section className='py-4 meet__team'>
                 <div className='container mx-auto px-6'>
                     <div className='py-14'>
                         <div className='mb-9'>
@@ -709,19 +756,31 @@ const Home = () => {
                                     <div className='mb-4 flex items-center justify-center'>
                                         <div className='square'></div>
                                     </div>
-                                    <h5 className='text-center'>Paul Oladimeji</h5>
+                                    <div className='text-center'>
+                                        <h5>Paul Oladimeji</h5>
+                                        <p>Product Manager</p>
+                                    </div>
                                 </div>
                                 <div className=''>
                                     <div className='mb-4 flex items-center justify-center'>
                                         <div className='square'></div>
                                     </div>
-                                    <h5 className='text-center'>Paul Oladimeji</h5>
+                                    <div className='text-center'>
+                                        <h5>Bose May</h5>
+                                        <p>Product Designer</p>
+                                    </div>
+
                                 </div>
                                 <div className=''>
                                     <div className='mb-4 flex items-center justify-center'>
                                         <div className='square'></div>
                                     </div>
-                                    <h5 className='text-center'>Paul Oladimeji</h5>
+                                    <div className='text-center'>
+                                        <h5>PraiseGod Udeh</h5>
+                                        <p>Frontend Developer</p>
+                                    </div>
+                                    
+
                                 </div>
                                 
                                 
