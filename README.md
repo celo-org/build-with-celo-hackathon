@@ -171,12 +171,12 @@ View the [Developer Code Examples page](https://docs.celo.org/developer#quicksta
 ## Todo :
 - [ ] App architecture schema
 - [ ] Web3 :
-	- [ ] ERC721 NFT contract 
-	- [ ] ERC721 NFT contract factory
+	- [ ] Upgradable ERC721 NFT contract 
+	- [ ] Upgradable ERC721 NFT contract factory
 	- [ ] Test for NFT contract
 	- [ ] Test for NFT contract factory
-	- [ ] Deploy NFT contract
 	- [ ] Deploy NFT contract factory
+	- [ ] Deploy NFT contract
 - [ ] Backend
 	- [ ] Database structure
 	- [ ] NodeJS API
