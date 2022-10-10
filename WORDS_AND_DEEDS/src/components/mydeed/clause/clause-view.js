@@ -19,7 +19,6 @@ class ClauseView extends React.Component {
 		super(props);
 		
 		this.app = this.props.app;
-		this.getMvcModuleObject = this.app.getMvcModuleObject;
 		this.getMvcMyPWAObject = this.app.getMvcMyPWAObject;
 		
 		this.uuid = this.app.guid();
@@ -54,6 +53,10 @@ class ClauseView extends React.Component {
 				content,
 
 				currency,
+
+				remoteaccount: null,
+				rpc: null,
+	
 				deedcard,
 
 				loaded: false,
@@ -139,6 +142,9 @@ class ClauseView extends React.Component {
 					let currency = {symbol: ''};
 	
 					let isOwner = false;
+					let remoteaccount = null;
+					let rpc = null;
+
 					let deedcard = null;
 	
 	
@@ -157,7 +163,33 @@ class ClauseView extends React.Component {
 					if (deedcard) {
 						isOwner = true;
 					}
+					else {
+						// check if corresponding currency is set for remote
+						let config = this.app.getConfig('remotewallet');	
+	
+						if (config && config.rpc && config.rpc[currency.uuid]) {
+							let curr_rpc_config = config.rpc[currency.uuid];
+	
+							if (curr_rpc_config.enabled === true) {
+								rpc = curr_rpc_config.rpc;
+	
+								// check if we are connected to a remote wallet
+								let deedclient = this.app.getDeedClientObject();
+								let walletconnectclient = deedclient.getWalletConnectClient();
 					
+								let connection = walletconnectclient.getConnectionFromRpc(rpc);
+								remoteaccount = (connection ? walletconnectclient.getRemoteAccount(connection.uuid) : null);
+	
+								if (remoteaccount) {
+									let areequal = await mvcmypwa.areAddressesEqual(rootsessionuuid, remoteaccount, deed.owner);
+	
+									if (areequal)
+										isOwner = true;
+								}
+							}
+						}
+					}
+	
 					let clause = deed.clauses[clauseindex];
 					this.clause = deed.clauses[clauseindex];
 
@@ -179,7 +211,7 @@ class ClauseView extends React.Component {
 					var sharelink = await this.app.getShareLink(txhash, currency.uuid);
 
 
-					this._setState({ currency, isOwner, deedcard ,
+					this._setState({ currency, isOwner, remoteaccount, rpc, deedcard ,
 						mintername, title, description, 
 						header, content,
 						registration_text, message_text, sharelink });

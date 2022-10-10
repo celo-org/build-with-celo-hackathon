@@ -15,7 +15,6 @@ class DeedListView extends React.Component {
 		super(props);
 		
 		this.app = this.props.app;
-		this.getMvcModuleObject = this.app.getMvcModuleObject;
 		this.getMvcMyPWAObject = this.app.getMvcMyPWAObject;
 
 		this.uuid = this.app.guid();

@@ -7,8 +7,6 @@ import PropTypes from 'prop-types';
 import { faCopy, faUndo} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import {CurrencyCardIcon} from '@primusmoney/react_pwa/react-js-ui';
-
 
 import ClauseListView from '../clause/clause-list-view.js'
 
@@ -18,7 +16,6 @@ class DeedView extends React.Component {
 		super(props);
 		
 		this.app = this.props.app;
-		this.getMvcModuleObject = this.app.getMvcModuleObject;
 		this.getMvcMyPWAObject = this.app.getMvcMyPWAObject;
 
 		this.dataobject = null;
@@ -48,6 +45,10 @@ class DeedView extends React.Component {
 
 			currency,
 			currencies,
+
+			remoteaccount: null,
+			rpc: null,
+
 			deedcard,
 
 			isOwner: false,
@@ -148,27 +149,41 @@ class DeedView extends React.Component {
 				var sharelink = await this.app.getShareLink(txhash, currency.uuid);
 	
 				let isOwner = false;
+				let remoteaccount = null;
+				let rpc = null;
 				
 				let deedcard = await mvcmypwa.getDeedOwningCard(rootsessionuuid, walletuuid, currencyuuid, minter, deed).catch(err => {});
 				if (deedcard) {
 					isOwner = true;
 				}
 				else {
-					// check if we are connected to a remote wallet
-					let deedclient = this.app.getDeedClientObject();
-					let walletconnectclient = deedclient.getWalletConnectClient();
-		
-					let remoteaccount = walletconnectclient.getRemoteAccount();
+					// check if corresponding currency is set for remote
+					let config = this.app.getConfig('remotewallet');	
 
-					if (remoteaccount) {
-						let areequal = await mvcmypwa.areAddressesEqual(rootsessionuuid, remoteaccount, deed.owner);
+					if (config && config.rpc && config.rpc[currency.uuid]) {
+						let curr_rpc_config = config.rpc[currency.uuid];
 
-						if (areequal)
-							isOwner = true;
+						if (curr_rpc_config.enabled === true) {
+							rpc = curr_rpc_config.rpc;
+
+							// check if we are connected to a remote wallet
+							let deedclient = this.app.getDeedClientObject();
+							let walletconnectclient = deedclient.getWalletConnectClient();
+				
+							let connection = walletconnectclient.getConnectionFromRpc(rpc);
+							remoteaccount = (connection ? walletconnectclient.getRemoteAccount(connection.uuid) : null);
+
+							if (remoteaccount) {
+								let areequal = await mvcmypwa.areAddressesEqual(rootsessionuuid, remoteaccount, deed.owner);
+
+								if (areequal)
+									isOwner = true;
+							}
+						}
 					}
 				}
 
-				this._setState({currency, mintername, isOwner, deedcard, 
+				this._setState({currency, mintername, isOwner, remoteaccount, rpc, deedcard, 
 					registration_text, registration_signature, sharelink});
 
 				dataobj.viewed = true;

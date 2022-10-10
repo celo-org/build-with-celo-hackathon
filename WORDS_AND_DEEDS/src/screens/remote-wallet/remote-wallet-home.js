@@ -4,91 +4,94 @@ import PropTypes from 'prop-types';
 
 import {Header} from '@primusmoney/react_pwa/react-js-ui';
 
-import DeedCreateForm from '../../../components/mydeed/deed/deed-create-form.js';
-import DeedTransferForm from '../../../components/mydeed/deed/deed-transfer-form.js';
-import DeedView from '../../../components/mydeed/deed/deed-view.js';
+import RemoteWalletView from '../../components/remote-wallet/remote-wallet-view.js';
 
-class DeedHomeScreen extends React.Component {
+class RemoteWalletHomeScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		
 		this.app = this.props.app;
 		this.getMvcMyPWAObject = this.app.getMvcMyPWAObject;
+
+		this.connectionuuid = null;
+		this.currencyuuid = null;
 		
 		this.uuid = this.app.guid();
 		
+		this.checking = false;
+		
 		this.state = {
-			action: 'create',
+			action: 'view',
 			txhash: null,
 			loaded: false,
-			deedinfo: 'loading...'
+			remotewalletinfo: 'loading...',
 		};
 	}
 	
 	// post render commit phase
 	componentDidMount() {
-		console.log('DeedHomeScreen.componentDidMount called');
+		console.log('RemoteWalletHomeScreen.componentDidMount called');
 		let mvcmypwa = this.app.getMvcMyPWAObject();
 		
 		mvcmypwa.registerEventListener('on_refreshPage', this.uuid, this.onRefreshPage.bind(this));
 		
 		this.checkNavigationState().catch(err => {console.log('error in checkNavigationState: ' + err);});
 	}
-
+	
 	async checkNavigationState() {
+		this.checking = true;
+
 		let mvcmypwa = this.getMvcMyPWAObject();
 
 		let rootsessionuuid = this.props.rootsessionuuid;
+		
+		let app_nav_target = this.app.getNavigationState('target');
 
-		let app_nav_state = this.app.getNavigationState();
-		let app_nav_target = app_nav_state.target;
+		try {
 
+			if (app_nav_target && (app_nav_target.route == 'remotewallet') && (app_nav_target.reached == false)) {
+				var params = (app_nav_target.params ? app_nav_target.params : {});
 
-		if (app_nav_target && (app_nav_target.route == 'deed') && (app_nav_target.reached == false)) {
-			var params = app_nav_target.params;
+				this.connectionuuid = params.connectionuuid;
+				this.currencyuuid = params.currencyuuid;
 
-			if (params) {
-				let txhash = params.txhash;
-				let deedinfo = '';
-				let action = (params.action ? params.action : 'create');
-	
-				if (txhash) {
-					// retrieve info from firenze
-					deedinfo = txhash;
-				}
-	
-				this.setState({action, txhash, deedinfo});
+				// mark target as reached
+				app_nav_target.reached = true;
 			}
 
-			// DeedView will take care of marking target reached
+		}
+		catch(e) {
+			console.log('exception in CeloHomeScreen.checkNavigationState: '+ e);
+		}
+		finally {
+			this.checking = false;
 		}
 
 		this.setState({loaded: true});
 	}
 
 	async onRefreshPage() {
-		console.log('DeedHomeScreen.onRefreshPage called');
+		console.log('RemoteWalletHomeScreen.onRefreshPage called');
 
 		return this.checkNavigationState().catch(err => {console.log('error in checkNavigationState: ' + err);});
 	}
 	
+
 	// end of life
 	componentWillUnmount() {
-		console.log('DeedHomeScreen.componentWillUnmount called');
+		console.log('RemoteWalletHomeScreen.componentWillUnmount called');
 		let app = this.app;
 		let mvcmypwa = this.getMvcMyPWAObject();
 		
 		mvcmypwa.unregisterEventListener('on_refreshPage', this.uuid);
 	}
 
-	renderDeedView() {
+	renderWalletView() {
 		switch(this.state.action) {
 			case 'view':
-				return (<DeedView app = {this.app}/>);
-			case 'create':
-				return (<DeedCreateForm app = {this.app}/>);
-			case 'transfer':
-				return (<DeedTransferForm app = {this.app}/>);
+				return (<RemoteWalletView app = {this.app} connectionuuid={this.connectionuuid} currencyuuid={this.currencyuuid}/>);
+			case 'load':
+				return (<div>Not implemented {this.state.action}</div>);
 			default:
 				return (<div>Error, wrong action {this.state.action}</div>);
 		}
@@ -96,25 +99,24 @@ class DeedHomeScreen extends React.Component {
 	
 	
 	render() {
-		let {loaded, action, deedinfo, txhash} = this.state;
+		let {loaded, action, remotewalletinfo} = this.state;
 
 		return (
 			<div className="Screen">
 				<Header app = {this.app} />
 				{(loaded === true ?
-				this.renderDeedView() :
-				<div>{deedinfo}</div>
-				)}
+				this.renderWalletView()
+				: <div>{remotewalletinfo}</div>)}
 			</div>
 		);
 	}
 }
 
 // propTypes validation
-DeedHomeScreen.propTypes = {
+RemoteWalletHomeScreen.propTypes = {
 	app: PropTypes.object.isRequired,
 };
 
 
 
-export default DeedHomeScreen;
+export default RemoteWalletHomeScreen;

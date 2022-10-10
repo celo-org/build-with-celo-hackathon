@@ -10,7 +10,7 @@ import { faCopy, faUndo} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {CurrencyCardIcon} from '@primusmoney/react_pwa/react-js-ui';
-
+import RemoteWalletIcon from '../../remote-wallet/remote-wallet-icon.js'
 
 class DeedTransferForm extends React.Component {
 	
@@ -18,8 +18,8 @@ class DeedTransferForm extends React.Component {
 		super(props);
 		
 		this.app = this.props.app;
-		this.getMvcModuleObject = this.app.getMvcModuleObject;
 		this.getMvcMyPWAObject = this.app.getMvcMyPWAObject;
+		this.getMvcMyDeedObject = this.app.getMvcMyDeedObject;
 
 		this.dataobject = null;
 
@@ -53,8 +53,14 @@ class DeedTransferForm extends React.Component {
 			toaddress,
 
 			currency,
+
 			signingkey,
 			isOwner: false,
+
+			remotewallet: false,
+			rpc: null,
+			connection: null,
+
 			deedcard,
 			deedcard_balance_int,
 			deedcard_balance_string,
@@ -163,6 +169,10 @@ class DeedTransferForm extends React.Component {
 				let deedcard_balance_int = 0;
 				let deedcard_balance_string = '';
 
+				let remotewallet = false;
+				let rpc = null;
+				let connection = null;
+
 				if (deedcard) {
 					isOwner = true;
 					let pos = await mvcmypwa.getCurrencyPosition(rootsessionuuid, walletuuid, currencyuuid, deedcard.uuid);
@@ -172,10 +182,51 @@ class DeedTransferForm extends React.Component {
 						deedcard_balance_string = await mvcmypwa.formatCurrencyAmount(rootsessionuuid, currencyuuid, pos);
 					}
 	
-				}								
+				}
+				else {
+					// check if corresponding currency is set for remote
+					let config = this.app.getConfig('remotewallet');	
+
+					if (config && config.rpc && config.rpc[currency.uuid]) {
+						let curr_rpc_config = config.rpc[currency.uuid];
+
+						if (curr_rpc_config.enabled === true) {
+							remotewallet = true;
+							rpc = curr_rpc_config.rpc;
+
+							// check if we are connected to a remote wallet
+							let deedclient = this.app.getDeedClientObject();
+							let walletconnectclient = deedclient.getWalletConnectClient();
+				
+							connection = walletconnectclient.getConnectionFromRpc(rpc);
+
+							let remoteaccount = (connection ? walletconnectclient.getRemoteAccount(connection.uuid) : null);
+
+							if (remoteaccount) {
+								let areequal = await mvcmypwa.areAddressesEqual(rootsessionuuid, remoteaccount, deed.owner);
+
+								if (areequal)
+									isOwner = true;
+
+									deedcard = await mvcmypwa.getCurrencyCardWithAddress(rootsessionuuid, walletuuid, currencyuuid,
+										remoteaccount); // creates read-only card if necessary
+
+									let pos = await mvcmypwa.getCurrencyPosition(rootsessionuuid, walletuuid, currencyuuid, deedcard.uuid);
+			
+									if (pos !== undefined) {
+										deedcard_balance_int = await pos.toInteger();
+										deedcard_balance_string = await mvcmypwa.formatCurrencyAmount(rootsessionuuid, currencyuuid, pos);
+									}
+				
+							}
+						}
+					}
+				}
 
 				this._setState({currency, mintername, 
-					isOwner, deedcard, deedcard_balance_int, deedcard_balance_string,
+					isOwner,
+					remotewallet, rpc, connection,
+					deedcard, deedcard_balance_int, deedcard_balance_string,
 					registration_text, sharelink});
 
 				dataobj.viewed = true;
@@ -209,10 +260,29 @@ class DeedTransferForm extends React.Component {
 	
 	
 	// user actions
+	_getTxConnection(feelevel) {
+		let connection = {type: 'local', feelevel: feelevel};	
+		
+		if (this.state.remotewallet) {
+			let deedclient = this.app.getDeedClientObject();
+			let walletconnectclient = deedclient.getWalletConnectClient();
+			let walletconnection = walletconnectclient.getConnectionFromRpc(this.state.rpc);
+
+			connection.type = 'remote';
+
+			connection.connectionuuid = walletconnection.uuid;
+			connection.provider = walletconnection.provider;
+			connection.account = walletconnection.account;
+		}
+
+		return connection;
+	}
+	
 	async onTransfer() {
 		console.log('onTransfer pressed!');
 		
 		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
 
 		let rootsessionuuid = this.props.rootsessionuuid;
 		let walletuuid = this.props.currentwalletuuid;
@@ -221,7 +291,11 @@ class DeedTransferForm extends React.Component {
 		let carduuid;
 		let card;
 
-		let {currency, toaddress, deedcard, signingkey} =this.state;
+		let {currency, toaddress, remotewallet, rpc, deedcard, signingkey} =this.state;
+
+		let remoteaccount;
+
+		let localcard = deedcard;
 
 		this._setState({processing: true});
 
@@ -238,6 +312,27 @@ class DeedTransferForm extends React.Component {
 				return;
 			}
 
+			if (remotewallet === true) {
+				let deedclient = this.app.getDeedClientObject();
+				let walletconnectclient = deedclient.getWalletConnectClient();
+
+				let connection = walletconnectclient.getConnectionFromRpc(rpc);
+				remoteaccount = (connection ? walletconnectclient.getRemoteAccount(connection.uuid) : null);
+
+				if (!remoteaccount) {
+					this.app.alert('You need to be connected to a remote wallet');
+					this._setState({processing: false});
+					return;
+				}
+
+				if (!localcard) {
+					this.app.alert('You need to have a local card for this currency');
+					this._setState({processing: false});
+					return;
+				}
+
+			}
+	
 			// get wallet details
 			wallet = await mvcmypwa.getWalletInfo(rootsessionuuid, walletuuid);
 
@@ -262,7 +357,7 @@ class DeedTransferForm extends React.Component {
 					}
 				}
 				else {
-					this.app.alert('You need to provide your private key for ' + currency.name + ' in order to sign your clause');
+					this.app.alert('You need to provide your private key for ' + currency.name + ' in order to being able to transfer this deed');
 					this._setState({processing: false});
 					return;
 				}
@@ -280,8 +375,16 @@ class DeedTransferForm extends React.Component {
 			tx_fee.estimated_cost_units = transfer_deed_cost_units;
 
 			let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, deedcard.uuid, tx_fee);
+			let connection = this._getTxConnection(_feelevel);
 
-			var canspend = await mvcmypwa.canCompleteTransaction(rootsessionuuid, walletuuid, deedcard.uuid, tx_fee, _feelevel).catch(err => {});
+			let canspend;
+
+			if (remotewallet === true) {
+				canspend = true; //TODO: do a check based on a read-only card
+			}
+			else {
+				canspend = await mvcmypwa.canCompleteTransaction(rootsessionuuid, walletuuid, deedcard.uuid, tx_fee, _feelevel).catch(err => {});
+			}
 
 			if (!canspend) {
 				if (tx_fee.estimated_fee.execution_credits > tx_fee.estimated_fee.max_credits) {
@@ -300,7 +403,7 @@ class DeedTransferForm extends React.Component {
 
 			deed.data = {url: deed.metadata.external_url};
 
-			const txhash = mvcmypwa.transferDeed(rootsessionuuid, walletuuid, currency.uuid, minter, deed, toaddress, _feelevel)
+			const txhash = mvcmydeed.transferDeed(rootsessionuuid, walletuuid, currency.uuid, minter, deed, toaddress, connection)
 			.catch(err => {
 				console.log('error in DeedTransferForm.onTransfer: ' + err);
 			});
@@ -398,12 +501,13 @@ class DeedTransferForm extends React.Component {
 	
 	// rendering
 	renderDeedCardPart() {
-		let { currency, deedcard, signingkey, deedcard_balance_string } = this.state;
+		let { currency, remotewallet, connection, deedcard, signingkey, deedcard_balance_string } = this.state;
 
 		return (
 			<span>
-				{(deedcard ?
-					<FormGroup className="CurrencyCard" controlId="address">
+				{( remotewallet !== true ?
+					(deedcard ?
+					<FormGroup className="CurrencyCard" controlId="currencycard">
 						<span className="CardIconCol">
 							<CurrencyCardIcon
 								app={this.app}
@@ -432,6 +536,26 @@ class DeedTransferForm extends React.Component {
 								onChange={e => this._setState({signingkey: e.target.value})}
 							/>
 						</FormGroup>
+					</FormGroup>) :
+
+					<FormGroup className="CurrencyCard" controlId="remotewallet">
+					<span className="CardIconCol">
+						<RemoteWalletIcon
+								app={this.app}
+								currency={currency}
+								connection={connection}
+							/>
+					</span>
+					<span className="CardBalanceCol">
+						<FormLabel>Balance</FormLabel>
+						<FormControl
+							className="CardBalanceCol"
+							disabled
+							autoFocus
+							type="text"
+							value={deedcard_balance_string}
+						/>
+					</span>
 					</FormGroup>
 				)}
 			</span>

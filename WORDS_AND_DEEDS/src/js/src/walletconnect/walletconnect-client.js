@@ -501,6 +501,12 @@ class WalletConnectClient {
 		return (connection ? {connectionuuid, rpc: connection.rpc, provider: connection.provider, account: connection.account} : {connectionuuid});
 	}
 
+	getConnection(connectionuuid) {
+		let connection = this._getConnection(connectionuuid);
+
+		return connection;
+	}
+
 	// called by wallet connect
 	async onAccountsChanged(connection, accounts) {
 		console.log("WallectConnect account changed: " + accounts);

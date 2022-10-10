@@ -42,13 +42,17 @@ class DeedCreateForm extends React.Component {
 			title,
 			description,
 			external_url,
+
 			currency,
 			currencies,
+
 			remotewallet: false,
 			rpc: null,
+
 			signingkey,
 			currentcard,
 			balance,
+
 			message_text: '',
 			processinginfo: 'processing submission',
 			processing: false
@@ -96,9 +100,9 @@ class DeedCreateForm extends React.Component {
 		// limit the size of minter name to 64
 		if (this.state.mintername != prevState.mintername) {
 			if (this.state.mintername.length > 64) {
-				let title = this.state.mintername.slice(0,64);
+				let mintername = this.state.mintername.slice(0,64);
 
-				this._setState({title});
+				this._setState({mintername});
 			}
 		}
 
@@ -300,7 +304,7 @@ class DeedCreateForm extends React.Component {
 
 	
 	// user actions
-	_getConnection(feelevel) {
+	_getTxConnection(feelevel) {
 		let connection = {type: 'local', feelevel: feelevel};	
 		
 		if (this.state.remotewallet) {
@@ -331,7 +335,7 @@ class DeedCreateForm extends React.Component {
 		let carduuid;
 		let card;
 		
-		let { currentminter, mintername, title, description, external_url, currency, remotewallet, currentcard, signingkey } = this.state;
+		let { currentminter, mintername, title, description, external_url, currency, remotewallet, rpc, currentcard, signingkey } = this.state;
 
 		let remoteaccount;
 
@@ -363,7 +367,8 @@ class DeedCreateForm extends React.Component {
 				let deedclient = this.app.getDeedClientObject();
 				let walletconnectclient = deedclient.getWalletConnectClient();
 
-				remoteaccount = walletconnectclient.getRemoteAccount();
+				let connection = walletconnectclient.getConnectionFromRpc(rpc);
+				remoteaccount = (connection ? walletconnectclient.getRemoteAccount(connection.uuid) : null);
 
 				if (!remoteaccount) {
 					this.app.alert('You need to be connected to a remote wallet');
@@ -445,7 +450,7 @@ class DeedCreateForm extends React.Component {
 
 				// need a higher feelevel than standard this.app.getCurrencyFeeLevel(currencyuuuid)
 				let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, card.uuid, tx_fee);
-				let connection = this._getConnection(_feelevel);
+				let connection = this._getTxConnection(_feelevel);
 
 				let canspend;
 				
@@ -496,7 +501,7 @@ class DeedCreateForm extends React.Component {
 			tx_fee.estimated_cost_units = mint_deed_cost_units + add_clause_cost_units;
 
 			let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, currentcard.uuid, tx_fee);
-			let connection = this._getConnection(_feelevel);
+			let connection = this._getTxConnection(_feelevel);
 
 			let canspend;
 				
@@ -670,7 +675,7 @@ class DeedCreateForm extends React.Component {
 		return (
 			<span>
 				{(currentcard ?
-					<FormGroup className="CurrencyCard" controlId="address">
+					<FormGroup className="CurrencyCard" controlId="currencycard">
 					<span className="CardIconCol">
 						<CurrencyCardIcon
 							app={this.app}
@@ -759,7 +764,7 @@ class DeedCreateForm extends React.Component {
 	}
 
 	renderDeedCreateForm() {
-		let { title, description, external_url, currentcard, message_text } = this.state;
+		let { title, description, external_url, remotewallet, currentcard, message_text } = this.state;
 		
 		return (
 			<div className="Form">
@@ -798,7 +803,7 @@ class DeedCreateForm extends React.Component {
 				</FormGroup>
 				
 				<Button 
-				disabled={(currentcard ? false : true)}
+				disabled={(currentcard || (remotewallet == true) ? false : true)}
 				onClick={this.onSubmit.bind(this)} 
 				type="submit">
 				  Create Deed

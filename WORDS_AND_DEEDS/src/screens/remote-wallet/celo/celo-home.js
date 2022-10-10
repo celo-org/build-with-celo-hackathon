@@ -112,8 +112,6 @@ class CeloHomeScreen extends React.Component {
 				app_nav_target.reached = true;
 			}
 
-			this.setState({loaded: true});
-
 		}
 		catch(e) {
 			console.log('exception in CeloHomeScreen.checkNavigationState: '+ e);
@@ -122,7 +120,7 @@ class CeloHomeScreen extends React.Component {
 			this.checking = false;
 		}
 
-
+		this.setState({loaded: true});
 	}
 
 

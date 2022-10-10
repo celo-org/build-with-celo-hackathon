@@ -172,6 +172,111 @@ var Module = class {
 	//
 	// Deeds
 	//
+	async _getDeedSigningCard(session, wallet, currency, minter, deed, connection) {
+		var card;
+
+		var mvcpwa = this._getMvcPWAObject();
+
+		if (!connection || (connection.type == 'local')) {
+			// get card owning this deed
+			card = await mvcpwa._getDeedOwningCard(session, wallet, currency, minter, deed);
+		}
+		else {
+			// when it is possible, we will ask remote wallet to sign strings
+
+			// for now, we check we have a local card that can sign locally
+			card = await mvcpwa._getCurrencyCard(session, wallet, currency);
+		}
+		
+		return card;
+	}
+
+	async canSignDeed(sessionuuid, walletuuid, currencyuuid, minter, deed, connection) {
+		if (!sessionuuid)
+		return Promise.reject('session uuid is undefined');
+	
+		if (!walletuuid)
+			return Promise.reject('wallet uuid is undefined');
+		
+		if (!currencyuuid)
+			return Promise.reject('currency uuid is undefined');
+		
+		var global = this.global;
+		var _apicontrollers = this._getClientAPI();
+
+		var mvcpwa = this._getMvcPWAObject();
+
+		var session = await _apicontrollers.getSessionObject(sessionuuid);
+		
+		if (!session)
+			return Promise.reject('could not find session ' + sessionuuid);
+		
+		var wallet = await _apicontrollers.getWalletFromUUID(session, walletuuid);
+		
+		if (!wallet)
+			return Promise.reject('could not find wallet ' + walletuuid);
+
+		var currency = await mvcpwa.getCurrencyFromUUID(sessionuuid, currencyuuid);
+
+		if (!currency)
+			return Promise.reject('could not find currency ' + currencyuuid);
+
+		var card = await this. _getDeedSigningCard(session, wallet, currency, minter, deed, connection);
+
+		return card.canSign();
+	}
+
+	async signDeedString(sessionuuid, walletuuid, currencyuuid, minter, deed, plainstring, connection) {
+		if (!sessionuuid)
+		return Promise.reject('session uuid is undefined');
+	
+		if (!walletuuid)
+			return Promise.reject('wallet uuid is undefined');
+		
+		if (!currencyuuid)
+			return Promise.reject('currency uuid is undefined');
+		
+		
+		var global = this.global;
+		var _apicontrollers = this._getClientAPI();
+
+		var mvcpwa = this._getMvcPWAObject();
+
+		var session = await _apicontrollers.getSessionObject(sessionuuid);
+		
+		if (!session)
+			return Promise.reject('could not find session ' + sessionuuid);
+		
+		var wallet = await _apicontrollers.getWalletFromUUID(session, walletuuid);
+		
+		if (!wallet)
+			return Promise.reject('could not find wallet ' + walletuuid);
+	
+		var currency = await mvcpwa.getCurrencyFromUUID(sessionuuid, currencyuuid);
+
+		if (!currency)
+			return Promise.reject('could not find currency ' + currencyuuid);
+
+		var card = await this._getDeedSigningCard(session, wallet, currency, minter, deed, connection);
+
+		if (!card)
+			return Promise.reject('could not find deed card');
+
+		var cardaccount = card._getSessionAccountObject();
+
+		if (!cardaccount)
+			return Promise.reject('card can not sign texts ' + card.uuid);
+
+		var privatekey = cardaccount.getPrivateKey();
+
+		// when it is possible, we will ask remote wallet to sign strings
+		var signing = {};
+
+		signing.signature = await _apicontrollers.signString(session, privatekey, plainstring);
+		signing.signer = card.getAddress();
+
+		return signing
+	}
 
 	async _getMonitoredRemoteWalletSession(session, wallet, currency, connection) {
 		var global = this.global;

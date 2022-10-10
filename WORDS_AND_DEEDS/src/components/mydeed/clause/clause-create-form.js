@@ -20,8 +20,8 @@ class ClauseCreateForm extends React.Component {
 		super(props);
 		
 		this.app = this.props.app;
-		this.getMvcModuleObject = this.app.getMvcModuleObject;
 		this.getMvcMyPWAObject = this.app.getMvcMyPWAObject;
+		this.getMvcMyDeedObject = this.app.getMvcMyDeedObject;
 
 		this.minter = null;
 		this.deed = null;
@@ -50,8 +50,13 @@ class ClauseCreateForm extends React.Component {
 			content,
 
 			currency,
+
 			signingkey,
 			isOwner: false,
+
+			remotewallet: false,
+			rpc: null,
+
 			deedcard,
 			deedcard_balance_int,
 			deedcard_balance_string,
@@ -230,9 +235,13 @@ class ClauseCreateForm extends React.Component {
 				let currency = {symbol: ''};
 
 				let isOwner = false;
+
 				let deedcard = null;
 				let deedcard_balance_int = 0;
 				let deedcard_balance_string = '';
+
+				let remotewallet = false;
+				let rpc = null;
 
 
 				const cur = await mvcmypwa.getCurrencyFromUUID(rootsessionuuid, currencyuuid)
@@ -256,11 +265,40 @@ class ClauseCreateForm extends React.Component {
 						deedcard_balance_string = await mvcmypwa.formatCurrencyAmount(rootsessionuuid, currencyuuid, pos);
 					}
 	
-				}								
+				}
+				else {
+					// check if corresponding currency is set for remote
+					let config = this.app.getConfig('remotewallet');	
+
+					if (config && config.rpc && config.rpc[currency.uuid]) {
+						let curr_rpc_config = config.rpc[currency.uuid];
+
+						if (curr_rpc_config.enabled === true) {
+							remotewallet = true;
+							rpc = curr_rpc_config.rpc;
+
+							// check if we are connected to a remote wallet
+							let deedclient = this.app.getDeedClientObject();
+							let walletconnectclient = deedclient.getWalletConnectClient();
+				
+							let connection = walletconnectclient.getConnectionFromRpc(rpc);
+							let remoteaccount = (connection ? walletconnectclient.getRemoteAccount(connection.uuid) : null);
+
+							if (remoteaccount) {
+								let areequal = await mvcmypwa.areAddressesEqual(rootsessionuuid, remoteaccount, deed.owner);
+
+								if (areequal)
+									isOwner = true;
+							}
+						}
+					}
+				}
 				
 			
 				this._setState({title, description, currency, 
-					isOwner, deedcard, deedcard_balance_int, deedcard_balance_string });
+					isOwner,
+					remotewallet, rpc,
+					deedcard, deedcard_balance_int, deedcard_balance_string });
 			}
 			else {
 				this.app.error('no data object for clause create form')
@@ -285,10 +323,29 @@ class ClauseCreateForm extends React.Component {
 	
 	
 	// user actions
+	_getTxConnection(feelevel) {
+		let connection = {type: 'local', feelevel: feelevel};	
+		
+		if (this.state.remotewallet) {
+			let deedclient = this.app.getDeedClientObject();
+			let walletconnectclient = deedclient.getWalletConnectClient();
+			let walletconnection = walletconnectclient.getConnectionFromRpc(this.state.rpc);
+
+			connection.type = 'remote';
+
+			connection.connectionuuid = walletconnection.uuid;
+			connection.provider = walletconnection.provider;
+			connection.account = walletconnection.account;
+		}
+
+		return connection;
+	}
+	
 	async onSubmit() {
 		console.log('onSubmit pressed!');
 		
 		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
 
 		let rootsessionuuid = this.props.rootsessionuuid;
 		let walletuuid = this.props.currentwalletuuid;
@@ -297,7 +354,11 @@ class ClauseCreateForm extends React.Component {
 		let carduuid;
 		let card;
 		
-		let { header, content, currency, deedcard, signingkey} = this.state;
+		let { header, content, currency, remotewallet, rpc, deedcard, signingkey} = this.state;
+
+		let remoteaccount;
+
+		let localcard = deedcard;
 
 		this._setState({processing: true});
 
@@ -320,6 +381,31 @@ class ClauseCreateForm extends React.Component {
 				this.app.alert('You need to specify a valid currency');
 				this._setState({processing: false});
 				return;
+			}
+	
+			if (remotewallet === true) {
+				let deedclient = this.app.getDeedClientObject();
+				let walletconnectclient = deedclient.getWalletConnectClient();
+
+				let connection = walletconnectclient.getConnectionFromRpc(rpc);
+				remoteaccount = (connection ? walletconnectclient.getRemoteAccount(connection.uuid) : null);
+
+				if (!remoteaccount) {
+					this.app.alert('You need to be connected to a remote wallet');
+					this._setState({processing: false});
+					return;
+				}
+
+				if (!localcard) {
+					this.app.alert('You need to have a local card for this currency');
+					this._setState({processing: false});
+					return;
+				}
+
+				// get card for remoteaccount
+				deedcard = await mvcmypwa.getCurrencyCardWithAddress(rootsessionuuid, walletuuid, currency.uuid,
+					remoteaccount); // creates read-only card if necessary
+
 			}
 	
 			// get wallet details
@@ -352,7 +438,6 @@ class ClauseCreateForm extends React.Component {
 				}
 		
 			}
-	
 
 
 			let minter = this.minter;
@@ -366,6 +451,7 @@ class ClauseCreateForm extends React.Component {
 
 			// need a higher feelevel
 			var feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, deedcard.uuid, tx_fee);
+			let connection = this._getTxConnection(feelevel);
 
 			var canspend = await mvcmypwa.canCompleteTransaction(rootsessionuuid, walletuuid, deedcard.uuid, tx_fee, feelevel).catch(err => {});
 	
@@ -384,9 +470,17 @@ class ClauseCreateForm extends React.Component {
 
 			// register clause
 			const article_clause = {subtype: 'article', header, content, time: Date.now()};
-			article_clause.signature = await mvcmypwa.signString(rootsessionuuid, walletuuid, deedcard.uuid, JSON.stringify(article_clause));
-			article_clause.signer = deedcard.address;
-			const clause_txhash = await mvcmypwa.registerClause(rootsessionuuid, walletuuid, currency.uuid, minter, deed, article_clause, feelevel)
+
+/* 			const signingcard = (remotewallet !== true ? currentcard : localcard); // sign clause with local currency card
+			article_clause.signature = await mvcmypwa.signString(rootsessionuuid, walletuuid, signingcard.uuid, JSON.stringify(article_clause));
+			article_clause.signer = signingcard.address; */
+
+			const signing = await mvcmydeed.signDeedString(rootsessionuuid, walletuuid, currency.uuid, minter, deed, JSON.stringify(article_clause), connection);
+			article_clause.signature = signing.signature;
+			article_clause.signer = signing.signer;
+
+
+			const clause_txhash = await mvcmydeed.registerClause(rootsessionuuid, walletuuid, currency.uuid, minter, deed, article_clause, connection)
 			.catch(err => {
 				console.log('error in ClauseCreateForm.onSubmit: ' + err);
 			});
@@ -438,7 +532,7 @@ class ClauseCreateForm extends React.Component {
 		return (
 			<span>
 				{(deedcard ?
-					<FormGroup className="CurrencyCard" controlId="address">
+					<FormGroup className="CurrencyCard" controlId="currencycard">
 						<span className="CardIconCol">
 							<CurrencyCardIcon
 								app={this.app}
