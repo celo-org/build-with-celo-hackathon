@@ -167,3 +167,30 @@ View the [Developer Code Examples page](https://docs.celo.org/developer#quicksta
 
 -   Join our [Discord](https://chat.celo.org/)
 -   [Discourse Forum](https://forum.celo.org/)
+
+## Todo :
+- [ ] App architecture schema
+- [ ] Web3 :
+	- [ ] Upgradable ERC721 NFT contract 
+	- [ ] Upgradable ERC721 NFT contract factory
+	- [ ] Test for NFT contract
+	- [ ] Test for NFT contract factory
+	- [ ] Deploy NFT contract factory
+	- [ ] Deploy NFT contract
+- [ ] Backend
+	- [ ] Database structure
+	- [ ] NodeJS API
+- [ ] Web3 middleware
+- [ ] Connect Web3 and database
+- [ ] Frontend
+	- [ ] Figma frontend model
+	- [ ] NextJS frontend
+- [ ] Connect the frontend to Web3 middleware
+- [ ] Connect the frontend to API
+- [ ] EXTRA :
+	- [ ] Audit smart contract
+	- [ ] Infrasctructure schema
+	- [ ] Scalable infrasctructure schema
+
+	
+
