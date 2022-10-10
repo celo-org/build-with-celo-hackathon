@@ -110,7 +110,7 @@ const Slider = () => {
           autoPlay
           controlsStrategy="responsive"
           items={items}
-          renderPrevButton={() => {
+          renderNextButton={() => {
             return (
               <IconButton
                 sx={{ position: "absolute", left: 0, top: "30%", pl: 4 }}
@@ -119,7 +119,7 @@ const Slider = () => {
               </IconButton>
             );
           }}
-          renderNextButton={() => {
+          renderPrevButton={() => {
             return (
               <IconButton
                 sx={{ position: "absolute", right: 0, top: "30%", pr: 4 }}

@@ -30,8 +30,23 @@ const Banner = () => {
                 textAlign="center"
                 lineHeight="50.09px"
               >
-                NFT TICKETING PLATFORM FOR BUSINESS & RECREATIONAL EVENTS NEAR
-                YOU.
+                NFT TICKETING PLATFORM
+              </Typography>
+              <Typography
+                fontWeight={600}
+                fontSize={{ xs: "28px", md: "48px" }}
+                textAlign="center"
+                lineHeight="50.09px"
+              >
+                FOR BUSINESS & RECREATIONAL
+              </Typography>
+              <Typography
+                fontWeight={600}
+                fontSize={{ xs: "28px", md: "48px" }}
+                textAlign="center"
+                lineHeight="50.09px"
+              >
+                EVENTS NEAR YOU.
               </Typography>
               <Typography
                 fontWeight={400}
