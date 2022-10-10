@@ -1,11 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, ScrollView, SafeAreaView } from 'react-native';
+import React from 'react';
+import Header from "../components/Header";
 
 const DigDaoScreen = () => {
   return (
-    <View>
-      <Text>DigDaoScreen</Text>
-    </View>
+    <ScrollView>
+      <SafeAreaView>
+          <Header/>
+      </SafeAreaView>
+    </ScrollView>
   )
 }
 

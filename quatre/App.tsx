@@ -11,6 +11,8 @@ import FinanceScreen from "./screens/FinanceScreen";
 import InvestScreen from "./screens/InvestScreen";
 import DigDaoScreen from "./screens/DigDaoScreen"
 import MainPage from "./screens/MainPage"
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import SpeedDoc from "./screens/SpeedDocScreen"
 
 
 export type StackParams = {
@@ -18,7 +20,9 @@ export type StackParams = {
   MainPage;
 }
 
-const Stack = createNativeStackNavigator<StackParams>();
+
+
+const Drawer = createDrawerNavigator<StackParams>();
 
 export default function App() {
   // const isLoadingComplete = useCachedResources();
@@ -35,14 +39,15 @@ export default function App() {
       //   <StatusBar />
       // </SafeAreaProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Onboarding" screenOptions={{ headerShown: false }} >
-          <Stack.Screen name="Onboarding" component={OnboardingScreen}/>
-           <Stack.Screen name="MainPage" component={MainPage}/>
+        <Drawer.Navigator initialRouteName="Onboarding" screenOptions={{ headerShown: false }} >
+          <Drawer.Screen name="Onboarding" component={OnboardingScreen}/>
+           <Drawer.Screen name="MainPage" component={MainPage}/>
+           <Drawer.Screen name="SpeedDoc" component={SpeedDoc}/>
           {/* <Stack.Screen name="Home" component={HomeScreen}/>
           <Stack.Screen name="Finance" component={FinanceScreen}/>
           <Stack.Screen name="Invest" component={InvestScreen}/>
           <Stack.Screen name="DigDao" component={DigDaoScreen}/> */}
-        </Stack.Navigator>
+        </Drawer.Navigator>
       </NavigationContainer>
     );
   

@@ -11,6 +11,11 @@ import InvestScreen from "./InvestScreen";
 import DigDaoScreen from "./DigDaoScreen";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+export type BottomTabParamList = {
+  Main: undefined;
+  Modal: { userId: string; name: string };
+  Order: { order: Order };
+};
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 const MainPage = () => {
   const colorScheme = useColorScheme();
@@ -28,6 +33,7 @@ const MainPage = () => {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
+        <BottomTab.Group>
       <BottomTab.Screen
         name="Home"
         component={HomeScreen}
@@ -78,6 +84,12 @@ const MainPage = () => {
           tabBarIcon: ({ color }) => <AntDesign name="idcard" size={30} color={color} />,
         }}
       />
+      </BottomTab.Group>
+
+      <BottomTab.Group>
+
+
+      </BottomTab.Group>
     </BottomTab.Navigator>
   )
 }

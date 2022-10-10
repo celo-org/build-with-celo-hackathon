@@ -2,17 +2,16 @@ import { StyleSheet, Text, View, ScrollView, SafeAreaView } from 'react-native'
 import React from 'react';
 import Header from "../components/Header";
 
-const InvestScreen = () => {
+const SpeedDocScreen = () => {
   return (
-    <ScrollView>
-      <SafeAreaView>
-          <Header/>
-          
-      </SafeAreaView>
-    </ScrollView>
+    <SafeAreaView>
+        <ScrollView>
+            <Header/>
+        </ScrollView>
+    </SafeAreaView>
   )
 }
 
-export default InvestScreen
+export default SpeedDocScreen
 
 const styles = StyleSheet.create({})

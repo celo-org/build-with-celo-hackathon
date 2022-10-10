@@ -23,7 +23,7 @@ const HomeScreen = () => {
 
   const [cardItems, setCardItems] = React.useState(data);
   return (
-    <ScrollView contentContainerStyle={{backgroundColor:"#E5E5E5", flex: 1}}>
+    <ScrollView contentContainerStyle={{backgroundColor:"#E5E5E5", paddingBottom: 60}}>
       <SafeAreaView>
       <Header/>
       <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between", paddingHorizontal:20, paddingVertical:30}}>
