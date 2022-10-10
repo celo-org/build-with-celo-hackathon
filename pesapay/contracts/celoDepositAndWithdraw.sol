@@ -16,12 +16,12 @@ contract CeloDepositAndWithdrawUpgradeable is
         address indexed tokenDeposited,
         uint256 amountDeposited
     );
-    event FundsWithdrawn(
+    event TokenFundsWithdrawn(
         address indexed tokenWithdrawn,
         address indexed withdrawAddress,
         uint256 amountWithdrawn
     );
-    event FundsWithdrawnCelo(
+    event CeloFundsWithdrawn(
         address indexed withdrawAddressbnb,
         uint256 amountWithdrawnbnb
     );
@@ -104,7 +104,7 @@ contract CeloDepositAndWithdrawUpgradeable is
         IERC20Upgradeable(_token).transfer(_withdrawerAddress, _amount);
         uint256 contractTokenBalance = contractTokenBalances[_token] -= _amount;
         emit contractTokenBalanceAdjusted(_token, contractTokenBalance);
-        emit FundsWithdrawn(_token, _withdrawerAddress, _amount);
+        emit TokenFundsWithdrawn(_token, _withdrawerAddress, _amount);
     }
 
     function withdrawCelo(address _withdrawerAddress, uint256 _amount)
@@ -121,6 +121,6 @@ contract CeloDepositAndWithdrawUpgradeable is
         (bool success, ) = payable(_withdrawerAddress).call{value: _amount}("");
         require(success, "Failed to withdraw celo to address");
         celoBalance -= _amount;
-        emit FundsWithdrawnCelo(_withdrawerAddress, _amount);
+        emit CeloFundsWithdrawn(_withdrawerAddress, _amount);
     }
 }

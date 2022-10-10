@@ -1,6 +1,7 @@
 require("@nomiclabs/hardhat-waffle")
 require("@openzeppelin/hardhat-upgrades")
 require("@nomiclabs/hardhat-ethers")
+require("@nomiclabs/hardhat-etherscan")
 require("dotenv").config({ path: ".env" })
 
 // This is a sample Hardhat task. To learn how to create your own go to
@@ -21,6 +22,11 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  */
 module.exports = {
   solidity: "0.8.11",
+  etherscan: {
+    apiKey: {
+      alfajores: process.env.CELOSCAN_API_KEY,
+    },
+  },
   networks: {
     alfajores: {
       url: "https://alfajores-forno.celo-testnet.org",
