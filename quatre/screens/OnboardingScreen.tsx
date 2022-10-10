@@ -8,6 +8,7 @@ import {
 import { StatusBar } from "expo-status-bar";
 import React, { useCallback } from "react";
 import { BACKGROUND_COLOR, PAGES } from "../constants";
+import { useNavigation } from "@react-navigation/native";
 import Page, { PAGE_WIDTH } from "../components/Page";
 import Animated, {
   useAnimatedRef,
@@ -20,6 +21,8 @@ import { AntDesign } from "@expo/vector-icons";
 
 const OnboardingScreen = () => {
   const translateX = useSharedValue(0);
+
+   const navigation = useNavigation<StackNavigationProps<StackParams>>();
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (e) => {
@@ -43,7 +46,7 @@ const OnboardingScreen = () => {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate("MainPage")}>
         <Text style={styles.buttonText}>Skip</Text>
       </TouchableOpacity>
       <Animated.ScrollView
@@ -94,7 +97,7 @@ const OnboardingScreen = () => {
         </View>
       </View>
 
-      <TouchableOpacity style={[styles.buttonAction]}>
+      <TouchableOpacity style={[styles.buttonAction]} onPress={()=>navigation.navigate("MainPage")}>
         <Text style={styles.buttonTitle}>Get Started</Text>
       </TouchableOpacity>
     </View>

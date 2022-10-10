@@ -66,10 +66,6 @@ const Page: React.FC<PageProps> = ({ page, translateX, index }) => {
       </View>
       <Text style={styles.title}>{page.title}</Text>
       <Text style={styles.description}>{page.description}</Text>
-
-      {/* <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonTitle}>{page.buttonTitle}</Text>
-      </TouchableOpacity> */}
     </View>
   );
 };

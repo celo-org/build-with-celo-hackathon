@@ -14,7 +14,7 @@ const Dot: React.FC<DotProps> = ({ activeDotIndex, index }) => {
     const isActive = activeDotIndex?.value === index;
     return {
       backgroundColor: withTiming(isActive ? "black" : "white", {
-        duration: 1500,
+        duration: 500,
       }),
     };
   });
