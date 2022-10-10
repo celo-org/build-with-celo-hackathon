@@ -4,6 +4,7 @@ import {
   CardContent,
   CardMedia,
   Container,
+  IconButton,
   Typography,
 } from "@mui/material";
 import React from "react";
@@ -11,6 +12,8 @@ import AliceCarousel from "react-alice-carousel";
 import sauti from "../../assets/sauti.png";
 import bb from "../../assets/bb.png";
 import centomy from "../../assets/centomy.png";
+import right from "../../assets/arrowRight.svg";
+import left from "../../assets/arrowLeft.svg";
 
 const Slider = () => {
   let responsive = {
@@ -21,13 +24,13 @@ const Slider = () => {
       items: 2,
     },
     1024: {
-      items: 3,
+      items: 4,
     },
   };
 
   let items = [
     <Box>
-      <Card sx={{ maxWidth: 396, borderRadius: "20px" }}>
+      <Card sx={{ maxWidth: "98%", borderRadius: "20px" }}>
         <CardMedia component="img" image={sauti} />
         <CardContent
           sx={{
@@ -44,7 +47,7 @@ const Slider = () => {
       </Card>
     </Box>,
     <Box>
-      <Card sx={{ maxWidth: 396, borderRadius: "20px" }}>
+      <Card sx={{ maxWidth: "98%", borderRadius: "20px" }}>
         <CardMedia component="img" image={bb} />
         <CardContent
           sx={{
@@ -61,7 +64,7 @@ const Slider = () => {
       </Card>
     </Box>,
     <Box>
-      <Card sx={{ maxWidth: 396, borderRadius: "20px" }}>
+      <Card sx={{ maxWidth: "98%", borderRadius: "20px" }}>
         <CardMedia component="img" image={centomy} />
         <CardContent
           sx={{
@@ -96,19 +99,36 @@ const Slider = () => {
             New Events
           </Typography>
         </Box>
-        <Box>
-          <AliceCarousel
-            mouseTracking
-            infinite
-            autoPlayInterval={1000}
-            animationDuration={1500}
-            disableDotsControls
-            disableButtonsControls
-            responsive={responsive}
-            autoPlay
-            items={items}
-          />
-        </Box>
+
+        <AliceCarousel
+          mouseTracking
+          infinite
+          autoPlayInterval={1000}
+          animationDuration={1500}
+          disableDotsControls
+          responsive={responsive}
+          autoPlay
+          controlsStrategy="responsive"
+          items={items}
+          renderPrevButton={() => {
+            return (
+              <IconButton
+                sx={{ position: "absolute", left: 0, top: "30%", pl: 4 }}
+              >
+                <img src={left} alt="" />
+              </IconButton>
+            );
+          }}
+          renderNextButton={() => {
+            return (
+              <IconButton
+                sx={{ position: "absolute", right: 0, top: "30%", pr: 4 }}
+              >
+                <img src={right} alt="" />
+              </IconButton>
+            );
+          }}
+        />
       </Container>
     </Box>
   );
