@@ -26,6 +26,7 @@ export const UI_VERSION = "1.3";
 // use a random placeholder account instead of the zero address as the zero address might have tokens
 export const PLACEHOLDER_ACCOUNT = ethers.Wallet.createRandom().address;
 
+export const ALFAJORES = 44787; // I am replacing every ARBITRUM to ALFAJORES
 export const MAINNET = 56;
 export const AVALANCHE = 43114;
 export const TESTNET = 97;
@@ -33,6 +34,7 @@ export const ARBITRUM_TESTNET = 421611;
 export const ARBITRUM = 42161;
 // TODO take it from web3
 export const DEFAULT_CHAIN_ID = ARBITRUM;
+// export const DEFAULT_CHAIN_ID = ALFAJORES; // ---------------
 export const CHAIN_ID = DEFAULT_CHAIN_ID;
 
 export const MIN_PROFIT_TIME = 0;
@@ -46,6 +48,7 @@ export const IS_NETWORK_DISABLED = {
 
 const CHAIN_NAMES_MAP = {
   [MAINNET]: "BSC",
+  [ALFAJORES]: "CELO",
   [TESTNET]: "BSC Testnet",
   [ARBITRUM_TESTNET]: "ArbRinkeby",
   [ARBITRUM]: "Arbitrum",
@@ -83,6 +86,7 @@ export function getAlchemyWsUrl() {
 
 const ARBITRUM_RPC_PROVIDERS = [getDefaultArbitrumRpcUrl()];
 const AVALANCHE_RPC_PROVIDERS = ["https://api.avax.network/ext/bc/C/rpc"];
+const ALFAJORES_RPC_PROVIDERS = ["https://alfajores-forno.celo-testnet.org"];
 export const WALLET_CONNECT_LOCALSTORAGE_KEY = "walletconnect";
 export const WALLET_LINK_LOCALSTORAGE_PREFIX = "-walletlink";
 export const SHOULD_EAGER_CONNECT_LOCALSTORAGE_KEY = "eagerconnect";
@@ -309,9 +313,10 @@ export const platformTokens = {
   },
 };
 
-const supportedChainIds = [ARBITRUM, AVALANCHE];
+const supportedChainIds = [ALFAJORES, ARBITRUM, AVALANCHE]; // -----------A
 if (isDevelopment()) {
-  supportedChainIds.push(ARBITRUM_TESTNET);
+  // supportedChainIds.push(ARBITRUM_TESTNET);
+  supportedChainIds.push(ALFAJORES);
 }
 const injectedConnector = new InjectedConnector({
   supportedChainIds,
@@ -321,6 +326,7 @@ const getWalletConnectConnector = () => {
   const chainId = localStorage.getItem(SELECTED_NETWORK_LOCAL_STORAGE_KEY) || DEFAULT_CHAIN_ID;
   return new WalletConnectConnector({
     rpc: {
+      [ALFAJORES]: ALFAJORES_RPC_PROVIDERS[0],
       [AVALANCHE]: AVALANCHE_RPC_PROVIDERS[0],
       [ARBITRUM]: ARBITRUM_RPC_PROVIDERS[0],
       [ARBITRUM_TESTNET]: "https://rinkeby.arbitrum.io/rpc",
@@ -471,6 +477,8 @@ export function getServerBaseUrl(chainId) {
     return "https://gmx-server-mainnet.uw.r.appspot.com";
   } else if (chainId === AVALANCHE) {
     return "https://gmx-avax-server.uc.r.appspot.com";
+  } else if (chainId === ALFAJORES) {
+    return "https://alfajores-blockscout.celo-testnet.org";
   }
   return "https://gmx-server-mainnet.uw.r.appspot.com";
 }
@@ -1276,12 +1284,14 @@ export const BSC_RPC_PROVIDERS = [
 ];
 
 const RPC_PROVIDERS = {
+  [ALFAJORES]: ALFAJORES_RPC_PROVIDERS, // ---------
   [MAINNET]: BSC_RPC_PROVIDERS,
   [ARBITRUM]: ARBITRUM_RPC_PROVIDERS,
   [AVALANCHE]: AVALANCHE_RPC_PROVIDERS,
 };
 
 const FALLBACK_PROVIDERS = {
+  [ALFAJORES]: ALFAJORES_RPC_PROVIDERS,
   [ARBITRUM]: [getAlchemyHttpUrl()],
   [AVALANCHE]: ["https://avax-mainnet.gateway.pokt.network/v1/lb/626f37766c499d003aada23b"],
 };
@@ -1948,6 +1958,8 @@ export function getExplorerUrl(chainId) {
     return "https://arbiscan.io/";
   } else if (chainId === AVALANCHE) {
     return "https://snowtrace.io/";
+  } else if (chainId === ALFAJORES) {
+    return "https://alfajores-blockscout.celo-testnet.org";
   }
   return "https://etherscan.io/";
 }
@@ -2113,6 +2125,17 @@ export const getTokenInfo = (infoTokens, tokenAddress, replaceNative, nativeToke
 };
 
 const NETWORK_METADATA = {
+  [ALFAJORES]: {
+    chainId: 44787,
+    chainName: "Celo (Alfajores Testnet)",
+    nativeCurrency: {
+      name: "Alfajores",
+      symbol: "CELO",
+      decimals: 18,
+    },
+    rpcUrls: ["https://alfajores-forno.celo-testnet.org"],
+    blockExplorerUrls: ["https://alfajores-blockscout.celo-testnet.org"],
+  },
   [MAINNET]: {
     chainId: "0x" + MAINNET.toString(16),
     chainName: "BSC",

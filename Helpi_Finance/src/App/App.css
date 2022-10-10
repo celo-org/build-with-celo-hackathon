@@ -393,7 +393,7 @@ button.App-connect-wallet:hover {
   border-radius: 0.4rem;
   display: inline-flex;
   align-items: center;
-  color: white;
+  color: white!important;
   position: relative;
 }
 
@@ -796,7 +796,7 @@ button.App-connect-wallet:hover {
 
 a.App-cta,
 button.App-cta {
-  color: #000000 !important;
+  color: #000000;
   text-decoration: none;
   background: linear-gradient(90deg, rgba(45, 252, 142, 1) 0%, rgba(0, 255, 119, 1) 100%);
   /* box-shadow: 0 0 0.4rem 0.6rem rgba(45,66,252,0.15); */

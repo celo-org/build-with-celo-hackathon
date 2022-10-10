@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 
-import { MAINNET, TESTNET, ARBITRUM_TESTNET, ARBITRUM, AVALANCHE } from "../lib/legacy";
+import { MAINNET, TESTNET, ARBITRUM_TESTNET, ARBITRUM, AVALANCHE, ALFAJORES } from "../lib/legacy";
 
 const { parseEther } = ethers.utils;
 
@@ -9,6 +9,16 @@ const constants = {
     nativeTokenSymbol: "BNB",
     defaultCollateralSymbol: "BUSD",
     defaultFlagOrdersEnabled: false,
+    positionReaderPropsLength: 8,
+    v2: false,
+  },
+
+  [ALFAJORES]: {
+    nativeTokenSymbol: "CELO",
+    wrappedTokenSymbol: "WCELO",
+
+    defaultCollateralSymbol: "CELO",
+    defaultFlagOrdersEnabled: true,
     positionReaderPropsLength: 8,
     v2: false,
   },

@@ -16,17 +16,17 @@ import "../../styles/Home.css";
 
 function Home() {
   return (
-    <div className="">
+    <div className="px-16">
       {/* Hero */}
-      <div className="flex flex-col lg:flex-row px-16 lg:px-32 my-12 ">
-        <div className="w-full lg:w-1/2 my-auto block lg:hidden">
+      <div className="flex flex-col lg:flex-row px-16 lg:px-32 my-12 mb-24">
+        <div className="w-full lg:w-1/2 my-auto block lg:hidden p-12">
           <img src={Mobiles} alt="Mobiles" />
         </div>
         <div className="w-full lg:w-1/2 my-auto text-center lg:text-left">
           <div className="max-w-lg px-4 pt-24 py-8 mx-auto text-left md:max-w-none md:text-center">
             <h1 className="font-extrabold leading-10 tracking-tight lg:text-left text-white text-center sm:leading-none text-4xl md:text-6xl lg:text-7xl">
-              <span className="block py-1">Helpi Finance</span>
-              <span className="text-2xl md:text-4xl xl:text-5xl font-bold mt-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-emerald-400 to-green-500 md:inline-block">
+              <span className="block py-1 text-8xl">Helpi Finance</span>
+              <span className="text-3xl md:text-5xl xl:text-6xl font-bold mt-2 mb-1 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-emerald-400 to-green-500 md:inline-block">
                 Serving unbanked population with
                 <span className="font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-500 via-cyon-400 to-purple-300">
                   {" "}
@@ -35,8 +35,8 @@ function Home() {
               </span>
             </h1>
             <div className="mx-auto rounded-lg font-black mt-5 text-zinc-400 md:mt-12 text-center lg:text-lg lg:text-left">
-              <Link to="/swap">
-                <button className="border text-sm text-white py-3 px-7 rounded-full hover:bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple hover:text-primary-dark">
+              <Link to="/dashboard">
+                <button className="border text-xl font-semibold text-white py-5 px-10 rounded-full hover:bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple hover:text-primary-dark">
                   Dashboard
                 </button>
               </Link>
@@ -48,7 +48,7 @@ function Home() {
         </div>
       </div>
       {/* Market Trades */}
-      <div className="flex flex-col lg:flex-row px-12 2xl:px-32 my-10">
+      <div className="flex flex-col lg:flex-row px-12 2xl:px-32 my-16">
         <div className="w-full lg:w-6/12 flex flex-col lg:flex-row">
           <div className="w-full lg:w-7/12 bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple rounded-r-xl">
             <div className="w-auto h-full bg-primary-dark mb-0.5 lg:mr-0.5 py-8 lg:py-2 pr-3 rounded-r-xl">
@@ -58,8 +58,8 @@ function Home() {
           </div>
           <div className="w-full lg:w-5/12 bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple rounded-r-xl">
             <div className="w-auto h-full bg-primary-dark mb-0.5 lg:mr-0.5 py-8 px-3 lg:py-2 rounded-r-xl">
-              <h4 className="text-2xl font-semibold text-right">$38.2m/$126.4k</h4>
-              <p className="w-full text-right text-sm text-secondary">Total/24hr Volume</p>
+              <div className="text-4xl font-semibold text-right">$38.2m/$126.4k</div>
+              <p className="w-full text-right text-2xl text-secondary">Total/24hr Volume</p>
             </div>
           </div>
         </div>
@@ -67,48 +67,48 @@ function Home() {
           {/* 2.1 */}
           <div className="w-full lg:w-3/12 bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple rounded-r-xl">
             <div className="w-auto h-full bg-primary-dark mb-0.5 lg:mr-0.5 py-8 px-3 lg:py-2 rounded-r-xl">
-              <h4 className="text-2xl font-semibold text-right">$89.5m</h4>
-              <p className="w-full text-right text-sm text-secondary">TVL</p>
+              <h4 className="text-4xl font-semibold text-right">$89.5m</h4>
+              <p className="w-full text-right text-2xl text-secondary">TVL</p>
             </div>
           </div>
           {/* 2.2 */}
           <div className="w-full lg:w-3/12 bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple rounded-r-xl">
             <div className="w-auto h-full bg-primary-dark mb-0.5 lg:mr-0.5 py-8 px-3 lg:py-2 rounded-r-xl">
-              <h4 className="text-2xl font-semibold text-right">$57.9m</h4>
-              <p className="w-full text-right text-sm text-secondary">Marketcap</p>
+              <h4 className="text-4xl font-semibold text-right">$57.9m</h4>
+              <p className="w-full text-right text-2xl text-secondary">Marketcap</p>
             </div>
           </div>
           {/* 2.3 */}
           <div className="w-full lg:w-3/12 bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple rounded-r-xl">
             <div className="w-auto h-full bg-primary-dark mb-0.5 lg:mr-0.5 py-8 px-3 lg:py-2 rounded-r-xl">
-              <h4 className="text-2xl font-semibold text-right">737.7m</h4>
-              <h4 className="text-2xl font-semibold text-right">HLP</h4>
-              <p className="w-full text-right text-sm text-secondary">Circulating Supply</p>
+              <h4 className="text-4xl font-semibold text-right">737.7m</h4>
+              <h4 className="text-4xl font-semibold text-right">HLP</h4>
+              <p className="w-full text-right text-2xl text-secondary">Circulating Supply</p>
             </div>
           </div>
           {/* 2.4 */}
           <div className="w-full lg:w-3/12  bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple rounded-r-xl">
             <div className="w-auto h-full bg-primary-dark mb-0.5 lg:m-0 py-8 px-3 lg:py-2 rounded-r-xl">
-              <h4 className="text-2xl font-semibold text-right">40.6m</h4>
-              <h4 className="text-2xl font-semibold text-right">xHLP</h4>
-              <p className="w-full text-right text-sm text-secondary">Locked in Vault</p>
+              <h4 className="text-4xl font-semibold text-right">40.6m</h4>
+              <h4 className="text-4xl font-semibold text-right">xHLP</h4>
+              <p className="w-full text-right text-2xl text-secondary">Locked in Vault</p>
             </div>
           </div>
         </div>
       </div>
       {/* Feature ---------------------- */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 pt-6 px-12 xl:px-16 2xl:px-32 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 pt-6 px-12 xl:px-16 2xl:px-32 gap-8">
         {/* card 1 */}
         <div
           role="listitem"
-          className="bg-primary-dull border border-primary-light cursor-pointer shadow rounded-lg mt-3 flex relative z-30"
+          className="bg-primary-dull border border-primary-light cursor-pointer shadow rounded-lg mt-3 p-3 flex relative z-30"
         >
           <div className="w-2.5 xl:w-0 h-auto bg-gradient-to-tr xl:from-transparent from-grad-green via-grad-blue to-grad-purple rounded-tl-md rounded-bl-md" />
           <div className="w-full p-8">
             <div className="md:flex items-center justify-between">
-              <h2 className="flex items-center text-2xl font-semibold leading-6 text-gray-400">
-                <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple shadow flex items-center justify-center mr-2">
-                  <AiOutlineSwap className="text-primary-dark text-sm" />
+              <h2 className="flex items-center text-3xl font-semibold leading-6 text-gray-400">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple shadow flex items-center justify-center mr-3">
+                  <AiOutlineSwap className="text-primary-dark text-xl" />
                 </div>
                 Swap
               </h2>
@@ -116,7 +116,7 @@ function Home() {
               $18<span className="font-normal text-base">/mo</span>
             </p> */}
             </div>
-            <p className="text-base leading-6 mt-4 text-gray-500">
+            <p className="text-2xl leading-12 font-medium mt-4 text-gray-500">
               Easily exchange one cryptocurrency for another without leaving their Blockchain Wallet.
             </p>
           </div>
@@ -124,14 +124,14 @@ function Home() {
         {/* card 2 */}
         <div
           role="listitem"
-          className="bg-primary-dull border border-primary-light cursor-pointer shadow rounded-lg mt-3 flex relative z-30"
+          className="bg-primary-dull border border-primary-light cursor-pointer shadow rounded-lg mt-3 p-3 flex relative z-30"
         >
           <div className="w-2.5 xl:w-0 h-auto bg-gradient-to-tr xl:from-transparent from-grad-green via-grad-blue to-grad-purple rounded-tl-md rounded-bl-md" />
           <div className="w-full p-8">
             <div className="md:flex items-center justify-between">
-              <h2 className="flex items-center text-2xl font-semibold leading-6 text-gray-400">
-                <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple shadow flex items-center justify-center mr-2">
-                  <ImLoop className="text-primary-dark text-sm" />
+              <h2 className="flex items-center text-3xl font-semibold leading-6 text-gray-400">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple shadow flex items-center justify-center mr-3">
+                  <ImLoop className="text-primary-dark text-xl" />
                 </div>
                 Staking Pools
               </h2>
@@ -139,7 +139,7 @@ function Home() {
               $18<span className="font-normal text-base">/mo</span>
             </p> */}
             </div>
-            <p className=" text-base leading-6 mt-4 text-gray-500">
+            <p className=" text-2xl leading-12 font-medium mt-4 text-gray-500">
               Stake Celo and cUSD tokens to earn Helpi Tokens as Rewards at high APR rates.
             </p>
           </div>
@@ -147,14 +147,14 @@ function Home() {
         {/* card 3 */}
         <div
           role="listitem"
-          className="bg-primary-dull border border-primary-light cursor-pointer shadow rounded-lg mt-3 flex relative z-30"
+          className="bg-primary-dull border border-primary-light cursor-pointer shadow rounded-lg mt-3 p-3 flex relative z-30"
         >
           <div className="w-2.5 xl:w-0 h-auto bg-gradient-to-tr xl:from-transparent from-grad-green via-grad-blue to-grad-purple rounded-tl-md rounded-bl-md" />
           <div className="w-full p-8">
             <div className="md:flex items-center justify-between">
-              <h2 className="flex items-center text-2xl font-semibold leading-6 text-gray-400">
-                <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple shadow flex items-center justify-center mr-2">
-                  <BiLockAlt className="text-primary-dark text-sm" />
+              <h2 className="flex items-center text-3xl font-semibold leading-6 text-gray-400">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple shadow flex items-center justify-center mr-3">
+                  <BiLockAlt className="text-primary-dark text-xl" />
                 </div>
                 Vesting
               </h2>
@@ -162,7 +162,7 @@ function Home() {
               $18<span className="font-normal text-base">/mo</span>
             </p> */}
             </div>
-            <p className=" text-base leading-6 mt-4 text-gray-500">
+            <p className=" text-2xl leading-12 font-medium mt-4 text-gray-500">
               Implemented to prevent Pumping and Dumping of Tokens by Whales to Protect your assets and earnings
             </p>
           </div>
@@ -170,14 +170,14 @@ function Home() {
         {/* card 4 */}
         <div
           role="listitem"
-          className="bg-primary-dull border border-primary-light cursor-pointer shadow rounded-lg mt-3 flex relative z-30"
+          className="bg-primary-dull border border-primary-light cursor-pointer shadow rounded-lg mt-3 p-3 flex relative z-30"
         >
           <div className="w-2.5 xl:w-0 h-auto bg-gradient-to-tr xl:from-transparent from-grad-green via-grad-blue to-grad-purple rounded-tl-md rounded-bl-md" />
           <div className="w-full p-8">
             <div className="md:flex items-center justify-between">
-              <h2 className="flex items-center text-2xl font-semibold leading-6 text-gray-400">
-                <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple shadow flex items-center justify-center mr-2">
-                  <FaHandshake className="text-primary-dark text-sm" />
+              <h2 className="flex items-center text-3xl font-semibold leading-6 text-gray-400">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple shadow flex items-center justify-center mr-3">
+                  <FaHandshake className="text-primary-dark text-xl" />
                 </div>
                 Contribute
               </h2>
@@ -185,7 +185,7 @@ function Home() {
               $18<span className="font-normal text-base">/mo</span>
             </p> */}
             </div>
-            <p className=" text-base leading-6 mt-4 text-gray-500">
+            <p className=" text-2xl leading-12 font-medium mt-4 text-gray-500">
               Helpi is a Contribution based DeFi Network where each member in the ecosystem contributes and helps others
               to earn interest
             </p>
@@ -194,7 +194,7 @@ function Home() {
       </div>
       {/* Our Mission ------------------- */}
       <div className="mt-24 md:flex xl:px-16 px-12 py-20 2xl:mx-auto 2xl:container relative z-40">
-        <div className="relative lg:w-1/2 sm:w-96 xl:h-96 h-80">
+        <div className="relative lg:w-1/2 sm:w-96 xl:h-3/6 h-80">
           <img
             src="https://i.ibb.co/4g1D9cv/imgslider1.png"
             alt="profile"
@@ -206,8 +206,8 @@ function Home() {
         </div>
         <div className="md:w-1/3 lg:w-1/3 xl:ml-32 md:ml-20 md:mt-0 mt-4 flex flex-col justify-between">
           <div>
-            <h1 className="text-2xl font-semibold xl:leading-loose text-gray-300">Our Mission</h1>
-            <p className="text-base font-medium leading-6 mt-4 text-gray-400">
+            <h1 className="text-4xl font-medium xl:leading-loose text-gray-300">Our Mission</h1>
+            <p className="text-2xl font-normal leading-8 mt-4 text-gray-400">
               We are a Decentralized protocol that allows users an easy access to the DeFi space by allowing them to use
               fiat-based currencies for day-to-day exchanges and cross-border remittances. The protocol is equiped with
               vesting capabilities allowing users to withdraw their rewards in a periodic manner rather than a massive
@@ -219,8 +219,8 @@ function Home() {
             </p>
           </div>
           <div className="md:mt-4 mt-8">
-            <p className="text-base font-medium leading-4 text-secondary">Felipe Montoya</p>
-            <p className="text-base leading-4 mt-2 mb-4 text-gray-400">CEO and Business Developer</p>
+            <p className="text-2xl font-medium leading-10 text-secondary">Felipe Montoya</p>
+            <p className="text-xl leading-4 mt-2 mb-4 text-gray-400">CEO and Business Developer</p>
           </div>
         </div>
       </div>

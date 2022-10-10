@@ -59,6 +59,7 @@
 @media screen and (max-width: 370px) {
   .user-address {
     margin-left: 0;
+    color: #fff !important;
   }
   .address-btn {
     display: flex;

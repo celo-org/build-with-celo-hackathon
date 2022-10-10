@@ -219,7 +219,7 @@
   border-radius: 0.4rem;
   display: inline-flex;
   align-items: center;
-  color: white;
+  color: white !important;
   position: relative;
 }
 

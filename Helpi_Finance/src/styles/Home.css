@@ -25,3 +25,13 @@ a {
 * {
   box-sizing: border-box;
 }
+
+/* Tailwind v3 ------------------ */
+/* BG Gradiant */
+.bg-gradient-to-r {
+    background-image: linear-gradient(to right, var(--tw-gradient-stops));
+}
+.hover\:bg-gradient-to-tr:hover {
+    background-image: linear-gradient(to top right, var(--tw-gradient-stops));
+}
+
