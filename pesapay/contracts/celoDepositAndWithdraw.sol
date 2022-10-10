@@ -22,8 +22,8 @@ contract CeloDepositAndWithdrawUpgradeable is
         uint256 amountWithdrawn
     );
     event CeloFundsWithdrawn(
-        address indexed withdrawAddressbnb,
-        uint256 amountWithdrawnbnb
+        address indexed withdrawAddresscelo,
+        uint256 amountWithdrawncelo
     );
     event UniqueTokenAdded(address indexed addedToken);
     event contractTokenBalanceAdjusted(address indexed token, uint256 amount);
@@ -116,7 +116,7 @@ contract CeloDepositAndWithdrawUpgradeable is
         require(_amount > 0, "Withdraw an amount greater than 0");
         require(
             celoBalance >= _amount,
-            "insufficient bnb available in the contract"
+            "insufficient celo available in the contract"
         );
         (bool success, ) = payable(_withdrawerAddress).call{value: _amount}("");
         require(success, "Failed to withdraw celo to address");
