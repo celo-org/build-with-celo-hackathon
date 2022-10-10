@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+*{
+    /* border:1px solid red; */
+}
+/* 
+#background{
+    filter: brightness(50%); */
+    /* opacity:0.5;
+    background-attachment: fixed;
+    background-image:url(../public/landing-image.jpg);
+    background-size:cover;
+    height:100vh;
+} */
+
+/* #opacity{
+    filter: brightness(100%);
+} */
