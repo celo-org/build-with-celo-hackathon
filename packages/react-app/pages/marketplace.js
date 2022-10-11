@@ -1,3 +1,4 @@
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Link from 'next/link'
 import React from 'react'
 import Layout from '../components/layout/Layout';
@@ -44,6 +45,42 @@ const MarketPlace = () => {
 
                 <div className='px-6 '>
 
+                  <div className='flex items-center py-4 mb-6'>
+                    <div className='flex-1'>
+                      <h3 className='h2'>Requests</h3>
+                    </div>
+
+                    <div className="mt-1 relative rounded-full flex-1  items-center grow flex h-12 ">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none h-full">
+                                    <span className="text-gray-500 px-3">
+                                        <svg width="22" height="22" viewBox="0 0 20 20" className="mr-3 pr-2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z" stroke="#9998A9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            <path d="M17.5 17.5L13.875 13.875" stroke="#9998A9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                    </span>
+                                </div>
+                                <input type="text" name="price" id="price" className="border border-gray-300 py-2 px-4  block w-full pl-12 pr-12 sm:text-sm rounded-full h-full focus:outline-none focus:border-gray-400" placeholder="Search for different scaps, company"/>
+                                
+                            </div>
+
+                    <div className=" font-normal flex items-center justify-end flex-row gap-3 flex-1">
+                            
+                            <button className="flex items-center text-neutral700 bg-white text-sm border-gray-300 border px-5 py-2 rounded-full h-12">
+                                Select country 
+                                <span className='text-sm'>
+                                  <ExpandMoreIcon className="text-sm  "/>
+                                </span>
+                            </button>
+                            <button className="flex items-center text-neutral700 bg-white text-sm border-gray-300 border px-5 py-2 rounded-full h-12">
+                                Sort By
+                                <span className='text-sm'>
+                                  <ExpandMoreIcon className="text-sm  "/>
+                                </span>
+                            </button>
+                        </div>
+                  </div>
+
+
                   <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-9 gap-y-9 '>
                       <div className='card shadow-lg py-3 rounded-md'>
                           <div className=''>
@@ -65,7 +102,7 @@ const MarketPlace = () => {
                               
                               </div>
                               <div>
-                                  <div class="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
+                                  <div className="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
                                       
                                       <span className='text-[#6D747D]'><span className='font-semibold text-[#3D4044]'>25%</span> gotten</span> 
                                   </div>
@@ -93,7 +130,7 @@ const MarketPlace = () => {
                               
                               </div>
                               <div>
-                                  <div class="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
+                                  <div className="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
                                       
                                       <span className='text-[#6D747D]'><span className='font-semibold text-[#3D4044]'>25%</span> gotten</span> 
                                   </div>
@@ -121,7 +158,7 @@ const MarketPlace = () => {
                               
                               </div>
                               <div>
-                                  <div class="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
+                                  <div className="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
                                       
                                       <span className='text-[#6D747D]'><span className='font-semibold text-[#3D4044]'>25%</span> gotten</span> 
                                   </div>
@@ -141,29 +178,25 @@ const MarketPlace = () => {
             
             </section>   
 
-            {/* <section className='py-12'>
+            <section className='py-12'>
               <div className="container mx-auto px-6">
                 <div>
                   <div className='grid grid-cols-1 md:grid-cols-2'>
                     <div>
-                      <ol type="1">
-                        <li>
-                          Jana Plasteeks LTD
-                        </li>
-                        <li>
-                          Jana Plasteeks LTD
-                        </li>
-                        <li>
-                          Jana Plasteeks LTD
-                        </li>
-                      </ol>
+                      <h3 className='h2'>Top Sellers this week</h3>
+                      <div>
+                        
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className='h2'>Top Buyers this week</h3>
                     </div>
 
                   </div>
                 </div>
               </div>
 
-            </section> */}
+            </section>
 
   
       </Layout>
