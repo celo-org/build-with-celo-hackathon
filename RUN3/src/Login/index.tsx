@@ -7,9 +7,9 @@ import '@ethersproject/shims'
 import { ethers } from 'ethers'
 
 import { StatusBar } from 'expo-status-bar'
-import React, { useEffect, useState } from 'react'
-import { Text, View, Image } from 'react-native'
-import { Button } from 'native-base'
+import React from 'react'
+import { View, Image } from 'react-native'
+import { Button, Text } from '@ui-kitten/components'
 import Web3Auth, { LOGIN_PROVIDER, OPENLOGIN_NETWORK, State } from '@web3auth/react-native-sdk'
 import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import * as Linking from 'expo-linking'
@@ -18,15 +18,16 @@ import { Buffer } from 'buffer'
 import { CLIENT_ID, NET_PROVIDER } from 'react-native-dotenv'
 import { styles } from './styles'
 import { useWalletProvider } from '../contexts/WalletContext'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { globalStyles } from '../globalStyles'
 
 global.Buffer = global.Buffer || Buffer
 
 const resolvedRedirectUrl = Linking.createURL('web3auth', {})
 
-export default function Login() {
+export default function Login({ navigation }: { navigation: any }) {
   const { setWalletWithProvider } = useWalletProvider()
 
-  const [userInfo, setUserInfo] = useState<State>()
   const login = async () => {
     try {
       const web3auth = new Web3Auth(WebBrowser, {
@@ -50,7 +51,8 @@ export default function Login() {
         const walletWithProvider = new CeloWallet(state.privKey, provider)
 
         setWalletWithProvider(walletWithProvider)
-        setUserInfo(state)
+        await AsyncStorage.setItem('wallet', JSON.stringify(walletWithProvider))
+        navigation.replace('home')
       }
     } catch (e) {
       console.error(e)
@@ -60,10 +62,9 @@ export default function Login() {
   return (
     <View style={styles.container}>
       <Image style={styles.logo} source={require('../../assets/RUN3-logo-03.png')} />
-      <Button style={styles.signBtn} size="lg" backgroundColor="primary" onPress={login}>
-        <Text style={styles.signBtnText}>Login</Text>
+      <Button style={[styles.signBtn, globalStyles.primaryBg]} size="large" onPress={login}>
+        <Text style={styles.signBtnText}>LOGIN</Text>
       </Button>
-
       <StatusBar style="auto" />
     </View>
   )

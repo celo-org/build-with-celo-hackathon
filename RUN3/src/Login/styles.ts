@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
   signBtnText: {
     marginTop: 'auto',
     color: '#fff',
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: 'bold',
   },
   logo: {
