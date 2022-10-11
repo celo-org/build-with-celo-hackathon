@@ -133,7 +133,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="mt-10 flex items-center justify-center">
-        <h4 className="text-sm">&copy; blak.art 2022. All rights reserved</h4>
+        <h4 className="text-sm">&copy; eventnexo 2022. All rights reserved</h4>
       </div>
     </footer>
   );

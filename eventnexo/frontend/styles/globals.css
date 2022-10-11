@@ -5,7 +5,24 @@
 @layer base {
   body {
     margin: 0;
-    font-family: "Space Mono", monospace;
+    font-family: "Fira Sans", sans-serif;
     -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+    @apply font-medium;
   }
+}
+
+.hero-img {
+  width: 100%;
+}
+
+.hero-img > span {
+  position: unset !important;
+}
+
+.hero-img .image {
+  object-fit: contain;
+  width: 100% !important;
+  position: relative !important;
+  height: unset !important;
 }

@@ -17,6 +17,14 @@ contract Eventnexo is Ownable, Pausable, ERC721Enumerable {
     string public baseExtension = ".json";
 
     constructor() ERC721("Eventnexo", "ENFT") {
+
+         setBaseURI(
+            "https://ipfs.io/ipfs/QmTn1W5CpTdqrkvdSLb7nXGWVYYmoTWMv8N2ripQthXw2v/"
+        );
+        for (uint16 i = 1; i <= 51; i++) {
+            _safeMint(msg.sender, i);
+            isMinted[i] = true;
+        }
        
     }
 
