@@ -17,6 +17,7 @@ contract POAP is ERC721URIStorage,  Ownable {
 
     struct EventStruct {
         string eventName;
+        string desc;
         string orgName;
         string logo;
         string date;
@@ -29,7 +30,7 @@ contract POAP is ERC721URIStorage,  Ownable {
     
     EventStruct public eventDetails;
 
-    Counters.Counter private tokenCount;
+    Counters.Counter private _tokenCounter;
 
     mapping(address => bool) mintedList;
 
@@ -37,6 +38,8 @@ contract POAP is ERC721URIStorage,  Ownable {
     uint256 private fee;
 
     event minted(address sender, uint256 tokenId);
+
+    string _tokenUri ;
     
     
 
@@ -44,6 +47,8 @@ contract POAP is ERC721URIStorage,  Ownable {
     {
         fee = 0.0001 * 10 ** 18; // 0.0001
         eventDetails=_eventDetails;
+
+        _tokenUri = generateTokenURI();
     }
 
 
@@ -55,20 +60,17 @@ contract POAP is ERC721URIStorage,  Ownable {
         require(mintedList[msg.sender]==false, "Already Minted");  
         require(eventDetails.maxCapacity > 0, "Invalid Event");
         require(eventDetails.poapsMinted < eventDetails.maxCapacity, "POAPs Sold Out");
-        //require(msg.value >= events[eventID].mintPrice, "Ticket price not met!");
+        //require(msg.value >= eventDetails.mintPrice, "Ticket price not met!");
 
         
-        uint256 tokenID = events[eventID].startingTokenID + events[eventID].poapsMinted;
+        
+        _tokenCounter.increment();
+        uint tokenID = _tokenCounter.current(); 
         eventDetails.poapsMinted++;
         mintedList[msg.sender]= true;
         
         _safeMint(msg.sender, tokenID);
-        _setTokenURI(tokenID, generateTokenURI(events[eventID].eventName, 
-                                                        events[eventID].orgName,
-                                                        events[eventID].date, 
-                                                        events[eventID].time,
-                                                        events[eventID].cid,
-                                                        "false"));
+        _setTokenURI(tokenID, _tokenUri);
 
         // emit a confirmation,
         // include tokenID of new NFTicket
@@ -79,7 +81,7 @@ contract POAP is ERC721URIStorage,  Ownable {
 
     
     
-    function generateTokenURI(string memory eventName,string memory desc, string memory orgName,string memory date) public pure returns(string memory)
+    function generateTokenURI() public view returns(string memory)
     {
         return string(
                 abi.encodePacked(
@@ -87,11 +89,15 @@ contract POAP is ERC721URIStorage,  Ownable {
                     Base64.encode(
                         bytes(
                             abi.encodePacked(
-                                '{"name":"',eventName,': POAP", ',
-                                '"description":"',desc,'", ',
+                                '{"name":"',eventDetails.eventName,': POAP", ',
+                                '"description":"',eventDetails.desc,'", ',
                                 '"attributes":['
-                                '{"trait_type":"Org Name","value":"',orgName,'"}, ',
-                                '{"trait_type":"Date","value":"',date,'"}, ',
+                                '{"trait_type":"Org Name","value":"',eventDetails.orgName,'"}, ',
+                                '{"trait_type":"Date","value":"',eventDetails.date,'"}, ',
+                                '{"trait_type":"Website","value":"',eventDetails.website,'"}, ',
+                                // '{"trait_type":"Date","value":"',date,'"}, ',
+                                // '{"trait_type":"Org Name","value":"',orgName,'"}, ',
+                                '],',
                                 '"image":"',eventDetails.logo,'"}'
                             )
                         )
