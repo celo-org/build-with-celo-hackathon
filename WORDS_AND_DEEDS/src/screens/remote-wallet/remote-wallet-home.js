@@ -89,7 +89,7 @@ class RemoteWalletHomeScreen extends React.Component {
 	renderWalletView() {
 		switch(this.state.action) {
 			case 'view':
-				return (<RemoteWalletView app = {this.app} connectionuuid={this.connectionuuid} currencyuuid={this.currencyuuid}/>);
+				return (<RemoteWalletView app={this.app} parent={this} connectionuuid={this.connectionuuid} currencyuuid={this.currencyuuid}/>);
 			case 'load':
 				return (<div>Not implemented {this.state.action}</div>);
 			default:

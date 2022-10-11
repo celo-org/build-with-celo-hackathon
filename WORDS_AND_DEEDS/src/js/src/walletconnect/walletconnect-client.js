@@ -279,8 +279,8 @@ class WalletConnectClient {
 
 	async connect(rpc) {
 		try {
-			let connectionuuid = this.guid();
 			let connection = this.getConnectionFromRpc(rpc);
+			let connectionuuid = (connection ? connection.uuid : null);
 
 			const provider = new WalletConnectProvider({
 				rpc: connection.rpc,

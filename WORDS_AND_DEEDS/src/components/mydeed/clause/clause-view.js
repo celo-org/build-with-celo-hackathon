@@ -19,6 +19,8 @@ class ClauseView extends React.Component {
 		super(props);
 		
 		this.app = this.props.app;
+		this.parent = this.props.parent;
+
 		this.getMvcMyPWAObject = this.app.getMvcMyPWAObject;
 		
 		this.uuid = this.app.guid();

@@ -153,9 +153,12 @@ class RemoteWalletConnectForm extends React.Component {
 	async _openConnectionWallet() {
 		let mvcmypwa = this.getMvcMyPWAObject();
 
+		let rootsessionuuid = this.props.rootsessionuuid;
+
 		let res = await new Promise((resolve, reject) => {
-			mvcmypwa.signalEvent('on_walletconnect_status_requested', {
+			mvcmypwa.signalEvent('on_walletconnect_open_requested', {
 				emitter: this.uuid,
+				sessionuuid: rootsessionuuid,
 				connectionuuid: this.state.connectionuuid,
 				rpc: this.rpc,
 				callback: (err,res) => {if (res) resolve(res); else reject(err);}
@@ -219,8 +222,6 @@ class RemoteWalletConnectForm extends React.Component {
 
 			if (!domatch)
 				return; // nothing to do with our connection
-
-			let mvcmypwa = this.getMvcMyPWAObject();
 
 			let rootsessionuuid = this.props.rootsessionuuid;
 			let walletuuid = this.props.currentwalletuuid;

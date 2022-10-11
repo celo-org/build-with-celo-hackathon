@@ -84,11 +84,11 @@ class DeedHomeScreen extends React.Component {
 	renderDeedView() {
 		switch(this.state.action) {
 			case 'view':
-				return (<DeedView app = {this.app}/>);
+				return (<DeedView app = {this.app} parent={this}/>);
 			case 'create':
-				return (<DeedCreateForm app = {this.app}/>);
+				return (<DeedCreateForm app = {this.app} parent={this}/>);
 			case 'transfer':
-				return (<DeedTransferForm app = {this.app}/>);
+				return (<DeedTransferForm app = {this.app} parent={this}/>);
 			default:
 				return (<div>Error, wrong action {this.state.action}</div>);
 		}

@@ -16,6 +16,7 @@ class DeedView extends React.Component {
 		super(props);
 		
 		this.app = this.props.app;
+		this.parent = this.props.parent;
 		this.getMvcMyPWAObject = this.app.getMvcMyPWAObject;
 
 		this.dataobject = null;
@@ -431,7 +432,7 @@ class DeedView extends React.Component {
 				<div>
 				<hr></hr>
 				<div>
-					{(this.deed ?<ClauseListView app={this.app} deed={this.deed} /> : <></> )}	
+					{(this.deed ?<ClauseListView app={this.app} parent={this.parent} deed={this.deed} /> : <></> )}	
 				</div>
 				</div> :
 				<></>

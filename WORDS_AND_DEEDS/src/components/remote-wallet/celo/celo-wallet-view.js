@@ -288,7 +288,7 @@ class CeloWalletView extends React.Component {
 		return {
 			hasOpenWallet: ((nextProps.currentwalletuuid) && (nextProps.iswalletlocked === false) ? true : false),
 		};
-	}	
+	}
 }
 
 // propTypes validation

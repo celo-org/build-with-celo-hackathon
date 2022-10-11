@@ -22,6 +22,8 @@ class DeedCreateForm extends React.Component {
 		super(props);
 		
 		this.app = this.props.app;
+		this.parent = this.props.parent;
+
 		this.getMvcMyPWAObject = this.app.getMvcMyPWAObject;
 		this.getMvcMyDeedObject = this.app.getMvcMyDeedObject;
 		
@@ -661,13 +663,11 @@ class DeedCreateForm extends React.Component {
 		return (
 			<RemoteWalletConnectForm 
 				app = {this.app}
-				parent={this}
+				parent={this.parent}
 				rpc={rpc}
 			/>
 		);
 	}
-
-
 
 	renderMainCardPart() {
 		let { currency, currentcard, signingkey, balance } = this.state;

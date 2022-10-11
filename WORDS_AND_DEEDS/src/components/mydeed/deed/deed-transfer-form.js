@@ -18,6 +18,8 @@ class DeedTransferForm extends React.Component {
 		super(props);
 		
 		this.app = this.props.app;
+		this.parent = this.props.parent;
+		
 		this.getMvcMyPWAObject = this.app.getMvcMyPWAObject;
 		this.getMvcMyDeedObject = this.app.getMvcMyDeedObject;
 
