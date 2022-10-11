@@ -45,13 +45,16 @@ const OnboardingScreen = () => {
     if (activeIndex.value === 0) return;
     scrollRef.current?.scrollTo({ x: PAGE_WIDTH * (activeIndex.value - 1) });
   }, []);
+
+  const skip = () => {
+    console.log("I got clicked");
+    navigation.navigate("MainPage");
+    console.log("I got clicked");
+  };
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("MainPage")}
-      >
+      <TouchableOpacity style={styles.button} onPress={() => skip}>
         <Text style={styles.buttonText}>Skip</Text>
       </TouchableOpacity>
       <Animated.ScrollView

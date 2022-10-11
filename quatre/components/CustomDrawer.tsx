@@ -45,10 +45,17 @@ const CustomDrawer = (props) => {
           />
 
           <TouchableOpacity
-            style={{ backgroundColor: "#B1B1B1", padding: 5, borderRadius: 70 }}
+            style={{
+              backgroundColor: "lightgray",
+              width: 40,
+              height: 40,
+              borderRadius: 20,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
             onPress={() => navigation.goBack()}
           >
-            <FontAwesome name="close" size={24} color="black" />
+            <FontAwesome name="close" size={24} color="#F87C00" />
           </TouchableOpacity>
         </View>
 
@@ -82,7 +89,7 @@ const CustomDrawer = (props) => {
               style={{
                 width: "100%",
                 backgroundColor: "#FFEFE0",
-                height: 50,
+                height: 40,
                 alignItems: "center",
                 flexDirection: "row",
               }}
@@ -91,7 +98,7 @@ const CustomDrawer = (props) => {
               <View
                 style={{
                   width: 20,
-                  height: 50,
+                  height: 70,
                   backgroundColor: "#F87C00",
                   borderTopRightRadius: 10,
                   borderBottomRightRadius: 10,
@@ -103,12 +110,12 @@ const CustomDrawer = (props) => {
                 style={{
                   fontWeight: "600",
                   color: "#F87C00",
-                  lineHeight: 14,
+                  lineHeight: 24,
                   marginLeft: 15,
                   fontSize: 16,
                 }}
               >
-                Speed Doc
+                Speed Docs
               </Text>
             </TouchableOpacity>
           </Drawer.Section>
