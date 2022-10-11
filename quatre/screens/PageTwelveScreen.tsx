@@ -11,7 +11,7 @@ import Header from "../components/Header";
 import { useNavigation } from "@react-navigation/native";
 import DropDown from "../components/DropDown";
 
-const SpeedDocScreen = () => {
+const PageTwelveScreen = () => {
   const navigation = useNavigation();
   return (
     <SafeAreaView>
@@ -29,7 +29,6 @@ const SpeedDocScreen = () => {
             Speed Doc
           </Text>
         </View>
-
         <View>
           <DropDown />
         </View>
@@ -43,8 +42,7 @@ const SpeedDocScreen = () => {
               color: "#323232",
             }}
           >
-            {" "}
-            TESTNET INFO
+            PUBLIC VS PRIVATE BANDS
           </Text>
         </View>
 
@@ -57,41 +55,42 @@ const SpeedDocScreen = () => {
               color: "#323232",
             }}
           >
-            This is a Beta version, token used does not have real value. Do not
-            use real network asset such as BNB. Be sure you're on testnet before
-            carrying out any transaction. You may experience inconsistencies.
-            Your feedbacks matter to us.
+            A public band is one with no access restriction. It is open to
+            anyone to who is willing and can afford the unit contribution. It is
+            permissionless and anyone is able to launch a community of this
+            type. Comparatively, private bands share similaries in settings with
+            the public type except that becoming a member requi res a preset
+            identity. Often, people in same geographical location or are known
+            to one another belong to this category.
           </Text>
         </View>
 
-        <View style={{ paddingVertical: 10, paddingHorizontal: 20 }}>
-          <Text
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            paddingHorizontal: 20,
+          }}
+        >
+          <TouchableOpacity
             style={{
-              fontWeight: "700",
-              fontSize: 18,
-              lineHeight: 32,
-              color: "#323232",
+              width: 200,
+              height: 70,
+              borderWidth: 1,
+              borderColor: "#B1B1B1",
+              alignItems: "flex-end",
+              justifyContent: "space-around",
+              paddingHorizontal: 10,
             }}
+            onPress={() => navigation.navigate("PageEleven")}
           >
-            {" "}
-            Support
-          </Text>
-        </View>
+            <Text>Previous</Text>
+            <Text style={{ color: "#F87C00", fontSize: 12, fontWeight: "300" }}>
+              Liquidation
+            </Text>
+          </TouchableOpacity>
 
-        <View style={{ paddingVertical: 10, paddingHorizontal: 20 }}>
-          <Text
-            style={{
-              fontWeight: "700",
-              fontSize: 18,
-              lineHeight: 32,
-              color: "#F87C00",
-            }}
-          >
-            t.me/quatrefinance
-          </Text>
-        </View>
-
-        <View style={{ alignItems: "flex-end", marginRight: 20 }}>
           <TouchableOpacity
             style={{
               width: 170,
@@ -102,11 +101,11 @@ const SpeedDocScreen = () => {
               justifyContent: "space-around",
               paddingHorizontal: 10,
             }}
-            onPress={() => navigation.navigate("PageTwo")}
+            onPress={() => navigation.navigate("PageThirteen")}
           >
             <Text>Next</Text>
             <Text style={{ color: "#F87C00", fontSize: 12, fontWeight: "300" }}>
-              What is a Digesu?
+              What is a cycle?
             </Text>
           </TouchableOpacity>
         </View>
@@ -115,6 +114,6 @@ const SpeedDocScreen = () => {
   );
 };
 
-export default SpeedDocScreen;
+export default PageTwelveScreen;
 
 const styles = StyleSheet.create({});

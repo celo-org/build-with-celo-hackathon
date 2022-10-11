@@ -18,11 +18,13 @@ import Animated, {
 } from "react-native-reanimated";
 import Dot from "../components/Dot";
 import { AntDesign } from "@expo/vector-icons";
+import { StackParams } from "../App";
+import type { StackNavigationProp } from "@react-navigation/stack";
 
 const OnboardingScreen = () => {
   const translateX = useSharedValue(0);
 
-   const navigation = useNavigation<StackNavigationProps<StackParams>>();
+  const navigation = useNavigation<StackNavigationProp<StackParams>>();
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (e) => {
@@ -46,7 +48,10 @@ const OnboardingScreen = () => {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate("MainPage")}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("MainPage")}
+      >
         <Text style={styles.buttonText}>Skip</Text>
       </TouchableOpacity>
       <Animated.ScrollView
@@ -97,7 +102,10 @@ const OnboardingScreen = () => {
         </View>
       </View>
 
-      <TouchableOpacity style={[styles.buttonAction]} onPress={()=>navigation.navigate("MainPage")}>
+      <TouchableOpacity
+        style={[styles.buttonAction]}
+        onPress={() => navigation.navigate("MainPage")}
+      >
         <Text style={styles.buttonTitle}>Get Started</Text>
       </TouchableOpacity>
     </View>

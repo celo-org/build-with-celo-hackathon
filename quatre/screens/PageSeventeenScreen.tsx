@@ -11,7 +11,7 @@ import Header from "../components/Header";
 import { useNavigation } from "@react-navigation/native";
 import DropDown from "../components/DropDown";
 
-const SpeedDocScreen = () => {
+const PageSeventeenScreen = () => {
   const navigation = useNavigation();
   return (
     <SafeAreaView>
@@ -43,8 +43,7 @@ const SpeedDocScreen = () => {
               color: "#323232",
             }}
           >
-            {" "}
-            TESTNET INFO
+            HOW IS A DIGESU DIFFERENT FROM OTHER PLATFORM?
           </Text>
         </View>
 
@@ -57,10 +56,11 @@ const SpeedDocScreen = () => {
               color: "#323232",
             }}
           >
-            This is a Beta version, token used does not have real value. Do not
-            use real network asset such as BNB. Be sure you're on testnet before
-            carrying out any transaction. You may experience inconsistencies.
-            Your feedbacks matter to us.
+            When all the participants have completed their turn and fully return
+            expected value to the pool, any of the band members can the{" "}
+            <Text style={{ color: "#F87C00" }}>COMPLETETHEROUND</Text> function
+            which distributes their funds accordingly. Thereafter, each member
+            can claim their part.
           </Text>
         </View>
 
@@ -91,10 +91,10 @@ const SpeedDocScreen = () => {
           </Text>
         </View>
 
-        <View style={{ alignItems: "flex-end", marginRight: 20 }}>
+        <View style={{ paddingVertical: 10, paddingHorizontal: 20 }}>
           <TouchableOpacity
             style={{
-              width: 170,
+              width: 200,
               height: 70,
               borderWidth: 1,
               borderColor: "#B1B1B1",
@@ -102,11 +102,11 @@ const SpeedDocScreen = () => {
               justifyContent: "space-around",
               paddingHorizontal: 10,
             }}
-            onPress={() => navigation.navigate("PageTwo")}
+            onPress={() => navigation.navigate("PageSixteen")}
           >
-            <Text>Next</Text>
+            <Text>Previous</Text>
             <Text style={{ color: "#F87C00", fontSize: 12, fontWeight: "300" }}>
-              What is a Digesu?
+              How to Payback
             </Text>
           </TouchableOpacity>
         </View>
@@ -115,6 +115,6 @@ const SpeedDocScreen = () => {
   );
 };
 
-export default SpeedDocScreen;
+export default PageSeventeenScreen;
 
 const styles = StyleSheet.create({});
