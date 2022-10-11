@@ -40,7 +40,7 @@ const Login = () => {
                                 <div className="flex items-center justify-center mt-5">
                                     <span className="">Don't have an account?</span>
                                     <Link href="/signup">
-                                        <a className=" text-tertiary ml-2 underline">Sign Up</a>
+                                        <a className=" text-[#DD7D37] ml-2 underline">Sign Up</a>
 
                                     </Link>
                                 </div>
@@ -49,8 +49,8 @@ const Login = () => {
                         
                     </div>
                 
-                    <div className='container mx-auto w-full px-6 mt-7'>
-                        <div className='flex items-center justify-between flex-wrap gap-5'>
+                    <div className='container mx-auto w-full px-6 mt-4'>
+                        <div className='flex items-center justify-between flex-wrap gap-3'>
                             <div>
                                 <p>&copy; gidiscrap 2022</p>
                             </div>

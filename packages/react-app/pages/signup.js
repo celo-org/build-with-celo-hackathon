@@ -54,7 +54,7 @@ const SignUp = () => {
                         <div className="flex items-center justify-center mt-5">
                             <span className="">Already have an account?</span>
                             <Link href='/login'>
-                            <a className=" text-tertiary ml-2 underline">Sign In</a>
+                            <a className=" text-[#DD7D37] ml-2 underline">Sign In</a>
                             
                             </Link>
                         </div>
