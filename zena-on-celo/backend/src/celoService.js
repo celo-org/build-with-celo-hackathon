@@ -15,6 +15,7 @@ export async function createWallet() {
 
     } catch (err) {
         console.error(err);
+
     }
 }
 
@@ -30,9 +31,8 @@ export async function rewardBTC(to, amount) {
         var numberOfTokens = ethers.utils.parseUnits('0.01', numberOfDecimals);
 
         // Send tokens
-        contract.transfer(to, numberOfTokens).then(function (tx) {
-            console.log(tx);
-        });
+        const tx = await contract.transfer(to, numberOfTokens)
+        return tx;
     } catch (err) {
         console.error(err)
     }

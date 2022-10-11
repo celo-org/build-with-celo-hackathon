@@ -14,8 +14,8 @@ const initDB = async () => {
             {
                 "id": 1,
                 "name": "Blue",
-                "pubKey": process.env.ZENA_ADDRESS,
-                "privKey": process.env.ZENA_PRIVATE_KEY,
+                "pubKey": "0x61a5A64861c839f8F4D9fAA1F6b6F06052BA1C1B",
+                "privKey": process.env.USER_PRIVATE_KEY,
                 "stats": {
                     "quiz1": 0,
                     "quiz2": 0,

@@ -1,6 +1,6 @@
 import express from 'express';
 import { db } from './database/db.js'
-import { createWallet, getBalance, rewardBTC } from "./ethService.js";
+import { createWallet, getBalance, rewardBTC } from "./celoService.js";
 import * as dotenv from 'dotenv'
 dotenv.config()
 
@@ -61,10 +61,9 @@ apiRouter.post('/users/:id/reward', async (req, res) => {
     await db.read();
     const reward = req.body.reward;
     const user = db.data.users?.find(user => user.id === parseInt(req.params.id))
-    // console.log(user)
-    // const balance = await getBalance(user.pubKey, "BTC");
+    if (!reward) return res.send(400);
     const result = rewardBTC(user.pubKey, "0.01");
-    // res.send(balance)
+    if (result) return res.send(204);
 })
 
 apiRouter.put('/users/:id', async (req, res) => {
@@ -79,9 +78,4 @@ apiRouter.put('/users/:id', async (req, res) => {
     })
     db.write()
     res.sendStatus(204)
-})
-
-apiRouter.post('/transferBTC', async (req, res) => {
-    await db.read()
-    // TODO
 })
