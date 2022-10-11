@@ -11,7 +11,16 @@ namespace Nomis.Celoscan.Calculators
         private const double BalancePercents = 26.88 / 100;
         private const double TotalTransactionsPercents = 9.99 / 100;
         private const double WalletTurnoverPercents = 16.31 / 100;
+        private const double NftPercents = 2.15 / 100;
+        private const double LastMonthPercents = 5.7 / 100;
         private const double TokensHoldingPercents = 3.86 / 100;
+
+        private const double NftHoldingPercents = 6.52 / 100;
+        private const double NftTradingPercents = 16.38 / 100;
+        private const double NftWorthPercents = 23.75 / 100;
+
+        private const double TransactionsPerMonthPercents = 18.00 / 100;
+        private const double TransactionsLastMonthPercents = 10.34 / 100;
 
         private static double WalletAgeScore(int walletAgeMonths)
         {
@@ -72,6 +81,65 @@ namespace Nomis.Celoscan.Calculators
             };
         }
 
+        private static double NftHoldingScore(int value)
+        {
+            return value switch
+            {
+                < 10 => 3.93,
+                < 100 => 11.13,
+                < 500 => 35.18,
+                _ => 49.76
+            };
+        }
+
+        private static double NftTradingScore(decimal value)
+        {
+            return value switch
+            {
+                < 1 => 2.35,
+                < 10 => 5.44,
+                < 50 => 12.56,
+                < 100 => 28.39,
+                _ => 51.26
+            };
+        }
+
+        private static double NftWorthScore(decimal value)
+        {
+            return value switch
+            {
+                < 1 => 2.35,
+                < 10 => 5.44,
+                < 50 => 12.56,
+                < 100 => 28.39,
+                _ => 51.26
+            };
+        }
+
+        private static double TransactionsPerMonthScore(double value)
+        {
+            return value switch
+            {
+                < 1 => 2.35,
+                < 10 => 5.44,
+                < 50 => 12.56,
+                < 100 => 28.39,
+                _ => 51.26
+            };
+        }
+
+        private static double TransactionsLastMonthScore(int value)
+        {
+            return value switch
+            {
+                < 1 => 2.35,
+                < 10 => 5.44,
+                < 50 => 12.56,
+                < 100 => 28.39,
+                _ => 51.26
+            };
+        }
+
         /// <summary>
         /// Get wallet score.
         /// </summary>
@@ -85,6 +153,18 @@ namespace Nomis.Celoscan.Calculators
             result += TotalTransactionsScore(stats.TotalTransactions) / 100 * TotalTransactionsPercents;
             result += WalletTurnoverScore(stats.WalletTurnover) / 100 * WalletTurnoverPercents;
             result += TokensHoldingScore(stats.TokensHolding) / 100 * TokensHoldingPercents;
+
+            var nft = 0.0;
+            nft += NftHoldingScore(stats.NftHolding) / 100 * NftHoldingPercents;
+            nft += NftTradingScore(stats.NftTrading) / 100 * NftTradingPercents;
+            nft += NftWorthScore(stats.NftWorth) / 100 * NftWorthPercents;
+            result += nft * NftPercents;
+
+            var lastMonth = 0.0;
+            lastMonth += TransactionsPerMonthScore(stats.TransactionsPerMonth) / 100 * TransactionsPerMonthPercents;
+            lastMonth += TransactionsLastMonthScore(stats.LastMonthTransactions) / 100 * TransactionsLastMonthPercents;
+
+            result += lastMonth * LastMonthPercents;
 
             return result;
         }
