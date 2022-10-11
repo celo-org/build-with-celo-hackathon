@@ -30,7 +30,7 @@ const Slider = () => {
 
   let items = [
     <Box>
-      <Card sx={{ maxWidth: "98%", borderRadius: "20px" }}>
+      <Card sx={{ maxWidth: "97%", borderRadius: "20px" }}>
         <CardMedia component="img" image={sauti} />
         <CardContent
           sx={{
@@ -47,7 +47,7 @@ const Slider = () => {
       </Card>
     </Box>,
     <Box>
-      <Card sx={{ maxWidth: "98%", borderRadius: "20px" }}>
+      <Card sx={{ maxWidth: "97%", borderRadius: "20px" }}>
         <CardMedia component="img" image={bb} />
         <CardContent
           sx={{
@@ -64,7 +64,7 @@ const Slider = () => {
       </Card>
     </Box>,
     <Box>
-      <Card sx={{ maxWidth: "98%", borderRadius: "20px" }}>
+      <Card sx={{ maxWidth: "97%", borderRadius: "20px" }}>
         <CardMedia component="img" image={centomy} />
         <CardContent
           sx={{
@@ -113,7 +113,7 @@ const Slider = () => {
           renderNextButton={() => {
             return (
               <IconButton
-                sx={{ position: "absolute", left: 0, top: "30%", pl: 4 }}
+                sx={{ position: "absolute", left: 0, top: "32%", pl: 4 }}
               >
                 <img src={left} alt="" />
               </IconButton>
@@ -122,7 +122,7 @@ const Slider = () => {
           renderPrevButton={() => {
             return (
               <IconButton
-                sx={{ position: "absolute", right: 0, top: "30%", pr: 4 }}
+                sx={{ position: "absolute", right: 0, top: "32%", pr: 4 }}
               >
                 <img src={right} alt="" />
               </IconButton>

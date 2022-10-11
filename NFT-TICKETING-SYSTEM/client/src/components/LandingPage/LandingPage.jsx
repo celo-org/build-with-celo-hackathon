@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
 import Banner from "./Banner";
+import Category from "./Category";
 import Slider from "./Slider";
 
 const LandingPage = () => {
@@ -8,6 +9,7 @@ const LandingPage = () => {
     <Box>
       <Banner />
       <Slider />
+      <Category />
     </Box>
   );
 };
