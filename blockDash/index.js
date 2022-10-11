@@ -317,11 +317,13 @@ async function main(privateKey, Number) {
   // return { create_result }
 }
 
-async function verification(code, Number) {
+async function verification(privateKey, code, Number) {
   phoneNumber = Number;
   console.log('phoneNumber from blockdash index:', phoneNumber)
   await init(privateKey);
-  await requestCodes();
+  await registerAccountAndWallet();
+  await getHashAndPepper(phoneNumber);
+  await getIdentifiers();
   await verify(contractkit, code);
   await getIdentifiers();
 }
