@@ -38,7 +38,11 @@ module.exports = {
       large: "12px",
       xl: "20px",
     },
-    extend: {},
+    extend: {
+      maxWidth: {
+        "8xl": "1440px",
+      },
+    },
   },
   plugins: [],
 };

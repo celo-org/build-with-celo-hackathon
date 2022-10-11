@@ -47,8 +47,8 @@ const Home: NextPage = () => {
           <span className="w-full h-full absolute left-0 top-0 rounded-[12px] border-2 border-black bg-white transition-opacity"></span>
         </div>
       </section>
-      <main className="flex flex-col items-center justify-center max-w-6xl mx-auto my-0 overflow-auto">
-        <div className="w-full mt-10">
+      <main className="flex flex-col items-center justify-center max-w-7xl mx-auto my-0 overflow-auto">
+        <div className="max-w-6xl mt-10 px-10">
           <div className="mb-6 flex flex-row justify-between items-center font-black w-full px-2">
             <h3 className="text-lg">Event Near You</h3>
             <a href="#" className="text-md">
@@ -56,6 +56,7 @@ const Home: NextPage = () => {
             </a>
           </div>
           <div className="flex flex-wrap w-full">
+            <EventCard />
             <EventCard />
             <EventCard />
             <EventCard />
