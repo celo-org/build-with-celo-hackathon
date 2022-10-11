@@ -8,7 +8,7 @@ import WalletModal from "./components/Wallet/Modal";
 // import IpfsRouter from "ipfs-react-router";
 
 export default function App() {
-  const [isLoggedIn] = useState(false);
+  const [isLoggedIn] = useState(true);
 
   const Start = () => {
     return (
@@ -34,7 +34,7 @@ export default function App() {
                 <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                   <div className="rounded-md shadow">
                     <Link
-                      to={isLoggedIn ? "/home" : "/onboarding"}
+                      to={isLoggedIn ? "/dashboard" : "/onboarding"}
                       className="flex w-full items-center justify-center rounded-md border border-transparent bg-green px-8 py-3 text-base font-medium text-white hover:bg-green-medium md:py-4 md:px-10 md:text-lg"
                     >
                       {isLoggedIn ? "Weiter geht's" : "Los geht's"}

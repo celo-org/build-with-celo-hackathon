@@ -4,8 +4,8 @@ import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const file = fs.readFileSync(__dirname + '/contracts/bctabi.json');
-const BCT_ABI = JSON.parse(file)
+const BCTABIfile = fs.readFileSync(__dirname + '/contracts/bctabi.json');
+const BCT_ABI = JSON.parse(BCTABIfile)
 
 export async function createWallet() {
     try {
@@ -38,22 +38,44 @@ export async function rewardBTC(to, amount) {
     }
 }
 
+const tokenMapper = [
+    {
+        name: "BTC",
+        abi: BCT_ABI,
+        provider: new CeloProvider('https://alfajores-forno.celo-testnet.org'),
+        address: "0x4c5f90C50Ca9F849bb75D93a393A4e1B6E68Accb"
+    },
+    {
+        name: "GoerliETH",
+        abi: null,
+        provider: new ethers.providers.getDefaultProvider('goerli'),
+        address: null
+    },
+    {
+        name: "CELO",
+        abi: null,
+        provider: new CeloProvider('https://alfajores-forno.celo-testnet.org'),
+        address: null
+    }
+]
+
+
 export async function getBalance(address, token) {
-    token = "BCT";
-    // always BCT for now
-
     try {
-        // Alfajores Testnet
-        const provider = new CeloProvider('https://alfajores-forno.celo-testnet.org')
+        const tokenData = tokenMapper.find(t => t.name === token);
+        const provider = tokenData.provider
+        const tokenAdress = tokenData.address;
+        const tokenABI = tokenData.abi;
+        let balance;
 
-        // BCT contract on Alfjaroes
-        const BCT_ADDRESS = "0x4c5f90C50Ca9F849bb75D93a393A4e1B6E68Accb";
-        // or 
-        // const abi = ["function balanceOf(walletAddress) view returns (uint256)"];
+        if (!tokenAdress) {
+            balance = await provider.getBalance(address);
+        } else {
+            const contract = new ethers.Contract(tokenAdress, tokenABI, provider);
+            balance = await contract.balanceOf(address);
+        }
 
-        const contract = new ethers.Contract(BCT_ADDRESS, BCT_ABI, provider)
-        const balance = await contract.balanceOf(address);
-        const formattedBalance = ethers.utils.formatUnits(balance)
+        const formattedBalance = ethers.utils.formatUnits(balance);
         return formattedBalance;
     } catch (err) {
         console.error(err);
