@@ -7,7 +7,15 @@ import UpwardIcon from '../../components/Icons/UpwardIcon'
 
 const Dashboard = () => {
     const [createOffer, setCreateOffer] = useState();
+    const [catDropdown, setCatDropdown] = useState();
+    const [typeDropdown, setypeDropdown] = useState();
 
+    const handleCat = () =>{
+        setCatDropdown(!catDropdown)
+    }
+    const handleType = () =>{
+        setypeDropdown(!typeDropdown)
+    }
     const handleCreateOffer = () =>{
         setCreateOffer(!createOffer)
     }
@@ -352,8 +360,8 @@ const Dashboard = () => {
                             <div className="flex justify-between items-center">                                
                                 <label className="text-gray-700 font-medium" htmlFor="token">Category of Scrap</label>
                             </div>
-                            <div className="dropdown relative grow mb-4 w-full" data-large-dropdown="">
-                                <button className="w-full bg-white h-12 focus:outline-none active:outline-none  flex items-center justify-between border border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease" id="token" data-large-dropdown-btn="" type="button" >
+                            <div className="dropdown relative grow mb-4 w-full" >
+                                <button className="w-full bg-white h-12 focus:outline-none active:outline-none  flex items-center justify-between border border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease" id="token"  type="button" onClick={handleCat} >
                                     <span className="pointer-events-none flex items-center gap-2 text-gray-400">
                                     Select the Scrap category
                                     </span>
@@ -364,33 +372,33 @@ const Dashboard = () => {
 
                                 
 
-                                    <div className={` absolute border bg-white form-submenu large-dropdown px-3 py-3 shadow-md rounded-md w-full h-40 max-w-full overflow-y-auto scrollbar-change fade-in`}>
+                                    <div className={` absolute border bg-white cat-menu ${catDropdown ? 'show' : ''} large-dropdown px-3 shadow-md rounded-md w-full h-40 max-w-full overflow-y-auto scrollbar-change fade-in z-10`}>
                                                 
                                         
-                                        <div className=" py-4">
+                                        <div className=" py-4 divide-y">
                                             
-                                            <button className="flex items-center py-2 px-1 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
+                                            <button className="flex items-center py-3 px-2 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
                                                 <div className="flex items-center justify-center gap-2 pr-2">
-                                                    <img src="/images/metamask.png" className='h-8 w-8'/>
+                                                    <img src="/images/plastics.svg" className='h-8 w-8'/>
                                                 </div>
                                                 <div className="flex grow flex-col justify-center items-start text-left">
-                                                        <p className="text-neutral700 font-normal text-base">MetaMask</p>
+                                                        <p className="text-gray-700 font-normal text-base">Plastics</p>
                                                 </div>
                                             </button>
-                                            <button className="flex items-center py-2 px-1 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
+                                            <button className="flex items-center py-3 px-2 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
                                                 <div className="flex items-center justify-center gap-2 pr-2">
-                                                    <img src="/images/metamask.png" className='h-8 w-8'/>
+                                                    <img src="/images/steel-square.svg" className='h-8 w-8'/>
                                                 </div>
                                                 <div className="flex grow flex-col justify-center items-start text-left">
-                                                        <p className="text-neutral700 font-normal text-base">MetaMask</p>
+                                                        <p className="text-gray-700 font-normal text-base">Metals</p>
                                                 </div>
                                             </button>
-                                            <button className="flex items-center py-2 px-1 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
+                                            <button className="flex items-center py-3 px-2 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
                                                 <div className="flex items-center justify-center gap-2 pr-2">
-                                                    <img src="/images/metamask.png" className='h-8 w-8'/>
+                                                    <img src="/images/tyre.svg" className='h-8 w-8'/>
                                                 </div>
                                                 <div className="flex grow flex-col justify-center items-start text-left">
-                                                        <p className="text-neutral700 font-normal text-base">MetaMask</p>
+                                                        <p className="text-gray-700 font-normal text-base">Rubber</p>
                                                 </div>
                                             </button>
                                         
@@ -403,8 +411,8 @@ const Dashboard = () => {
                             <div className="flex justify-between items-center">                                
                                 <label className="text-gray-700 font-medium" htmlFor="token">Type of Scrap</label>
                             </div>
-                            <div className="dropdown relative grow mb-4 w-full" data-large-dropdown="">
-                                <button className="w-full bg-white h-12 focus:outline-none active:outline-none  flex items-center justify-between border border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease" id="token" data-large-dropdown-btn="" type="button" >
+                            <div className="dropdown relative grow mb-4 w-full">
+                                <button className="w-full bg-white h-12 focus:outline-none active:outline-none  flex items-center justify-between border border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease" id="token" type="button" onClick={handleType}>
                                     <span className="pointer-events-none flex items-center gap-2 text-gray-400">
                                         Select the Scrap type   
                                     </span>
@@ -415,34 +423,22 @@ const Dashboard = () => {
 
                                 
 
-                                    <div className={` absolute border bg-white form-submenu large-dropdown px-3 py-3 shadow-md rounded-md w-full h-40 max-w-full overflow-y-auto scrollbar-change fade-in`}>
+                                    <div className={` absolute border bg-white type-menu  ${typeDropdown ? 'show' : ''} large-dropdown px-3 shadow-md rounded-md w-full h-40 max-w-full overflow-y-auto scrollbar-change fade-in z-10`}>
                                                 
                                         
                                         <div className=" py-4">
                                             
-                                            <button className="flex items-center py-2 px-1 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
-                                                <div className="flex items-center justify-center gap-2 pr-2">
-                                                    <img src="/images/metamask.png" className='h-8 w-8'/>
-                                                </div>
-                                                <div className="flex grow flex-col justify-center items-start text-left">
-                                                        <p className="text-neutral700 font-normal text-base">MetaMask</p>
-                                                </div>
+                                            <button className="flex items-center py-3 px-1 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
+                                                <p className="text-gray-700 font-normal text-base px-2">Polyethylene Terephthalate (PET)</p>
                                             </button>
-                                            <button className="flex items-center py-2 px-1 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
-                                                <div className="flex items-center justify-center gap-2 pr-2">
-                                                    <img src="/images/metamask.png" className='h-8 w-8'/>
-                                                </div>
-                                                <div className="flex grow flex-col justify-center items-start text-left">
-                                                        <p className="text-neutral700 font-normal text-base">MetaMask</p>
-                                                </div>
+                                            <button className="flex items-center py-3 px-1 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
+                                                <p className="text-gray-700 font-normal text-base px-2">High-Density Polyethylene (HDPE)</p>
                                             </button>
-                                            <button className="flex items-center py-2 px-1 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
-                                                <div className="flex items-center justify-center gap-2 pr-2">
-                                                    <img src="/images/metamask.png" className='h-8 w-8'/>
-                                                </div>
-                                                <div className="flex grow flex-col justify-center items-start text-left">
-                                                        <p className="text-neutral700 font-normal text-base">MetaMask</p>
-                                                </div>
+                                            <button className="flex items-center py-3 px-1 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
+                                                <p className="text-gray-700 font-normal text-base px-2">Polyvinyl Chloride (PVC or Vinyl)</p>
+                                            </button>
+                                            <button className="flex items-center py-3 px-1 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
+                                                <p className="text-gray-700 font-normal text-base px-2">Low-Density Polyethylene (LDPE)</p>
                                             </button>
                                         
                                         </div>
@@ -454,7 +450,7 @@ const Dashboard = () => {
                             <div className="flex justify-between items-center">                                
                                 <label className="text-gray-700 font-medium" htmlFor="token">Quantity Required</label>
                             </div>
-                            <div className="dropdown relative grow mb-4 w-full" data-large-dropdown="">
+                            <div className="dropdown relative grow  w-full" data-large-dropdown="">
                                 <button className="w-full bg-white h-12 focus:outline-none active:outline-none  flex items-center justify-between border border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease" id="token" data-large-dropdown-btn="" type="button" >
                                     <span className="pointer-events-none flex items-center gap-2 text-gray-400">
                                         What's the quantity you need
@@ -499,6 +495,10 @@ const Dashboard = () => {
                                         </div>
                                 </div>
                             
+                            </div>
+                            <div className='flex items-center justify-between'>
+                                <p className='text-sm text-gray-500'>1kg = $50</p>
+                                <p className='text-gray-700'>150kg = $7,500</p>
                             </div>
                         </div>
                         <div className="mb-3">

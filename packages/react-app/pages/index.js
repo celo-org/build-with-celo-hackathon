@@ -116,6 +116,12 @@ const Home = () => {
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div className='flex items-center justify-center mt-8 pt-8'>
+                                                <Link href='/connect-wallet'>
+                                                    <a className='text-white bg-[#DD7D37] px-12 py-3 text-sm border border-[#DD7D37] rounded-full'>Get Started as a Company</a>
+                                                </Link>
+                                            </div>
+
                                         </div>
 
                                     </TabPanel>
@@ -169,6 +175,11 @@ const Home = () => {
                                                         <p className='text-sm'>After the 48-hour cooldown period has elapsed without any disputes, you can claim your payment into your GidiScrap Celo wallet.</p>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div className='flex items-center justify-center mt-8 pt-8'>
+                                                <Link href='/signup'>
+                                                    <a className='text-white bg-[#DD7D37] px-12 py-3 text-sm border border-[#DD7D37] rounded-full'>Get Started as an Individual</a>
+                                                </Link>
                                             </div>
                             
                                         </div>
