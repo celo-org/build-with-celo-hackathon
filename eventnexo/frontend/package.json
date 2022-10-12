@@ -6,6 +6,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@celo/contractkit": "^2.2.0",
+    "@celo/react-celo": "^4.2.0",
     "@ethersproject/address": "^5.7.0",
     "@fontsource/fira-sans": "^4.5.10",
     "@fontsource/space-mono": "^4.5.10",
