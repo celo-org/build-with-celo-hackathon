@@ -1,4 +1,12 @@
-export default function Step1() {
+type Props = {
+  setUserData: Function;
+  userData: {
+    name: string;
+    avatar: string;
+  };
+};
+
+export default function Step1({ setUserData, userData }: Props) {
   return (
     <section className="bg-white dark:bg-gray-900 mt-24">
       <div className="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
@@ -15,6 +23,12 @@ export default function Step1() {
             Name
           </label>
           <input
+            onChange={(e) =>
+              setUserData({
+                ...userData,
+                name: e.target.value,
+              })
+            }
             type="text"
             name="name"
             id="name"

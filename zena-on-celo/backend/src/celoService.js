@@ -40,7 +40,7 @@ export async function rewardBTC(to, amount) {
 
 const tokenMapper = [
     {
-        name: "BTC",
+        name: "BCT",
         abi: BCT_ABI,
         provider: new CeloProvider('https://alfajores-forno.celo-testnet.org'),
         address: "0x4c5f90C50Ca9F849bb75D93a393A4e1B6E68Accb"

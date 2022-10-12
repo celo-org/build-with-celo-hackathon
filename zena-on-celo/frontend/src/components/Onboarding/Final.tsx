@@ -1,8 +1,18 @@
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
+import { useEffect } from "react";
+type Props = {
+  userData: {
+    name: string;
+    avatar: string;
+  };
+};
 
-export default function Final() {
+export default function Final({ userData }: Props) {
   const { width, height } = useWindowSize();
+  useEffect(() => {
+    localStorage.setItem("zena-session", JSON.stringify(userData));
+  });
 
   return (
     <>

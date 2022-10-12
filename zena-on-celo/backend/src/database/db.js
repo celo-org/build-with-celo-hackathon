@@ -8,6 +8,7 @@ const file = join(__dirname, './db.json')
 const adapter = new JSONFile(file)
 export const db = new Low(adapter)
 
+// in our showcase every test user session uses same user data / wallet 
 const initDB = async () => {
     db.data ||= {
         "users": [

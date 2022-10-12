@@ -5,10 +5,10 @@ import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Chapter from "./pages/Chapter";
 import WalletModal from "./components/Wallet/Modal";
-// import IpfsRouter from "ipfs-react-router";
 
 export default function App() {
-  const [isLoggedIn] = useState(true);
+  const session = localStorage.getItem("zena-session") || "";
+  const [isLoggedIn] = useState(!!session);
 
   const Start = () => {
     return (

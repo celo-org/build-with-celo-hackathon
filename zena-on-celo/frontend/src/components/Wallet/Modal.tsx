@@ -1,16 +1,26 @@
-import { CheckIcon, CurrencyDollarIcon } from "@heroicons/react/24/outline";
-import { mintState, userState, walletOpenState } from "../../utils/store";
+import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
+import { mintState, walletOpenState } from "../../utils/store";
 import { useRecoilState } from "recoil";
-import Minting from "./Minting";
-import tree from "../../images/tree.jpg"; // Tell webpack this JS file uses this image
+// import tree from "../../images/tree.jpg";
 import { Transition, Dialog } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useState, useEffect } from "react";
+import axios from "axios";
+import Content from "./Content";
 
 export default function Modal() {
   const [open, setOpen] = useRecoilState(walletOpenState);
-  const [user, setUser] = useRecoilState(userState);
   const [shouldMint, setMint] = useRecoilState(mintState);
+  const [userData, setData] = useState<any>();
+  const session = JSON.parse(localStorage.getItem("zena-session") || "");
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios("http://localhost:3001/api/users/1");
+      setData(result.data);
+    };
+
+    fetchData();
+  }, []);
   if (!open) return null;
 
   return (
@@ -47,15 +57,14 @@ export default function Modal() {
                         <div className="flex justify-between p-5 rounded-t border-b dark:border-gray-600">
                           <div className="ml-4 mt-4">
                             <h2 className="text-2xl font-bold leading-7 text-font sm:truncate sm:text-3xl sm:tracking-tight">
-                              {user.name}'s Wallet
+                              {session.name}'s Wallet
                             </h2>
 
                             <p className="mt-1 text-sm text-font-light">
-                              Öffentliche Adresse: 0x1234
+                              Öffentliche Adresse: {userData?.pubKey}
                             </p>
                           </div>
                           <h3 className="text-xl font-medium text-font dark:text-white"></h3>
-                          {/* <span>Öffentliche Adresse: 0x123456789101112</span> */}
                           <button
                             onClick={() => {
                               setMint(false);
@@ -81,54 +90,7 @@ export default function Modal() {
                             <span className="sr-only">Close modal</span>
                           </button>
                         </div>
-                        <div className="p-6">
-                          <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-5 pb-12 shadow sm:px-6 sm:pt-6">
-                            <dt>
-                              <div className="absolute rounded-md bg-green-medium p-3">
-                                <CurrencyDollarIcon
-                                  className="h-6 w-6 text-white"
-                                  aria-hidden="true"
-                                />
-                              </div>
-                              <p className="pl-14 text-sm font-medium text-font-light">
-                                Kontostand
-                              </p>
-                            </dt>
-                            <dd className="ml-16 flex items-baseline pb-6 sm:pb-7">
-                              <p className="text-2xl font-semibold text-font">
-                                0.00211 GoerliETH
-                              </p>
-                            </dd>
-                            <Minting />
-                            <div className="border-b border-gray-200 pb-5">
-                              <h3 className="text-lg font-medium leading-6 text-font">
-                                {user.name}'s NFTs
-                              </h3>
-                              <p className="mt-2 text-sm text-font-light">
-                                Hier sind alle deine geminteten oder gekauften
-                                NFTs zu sehen.
-                              </p>
-                              <p className="p-6">
-                                <div className="grid grid-cols-2 gap-2">
-                                  {Array.from(Array(user.nft)).map((x, i) => {
-                                    return (
-                                      <div className="border border-b border-indigo-300 border-opacity-25">
-                                        <img
-                                          style={{
-                                            display: "unset",
-                                            width: 200,
-                                          }}
-                                          src={tree}
-                                          alt="Baum"
-                                        />
-                                      </div>
-                                    );
-                                  })}
-                                </div>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
+                        <Content />
                       </div>
                     </div>
                   </div>
