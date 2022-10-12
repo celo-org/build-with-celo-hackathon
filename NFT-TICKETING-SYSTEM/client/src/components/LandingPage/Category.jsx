@@ -191,6 +191,31 @@ const Category = () => {
             </Button>
           </Box>
         </Box>
+        <Box mt="4%">
+          <Typography
+            color="#fff"
+            fontWeight={700}
+            fontSize={{ xs: "20px", sm: "28px", md: "36px" }}
+          >
+            {" "}
+            Your NFT, Your Ticket
+          </Typography>
+          <Grid container>
+            <Grid item xs={12} md={6}>
+              <Typography
+                color="#fff"
+                fontWeight={400}
+                fontSize={{ xs: "16px", sm: "20px", md: "24px" }}
+                lineHeight="29.05px"
+              >
+                Whether you want to create and mint, buy or sell \NFT tickets
+                for an event of your choice, MyTicket is your number one stop
+                solution. Get into the new world of NFTs where your NFT is your
+                ticket to your favorite events.
+              </Typography>
+            </Grid>
+          </Grid>
+        </Box>
       </Container>
     </Box>
   );
