@@ -1,10 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^ 0.8.2;
+// import "./joincommunity.sol";
 import "../node_modules/@openzeppelin/contracts/access/AccessControl.sol";
 import "../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 
-contract tumainiDao is Ownable,AccessControl ,ReentrancyGuard{
+
+contract tumainiDao is Ownable,AccessControl ,ReentrancyGuard {
 
 /*
 *user of the dao will be of two types Contributor and StakeHolder;
@@ -38,6 +41,8 @@ mapping(uint256 => TumainCharityProposal)private tumainicharityproposal;
 mapping(address => uint256[]) private stakeholderVotes;
 mapping(address => uint256) private contributors;
 mapping(address => uint256) private stakeholders;
+IERC20 tokens;
+
 //evets
 event ContributionReceived(address indexed fromAddress, uint256 amount);
 event NewCharityProposal(address indexed proposer, uint256 amount);
@@ -46,6 +51,10 @@ event PaymentTransfered(
     address indexed charityAddress,
     uint256 amount
 );
+constructor(address _tokens){
+    tokens= IERC20(_tokens);
+    
+}
 
 modifier onlyStakeHolder(string memory message){
     require(hasRole(STAKEHOLDER_ROLE,msg.sender),message);
@@ -62,6 +71,7 @@ function addMember()public{
 /**
 *@dev create proposal*/
 function createProposal(string calldata description,address charityAddress,uint256 amount)external onlyStakeHolder("only stakeHolders are allowed to create a proposal"){
+   require(tokens.balanceOf(msg.sender) >= 9 ,"less tumain token please purchase");
     uint proposalid= numOfProposals ++;
     TumainCharityProposal storage proposal = tumainicharityproposal[proposalid];
     proposal.id = proposalid;
@@ -70,6 +80,7 @@ function createProposal(string calldata description,address charityAddress,uint2
        proposal.charityAddress = payable(charityAddress);
         proposal.amount = amount;
          proposal.livePeriod = block.timestamp + minimumVotingPeriod;
+        
          emit NewCharityProposal(msg.sender,amount);
 
 }
@@ -90,6 +101,13 @@ function votable(TumainCharityProposal storage tumainiProposal)private{
         if(tumainiProposal.id == tempVotes[votes]){
         revert("This stakeholder has already voted on this proposal");
     }}
+
+}
+//the contract call
+//contribute function
+function contributeToCharity(uint proposalid)public payable{
+    TumainCharityProposal storage tumainproposal = tumainicharityproposal[proposalid];
+    tumainproposal.charityAddress.transfer(msg.value);
 }
 function transferToCharity(uint256 proposalid)external onlyStakeHolder("only StakeHolders are allowed to make payments"){
     TumainCharityProposal storage tumainiProposal = tumainicharityproposal[proposalid];
@@ -112,17 +130,17 @@ function transferToCharity(uint256 proposalid)external onlyStakeHolder("only Sta
 /*
 *@dev making stakeholders
 */
-function makeStakeholder(uint256 amount)external payable{
+function makeStakeholder()external payable{
     address account = msg.sender;
-    uint256 amountContributed = amount * 1 ether;
+    uint256 amountContributed = msg.value;
     if(!hasRole(STAKEHOLDER_ROLE,account)){
         uint256 totalContributed = contributors[account] + amountContributed;
-        if(totalContributed >= 2 ether){
+        if(totalContributed >= msg.value){
             stakeholders[account] = totalContributed;
             contributors[account] = totalContributed;
             _setupRole(STAKEHOLDER_ROLE,account);
             _setupRole(CONTRIBUTOR_ROLE,account);
-            payable(address(this)).transfer(amountContributed);
+            payable(address(this)).transfer(msg.value);
 
         }else{
             contributors[account] += amountContributed;
@@ -174,12 +192,14 @@ function isContributor() public view returns (bool) {
 function withDraw()public    onlyOwner {
     payable(msg.sender).transfer(address(this).balance);
 }
-receive() external payable {
-     //   emit ContributionReceived(msg.sender, msg.value);
-}
-fallback() external payable{
-  //  emit ContributionReceived(msg.sender, msg.value);
+// receive() external payable {
+//      //   emit ContributionReceived(msg.sender, msg.value);
+// }
+// fallback() external payable{
+//   //  emit ContributionReceived(msg.sender, msg.value);
 
+// }
+function bal()public view returns(uint){
+    return tokens.balanceOf(msg.sender); 
 }
-
 }
