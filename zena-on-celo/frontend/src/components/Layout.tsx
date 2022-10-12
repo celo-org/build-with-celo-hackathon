@@ -2,10 +2,9 @@ import { Disclosure } from "@headlessui/react";
 import { WalletIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { userState, walletOpenState } from "../utils/store";
+import { walletOpenState } from "../utils/store";
 
 export default function App({ children }: any) {
-  const [user, setUser] = useRecoilState(userState);
   const [isWalletOpen, setWalletOpen] = useRecoilState(walletOpenState);
   return (
     <>
