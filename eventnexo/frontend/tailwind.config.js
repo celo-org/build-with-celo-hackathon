@@ -42,7 +42,13 @@ module.exports = {
       maxWidth: {
         "8xl": "1440px",
       },
+      colors: {
+        primary: "#00D26D",
+        secondary: "#FFCB5C",
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+  ],
 };

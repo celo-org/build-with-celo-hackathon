@@ -36,7 +36,7 @@ export default function NewHeader() {
       }
       as="header"
     >
-      <div className="xl:px-20 md:px-6 !px-0 lg:!px-10 max-w-full mx-auto md:max-w-screen-7xl lg:max-w-screen-2xl 2xl:max-w-screen-3xl">
+      <div className="xl:px-20 md:px-6 !px-8 lg:!px-10 max-w-full mx-auto md:max-w-screen-7xl lg:max-w-screen-2xl 2xl:max-w-screen-3xl">
         <div className="flex justify-between items-center py-6 lg:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex">
             <Link href="/" passHref>
@@ -128,6 +128,7 @@ export default function NewHeader() {
               </svg>
             </SecondaryButton>
             <PrimaryButton
+              background="bg-secondary"
               title="Connect Wallet"
               onPressed={() => console.log(0)}
             />
@@ -180,7 +181,7 @@ export default function NewHeader() {
               </div>
             </div>
             <div className="py-6 px-5 space-y-6">
-              <div className="grid grid-cols-2 gap-y-4 gap-x-8">
+              {/* <div className="grid grid-cols-2 gap-y-4 gap-x-8">
                 <Link href="/auction" passHref>
                   <a
                     className={
@@ -234,7 +235,7 @@ export default function NewHeader() {
                 <button className="bg-black whitespace-nowrap inline-flex items-center justify-center px-3 py-2 border border-transparent shadow-sm text-sm text-white">
                   Connect wallet
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         </Popover.Panel>
