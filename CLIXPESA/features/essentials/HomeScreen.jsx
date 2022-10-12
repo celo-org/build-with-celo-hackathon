@@ -20,6 +20,7 @@ import { NativeTokensByAddress } from '../wallet/tokens'
 import { fetchBalances } from '../wallet/walletSlice'
 import { getWallets } from '../wallet/walletsManager'
 import { shortenAddress } from '../../blockchain/utils/addresses'
+import { utils } from 'ethers'
 
 export default function HomeScreen({ navigation }) {
   const dispatch = useDispatch()
@@ -52,9 +53,21 @@ export default function HomeScreen({ navigation }) {
     console.log(result)
   }
 
+  const handleGetRoscaData = async () => {
+    const roscaAddr = '0x96F3FC4FA0408F872833ed0AA930fED675ac81a8' //'0x536a2b859fEF47C31B7C535D57F70C40416A1ac3'
+    const result = await celoHelper.smartContractCall('Rosca', {
+      contractAddress: roscaAddr,
+      method: 'getDetails',
+      methodType: 'read',
+      params: [],
+    })
+
+    console.log(utils.formatUnits(result.data[2].toString(), 18))
+  }
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <Box flex={1} bg="muted.100" alignItems="center">
+      <Box flex={1} bg="muted.50" alignItems="center">
         <Box mt="2" bg="#fff" width="95%" rounded="2xl" shadow="none">
           <HStack justifyContent="space-between">
             <Stack mx="4" my="3">
@@ -138,8 +151,8 @@ export default function HomeScreen({ navigation }) {
         {/* Saving Spaces/Vault/Earnings */}
         {/* Rewards and Offers */}
 
-        {/* Test buttons 
-        <Button onPress={() => handleGetWallets()}>Show Wallet List</Button>*/}
+        {/*Test buttons*/}
+        <Button onPress={() => handleGetRoscaData()}>Show Rosca Data</Button>
       </Box>
     </ScrollView>
   )

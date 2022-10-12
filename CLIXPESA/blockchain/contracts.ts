@@ -3,6 +3,8 @@ import { ABI as Erc20Abi } from './Abis/erc20'
 import { ABI as Erc721Abi } from './Abis/erc721'
 import { ABI as CeloTokenAbi } from './Abis/celoToken'
 import { ABI as StableTokenAbi } from './Abis/stableToken'
+import { ABI as SpacesAbi } from './Abis/spaces'
+import { ABI as RoscaAbi } from './Abis/rosca'
 import { getSigner } from './signer'
 import { CeloContract, config } from './configs/celo.config'
 import { areAddressesEqual, normalizeAddress } from './utils/addresses'
@@ -18,6 +20,17 @@ export function getContract(c: CeloContract) {
   const abi = getContractAbi(c)
   const contract = new Contract(address, abi, signer)
   contractCache[c] = contract
+  return contract
+}
+
+export function getCustomContract(cc: CeloContract, addr: string) {
+  const cachedContract = contractCache[cc]
+  if (cachedContract) return cachedContract
+  const signer = getSigner()
+  const address = addr
+  const abi = getContractAbi(cc)
+  const contract = new Contract(address, abi, signer)
+  contractCache[cc] = contract
   return contract
 }
 
@@ -48,6 +61,10 @@ function getContractAbi(c: CeloContract) {
     case CeloContract.StableTokenEUR:
     case CeloContract.StableTokenBRL:
       return StableTokenAbi
+    case CeloContract.Spaces:
+      return SpacesAbi
+    case CeloContract.Rosca:
+      return RoscaAbi
     default:
       throw new Error(`No ABI for contract ${c}`)
   }

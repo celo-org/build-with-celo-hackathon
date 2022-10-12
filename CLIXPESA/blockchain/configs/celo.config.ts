@@ -16,6 +16,9 @@ export enum CeloContract {
   StableTokenEUR = 'StableTokenEUR',
   StableTokenBRL = 'StableTokenBRL',
   Validators = 'Validators',
+  //Clixpesa
+  Spaces = 'Spaces',
+  Rosca = 'Rosca',
 }
 
 export enum CeloChain {
@@ -63,6 +66,9 @@ const configMainnet: Config = {
     [CeloContract.StableTokenEUR]: '0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73',
     [CeloContract.StableTokenBRL]: '0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787',
     [CeloContract.Validators]: '0xaEb865bCa93DdC8F47b8e29F40C5399cE34d0C58',
+    //Clixpesa
+    [CeloContract.Spaces]: '0x03Ac440E2a71b7A425Fdb94E9e07B76e367cF11F',
+    [CeloContract.Rosca]: '0x0000000000000000000000000000000000000000',
   },
   nomspaceRegistry: '0x3DE51c3960400A0F752d3492652Ae4A0b2A36FB3',
   ensCoinTypeValue: 2147525868, // https://github.com/ensdomains/address-encoder/issues/329
@@ -93,6 +99,9 @@ const configAlfajores: Config = {
     [CeloContract.StableTokenEUR]: '0x10c892A6EC43a53E45D0B916B4b7D383B1b78C0F',
     [CeloContract.StableTokenBRL]: '0xE4D517785D091D3c54818832dB6094bcc2744545',
     [CeloContract.Validators]: '0x9acF2A99914E083aD0d610672E93d14b0736BBCc',
+    //Clixpesa
+    [CeloContract.Spaces]: '0x03Ac440E2a71b7A425Fdb94E9e07B76e367cF11F',
+    [CeloContract.Rosca]: '0x0000000000000000000000000000000000000000',
   },
   nomspaceRegistry: '0x40cd4db228e9c172dA64513D0e874d009486A9a9',
 }

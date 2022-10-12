@@ -1,9 +1,9 @@
 import { Wallet, BigNumber, BigNumberish, Contract, utils } from 'ethers'
 import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
-import { config } from '../configs/celo.config'
+import { CeloContract, config } from '../configs/celo.config'
 import { getProvider } from '../provider'
 import { setSigner } from '../signer'
-import { getContractByAddress } from '../contracts'
+import { getContractByAddress, getContract, getCustomContract } from '../contracts'
 import { CELO_DERIVATION_PATH } from '../utils/consts'
 import {
   CeloBalancePayload,
@@ -98,6 +98,48 @@ const generateWalletFromMnemonic = async (mnemonic: string, derivationPath?: str
   })
 }
 
+const smartContractCall = async (contractName: CeloContract, args: any) => {
+  let contract: Contract | null
+  if (args.contractAddress) {
+    contract = getCustomContract(contractName, args.contractAddress)
+  } else {
+    contract = getContract(contractName)
+  }
+
+  //const nonce = await signer.getTransactionCount('pending')
+  if (!contract) throw new Error(`No contract found for name: ${contractName}`)
+  try {
+    let tx
+    let overrides = {} as any
+
+    if (args.methodType === 'read') {
+      overrides = {}
+    } else if (args.methodType === 'write') {
+      overrides = {
+        gasPrice: utils.parseUnits(args.gasPrice, 'gwei'),
+        nonce: args.nonce,
+        value: args.value ? utils.parseEther(args.value.toString()) : 0,
+      }
+
+      if (args.gasLimit) {
+        overrides.gasLimit = args.gasLimit
+      }
+    }
+
+    if (args.params.length > 0) {
+      tx = await contract?.[args.method](...args.params, overrides)
+    } else {
+      tx = await contract?.[args.method](overrides)
+    }
+
+    return successResponse({
+      data: tx,
+    })
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   getBalances,
   getTokenBalance,
@@ -110,5 +152,5 @@ export default {
   //getEncryptedJsonFromPrivateKey,
   //getWalletFromEncryptedJson,
   //getTokenInfo,
-  //smartContractCall,
+  smartContractCall,
 }

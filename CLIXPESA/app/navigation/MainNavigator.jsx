@@ -11,7 +11,13 @@ import { HomeScreen, DummyScreen } from 'clixpesa/features/essentials'
 import { AllTokensScreen } from 'clixpesa/features/wallet'
 import { AccountScreen } from 'clixpesa/features/account'
 import { LoansHomeScreen } from 'clixpesa/features/microloans'
-import { SpacesHomeScreen } from 'clixpesa/features/spaces'
+import {
+  SpacesHomeScreen,
+  RoscaHomeScreen,
+  SelectContactsScreen,
+  CustomizeGroupScreen,
+  SetRoscaGoalScreen,
+} from 'clixpesa/features/spaces'
 import { useSelector } from 'react-redux'
 
 const MainStack = createNativeStackNavigator()
@@ -26,6 +32,10 @@ export default function MainNavigator() {
       />
       <MainStack.Group screenOptions={{ presentation: 'modal' }}>
         <MainStack.Screen name="Account" component={AccountScreen} />
+        <MainStack.Screen name="RoscaHome" component={RoscaHomeScreen} />
+        <MainStack.Screen name="selectContacts" component={SelectContactsScreen} />
+        <MainStack.Screen name="customizeGroup" component={CustomizeGroupScreen} />
+        <MainStack.Screen name="setRoscaGoal" component={SetRoscaGoalScreen} />
         <MainStack.Screen name="DummyModal" component={DummyScreen} />
         <MainStack.Screen
           name="AllTokens"
