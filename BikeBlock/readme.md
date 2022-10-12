@@ -17,17 +17,20 @@ Owners will also have the ablility to report a stolen bike and post a reward for
 ## Final Results
 
 Smart Contracts
-    - ERC721 
-    - Utilities 
-        - ERC721Enumerable
-        - ERC721URIStorage
-        - Pausable
-        - Ownable
-        - Counters
+
+- ERC721 
+
+- Utilities 
+    - ERC721Enumerable
+    - ERC721URIStorage
+    - Pausable
+    - Ownable
+    - Counters
 
 Dapps 
-    - React js
-    - iOS swiftUI
+
+- React js
+    
 
 Build Plan
 
