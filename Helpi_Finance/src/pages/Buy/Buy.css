@@ -1,0 +1,20 @@
+.BuyHLPTHLP {
+  background: #101124;
+  justify-content: space-between;
+}
+
+.BuyHLPTHLP-container {
+  padding: 0 0 3.1rem 0;
+  width: 100%;
+}
+
+.BuyHLPTHLP-container .section-title-content {
+  justify-content: flex-start;
+}
+
+@media (max-width: 400px) {
+  .BuyHLPTHLP-container {
+    padding-left: 1.6rem !important;
+    padding-right: 1.6rem !important;
+  }
+}

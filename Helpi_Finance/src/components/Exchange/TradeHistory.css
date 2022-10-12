@@ -1,0 +1,10 @@
+.TradeHistory-row {
+  font-size: 1.4rem;
+  padding: 1.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.TradeHistory-time {
+  font-size: 1.25rem;
+  margin-bottom: 0.155rem;
+}

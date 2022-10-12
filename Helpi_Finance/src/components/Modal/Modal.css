@@ -1,0 +1,97 @@
+.Modal {
+  position: fixed;
+  z-index: 900;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+}
+
+.Modal-scrollable .Modal-content .Modal-body {
+  overscroll-behavior: smooth;
+  max-height: calc(80vh - 5.5rem);
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.Modal-backdrop {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.Modal-content {
+  z-index: 20;
+  position: relative;
+  max-width: 100%;
+  max-height: 90vh;
+  overflow: auto;
+  background: #16182e;
+  border-radius: 4px;
+}
+
+.divider {
+  border-bottom: 1px solid #ffffff29;
+  margin-bottom: 1.5rem;
+}
+
+.Modal.non-scrollable .Modal-content {
+  overflow: visible;
+}
+
+.Modal-title-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1.5rem;
+}
+.Modal-body {
+  margin: 1.5rem;
+}
+.Modal-body::-webkit-scrollbar {
+  width: 0.6rem;
+}
+
+.Modal-body::-webkit-scrollbar-track {
+  background-color: #1c1c1c;
+  border-radius: 155rem;
+}
+
+.Modal-body::-webkit-scrollbar-thumb {
+  background-color: #949393;
+  border-radius: 155rem;
+}
+
+.Modal-title {
+  text-align: left;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.Modal-close-button {
+  text-align: right;
+}
+
+.Modal-close-icon {
+  opacity: 0.6;
+  cursor: pointer;
+  text-align: right;
+  display: inline-block;
+}
+
+.Modal-close-icon:hover {
+  opacity: 0.9;
+}
+
+.Modal-note {
+  margin-bottom: 1.5rem;
+  margin-top: 0.8rem;
+}
