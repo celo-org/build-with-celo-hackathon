@@ -14,7 +14,7 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const run3 = await ethers.getContractFactory('RUN3Token')
+  const run3 = await ethers.getContractFactory('Run3Token')
   const run3toDep = await run3.deploy()
 
   await run3toDep.deployed()

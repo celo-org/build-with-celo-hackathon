@@ -11,6 +11,12 @@ export const colors = {
 }
 
 export const globalStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   primaryColor: {
     color: colors.primary,
   },
@@ -42,6 +48,7 @@ export const globalStyles = StyleSheet.create({
   },
   lightGreenBg: {
     backgroundColor: colors.lightGreen,
+    borderColor: colors.lightGreen,
   },
   yellowBg: {
     backgroundColor: colors.yellow,

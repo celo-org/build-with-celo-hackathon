@@ -17,7 +17,7 @@ contract Run3Token is ERC20, Ownable {
     }
 
     function mint(address recipient, uint256 amount) public onlyOwner {
-        require((_totalSupply + amount) <= MAX_SUPPLY, "Max supply was reached");
+      //  require((totalSupply + amount) <= MAX_SUPPLY, "Max supply was reached");
         _mint(recipient, amount);
     }
 }

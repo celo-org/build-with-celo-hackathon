@@ -19,7 +19,7 @@ import { CLIENT_ID, NET_PROVIDER } from 'react-native-dotenv'
 import { styles } from './styles'
 import { useWalletProvider } from '../contexts/WalletContext'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { globalStyles } from '../globalStyles'
+import { globalStyles } from '../utils/globalStyles'
 
 global.Buffer = global.Buffer || Buffer
 
