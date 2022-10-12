@@ -1,13 +1,9 @@
-# Sample Hardhat Project
+# Guess It!: Puzzle game built on top of Celo
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+This game is a simple puzzle game where answer and reward for question are stored on-chain. Answer will be hashed using Keccak256 and that hash is stored on-chain.
 
-Try running some of the following tasks:
+Current rewards are just in CUSD but in future other tokens will be added. Adding these tokens will give players additional incentives.
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
-```
+## Architecture of Guess It
+
+![Image explaining how application will work](/assets/arch.png)
