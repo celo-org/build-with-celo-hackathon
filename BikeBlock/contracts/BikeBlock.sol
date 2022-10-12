@@ -61,21 +61,21 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
 
 
     // Maps tokenId to state of bike
-    mapping(uint256 => State) public bikeState;
+    mapping(uint256 => State) private bikeState;
 
     // Map bikes serial hash to tokenId (NFT)
-    mapping(bytes32 =>  uint256) public bikes;
+    mapping(bytes32 =>  uint256) private bikes;
 
     // Map tokenId to stolen bike info
-    mapping(uint256 => Stolen) public stolenState;
+    mapping(uint256 => Stolen) private stolenState;
 
     // Array of stolen bikes 
-    uint256[] stolenBikes;
+    uint256[] private stolenBikes;
 
     // Mapping of reportId sent in buy user
     mapping(bytes32 => RecoveryReport) private recovery;
     // Mapping of tokenId to array of reportId's
-    mapping(uint256 => bytes32[]) public reports;
+    mapping(uint256 => bytes32[]) private reports;
 
     // Events
     event ReportStolenBike(uint256 tokenId);
@@ -180,6 +180,46 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
     }
 
 
+/***************** Bike Stolen **********************/
+
+    /**
+     * @dev setStolenBike allow bike owner to set bike as stolen
+     *
+     * TODO add time base reward system
+     * TODO Mover over to celo escrow contract
+     *      - If bike was not found within a certain time frame reward is returned back to owner
+     *
+     * @param tokenId id of token (NFT) 
+     * @param _time time bike was stolen
+     * @param _location location bike was stolen (Might change to address)
+     * @param _bountyPayOut amount set for bike bounty
+     *
+     */
+
+    function setStolenBike(uint256 tokenId,uint256 _time,Coordinate memory _location, uint256 _bountyPayOut) 
+    public
+    whenNotPaused
+    {
+        // Check if token is already set stolen
+        require(!isStolen(tokenId),"State is already stolen");
+        require(isTokenOwner(msg.sender,tokenId),"Not token owner");
+        require(_token.allowance(msg.sender, address(this)) >= _bountyPayOut, "Insufficient allowance");
+        //require(ercToken.balanceOf(msg.sender) < _bountyPayOut,"Insufficient funds for bounty price.");
+        require(_token.transferFrom(msg.sender,address(this),_bountyPayOut),"transfer Failed");
+
+        Stolen memory stolenInfo;
+        stolenInfo.time = _time;
+        stolenInfo.location = _location;
+        stolenInfo.bountyPayOut = _bountyPayOut;
+        stolenInfo.index = stolenBikes.length;
+        // Set info in stolenState 
+        stolenState[tokenId] = stolenInfo; 
+        bikeState[tokenId] = State.Stolen;
+        // Push to stolenBikes array
+        stolenBikes.push(tokenId);         
+    }
+
+
 
     /**
      * @dev returns bool if given token is in stolen state
@@ -196,7 +236,41 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
     }
 
 
-    /***************** Bike Recovery **********************/
+    function getStolenBikeAtIndex(uint256 _startIndex,uint256 _count)
+    public
+    view
+    returns(uint256[] memory)
+    {
+        uint256 end = _startIndex + _count;
+        uint256[] memory tokens = new uint256[](_count); 
+        uint256 newIndex = 0;
+        for(uint256 t = _startIndex; t < end; t++){
+            tokens[newIndex] = stolenBikes[_startIndex];
+            newIndex++;
+        }
+        return(tokens);
+    }
+ 
+
+    function getStolenBikeCount()
+    public
+    view
+    returns(uint256)
+    {
+        return(stolenBikes.length);
+    }
+
+
+    function getStolenInfo(uint256 _tokenId)
+    public
+    view
+    returns(Stolen memory)
+    {
+        return(stolenState[_tokenId]);
+    }
+
+
+/***************** Bike Recovery **********************/
 
     /**
     *@dev returns amount of reports for a token
@@ -236,41 +310,6 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
     returns( RecoveryReport memory)
     {
         return(recovery[_reportId]);
-    }
-
-    /**
-     * @dev setStolenBike allow bike owner to set bike as stolen
-     *
-     * TODO add time base reward system
-     * TODO Mover over to celo escrow contract
-     *      - If bike was not found within a certain time frame reward is returned back to owner
-     *
-     * @param tokenId id of token (NFT) 
-     * @param _time time bike was stolen
-     * @param _location location bike was stolen (Might change to address)
-     * @param _bountyPayOut amount set for bike bounty
-     *
-     */
-
-    function setStolenBike(uint256 tokenId,uint256 _time,Coordinate memory _location, uint256 _bountyPayOut) 
-    public
-    whenNotPaused
-    {
-        require(isTokenOwner(msg.sender,tokenId),"Not token owner");
-        require(_token.allowance(msg.sender, address(this)) >= _bountyPayOut, "Insufficient allowance");
-        //require(ercToken.balanceOf(msg.sender) < _bountyPayOut,"Insufficient funds for bounty price.");
-        require(_token.transferFrom(msg.sender,address(this),_bountyPayOut),"transfer Failed");
-
-        Stolen memory stolenInfo;
-        stolenInfo.time = _time;
-        stolenInfo.location = _location;
-        stolenInfo.bountyPayOut = _bountyPayOut;
-        stolenInfo.index = stolenBikes.length;
-        // Set info in stolenState 
-        stolenState[tokenId] = stolenInfo; 
-        bikeState[tokenId] = State.Stolen;
-        // Push to stolenBikes array
-        stolenBikes.push(tokenId);         
     }
 
 
