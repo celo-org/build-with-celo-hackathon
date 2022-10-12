@@ -193,7 +193,7 @@ function Home() {
         </div>
       </div>
       {/* Our Mission ------------------- */}
-      <div className="mt-24 md:flex xl:px-16 px-12 py-20 2xl:mx-auto 2xl:container relative z-40">
+      <div className="mt-40 md:flex xl:px-16 px-12 py-20 2xl:mx-auto 2xl:container relative z-40">
         <div className="relative lg:w-1/2 sm:w-96 xl:h-3/6 h-80">
           <img
             src="https://i.ibb.co/4g1D9cv/imgslider1.png"
@@ -225,10 +225,10 @@ function Home() {
         </div>
       </div>
       {/* Our Achievements -------------- */}
-      <div className="px-16 pb-24">
+      <div className="px-16 pb-40 mt-24">
         <h1
           id="roadmap"
-          className="xl:text-4xl text-3xl text-center text-primary font-extrabold py-6 sm:w-4/6 w-5/6 mx-auto black-bruno"
+          className="xl:text-5xl text-4xl text-center text-primary font-extrabold py-6 sm:w-4/6 w-5/6 mx-auto black-bruno"
         >
           {/* <span className="text-xl better-brush">Paste You Heading Here</span> */}
           Our Achievements
@@ -236,20 +236,22 @@ function Home() {
         <div className="flex flex-col md:grid grid-cols-9 mx-auto py-2 text-blue-50">
           {/* <!-- left --> */}
           <div className="flex flex-row-reverse md:contents">
-            <div className="col-start-1 col-end-5 p-4 border border-primary-light bg-primary-dull rounded-xl my-4 ml-auto shadow-md w-11/12">
-              <p className="leading-tight text-justify text-sm text-secondary mb-1 ">APRIL 2021</p>
+            <div className="col-start-1 col-end-5 p-8 border border-primary-light bg-primary-dull rounded-xl my-4 ml-auto shadow-md w-11/12">
+              <p className="leading-tight text-justify text-lg text-secondary mb-1 ">APRIL 2021</p>
               {/* <h3 className="font-semibold text-xl mb-4 text-secondary black-bruno">
               Bonds
               <span className="text-lg better-brush">:</span>
             </h3> */}
-              <p className="leading-tight text-justify">Third prize in Gitcoin Binance Smart Chain Hackathon</p>
+              <p className="leading-tight text-justify text-2xl">
+                Third prize in Gitcoin Binance Smart Chain Hackathon
+              </p>
             </div>
             <div className="col-start-5 col-end-6 md:mx-auto relative mr-10">
               <div className="h-full w-6 flex items-center justify-center">
                 <div className="h-full w-1 bg-primary-light rounded-t-full pointer-events-none"></div>
               </div>
-              <div className="w-8 h-8 absolute top-1/2 -mt-4 -ml-1 rounded-full bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple shadow flex items-center justify-center">
-                <RiTrophyLine className="text-primary-dark text-xl" />
+              <div className="w-16 h-16 absolute top-1/2 -mt-8 -ml-5 rounded-full bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple shadow flex items-center justify-center">
+                <RiTrophyLine className="text-primary-dark text-2xl" />
               </div>
             </div>
           </div>
@@ -259,34 +261,34 @@ function Home() {
               <div className="h-full w-6 flex items-center justify-center">
                 <div className="h-full w-1 bg-primary-light pointer-events-none"></div>
               </div>
-              <div className="w-8 h-8 absolute top-1/2 -mt-4 -ml-1 rounded-full bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple shadow flex items-center justify-center">
-                <RiTrophyLine className="text-primary-dark text-xl" />
+              <div className="w-16 h-16 absolute top-1/2 -mt-8 -ml-5 rounded-full bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple shadow flex items-center justify-center">
+                <RiTrophyLine className="text-primary-dark text-2xl" />
               </div>
             </div>
-            <div className="col-start-6 col-end-10 p-4 rounded-xl my-4 mr-auto shadow-md border  border-primary-light bg-primary-dull w-11/12">
-              <p className="leading-tight text-justify text-sm text-secondary mb-1 ">MAY 2021</p>
+            <div className="col-start-6 col-end-10 p-8 rounded-xl my-4 mr-auto shadow-md border  border-primary-light bg-primary-dull w-11/12">
+              <p className="leading-tight text-justify text-lg text-secondary mb-1 ">MAY 2021</p>
               {/* <h3 className="font-semibold text-xl mb-4 text-secondary black-bruno">
               Staking Pools <span className="text-lg better-brush">:</span>
             </h3> */}
-              <p className="leading-tight text-justify">Best LatAm Team Gitcoin Celo Mobilize Hackathon</p>
+              <p className="leading-tight text-justify text-2xl">Best LatAm Team Gitcoin Celo Mobilize Hackathon</p>
             </div>
           </div>
           {/* <!-- left --> */}
           <div className="flex flex-row-reverse md:contents">
-            <div className="col-start-1 col-end-5 p-4 rounded-xl my-4 ml-auto shadow-md border  border-primary-light bg-primary-dull w-11/12">
-              <p className="leading-tight text-justify text-sm text-secondary mb-1 ">JUNE 2021</p>
+            <div className="col-start-1 col-end-5 p-8 rounded-xl my-4 ml-auto shadow-md border  border-primary-light bg-primary-dull w-11/12">
+              <p className="leading-tight text-justify text-lg text-secondary mb-1 ">JUNE 2021</p>
               {/* <h3 className="font-semibold text-xl mb-4 text-secondary black-bruno">
               Vesting
               <span className="text-lg better-brush ">:</span>
             </h3> */}
-              <p className="leading-tight text-justify ">Runners-up Degen VC Gitcoin Hackathon</p>
+              <p className="leading-tight text-justify  text-2xl">Runners-up Degen VC Gitcoin Hackathon</p>
             </div>
             <div className="col-start-5 col-end-6 md:mx-auto relative mr-10">
               <div className="h-full w-6 flex items-center justify-center">
                 <div className="h-full w-1 bg-primary-light pointer-events-none"></div>
               </div>
-              <div className="w-8 h-8 absolute top-1/2 -mt-4 -ml-1 rounded-full bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple shadow flex items-center justify-center">
-                <RiTrophyLine className="text-primary-dark text-xl" />
+              <div className="w-16 h-16 absolute top-1/2 -mt-8 -ml-5 rounded-full bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple shadow flex items-center justify-center">
+                <RiTrophyLine className="text-primary-dark text-2xl" />
               </div>
             </div>
           </div>
@@ -296,16 +298,16 @@ function Home() {
               <div className="h-full w-6 flex items-center justify-center">
                 <div className="h-full w-1 bg-primary-light pointer-events-none rounded-b-full"></div>
               </div>
-              <div className="w-8 h-8 absolute top-1/2 -mt-4 -ml-1 rounded-full bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple shadow flex items-center justify-center">
-                <RiTrophyLine className="text-primary-dark text-xl" />
+              <div className="w-16 h-16 absolute top-1/2 -mt-8 -ml-5 rounded-full bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple shadow flex items-center justify-center">
+                <RiTrophyLine className="text-primary-dark text-2xl" />
               </div>
             </div>
-            <div className="col-start-6 col-end-10 p-4 rounded-xl my-4 mr-auto shadow-md border border-primary-light bg-primary-dull w-11/12">
-              <p className="leading-tight text-justify text-sm text-secondary mb-1 ">NOVEMBER 2021</p>
+            <div className="col-start-6 col-end-10 p-8 rounded-xl my-4 mr-auto shadow-md border border-primary-light bg-primary-dull w-11/12">
+              <p className="leading-tight text-justify text-lg text-secondary mb-1 ">NOVEMBER 2021</p>
               {/* <h3 className="font-semibold text-xl mb-4 text-secondary black-bruno">
               Contribute <span className="text-lg better-brush">:</span>
             </h3> */}
-              <p className="leading-tight text-justify ">Mission-alligned Team in Celo Startup Pathway</p>
+              <p className="leading-tight text-justify text-2xl">Mission-alligned Team in Celo Startup Pathway</p>
             </div>
           </div>
         </div>
@@ -314,8 +316,8 @@ function Home() {
       <div className="md:flex xl:px-16 px-12 py-12 2xl:mx-auto 2xl:container relative z-40">
         <div className="md:w-1/2 xl:mr-32 md:mr-20 my-auto flex flex-col justify-between">
           <div>
-            <h1 className="text-2xl font-semibold xl:leading-loose text-gray-300">What is Vesting?</h1>
-            <p className="text-base font-medium leading-6 my-4 text-gray-400">
+            <h1 className="text-4xl font-semibold xl:leading-loose text-gray-300">What is Vesting?</h1>
+            <p className="text-2xl font-normal leading-9 my-4 text-gray-400">
               Vesting protocol allows user to claim their rewards in a periodic manner rather than allowing a massive
               cash-out in order to prevent big players (aka "Whales") from crashing the Native Helpi token through
               massive token dumps. This protects the value of the token and provide stability to the users.
@@ -331,23 +333,23 @@ function Home() {
         </div>
       </div>
       {/* Team -------------------------- */}
-      <div className="py-24">
-        <h1 className="xl:text-4xl text-3xl text-center text-primary font-extrabold pb-2 sm:w-4/6 w-5/6 mx-auto black-bruno">
+      <div className="py-24 mt-24">
+        <h1 className="xl:text-5xl text-4xl text-center text-primary font-extrabold pb-2 sm:w-4/6 w-5/6 mx-auto black-bruno">
           Our Amazing Team
         </h1>
-        <p className="text-xl text-center pb-12">The team with a vision.</p>
+        <p className="text-2xl text-center pb-12 pt-2">The team with a vision.</p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-12 px-16 md:px-32">
           {/* card 1 */}
           <div className="flex flex-col justify-center max-w-xs mx-auto p-6 shadow-md rounded-xl ">
             <img
               src={Aun}
               alt="Sebs"
-              className="w-28 h-28 mx-auto rounded-full dark:bg-gray-500 aspect-square hover:scale-110 transition-all duration-200 ease-in-out"
+              className="w-52 h-52 mx-auto rounded-full dark:bg-gray-500 aspect-square hover:scale-110 transition-all duration-200 ease-in-out"
             />
             <div className="space-y-4 text-center divide-y divide-gray-700">
               <div className="my-2 space-y-1">
-                <h2 className="text-md md:text-lg font-semibold ">Aun Shahbaz</h2>
-                <p className="px-5 text-xs text-secondary">BLOCKCHAIN DEVELOPER</p>
+                <h2 className="text-xl md:text-2xl font-semibold">Aun Shahbaz</h2>
+                <p className="px-5 text-lg text-secondary">BLOCKCHAIN DEVELOPER</p>
               </div>
               <div className="flex justify-center pt-2 space-x-4 align-center">
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}{" "}
@@ -384,12 +386,12 @@ function Home() {
             <img
               src={Brindrajsinh}
               alt="Brindrajsinh"
-              className="w-28 h-28 mx-auto rounded-full bg-center bg-cover object-contain aspect-square hover:scale-110 transition-all duration-200 ease-in-out"
+              className="w-52 h-52 mx-auto rounded-full bg-center bg-cover object-contain aspect-square hover:scale-110 transition-all duration-200 ease-in-out"
             />
             <div className="space-y-4 text-center divide-y divide-gray-700">
               <div className="my-2 space-y-1">
-                <h2 className="text-md md:text-lg font-semibold ">Brindrajsinh</h2>
-                <p className="px-5 text-xs text-secondary">BLOCKCHAIN DEVELOPER</p>
+                <h2 className="text-xl md:text-2xl font-semibold">Brindrajsinh</h2>
+                <p className="px-5 text-lg text-secondary">BLOCKCHAIN DEVELOPER</p>
               </div>
               <div className="flex justify-center pt-2 space-x-4 align-center">
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}{" "}
@@ -426,12 +428,12 @@ function Home() {
             <img
               src={Felipe}
               alt="Felipe"
-              className="w-28 h-28 mx-auto rounded-full dark:bg-gray-500 aspect-square hover:scale-110 transition-all duration-200 ease-in-out"
+              className="w-52 h-52 mx-auto rounded-full dark:bg-gray-500 aspect-square hover:scale-110 transition-all duration-200 ease-in-out"
             />
             <div className="space-y-4 text-center divide-y divide-gray-700">
               <div className="my-2 space-y-1">
-                <h2 className="text-md md:text-lg font-semibold ">Felipe Montoya</h2>
-                <p className="px-5 text-xs text-secondary">CEO AND BUSINESS DEVELOPER</p>
+                <h2 className="text-xl md:text-2xl font-semibold">Felipe Montoya</h2>
+                <p className="px-5 text-lg text-secondary">CEO AND BUSINESS DEVELOPER</p>
               </div>
               <div className="flex justify-center pt-2 space-x-4 align-center">
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}{" "}
@@ -468,12 +470,12 @@ function Home() {
             <img
               src={Gilberts}
               alt="Gilberts"
-              className="w-28 h-28 mx-auto rounded-full dark:bg-gray-500 aspect-square hover:scale-110 transition-all duration-200 ease-in-out"
+              className="w-52 h-52 mx-auto rounded-full dark:bg-gray-500 aspect-square hover:scale-110 transition-all duration-200 ease-in-out"
             />
             <div className="space-y-4 text-center divide-y divide-gray-700">
               <div className="my-2 space-y-1">
-                <h2 className="text-md md:text-lg font-semibold ">Gilberts</h2>
-                <p className="px-5 text-xs text-secondary">BLOCKCHAIN ENGINEER</p>
+                <h2 className="text-xl md:text-2xl font-semibold">Gilberts</h2>
+                <p className="px-5 text-lg text-secondary">BLOCKCHAIN ENGINEER</p>
               </div>
               <div className="flex justify-center pt-2 space-x-4 align-center">
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}{" "}
@@ -510,12 +512,12 @@ function Home() {
             <img
               src={Diana}
               alt="Diana"
-              className="w-28 h-28 mx-auto rounded-full dark:bg-gray-500 aspect-square hover:scale-110 transition-all duration-200 ease-in-out"
+              className="w-52 h-52 mx-auto rounded-full dark:bg-gray-500 aspect-square hover:scale-110 transition-all duration-200 ease-in-out"
             />
             <div className="space-y-4 text-center divide-y divide-gray-700">
               <div className="my-2 space-y-1">
-                <h2 className="text-md md:text-lg font-semibold ">Diana Rincon</h2>
-                <p className="px-5 text-xs text-secondary">BUSINESS DEVELOPER</p>
+                <h2 className="text-xl md:text-2xl font-semibold">Diana Rincon</h2>
+                <p className="px-5 text-lg text-secondary">BUSINESS DEVELOPER</p>
               </div>
               <div className="flex justify-center pt-2 space-x-4 align-center">
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}{" "}
@@ -554,30 +556,30 @@ function Home() {
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap text-left lg:text-left">
             <div className="w-full lg:w-6/12 px-4">
-              <h4 className="text-3xl font-semibold text-gray-500">
+              <h4 className="text-4xl font-semibold text-gray-500">
                 {/* eslint-disable-next-line react/no-unescaped-entities */}
                 Let's keep in touch!
               </h4>
-              <h5 className="text-lg mt-0 mb-2 text-secondary">
+              <h5 className="text-xl mt-2 mb-2 text-secondary">
                 Find us on any of these platforms, we respond 1-2 business days.
               </h5>
               <div className="mt-6 lg:mb-0 mb-6">
                 <button
                   onClick={() => window.open("https://twitter.com/Helpi_io", "_blank")}
-                  className="text-primary-dark bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple h-10 w-10 rounded-full outline-none focus:outline-none hover:scale-105 transition-all mr-3"
+                  className="text-primary-dark bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple h-16 w-16 rounded-full outline-none focus:outline-none hover:scale-105 transition-all mr-6"
                   type="button"
                 >
                   <BsTwitter className="m-auto" />
                 </button>
                 <button
-                  className="text-primary-dark bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple h-10 w-10 rounded-full outline-none focus:outline-none hover:scale-105 transition-all mr-3"
+                  className="text-primary-dark bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple h-16 w-16 rounded-full outline-none focus:outline-none hover:scale-105 transition-all mr-6"
                   type="button"
                 >
                   <BsLinkedin className="m-auto" />
                 </button>
                 <button
                   onClick={() => window.open("https://github.com/helpicelo", "_blank")}
-                  className="text-primary-dark bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple h-10 w-10 rounded-full outline-none focus:outline-none hover:scale-105 transition-all mr-3"
+                  className="text-primary-dark bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple h-16 w-16 rounded-full outline-none focus:outline-none hover:scale-105 transition-all mr-6"
                   type="button"
                 >
                   <BsGithub className="m-auto" />
@@ -588,11 +590,11 @@ function Home() {
               <div className="flex flex-wrap items-top mb-6">
                 <div className="w-full lg:w-4/12 px-4 ml-auto">
                   <span className="block uppercase text-secondary text-md font-bold mb-2">Useful Links</span>
-                  <ul className="list-unstyled">
+                  <ul className="list-unstyled -ml-8 mt-8">
                     <li>
                       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                       <a
-                        className="text-blueGray-600 bg-clip-text hover:text-transparent hover:bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple font-semibold block pb-2 text-sm"
+                        className="text-blueGray-600 bg-clip-text hover:text-transparent hover:bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple font-semibold block pb-2 text-xl"
                         href="#"
                       >
                         About Us
@@ -601,7 +603,7 @@ function Home() {
                     <li>
                       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                       <a
-                        className="text-blueGray-600 bg-clip-text hover:text-transparent hover:bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple font-semibold block pb-2 text-sm"
+                        className="text-blueGray-600 bg-clip-text hover:text-transparent hover:bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple font-semibold block pb-2 text-xl"
                         href="#"
                       >
                         Blog
@@ -610,7 +612,7 @@ function Home() {
                     <li>
                       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                       <a
-                        className="text-blueGray-600 bg-clip-text hover:text-transparent hover:bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple font-semibold block pb-2 text-sm"
+                        className="text-blueGray-600 bg-clip-text hover:text-transparent hover:bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple font-semibold block pb-2 text-xl"
                         href="#"
                       >
                         Github
@@ -619,7 +621,7 @@ function Home() {
                     <li>
                       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                       <a
-                        className="text-blueGray-600 bg-clip-text hover:text-transparent hover:bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple font-semibold block pb-2 text-sm"
+                        className="text-blueGray-600 bg-clip-text hover:text-transparent hover:bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple font-semibold block pb-2 text-xl"
                         href="#"
                       >
                         Free Products
@@ -629,11 +631,11 @@ function Home() {
                 </div>
                 <div className="w-full lg:w-4/12 px-4">
                   <span className="block uppercase text-secondary text-md font-bold mb-2">Other Resources</span>
-                  <ul className="list-unstyled">
+                  <ul className="list-unstyled -ml-8 mt-8">
                     <li>
                       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                       <a
-                        className="text-blueGray-600 bg-clip-text hover:text-transparent hover:bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple font-semibold block pb-2 text-sm"
+                        className="text-blueGray-600 bg-clip-text hover:text-transparent hover:bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple font-semibold block pb-2 text-xl"
                         href="#"
                       >
                         MIT License
@@ -642,7 +644,7 @@ function Home() {
                     <li>
                       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                       <a
-                        className="text-blueGray-600 bg-clip-text hover:text-transparent hover:bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple font-semibold block pb-2 text-sm"
+                        className="text-blueGray-600 bg-clip-text hover:text-transparent hover:bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple font-semibold block pb-2 text-xl"
                         href="#"
                       >
                         Terms &amp; Conditions
@@ -651,7 +653,7 @@ function Home() {
                     <li>
                       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                       <a
-                        className="text-blueGray-600 bg-clip-text hover:text-transparent hover:bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple font-semibold block pb-2 text-sm"
+                        className="text-blueGray-600 bg-clip-text hover:text-transparent hover:bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple font-semibold block pb-2 text-xl"
                         href="#"
                       >
                         Privacy Policy
@@ -660,7 +662,7 @@ function Home() {
                     <li>
                       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                       <a
-                        className="text-blueGray-600 bg-clip-text hover:text-transparent hover:bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple font-semibold block pb-2 text-sm"
+                        className="text-blueGray-600 bg-clip-text hover:text-transparent hover:bg-gradient-to-tr from-grad-green via-grad-blue to-grad-purple font-semibold block pb-2 text-xl"
                         href="#"
                       >
                         Contact Us
