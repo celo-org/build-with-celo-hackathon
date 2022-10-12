@@ -211,6 +211,13 @@ ol {list-style:decimal;}
 .form-submenu.show{
 display: block;
 }
+.user-menu{
+    display: none;
+  }
+  
+.user-menu.show{
+display: block;
+}
   
 
 
@@ -230,6 +237,79 @@ background-color: #45CD85;
 }
 
 
+
+
+.modal__box{
+    position: fixed;
+    display: block;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin: 0 auto;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    overflow-x: hidden;
+    background-color: rgba(31,32,41,.75);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 250ms 700ms ease;
+    
+  }
+  
+  .modal__box-wrapper{
+    position: relative;
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    /* border-radius: 4px; */
+    overflow: hidden;
+    padding-bottom: 20px;
+    background-color: #fff;
+      -ms-flex-item-align: center;
+      align-self: center;
+      /* box-shadow: 0 12px 25px 0 rgba(199,175,189,.25); */
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 250ms 250ms ease, transform 300ms 250ms ease;
+    padding: 20px 25px;
+  }
+  
+  
+  .modal__box.show{
+    pointer-events: auto;
+    opacity: 1;
+    transition: all 300ms ease-in-out;
+  }
+  
+  
+    .modal__box.show .modal__box-wrapper{
+      opacity: 1;
+      transform: scale(1);
+      transition: all 300ms ease-in-out;
+    }
+  
+  /* react-tabs__tab--selected */
+  
+  @media only screen and (max-width: 991px){
+    .modal__box-wrapper {
+      max-width: 700px;
+    } 
+  }
+  @media only screen and (max-width: 767px){
+    .modal__box-wrapper {
+      width: calc(100% - 40px);
+    } 
+  }
+  
 
 
   .fade-in {

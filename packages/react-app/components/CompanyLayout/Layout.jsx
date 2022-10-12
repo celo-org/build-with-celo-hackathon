@@ -9,7 +9,6 @@ const CompanyLayout = ({children}) => {
 
         {children}
 
-        <Footer/>
     
     </>
   )

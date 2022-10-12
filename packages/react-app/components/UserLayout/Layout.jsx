@@ -9,7 +9,6 @@ const UserLayout = ({children}) => {
 
         {children}
 
-        <Footer/>
     
     </>
   )
