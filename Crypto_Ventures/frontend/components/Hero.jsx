@@ -3,6 +3,7 @@ import React from 'react';
 import {FcGoogle} from 'react-icons/fc'
 import {BsApple} from 'react-icons/bs';
 import {BsFacebook} from 'react-icons/bs';
+import {RiCheckboxCircleLine} from 'react-icons/ri';
 
 const Hero = () => {
   return (
@@ -31,6 +32,14 @@ const Hero = () => {
       <a className="inline-block align-baseline text-sm text-black hover:text-blue-800" href="#">
         Forgot Password?
       </a>
+    </div> <br />
+    <div className="flex flex-col justify-between">
+      <div className="" >
+        Already have an account ?
+      </div>
+      <a className="inline-block align-baseline text-sm text-black hover:text-blue-800" href="#">
+        Login Here
+      </a>
     </div>
     
   </form>
@@ -44,7 +53,13 @@ const Hero = () => {
     <li className='block px-4 py-1 bg-white text-blue-600'>
       <BsFacebook size={20}/>
     </li>
-  </div>
+  </div> <br />
+      <div className="flex items-center justify-between text-black">
+      <div className="block mr-5" >
+        <RiCheckboxCircleLine size={20}/>
+      </div>
+      <p>By signing up you agree to receive updates and special offers</p>
+    </div>
         
       </div>
     </div>
