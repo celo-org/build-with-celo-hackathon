@@ -2,11 +2,10 @@
 pragma solidity ^0.8.0;
 
 import '../reputationManager/ReputationManager.sol';
-
 import './AdminControls.sol';
+
 // Modulars 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/utils/escrow/Escrow.sol";
 
 /**
  * @title RideManager
@@ -15,9 +14,10 @@ import "@openzeppelin/contracts/utils/escrow/Escrow.sol";
  *
  * TODO make contract ownable 
  * TODO could add time base escrow for drivers
+ * TODO users need a fund a securty deposit
  */
 
-contract RideManager is ReputationManager, AdminControls, Escrow {
+contract RideManager is ReputationManager, AdminControls {
 
     //address constant private cUSD = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
     IERC20 _token;
@@ -53,7 +53,6 @@ contract RideManager is ReputationManager, AdminControls, Escrow {
         address acceptedDriver;
         address passenger;
         RideState state;
-
     }
 
     mapping(address => bytes32) private activeRides; // Links passenger & driver to there current active ride
@@ -63,13 +62,19 @@ contract RideManager is ReputationManager, AdminControls, Escrow {
     mapping(bytes32 => address[]) private proposedDrivers; // drivers for announcedRides 
     mapping(bytes32 => Ride) private rides; 
 
-    modifier _inRide {
+    modifier inRide {
         require(activeRides[msg.sender] == 0,"You must complete or cancel your current ride.");
+        _;
+    }
+
+    modifier notCanceled(bytes32 _rideId) {
+        require(rides[_rideId].state != RideState.Canceled,"Ride was canceled");
         _;
     }
 
 
     constructor(address token) {
+
         _token = IERC20(token);
     }
 
@@ -80,6 +85,7 @@ contract RideManager is ReputationManager, AdminControls, Escrow {
     *
     * @return bytes32 keccak hash of the ride
     */
+    
     function getActiveRide()
     public
     view 
@@ -87,7 +93,23 @@ contract RideManager is ReputationManager, AdminControls, Escrow {
     {
         return(activeRides[msg.sender]);
     }
-
+    
+    /*
+    function driverTime(bytes32 _rideId)
+    public
+    view
+    returns(address)
+    {
+        Ride memory ride = rides[_rideId];
+        
+        uint256 timeElapsed = block.timestamp - ride.time;
+        return( block.timestamp);
+        uint256 driverIndex = timeElapsed / driverAcceptanceTime;  
+        return(driverIndex);
+        address[] memory drivers = proposedDrivers[_rideId];
+        return(drivers[driverIndex]);
+    }
+    */
 
 
     /**
@@ -98,6 +120,7 @@ contract RideManager is ReputationManager, AdminControls, Escrow {
     * @return Ride struct 
     *
     */
+    
     function getRide(bytes32 rideId) 
     public
     view
@@ -113,7 +136,7 @@ contract RideManager is ReputationManager, AdminControls, Escrow {
     {
         return(rides[rideId].state == RideState.Canceled);
     }
-
+    
 
 
     /**
@@ -131,12 +154,15 @@ contract RideManager is ReputationManager, AdminControls, Escrow {
     function announceRide(Coordinate memory _startLocation, Coordinate memory _endLocation,address[] memory _drivers, uint256 _price, bool _shared)
     whenNotPaused
     public 
-    _inRide
-    {        
+    inRide
+    {   
+        require(_price != 0,"Price cant be zero");
+        require(_drivers.length != 0,"No drivers selected");
+
         // Check msg.sender allowance vs ride price
         require(_token.allowance(msg.sender, address(this)) >= _price,"Insuficient Allowance");
         require(_token.transferFrom(msg.sender,address(this),_price),"transfer Failed");
-        
+
         // Create ride struct 
         Ride memory ride;
         ride.startCoordinate = _startLocation;
@@ -177,16 +203,17 @@ contract RideManager is ReputationManager, AdminControls, Escrow {
 
     function driverAcceptsRide(bytes32 _rideId) 
     public 
+    notCanceled(_rideId)
     {   
-        require(!isCancled(_rideId),"Ride was canceled");
         Ride memory ride = rides[_rideId];
-        require(ride.state == RideState.Announced,"Check ride state"); // Check ride state 
+        require(ride.state == RideState.Announced,"Check ride state");
         
         uint256 timeElapsed = block.timestamp - ride.time;
         uint256 driverIndex = timeElapsed / driverAcceptanceTime;  
+
         // get drivers index 
         address[] memory drivers = proposedDrivers[_rideId];
-        require(driverIndex < drivers.length,"Time exceeded drivers");
+        require(driverIndex < drivers.length,"Time exceeded drivers time to accept");
         // Check if msg.sender is driver at index
         require(msg.sender == drivers[driverIndex],"Driver not listed"); 
 
@@ -212,8 +239,8 @@ contract RideManager is ReputationManager, AdminControls, Escrow {
 
     function passengerConfirmsPickUp(bytes32 _rideId)
     public
+    notCanceled(_rideId)
     {
-        require(!isCancled(_rideId),"Ride was canceled");
 
         Ride memory ride = rides[_rideId];
         require(ride.state == RideState.DriverAccepted);
@@ -235,9 +262,9 @@ contract RideManager is ReputationManager, AdminControls, Escrow {
 
     function driverConfirmsDropOff(bytes32 _rideId,uint256 _passengerRating)
     public
-    withinRange(_passengerRating)
+    notCanceled(_rideId)
+    validRating(_passengerRating)
     {
-        require(!isCancled(_rideId),"Ride was canceled");
         Ride memory ride = rides[_rideId];
 
         require(ride.state == RideState.PassengerPickUp,"Incorrect ridestate.");
@@ -262,9 +289,11 @@ contract RideManager is ReputationManager, AdminControls, Escrow {
 
     function passengerConfirmsDropOff(bytes32 _rideId,uint256 _driverRating) 
     public
-    withinRange(_driverRating)
+    notCanceled(_rideId)
+    validRating(_driverRating)
+    
     {
-        require(!isCancled(_rideId),"Ride was canceled");
+
 
         // Update ridestate passenger confirms dropoff
         Ride memory ride = rides[_rideId];
@@ -272,18 +301,17 @@ contract RideManager is ReputationManager, AdminControls, Escrow {
         require(ride.state == RideState.DriverDropOff,"Driver must confirm dropOff.");
         require(ride.passenger == msg.sender,"Only callable by passenger."); // Only callable the passenger
 
+        // Update ride state
         ride.state = RideState.Complete;
         rides[_rideId] = ride;
-        // transfer tokens from passenger to driver 
- 
-        //require(token.allowance(address(this), ride.acceptedDriver) >= ride.price,"Contract is broke");
-        // TODO transfer cUSD from msg.sender to CELOS escrow 
+
+        // transfer tokens from contract to driver 
         require(_token.transfer(ride.acceptedDriver ,ride.price),"transfer Failed");
 
         // Update passenger and driver R&R 
         updateReputation(ride.acceptedDriver,_driverRating,10,false);
 
-        // Set active ride back to empty
+        // Set passenger active ride back to empty 
         activeRides[ride.passenger] = 0;
         activeRides[ride.acceptedDriver] = 0;
 
@@ -298,17 +326,18 @@ contract RideManager is ReputationManager, AdminControls, Escrow {
      * @param _rideId Bytes32 keccak hash of the ride
      * 
      * 
-     * TODO Implment refund amounts and optimize
      */
     function cancelRide(bytes32 _rideId)
     public
+    notCanceled(_rideId)
     {
-        require(!isCancled(_rideId),"Ride was canceled");
-
+    
         Ride memory ride = rides[_rideId];
-        require(ride.state != RideState.None || ride.state != RideState.Canceled,"No ride exist");
+        require(ride.state == RideState.None,"No Ride exist");
+
         // Only callable by passenger and driver 
-        require(ride.passenger == msg.sender ||ride.acceptedDriver == msg.sender , "Method is only callable by driver or passenger");
+        require(ride.passenger == msg.sender || ride.acceptedDriver == msg.sender , "Method is only callable by driver or passenger");
+
         // Set ride to canceled 
         ride.state = RideState.Canceled;
         rides[_rideId] = ride; 
