@@ -1,4 +1,5 @@
-//SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT
+
 pragma solidity ^0.8.4;
 
 import "./Proxiable.sol";
@@ -6,7 +7,7 @@ import "./ISuccour.sol";
 
 contract Succour is Proxiable{
 
-   
+    
     address public owner;
 
     struct DAOMembers {
@@ -38,7 +39,7 @@ contract Succour is Proxiable{
 
     uint public minimumRequirement;
     uint public maximumRequirement;
-    address public celoTokenAddress;
+    IERC20 public celoTokenAddress;
     uint public totalVotingPower;
     uint public totalDAOBalance;
     uint proposalID = 1;
@@ -61,15 +62,16 @@ contract Succour is Proxiable{
     }
 
 
-    function encode() external pure returns (bytes memory) {
-        return abi.encodeWithSignature("constructor1()");
+    function encode(uint _minimumRequirement, uint _maximumRequirement, address _celoTokenAddress) external pure returns (bytes memory) {
+        return abi.encodeWithSignature("initializer(uint256,uint256,address)", _minimumRequirement, _maximumRequirement, _celoTokenAddress);
     }
 
-     function initializer(uint _minimumRequirement, uint _maximumRequirement) public {
+     function initializer(uint _minimumRequirement, uint _maximumRequirement, address _celoTokenAddress) public {
         require(owner == address(0), "Already initalized");
         owner = msg.sender;
         minimumRequirement = _minimumRequirement;
         maximumRequirement = _maximumRequirement;
+        celoTokenAddress = IERC20(_celoTokenAddress);
     }
 
 
@@ -127,7 +129,7 @@ contract Succour is Proxiable{
         }
     }
  
-    function proposeProject (string memory _title, string memory _description, uint _amountProposed) public {
+    function proposeProject (string memory _title, string memory _description, uint _amountProposed) external  {
         bool check = checkDAOEligibility(msg.sender);
         require(check == true, "You can't propose a project");
         Proposals storage propose = proposals[proposalID];
@@ -141,7 +143,7 @@ contract Succour is Proxiable{
     }
 
 
-    function memberVote (uint IDofProposal) public {
+    function memberVote (uint IDofProposal) external {
         bool check1 = checkDAOEligibility(msg.sender);
         require(check1 == true, "You can't vote");
         Proposals storage propose = proposals[IDofProposal];
