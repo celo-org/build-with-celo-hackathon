@@ -65,10 +65,10 @@ Token.transfer(msg.sender,_amount *10);
     }
     /*
     *@dev but for ethereum*/
-    function buyRehemaTokenForETH()public payable{
-      require( msg.sender.balance >= msg.value,"Less amount in the account")
-      payable(address(this)).transfer(msg.value);
-      Token.transfer(msg.sender,msg.value*10);
+    function buyRehemaTokenForETH(uint256 _amount)public payable{
+      require( msg.sender.balance >= _amount,"Less amount in the account");
+      payable(address(this)).transfer(_amount);
+      Token.transfer(msg.sender,_amount*10);
       
     }
 function balances()public view  onlyOwner returns(uint){
