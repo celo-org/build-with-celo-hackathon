@@ -48,6 +48,20 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  walletconnect_dart: ^0.0.6 # https://pub.dev/packages/walletconnect_dart/changelog
+  walletconnect_secure_storage: ^1.0.0
+  web3dart: ^2.4.0
+  flutter_walletconnect: ^0.0.1
+  qr_flutter: ^4.0.0
+  eip55: ^1.0.2
+  easy_localization: ^3.0.0
+  walletconnect_qrcode_modal_dart: ^0.0.5
+  provider: ^6.0.3
+  eth_sig_util: ^0.0.7
+  http: ^0.13.4
+  intl: ^0.17.0
+  json_annotation: ^4.4.0
+  logger: ^1.1.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -61,9 +75,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+assets:
+  - assets/*
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
