@@ -4,23 +4,28 @@ import { Button, Dropdown, DropdownButton, FormGroup, FormControl, FormLabel, In
 
 import PropTypes from 'prop-types';
 
+import { Dots } from 'react-activity';
+
 import { faCopy, faUndo} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import {CurrencyCardIcon} from '@primusmoney/react_pwa/react-js-ui';
+import RemoteWalletIcon from '../../remote-wallet/remote-wallet-icon.js'
 
-import ClauseListView from '../clause/clause-list-view.js'
-
-class DeedView extends React.Component {
+class DeedBuyForm extends React.Component {
 	
 	constructor(props) {
 		super(props);
 		
 		this.app = this.props.app;
 		this.parent = this.props.parent;
+		
 		this.getMvcMyPWAObject = this.app.getMvcMyPWAObject;
+		this.getMvcMyDeedObject = this.app.getMvcMyDeedObject;
 
 		this.dataobject = null;
 
+		this.minter = null;
 		this.deed = null;
 
 		
@@ -28,12 +33,16 @@ class DeedView extends React.Component {
 
 		let title = '';
 		let description = '';
-		let tokenuri = '';
+
+		let saleprice = '';
 
 		let currency = {symbol: ''};
-		let currencies= [];
 
+		let signingkey = null;
 		let deedcard = null;
+		let deedcard_balance_int = 0;
+		let deedcard_balance_string = '';
+
 		
 		this.closing = false;
 		
@@ -42,23 +51,30 @@ class DeedView extends React.Component {
 
 			title,
 			description,
-			tokenuri,
+
+			saleprice,
 
 			currency,
-			currencies,
 
-			remoteaccount: null,
+			signingkey,
+			isOwner: false,
+
+			remotewallet: false,
 			rpc: null,
+			connection: null,
 
 			deedcard,
+			deedcard_balance_int,
+			deedcard_balance_string,
 
-			isOwner: false,
 			loaded: false,
 			registration_text: 'loading...',
-			registration_signature: 'loading...',
 			message_text: 'loading...',
 			sharelinkmessage: 'loading...',
-			sharelink: 'loading...'
+			sharelink: 'loading...',
+			processinginfo: 'processing transfer',
+			processing: false
+
 		}
 	}
 
@@ -71,7 +87,7 @@ class DeedView extends React.Component {
 	
 	// post render commit phase
 	componentDidMount() {
-		console.log('DeedView.componentDidMount called');
+		console.log('DeedBuyForm.componentDidMount called');
 		
 		let mvcmypwa = this.getMvcMyPWAObject();
 
@@ -93,7 +109,7 @@ class DeedView extends React.Component {
 		
 		this._setState({registration_text, message_text, sharelinkmessage});
 
-		this.checkNavigationState().catch(err => {console.log('error in DeedView.checkNavigationState: ' + err);});
+		this.checkNavigationState().catch(err => {console.log('error in DeedBuyForm.checkNavigationState: ' + err);});
 	}
 
 
@@ -113,11 +129,11 @@ class DeedView extends React.Component {
 			if (dataobj && (dataobj.type === 'deed') && (dataobj.treated !== true)) {
 				this.dataobject = dataobj;
 
-				let currencyuuid = (params.currencyuuid ? params.currencyuuid : dataobj.currencyuuid);
-				let txhash = (params.txhash ? params.txhash : dataobj.txhash);
+				let currencyuuid = params.currencyuuid;
+				let txhash = params.txhash;
 
-				let minter_address = (params.address ? params.address : dataobj.minter);
-				let tokenid = (params.tokenid ? params.tokenid : dataobj.tokenid);
+				let minter_address = params.address;
+				let tokenid = params.tokenid;
 
 				// we fetch the deed to have a proper record
 				let minter = await mvcmypwa.fetchDeedMinterFromAddress(rootsessionuuid, walletuuid, currencyuuid, minter_address);
@@ -125,6 +141,7 @@ class DeedView extends React.Component {
 				if (!minter)
 					throw 'could not find minter with address ' + minter_address;
 
+				this.minter = minter;
 				let mintername = minter.name;
 
 				let deed = await mvcmypwa.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid);
@@ -134,14 +151,13 @@ class DeedView extends React.Component {
 				let registration_time = (deed.metadata ? deed.metadata.time/1000 : null);
 				let registration_text = mvcmypwa.t('This deed has been registered on');
 
-				registration_text += ' ' + (registration_time ? mvcmypwa.formatDate(registration_time, 'YYYY-mm-dd HH:MM:SS') : mvcmypwa.t(': missing')) + '.';
+				registration_text += ' ' + mvcmypwa.formatDate(registration_time, 'YYYY-mm-dd HH:MM:SS') + '.';
 				
-				let registration_signature = (deed.metadata.signature && deed.metadata.signature ? deed.metadata.signature : mvcmypwa.t('missing'));
 	
 				// share link
 				let currency = await mvcmypwa.getCurrencyFromUUID(rootsessionuuid, currencyuuid)
 				.catch(err => {
-					console.log('error in DeedView.checkNavigationState: ' + err);
+					console.log('error in DeedBuyForm.checkNavigationState: ' + err);
 				});
 
 				if (!currency)
@@ -150,12 +166,24 @@ class DeedView extends React.Component {
 				var sharelink = await this.app.getShareLink(txhash, currency.uuid);
 	
 				let isOwner = false;
-				let remoteaccount = null;
-				let rpc = null;
 				
 				let deedcard = await mvcmypwa.getDeedOwningCard(rootsessionuuid, walletuuid, currencyuuid, minter, deed).catch(err => {});
+				let deedcard_balance_int = 0;
+				let deedcard_balance_string = '';
+
+				let remotewallet = false;
+				let rpc = null;
+				let connection = null;
+
 				if (deedcard) {
 					isOwner = true;
+					let pos = await mvcmypwa.getCurrencyPosition(rootsessionuuid, walletuuid, currencyuuid, deedcard.uuid);
+			
+					if (pos !== undefined) {
+						deedcard_balance_int = await pos.toInteger();
+						deedcard_balance_string = await mvcmypwa.formatCurrencyAmount(rootsessionuuid, currencyuuid, pos);
+					}
+	
 				}
 				else {
 					// check if corresponding currency is set for remote
@@ -165,27 +193,43 @@ class DeedView extends React.Component {
 						let curr_rpc_config = config.rpc[currency.uuid];
 
 						if (curr_rpc_config.enabled === true) {
+							remotewallet = true;
 							rpc = curr_rpc_config.rpc;
 
 							// check if we are connected to a remote wallet
 							let deedclient = this.app.getDeedClientObject();
 							let walletconnectclient = deedclient.getWalletConnectClient();
 				
-							let connection = walletconnectclient.getConnectionFromRpc(rpc);
-							remoteaccount = (connection ? walletconnectclient.getRemoteAccount(connection.uuid) : null);
+							connection = walletconnectclient.getConnectionFromRpc(rpc);
+
+							let remoteaccount = (connection ? walletconnectclient.getRemoteAccount(connection.uuid) : null);
 
 							if (remoteaccount) {
 								let areequal = await mvcmypwa.areAddressesEqual(rootsessionuuid, remoteaccount, deed.owner);
 
 								if (areequal)
 									isOwner = true;
+
+									deedcard = await mvcmypwa.getCurrencyCardWithAddress(rootsessionuuid, walletuuid, currencyuuid,
+										remoteaccount); // creates read-only card if necessary
+
+									let pos = await mvcmypwa.getCurrencyPosition(rootsessionuuid, walletuuid, currencyuuid, deedcard.uuid);
+			
+									if (pos !== undefined) {
+										deedcard_balance_int = await pos.toInteger();
+										deedcard_balance_string = await mvcmypwa.formatCurrencyAmount(rootsessionuuid, currencyuuid, pos);
+									}
+				
 							}
 						}
 					}
 				}
 
-				this._setState({currency, mintername, isOwner, remoteaccount, rpc, deedcard, 
-					registration_text, registration_signature, sharelink});
+				this._setState({currency, mintername, 
+					isOwner,
+					remotewallet, rpc, connection,
+					deedcard, deedcard_balance_int, deedcard_balance_string,
+					registration_text, sharelink});
 
 				dataobj.viewed = true;
 			}
@@ -197,14 +241,13 @@ class DeedView extends React.Component {
 		if (this.deed) {
 			let deed = this.deed;
 
-			let deedowner = deed.owner;
 			let tokenuri = deed.tokenuri;
 
 			let title = (deed.metadata && deed.metadata.title ? deed.metadata.title : '');
 			let description = (deed.metadata && deed.metadata.description ? deed.metadata.description : '');
 			let external_url = (deed.metadata && deed.metadata.external_url ? deed.metadata.external_url : '');
 
-			this._setState({tokenuri, deedowner, title, description, external_url});
+			this._setState({tokenuri, title, description, external_url});
 		}
 
 		this._setState({loaded: true});
@@ -212,54 +255,78 @@ class DeedView extends React.Component {
 
  	// end of life
 	componentWillUnmount() {
-		console.log('DeedView.componentWillUnmount called');
+		console.log('DeedBuyForm.componentWillUnmount called');
 		
 		this.closing = true;
 	}
 	
 	
 	// user actions
+	_getTxConnection(feelevel) {
+		let connection = {type: 'local', feelevel: feelevel};	
+		
+		if (this.state.remotewallet) {
+			let deedclient = this.app.getDeedClientObject();
+			let walletconnectclient = deedclient.getWalletConnectClient();
+			let walletconnection = walletconnectclient.getConnectionFromRpc(this.state.rpc);
+
+			connection.type = 'remote';
+
+			connection.connectionuuid = walletconnection.uuid;
+			connection.provider = walletconnection.provider;
+			connection.account = walletconnection.account;
+		}
+
+		return connection;
+	}
+	
+	async onOfferOnSale() {
+		console.log('onOfferOnSale pressed!');
+		
+		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
+
+		let rootsessionuuid = this.props.rootsessionuuid;
+		let walletuuid = this.props.currentwalletuuid;
+		
+		let wallet;
+		let carduuid;
+		let card;
+
+		let {currency, saleprice, remotewallet, rpc, deedcard, signingkey} =this.state;
+
+		let remoteaccount;
+
+		let localcard = deedcard;
+
+		this._setState({processing: true});
+
+		try {
+
+		}
+		catch(e) {
+			console.log('exception in onOfferOnSale: ' + e);
+			this.app.error('exception in onOfferOnSale: ' + e);
+
+			this.app.alert('could not set price of deed')
+
+			this._setState({processing: false});
+		}
+
+
+	}
+
 	async onBack() {
 		console.log('onBack pressed!');
 
 		let currencyuuid = this.deed.currencyuuid;
+		let txhash = this.deed.txhash;
+		let address = this.deed.minter;
+		let tokenid = this.deed.tokenid;
 		
-		let params = {action: 'view', currencyuuid};
-	
-		await this.app.gotoRoute('deeds', params);
-	}
+		let params = {action: 'view', currencyuuid, txhash, address, tokenid, dataobject: this.deed};
 
-	async onAddClause() {
-		console.log('onAddClause pressed!');
-		
-		if (this.dataobject) {
-			let params = {action: 'create', txhash: this.dataobject.txhash, currencyuuid: this.dataobject.currencyuuid, dataobject: this.dataobject};
-			this.app.gotoRoute('clause', params);
-		}
-		else
-			this.app.alert('Deed parameters not found');
-
-		return true;
-	}
-
-	async onTransfer() {
-		console.log('onTransfer pressed!');
-		
-		let params = {action: 'transfer', currencyuuid: this.dataobject.currencyuuid, txhash: this.dataobject.txhash, address: this.deed.minter, tokenid: this.deed.tokenid, dataobject: this.deed};
-
-		await this.app.gotoRoute('deed', params);		
-		
-		return true;
-	}
-
-	async onOfferOnSale() {
-		console.log('onOfferOnSale pressed!');
-		
-		let params = {action: 'offeronsale', currencyuuid: this.dataobject.currencyuuid, txhash: this.dataobject.txhash, address: this.deed.minter, tokenid: this.deed.tokenid, dataobject: this.deed};
-
-		await this.app.gotoRoute('deed', params);		
-		
-		return true;
+		this.app.gotoRoute('deed', params);
 	}
 
 
@@ -313,31 +380,77 @@ class DeedView extends React.Component {
 
 	
 	// rendering
+	renderDeedCardPart() {
+		let { currency, remotewallet, connection, deedcard, signingkey, deedcard_balance_string } = this.state;
+
+		return (
+			<span>
+				{( remotewallet !== true ?
+					(deedcard ?
+					<FormGroup className="CurrencyCard" controlId="currencycard">
+						<span className="CardIconCol">
+							<CurrencyCardIcon
+								app={this.app}
+								currency={currency}
+								card={deedcard}
+							/>
+						</span>
+						<span className="CardBalanceCol">
+							<FormLabel>Your Balance</FormLabel>
+							<FormControl
+								className="CardBalanceCol"
+								disabled
+								autoFocus
+								type="text"
+								value={deedcard_balance_string}
+							/>
+						</span>
+					</FormGroup> :
+					<FormGroup controlId="signingkey">
+						<FormLabel>'Your Private Key '{(currency && currency.name ? 'for ' + currency.name : '')}</FormLabel>
+						<FormGroup>
+							<FormControl
+								autoFocus
+								type="text"
+								value={(signingkey ? signingkey : '')}
+								onChange={e => this._setState({signingkey: e.target.value})}
+							/>
+						</FormGroup>
+					</FormGroup>) :
+
+					<FormGroup className="CurrencyCard" controlId="remotewallet">
+					<span className="CardIconCol">
+						<RemoteWalletIcon
+								app={this.app}
+								currency={currency}
+								connection={connection}
+							/>
+					</span>
+					<span className="CardBalanceCol">
+						<FormLabel>Balance</FormLabel>
+						<FormControl
+							className="CardBalanceCol"
+							disabled
+							autoFocus
+							type="text"
+							value={deedcard_balance_string}
+						/>
+					</span>
+					</FormGroup>
+				)}
+			</span>
+
+		);
+	}
+
 	renderDeedButtons() {
 		let { loaded, isOwner} = this.state;
 
 		if (loaded) {
 			return(
-				<div className="DeedButtonsLine">
-				<span className="DeedButton">
-				<Button onClick={this.onAddClause.bind(this)} 
-				disabled={(isOwner ? false : true)} 
-				variant={(isOwner ? "primary" : "secondary")} 
-				type="submit">
-				Add a clause</Button>
-				</span>
-				<span className="DeedButton">
-				<Button onClick={this.onTransfer.bind(this)} 
-				disabled={(isOwner ? false : true)} 
-				variant={(isOwner ? "primary" : "secondary")} 
-				type="submit">
-				Transfer</Button>
-				</span>
-				<span className="DeedButton">
-				<Button onClick={this.onOfferOnSale.bind(this)} 
-				disabled={(isOwner ? false : true)} 
-				variant={(isOwner ? "primary" : "secondary")} 
-				type="submit">
+				<div>
+				<span>
+				<Button onClick={this.onOfferOnSale.bind(this)} disabled={(isOwner ? false : true)} type="submit">
 				Offer on sale</Button>
 				</span>
 				</div>
@@ -345,45 +458,22 @@ class DeedView extends React.Component {
 		}
 		else {
 			return(	
-				<div className="DeedButtonsLine">
-				<span className="DeedButton">
-				<Button disabled type="submit">
-					loading...
-				</Button>
-				</span>
-				<span className="DeedButton">
-				<Button disabled type="submit">
-					loading...
-				</Button>
-				</span>
-				<span className="DeedButton">
+				<div>
+				<span>
 				<Button disabled type="submit">
 					loading...
 				</Button>
 				</span>
 				</div>
-		);
+			);
 		}
 	}
 
-	renderDeedView() {
-		let { isOwner, deedowner, mintername, title, description, currency, registration_text, registration_signature, message_text, sharelinkmessage, sharelink, tokenuri, external_url } = this.state;
+	renderDeedBuyForm() {
+		let { mintername, title, description, currency, registration_text, message_text, sharelinkmessage, sharelink, saleprice, external_url } = this.state;
 		
 		return (
 			<div className="Form">
-			
-				<FormGroup controlId="currency">
-				<FormLabel>Currency</FormLabel>
-				<FormControl
-					disabled
-					autoFocus
-					type="text"
-					value={(currency ? currency.symbol : '')}
-					onChange={e => this._setState({currencysymbol: e.target.value})}
-				/>
-			  	</FormGroup>
-
-
 				<FormGroup controlId="mintername">
 				  <FormLabel>Minter Name</FormLabel>
 				  <FormControl
@@ -418,7 +508,19 @@ class DeedView extends React.Component {
 					onChange={e => this._setState({description: e.target.value})}
 				  />
 				</FormGroup>
+
+				{this.renderDeedCardPart()}
 				
+				<FormGroup controlId="title">
+				  <FormLabel>Enter sell price</FormLabel>
+				  <FormControl
+					autoFocus
+					type="text"
+					value={saleprice}
+					onChange={e => this._setState({saleprice: e.target.value})}
+				  />
+				</FormGroup>
+
 				<FormGroup controlId="asseturl">
 				  <FormLabel>Asset url</FormLabel>
 				  <div className="ShareBlock">
@@ -427,14 +529,9 @@ class DeedView extends React.Component {
 				  </div>
 				</FormGroup>
 
-				{(isOwner ? <div className="Separator"><span>you are the owner</span></div> : <div className="Separator"><span>you are not the owner</span></div>)}
-
-				{this.renderDeedButtons()}
 
 				<div className="TextBox">
-				  <div>{registration_text}</div>
-				  <div>With card:&nbsp;<span>{deedowner}</span></div>
-				  <div>Signature:&nbsp;<span className="DeedSignature">{registration_signature}</span></div>
+				  {registration_text}
 			  	</div>
 
 				<div className="TextBox">
@@ -445,33 +542,36 @@ class DeedView extends React.Component {
 					</div>
 				</div>
 
+				{this.renderDeedButtons()}
+
 				<div className="TextBox">
 				  {message_text}
 			  	</div>
 
-
-				{(this.dataobject ?
-				<div>
-				<hr></hr>
-				<div>
-					{(this.deed ?<ClauseListView app={this.app} parent={this.parent} deed={this.deed} /> : <></> )}	
-				</div>
-				</div> :
-				<></>
-				)}
 			</div>
 		  );
 	}
 
 
 	render() {
+		let {processing} = this.state; 
+		
+		if (processing === true) {
+			return (
+				<div className="Splash">
+					<div>{this.state.processinginfo}</div>
+					<Dots />
+				</div>
+			);
+		}
+		
 		return (
 			<div className="Container">
 				<div className="TitleBanner">
-				<div className="Title">Deed View</div>
+				<div className="Title">Sell Deed</div>
 				<div className="BackIcon" onClick={this.onBack.bind(this)}><FontAwesomeIcon icon={faUndo} /></div>
 				</div>
-				{ this.renderDeedView()}
+				{ this.renderDeedBuyForm()}
 			</div>
 		  );
 	}
@@ -480,7 +580,7 @@ class DeedView extends React.Component {
 
 
 // propTypes validation
-DeedView.propTypes = {
+DeedBuyForm.propTypes = {
 	app: PropTypes.object.isRequired,
 	rootsessionuuid: PropTypes.string,
 	currentwalletuuid: PropTypes.string,
@@ -505,6 +605,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-export {DeedView};
-export default connect(mapStateToProps, mapDispatchToProps)(DeedView);
+export {DeedBuyForm};
+export default connect(mapStateToProps, mapDispatchToProps)(DeedBuyForm);
 

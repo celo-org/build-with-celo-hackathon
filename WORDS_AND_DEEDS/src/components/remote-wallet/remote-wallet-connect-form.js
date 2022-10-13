@@ -233,14 +233,18 @@ class RemoteWalletConnectForm extends React.Component {
 
 				// and set it in redux
 				if (walletinfo) {
+					let password = params.account;
+
+					// TODO: remove doSetWallet and doOpenWallet
 					//let res = await this._doSetWallet(walletinfo.label, walletinfo.uuid); // does not unlock wallet
 
-					// note: for @primusmoney/react_pwa > 0.30.20, we can use this.app.openWallet
-
-					let mvcmodule = this.app.getMvcModuleObject();
-					let password = params.account;
+/* 					let mvcmodule = this.app.getMvcModuleObject();
 					let unlocked =  await this._doOpenWallet(mvcmodule, rootsessionuuid, walletinfo.uuid, walletinfo.label, password)
 					.catch(err => {
+						console.log('error in RemoteWalletConnectForm.onWalletConnected:' + err);
+					}); */
+
+					let unlocked = await this.app.openWallet(walletinfo.uuid, walletinfo.label, password).catch(err => {
 						console.log('error in RemoteWalletConnectForm.onWalletConnected:' + err);
 					});
 

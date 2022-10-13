@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 
 import {Header} from '@primusmoney/react_pwa/react-js-ui';
 
+import DeedBuyForm from '../../../components/mydeed/deed/deed-buy-form.js';
 import DeedCreateForm from '../../../components/mydeed/deed/deed-create-form.js';
+import DeedSellForm from '../../../components/mydeed/deed/deed-sell-form.js';
 import DeedTransferForm from '../../../components/mydeed/deed/deed-transfer-form.js';
 import DeedView from '../../../components/mydeed/deed/deed-view.js';
 
@@ -89,6 +91,10 @@ class DeedHomeScreen extends React.Component {
 				return (<DeedCreateForm app = {this.app} parent={this}/>);
 			case 'transfer':
 				return (<DeedTransferForm app = {this.app} parent={this}/>);
+			case 'offeronsale':
+				return (<DeedSellForm app = {this.app} parent={this}/>);
+			case 'buy':
+				return (<DeedBuyForm app = {this.app} parent={this}/>);
 			default:
 				return (<div>Error, wrong action {this.state.action}</div>);
 		}

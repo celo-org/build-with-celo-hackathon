@@ -100,10 +100,12 @@ class DeedListView extends React.Component {
 
 				if (!minter) continue;
 
-				let _currencycarddeeds = await mvcmypwa.fetchDeeds(rootsessionuuid, walletuuid, _currency.uuid, minter);
+				let _currencycarddeeds = await mvcmypwa.fetchDeeds(rootsessionuuid, walletuuid, _currency.uuid, minter).catch(err => {
+					console.log('error: ' + err);
+				});
 
 				// enrich items
-				for (var k = 0; k < _currencycarddeeds.length; k++) {
+				for (var k = 0; k < (_currencycarddeeds ? _currencycarddeeds.length : 0); k++) {
 					let _currencycarddeed = _currencycarddeeds[k]
 					var metadata = (_currencycarddeed.metadata ? _currencycarddeed.metadata : {title: mvcmypwa.t('token') + ' ' + _currencycarddeed.tokenid});
 
