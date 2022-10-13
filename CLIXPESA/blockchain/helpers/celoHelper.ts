@@ -6,6 +6,7 @@ import { setSigner } from '../signer'
 import { getContractByAddress, getContract, getCustomContract } from '../contracts'
 import { CELO_DERIVATION_PATH } from '../utils/consts'
 import {
+  Token,
   CeloBalancePayload,
   GetEncryptedJsonFromPrivateKey,
   GetTransactionPayload,
@@ -16,16 +17,7 @@ import {
   ISmartContractCallPayload,
 } from '../utils/types'
 import { successResponse } from '../utils'
-
-interface Token {
-  symbol: string
-  name: string
-  address: Address // contract address
-  chainId: number
-  decimals?: number
-  exchangeAddress?: Address // Mento contract for token
-  sortOrder?: number // for order preference in balance lists
-}
+import { sendTransaction } from '../transaction'
 
 type TokenMap = Record<Address, Token>
 
@@ -109,32 +101,37 @@ const smartContractCall = async (contractName: CeloContract, args: any) => {
   //const nonce = await signer.getTransactionCount('pending')
   if (!contract) throw new Error(`No contract found for name: ${contractName}`)
   try {
-    let tx
+    let txReceipt: any
+    let unsignedTx: any
     let overrides = {} as any
+
+    const feeEstimate = {
+      gasPrice: utils.parseUnits('0.1', 'gwei').toString(),
+      gasLimit: utils.parseUnits('0.035', 'gwei').toString(),
+      fee: '0.0',
+      feeToken: config.contractAddresses.StableToken,
+    }
 
     if (args.methodType === 'read') {
       overrides = {}
     } else if (args.methodType === 'write') {
+      const { gasPrice, gasLimit } = feeEstimate
       overrides = {
-        gasPrice: utils.parseUnits(args.gasPrice, 'gwei'),
-        nonce: args.nonce,
+        gasPrice,
+        gasLimit,
+        //nonce: args.nonce ? args.nonce : 1,
         value: args.value ? utils.parseEther(args.value.toString()) : 0,
       }
-
-      if (args.gasLimit) {
-        overrides.gasLimit = args.gasLimit
-      }
     }
 
-    if (args.params.length > 0) {
-      tx = await contract?.[args.method](...args.params, overrides)
+    if (args.params) {
+      unsignedTx = await contract.populateTransaction[args.method](...args.params, overrides)
+      txReceipt = await sendTransaction(unsignedTx, feeEstimate)
     } else {
-      tx = await contract?.[args.method](overrides)
+      txReceipt = await contract?.[args.method](overrides)
     }
 
-    return successResponse({
-      data: tx,
-    })
+    return txReceipt
   } catch (error) {
     throw error
   }

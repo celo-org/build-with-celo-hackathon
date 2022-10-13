@@ -20,7 +20,7 @@ const spacesInitialState = {
   roscaAddress: null,
   roscaDetails: {},
   userSpaces: {
-    // updated from contracts
+    // just add contract addresses
     roscas: [],
     personal: [],
     regular: [],
@@ -53,11 +53,10 @@ const spacesSlice = createSlice({
       state.spaceInfo.ctbAmount = size ? payload / state.spaceInfo.members.length : payload
     },
     setUserSpaces: (state, { payload }) => {
-      state.spaceInfo.creator = payload
       if (state.spaceInfo.type === 'rosca') {
-        state.userSpaces.roscas.push(state.spaceInfo)
+        state.userSpaces.roscas.push(payload)
       } else if (state.spaceInfo.type === 'personal') {
-        state.userSpaces.personal.push(state.spaceInfo)
+        state.userSpaces.personal.push(payload)
       }
     },
   },

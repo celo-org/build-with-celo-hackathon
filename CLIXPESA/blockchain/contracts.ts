@@ -12,6 +12,9 @@ import { areAddressesEqual, normalizeAddress } from './utils/addresses'
 let contractCache: Partial<Record<CeloContract, Contract>> = {}
 let tokenContractCache: Partial<Record<string, Contract>> = {} // token address to contract
 
+export const spacesIface = new utils.Interface(SpacesAbi)
+export const roscaIface = new utils.Interface(RoscaAbi)
+
 export function getContract(c: CeloContract) {
   const cachedContract = contractCache[c]
   if (cachedContract) return cachedContract

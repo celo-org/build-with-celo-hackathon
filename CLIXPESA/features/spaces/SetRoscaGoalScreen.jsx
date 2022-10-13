@@ -15,9 +15,15 @@ import {
 import { TouchableOpacity } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { useState } from 'react'
-import { setCtbSchedule, setDisbSchedule, setGoalAmount, setUserSpaces } from './spacesSlice'
+import {
+  getRoscaData,
+  setCtbSchedule,
+  setDisbSchedule,
+  setGoalAmount,
+  setUserSpaces,
+} from './spacesSlice'
 import celoHelper from '../../blockchain/helpers/celoHelper'
-import { getSigner } from '../../blockchain/signer'
+import { spacesIface } from '../../blockchain/contracts'
 import { utils } from 'ethers'
 
 export default function SetRoscaGoalScreen({ navigation, route }) {
@@ -38,11 +44,11 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
   const members = useSelector((state) => state.spaces.spaceInfo.members)
 
   const createRosca = async () => {
+    setIsLoading(true)
     const stableTokenAddress = '0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1'
     const ctbAmount = utils.parseEther(spaceInfo.ctbAmount.toString()).toString()
     const goalAmount = utils.parseEther(spaceInfo.goalAmount.toString()).toString()
-    const signer = getSigner()
-    const nonce = await signer.getTransactionCount('pending')
+    let results
     const imageLink =
       'https://images.unsplash.com/photo-1493655430214-3dd7718460bb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
     try {
@@ -61,20 +67,20 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
         ],
       }
 
-      const data = await celoHelper.smartContractCall('Spaces', {
+      const txReceipt = await celoHelper.smartContractCall('Spaces', {
         method: 'createRosca',
         methodType: 'write',
         params: [txData.address, txData.params],
-        gasPrice: '0.3',
-        nonce: nonce,
       })
-      console.log(data)
-      setIsLoading(true)
+      const { data, topics } = txReceipt.logs[1]
+      results = spacesIface.parseLog({ data, topics })
+      dispatch(setUserSpaces(results.args.roscaAddress))
     } catch (e) {
       console.log(e)
     } finally {
       setIsLoading(false)
-      //navigation.navigate('RoscaHome')
+      //dispatch(getRoscaData(results.args.roscaAddress))
+      navigation.navigate('RoscaHome')
     }
   }
 

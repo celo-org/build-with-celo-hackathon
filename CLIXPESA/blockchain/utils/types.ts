@@ -109,3 +109,25 @@ export interface ISmartContractCallPayload {
   nonce?: number
   privateKey?: string
 }
+
+export interface GasPrice {
+  value: string
+  lastUpdated: number
+}
+
+export interface FeeEstimate {
+  gasPrice: string
+  gasLimit: string
+  fee: string // in wei
+  feeToken: Address // Native token address
+}
+
+export interface Token {
+  symbol: string
+  name: string
+  address: Address // contract address
+  chainId: number
+  decimals?: number
+  exchangeAddress?: Address // Mento contract for token
+  sortOrder?: number // for order preference in balance lists
+}
