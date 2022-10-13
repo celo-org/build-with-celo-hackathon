@@ -1,6 +1,6 @@
 //The purpose of this file is having a global state handler for some situations where a react state is not enought
 import React from 'react'
-import { useWallet, WalletWithProvider } from './useWallet'
+import { useWallet, WalletWithProvider } from '../hooks/useWallet'
 
 const WalletContext = React.createContext<WalletWithProvider>({} as any)
 

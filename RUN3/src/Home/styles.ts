@@ -20,4 +20,5 @@ export const styles = StyleSheet.create({
   btnItem: {
     width: 110,
   },
+  wrapper: { backgroundColor: '#fff', flex: 1 },
 })

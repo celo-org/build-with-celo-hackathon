@@ -43,7 +43,8 @@
     "react-native-screens": "~3.11.1",
     "react-native-svg": "12.3.0",
     "react-native-web": "0.17.7",
-    "expo-clipboard": "~3.0.1"
+    "expo-clipboard": "~3.0.1",
+    "react-native-webview": "11.18.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
