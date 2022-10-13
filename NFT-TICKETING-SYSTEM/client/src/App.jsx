@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import { Toolbar, Typography } from "@mui/material";
-import { NavBar, LandingPage } from "./components";
+import { NavBar, LandingPage, Footer } from "./components";
 
 import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
@@ -33,6 +33,7 @@ const App = () => {
           <NavBar />
           <Toolbar />
           <LandingPage />
+          <Footer />
         </Box>
       </RainbowKitProvider>
     </WagmiConfig>

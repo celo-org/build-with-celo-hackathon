@@ -7,7 +7,7 @@ const Purpose = () => {
     <Box
       sx={{
         background: "linear-gradient(to right, #000 20%, #7228BB)",
-        pb: "5%",
+        pb: "10%",
         pt: "5%",
       }}
     >
@@ -82,8 +82,8 @@ const Purpose = () => {
                     backgroundPosition: "center center",
                     backgroundSize: "cover",
                     backgroundRepeat: "no-repeat",
-                    width: { xs: "100px", md: "200px" },
-                    height: { xs: "100px", md: "200px" },
+                    width: { xs: "100px", sm: "150px", md: "200px" },
+                    height: { xs: "100px", sm: "150px", md: "200px" },
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -99,8 +99,8 @@ const Purpose = () => {
                     backgroundPosition: "center center",
                     backgroundSize: "cover",
                     backgroundRepeat: "no-repeat",
-                    width: { xs: "100px", md: "200px" },
-                    height: { xs: "100px", md: "200px" },
+                    width: { xs: "100px", sm: "150px", md: "200px" },
+                    height: { xs: "100px", sm: "150px", md: "200px" },
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -118,8 +118,8 @@ const Purpose = () => {
                     backgroundPosition: "center center",
                     backgroundSize: "cover",
                     backgroundRepeat: "no-repeat",
-                    width: { xs: "100px", md: "200px" },
-                    height: { xs: "100px", md: "200px" },
+                    width: { xs: "100px", sm: "150px", md: "200px" },
+                    height: { xs: "100px", sm: "150px", md: "200px" },
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -135,15 +135,15 @@ const Purpose = () => {
                     backgroundPosition: "center center",
                     backgroundSize: "cover",
                     backgroundRepeat: "no-repeat",
-                    width: { xs: "100px", md: "200px" },
-                    height: { xs: "100px", md: "200px" },
+                    width: { xs: "100px", sm: "150px", md: "200px" },
+                    height: { xs: "100px", sm: "150px", md: "200px" },
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                   }}
                 >
                   <Typography color="#fff" sx={{ transform: "rotate(-50deg)" }}>
-                    Resale
+                    Memberships
                   </Typography>
                 </Box>
               </Box>
