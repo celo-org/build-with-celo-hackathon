@@ -20,6 +20,8 @@ import { NativeTokensByAddress } from '../wallet/tokens'
 import { fetchBalances } from '../wallet/walletSlice'
 import { getWallets } from '../wallet/walletsManager'
 import { shortenAddress } from '../../blockchain/utils/addresses'
+import { spacesIface } from '../../blockchain/contracts'
+import { utils } from 'ethers'
 
 export default function HomeScreen({ navigation }) {
   const dispatch = useDispatch()
@@ -52,18 +54,40 @@ export default function HomeScreen({ navigation }) {
     console.log(result)
   }
 
+  const handleGetRoscaData = async () => {
+    const roscaAddr = '0x3C842105ea78699B90517Ffc2746019f1149FC28' //'0x536a2b859fEF47C31B7C535D57F70C40416A1ac3'
+    const result = await celoHelper.smartContractCall('Rosca', {
+      contractAddress: roscaAddr,
+      method: 'getDetails',
+      methodType: 'read',
+    })
+
+    console.log(utils.formatUnits(result.currentRound.toString(), 0))
+  }
+
+  const handleDecodeData = () => {
+    const topics = ['0xaf7c8d4cffff8eaaf44f10d975f1c71cc0df6e55c89b6c15106c0ba1f66e7d3e']
+    const data =
+      '0x0000000000000000000000003c842105ea78699b90517ffc2746019f1149fc280000000000000000000000008e912ee99bfaecae8364ba6604612ffdfe46afd200000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000002200000000000000000000000000000000000000000000000001bc16d674ec80000000000000000000000000000000000000000000000000000094079cd1a42aa68000000000000000000000000000000000000000000000000000000000000026000000000000000000000000000000000000000000000000000000000000002a000000000000000000000000000000000000000000000000000000000000002e000000000000000000000000000000000000000000000000000000000000003200000000000000000000000000000000000000000000000000000000000000009456d657267656e63790000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009d68747470733a2f2f696d616765732e756e73706c6173682e636f6d2f70686f746f2d313439333635353433303231342d3364643737313834363062623f69786c69623d72622d312e322e3126697869643d4d6e77784d6a4133664442384d48787761473930627931775957646c66487838664756756644423866487838266175746f3d666f726d6174266669743d63726f7026773d38373026713d38300000000000000000000000000000000000000000000000000000000000000000000006333639624331000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000064d6f6e646179000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000065765656b6c7900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007547565736461790000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000065765656b6c790000000000000000000000000000000000000000000000000000'
+    const results = spacesIface.parseLog({ data, topics })
+    console.log(results.args.RD.imgLink)
+  }
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <Box flex={1} bg="muted.100" alignItems="center">
+      <Box flex={1} bg="muted.50" alignItems="center">
         <Box mt="2" bg="#fff" width="95%" rounded="2xl" shadow="none">
           <HStack justifyContent="space-between">
             <Stack mx="4" my="3">
               <Text _light={{ color: 'muted.700' }}>Actual Balance (KES)</Text>
               <Heading size="xl" letterSpacing="0.5" _light={{ color: 'muted.800' }}>
-                {balances ? balances[tokenAddrs[1]] * 120.75 : tempBal[tokenAddrs[1]] * 120.75}
+                {balances
+                  ? (balances[tokenAddrs[1]] * 120.75).toFixed(2)
+                  : tempBal[tokenAddrs[1]] * 120.75}
               </Heading>
               <Text _light={{ color: 'muted.700' }} lineHeight="sm">
-                ≈ {balances ? balances[tokenAddrs[1]] : tempBal[tokenAddrs[1]]} cUSD
+                ≈ {balances ? (balances[tokenAddrs[1]] * 1.0).toFixed(2) : tempBal[tokenAddrs[1]]}{' '}
+                cUSD
               </Text>
             </Stack>
             <Pressable
@@ -138,8 +162,9 @@ export default function HomeScreen({ navigation }) {
         {/* Saving Spaces/Vault/Earnings */}
         {/* Rewards and Offers */}
 
-        {/* Test buttons 
-        <Button onPress={() => handleGetWallets()}>Show Wallet List</Button>*/}
+        {/*Test buttons*/}
+        <Button onPress={() => handleGetRoscaData()}>Show Rosca Data</Button>
+        <Button onPress={() => handleDecodeData()}>Show Data</Button>
       </Box>
     </ScrollView>
   )

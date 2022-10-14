@@ -1,11 +1,12 @@
 import { Wallet, BigNumber, BigNumberish, Contract, utils } from 'ethers'
 import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
-import { config } from '../configs/celo.config'
+import { CeloContract, config } from '../configs/celo.config'
 import { getProvider } from '../provider'
 import { setSigner } from '../signer'
-import { getContractByAddress } from '../contracts'
+import { getContractByAddress, getContract, getCustomContract } from '../contracts'
 import { CELO_DERIVATION_PATH } from '../utils/consts'
 import {
+  Token,
   CeloBalancePayload,
   GetEncryptedJsonFromPrivateKey,
   GetTransactionPayload,
@@ -16,16 +17,7 @@ import {
   ISmartContractCallPayload,
 } from '../utils/types'
 import { successResponse } from '../utils'
-
-interface Token {
-  symbol: string
-  name: string
-  address: Address // contract address
-  chainId: number
-  decimals?: number
-  exchangeAddress?: Address // Mento contract for token
-  sortOrder?: number // for order preference in balance lists
-}
+import { sendTransaction } from '../transaction'
 
 type TokenMap = Record<Address, Token>
 
@@ -98,6 +90,57 @@ const generateWalletFromMnemonic = async (mnemonic: string, derivationPath?: str
   })
 }
 
+const smartContractCall = async (contractName: CeloContract, args: any) => {
+  let contract: Contract | null
+  if (args.contractAddress) {
+    contract = getCustomContract(contractName, args.contractAddress)
+  } else {
+    contract = getContract(contractName)
+  }
+
+  //const nonce = await signer.getTransactionCount('pending')
+  if (!contract) throw new Error(`No contract found for name: ${contractName}`)
+  try {
+    let txReceipt: any
+    let unsignedTx: any
+    let overrides = {} as any
+
+    const feeEstimate = {
+      gasPrice: utils.parseUnits('0.1', 'gwei').toString(),
+      gasLimit: utils.parseUnits('0.035', 'gwei').toString(),
+      fee: '0.0',
+      feeToken: config.contractAddresses.StableToken,
+    }
+
+    if (args.methodType === 'read') {
+      overrides = {}
+    } else if (args.methodType === 'write') {
+      const { gasPrice, gasLimit } = feeEstimate
+      overrides = {
+        gasPrice,
+        gasLimit,
+        //nonce: args.nonce ? args.nonce : 1,
+        value: args.value ? utils.parseEther(args.value.toString()) : 0,
+      }
+    }
+
+    if (args.params) {
+      if (args.approvalContract) {
+        const approvalContract = getContract(args.approvalContract)
+        await approvalContract.approve(args.contractAddress, args.params[0])
+      }
+      unsignedTx = await contract.populateTransaction[args.method](...args.params, overrides)
+      txReceipt = await sendTransaction(unsignedTx, feeEstimate)
+    } else {
+      txReceipt = await contract?.[args.method](overrides)
+    }
+
+    return txReceipt
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   getBalances,
   getTokenBalance,
@@ -110,5 +153,5 @@ export default {
   //getEncryptedJsonFromPrivateKey,
   //getWalletFromEncryptedJson,
   //getTokenInfo,
-  //smartContractCall,
+  smartContractCall,
 }
