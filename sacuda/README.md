@@ -1,9 +1,7 @@
 
-# ⚡ Hackathon Project Template ⚡
-_This is a sample submission repository.
-Please [__fork this repo__](https://help.github.com/articles/fork-a-repo/) and use this as a starting point for your hackathon project._
+# ⚡ Sacuda ⚡
 
-## Project Name
+
 ### Team name
 #### Hackathon Track
 
