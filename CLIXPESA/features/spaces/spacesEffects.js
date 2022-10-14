@@ -1,5 +1,6 @@
 import celoHelper from '../../blockchain/helpers/celoHelper'
-import { getRoscaData } from './spacesSlice'
+import { getRoscaData, setRoscaDetails } from './spacesSlice'
+import { utils } from 'ethers'
 
 export const spacesListeners = (startListening) => {
   startListening({
@@ -12,7 +13,21 @@ export const spacesListeners = (startListening) => {
         methodType: 'read',
       })
 
-      console.log(result)
+      const roscaDetails = {
+        roscaName: result.roscaName,
+        imgLink: result.imgLink,
+        goalAmount: utils.formatUnits(result.goalAmount.toString(), 18),
+        ctbDay: result.ctbDay,
+        ctbOccur: result.ctbOccur,
+        disbDay: result.disbDay,
+        disbOccur: result.disbOccur,
+        activeMembers: utils.formatUnits(result.activeMembers.toString(), 0),
+        currentRound: utils.formatUnits(result.currentRound.toString(), 0),
+        creator: result.creator,
+        roscaBal: utils.formatUnits(result.roscaBal.toString(), 18),
+      }
+
+      listenerApi.dispatch(setRoscaDetails(roscaDetails))
     },
   })
 }

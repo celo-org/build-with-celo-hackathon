@@ -21,6 +21,7 @@ import { fetchBalances } from '../wallet/walletSlice'
 import { getWallets } from '../wallet/walletsManager'
 import { shortenAddress } from '../../blockchain/utils/addresses'
 import { spacesIface } from '../../blockchain/contracts'
+import { utils } from 'ethers'
 
 export default function HomeScreen({ navigation }) {
   const dispatch = useDispatch()
@@ -61,7 +62,7 @@ export default function HomeScreen({ navigation }) {
       methodType: 'read',
     })
 
-    console.log(result.imgLink)
+    console.log(utils.formatUnits(result.currentRound.toString(), 0))
   }
 
   const handleDecodeData = () => {

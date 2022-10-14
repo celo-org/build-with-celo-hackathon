@@ -17,6 +17,7 @@ import {
   SelectContactsScreen,
   CustomizeGroupScreen,
   SetRoscaGoalScreen,
+  FundSpaceScreen,
 } from 'clixpesa/features/spaces'
 import { useSelector } from 'react-redux'
 
@@ -32,10 +33,18 @@ export default function MainNavigator() {
       />
       <MainStack.Group screenOptions={{ presentation: 'modal' }}>
         <MainStack.Screen name="Account" component={AccountScreen} />
-        <MainStack.Screen name="RoscaHome" component={RoscaHomeScreen} />
+        <MainStack.Screen
+          name="RoscaHome"
+          component={RoscaHomeScreen}
+          options={({ route }) => ({
+            //unmountOnBlur: true,
+            roscaAddress: route.params.roscaAddress,
+          })}
+        />
         <MainStack.Screen name="selectContacts" component={SelectContactsScreen} />
         <MainStack.Screen name="customizeGroup" component={CustomizeGroupScreen} />
         <MainStack.Screen name="setRoscaGoal" component={SetRoscaGoalScreen} />
+        <MainStack.Screen name="fundSpace" component={FundSpaceScreen} />
         <MainStack.Screen name="DummyModal" component={DummyScreen} />
         <MainStack.Screen
           name="AllTokens"

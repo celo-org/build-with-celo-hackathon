@@ -10,8 +10,10 @@ import {
   Pressable,
 } from 'native-base'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { useSelector } from 'react-redux'
 
 export default function SpacesScreen({ navigation, route }) {
+  const roscaAddress = useSelector((s) => s.spaces.userSpaces.roscas[0])
   //const navigation = useNavigation();
   return (
     <Box flex={1} bg="muted.50" justifyContent="flex-start" p={6}>
@@ -101,7 +103,9 @@ export default function SpacesScreen({ navigation, route }) {
             padding="2"
             width="50%"
             onPress={() => {
-              navigation.navigate('selectContacts')
+              //navigation.navigate('selectContacts')
+              //navigation.navigate('setRoscaGoal')
+              navigation.navigate('RoscaHome', { roscaAddress: roscaAddress })
             }}
           >
             <AspectRatio w="100%">

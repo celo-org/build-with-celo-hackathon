@@ -9,21 +9,23 @@ import {
   Progress,
   Avatar,
   Spinner,
+  Icon,
 } from 'native-base'
+import { Feather } from '@expo/vector-icons'
 import { HeaderBackButton } from '@react-navigation/elements'
 import { useLayoutEffect, useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getRoscaData, getRoscaAddress } from './spacesSlice'
+import { getRoscaData } from './spacesSlice'
 
 export default function RoscaHomeScreen({ navigation, route }) {
+  const roscaAddress = route.params.roscaAddress
   const dispatch = useDispatch()
-  const { roscaDetails, isLoading, roscaAddress } = useSelector((state) => state.spaces)
-  console.log(roscaDetails)
+  const { roscaDetails } = useSelector((state) => state.spaces)
   const [isFetching, setIsFetching] = useState(false)
 
   useEffect(() => {
-    dispatch(getRoscaAddress())
-  }, [dispatch])
+    dispatch(getRoscaData(roscaAddress))
+  }, [])
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -41,7 +43,7 @@ export default function RoscaHomeScreen({ navigation, route }) {
   }, [navigation])
 
   const prog = (300.89 / 5000.0) * 100
-  if (isLoading || isFetching) {
+  if (!roscaDetails) {
     return <Spinner size="lg" />
   }
   return (
@@ -55,54 +57,49 @@ export default function RoscaHomeScreen({ navigation, route }) {
         minH={240}
       />
       <Box position="absolute" top="11%" left={3}>
-        <Box bg="rgba(52, 52, 52, 0.3)" w="60%" rounded="lg">
-          <Box p={3}>
+        <Box bg="rgba(52, 52, 52, 0.3)" minW="2/3" rounded="lg">
+          <Box p={3} minW="2/3">
             <Text fontSize="md" fontWeight="medium" color="white" lineHeight="xs">
-              Balance (CELO)
+              Balance (cUSD)
             </Text>
             <Text fontSize="3xl" fontWeight="semibold" color="white">
               {roscaDetails.roscaBal}
             </Text>
             <Text fontSize="sm" color="white" lineHeight="xs">
-              ≈ {roscaDetails.roscaBal * 92.7} KES
+              ≈ {(roscaDetails.roscaBal * 120.75).toFixed(2)} KES
             </Text>
           </Box>
         </Box>
         <HStack space={2} mt={3}>
           <Button
+            leftIcon={<Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />}
             variant="subtle"
             rounded="3xl"
-            w="25%"
+            pr="4"
             _text={{ color: 'primary.600', fontWeight: 'semibold', mb: '0.5' }}
-            onPress={() => navigation.navigate('FundRound')}
+            onPress={() => navigation.navigate('fundSpace')}
           >
             Fund
           </Button>
           <Button
+            leftIcon={
+              <Icon as={Feather} name="arrow-down-right" size="md" color="primary.600" mr="1" />
+            }
             variant="subtle"
             rounded="3xl"
-            w="25%"
+            pr="4"
             _text={{ color: 'primary.600', fontWeight: 'semibold', mb: '0.5' }}
           >
             Withdraw
           </Button>
           <Button
+            leftIcon={
+              <Icon as={Feather} name="more-horizontal" size="md" color="primary.600" mx="2" />
+            }
             variant="subtle"
             rounded="3xl"
-            w="18%"
             _text={{ color: 'primary.600', fontWeight: 'semibold', mb: '0.5' }}
-          >
-            More
-          </Button>
-          <Button
-            variant="subtle"
-            rounded="3xl"
-            w="15%"
-            _text={{ color: 'primary.600', fontWeight: 'semibold', mb: '0.5' }}
-            onPress={() => dispatch(getRoscaData(roscaAddress))}
-          >
-            set
-          </Button>
+          />
         </HStack>
       </Box>
       <Box alignItems="center" mt={3}>

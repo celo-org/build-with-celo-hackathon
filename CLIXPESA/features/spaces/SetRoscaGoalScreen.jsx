@@ -30,7 +30,7 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
   const dispatch = useDispatch()
   const spaceInfo = useSelector((state) => state.spaces.spaceInfo)
 
-  const [amount, setAmount] = useState(0)
+  const [amount, setAmount] = useState('0')
   const { isOpen, onOpen, onClose } = useDisclose()
   const [isSetCtb, setIsSetCtb] = useState(false)
   const [schedule, setSchedule] = useState({
@@ -80,7 +80,7 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
     } finally {
       setIsLoading(false)
       //dispatch(getRoscaData(results.args.roscaAddress))
-      navigation.navigate('RoscaHome')
+      navigation.navigate('RoscaHome', { roscaAddress: results.args.roscaAddress })
     }
   }
 
@@ -109,7 +109,7 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
                   </Text>
                 }
                 value={amount}
-                onChangeText={(text) => setAmount(text)}
+                onChangeText={(amount) => setAmount(amount)}
                 onClose={() => dispatch(setGoalAmount(amount))}
                 onSubmitEditing={() => dispatch(setGoalAmount(amount))}
               />

@@ -125,6 +125,10 @@ const smartContractCall = async (contractName: CeloContract, args: any) => {
     }
 
     if (args.params) {
+      if (args.approvalContract) {
+        const approvalContract = getContract(args.approvalContract)
+        await approvalContract.approve(args.contractAddress, args.params[0])
+      }
       unsignedTx = await contract.populateTransaction[args.method](...args.params, overrides)
       txReceipt = await sendTransaction(unsignedTx, feeEstimate)
     } else {

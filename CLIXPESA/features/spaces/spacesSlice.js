@@ -17,11 +17,10 @@ const spacesInitialState = {
     disbOccurence: 'Weekly',
     creator: null, //creator user address
   },
-  roscaAddress: null,
   roscaDetails: {},
   userSpaces: {
     // just add contract addresses
-    roscas: [],
+    roscas: ['0x3C842105ea78699B90517Ffc2746019f1149FC28'],
     personal: [],
     regular: [],
     mchango: [],
@@ -59,6 +58,9 @@ const spacesSlice = createSlice({
         state.userSpaces.personal.push(payload)
       }
     },
+    setRoscaDetails: (state, { payload }) => {
+      state.roscaDetails = payload
+    },
   },
   extraReducers: {},
 })
@@ -70,6 +72,7 @@ export const {
   setDisbSchedule,
   setGoalAmount,
   setUserSpaces,
+  setRoscaDetails,
 } = spacesSlice.actions
 
 //Created action
