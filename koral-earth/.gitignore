@@ -9,3 +9,5 @@ typechain-types
 cache
 artifacts
 
+#temporarily ignore contract deployments
+deployments

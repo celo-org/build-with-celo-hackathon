@@ -1,9 +1,33 @@
 import type { HardhatRuntimeEnvironment } from 'hardhat/types';
 
-async function deployer(_hre: HardhatRuntimeEnvironment) {
-  console.log(`Deployed all contracts successfully`);
+const contractName = 'Colony';
+
+async function deployer(hre: HardhatRuntimeEnvironment) {
+  const [ownerAddress] = await hre.getUnnamedAccounts();
+  console.log('ownerAddress', ownerAddress);
+  const { deploy: deployContract } = hre.deployments;
+
+  const colony = await deployContract(contractName, {
+    from: ownerAddress,
+    log: true,
+    autoMine: true,
+    proxy: {
+      owner: ownerAddress,
+      execute: {
+        methodName: "initialize",
+        args: ["DataCooper", 10, 2]
+      }
+    }
+  });
+
+  console.log(`Deployed colony successfully`, colony.address);
+
+  await hre.ethernal.push({
+    name: contractName,
+    address: colony.address
+  })
 }
 
-deployer.tags = ['Colony'];
+deployer.tags = [`${contractName}_001`];
 
 export default deployer;

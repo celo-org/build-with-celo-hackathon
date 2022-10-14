@@ -2,6 +2,7 @@ import 'dotenv/config';
 import 'hardhat-celo';
 import 'hardhat-deploy';
 import 'hardhat-deploy-ethers';
+import 'hardhat-ethernal';
 import type { HardhatUserConfig } from 'hardhat/config';
 import type { NetworkUserConfig } from 'hardhat/types';
 
@@ -43,6 +44,17 @@ function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
 
 const config: HardhatUserConfig = {
   defaultNetwork: 'ganache',
+  ethernal: {
+    email: getEnvVar('ETHERNAL_USERNAME'),
+    password: getEnvVar('ETHERNAL_PASSWORD'),
+    disableSync: false,
+    disableTrace: false,
+    workspace: "colony", 
+    uploadAst: false,
+    disabled: false,
+    resetOnStart: undefined,
+    serverSync: false
+  },
   etherscan: {
     apiKey: {
       mainnet: getEnvVar("CELOSCAN_API_KEY"),
