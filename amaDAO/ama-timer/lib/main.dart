@@ -1,11 +1,14 @@
 import 'dart:async';
-import 'dart:ffi';
+// import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'class/pomodoro_cycle.dart';
 import 'class/pomodoro_config.dart';
 import 'class/state/pomodoro.dart';
-
+import 'components/primary_button.dart';
+import 'controllers/wallect_controller.dart';
+import 'package:provider/provider.dart';
+import 'utils/constants.dart';
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -35,7 +38,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  int _tasks = 1;
+  int _tasks = 0;
   static const int minSec = 1; //60
   int _duration = 25 * minSec; 
   PomodoroState? nextState = PomodoroState.INIT;
@@ -160,7 +163,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _addTask() {
-    setState(() {
+    print("next state:${nextState.toString()}");
+    if (nextState != PomodoroState.BREAK && nextState != PomodoroState.LONG_BREAK) {
+      setState(() {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
       // so that the display can reflect the updated values. If we changed
@@ -168,103 +173,218 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _tasks++;
     });
+    }
   }
 
+  Widget _seedsWidget(){
+    print("seed state:${_pomodoro.state}");
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+        for( var i = 0 ; i < _tasks; i++ )
+          if(i==_tasks-1 && _pomodoro.state==PomodoroState.FOCUS)
+            Image.asset('images/seed_inactive.png',width: 30,height: 30)
+            else Image.asset('images/seed_active.png',width: 30,height: 30,),
+        ],
+        ),
+        if(_pomodoro.state==PomodoroState.FINISHED)
+          Container(
+            alignment: Alignment.centerRight,
+            child: PrimaryButton("Plant Now",(){},radius: 4,textColor: Color(0xffffffff),))
+      ],
+    );
+  }
+
+  Widget _BottomOpction(
+      Color color,
+      String hashTag,
+      String dis
+      ){
+    return Container(
+      padding: EdgeInsets.all(8),
+      child: Row(
+        children: [
+          Container(
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Color(0xffD8D8D8),
+                borderRadius: BorderRadius.all(Radius.circular(12))
+
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 10,
+                  height: 10,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: color,
+                  ),
+                ),
+                SizedBox(width: 8,),
+                Text(hashTag),
+              ],
+            ),
+          ),
+          SizedBox(width: 15,),
+          Text(dis)
+        ],
+      ),
+    );
+  }
+  WalletController walletController = WalletController();
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title!),
+        flexibleSpace: Container(
+          alignment: Alignment.centerRight,
+          child: walletController.isConnectWallet
+              ? const SizedBox()
+              :PrimaryButton("Connect",() async {
+          try {
+          walletController.connectWallet(context);
+          } catch (e) {
+          // logger.d(e);
+          }
+          }),
+        ),
       ),
       body: Center(
-        child: CircularCountDownTimer(
-          // Countdown duration in Seconds.
-          duration: _getDuration(),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _seedsWidget(),
+            SizedBox(height: 30,),
+            CircularCountDownTimer(
+              // Countdown duration in Seconds.
+              duration: _getDuration(),
 
-          // Countdown initial elapsed Duration in Seconds.
-          initialDuration: 0,
+              // Countdown initial elapsed Duration in Seconds.
+              initialDuration: 0,
 
-          // Controls (i.e Start, Pause, Resume, Restart) the Countdown Timer.
-          controller: _controller,
+              // Controls (i.e Start, Pause, Resume, Restart) the Countdown Timer.
+              controller: _controller,
 
-          // Width of the Countdown Widget.
-          width: MediaQuery.of(context).size.width / 2,
+              // Width of the Countdown Widget.
+              width: MediaQuery.of(context).size.width / 3,
 
-          // Height of the Countdown Widget.
-          height: MediaQuery.of(context).size.height / 2,
+              // Height of the Countdown Widget.
+              height: MediaQuery.of(context).size.height / 3,
 
-          // Ring Color for Countdown Widget.
-          ringColor: Colors.grey[300]!,
+              // Ring Color for Countdown Widget.
+              ringColor: Colors.grey[300]!,
 
-          // Ring Gradient for Countdown Widget.
-          ringGradient: null,
+              // Ring Gradient for Countdown Widget.
+              ringGradient: null,
 
-          // Filling Color for Countdown Widget.
-          fillColor: _getStateColor(),
+              // Filling Color for Countdown Widget.
+              fillColor: _getStateColor(),
 
-          // Filling Gradient for Countdown Widget.
-          fillGradient: null,
+              // Filling Gradient for Countdown Widget.
+              fillGradient: null,
 
-          // Background Color for Countdown Widget.
-          backgroundColor: Colors.blue[500],
+              // Background Color for Countdown Widget.
+              // backgroundColor: Colors.blue[500],
 
-          // Background Gradient for Countdown Widget.
-          backgroundGradient: null,
+              // Background Gradient for Countdown Widget.
+              backgroundGradient: null,
 
-          // Border Thickness of the Countdown Ring.
-          strokeWidth: 20.0,
+              // Border Thickness of the Countdown Ring.
+              strokeWidth: 5.0,
 
-          // Begin and end contours with a flat edge and no extension.
-          strokeCap: StrokeCap.round,
+              // Begin and end contours with a flat edge and no extension.
+              strokeCap: StrokeCap.round,
 
-          // Text Style for Countdown Text.
-          textStyle: const TextStyle(
-            fontSize: 33.0,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+              // Text Style for Countdown Text.
+              textStyle: const TextStyle(
+                fontSize: 33.0,
+                color: Colors.black,
+                fontWeight: FontWeight.w900,
+              ),
 
-          // Format for the Countdown Text.
-          textFormat: CountdownTextFormat.MM_SS,
+              // Format for the Countdown Text.
+              textFormat: CountdownTextFormat.MM_SS,
 
-          // Handles Countdown Timer (true for Reverse Countdown (max to 0), false for Forward Countdown (0 to max)).
-          isReverse: true,
+              // Handles Countdown Timer (true for Reverse Countdown (max to 0), false for Forward Countdown (0 to max)).
+              isReverse: true,
 
-          // Handles Animation Direction (true for Reverse Animation, false for Forward Animation).
-          isReverseAnimation: false,
+              // Handles Animation Direction (true for Reverse Animation, false for Forward Animation).
+              isReverseAnimation: false,
 
-          // Handles visibility of the Countdown Text.
-          isTimerTextShown: true,
+              // Handles visibility of the Countdown Text.
+              isTimerTextShown: true,
 
-          // Handles the timer start.
-          autoStart: false,
+              // Handles the timer start.
+              autoStart: false,
 
-          // This Callback will execute when the Countdown Starts.
-          onStart: () {
-            // Here, do whatever you want
-            debugPrint('Countdown Started');
-            // _checkPomodoro(); 
-            // _pomodoro.reset();
-            // _pomodoro.performs();
-          },
+              // This Callback will execute when the Countdown Starts.
+              onStart: () {
+                // Here, do whatever you want
+                debugPrint('Countdown Started');
+                // _checkPomodoro();
+                // _pomodoro.reset();
+                // _pomodoro.performs();
+              },
 
-          // This Callback will execute when the Countdown Ends.
-          onComplete: () {
-            // Here, do whatever you want
-            debugPrint('Countdown Ended');
-            _checkPomodoro();
-            //_controllerSetup();
+              // This Callback will execute when the Countdown Ends.
+              onComplete: () {
+                // Here, do whatever you want
+                debugPrint('Countdown Ended');
+                _checkPomodoro();
+                _addTask();
+                //_controllerSetup();
 
-          },
+              },
 
-          // This Callback will execute when the Countdown Changes.
-          onChange: (String timeStamp) {
-            PomodoroState state = _pomodoro.state;
-            // Here, do whatever you want
-            //debugPrint('Countdown Changed $timeStamp, state: $state.');
-            //**_checkPomodoroStatus();
-          },
+              // This Callback will execute when the Countdown Changes.
+              onChange: (String timeStamp) {
+                PomodoroState state = _pomodoro.state;
+
+                // Here, do whatever you want
+                //debugPrint('Countdown Changed $timeStamp, state: $state.');
+                //**_checkPomodoroStatus();
+              },
+            ),
+            SizedBox(height: 30,),
+            Container(
+              color: Color(0xffD8D8D8),
+              padding: EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: 10,
+                    height: 10,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(0xffD511CE)
+                    ),
+                  ),
+                  SizedBox(width: 8,),
+                  Text("#Growth"),
+                  Expanded(child: Center(child: Text("Read article for inspiration")))
+                ],
+              ),
+
+            ),
+            // SizedBox(height: 30,),
+            _BottomOpction(Color(0xff1197D5),"#twitter","Write Thread"),
+            _BottomOpction(Color(0xff11D514),"#desgin","Create visual"),
+            _BottomOpction(Color(0xffD5B511),"#write","Expand into blog post"),
+            _BottomOpction(Color(0xffD53A11),"#engage","Online with audience"),
+
+          ],
         ),
       ),
       // floatingActionButton: FloatingActionButton(
