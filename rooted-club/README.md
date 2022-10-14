@@ -60,6 +60,9 @@ List any URLs relevant to demonstrating your prototype
 
 #### Benefits
 - Access to common comunication online channel with the stewards and supporters.
+- Access to the SAF chat group and the agenda of this agroecosystem.
+- Possibility of interaction between supporters, to combine visits, experiences and access to products.
+- Passport for local events and experiences.
 
 
 #### Next Steps(What we need to do next to turn this prototype into a working solution)
