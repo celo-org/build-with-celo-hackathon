@@ -2,11 +2,12 @@ import 'dart:math';
 
 import 'package:eip55/eip55.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_web3/model/app_info.dart';
-import 'package:flutter_web3/utils/helper.dart';
-import 'package:flutter_web3/utils/index.dart';
 import 'package:http/http.dart';
 import 'package:web3dart/web3dart.dart';
+
+import '../model/app_info.dart';
+import '../utils/constants.dart';
+import '../utils/wallet_connect_helper.dart';
 
 class WalletController extends ChangeNotifier {
   bool balRefresh = false;
@@ -33,7 +34,7 @@ class WalletController extends ChangeNotifier {
     print("connect to Wallet");
 
     isConnectWallet =
-        await walletConnectHelper.initSession(context, chainId: 42220);
+    await walletConnectHelper.initSession(context, chainId: 42220);
     print(isConnectWallet);
     if (isConnectWallet) {
       publicWalletAddress = walletConnectHelper
@@ -76,7 +77,7 @@ class WalletController extends ChangeNotifier {
 
   Future getBalance() async {
     var address =
-        await walletConnectHelper.getEthereumCredentials().extractAddress();
+    await walletConnectHelper.getEthereumCredentials().extractAddress();
     bal = await web3client.getBalance(address);
     notifyListeners();
   }
