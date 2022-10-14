@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // Import the crypto getRandomValues shim (**BEFORE** the shims)
 import 'react-native-get-random-values'
 
@@ -13,23 +13,20 @@ import { colors, globalStyles } from '../utils/globalStyles'
 import { styles } from './styles'
 import { Avatar, Button, Divider, ListItem, Tooltip } from '@ui-kitten/components'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faWallet, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { faWallet, faArrowLeft, faRefresh } from '@fortawesome/free-solid-svg-icons'
 import * as Clipboard from 'expo-clipboard'
 import WebView from 'react-native-webview'
-import { useRun3T } from '../hooks/useRUN3T'
+import { useRun3T } from '../hooks'
 
 export default function Home() {
   const { walletWithProvider } = useWalletProvider()
-  const { mintRun3Token } = useRun3T()
+  const { mintRun3Token, getRun3TokenBalance } = useRun3T()
   const [visibleTooltip, setVisibleTooltip] = useState<boolean>(false)
+  const [visibleTooltipRun3, setVisibleTooltipRun3] = useState<boolean>(false)
   const [celoBalance, setCeloBalance] = useState<string>('')
+  const [run3TBalance, setRun3TBalance] = useState<string>('')
   const [showWebView, setShowWebView] = useState<boolean>(false)
-  const getBalance = async () => {
-    const value = await walletWithProvider.getBalance()
-    const balanceInEth = ethers.utils.formatEther(value)
-    setCeloBalance(balanceInEth)
-  }
-  getBalance()
+  const [shouldRefresh, setShouldRefresh] = useState<boolean>(true)
 
   const copyToClipboard = async () => {
     setVisibleTooltip(true)
@@ -38,6 +35,28 @@ export default function Home() {
       setVisibleTooltip(false)
     }, 3000)
   }
+
+  useEffect(() => {
+    if (shouldRefresh) {
+      const getBalance = async () => {
+        const value = await walletWithProvider.getBalance()
+        const balanceInEth = ethers.utils.formatEther(value)
+        setCeloBalance(balanceInEth)
+      }
+
+      const getRun3TBalance = async () => {
+        try {
+          const value = await getRun3TokenBalance(walletWithProvider.address)
+          setRun3TBalance(value)
+        } catch (e) {
+          console.log('eHere', e)
+        }
+      }
+      getBalance()
+      getRun3TBalance()
+      setShouldRefresh(false)
+    }
+  }, [shouldRefresh])
 
   //0x25cD75A13d91AA792b18F593E0a337E23a774bAe RUN3T address
 
@@ -78,48 +97,71 @@ export default function Home() {
 
   return (
     <View style={styles.wrapper}>
-      <ListItem
-        title={`Address: ${walletWithProvider.address}`}
-        accessoryLeft={() => <FontAwesomeIcon color={colors.secondary} icon={faWallet} size={50} />}
-        accessoryRight={() => (
-          <Tooltip
-            anchor={() => (
-              <Button style={[styles.btnItem, globalStyles.secondaryBg]} onPress={copyToClipboard} size="small">
-                COPY
-              </Button>
-            )}
-            visible={visibleTooltip}
-            onBackdropPress={() => setVisibleTooltip(false)}
-          >
-            Your wallet address was copied to your clipboard
-          </Tooltip>
-        )}
-      />
-      <Divider />
-      <ListItem
-        title={`CELO Balance: ${celoBalance}`}
-        accessoryLeft={() => <Avatar style={styles.celoLogo} source={require('../../assets/celo-logo.png')} />}
-        accessoryRight={() => (
-          <Button onPress={() => setShowWebView(true)} style={[styles.btnItem, globalStyles.secondaryBg]} size="small">
-            GET CELO
-          </Button>
-        )}
-      />
-      <Divider />
-      <ListItem
-        title={`RUN3T Balance: ${celoBalance}`}
-        accessoryLeft={() => <Avatar style={styles.celoLogo} source={require('../../assets/RUN3-isologo-01.png')} />}
-        accessoryRight={() => (
-          <Button
-            onPress={() => mintRun3Token(walletWithProvider.address)}
-            style={[styles.btnItem, globalStyles.secondaryBg]}
-            size="small"
-          >
-            GET RUN3T
-          </Button>
-        )}
-      />
-      <Divider />
+      <View>
+        <ListItem
+          title={`Address: ${walletWithProvider.address}`}
+          accessoryLeft={() => <FontAwesomeIcon color={colors.secondary} icon={faWallet} size={50} />}
+          accessoryRight={() => (
+            <Tooltip
+              anchor={() => (
+                <Button style={[styles.btnItem, globalStyles.secondaryBg]} onPress={copyToClipboard} size="small">
+                  COPY
+                </Button>
+              )}
+              visible={visibleTooltip}
+              onBackdropPress={() => setVisibleTooltip(false)}
+            >
+              Your wallet address was copied to your clipboard
+            </Tooltip>
+          )}
+        />
+        <Divider />
+        <ListItem
+          title={`CELO Balance: ${celoBalance}`}
+          accessoryLeft={() => <Avatar style={styles.celoLogo} source={require('../../assets/celo-logo.png')} />}
+          accessoryRight={() => (
+            <Button onPress={() => setShowWebView(true)} style={[styles.btnItem, globalStyles.secondaryBg]} size="small">
+              GET CELO
+            </Button>
+          )}
+        />
+        <Divider />
+        <ListItem
+          title={`RUN3T Balance: ${run3TBalance}`}
+          accessoryLeft={() => <Avatar style={styles.celoLogo} source={require('../../assets/RUN3-isologo-01.png')} />}
+          accessoryRight={() => (
+            <Tooltip
+              anchor={() => (
+                <Button
+                  onPress={async () => {
+                    setVisibleTooltipRun3(true)
+                    await mintRun3Token(walletWithProvider.address)
+                    setTimeout(() => {
+                      setVisibleTooltip(false)
+                    }, 3000)
+                  }}
+                  style={[styles.btnItem, globalStyles.secondaryBg]}
+                  size="small"
+                >
+                  GET RUN3T
+                </Button>
+              )}
+              visible={visibleTooltipRun3}
+              onBackdropPress={() => setVisibleTooltipRun3(false)}
+            >
+              Your will receive 100 RUN3T soon
+            </Tooltip>
+          )}
+        />
+        <Divider />
+      </View>
+      <Button
+        onPress={() => setShouldRefresh(true)}
+        style={[styles.refreshBtn, globalStyles.primaryBg]}
+        accessoryLeft={<FontAwesomeIcon color="white" icon={faRefresh} size={18} />}
+      >
+        REFRESH
+      </Button>
     </View>
   )
 }

@@ -20,5 +20,10 @@ export const styles = StyleSheet.create({
   btnItem: {
     width: 110,
   },
-  wrapper: { backgroundColor: '#fff', flex: 1 },
+  wrapper: { backgroundColor: '#fff', flex: 1, justifyContent: 'space-between' },
+  refreshBtn: {
+    marginBottom: 40,
+    width: '70%',
+    alignSelf: 'center',
+  },
 })
