@@ -79,6 +79,8 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
 
     // Events
     event ReportStolenBike(uint256 tokenId);
+    event Mint(uint256 tokenId);
+    event Stolen(uint256 tokenId);
 
     // Modifiers
     modifier checkAllowance(uint amount) {
@@ -115,6 +117,8 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
         // Map serial hash to tokenId and set bike state 
         bikes[_serialHash] = newTokenId;
         bikeState[newTokenId] = State.Normal;
+
+        emit Mint(newTokenId);
     }
 
     /**
@@ -204,7 +208,6 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
         require(!isStolen(tokenId),"State is already stolen");
         require(isTokenOwner(msg.sender,tokenId),"Not token owner");
         require(_token.allowance(msg.sender, address(this)) >= _bountyPayOut, "Insufficient allowance");
-        //require(ercToken.balanceOf(msg.sender) < _bountyPayOut,"Insufficient funds for bounty price.");
         require(_token.transferFrom(msg.sender,address(this),_bountyPayOut),"transfer Failed");
 
         Stolen memory stolenInfo;
@@ -216,7 +219,8 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
         stolenState[tokenId] = stolenInfo; 
         bikeState[tokenId] = State.Stolen;
         // Push to stolenBikes array
-        stolenBikes.push(tokenId);         
+        stolenBikes.push(tokenId); 
+        emit Stolen(tokenId);
     }
 
 
@@ -361,12 +365,11 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
         State state = bikeState[tokenId];
         // Check if bike is stolen 
         require(state == State.Stolen,"Bike is not stolen");
-        Stolen memory ss = stolenState[tokenId]; 
+        Stolen memory stolenDetails = stolenState[tokenId]; 
         RecoveryReport memory report = recovery[reportId];
         // Transfer to reporter 
         // payout to reporter from contract
-      
-        require(_token.transfer(report.rescuers,ss.bountyPayOut),"transfer Failed");
+        require(_token.transfer(report.rescuers,stolenDetails.bountyPayOut),"transfer Failed");
         // Set bike state to found
         bikeState[tokenId] = State.Found;
     }
