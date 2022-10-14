@@ -47,16 +47,16 @@ List any URLs relevant to demonstrating your prototype
 -
 ### #1 NFT - MONTE VERDE SAF STEWARD 
 #### Metadata
-- Name
-- Stewards 
-- Region
-- Area to plant
-- Altitude
-- Date
-- Goal
-- Geolocation
-- Species
-- Calendar of actions and harvests
+- Name: Monte Verde Agroforest
+- Steward: Diogo Jorge 
+- Region: Atlantic forest
+- Area to plant: 600 m² 
+- Altitude: 900m
+- Date: Oct 2022
+- Goal: Production of tree lines and interlines of annual food species
+- Geolocation: -21.9156039, -43.8083884
+- Species: Banana, Jussara, Avocado, Mulungu, Blackberry, Daisy, Guandú, Rice, Beans, Corn, Peanuts, Andropogon, Cassava, Sugar Cane
+- Calendar of actions and harvests:
 
 #### Benefits
 - Access to common comunication online channel with the stewards and supporters.
