@@ -167,3 +167,9 @@ View the [Developer Code Examples page](https://docs.celo.org/developer#quicksta
 
 -   Join our [Discord](https://chat.celo.org/)
 -   [Discourse Forum](https://forum.celo.org/)
+
+### Frontend Documentation : React Native
+- Typescript was used to write the application, the screens and the components.
+- The whole project was bootstrapped and built upon Expo commandline interface.
+- React Native Navigation and its types were used to handle navigation between screens. The composite Navigation was used to handle drawer navigation, stack navigation and bottom navigation between screens and components. 
+- Other packages used were react-native-element-dropdown to handle dropdown between pages, expo icons were used for icons, and react-native-reanimated was used to handle animations. 
