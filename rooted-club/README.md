@@ -43,10 +43,27 @@ List any URLs relevant to demonstrating your prototype
 - In a partnership with local educational institutes Diogo Jorge has been teaching how to plan, build and manage agroforest systems to many goups of aprentices.
 - Partnership with many land owners, eco-vilages, agroforest builders, mentors and apprentices all over a Brasil.
 - Recently created a first test smart contract to mint NFT´s on Celo test network(Alfajores).
+- Created the first NFT colection on Celo Test Network - Alfajores - (#1 NFT SAF - MONTE VERDE)
+*** AgroforestNFT Contract Address: 0x7ac3a237FeE175a165CE79f336F30d1cB73CD82e
+-
+### #1 NFT - MONTE VERDE SAF STEWARD 
+#### Metadata
+- Name
+- Stewards 
+- Region
+- Area to plant
+- Altitude
+- Date
+- Goal
+- Geolocation
+- Species
+
+#### Benefits
+- Access to common comunication online channel with the stewards and supporters.
 
 
 #### Next Steps(What we need to do next to turn this prototype into a working solution)
-- Define the next NFT´s collections, badges and passports;
+- ReFine the next NFT´s collections, badges and passports;
 - Create the respectives smart contracts to above mentioned;
 - Build the frontend
 - Keep calm and go on...
