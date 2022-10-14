@@ -62,16 +62,8 @@ const Login = () => {
                     </div>
                 </div>
 
-                <div className=" left w-full md:w-1/2 lg:w-1/2 py-5 md:py-5 md:mb-0  relative hidden md:block h-full bg-slate-400 rounded-tl-3xl rounded-bl-3xl">
-                <div className="overlay"></div>
-                <div className="flex items-center justify-center w-full h-full">
-                    
-                    <div className="flex items-center justify-center relative text-center mx-auto flex-col gap-10">
-                        <img src="images/Logo_main.png" alt="Logo" className=" "/>
-                        <img src="images/rafiki.png" alt="Logo" className=""/>
-
-                    </div>
-                </div>
+                <div className=" left w-full md:w-1/2 lg:w-1/2 py-5 md:py-5 md:mb-0  relative hidden md:block h-full bg-slate-400 rounded-tl-[60px] rounded-bl-[60px]" style={{'backgroundImage': 'url(/images/LoginHero.png)', 'backgroundPosition': 'center center', 'backgroundSize': 'cover', 'backgroundRepeat': 'no-repeat'}}>
+                    {/* <div className="overlay"></div> */}
                     
                 </div>
                 

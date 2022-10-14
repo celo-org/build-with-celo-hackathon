@@ -52,14 +52,14 @@ const Header = () => {
                                 </a>
                             </Link>
                             
-                            <Link href="/company/requests">
-                                <a className={`block mt-4 lg:inline-block lg:mt-0 text-[#5B5B5B]  hover:bg-[#FEF0E6] px-3 py-3 mr-4 rounded-md transition-all duration-200 ease-in-out ${(router.asPath === "/company/requests" || router.asPath === "/company/request-offers") && 'bg-[#FEF0E6]'}`}>
-                                    Requests
+                            <Link href="/company/offers">
+                                <a className={`block mt-4 lg:inline-block lg:mt-0 text-[#5B5B5B]  hover:bg-[#FEF0E6] px-3 py-3 mr-4 rounded-md transition-all duration-200 ease-in-out ${(router.asPath === "/company/offers" || router.asPath === "/company/dropoffs") && 'bg-[#FEF0E6]'}`}>
+                                    Offers
                                 </a>
                             </Link>
                             <Link href="/transfer">
                                 <a className={`block mt-4 lg:inline-block lg:mt-0 text-[#5B5B5B]  hover:bg-[#FEF0E6] px-3 py-3 mr-4 rounded-md transition-all duration-200 ease-in-out ${router.asPath === "/transfer" && 'bg-[#FEF0E6]'}`}>
-                                Disputes
+                                    Disputes
                                 </a>
                             </Link>
                             
