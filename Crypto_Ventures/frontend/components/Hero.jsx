@@ -11,7 +11,7 @@ const Hero = () => {
       {/* Overlay */}
       <div className='absolute top-0 left-0 right-0 bottom-0 z-[2]' />
       <div className='p-5 text-[#4b006f] z-[2] mt-[-10rem]'>
-        <p className='py-5 mt-40 text-xl'>a successful business strategy begins <br /> with discovering the right investors</p>
+        <p className='py-5 mt-60 text-xl'>a successful business strategy begins <br /> with discovering the right investors</p>
          <form class="bg-transparent shadow-sm rounded px-8 pt-6 pb-8 mb-4">
     <div className="mb-4">
       <label className="block text-black text-[30px] font-bold mb-2" for="username">
@@ -32,7 +32,7 @@ const Hero = () => {
       <a className="inline-block align-baseline text-sm text-black hover:text-blue-800" href="#">
         Forgot Password?
       </a>
-    </div> <br />
+    </div> 
     <div className="flex flex-col justify-between">
       <div className="" >
         Already have an account ?
@@ -53,12 +53,12 @@ const Hero = () => {
     <li className='block px-4 py-1 bg-white text-blue-600'>
       <BsFacebook size={20}/>
     </li>
-  </div> <br />
-      <div className="flex items-center justify-between text-black">
-      <div className="block mr-5" >
-        <RiCheckboxCircleLine size={20}/>
+  </div> 
+      <div className="flex items-center justify-between pt-3 text-black">
+      <div className="block" >
+        <RiCheckboxCircleLine size={40}/>
       </div>
-      <p>By signing up you agree to receive updates and special offers</p>
+      <p>By signing up you agree to receive <br /> updates and special offers</p>
     </div>
         
       </div>
