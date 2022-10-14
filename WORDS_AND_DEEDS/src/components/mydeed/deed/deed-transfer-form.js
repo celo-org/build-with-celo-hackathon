@@ -197,12 +197,9 @@ class DeedTransferForm extends React.Component {
 							rpc = curr_rpc_config.rpc;
 
 							// check if we are connected to a remote wallet
-							let deedclient = this.app.getDeedClientObject();
-							let walletconnectclient = deedclient.getWalletConnectClient();
-				
-							connection = walletconnectclient.getConnectionFromRpc(rpc);
+							connection = this._getRemoteConnectionFromRpc(rpc);
 
-							let remoteaccount = (connection ? walletconnectclient.getRemoteAccount(connection.uuid) : null);
+							let remoteaccount = (connection ? connection.account: null);
 
 							if (remoteaccount) {
 								let areequal = await mvcmypwa.areAddressesEqual(rootsessionuuid, remoteaccount, deed.owner);
@@ -262,6 +259,13 @@ class DeedTransferForm extends React.Component {
 	
 	
 	// user actions
+	_getRemoteConnectionFromRpc(rpc) {
+		let deedclient = this.app.getDeedClientObject();
+		let walletconnectclient = deedclient.getWalletConnectClient();
+
+		return walletconnectclient.getConnectionFromRpc(rpc);
+	}
+
 	_getTxConnection(feelevel) {
 		let connection = {type: 'local', feelevel: feelevel};	
 		
@@ -315,11 +319,8 @@ class DeedTransferForm extends React.Component {
 			}
 
 			if (remotewallet === true) {
-				let deedclient = this.app.getDeedClientObject();
-				let walletconnectclient = deedclient.getWalletConnectClient();
-
-				let connection = walletconnectclient.getConnectionFromRpc(rpc);
-				remoteaccount = (connection ? walletconnectclient.getRemoteAccount(connection.uuid) : null);
+				let connection = this._getRemoteConnectionFromRpc(rpc);
+				remoteaccount = (connection ? connection.account : null);
 
 				if (!remoteaccount) {
 					this.app.alert('You need to be connected to a remote wallet');

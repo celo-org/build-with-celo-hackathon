@@ -284,7 +284,7 @@ class ClauseCreateForm extends React.Component {
 							let deedclient = this.app.getDeedClientObject();
 							let walletconnectclient = deedclient.getWalletConnectClient();
 				
-							connection = walletconnectclient.getConnectionFromRpc(rpc);
+							connection = walletconnectclient.getRemoteConnectionFromRpc(rpc);
 
 							let remoteaccount = (connection ? walletconnectclient.getRemoteAccount(connection.uuid) : null);
 
@@ -339,6 +339,13 @@ class ClauseCreateForm extends React.Component {
 	
 	
 	// user actions
+	_getRemoteConnectionFromRpc(rpc) {
+		let deedclient = this.app.getDeedClientObject();
+		let walletconnectclient = deedclient.getWalletConnectClient();
+
+		return walletconnectclient.getConnectionFromRpc(rpc);
+	}
+
 	_getTxConnection(feelevel) {
 		let connection = {type: 'local', feelevel: feelevel};	
 		
@@ -400,11 +407,8 @@ class ClauseCreateForm extends React.Component {
 			}
 	
 			if (remotewallet === true) {
-				let deedclient = this.app.getDeedClientObject();
-				let walletconnectclient = deedclient.getWalletConnectClient();
-
-				let connection = walletconnectclient.getConnectionFromRpc(rpc);
-				remoteaccount = (connection ? walletconnectclient.getRemoteAccount(connection.uuid) : null);
+				let connection = this._getRemoteConnectionFromRpc(rpc);
+				remoteaccount = (connection ? connection.account : null);
 
 				if (!remoteaccount) {
 					this.app.alert('You need to be connected to a remote wallet');

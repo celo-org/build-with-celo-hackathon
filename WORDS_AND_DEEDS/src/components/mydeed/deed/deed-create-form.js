@@ -11,6 +11,7 @@ import { faMobileAlt, faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {CurrencyCardIcon} from '@primusmoney/react_pwa/react-js-ui';
+import RemoteWalletIcon from '../../remote-wallet/remote-wallet-icon.js'
 
 import RemoteWalletConnectForm from '../../remote-wallet/remote-wallet-connect-form.js'
 
@@ -35,7 +36,7 @@ class DeedCreateForm extends React.Component {
 		let currencies= [];
 		let signingkey = null;
 		let currentcard = null;
-		let balance = '';
+		let card_balance_string = '';
 		
 		this.closing = false;
 
@@ -50,10 +51,11 @@ class DeedCreateForm extends React.Component {
 
 			remotewallet: false,
 			rpc: null,
+			connection: null,
 
 			signingkey,
 			currentcard,
-			balance,
+			card_balance_string,
 
 			message_text: '',
 			processinginfo: 'processing submission',
@@ -141,7 +143,7 @@ class DeedCreateForm extends React.Component {
 
 			if ( (currency) && (currency.uuid)) {
 				let currentcard = null;
-				let balance = '';
+				let card_balance_string = '';
 				
 				let currencyuuid = currency.uuid;
 
@@ -154,11 +156,11 @@ class DeedCreateForm extends React.Component {
 				.then((pos) => {
 					return mvcmypwa.formatCurrencyAmount(rootsessionuuid, currencyuuid, pos);
 				})
-				.then((balance) => {
-					this._setState({currentcard, balance});
+				.then((card_balance_string) => {
+					this._setState({currentcard, card_balance_string});
 				})
 				.catch(err => {
-					this._setState({currentcard, balance})
+					this._setState({currentcard, card_balance_string})
 				});
 			}
 		}
@@ -167,12 +169,26 @@ class DeedCreateForm extends React.Component {
 		if (this.state.currency && this.state.currency.uuid && (this.state.currency.uuid != (prevState.currency ? prevState.currency.uuid : null))) {
 			// we reset the current card
 			let currentcard = null;
-			let balance = '';
+			let card_balance_string = '';
 
 			const currency = this.state.currency;
 			let currencyuuid = currency.uuid;
+			let cardpromise;
 
-			this.app.openCurrencyCard(currencyuuid)
+			if (this.state.remotewallet !== true) {
+				cardpromise = this.app.openCurrencyCard(currencyuuid);
+			}
+			else {
+				if (this.state.connection && (this.state.connection.account)) {
+					cardpromise = mvcmypwa.getCurrencyCardWithAddress(rootsessionuuid, walletuuid, currencyuuid, this.state.connection.account);
+										 // creates read-only card if necessary
+				}
+				else {
+					cardpromise = Promise.reject('remote connection is not activated');
+				}
+			}
+
+			cardpromise
 			.then(card => {
 				if (!card)
 					throw 'no current card';
@@ -202,12 +218,12 @@ class DeedCreateForm extends React.Component {
 			.then((pos) => {
 				return mvcmypwa.formatCurrencyAmount(rootsessionuuid, currencyuuid, pos);
 			})
-			.then((balance) => {
-				this._setState({currentcard, balance});
+			.then((card_balance_string) => {
+				this._setState({currentcard, card_balance_string});
 			})		
 			.catch(err => {
 				this._setState({currentminter: null, mintername: ''});
-				this._setState({currentcard, balance})
+				this._setState({currentcard, card_balance_string})
 			});
 
 		}
@@ -306,6 +322,13 @@ class DeedCreateForm extends React.Component {
 
 	
 	// user actions
+	_getRemoteConnectionFromRpc(rpc) {
+		let deedclient = this.app.getDeedClientObject();
+		let walletconnectclient = deedclient.getWalletConnectClient();
+
+		return walletconnectclient.getConnectionFromRpc(rpc);
+	}
+
 	_getTxConnection(feelevel) {
 		let connection = {type: 'local', feelevel: feelevel};	
 		
@@ -366,11 +389,8 @@ class DeedCreateForm extends React.Component {
 			}
 
 			if (remotewallet === true) {
-				let deedclient = this.app.getDeedClientObject();
-				let walletconnectclient = deedclient.getWalletConnectClient();
-
-				let connection = walletconnectclient.getConnectionFromRpc(rpc);
-				remoteaccount = (connection ? walletconnectclient.getRemoteAccount(connection.uuid) : null);
+				let connection = this._getRemoteConnectionFromRpc(rpc);
+				remoteaccount = (connection ? connection.account : null);
 
 				if (!remoteaccount) {
 					this.app.alert('You need to be connected to a remote wallet');
@@ -427,8 +447,7 @@ class DeedCreateForm extends React.Component {
 			}
 
 			// check card can transfer credit units and tokens
-			let _privkey = await  mvcmypwa.getCardPrivateKey(rootsessionuuid, walletuuid, currentcard.uuid).catch(err => {});
-			let cansign = (_privkey ? true : false);
+			let cansign = await mvcmydeed.canCardSign(rootsessionuuid, walletuuid, currentcard.uuid).catch(err => {});
 
 			if ((remotewallet !== true) && (cansign !== true)) {
 				this.app.alert('Current card for the currency is read-only');
@@ -598,6 +617,7 @@ class DeedCreateForm extends React.Component {
 	async _changeCurrency(currency) {
 		let remotewallet = false;
 		let rpc = null;
+		let connection = null;
 
 		if (currency) {
 			// check if corresponding currency is set for remote
@@ -607,16 +627,22 @@ class DeedCreateForm extends React.Component {
 				let curr_rpc_config = config.rpc[currency.uuid];
 
 				if (curr_rpc_config.enabled === true) {
-					remotewallet = true;
 					rpc = curr_rpc_config.rpc;
+
+					// check if a remote wallet is connected
+					connection = await this._getRemoteConnectionFromRpc(rpc);
+
+					if (connection && connection.account) {
+						// we are connected to a remote wallet supporting this
+						// currency's rpc
+						remotewallet = true;
+					}
 				}
 			}
-
-			// change state
-			this._setState({currency});
 		}
 
-		this._setState({remotewallet, rpc});
+		// change state
+		this._setState({currency, remotewallet, rpc, connection});
 	}
 
 	async onChangeCurrency(e) {
@@ -670,11 +696,12 @@ class DeedCreateForm extends React.Component {
 	}
 
 	renderMainCardPart() {
-		let { currency, currentcard, signingkey, balance } = this.state;
+		let { currency, remotewallet, connection, currentcard, signingkey, card_balance_string } = this.state;
 
 		return (
 			<span>
-				{(currentcard ?
+				{(remotewallet !== true ?
+					(currentcard ?
 					<FormGroup className="CurrencyCard" controlId="currencycard">
 					<span className="CardIconCol">
 						<CurrencyCardIcon
@@ -690,7 +717,7 @@ class DeedCreateForm extends React.Component {
 							disabled
 							autoFocus
 							type="text"
-							value={balance}
+							value={card_balance_string}
 						/>
 					</span>
 					</FormGroup> :
@@ -703,6 +730,26 @@ class DeedCreateForm extends React.Component {
 						onChange={e => this._setState({signingkey: e.target.value})}
 						/>
 					</FormGroup>
+					) :
+					<FormGroup className="CurrencyCard" controlId="remotewallet">
+					<span className="CardIconCol">
+						<RemoteWalletIcon
+								app={this.app}
+								currency={currency}
+								connection={connection}
+							/>
+					</span>
+					<span className="CardBalanceCol">
+						<FormLabel>Balance</FormLabel>
+						<FormControl
+							className="CardBalanceCol"
+							disabled
+							autoFocus
+							type="text"
+							value={card_balance_string}
+						/>
+					</span>
+					</FormGroup>
 				)}		
 			</span>
 		);
@@ -710,7 +757,7 @@ class DeedCreateForm extends React.Component {
 	}
 
 	renderCurrencyPickForm() {
-		let { currencies, currency, remotewallet} = this.state;
+		let { currencies, currency} = this.state;
 		
 		return (
 			<div className="Form">
@@ -737,7 +784,7 @@ class DeedCreateForm extends React.Component {
 			  </FormGroup>
 			  </FormGroup>
 
-				{(remotewallet ? this.renderRemoteWalletConnection() : this.renderMainCardPart())}
+				{this.renderMainCardPart()}
 
 			</div>
 		  );
