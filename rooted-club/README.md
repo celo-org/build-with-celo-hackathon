@@ -6,7 +6,7 @@
 ##### Brasil
 
 ##### Team Members
-- Diogo Jorge, Owner
+- Diogo Jorge, Founder
 - Athus Oliveira, Developer
 
 
@@ -41,8 +41,7 @@ List any URLs relevant to demonstrating your prototype
 
 #### What we already have done
 - In a partnership with local educational institutes Diogo Jorge has been teaching how to plan, build and manage agroforest systems to many goups of aprentices.
-- Partnership with many land owners, eco-vilages, agroforest builders, mentors and apprentices all over a Brasil.
-- Recently created a first test smart contract to mint NFT´s on Celo test network(Alfajores).
+- Partnership with many land owners, eco-vilages, agroforest builders, mentors and apprentices all over Brasil.
 - Created the first NFT colection on Celo Test Network - Alfajores - (#1 NFT SAF - MONTE VERDE)
 *** AgroforestNFT Contract Address: 0x7ac3a237FeE175a165CE79f336F30d1cB73CD82e
 -
