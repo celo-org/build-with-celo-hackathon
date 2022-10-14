@@ -67,8 +67,8 @@ List any URLs relevant to demonstrating your prototype
 
 
 #### Next Steps(What we need to do next to turn this prototype into a working solution)
-- ReFine the next NFT´s collections, badges and passports;
-- Create the respectives smart contracts to above mentioned;
+- ReFine the next NFT´s collections, badges and passports
+- Create the respectives smart contracts to above mentioned
 - Build the frontend
 - Keep calm and go on...
 
