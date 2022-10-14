@@ -67,11 +67,20 @@ const Banner = () => {
                 pb: "4%",
               }}
             >
-              <CustomButton sx={{ width: "203px", fontSize: "28px" }}>
+              <CustomButton
+                sx={{
+                  width: "203px",
+                  fontSize: { xs: "18px", md: "28px" },
+                }}
+              >
                 Create Event
               </CustomButton>
               <CustomButton
-                sx={{ ml: "10%", width: "179px", fontSize: "28px" }}
+                sx={{
+                  ml: "10%",
+                  width: "179px",
+                  fontSize: { xs: "18px", md: "28px" },
+                }}
               >
                 Explore
               </CustomButton>
