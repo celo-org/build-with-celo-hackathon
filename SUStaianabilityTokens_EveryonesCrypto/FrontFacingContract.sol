@@ -5,6 +5,13 @@ pragma solidity >=0.8.0;
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+/************************************** INTERFACES **************************************/
+interface IRoles {
+    function isSuperAdmin(address account) external view returns(bool);
+
+    function isMinter(address account) external view returns(bool);
+    function isPauser(address account) external view returns(bool);
+}
 
 interface SUSTokenFactory {
     function mintSUST(address, uint256) external;
@@ -12,9 +19,11 @@ interface SUSTokenFactory {
 
 contract FrontFace {
     address private tokenFactoryAddress;
-    
-    constructor(address _tokenFactoryAddress) {
+    address private rolesSC;
+
+    constructor(address _rolesContractAddress,  address _tokenFactoryAddress) {
         tokenFactoryAddress = _tokenFactoryAddress;
+        rolesSC  = _rolesContractAddress;
     }
 
     function stringToBytes32(string memory _str) public pure returns (bytes32)  {
@@ -38,6 +47,12 @@ contract FrontFace {
         tokenFactoryAddress = _tokenFactoryAddress;
     }
 
+    function setRolesContractAddress(address _rolesSC) public whenNotPaused {
+        require(IRoles(rolesSC).isAddressManager(msg.sender), "Access Denied: Caller is NOT Address Manager!");
+        require(_rolesSC != address(0), "Account: Zero or Invalid address!");
+        rolesSC = _rolesSC;
+    }
+    
     function sendReceipt(address walletAddress, uint256 amount) public {
         //require(receiptNum != 0, "Input Error: Receipt number is zero or invalid!");
         require(walletAddress != address(0), "Input Error: Recepient address is zero or invalid!");
