@@ -12,9 +12,8 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
  * @author Mitchell Tucker
  * @dev 
  *
- * TODO make contract ownable 
  * TODO could add time base escrow for drivers
- * TODO users need a fund a securty deposit
+ * TODO users need to fund a security deposit
  */
 
 contract RideManager is ReputationManager, AdminControls {
@@ -74,10 +73,8 @@ contract RideManager is ReputationManager, AdminControls {
 
 
     constructor(address token) {
-
         _token = IERC20(token);
     }
-
 
 
     /**
@@ -94,22 +91,26 @@ contract RideManager is ReputationManager, AdminControls {
         return(activeRides[msg.sender]);
     }
     
-    /*
+    /**
+    * @dev Test function used for debuggin 
+    *
+    * @param _rideId Bytes32 keccak hash of the ride 
+    * 
+    * @return address drivers address at a given time
+    *
+    */
     function driverTime(bytes32 _rideId)
     public
     view
     returns(address)
     {
         Ride memory ride = rides[_rideId];
-        
         uint256 timeElapsed = block.timestamp - ride.time;
-        return( block.timestamp);
         uint256 driverIndex = timeElapsed / driverAcceptanceTime;  
-        return(driverIndex);
         address[] memory drivers = proposedDrivers[_rideId];
         return(drivers[driverIndex]);
     }
-    */
+    
 
 
     /**
@@ -129,7 +130,16 @@ contract RideManager is ReputationManager, AdminControls {
         return(rides[rideId]);
     }
 
-    function isCancled(bytes32 rideId)
+    /**
+    * @dev returns bool if ride is canceled
+    *
+    * @param rideId Bytes32 keccak hash of the ride 
+    * 
+    * @return Bool ride is canceled 
+    *
+    */
+    
+    function isCanceled(bytes32 rideId)
     public
     view 
     returns(bool)
@@ -137,7 +147,6 @@ contract RideManager is ReputationManager, AdminControls {
         return(rides[rideId].state == RideState.Canceled);
     }
     
-
 
     /**
      *@dev announce a passenger ride on the network
@@ -294,7 +303,6 @@ contract RideManager is ReputationManager, AdminControls {
     
     {
 
-
         // Update ridestate passenger confirms dropoff
         Ride memory ride = rides[_rideId];
 
@@ -333,12 +341,15 @@ contract RideManager is ReputationManager, AdminControls {
     {
     
         Ride memory ride = rides[_rideId];
-        require(ride.state == RideState.None,"No Ride exist");
+
+        require(ride.state != RideState.None,"No Ride exist");
+        require(ride.state != RideState.Complete,"Ride compeleted");
 
         // Only callable by passenger and driver 
         require(ride.passenger == msg.sender || ride.acceptedDriver == msg.sender , "Method is only callable by driver or passenger");
 
-        // Set ride to canceled 
+        // Set ride to canceled before transfers
+        RideState prevState = ride.state;
         ride.state = RideState.Canceled;
         rides[_rideId] = ride; 
 
@@ -347,24 +358,24 @@ contract RideManager is ReputationManager, AdminControls {
         activeRides[ride.acceptedDriver] = 0;
 
         // Check what state the ride is in and refund 
-        if(ride.state == RideState.Announced){
+        if(prevState == RideState.Announced){
             // refund all tokens back to passenger
             require(_token.transfer(ride.passenger,ride.price),"transfer Failed");
             
-        }else if(ride.state == RideState.DriverAccepted){
+        }else if(prevState == RideState.DriverAccepted){
             // Passenger 80%
             require(_token.transfer(ride.passenger ,(ride.price / 5) * 4),"transfer Failed");
             // Driver 20%
             require(_token.transfer(ride.acceptedDriver ,ride.price / 5),"transfer Failed");
 
-        }else if(ride.state == RideState.PassengerPickUp){
+        }else if(prevState == RideState.PassengerPickUp){
             uint256 half = ride.price / 2;
             // Passenger 50%
             require(_token.transfer(ride.passenger ,half),"transfer Failed");
             // Driver 50%
             require(_token.transfer(ride.acceptedDriver ,half),"transfer Failed");
 
-        }else if(ride.state == RideState.DriverDropOff){  // Driver confirms drop off but passenger hasn't
+        }else if(prevState == RideState.DriverDropOff){  // Driver confirms drop off but passenger hasn't
             // Passenger 20%
             require(_token.transfer(ride.passenger ,ride.price / 5),"transfer Failed");
             // Driver 80%
