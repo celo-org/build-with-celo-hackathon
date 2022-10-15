@@ -1,0 +1,99 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a {
+  color: #312d22;
+}
+a {
+  font-size: 14px;
+}
+
+@font-face {
+  font-family: "Euclid Circular A";
+  src: url("/fonts/euclid-circular-a-cufonfonts/Euclid Circular A Regular.ttf");
+  src: url("/fonts/euclid-circular-a-cufonfonts/Euclid Circular A Regular.ttf") format("truetype")
+      url("/fonts/euclid-circular-a-cufonfonts/Euclid Circular A Bold.ttf") format("truetype"),
+    url("/fonts/euclid-circular-a-cufonfonts/Euclid Circular A Bold Italic.ttf") format("truetype"),
+    url("/fonts/euclid-circular-a-cufonfonts/Euclid Circular A Italic.ttf") format("truetype"),
+    url("/fonts/euclid-circular-a-cufonfonts/Euclid Circular A Light Italic.ttff") format("truetype"),
+    url("/fonts/euclid-circular-a-cufonfonts/Euclid Circular A Light.ttf") format("truetype"),
+    url("/fonts/euclid-circular-a-cufonfonts/Euclid Circular A Medium Italic.ttf") format("truetype"),
+    url("/fonts/euclid-circular-a-cufonfonts/Euclid Circular A Medium.ttf") format("truetype"),
+    url("/fonts/euclid-circular-a-cufonfonts/Euclid Circular A SemiBold Italic.ttf") format("truetype"),
+    url("/fonts/euclid-circular-a-cufonfonts/Euclid Circular A SemiBold.ttf") format("truetype");
+}
+
+body {
+  font-family: Euclid Circular A !important;
+}
+
+.future-plan {
+  background-image: url("/images/FuturePlan/img.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.mobile-future-plan {
+  display: none;
+  color: #fff;
+}
+
+.responsive-navlinks {
+  display: none;
+}
+
+.feature-icon {
+  width: 8%;
+}
+
+#hero-cta {
+  justify-content: center;
+  align-items: center;
+  padding: 8px 24px;
+  gap: 8px;
+  width: 214px;
+  height: 39px;
+  border-radius: 28px;
+}
+
+#progress_bar > div {
+  background-color: #faca4f !important;
+}
+
+.proposal-header {
+  background-image: url("/images/Other/wrapper.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
+  height: 150px;
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+  .responsive-navlinks {
+    display: block;
+  }
+  .future-plan-img {
+    display: none;
+  }
+
+  .mobile-future-plan {
+    display: block;
+  }
+
+  .feature-icon {
+    width: 14%;
+  }
+
+  #hero-cta {
+    width: 100%;
+  }
+}
