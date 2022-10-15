@@ -136,7 +136,7 @@ contract Slice is Ownable {
             //Approve exchange to allowance
             ERC20(_inputToken).approve(exchangeAddress, _amountInputMaximum);
             
-            uint[] memory amounts = exchange.swapTokensForExactTokens(
+            uint[] memory amounts = exchange.swapExactInputSingle(
                 _outputAmount,
                 _amountInputMaximum,
                 path,
