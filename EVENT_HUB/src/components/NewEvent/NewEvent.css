@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+*{
+    font-family: 'Roboto', sans-serif;
+}
+.form-container{
+    position: relative;
+    top: 200px;
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    justify-content: space-evenly;
+    column-gap: 20px;
+    align-content: space-between;
+    padding: 40px 10px;
+    background-color: rgb(223, 223, 223);
+    border-radius: 50px;
+    left: 37%;
+    right: 50%;
+}
+
+.name-container{
+    padding: 10px
+}
+.number-container{
+    padding: 10px
+}
+.price-container{
+    padding: 10px
+}
+.reg-days-container{
+    padding: 10px
+}
+.collected-container{
+    padding: 10px
+}
+.owner-container{
+    padding: 10px
+}
+
+button {
+    background-color: rgb(44, 151, 201);
+    color: white;
+    margin-top: 20px;
+    padding: 10px 40px;
+    border: none;
+    border-radius: 10px;
+}
+
+h1 {
+    margin-top: 0px;
+}
