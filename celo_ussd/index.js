@@ -9,9 +9,10 @@ let menu = new UssdMenu();
 
 let phoneMapper = require('../blockDash/index').main;
 let create_wallet = require('../blockDash/createAndFundAccount').main;
+let airdrop = require('../blockDash/send_drop').main;
 let verifier = require('../blockDash/index').verification;
 let getWalletBalance = require('../blockDash/utils').getWalletBalance;
-// let sendCELO = require('../blockDash/utils').sendCELO;
+let sendCELO = require('../blockDash/utils').sendCELO;
 
 
 
@@ -71,9 +72,13 @@ menu.state('createWallet.create', {
                     console.log(item)
                 }))
             })
-            // phoneMapper(result.wallet.created_account_private_key, menu.args.phoneNumber).then(function () {
+            airdrop(result.wallet.created_account).then(function (result) {
+                console.log('Airdrop Result:', result)
+                phoneMapper(PrivateKey, menu.args.phoneNumber).then(function () {
 
-            // })
+                })
+            })
+
         });
 
     }
@@ -123,26 +128,75 @@ menu.state('verifyWallet.verify', {
             collection.find({ Number: menu.args.phoneNumber }).toArray((error, items) => {
                 console.log(items[0].PrivateKey)
                 const bytes = CryptoJS.AES.decrypt(items[0].PrivateKey, passphrase);
-                const privateKey = bytes.toString(CryptoJS.enc.Utf8)
-                if (privateKey.length == 0) {
+                const private_key = bytes.toString(CryptoJS.enc.Utf8)
+                if (private_key.length == 0) {
                     menu.end('Wrong PassPhrase')
+                }
+                else {
+                    verifier(private_key, code, menu.args.phoneNumber).then(function (res) {
+                        menu.end('Successfully Verified');
+                    });
                 }
             })
         })
-        verifier(privateKey, code, menu.args.phoneNumber).then(function (res) {
-            menu.end('Successfully Verified');
-        });
+
+
     }
 
 });
 
 menu.state('checkBalance', {
     run: () => {
-        getWalletBalance(menu.args.phoneNumber).then(function (result) {
-            menu.end(`Your Celo Balance is ${result.celoBalanceConv} and Your cUSD Balance is  ${result.cUSDBalanceConv} `)
-        });
-
+        menu.con('Enter PassPhrase:');
+        console.log('PassPhrase')
+    },
+    next: {
+        '*\\d+': 'checkbalance.balance'
     }
+    // getWalletBalance(menu.args.phoneNumber).then(function (result) {
+    //     menu.end(`Your Celo Balance is ${result.celoBalanceConv} and Your cUSD Balance is  ${result.cUSDBalanceConv} `)
+    // });
+});
+
+menu.state('checkbalance.balance', {
+    run: () => {
+        console.log('checkbalance.balance')
+        var passphrase = String(menu.val);
+        console.log('pass', passphrase)
+
+        // getPrivateKey(menu.args.phoneNumber, passphrase).then(function (result) {
+        // console.log('result:', result)
+        // menu.end(`Your Celo Balance is ${result.celoBalanceConv} and Your cUSD Balance is  ${result.cUSDBalanceConv} `)
+        // });
+
+        mongo.connect(url, (err, client) => {
+            if (err) {
+                console.error(err)
+                return
+            }
+            console.log('Connected successfully to server')
+            const db = client.db(dbName)
+            const collection = db.collection('collectionname')
+
+            collection.find({ Number: menu.args.phoneNumber }).toArray((error, items) => {
+                console.log(items[0].PrivateKey)
+                const bytes = CryptoJS.AES.decrypt(items[0].PrivateKey, passphrase);
+                let private_key = bytes.toString(CryptoJS.enc.Utf8)
+                console.log('privateKey:', private_key)
+                if (private_key.length == 0) {
+                    menu.end('Wrong PassPhrase')
+                }
+                else {
+                    getWalletBalance(private_key, menu.args.phoneNumber).then(function (result) {
+                        menu.end(`Your Celo Balance is ${result.celoBalanceConv} and Your cUSD Balance is  ${result.cUSDBalanceConv} `)
+                    });
+                }
+
+            })
+
+
+        })
+    },
 });
 
 menu.state('transfer', {
@@ -162,23 +216,84 @@ menu.state('transfer.value', {
     },
     next: {
         // using regex to match user input to next state
+        '*\\d+': 'transfer.passphrase'
+    }
+});
+
+menu.state('transfer.passphrase', {
+    run: function () {
+        menu.con('Enter Passphrase:');
+    },
+    next: {
+        // using regex to match user input to next state
         '*\\d+': 'transfer.transfer'
     }
 });
 
 menu.state('transfer.transfer', {
     run: () => {
-        // console.log('menu', menu.states['transfer.value'].val)
-        // console.log('menu.value', menu.val)
-        sendCELO('0x3dacc82ae2c0a787d31f0c0271c850d3f8a2ccc185c4ecfdc4144334660c974e', menu.states['transfer.value'].val, menu.val).then(function (result) {
-            console.log(result)
-            menu.end('end')
-        });
+        mongo.connect(url, (err, client) => {
+            if (err) {
+                console.error(err)
+                return
+            }
+            console.log('Connected successfully to server')
+            const db = client.db(dbName)
+            const collection = db.collection('collectionname')
+            const passphrase = menu.states['transfer.transfer'].val
+
+            collection.find({ Number: menu.args.phoneNumber }).toArray((error, items) => {
+                console.log(items[0].PrivateKey)
+                const bytes = CryptoJS.AES.decrypt(items[0].PrivateKey, passphrase);
+                let private_key = bytes.toString(CryptoJS.enc.Utf8)
+                console.log('privateKey:', private_key)
+                if (private_key.length == 0) {
+                    menu.end('Wrong PassPhrase')
+                }
+                else {
+                    sendCELO(private_key, menu.states['transfer.value'].val, menu.states['transfer.passphrase'].val).then(function (result) {
+                        console.log(result)
+                        menu.end('Succensfully Sent ' + menu.states['transfer.passphrase'].val + 'to ' + menu.states['transfer.value'].val)
+                    });
+                }
+
+            })
+
+
+        })
+
 
     }
 });
 
+async function getPrivateKey(phoneNumber, passphrase) {
+    mongo.connect(url, (err, client) => {
+        if (err) {
+            console.error(err)
+            return
+        }
+        console.log('Connected successfully to server')
+        const db = client.db(dbName)
+        const collection = db.collection('collectionname')
 
+        let result = collection.find({ Number: phoneNumber }).toArray((error, items) => {
+            console.log(items[0].PrivateKey)
+            const bytes = CryptoJS.AES.decrypt(items[0].PrivateKey, passphrase);
+            bytes.toString(CryptoJS.enc.Utf8)
+            // console.log('privateKey:', private_key)
+            // if (private_key.length == 0) {
+            //     return false
+            // }
+            // else {
+            //     return { private_key }
+
+            // }
+        })
+        return { result }
+
+    })
+
+}
 
 module.exports = {
     ussd: menu
