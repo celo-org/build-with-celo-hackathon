@@ -6,7 +6,7 @@ import Navbar from '../components/Navbar'
 import { Transition } from "@headlessui/react";
 import { Toaster, ToastIcon, toast, resolveValue } from "react-hot-toast";
 
-const contractaddress = '0xD745c2F6791329B29978EdB04C48c9346a961DcB'
+const contractaddress = '0x602FF6a74510B14Ceb3A4888E916b9616C7d4442'
 
 
 const style = {
@@ -23,6 +23,8 @@ const style = {
 export const challenge = () => {
   const { address, getConnectedKit } = useCelo();
   const [items, setItems] = useState([])
+  const [loading, setLoading] = useState(false)
+
   const TailwindToaster = () => {
     return (
       <Toaster>
@@ -52,12 +54,18 @@ export const challenge = () => {
 
   }, [address])
   async function challenge(tokenId){
-    const kit = await getConnectedKit();
-    const nftContract = new kit.connection.web3.eth.Contract(ArrowCatch.abi, contractaddress)
-    let tx = await nftContract.methods.challenge(tokenId).send({from: address, value: 25000000000000000})
-    console.log(tx, tx.events.Challenge.returnValues)
-    toast.success("You "+ tx.events.Challenge.returnValues.state + " "+ tx.events.Challenge.returnValues.reward / 10**18 + " Celo" )
-    fetchMarket()
+    setLoading(true)
+    try {
+      const kit = await getConnectedKit();
+      const nftContract = new kit.connection.web3.eth.Contract(ArrowCatch.abi, contractaddress)
+      let tx = await nftContract.methods.challenge(tokenId).send({from: address, value: 25000000000000000})
+      console.log(tx, tx.events.Challenge.returnValues)
+      toast.success("You "+ tx.events.Challenge.returnValues.state + " "+ tx.events.Challenge.returnValues.reward / 10**18 + " Celo" )  
+    } catch {
+      toast.success("Error")
+    }
+fetchMarket()
+setLoading(false)
   }
   async function fetchMarket() {
     const kit = await getConnectedKit();
@@ -95,6 +103,12 @@ export const challenge = () => {
     <Navbar/>
     <div className={style.wrapper} >
     {address ? ( 
+                      loading ? (
+                        <div role="status" class="animate-pulse px-2 py-2 h-20 w-20">
+                        <svg className="animate-spin bg-black h-53 w-53 mr-3 ..." viewBox="0 0 25 25"></svg>
+                        
+                    </div>
+                    ): (
       <div className={style.grid}>
         {items.map((item, id) => (
           <div className="relative p-3" key={id}>
@@ -115,7 +129,7 @@ export const challenge = () => {
             </div>
           </div>
         ))}
-      </div>):(
+      </div>)):(
         <div className={style.walletConnectWrapper}>
             <div className='mx-auto justify justify-center '>
             <p className='mx-10 px-10 py-10 text-xl'>Connect your wallet to use this App</p>

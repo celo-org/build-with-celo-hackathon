@@ -6,7 +6,7 @@ import ArrowCatch from '../../hardhat/artifacts/contracts/ArrowCatch.sol/ArrowCa
 import { Transition } from "@headlessui/react";
 import { Toaster, ToastIcon, toast, resolveValue } from "react-hot-toast";
 
-const contractaddress='0xD745c2F6791329B29978EdB04C48c9346a961DcB'
+const contractaddress='0x602FF6a74510B14Ceb3A4888E916b9616C7d4442'
 
 
 const style = {
@@ -26,7 +26,7 @@ const profile = ( ) => {
     const { address, getConnectedKit } = useCelo();
     const [Myitems, setMyItems] = useState([])
     const [amount, setAmount] = useState(0)
-    const [laoding, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const TailwindToaster = () => {
       return (
@@ -91,18 +91,20 @@ const profile = ( ) => {
 
     async function openContest(tokenId){
         setLoading(true)
-        const kit = await getConnectedKit();
-        const Amount = kit.connection.web3.utils.toWei(amount, 'ether')
-        console.log(Amount);
-        const nftContract = new kit.connection.web3.eth.Contract(ArrowCatch.abi, contractaddress)
-        let tx = await nftContract.methods.openContest(tokenId, Amount).send({from: address, value: Amount})
-        console.log(tx)
-        toast.success("Great you list this NFT for challenge, the winner will get :" + Amount/10**18 + " Celo")
+        try {
+          const kit = await getConnectedKit();
+          const Amount = kit.connection.web3.utils.toWei(amount, 'ether')
+          console.log(Amount);
+          const nftContract = new kit.connection.web3.eth.Contract(ArrowCatch.abi, contractaddress)
+          let tx = await nftContract.methods.openContest(tokenId, Amount).send({from: address, value: Amount})
+          console.log(tx)
+          toast.success("Great you list this NFT for challenge, the winner will get :" + Amount/10**18 + " Celo")
+        } catch {
+          toast.success("Error")
+        }
         setLoading(false)
         fetchMarket()
-
       }
-
     const changeAmount = ({ target }) => {
         setAmount(target.value)
       }
@@ -111,48 +113,55 @@ const profile = ( ) => {
         <div className="flex min-h-screen flex-col items-center justify-center " >
             <Navbar/>
             <div className={style.wrapper} >
-            {address ? ( 
-            <div className={style.grid}>
-                {Myitems.map((item, id) => (
-                <div className="relative p-3" key={id}>
-                    <div className={style.card}>
-                    <label className={style.title} >Challenge NFT Id: {item.itemId}</label>
-                    <ul class="space-y-1 max-w-md list-disc list-inside text-gray-500 dark:text-gray-400">
-                        <li>last Prize: {item.prize / 10 ** 18} Celo </li>
-                        <li>Owner: {item.owner.slice(0, 10)} ...</li>
-                        <li>Points: {item.points} </li>
-                    </ul>
-                    </div>
-                    <div className={style.image} >
-                    <Image alt='SVG' src={item.svg} width={'400px'} height={'400px'} />
-                    { item.state ? (
-                        <div className="inline-flex rounded-md shadow-sm">
-                            <label className="py-4 px-4 text-sm font-medium text-gray-900  border-t border-b border-gray-900  focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white" >NFT {item.itemId} Have a prize wait for new challenge</label>
-                        </div>
-                    ) : (
-
-                        <div className="rounded-md shadow-sm" >
-                            <button className={style.button} onClick={() => openContest(item.itemId)} > set prize</button>
-                            <input type="number" placeholder="Amount" onChange={changeAmount} className={style.input} ></input>
-                            {laoding? ( 
-                              <div className="inline-flex rounded-md shadow-sm">
-                                <label className="py-4 px-4 text-sm font-medium text-gray-900  border-t border-b border-gray-900  focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white" >NFT {item.itemId} Have a prize wait for new challenge</label>
-                              </div>):(
-                                <></>
-                            ) }
-                            <TailwindToaster />
-                        </div>
-                    )
-                    }
-                    </div>
+            {address ? (
+                loading ? (
+                  <div role="status" class="animate-pulse px-2 py-2 h-20 w-20">
+                  <svg className="animate-spin bg-black h-53 w-53 mr-3 ..." viewBox="0 0 25 25"></svg>
+              </div>
+              ): (
+                  <div className={style.grid}>
+                  {Myitems.map((item, id) => (
+                  <div className="relative p-3" key={id}>
+                      <div className={style.card}>
+                      <label className={style.title} >NFT Id: {item.itemId}</label>
+                      <ul class="space-y-1 max-w-md list-disc list-inside text-gray-500 dark:text-gray-400">
+                          <li>last Prize: {item.prize / 10 ** 18} Celo </li>
+                          <li>Owner: {item.owner.slice(0, 10)} ...</li>
+                          <li>Points: {item.points} </li>
+                      </ul>
+                      </div>
+                      <div className={style.image} >
+                      <Image alt='SVG' src={item.svg} width={'400px'} height={'400px'} />
+                      { item.state ? (
+                          <div className="inline-flex rounded-md shadow-sm">
+                              <label className="py-4 px-4 text-sm font-medium text-gray-900  border-t border-b border-gray-900  focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white" >NFT {item.itemId} Have a prize wait for new challenge</label>
+                          </div>
+                      ) : (
+  
+                          <div className="rounded-md shadow-sm" >
+                              <button className={style.button} onClick={() => openContest(item.itemId)} > set prize</button>
+                              <input type="number" placeholder="Amount" onChange={changeAmount} className={style.input} ></input>
+                              {loading? ( 
+                                <div className="inline-flex rounded-md shadow-sm">
+                                  <label className="py-4 px-4 text-sm font-medium text-gray-900  border-t border-b border-gray-900  focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white" >NFT {item.itemId} Have a prize wait for new challenge</label>
+                                </div>):(
+                                  <></>
+                              ) }
+                              <TailwindToaster />
+                          </div>
+                      )
+                      }
+                      </div>
+                  </div>
+                  ))}
+              </div>
+                )
+            ):(
+            <div className={style.walletConnectWrapper}>
+                <div className='mx-auto justify justify-center '>
+                <p className='mx-10 px-10 py-10 text-xl'>Connect your wallet to use this App</p>
                 </div>
-                ))}
-            </div>):(
-        <div className={style.walletConnectWrapper}>
-            <div className='mx-auto justify justify-center '>
-            <p className='mx-10 px-10 py-10 text-xl'>Connect your wallet to use this App</p>
             </div>
-        </div>
         
       )}
             </div>

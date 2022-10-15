@@ -12,11 +12,11 @@ import { Toaster, ToastIcon, toast, resolveValue } from "react-hot-toast";
 
 
 
-const contractaddress = '0xD745c2F6791329B29978EdB04C48c9346a961DcB'
+const contractaddress = '0x602FF6a74510B14Ceb3A4888E916b9616C7d4442'
 
 const style = {
   walletConnectWrapper: `flex flex-col justify-center items-center h-screen w-screen bg-[#3b3d42] `,
-  wrapper: `py-10 overflow-hidden flex  text-gray-500 bg-white rounded-lg shadow dark:bg-gray-800 dark:text-gray-400`,
+  wrapper: `py-10 overflow-hidden flex  text-gray-500 bg-white rounded-lg  dark:bg-gray-800 dark:text-gray-400`,
   card1: ` row-span-3 w-full  rounded-lg border shadow-md sm:p-2 `,
   card2: ` w-[30vh] col-span-2 max-w-sm rounded-lg border shadow-md sm:p-2 `,
   background: `py-20 object-cover max-w-lg rounded-t-lg md:h-auto md:w-90 md:rounded-none md:rounded-l-lg`,
@@ -53,34 +53,59 @@ const TailwindToaster = () => {
 };
 const Arrow = () => {
   const { address, getConnectedKit } = useCelo();
+  const [loading, setLoading] = useState(false)
+  const [svg, setSVG] = useState()
   async function RandomMint(){
     setLoading(true)
-    const kit = await getConnectedKit();
-    let stabletoken = await kit.contracts.getStableToken()
-    const nftContract = new kit.connection.web3.eth.Contract(ArrowCatch.abi, contractaddress)
-    let tx = await nftContract.methods.createNFT().send({from: address,feeCurrency: stabletoken.address, value: 25000000000000000})
-    console.log(tx)
-    toast.success("Very Luck you mint arrow hit a nice position on the Board!")
+    try {
+      const kit = await getConnectedKit();
+      let stabletoken = await kit.contracts.getStableToken()
+      const nftContract = new kit.connection.web3.eth.Contract(ArrowCatch.abi, contractaddress)
+      let tx = await nftContract.methods.createNFT().send({from: address,feeCurrency: stabletoken.address, value: 25000000000000000})
+      console.log(tx.events.CreateNFT.returnValues.tokenid)
+      loadNFT(tx.events.CreateNFT.returnValues.tokenid)
+      toast.success("Very Luck you mint arrow hit a nice position on the Board!")
+    } catch{
+      toast.success("Error")
+    }
+    setLoading(false)
   }
-
+async function loadNFT(tokenId){
+  const kit = await getConnectedKit();
+  const nftContract = new kit.connection.web3.eth.Contract(ArrowCatch.abi, contractaddress)
+  const uri = await nftContract.methods.tokenURI(tokenId).call()
+  uri = uri.replace('data:application/json;base64,', '')
+  uri = Buffer.from(uri, 'base64')
+  uri = JSON.parse(uri);
+  const svgmeta = uri.image
+  setSVG(svgmeta)
+}
 
   return (
     <div className={style.wrapper}>
-              {address ? ( 
+              {address ? (loading ? (
+                <div role="status" class="animate-pulse px-2 py-2 h-20 w-20">
+                    <svg className="animate-spin bg-black h-53 w-53 mr-3 ..." viewBox="0 0 25 25"></svg>
+                </div>
+              ): (
       <div className={style.wrapper}>
-          
           <Image src={home} height='160' width='220' ></Image>
           <div className="flex flex-col p-4 leading-normal">
-            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Mint a random NFT & If you think you have better luck, challenge a player to win the prize </p>
+            <p className="mb-3 text-center font-normal text-gray-700 dark:text-gray-400">Mint BDNFT <br/> The contract will generate a random position on board. <br/>
+             Good luck !</p>
             <div className="mb-3 flex relative justify-center flex-wrap items-center ">
               <button className={style.button} onClick={() => RandomMint()} >Random Hit</button>
               <TailwindToaster />
-            </div>
-            <Board className={style.image} />
+            </div>{svg ? (
+              <Image alt='SVG' src={svg} className={style.image} width={'637px'} height={'637px'} />
+            ): (
+              <Board className={style.image} />
+            )}
+            
             
           </div>
 
-    </div>
+    </div>)
       ):(
         <div className={style.walletConnectWrapper}>
             <div className='mx-auto justify justify-center '>
