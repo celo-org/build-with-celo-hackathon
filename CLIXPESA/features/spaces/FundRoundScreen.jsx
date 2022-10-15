@@ -15,7 +15,7 @@ import { useState } from 'react'
 import { utils } from 'ethers'
 import celoHelper from '../../blockchain/helpers/celoHelper'
 
-export default function FundSpaceScreen() {
+export default function FundRoundScreen() {
   const [amount, setAmount] = useState('')
 
   const fundRound = async () => {
