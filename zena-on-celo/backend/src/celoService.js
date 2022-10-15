@@ -22,7 +22,7 @@ export async function createWallet() {
 export async function rewardBTC(to, amount) {
     try {
         // Alfajores Testmet
-        const provider = new CeloProvider('https://alfajores-forno.celo-testnet.org')
+        const provider = new CeloProvider(process.env.RPC_URL)
         const signer = new CeloWallet(process.env.ZENA_PRIVATE_KEY, provider)
         const BCT_ADDRESS = "0x4c5f90C50Ca9F849bb75D93a393A4e1B6E68Accb";
         var contract = new ethers.Contract(BCT_ADDRESS, BCT_ABI, signer);
@@ -42,7 +42,7 @@ const tokenMapper = [
     {
         name: "BCT",
         abi: BCT_ABI,
-        provider: new CeloProvider('https://alfajores-forno.celo-testnet.org'),
+        provider: new CeloProvider(process.env.RPC_URL),
         address: "0x4c5f90C50Ca9F849bb75D93a393A4e1B6E68Accb"
     },
     {
@@ -54,7 +54,7 @@ const tokenMapper = [
     {
         name: "CELO",
         abi: null,
-        provider: new CeloProvider('https://alfajores-forno.celo-testnet.org'),
+        provider: new CeloProvider(process.env.RPC_URL),
         address: null
     }
 ]
