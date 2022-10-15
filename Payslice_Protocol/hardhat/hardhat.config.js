@@ -18,5 +18,11 @@ module.exports = {
       accounts: [proccess.env.ACCOUNT_PRIVATE_KEY]
     }
   },
+  etherscan: {
+    apiKey:{
+      alfajores: proccess.env.CELO_SCAN_API_KEY,
+      celo: proccess.env.CELO_SCAN_API_KEY
+    }
+  }
   
 };
