@@ -51,6 +51,21 @@ body {
   width: 8%;
 }
 
+.btn-primary{
+  background-color: #FACA4F;
+  border: 0;
+  outline: none;
+  padding: 10px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+}
+.nav-shadow {
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+
+.bg-ash{
+  background-color: #F1F0F0;
+}
 #hero-cta {
   justify-content: center;
   align-items: center;
@@ -96,4 +111,7 @@ body {
   #hero-cta {
     width: 100%;
   }
+}
+.border{
+  border: 1px solid red;
 }
