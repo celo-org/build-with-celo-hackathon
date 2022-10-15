@@ -1,11 +1,11 @@
 import React from 'react'
-import Login from './src/Login'
+import Login from './src/Components/Login'
 import { useWalletProvider, WalletProvider } from './src/contexts/WalletContext'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import Home from './src/Home/'
+import Home from './src/Components/Home'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import Header from './src/Header/'
+import Header from './src/Components/Header'
 import { ApplicationProvider, BottomNavigation, BottomNavigationTab } from '@ui-kitten/components'
 import * as eva from '@eva-design/eva'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -40,6 +40,7 @@ const HomeApp = () => {
     <Tab.Navigator initialRouteName="homeApp" tabBar={(props) => <BottomTabBar {...props} />}>
       <Tab.Screen name="Profile" component={Home} />
       <Tab.Screen name="Move To Earn" component={Home} />
+      <Tab.Screen name="Move To Build" component={Home} />
     </Tab.Navigator>
   )
 }

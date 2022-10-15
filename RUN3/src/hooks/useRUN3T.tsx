@@ -7,16 +7,16 @@ import { FAKE_KEY, NET_PROVIDER } from 'react-native-dotenv'
 export const useRun3T = () => {
   const [run3Contract, setRun3Contract] = useState<Contract>()
 
+  const abi = [
+    'function mint(address recipient, uint256 amount)',
+    'function balanceOf(address owner) view returns (uint256)',
+  ]
+
   useEffect(() => {
     const getRun3TContract = async () => {
       const provider = new CeloProvider(NET_PROVIDER)
       await provider.ready
       const signer = new ethers.Wallet(FAKE_KEY, provider)
-      const abi = [
-        'function mint(address recipient, uint256 amount)',
-        'function balanceOf(address owner) view returns (uint256)',
-      ]
-
       const run3tContract = new ethers.Contract('0x25cD75A13d91AA792b18F593E0a337E23a774bAe', abi, signer)
 
       setRun3Contract(run3tContract)
@@ -24,7 +24,7 @@ export const useRun3T = () => {
     getRun3TContract()
   }, [])
 
-  const getRun3TokenBalance = async (address: string) => {
+  const getRun3TokenBalanceByOwner = async (address: string) => {
     const balance = await run3Contract?.balanceOf(address)
     const formatBalance = Number(ethers.utils.formatEther(balance)).toFixed(2)
     return formatBalance
@@ -52,5 +52,5 @@ export const useRun3T = () => {
     }
   }
 
-  return { mintRun3Token, getRun3TokenBalance }
+  return { mintRun3Token, getRun3TokenBalanceByOwner, abi }
 }

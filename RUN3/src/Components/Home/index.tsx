@@ -8,19 +8,19 @@ import '@ethersproject/shims'
 import { ethers } from 'ethers'
 
 import { Text, View } from 'react-native'
-import { useWalletProvider } from '../contexts/WalletContext'
-import { colors, globalStyles } from '../utils/globalStyles'
+import { useWalletProvider } from '../../contexts/WalletContext'
+import { colors, globalStyles } from '../../utils/globalStyles'
 import { styles } from './styles'
 import { Avatar, Button, Divider, ListItem, Tooltip } from '@ui-kitten/components'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faWallet, faArrowLeft, faRefresh } from '@fortawesome/free-solid-svg-icons'
 import * as Clipboard from 'expo-clipboard'
 import WebView from 'react-native-webview'
-import { useRun3T } from '../hooks'
+import { useRun3T } from '../../hooks'
 
 export default function Home() {
   const { walletWithProvider } = useWalletProvider()
-  const { mintRun3Token, getRun3TokenBalance } = useRun3T()
+  const { mintRun3Token, abi } = useRun3T()
   const [visibleTooltip, setVisibleTooltip] = useState<boolean>(false)
   const [visibleTooltipRun3, setVisibleTooltipRun3] = useState<boolean>(false)
   const [celoBalance, setCeloBalance] = useState<string>('')
@@ -46,10 +46,12 @@ export default function Home() {
 
       const getRun3TBalance = async () => {
         try {
-          const value = await getRun3TokenBalance(walletWithProvider.address)
-          setRun3TBalance(value)
+          const run3tContract = new ethers.Contract('0x25cD75A13d91AA792b18F593E0a337E23a774bAe', abi, walletWithProvider)
+          const balance = await run3tContract?.balanceOf(walletWithProvider.address)
+          const formatBalance = Number(ethers.utils.formatEther(balance)).toFixed(2)
+          setRun3TBalance(formatBalance)
         } catch (e) {
-          console.log('eHere', e)
+          console.log('Error', e)
         }
       }
       getBalance()
@@ -118,7 +120,7 @@ export default function Home() {
         <Divider />
         <ListItem
           title={`CELO Balance: ${celoBalance}`}
-          accessoryLeft={() => <Avatar style={styles.celoLogo} source={require('../../assets/celo-logo.png')} />}
+          accessoryLeft={() => <Avatar style={styles.celoLogo} source={require('../../../assets/celo-logo.png')} />}
           accessoryRight={() => (
             <Button onPress={() => setShowWebView(true)} style={[styles.btnItem, globalStyles.secondaryBg]} size="small">
               GET CELO
@@ -128,7 +130,7 @@ export default function Home() {
         <Divider />
         <ListItem
           title={`RUN3T Balance: ${run3TBalance}`}
-          accessoryLeft={() => <Avatar style={styles.celoLogo} source={require('../../assets/RUN3-isologo-01.png')} />}
+          accessoryLeft={() => <Avatar style={styles.celoLogo} source={require('../../../assets/RUN3-isologo-01.png')} />}
           accessoryRight={() => (
             <Tooltip
               anchor={() => (

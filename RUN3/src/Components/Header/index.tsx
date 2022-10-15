@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <View style={styles.viewContainer}>
       <Image
-        source={require('../../assets/RUN3-logo-03.png')}
+        source={require('../../../assets/RUN3-logo-03.png')}
         style={{
           width: '100%',
           height: 40,
@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
   viewContainer: {
     flex: 1,
     flexDirection: 'row',
+    right: 5,
     justifyContent: 'center',
     alignItems: 'center',
   },

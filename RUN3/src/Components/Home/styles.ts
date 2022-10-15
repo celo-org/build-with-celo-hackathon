@@ -1,4 +1,4 @@
-import { colors } from './../utils/globalStyles'
+import { colors } from '../../utils/globalStyles'
 //import { JustifySelf } from './../../my-app/node_modules/csstype/index.d';
 import { StyleSheet } from 'react-native'
 

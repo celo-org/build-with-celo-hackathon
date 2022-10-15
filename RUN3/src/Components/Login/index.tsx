@@ -17,9 +17,9 @@ import * as WebBrowser from 'expo-web-browser'
 import { Buffer } from 'buffer'
 import { CLIENT_ID, NET_PROVIDER } from 'react-native-dotenv'
 import { styles } from './styles'
-import { useWalletProvider } from '../contexts/WalletContext'
+import { useWalletProvider } from '../../contexts/WalletContext'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { globalStyles } from '../utils/globalStyles'
+import { globalStyles } from '../../utils/globalStyles'
 
 global.Buffer = global.Buffer || Buffer
 
@@ -61,7 +61,7 @@ export default function Login({ navigation }: { navigation: any }) {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.logo} source={require('../../assets/RUN3-logo-03.png')} />
+      <Image style={styles.logo} source={require('../../../assets/RUN3-logo-03.png')} />
       <Button style={[styles.signBtn, globalStyles.primaryBg]} size="large" onPress={login}>
         <Text style={styles.signBtnText}>LOGIN</Text>
       </Button>
