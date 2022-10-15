@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
 import "@fontsource/arimo";
+import "@fontsource/poppins";
 
 ReactDOM.render(
   <BrowserRouter>

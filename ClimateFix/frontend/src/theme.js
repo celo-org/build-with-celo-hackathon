@@ -11,6 +11,7 @@ const breakpoints = createBreakpoints({
 
 const colors = {
   brand: {
+    green: "#18541A",
     primary: "#119606",
     white: "#FFFFFF",
     lightGrey: "#FAF9F7",
@@ -23,13 +24,13 @@ const colors = {
 };
 
 const fonts = {
-  heading: `'Arimo', san-serif`,
-  body: `'Arimo', san-serif`,
+  heading: `'Poppins', 'Arimo', san-serif`,
+  body: `'Poppins', 'Arimo', san-serif`,
 };
 
 const styles = {
   body: {
-    fontFamily: "'Arimo', san-serif",
+    fontFamily: "'Poppins', 'Arimo', san-serif",
   },
   "::placeholder": {
     color: "#BABABA",

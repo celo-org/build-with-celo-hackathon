@@ -36,3 +36,45 @@
     transform: rotate(360deg);
   }
 }
+
+@keyframes animatedBackground {
+	0% { background-position: 0 0; }
+	100% { background-position: -300px 0; }
+}
+@-moz-keyframes animatedBackground {
+	0% { background-position: 0 0; }
+	100% { background-position: -300px 0; }
+}
+@-webkit-keyframes animatedBackground {
+	0% { background-position: 0 0; }
+	100% { background-position: -300px 0; }
+}
+@-ms-keyframes animatedBackground {
+	0% { background-position: 0 0; }
+	100% { background-position: -300px 0; }
+}
+@-o-keyframes animatedBackground {
+	0% { background-position: 0 0; }
+	100% { background-position: -300px 0; }
+}
+
+.main-bg {
+	width: 100%; 
+	height: 92vh; 
+    background-image: url("./assets/images/background-img.jpeg");
+    background-position: 0px 0px;
+    overflow: hidden;
+    background-repeat: repeat;
+    position: relative;
+    object-fit: cover;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    animation: animatedBackground 20s linear infinite;
+    -moz-animation: animatedBackground 20s linear infinite;
+    -webkit-animation: animatedBackground 20s linear infinite;
+    -ms-animation: animatedBackground 20s linear infinite;
+    -o-animation: animatedBackground 20s linear infinite;
+}
