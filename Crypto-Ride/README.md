@@ -170,24 +170,78 @@ Simply the ride has four steps from start to finish, anywhere within the ride is
 
 ## Completed
 
-General smart contract structure 
+1. General smart contract structure 
 
-Firebase server configuration for location services.
+2. Full contract testing
 
-Testing and implentatation of location services in iOS apps.
+3. Built in contract escrow 
+
+    -  `rideManager` contract is use as the escrow contract. 
+
+    1. **Ride funds are transferred from passenger to contract when the ride is created**
+    ```js
+    //  RideManager.sol 
+    //  line 167-172
+    require(_price != 0,"Price cant be zero");
+    require(_drivers.length != 0,"No drivers selected");
+    // Tranfer allowed tokens from passenger to contract
+    require(_token.allowance(msg.sender, address(this)) >= _price,"Insuficient Allowance");
+    require(_token.transferFrom(msg.sender,address(this),_price),"transfer Failed");
+
+    ```
+    2. **Ride funds are transferred from contract to driver when passenger confirms dropoff**
+    ```js
+    // RideManager.sol
+    // line 358-383
+    // transfer tokens from contract to driver 
+    require(_token.transfer(ride.acceptedDriver ,ride.price),"transfer Failed");
+
+    ```
+    3. **When a ride is canceled ride funds are split according based on ride state**
+    ```js
+        // Check what state the ride is in and refund 
+    if(prevState == RideState.Announced){
+        // refund all tokens back to passenger
+        require(_token.transfer(ride.passenger,ride.price),"transfer Failed");
+        
+    }else if(prevState == RideState.DriverAccepted){
+        // Passenger 80%
+        require(_token.transfer(ride.passenger ,(ride.price / 5) * 4),"transfer Failed");
+        // Driver 20%
+        require(_token.transfer(ride.acceptedDriver ,ride.price / 5),"transfer Failed");
+
+    }else if(prevState == RideState.PassengerPickUp){
+        uint256 half = ride.price / 2;
+        // Passenger 50%
+        require(_token.transfer(ride.passenger ,half),"transfer Failed");
+        // Driver 50%
+        require(_token.transfer(ride.acceptedDriver ,half),"transfer Failed");
+
+    }else if(prevState == RideState.DriverDropOff){  // Driver confirms drop off but passenger hasn't
+        // Passenger 20%
+        require(_token.transfer(ride.passenger ,ride.price / 5),"transfer Failed");
+        // Driver 80%
+        require(_token.transfer(ride.acceptedDriver ,(ride.price / 5) * 4),"transfer Failed");
+
+    }   
+    ```
+
+
+
+4. Firebase server configuration for location services.
+
+5. Testing and implentatation of location services in iOS apps.
+
 
 ## TODO
 
-- iOS apps
+- iOS apps 
 
-Both driver and passenger iOS apps have been started but are a still work in progress. Both apps currently allow passengers to find drivers through Firebase. This was one of the first steps to complete, making sure it was possible. Both apps need `web3swift` library to carry out wallet creation and contract calls.
+1. UI design 
 
-- Improved escrow contract 
+2. Both driver and passenger iOS apps have been started but are a still work in progress. Both apps currently allow passengers to find drivers through Firebase. This was one of the first steps to complete, making sure it was possible. Both apps implement `web3swift` library to carry out wallet creation and contract calls.
 
-As of now the `rideManager` contract is treated as the escrow contract. Allows for testing of base functionality.
-
-- Full contract testing and static security audit
-    - Truffle suit for testing
+3. Static security audit
     - Slither Static Analysis Tool for audit
 
 
