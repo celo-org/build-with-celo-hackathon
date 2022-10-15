@@ -52,7 +52,7 @@ Build plan will be split between two phases Smart Contract &amp; Dapps. Each giv
 
 3. Built in smart contract escrow allowing for bike bountys
 
-    1. **Transfer funds bounty funds from token owner to contract when setting a bike stolen**
+    1. **Transfer bounty funds from token owner to contract when setting a bike stolen**
     ```js
             // BikeBlock.sol
             // Line 203-224
