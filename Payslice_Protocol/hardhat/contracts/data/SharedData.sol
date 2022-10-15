@@ -1,15 +1,13 @@
 // SPDX-License-Identifier: SEE LICENSE IN LICENSE
 pragma solidity 0.8.15;
 
-contract SharedData {
-
     enum PaymentTrigger {
         FullPayment,
         Manual
     }
 
-    struct InvoiceDetails {
-        bytes32 name;
+    struct SliceDetails {
+        string title;
         string description;
         address targetToken;
         address recipientAddress;
@@ -22,4 +20,3 @@ contract SharedData {
         uint amountDue;
     }
 
-}

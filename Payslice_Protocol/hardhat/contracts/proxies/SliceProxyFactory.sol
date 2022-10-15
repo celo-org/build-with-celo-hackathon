@@ -1,26 +1,47 @@
-// SPDX-License-Identifier: SEE LICENSE IN LICENSE
+// SPDX-License-Identifier: MIT
+
+/// @author Nartey Kodjo-Sarso
 pragma solidity 0.8.15;
 
 import "./Proxy.sol";
 
+import "../interfaces/ISlice.sol";
+
+///@dev Slice Proxy factory
 contract SliceProxyFactory {
-    event ProxyCreation(address proxy, address mastercopy);
 
-    function createStorage(address _mastercopy, bytes memory _data) external {
-        require(_mastercopy != address(0), "Invalid mastercopy address");
-        Proxy proxy = new Proxy(_mastercopy);
+    address public exchangeAddress;
+    address public loggerAddress;
+    address public mastercopy;
 
-        if(_data.length > 0){
-            assembly{
-                
-                if eq(call(gas(), _mastercopy,0, add(_data, 0x20), mload(_data), 0, 0), 0) {
-                    revert(0, returndatasize())
-                }
-            }
-        
-        }
-        
+    event ProxyCreated(address proxy, address indexed owner);
+    /// @dev deploy new invoice
+    
+    function createNewSlice(address _token,
+        address _recipientAddress,
+        uint _recipientAddresschainId, uint _totalReceivable,
+        string memory _title,
+        string memory _description,
+        SPayer[] memory _payers) external returns (address) {
 
-        emit ProxyCreation(address(proxy), _mastercopy);
+        Proxy proxy = new Proxy(mastercopy);
+
+        bool success = ISlice(address(proxy)).setupSlice(
+            _token,
+            _recipientAddress,
+            _recipientAddresschainId,
+            exchangeAddress,
+            loggerAddress,
+            _totalReceivable,
+            _title,
+            _description,
+            _payers
+        );
+
+        require(success, "Failed to setup slice");
+
+        emit ProxyCreated(address(proxy), msg.sender);
+
+        return address(proxy);
     }
 }

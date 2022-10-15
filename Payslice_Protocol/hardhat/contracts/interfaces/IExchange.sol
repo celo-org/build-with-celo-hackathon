@@ -10,6 +10,6 @@ interface IExchange {
         uint24 _poolFee,
         uint256 _amountIn,
         uint256 _amountOutMinimum,
-        uint160 _sqrtPriceLimitX96
-    ) external returns (uint256 amountOut);
+        uint160  _sqrtPriceLimitX96
+        ) external returns (uint256 amountOut)
 }

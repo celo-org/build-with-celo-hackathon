@@ -1,15 +1,16 @@
-// SPDX-License-Identifier: SEE LICENSE IN LICENSE
-pragma solidity 0.8.15;
+// SPDX-License-Identifier: MIT
+
+pragma solidity ^0.8.14;
 
 contract Proxy {
-    
     /// @dev that this contract has not data stored in it
+    /// keccak("MASTER_COPY_ADDRESS") => 0x542716ccde0a3fd74601ae4bfa898139e782bb572a8d2efa9b3bd9b79d5a240c
     bytes32 constant MASTER_COPY_ADDRESS = 0x542716ccde0a3fd74601ae4bfa898139e782bb572a8d2efa9b3bd9b79d5a240c;
 
     /// @dev Allows you 
     constructor(address _mastercopy){
         require(_mastercopy != address(0), "Invalid mastercopy address");
-        // keccak("MASTER_COPY_ADDRESS") => 0x542716ccde0a3fd74601ae4bfa898139e782bb572a8d2efa9b3bd9b79d5a240c
+        
         assembly{
             sstore(MASTER_COPY_ADDRESS, _mastercopy)
         }
