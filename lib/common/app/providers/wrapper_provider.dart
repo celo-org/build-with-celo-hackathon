@@ -10,7 +10,6 @@ class WrapperNotifier extends StateNotifier<bool> {
   WrapperNotifier(this.ref) : super(false);
 
   Ref ref; // not using right now
-
   final String key = "onboardOrGoToHome?";
 
   SharedPreferences? pref;
@@ -27,6 +26,7 @@ class WrapperNotifier extends StateNotifier<bool> {
   loadFromPrefs() async {
     await initPrefs();
     state = pref!.getBool(key) ?? false;
+    return state;
   }
 
   _saveToPrefs() async {

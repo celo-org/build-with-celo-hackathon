@@ -179,13 +179,14 @@ class UserProvider extends StateNotifier<UserModel> {
     // a ratio that is too small. example: 0.2 : 0.8
     // the circle with the 0.2 ratio will be way too small, the text might
     // even protrude out of the circle. so if its smaller than the  min size
-    // variiable, then we use the minsize variable instead.
+    // variable, then we use the minsize variable instead.
     if (sizeOfYoursRounded < minSize) {
       finalSizeOfYours = minSize;
       // but wait there's a catch. If sizeOfYoursRounded : sizeOfGlobalRounded
       // is 0.2 : 0.8, but our minSize is 0.4 then 0.2 will be replaced by 0.4
       // right? then wont the new ratio be 0.4: 0.8. but that does not add up to 1
       // thats why we scrap the 0.8 and replace with 1 - 0.4, which is 0.6.
+      // new ratio would be 0.4 : 0.6.
       finalSizeOfGlobal = 1 - minSize;
     }
 
@@ -197,6 +198,7 @@ class UserProvider extends StateNotifier<UserModel> {
     // get screen width, but not all of it. leaving some padding
     // therefore our circle's wont just go all the way upto the horizontal
     // limits of the  screen. we subtract a  total of 110. looks nice like that.
+    // ignore the fact that 110 is being split into 4 different subtractions here.
     double screenToWorkWith = SizeData.screenWidth - 45 - 30 - 20 - 15;
     log('screenToWorkWith:   $screenToWorkWith');
 

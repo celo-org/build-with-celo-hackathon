@@ -24,8 +24,6 @@ class _WrapperState extends ConsumerState<Wrapper> {
 
   @override
   Widget build(BuildContext context) {
-    // need to check which screen to load here
-    // if false load onboarding, else load home
     bool value = ref.watch(wrapperProvider);
     if (value) {
       return const BottomNav();
