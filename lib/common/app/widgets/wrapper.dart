@@ -22,6 +22,18 @@ class _WrapperState extends ConsumerState<Wrapper> {
     await ref.read(wrapperProvider.notifier).loadFromPrefs();
   }
 
+  // the actuall wrapper
+
+  // FirebaseAuth.instance
+  // .authStateChanges()
+  // .listen((User? user) {
+  //   if (user == null) {
+  //     print('User is currently signed out!');
+  //   } else {
+  //     print('User is signed in!');
+  //   }
+  // });
+
   @override
   Widget build(BuildContext context) {
     bool value = ref.watch(wrapperProvider);
