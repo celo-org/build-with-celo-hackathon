@@ -20,12 +20,12 @@ async function deployer(hre: HardhatRuntimeEnvironment) {
     }
   });
 
-  console.log(`Deployed colony successfully`, colony.address);
-
   await hre.ethernal.push({
     name: contractName,
     address: colony.address
-  })
+  });
+
+  console.log(`Deployed colony successfully`, colony.address);
 }
 
 deployer.tags = [`${contractName}_001`];

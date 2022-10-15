@@ -50,7 +50,7 @@ const config: HardhatUserConfig = {
     disableSync: false,
     disableTrace: false,
     workspace: "colony", 
-    uploadAst: false,
+    uploadAst: true,
     disabled: false,
     resetOnStart: undefined,
     serverSync: false
