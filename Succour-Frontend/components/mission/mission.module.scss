@@ -1,0 +1,116 @@
+
+
+.mission {
+  padding-top: 120px;
+   padding-bottom: 120px;
+   position: relative;
+   background: #0E0D0D;
+
+   .wrapper {
+    margin: 0 auto;
+    max-width: calc(100% - 2.875rem);
+    width: 100%;
+
+    @media (min-width: 1024px) {
+     max-width: calc(100% - 7.5rem);
+    }
+
+    @media (min-width: 480px) {
+     max-width: calc(100% - 3.75rem);
+   }
+
+
+   .container {
+     display: flex;
+     gap: 2.875rem;
+    //  border: 1px solid red;
+     padding-left: 80px;
+     padding-right: 100px;
+     padding-top: 100px;
+
+
+     .mission_img {
+         max-width: 50%;
+         width: 100%;
+
+        //  .image_content {
+          
+        //  }
+     }
+
+     .mission_content {
+            max-width: 50%;
+            width: 100%;
+
+          @media (max-width: 1023.98px) {
+            max-width: 100%;
+          }
+
+          .title {
+            position: relative;
+              font-weight: 600;
+              font-size: 38px;
+              line-height: 145%;
+              color: #FFFFFF;
+              margin-bottom: 20px;
+
+              span:nth-child(odd) {
+                color: #CCAECC;;
+              }
+
+          //   .netvector {
+          //    background-image: url('../../assets/vector-fixed.svg'); 
+          //    background-position: 100% 0;
+          //    background-repeat: no-repeat;
+          //    background-size: contain;
+          //    height: 40px;
+          //    max-width: 30%;
+          //    position: absolute;
+          //    left: 30px;
+          //   //  right: 0px;
+          //    top: 40px;
+          //    width: 100%;
+          //    z-index: 1;
+          // }
+          }
+      
+          .desc {
+             font-weight: 300;
+             font-size: 20px;
+             line-height: 170%;
+             color: #FFFEFE;
+          }
+
+     }
+   }
+
+   
+.netvector_image {
+   background-image: url('../../assets//Netvector.svg'); 
+    background-position: 100% 0;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 900px;
+    max-width: 40%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+
+  //   @media (max-width: 660px) {
+  //   background-position: right -10px bottom 0;
+  //   max-width: 100%;
+  //   top: 300px;
+  //   z-index: -1;
+  //  }
+
+    @media (max-width: 1023.98px) {
+    background-position: left 10px top 30%;
+    height: 870px;
+   }
+}
+
+}
+
+}

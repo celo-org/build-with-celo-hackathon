@@ -1,0 +1,36 @@
+<svg width="656" height="666" viewBox="0 0 656 666" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_f_516_4563)">
+<ellipse cx="576" cy="317.2" rx="168" ry="158.6" fill="#4C2E4C"/>
+</g>
+<g filter="url(#filter1_f_516_4563)">
+<ellipse cx="276" cy="158.6" rx="168" ry="158.6" fill="#804D80"/>
+</g>
+<g filter="url(#filter2_f_516_4563)">
+<ellipse cx="218" cy="475.8" rx="168" ry="158.6" fill="#663E66"/>
+</g>
+<g filter="url(#filter3_f_516_4563)">
+<ellipse cx="524" cy="634.4" rx="168" ry="158.6" fill="#995D99"/>
+</g>
+<defs>
+<filter id="filter0_f_516_4563" x="358" y="108.6" width="436" height="417.2" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="25" result="effect1_foregroundBlur_516_4563"/>
+</filter>
+<filter id="filter1_f_516_4563" x="68" y="-40" width="416" height="397.2" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="20" result="effect1_foregroundBlur_516_4563"/>
+</filter>
+<filter id="filter2_f_516_4563" x="0" y="267.2" width="436" height="417.2" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="25" result="effect1_foregroundBlur_516_4563"/>
+</filter>
+<filter id="filter3_f_516_4563" x="316" y="435.8" width="416" height="397.2" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="20" result="effect1_foregroundBlur_516_4563"/>
+</filter>
+</defs>
+</svg>

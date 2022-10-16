@@ -1,8 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@100;200;300;400;500;600;700&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 :root {
   --color-bg: #AF4AAF;
@@ -26,7 +23,7 @@ a {
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 7px;
 }
 
 ::-webkit-scrollbar-track {

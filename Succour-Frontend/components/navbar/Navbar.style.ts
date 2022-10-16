@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const NavbarContainer = styled.nav`
  position: fixed;
  width: 100%;
- height: ${(props) => (props.click ? "100vh" : "100px" )};
+ height: ${(props) => (props.click ? "100vh" : "105px" )};
  background-color: black;
  display: flex;
  z-index: 1000;
@@ -20,7 +20,7 @@ export const RightContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding-right: 8%;
+  padding-right: 10%;
 `;
 
 export const NavbarInnerContainer = styled.div`
@@ -37,7 +37,7 @@ export const NavbarLink = styled.a`
   font-weight: 500;
   padding-left: 20px;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 165%;
   color: #AFAEAE;
   transition: all 400ms ease-in-out;
@@ -53,23 +53,24 @@ export const NavbarLink = styled.a`
   }
 `
 export const Logo = styled.div`
+  cursor: pointer;
   margin: 10px;
   max-width: 180px;
   height: auto;
 `
 export const NavbarButton = styled.button`
-  position: relative;
-  width: 180px;
-  height: 60px;
+  cursor: pointer;
+  text-align: center;
+  width: 200px;
+  height: 70px;
   font-size: 18px;
   line-height: 60px;
   letter-spacing: 2px;
   text-decoration: none;
-  text-transform: uppercase;
-  text-align: center;
   color: #FFFFFF;
+  background: transparent;
   transition: all 200ms ease-out;
-  border: 2px solid rgba(49, 7, 49, 0.8);
+  border: 2px solid var(--color-bg);
   border-width: 2px;
   border-radius: 30px;
   margin-right: 40px;
@@ -77,21 +78,30 @@ export const NavbarButton = styled.button`
   @media (max-width: 700px) {
      display: none;
   }
+  
+  &:hover {
+    background: #331F33;
+  }
 `
 export const NavbarButtonExtended = styled.button`
   position: relative;
-  width: 180px;
-  height: 60px;
+  transition: all 200ms ease-out;
+  border: 2px solid var(--color-bg);
+  border-radius: 30px;
+  cursor: pointer;
+  width: 210px;
+  height: 70px;
   font-size: 18px;
   line-height: 60px;
   letter-spacing: 2px;
   text-decoration: none;
-  text-transform: uppercase;
+  background: transparent;
   text-align: center;
   color: #FFFFFF;
-  transition: all 200ms ease-out;
-  border: 2px solid var(--color-bg);
-  border-radius: 30px;
+
+   &:hover {
+    background: #331F33;
+  }
 `
 export const NavbarUser = styled.div`
      display: flex;

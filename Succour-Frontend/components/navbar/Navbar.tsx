@@ -33,15 +33,16 @@ const Navbar = () => {
         <NavbarInnerContainer>
            <LeftContainer>
             <Logo> 
-              <Image src={logo} alt="Succour Logo" />
+              <Link href="/"><Image src={logo} alt="Succour Logo" /></Link>
             </Logo>
            </LeftContainer>
           
            <RightContainer>
             <NavbarLinkContainer>
-               <Link href="/dao"><NavbarLink>DAO</NavbarLink></Link>
-               <Link href="/funding"><NavbarLink>Public funding</NavbarLink></Link>
-               <Link href="/join"><NavbarButton>Join DAO</NavbarButton></Link>
+               <Link href="/Dao"><NavbarLink>DAO</NavbarLink></Link>
+               <Link href="/Projects/Projects"><NavbarLink>Projects</NavbarLink></Link>
+                <Link href="/Join"><NavbarLink>Join DAO</NavbarLink></Link>
+               <Link href="/CrowdFunding"><NavbarButton>Crowdfunding</NavbarButton></Link>
                <NavbarUser>
                 <TiUserOutline color="white" fontSize="1.5rem" />
                </NavbarUser>
@@ -59,9 +60,10 @@ const Navbar = () => {
         </NavbarInnerContainer>
         { click &&  (
         <NavbarExtendedContainer>
-          <NavbarLinkExtended>DAO</NavbarLinkExtended>
-          <NavbarLinkExtended>Projects</NavbarLinkExtended>
-          <NavbarLinkExtended><Link href="/join"><NavbarButtonExtended>Join DAO</NavbarButtonExtended></Link></NavbarLinkExtended>
+          <NavbarLinkExtended><Link href="/Dao">DAO</Link></NavbarLinkExtended>
+          <NavbarLinkExtended><Link href="/Projects/Projects">Projects</Link></NavbarLinkExtended>
+          <NavbarLinkExtended><Link href="/Join">Join DAO</Link></NavbarLinkExtended>
+          <NavbarLinkExtended><Link href="/Crowdfunding"><NavbarButtonExtended>Crowdfunding</NavbarButtonExtended></Link></NavbarLinkExtended>
           <NavbarUserExtended>
            <TiUserOutline color="white" fontSize="1.5rem" />
           </NavbarUserExtended>
