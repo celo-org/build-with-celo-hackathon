@@ -35,6 +35,7 @@ contract sendCeloOrEth{
     function checkBalance() public view  returns(uint){
         return IERC20Token(cUsdTokenAddress).balanceOf(msg.sender);
     }
+    
     function getbalanceofreceiver()public view returns(uint){
         return IERC20Token(cUsdTokenAddress).balanceOf(receiver);
     }
