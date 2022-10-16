@@ -94,6 +94,14 @@ Links to our presentation will be added at a later date.
 - [x] Test case coverage 50% - https://github.com/celo-org/build-with-celo-hackathon/pull/10/commits/7187452ccd3ee2f5f650d41f8ef54350a65f3e48
 - [x] Started evaluation of Toucan 
 
+### Week Ending: 15 Oct 22
+
+- [x] Onboard new team members 
+- [x] Designs for Widget - https://github.com/celo-org/build-with-celo-hackathon/commit/d4695fb5a7796907b157741fea97e99ed1ed0344
+- [x] Added flows to Timer app - https://github.com/celo-org/build-with-celo-hackathon/commit/f24d80d6d56a2352e0630c425d4fc509b3895b07
+- [x] Add wallet connect to Timer app - https://github.com/celo-org/build-with-celo-hackathon/commit/8f654816e894f7045d72dd8a4e8d170c6ec8842d
+
+
 This week we plan to complete the following:
 - [ ] Improve Test cases coverage for Token 
 - [ ] Improve Test cases coverage for Sponsor Contract
