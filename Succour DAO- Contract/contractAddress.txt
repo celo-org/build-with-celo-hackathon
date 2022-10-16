@@ -1,0 +1,5 @@
+token_Contract = 0x9b7Fb05121f7AAC62a324e109c10F138eCd5C342
+Proxy_contract_address= 0x4053af8674d17a2B1825870c1FC79878f9F4e262
+Current_implementation_address= 0x078FC5350D48d26b659F06731A2828FbF2dA132E
+
+use cloudinary for file storage 

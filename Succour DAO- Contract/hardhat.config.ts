@@ -19,6 +19,9 @@ const config: HardhatUserConfig = {
       url: process.env.ROPSTEN_URL,
       accounts: [process.env.PRIVATE_KEY] as HttpNetworkAccountsUserConfig | undefined,
     }
+  },
+  etherscan: {
+    apiKey: process.env.API_TOKEN
   }
 };
 

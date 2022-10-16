@@ -7,6 +7,8 @@ import "./ISuccour.sol";
 
 contract Succour is Proxiable{
 
+
+//0x9b7Fb05121f7AAC62a324e109c10F138eCd5C342
     
     address public owner;
 
@@ -15,7 +17,6 @@ contract Succour is Proxiable{
         uint memberId;
         address memberAddress;
         uint balance;
-        uint percentageOfDAO;
         uint votingPower;
         uint withDrawTime;
         bool withdrawStatus;
@@ -34,8 +35,8 @@ contract Succour is Proxiable{
         uint approveWithdraw;
     } 
 
-    mapping (uint => Proposals) proposals;
-    mapping (address => DAOMembers) members;
+    mapping (uint => Proposals) public proposals;
+    mapping (address => DAOMembers) public members;
 
     uint public minimumRequirement;
     uint public maximumRequirement;
@@ -87,6 +88,7 @@ contract Succour is Proxiable{
     } 
 
     function joinDAO (string memory _name, uint amount) public {
+         memberID++;
          depositMember(amount);
          DAOMembers storage DM = members[msg.sender];
          DM.name = _name;
@@ -94,26 +96,46 @@ contract Succour is Proxiable{
          DM.memberAddress = msg.sender;
          DM.balance += amount;
          totalDAOBalance += amount;
-         uint percent = memberPercentage(amount);
-         uint power = votePower(amount);
+         EligibleVoters.push(msg.sender);
+         uint power = votePower(amount) / 1e6;
          totalVotingPower += power;
-         DM.percentageOfDAO = percent;
          DM.votingPower = power;
          membersData.push(DM);
-         EligibleVoters.push(msg.sender);
-         memberID++;
     }
 
-    function memberPercentage(uint bal) public view returns(uint DAOPercentage){
-        DAOPercentage = (bal / totalDAOBalance) * 100;
+    function updateDAOMemberBal (uint amount) external {
+        depositIntoDAO(amount);
+        DAOMembers storage DM = members[msg.sender];
+        uint addBal = amount + DM.balance;
+        if (addBal > maximumRequirement) {
+            DM.balance = maximumRequirement;
+            totalDAOBalance += amount;
+            membersData[DM.memberId - 1].balance = maximumRequirement;
+            uint power = votePower( DM.balance) / 1e6;
+            DM.votingPower = power;
+            membersData[DM.memberId - 1].votingPower = power;
+        }else {
+            DM.balance += amount;
+            membersData[DM.memberId - 1].balance += amount;
+            totalDAOBalance += amount;
+            uint power = votePower( DM.balance) / 1e6;
+            DM.votingPower = power;
+            membersData[DM.memberId - 1].votingPower = power;
+        }
+    }
+
+    function memberPercentage(address _addr) public view returns(uint DAOPercentage){
+         DAOMembers memory DM = members[_addr];
+         uint bal = DM.balance;
+        DAOPercentage = (bal * 100) / totalDAOBalance;
     }
 
     function votePower (uint bal) public view returns (uint power) {
-        power = bal/minimumRequirement;
+        power = (bal * 1e6)/minimumRequirement;
     }
 
     function checkDAOEligibility (address addr) public view returns (bool status) {
-        for (uint i; i > EligibleVoters.length; i++) {
+        for (uint i; i < EligibleVoters.length; i++) {
             if (EligibleVoters[i] == addr) {
                 status = true;
             }
@@ -122,7 +144,7 @@ contract Succour is Proxiable{
 
     function checkIfVoted (address addr, uint id) public view returns (bool status) {
         address[] memory proposalVotees = proposals[id].voters;
-        for (uint i; i > proposalVotees.length; i++) {
+        for (uint i; i < proposalVotees.length; i++) {
             if (proposalVotees[i] == addr) {
                 status = true;
             }
@@ -130,16 +152,20 @@ contract Succour is Proxiable{
     }
  
     function proposeProject (string memory _title, string memory _description, uint _amountProposed) external  {
+        proposalID++;
         bool check = checkDAOEligibility(msg.sender);
         require(check == true, "You can't propose a project");
         Proposals storage propose = proposals[proposalID];
+        DAOMembers memory DM = members[msg.sender];
+        uint vote = DM.votingPower;
         propose.ID = proposalID;
         propose.amountProposed = _amountProposed;
+        propose.NumberOfVotes += vote; 
         propose.Title = _title;
         propose.Description = _description;
+        propose.proposer = msg.sender;
         propose.voters.push(msg.sender);
         allProposals.push(propose);
-        proposalID++;
     }
 
 
@@ -151,14 +177,12 @@ contract Succour is Proxiable{
         bool check2 = checkIfVoted(msg.sender, position); 
         require(check2 != true, "You can't vote twice");
         uint votepower = members[msg.sender].votingPower;
-        uint currentVotes = propose.NumberOfVotes;
         propose.NumberOfVotes += votepower;
         allProposals[position-1].NumberOfVotes += votepower;
-        uint projectVotes = (currentVotes/totalVotingPower) * 100;
         uint requiredVote =  projectRequiredPercentage();
         propose.voters.push(msg.sender);
         allProposals[position-1].voters.push(msg.sender);
-        if (projectVotes >= requiredVote) {
+        if (propose.NumberOfVotes >= requiredVote) {
             approvedProposals.push(propose);
             propose.approved = true;
             uint DAOdonation = donationFromDAO(position);
@@ -230,7 +254,7 @@ contract Succour is Proxiable{
    }
 
 
-   function withdrawProposalFund (address addr, uint IDofProposal) public  onlyOwner {
+   function withdrawProposalFund (address addr, uint IDofProposal) external  onlyOwner {
        require(addr != address(0), "Can't withdraw to this Address");
        Proposals storage propose = proposals[IDofProposal];
        uint proposedAmount = propose.amountProposed;
@@ -253,6 +277,10 @@ contract Succour is Proxiable{
 
    function viewAllProposals () public view returns(Proposals[] memory) {
         return allProposals;
+    }
+
+    function viewElidgibleMembers () public view returns(address[] memory) {
+        return EligibleVoters;
     }
 
 
@@ -280,13 +308,13 @@ contract Succour is Proxiable{
 
 
         function createGofund (string memory _name, string memory _reasonForFund, uint _amountNeeded ) public {
+            GOFUNDId++;
             individualFundMe storage GOFUND = GoFunds[msg.sender];
             GOFUND.name = _name;
             GOFUND.reasonForFund = _reasonForFund;
             GOFUND.amountNeeded = _amountNeeded;
             GOFUND.goFundID = GOFUNDId;
             goFunds.push(GOFUND);
-            GOFUNDId++;
         }
 
 
