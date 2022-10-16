@@ -604,6 +604,10 @@ pre code {
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+ 
+}
+.loader{
+  text-align: center;
 }
 
 @media (min-width: 576px) {
