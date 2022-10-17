@@ -1,3 +1,6 @@
+# This is me manually git ignoring
+/android/app/google-services.json
+
 # Miscellaneous
 *.class
 *.log
