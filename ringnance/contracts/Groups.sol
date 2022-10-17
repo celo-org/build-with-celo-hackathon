@@ -40,5 +40,6 @@ contract Groups {
         return allGroups;
     }
 
+   //pinging the new computer ssh connection
 
 }
