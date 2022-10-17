@@ -36,18 +36,6 @@ async function init(privateKey) {
   console.log('cUSD balance', balance.cUSD.toFixed());
 }
 
-// async function sendTransaction() {
-//   let amount = contractkit.web3.utils.toWei("0.000000000000000001", "ether")
-
-//   // let goldtoken = await contractkit.contracts.getGoldToken()
-//   let stabletoken = await contractkit.contracts.getStableToken()
-//   // let celotx = await goldtoken.transfer(anAddress, amount).send({ from: account })
-//   let cUSDtx = await stabletoken.transfer("0xff407db55e8cf328e253bb75e8e3734a72bd2b34", amount).send({ from: account, feeCurrency: stabletoken.address })
-
-//   // let celoReceipt = await celotx.waitReceipt()
-//   let cUSDReceipt = await cUSDtx.waitReceipt()
-// }
-
 // lookup phone number from ODIS, get the identifier (pepper) and phone number hash
 async function getHashAndPepper(phoneNumber) {
   console.log('Phone Number getHashPepper:', phoneNumber);
@@ -141,7 +129,6 @@ const postAttestationRequest = async (attestationToComplete) => {
 };
 
 // verify an attestation request with the given code
-
 async function verify(contractkit, base64Code) {
   const attestationsWrapper = await contractkit.contracts.getAttestations();
 
@@ -281,7 +268,7 @@ async function registerAccountAndWallet() {
     }
     catch (e) {
       console.log("Errored Out from blockdash index:", e)
-      return false
+      return NaN
       // const setWalletTx = await accountsContract.setWalletAddress(account);
       // await setWalletTx.sendAndWaitForReceipt();
     }
@@ -298,23 +285,18 @@ module.exports = {
 }
 
 async function main(privateKey, Number) {
-  // phoneNumber = "+2348057922485"
   phoneNumber = Number;
   console.log('phoneNumber from blockdash index:', phoneNumber)
 
   await init(privateKey);
-  await registerAccountAndWallet();
+  let result = await registerAccountAndWallet();
+  if (result == false) {
+    await registerAccountAndWallet();
+  }
   await getHashAndPepper(phoneNumber);
   await getIdentifiers();
   await requestCodes();
-  // let code1 = await ask("Enter first code: ");
-  // await verify(contractkit, code1);
-  // let code2 = await ask("Enter second code: ");
-  // await verify(contractkit, code2);
-  // let code3 = await ask("Enter third code: ");
-  // await verify(contractkit, code3);
   // await getIdentifiers();
-  // return { create_result }
 }
 
 async function verification(privateKey, code, Number) {
@@ -324,6 +306,6 @@ async function verification(privateKey, code, Number) {
   await registerAccountAndWallet();
   await getHashAndPepper(phoneNumber);
   await getIdentifiers();
-  await verify(contractkit, code);
+  await verify(contractkit, String(code));
   await getIdentifiers();
 }

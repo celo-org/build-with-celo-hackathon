@@ -43,7 +43,7 @@ async function fundCreatedAccount(anAddress) {
     console.log("FROM: ", account)
     console.log("TO: ", anAddress)
 
-    let amount = contractkit.web3.utils.toWei("0.05", "ether")
+    let amount = contractkit.web3.utils.toWei("0.01", "ether")
 
     let goldtoken = await contractkit.contracts.getGoldToken()
     let stabletoken = await contractkit.contracts.getStableToken()
@@ -57,7 +57,7 @@ async function fundCreatedAccount(anAddress) {
     let celoReceipt = await celotx.waitReceipt()
     let cUSDReceipt = await cUSDtx.waitReceipt()
 
-    console.log(`CELO Transaction: https://alfajores-blockscout.celo-testnet.org/tx/${celoReceipt.transactionHash}/`)
+    // console.log(`CELO Transaction: https://alfajores-blockscout.celo-testnet.org/tx/${celoReceipt.transactionHash}/`)
     // console.log(`cUSD Transaction: https://alfajores-blockscout.celo-testnet.org/tx/${cUSDReceipt.transactionHash}/`)
 
     let celoBalance = await goldtoken.balanceOf(account)
@@ -71,7 +71,7 @@ module.exports.main = main;
 
 async function main() {
     let wallet = await initialize_network();
-    await fundCreatedAccount(wallet.created_account)
+    // await fundCreatedAccount(wallet.created_account)
 
     return { wallet }
     // await delay(10000);
