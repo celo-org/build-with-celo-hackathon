@@ -1,7 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { Grid, Stack, Typography, Box, TextField } from "@mui/material";
-import Section from "../Layout/Section";
+import { Grid, Stack, TextField } from "@mui/material";
 
 const NewsLetter = () => {
   return (
