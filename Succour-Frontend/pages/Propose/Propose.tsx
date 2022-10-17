@@ -8,8 +8,7 @@ import documentCloudSvg from '../../assets/document-cloud.svg'
 import arrowLeftSvg from '../../assets/arrow-left.svg'
 
 const Propose = () => {
-     const hiddenFileInput = useRef(null);
-
+     
      return (
           <>
           <Navbar />
