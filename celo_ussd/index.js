@@ -266,34 +266,6 @@ menu.state('transfer.transfer', {
     }
 });
 
-async function getPrivateKey(phoneNumber, passphrase) {
-    mongo.connect(url, (err, client) => {
-        if (err) {
-            console.error(err)
-            return
-        }
-        console.log('Connected successfully to server')
-        const db = client.db(dbName)
-        const collection = db.collection('collectionname')
-
-        let result = collection.find({ Number: phoneNumber }).toArray((error, items) => {
-            console.log(items[0].PrivateKey)
-            const bytes = CryptoJS.AES.decrypt(items[0].PrivateKey, passphrase);
-            bytes.toString(CryptoJS.enc.Utf8)
-            // console.log('privateKey:', private_key)
-            // if (private_key.length == 0) {
-            //     return false
-            // }
-            // else {
-            //     return { private_key }
-
-            // }
-        })
-        return { result }
-
-    })
-
-}
 
 module.exports = {
     ussd: menu
