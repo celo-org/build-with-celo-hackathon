@@ -39,23 +39,23 @@
 
 @keyframes animatedBackground {
 	0% { background-position: 0 0; }
-	100% { background-position: -300px 0; }
+	50% { background-position: -400px 0; }
 }
 @-moz-keyframes animatedBackground {
 	0% { background-position: 0 0; }
-	100% { background-position: -300px 0; }
+	50% { background-position: -400px 0; }
 }
 @-webkit-keyframes animatedBackground {
 	0% { background-position: 0 0; }
-	100% { background-position: -300px 0; }
+	50% { background-position: -400px 0; }
 }
 @-ms-keyframes animatedBackground {
 	0% { background-position: 0 0; }
-	100% { background-position: -300px 0; }
+	50% { background-position: -400px 0; }
 }
 @-o-keyframes animatedBackground {
 	0% { background-position: 0 0; }
-	100% { background-position: -300px 0; }
+	50% { background-position: -400px 0; }
 }
 
 .main-bg {

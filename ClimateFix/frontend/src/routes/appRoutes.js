@@ -4,6 +4,8 @@ import { render } from "react-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "../theme";
 import LandingPage from "../pages/LandingPage";
+import SignUp from "../pages/SignUp";
+import Login from "../pages/Login";
 
 const AppRoute = () => {
 
@@ -12,6 +14,8 @@ const AppRoute = () => {
      <ChakraProvider theme={theme} resetCSS>
       <Routes>
         <Route index path="/" element={<LandingPage />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
      </ChakraProvider>
     </BrowserRouter>,

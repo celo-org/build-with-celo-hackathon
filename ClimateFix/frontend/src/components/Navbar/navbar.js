@@ -29,20 +29,24 @@ const NavBar = () => {
         </Flex>
       </Flex>
       <Flex justifyContent="space-evenly" alignItems="center">
-        <CustomButton bg="brand.orange" hoverBg="brand.yellow" hoverColor="brand.green"  color="brand.white">
-          Sign Up
-        </CustomButton>
-        <Flex
-          alignItems="center"
-          style={{ transition: "all 0.8s ease" }}
-          cursor="pointer"
-          ml="80px"
-        >
-          {lockIcon}
-          <Text ml="10px" color="white" _hover={{ color: "brand.yellow" }}>
-            Login
-          </Text>
-        </Flex>
+        <a href="/signup">
+            <CustomButton bg="brand.orange" hoverBg="brand.yellow" hoverColor="brand.green"  color="brand.white">
+            Sign Up
+            </CustomButton>
+        </a>
+        <a href="/login">
+          <Flex
+            alignItems="center"
+            style={{ transition: "all 0.8s ease" }}
+            cursor="pointer"
+            ml="80px"
+          >
+            {lockIcon}
+            <Text ml="10px" color="white" _hover={{ color: "brand.yellow" }} style={{ transition: "all 0.8s ease" }}>
+              Login
+            </Text>
+          </Flex>
+        </a>
       </Flex>
     </Flex>
   );

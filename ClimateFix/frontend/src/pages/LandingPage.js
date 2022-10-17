@@ -24,8 +24,12 @@ const LandingPage = () => {
                         </Box>
 
                         <Flex mt="40px">
-                            <CustomButton border="1px solid #FAF9F7" bg="none" color="white" hoverBg="brand.secondary">Learn more</CustomButton>
-                            <CustomButton bg="brand.orange" color="white" hoverBg="brand.secondary" m="0 20px">Sign up</CustomButton>
+                            <a href="/login">
+                                <CustomButton border="1px solid #FAF9F7" bg="none" color="white" hoverBg="brand.secondary">Learn more</CustomButton>
+                            </a>
+                            <a href="/signup">
+                                <CustomButton bg="brand.orange" color="white" hoverBg="brand.secondary" m="0 20px">Sign up</CustomButton>
+                            </a>
                         </Flex>
                     <Flex fontSize="12px" justifyContent="space-around" w="100%" textAlign="center" bottom="0" pos="absolute" p="40px 0">
                         <Box>
@@ -66,9 +70,9 @@ const LandingPage = () => {
                         <Box margin="0 auto" w="100%">
                             <Image src={ExpertConnects} alt="connect-with-experts" m="0 auto" />
                             <Box mt="10px">
-                                <Text fontWeight="900">Connect With an Experts</Text>
+                                <Text fontWeight="900">Connect With an Expert</Text>
                                 <Text fontSize="14px" mt="10px">
-                                Get connected with an experts to help you improve the lives of the trees you planted
+                                Get connected with an expert to help you improve the lives of the trees you planted
                                 </Text>
                             </Box>
                         </Box>
@@ -88,7 +92,6 @@ const LandingPage = () => {
                         <CustomButton m="30px auto" border="1px solid #212529" bg="none" color="brand.dark" hoverBg="brand.secondary">View more!</CustomButton>
                     </Flex>
                 </Box>
-
             </section>
         </Box>
     );
