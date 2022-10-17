@@ -1,0 +1,66 @@
+<div class="container-fluid home-carousel-container">
+    <div class="row">
+        <div class="col">
+
+            <c-carousel>
+                <!-- <c-carousel-indicators></c-carousel-indicators> -->
+                <c-carousel-inner>
+                  <c-carousel-item *ngFor="let slide of slides">
+                    <img
+                      alt="{{slide.title}}"
+                      class="d-block w-100"
+                      loading="lazy"
+                      src="{{slide.src}}"
+                    />
+                    <c-carousel-caption class="">
+                      <h1 class="mb-3">{{slide.title}}</h1>
+                      <h5 class="text-justify mb-5">{{slide.subtitle}} <span class="d-none d-md-block" *ngIf="slide.subtitle"><br/>{{slide.subtitle2}}</span></h5>
+
+                      <div class="d-flex justify-content-left mt-2 mt-md-4">
+                        <div class="mx-2 ">
+                            <a  routerLink="../campaigns/start" class="btn btn-sm btn-light  btn-yellow ">Launch a Campaign</a>
+                        </div>
+                        <div class="mx-2">
+                            <a  routerLink="../tokens/token-minter" class="btn btn-sm btn-light btn-yellow">Mint Your Own Token</a>
+                        </div>
+                    </div>
+                    </c-carousel-caption>
+                  </c-carousel-item>
+                </c-carousel-inner>
+                <!-- <c-carousel-control [routerLink] caption="Previous" direction="prev"></c-carousel-control>
+                <c-carousel-control [routerLink] caption="Next" direction="next"></c-carousel-control> -->
+              </c-carousel>
+
+            
+
+        </div>
+    </div>
+
+
+    <div class="row mt-5">
+        <div class="col-6 mt-5 text-center">
+            <img  src="/assets/img/brand/tokens.png" alt="Token Minter Image" class="img-fluid" style="max-width: 200px;">
+            <h5 class="mt-3 px-2">
+                <a routerLink="../tokens/token-minter" class="btn btn-dark btn-purple w-100">Mint a Crypto Coin/Token</a>
+            </h5>
+            <h6 class="mt-3 text-justify text-action-title">Mint with our Easy to Use Token Minter</h6>
+            <p class="text-justify text-black">Use our simple and fast Token Minter to create your own crypto token.
+                <br>No programming knowledge needed.</p>
+        </div>
+        <div class="col-6 mt-5 text-center">
+            <img src="/assets/img/brand/tokenholder.png" alt="Token Minter Image" class="img-fluid" style="max-width: 200px;">
+            <h5 class="mt-3 px-2">
+                <a routerLink="../campaigns/start" class="btn btn-dark btn-purple w-100">Start Sale for your Coin</a>
+            </h5>
+            <h6 class="mt-3 text-justify text-black text-action-title">Raise funds for your Crypto Tokens</h6>
+            <p class="text-justify text-black">Present your project to our growing community
+            of investors.</p>
+            
+        </div>
+    </div>
+</div>
+
+<!-- Logo -->
+<!-- <div class="container text-center mt-4">
+    <img src="/assets/img/brand/zsaleslogo2.png" alt="Zsales LaunchPad Logo" height="100">  
+</div> -->

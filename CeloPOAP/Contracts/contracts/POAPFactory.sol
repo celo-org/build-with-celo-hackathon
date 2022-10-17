@@ -46,13 +46,14 @@ contract POAPFactory is   Ownable {
     /**
     * @dev Create A new Event.
     */
-    function createNewEvent(POAP.EventStruct memory eventDetails) public payable  {
+    function createNewEvent(POAP.EventStruct memory eventDetails, string memory eventCode) public payable  {
         
         require(msg.value >= fee, 'POAPFactory: Requires Event Creation Price' );
    
         _counter.increment(); 
-
-        address payable newEventAddress = payable(address(new POAP("POAP", "POAP", eventDetails) ) );
+        eventDetails.eventOwner= msg.sender;
+        
+        address payable newEventAddress = payable(address(new POAP("POAP", "POAP", eventDetails, eventCode) ) );
 
         _events.set(_counter.current(), newEventAddress);
         _ownersEvents[msg.sender].push( _counter.current());        

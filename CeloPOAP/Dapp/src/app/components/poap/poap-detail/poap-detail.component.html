@@ -1,0 +1,476 @@
+<c-toaster class="p-3" position="fixed" [placement]="placement"></c-toaster>
+
+
+<div *ngIf="!poap">
+    Loading ..
+</div>
+
+<div class="row" *ngIf="poap">
+    <div class="col-12">
+        <div class="card ">
+            <div class="card-body" >
+                <h3>{{poap.eventName}}</h3>
+
+                <p>{{poap.desc}}</p>
+
+                <div class="text-left my-2" >
+                    
+                    <a  class="mx-2" [href]="'mailto:' + poap.email" target="_blank"> 
+                      <svg cIcon [name]="'cibEmail'" [title]="'cibEmail'" size="2xl"></svg>
+                      
+                    </a>
+
+                    <a  class="px-2 mx-2" [href]="poap.website" target="_blank"> 
+                      <svg cIcon [name]="'cilBrowser'" [title]="'cilBrowser'" size="2xl"></svg>
+                      
+                    </a>
+
+                                        
+                    
+                </div>
+
+                <!-- <ul class="list-group mt-4">
+                    <li class="list-group-item d-flex justify-content-between align-items-start py-4">
+                      <div class="ms-2 me-auto">
+                        <div class="fw-bold">Presale Address</div>
+                        
+                      </div>
+                      <div >{{poap.poapAddress}} </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start py-4">
+                        <div class="ms-2 me-auto">
+                          <div class="fw-bold">Token Address</div>
+                          
+                        </div>
+                        <div >{{poap.tokenAddress}}</div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start py-4">
+                        <div class="ms-2 me-auto">
+                          <div class="fw-bold">Dates</div>
+                          
+                        </div>
+                        <div >{{ formatDateToJsString( poap.saleStartTime)}} to {{formatDateToJsString( poap.saleEndTime)}} </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start py-4">
+                        <div class="ms-2 me-auto">
+                        <div class="fw-bold">Soft Cap/Hard Cap</div>
+                        
+                        </div>
+                        <div >{{poap.softCap}} {{purchaseCoin}} to {{  poap.hardCap}} {{purchaseCoin}}</div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start py-4">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">Sale Rate</div>
+                        
+                    </div>
+                    <div >1 {{purchaseCoin}} gets {{poap.listRate}} {{poap.symbol}}</div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start py-4">
+                        <div class="ms-2 me-auto">
+                        <div class="fw-bold">DEX Listing Rate</div>
+                        
+                        </div>
+                        <div >1 {{purchaseCoin}} gets {{poap.dexListRate}} {{poap.symbol}}</div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Raised funds allocated for Liquidity</div>
+                            
+                        </div>
+                        <div class="">
+                          <div>{{ formatPercent(  poap.liquidity) }} % of {{ poap.hardCap}} {{purchaseCoin}} </div>
+                          <div><em>locked till {{formatEtherDateToJs( poap.liquidityReleaseTime)}}</em></div>
+                        </div>
+                    </li>
+
+
+                    <li class="list-group-item d-flex justify-content-between align-items-start py-4">
+                        <div class="ms-2 me-auto">
+                        <div class="fw-bold">Uses Whitelist?</div>
+                        
+                        </div>
+                        <div > {{(poap.useWhiteList? 'Yes': 'No')}} </div>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between align-items-start py-4">
+                        <div class="ms-2 me-auto">                            
+                            <div [innerHtml]="descriptionFromIpfs"></div>                            
+                        </div>
+                    </li>
+
+
+                  </ul> -->
+
+              </div>
+          </div>
+    </div>
+    <!-- <div class="col-12">
+
+        <div class="card ">
+            <div class="card-body" style="font-size: 0.78rem">
+
+                <ul class="list-group mt-4" >
+                    <li *ngIf="this.poap.totalCoinReceived >= this.poap.hardCap" class="list-group-item d-flex justify-content-center ">
+                        
+                        <div style="font-size: 20px;
+                            color: red;
+                            background-color: white;
+                            padding: 10px 4px;
+                            font-weight: bold;">
+                            Sold out
+                        </div>
+
+                        
+                    </li>
+
+                    <li *ngIf="isOpenForPayment===true" class="list-group-item ">
+                        
+                        <div>
+                            <strong>Sale End Timer</strong>
+                        </div>
+
+                        <div
+                          class="countdown d-flex justify-content-center"
+                          simpleCountdown
+                          [dateTo]="poap.saleEndTime.getTime()/1000"
+                          [language]="'en'"
+                          [endMessage]="'Sale Ended'"
+                          [styles]="'
+                            font-size: 20px;
+                            color: red;
+                            background-color: white;
+                            padding: 10px 4px;
+                            font-weight: bold;
+                          '"
+                          (finish)="onCountdownfinish()"
+                        ></div>
+                        
+                    </li>
+
+                    <li *ngIf="poap.saleStartTime.getTime() > now" class="list-group-item">
+                        
+                        <div >
+
+                            <strong>Sale Start Timer</strong>
+                        </div>
+
+                         <div
+                          class="countdown d-flex justify-content-center"
+                          simpleCountdown
+                          [dateTo]="poap.saleStartTime.getTime()/1000"
+                          [language]="'en'"
+                          [endMessage]="'Sale Started'"
+                          [styles]="'
+                            font-size: 20px;
+                            color: red;
+                            background-color: white;
+                            padding: 10px 4px;
+                            font-weight: bold;
+                          '"
+                          (finish)="onCountdownfinish()"
+                        ></div>
+                        
+                    </li>
+
+                    <li class="list-group-item">
+                        <div>
+                            <small>{{poap.totalCoinReceived}} {{purchaseCoin}} /
+
+                            {{ (poap.totalCoinReceived >= poap.softCap) ? (poap.hardCap + ' ' + purchaseCoin  ) : (poap.softCap + ' '+ purchaseCoin ) }}
+
+                                <span *ngIf="poap.totalCoinReceived >= poap.softCap" class="text-success">
+                                    Soft Cap Hit
+                                </span>
+                            </small> 
+                        </div>
+                        
+                        <c-progress class="mb-3" [height]="20">
+                          <c-progress-bar [value]="saleProgress"> 
+                            {{poap.totalCoinReceived}} {{purchaseCoin}}                            
+                          </c-progress-bar>
+                        </c-progress>
+                    </li>
+
+                    <li *ngIf="isOpenForPayment===true" class="list-group-item" style="background-color: #9effbb;">
+                        <form  [formGroup]="mainFormGroup" class="main-form needs-validation"  novalidate [validated]="false"  cForm>
+                            <div class="row">
+                                <div class="col-12 ">
+                                    <b>Participate in Sale  </b> <br/>
+                                    
+                                </div>
+                                <div class="col-12 ">
+                                    <div class="row">
+                                        <div [cFormFloating]="true" class="my-3" >
+                                            <input cFormControl id="amt" placeholder="Amount" formControlName="amount" type="number" sizing="sm" 
+                                                [ngClass]="{ 'is-invalid': mainFormGroup.get('amount').touched && mainFormGroup.get('amount').invalid, 'is-valid': mainFormGroup.get('amount').touched && mainFormGroup.get('amount').valid }"
+                                            />
+                                            <label cLabel for="amt"> &nbsp; Amount to buy ({{purchaseCoin}})</label>
+                                            
+                                            <div cFormText class="mt-2">
+                                                If the Soft Cap is not met, Funds will be returned to Participants
+                                            </div>
+                
+                                            <div class="error-message" *ngIf="mainFormGroup.get('amount').invalid && mainFormGroup.get('amount').touched">
+                                                <div *ngFor="let error of  objectKeys(mainFormGroup.get('amount')?.errors)">                                        
+                                                {{validationMessages.amount[error]}}
+                                                </div>
+                                            </div>
+                
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                </div>
+                
+                                <div class="col d-flex align-items-center justify-content-end">
+
+                                    
+                        
+                                    <button type="submit"  class="me-1 btn btn-success" style="color:white" [disabled]="mainFormGroup.invalid || submittingBid"  (click)="submitBid()"  >
+                                        
+                                        
+                                        <img *ngIf="submittingBid==true" src="/assets/images/loader.gif" style="width:40px;height: 40px;"/>
+                                        Submit
+                                    </button>
+                        
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between align-items-start py-4">
+                        <div class="ms-2 me-auto">
+                          <div class="fw-bold">Sale Dates</div>
+                          
+                        </div>
+                        <div>
+                            <div >{{ formatDateToJsString(poap.saleStartTime)}} </div> to <div> {{ formatDateToJsString(poap.saleEndTime)}} </div>
+                        </div>
+                    </li>
+                    
+
+                    <li class="list-group-item d-flex justify-content-between align-items-start py-4">
+                      <div class="ms-2 me-auto">
+                        <div class="fw-bold">Buy Limits (Tier 1)  </div>
+                        
+                      </div>
+                      <div >{{poap.maxAllocationPerUserTierOne}} {{purchaseCoin}} 
+                        <button cButton cTooltip="To participate in Tier 1 you must have ZSX to participate." cTooltipPlacement="top"
+        class="me-1" color="secondary">i
+                            </button>
+                      </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start py-4">
+                        <div class="ms-2 me-auto">
+                          <div class="fw-bold">Buy Limits (Public Tier)</div>
+                          
+                        </div>
+                        <div >{{poap.maxAllocationPerUserTierTwo}} {{purchaseCoin}} </div>
+                    </li>
+
+                    <li *ngIf="isOwner" class="list-group-item  py-4 px-4">
+
+                        <div class="btn-group-vertical  " role="group" >
+                            <button *ngIf="isOwner && poap.status==0" class="mx-2 my-2 btn btn-danger btn-sm"  (click)="transferTokens()"  >Transfer Tokens</button>
+
+                            <button *ngIf="isOwner && poap.saleStartTime.getTime() > now" class="mx-2 my-2 btn btn-warning btn-sm"  (click)="postponeSale()"  >Postpone Sale</button>
+
+                            <button *ngIf="isOwner && poap.saleStartTime.getTime() > now" class="mx-2 my-2 btn btn-danger btn-sm"  (click)="cancelSale()"  >Cancel Sale</button>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <button *ngIf="isOwner && poap.saleStartTime.getTime() > now" class="mx-2 my-2 btn btn-warning btn-sm"  (click)="showWhitelist()"  >
+                                    Manage Whitelist  
+                                </button>
+
+                                <button class="btn btn-dark"  (click)="viewCurrentWhitelist()" *ngIf="poap.useWhiteList">View List</button>
+                            </div>
+                            
+
+
+
+                            <button *ngIf="isOwner && poap.saleEndTime.getTime() <  now" class="mx-2 my-2 btn btn-success btn-sm"  (click)="finalizeSale()"  >Finalize Sale</button>
+
+                            <button *ngIf="isOwner && poap.saleEndTime.getTime() < now && (poap.status==2 || poap.status==3)" class="mx-2 my-2 btn btn-success btn-sm"  (click)="withdrawOwnerTokens()"  >Withdraw Owner Tokens</button>
+
+                            
+                        </div>
+                        
+                    </li>
+
+                    <li *ngIf="!isOwner" class="list-group-item d-flex justify-content-between align-items-start py-4">
+                        
+                        <button *ngIf="!isOwner && (poap.saleEndTime.getTime() < now || poap.status==4) " class="mx-2 my-2 btn btn-success btn-sm" (click)="withdrawInvestorTokens()"  >Withdraw Your Tokens</button>
+                    </li>
+
+                </ul>
+
+
+                
+            </div>
+        </div>
+
+    </div> -->
+
+    
+</div>
+
+<!-- 
+<c-modal id="postponeSaleModal" [visible]="postponeSaleModalVisible" >
+  <c-modal-header>
+    <h5 cModalTitle>Postpone this Sale?</h5>
+    <button (click)="closePostponeModal()" cButtonClose>x</button>
+  </c-modal-header>
+
+  <c-modal-body>
+    <form *ngIf="postponeSaleFormGroup"  [formGroup]="postponeSaleFormGroup" class="pospone-form needs-validation"  novalidate [validated]="false"  cForm>
+        <div class="row">
+            <div class="col-12">
+                <div [cFormFloating]="true" class="my-3" >
+                    <input cFormControl id="postponesaleStartTime"  placeholder="" formControlName="startDate" type="datetime"  sizing="sm"  [ngClass]="{ 'is-invalid': postponeSaleFormGroup.get('startDate').touched && postponeSaleFormGroup.get('startDate').invalid, 'is-valid': postponeSaleFormGroup.get('startDate').touched && postponeSaleFormGroup.get('startDate').valid }"/>
+                    <label cLabel for="postponesaleStartTime">New Start Date</label>
+                    
+                    <div cFormText class="mt-2">
+                        
+                    </div>
+
+                    <div class="error-message" *ngIf="postponeSaleFormGroup.get('startDate').invalid && postponeSaleFormGroup.get('startDate').touched">
+                        <div *ngFor="let error of  objectKeys(postponeSaleFormGroup.get('startDate')?.errors)">                                        
+                        {{validationMessages.startDate[error]}}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-12">
+                <div [cFormFloating]="true" class="my-3" >
+                    <input cFormControl id="postponesaleEndTime" type="datetime"  placeholder="" formControlName="endDate"  sizing="sm"  [ngClass]="{ 'is-invalid': postponeSaleFormGroup.get('endDate').touched && postponeSaleFormGroup.get('endDate').invalid, 'is-valid': postponeSaleFormGroup.get('endDate').touched && postponeSaleFormGroup.get('endDate').valid }"/>
+                    <label cLabel for="postponesaleEndTime">New End Date</label>
+                    
+                    <div cFormText class="mt-2">
+                        
+                    </div>
+
+                    <div class="error-message" *ngIf="postponeSaleFormGroup.get('endDate').invalid && postponeSaleFormGroup.get('endDate').touched">
+                        <div *ngFor="let error of  objectKeys(postponeSaleFormGroup.get('endDate')?.errors)">                                        
+                        {{validationMessages.endDate[error]}}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+
+        </div>
+    </form>
+  </c-modal-body>
+
+  <c-modal-footer>
+    <button (click)="closePostponeModal()" class="btn btn-secondary">
+      Close
+    </button>
+    <button class="btn btn-primary" *ngIf="postponeSaleFormGroup" [disabled]="postponeSaleFormGroup.invalid " (click)="submitPostpone()">Postpone</button>
+  </c-modal-footer>
+</c-modal>
+
+
+
+
+<c-modal id="addWhitelistModal" [visible]="whitelistModalVisible" >
+    <c-modal-header>
+      <h5 cModalTitle>Manage Whitelist</h5>
+      <button (click)="closeWhitelistModal()" cButtonClose>x</button>
+    </c-modal-header>
+  
+    <c-modal-body>
+    
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-info">
+                    You will be asked to sign a message with your Wallet before sending the Whitelist transaction, this allows us to authenticate that you are the one sending the whitelist on our API Server 
+                </div>
+            </div>
+        </div>
+
+      <form *ngIf="whitelistFormGroup"  [formGroup]="whitelistFormGroup" class="whitelist-form needs-validation"  novalidate [validated]="false"  cForm>
+          <div class="row">
+              <div class="col-12">
+                <c-form-check [switch]="true" class="my-3">
+                    <input cFormCheckInput checked type="checkbox" formControlName="enable" />
+                    <label cFormCheckLabel>Use Whitelist</label>
+                </c-form-check>
+
+              </div>
+              <div class="col-12" *ngIf="whitelistFormGroup.get('enable').value === true">
+                  <div [cFormFloating]="true" class="my-3" >
+                    <textarea cFormControl style="height: 100px;font-size: 1.15rem" rows="6" id="list" placeholder="" formControlName="addresses" type="text" sizing="lg" [ngClass]="{ 'is-invalid': whitelistFormGroup.get('addresses').touched && whitelistFormGroup.get('addresses').invalid, 'is-valid': whitelistFormGroup.get('addresses').touched && whitelistFormGroup.get('addresses').valid }">
+                    </textarea>
+                    <label cLabel for="list">Addresses (Enter each address on a separate line)</label>
+                      
+                    <div cFormText class="mt-2">
+                        You can whitelist a maximum of 1,000 addresses. <br/>
+                        
+                        <div class="alert alert-info">Submitting a new whitelist will overwrite any existing whitelist</div>
+                    </div>
+  
+                      <div class="error-message" *ngIf="whitelistFormGroup.get('addresses').invalid && whitelistFormGroup.get('addresses').touched">
+                          <div *ngFor="let error of  objectKeys(whitelistFormGroup.get('addresses')?.errors)">                                        
+                          {{validationMessages.whitelistAddresses[error]}}
+                          </div>
+                      </div>
+  
+                  </div>
+              </div>
+              
+  
+          </div>
+      </form>
+    </c-modal-body>
+  
+    <c-modal-footer>
+        
+      <button (click)="closeWhitelistModal()" cButton color="secondary">
+        Close
+      </button>
+      <button class="btn btn-primary" *ngIf="whitelistFormGroup" [disabled]="whitelistFormGroup.invalid " (click)="submitWhitelist()">Submit</button>
+    </c-modal-footer>
+  </c-modal>
+
+
+  <c-modal id="viewWhitelistModal" [visible]="viewWhitelistModalVisible" >
+    <c-modal-header>
+      <h5 cModalTitle>View Whitelist</h5>
+      <button (click)="closeViewWhitelistModal()" cButtonClose>x</button>
+    </c-modal-header>
+  
+    <c-modal-body>
+    
+        <div class="row" *ngIf="whitelist">
+            <div class="col">
+
+                <ol class="list-group list-group-numbered mt-4" >
+                    <li *ngIf="whitelist.length<1" class="list-group-item ">
+                        No Address in Whitelist
+                    </li>
+                    <li *ngFor="let add of whitelist" class="list-group-item " style="font-weight: bold;">
+                        {{add}}
+                    </li>
+
+
+                </ol>
+            </div>
+        </div>
+
+    </c-modal-body>
+  
+    <c-modal-footer>
+        
+      <button (click)="closeViewWhitelistModal()" cButton color="secondary">
+        Close
+      </button>
+      
+    </c-modal-footer>
+  </c-modal> -->
+
+
+
+  

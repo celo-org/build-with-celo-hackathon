@@ -30,9 +30,14 @@ contract POAP is ERC721URIStorage,  Ownable {
     
     EventStruct public eventDetails;
 
+    bytes32 private eventCodeHashed;
+
     Counters.Counter private _tokenCounter;
 
     mapping(address => bool) mintedList;
+
+    // address[] private addresses;
+    // mapping(address => bool) attendeesStatus;
 
     
     uint256 private fee;
@@ -40,23 +45,30 @@ contract POAP is ERC721URIStorage,  Ownable {
     event minted(address sender, uint256 tokenId);
 
     string _tokenUri ;
+
+    bool _allowMinting=false;
     
     
 
-    constructor(string memory name, string memory symbol, EventStruct memory _eventDetails) ERC721(name,symbol) 
+    constructor(string memory name, string memory symbol, EventStruct memory _eventDetails, string memory eventCode) ERC721(name,symbol) 
     {
         fee = 0.0001 * 10 ** 18; // 0.0001
         eventDetails=_eventDetails;
-
+        eventDetails.poapsMinted=0;
+        eventCodeHashed = keccak256(abi.encodePacked(eventCode));
         _tokenUri = generateTokenURI();
+
+        _transferOwnership(_eventDetails.eventOwner);
     }
 
 
 
-    function mintPOAP() 
-    public payable
-    returns (uint256)
+    function mintPOAP(string memory eventCode) 
+        public payable
+        returns (uint256)
     { 
+        require(_allowMinting, "Minting Not Allowed");
+        require(eventCodeHashed==keccak256(abi.encodePacked(eventCode)), "Invalid Event Code"); 
         require(mintedList[msg.sender]==false, "Already Minted");  
         require(eventDetails.maxCapacity > 0, "Invalid Event");
         require(eventDetails.poapsMinted < eventDetails.maxCapacity, "POAPs Sold Out");
@@ -72,11 +84,38 @@ contract POAP is ERC721URIStorage,  Ownable {
         _safeMint(msg.sender, tokenID);
         _setTokenURI(tokenID, _tokenUri);
 
+        // mintees.push(msg.sender);
+
         // emit a confirmation,
         // include tokenID of new NFTicket
         emit minted(msg.sender, tokenID);
         
         return tokenID;
+    }
+
+    // function markAttendance(string memory eventCode) public {
+    //     require(eventCodeHashed==keccak256(abi.encodePacked(eventCode)), "Invalid Event Code");
+    //     if(attendeesStatus[msg.sender] == false){
+    //         attendees.push(msg.sender);
+    //         attendeesStatus[msg.sender]=true;
+    //     }
+    // }
+
+    // function addAttendees(address[100] memory addresses) public onlyOwner {
+    //     for(uint i=0; i< addresses.length;i++){
+    //         if(attendeesStatus[addresses[i]] == false){
+    //             attendees.push(addresses[i]);
+    //             attendeesStatus[addresses[i]]=true;
+    //         }
+    //     }
+    // }
+
+    // function disableAttendee(address attendee) public onlyOwner {
+    //     attendeesStatus[attendee]=false;
+    // }
+
+    function allowMint(bool allowOrDisallow) public onlyOwner {
+        _allowMinting=allowOrDisallow;
     }
 
     
