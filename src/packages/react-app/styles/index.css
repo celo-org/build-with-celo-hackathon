@@ -89,6 +89,10 @@ body {
   width: 100%;
 }
 
+.future-plan-img > img {
+  width: 80%;
+}
+
 @media screen and (max-width: 768px) {
   .nav-links {
     display: none;
