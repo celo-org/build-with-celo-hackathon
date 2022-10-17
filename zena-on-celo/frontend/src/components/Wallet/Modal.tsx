@@ -11,7 +11,8 @@ export default function Modal() {
   const [open, setOpen] = useRecoilState(walletOpenState);
   const [shouldMint, setMint] = useRecoilState(mintState);
   const [userData, setData] = useState<any>();
-  const session = JSON.parse(localStorage.getItem("zena-session") || "");
+  const zena = localStorage.getItem("zena-session");
+  const session = zena ? JSON.parse(zena) : null;
 
   useEffect(() => {
     const fetchData = async () => {
