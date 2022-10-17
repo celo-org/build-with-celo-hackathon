@@ -7,7 +7,7 @@ import '@ethersproject/shims'
 // Import ethers now
 import { ethers } from 'ethers'
 
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { useWalletProvider } from '../../contexts/WalletContext'
 import { colors, globalStyles } from '../../utils/globalStyles'
 import { styles } from './styles'

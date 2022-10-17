@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   viewContainer: {
     flex: 1,
     flexDirection: 'row',
-    right: 5,
+    right: 24,
     justifyContent: 'center',
     alignItems: 'center',
   },

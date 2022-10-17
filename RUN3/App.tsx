@@ -4,12 +4,16 @@ import { useWalletProvider, WalletProvider } from './src/contexts/WalletContext'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Home from './src/Components/Home'
+import { Text } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Header from './src/Components/Header'
 import { ApplicationProvider, BottomNavigation, BottomNavigationTab } from '@ui-kitten/components'
 import * as eva from '@eva-design/eva'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faUser, faRunning, faRoad } from '@fortawesome/free-solid-svg-icons'
+import MoveToEarn from './src/Components/MoveToEarn'
+import { colors, globalStyles } from './src/utils/globalStyles'
+import MoveToBuild from './src/Components/MoveToBuild'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -17,20 +21,21 @@ const Tab = createBottomTabNavigator()
 const BottomTabBar = ({ navigation, state }: { navigation: any; state: any }) => (
   <BottomNavigation
     style={{ height: 80 }}
+    indicatorStyle={{ backgroundColor: colors.secondary }}
     selectedIndex={state.index}
     onSelect={(index) => navigation.navigate(state.routeNames[index])}
   >
     <BottomNavigationTab
-      title="User Profile"
-      icon={(props: any) => <FontAwesomeIcon color={props.style.tintColor} icon={faUser} size={20} />}
+      title={() => <Text style={globalStyles.secondaryColor}>User Profile</Text>}
+      icon={(props: any) => <FontAwesomeIcon color={colors.secondary} icon={faUser} size={20} />}
     />
     <BottomNavigationTab
-      title="Move To Earn"
-      icon={(props: any) => <FontAwesomeIcon color={props.style.tintColor} icon={faRunning} size={20} />}
+      title={() => <Text style={globalStyles.secondaryColor}>Move To Earn</Text>}
+      icon={(props: any) => <FontAwesomeIcon color={colors.secondary} icon={faRunning} size={20} />}
     />
     <BottomNavigationTab
-      title="Move To Build"
-      icon={(props: any) => <FontAwesomeIcon color={props.style.tintColor} icon={faRoad} size={20} />}
+      title={() => <Text style={globalStyles.secondaryColor}>Move To Build</Text>}
+      icon={(props: any) => <FontAwesomeIcon color={colors.secondary} icon={faRoad} size={20} />}
     />
   </BottomNavigation>
 )
@@ -39,8 +44,8 @@ const HomeApp = () => {
   return (
     <Tab.Navigator initialRouteName="homeApp" tabBar={(props) => <BottomTabBar {...props} />}>
       <Tab.Screen name="Profile" component={Home} />
-      <Tab.Screen name="Move To Earn" component={Home} />
-      <Tab.Screen name="Move To Build" component={Home} />
+      <Tab.Screen name="Move To Earn" component={MoveToEarn} />
+      <Tab.Screen name="Move To Build" component={MoveToBuild} />
     </Tab.Navigator>
   )
 }
