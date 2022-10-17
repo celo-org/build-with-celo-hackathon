@@ -12,7 +12,7 @@ const Login = () => {
           Welcome Back!
         </Text>
         <Text color="brand.yellow" fontSize="14px">
-          Begin your journey to improve the ecosystem
+          Continue your journey to improve the ecosystem
         </Text>
       </Box>
       <Box w="45%" p="80px">
@@ -38,6 +38,20 @@ const Login = () => {
             />
             <CustomButton m="30px 0" w="100%" p="25px" bg="brand.lightGreen" color="brand.white" hoverBg="brand.green">Log In</CustomButton>
           </form>
+          <Flex fontSize="14px" mt="-15px" justifyContent="center">
+            <Text>Don't have an account yet?</Text>
+            <a href="/signup">
+              <Text
+                ml="10px"
+                color="brand.orange"
+                _hover={{ color: "brand.yellow" }}
+                cursor="pointer"
+                fontWeight="bold"
+              >
+                Sign Up
+              </Text>
+            </a>
+          </Flex>
         </Box>
       </Box>
     </Flex>
