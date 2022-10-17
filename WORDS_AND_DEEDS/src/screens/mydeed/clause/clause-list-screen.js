@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import {Header} from '@primusmoney/react_pwa/react-js-ui';
 
+import AppsPane from '../../core/apps-pane.js';
+
 import ClauseListView from '../../../components/mydeed/clause/clause-list-view.js';
 
 class ClauseListScreen extends React.Component {
@@ -76,10 +78,12 @@ class ClauseListScreen extends React.Component {
 		return (
 			<div className="Screen">
 				<Header app = {this.app} />
+				<AppsPane app={this.app}>
 				{(loaded === true ?
 				<ClauseListView app = {this.app} /> :
 				<div>{quoteinfo}</div>
 				)}
+				</AppsPane>
 			</div>
 		);
 	}

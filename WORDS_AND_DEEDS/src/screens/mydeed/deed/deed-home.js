@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import {Header} from '@primusmoney/react_pwa/react-js-ui';
 
+import AppsPane from '../../core/apps-pane.js';
+
 import DeedBuyForm from '../../../components/mydeed/deed/deed-buy-form.js';
 import DeedCreateForm from '../../../components/mydeed/deed/deed-create-form.js';
 import DeedSellForm from '../../../components/mydeed/deed/deed-sell-form.js';
@@ -107,10 +109,12 @@ class DeedHomeScreen extends React.Component {
 		return (
 			<div className="Screen">
 				<Header app = {this.app} />
+				<AppsPane app={this.app}>
 				{(loaded === true ?
 				this.renderDeedView() :
 				<div>{deedinfo}</div>
 				)}
+				</AppsPane>
 			</div>
 		);
 	}

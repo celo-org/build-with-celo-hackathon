@@ -12,6 +12,7 @@ class DeedClient {
 		this.globalscope = window;
 
 		this.mvcmypwa = null;
+		this.mvcmydeed = null;
 
 		this.walletconnect_client = null;
 	}
@@ -23,6 +24,15 @@ class DeedClient {
 		this.mvcmypwa = this.global.getModuleObject('mvc-myquote');
 
 		return this.mvcmypwa;
+	}
+
+	getMvcMyDeedObject() {
+		if (this.mvcmydeed)
+			return this.mvcmydeed;
+
+		this.mvcmydeed = this.global.getModuleObject('mvc-mydeed');
+
+		return this.mvcmydeed;
 	}
 
 	async init() {
@@ -301,8 +311,28 @@ class DeedClient {
 
 		return res;
 	}
+
+	getConnectionFromRpc(rpc) {
+		let walletconnectclient = this.getWalletConnectClient();
+
+		return walletconnectclient.getConnectionFromRpc(rpc);
+	}
+
+	getTxConnection(feelevel, rpc) {
+		let connection = {feelevel: feelevel};	
 		
-	
+		let walletconnectclient = this.getWalletConnectClient();
+		let walletconnection = walletconnectclient.getConnectionFromRpc(rpc);
+
+		connection.type = 'remote';
+
+		connection.connectionuuid = walletconnection.uuid;
+		connection.provider = walletconnection.provider;
+		connection.account = walletconnection.account;
+
+		return connection;
+	}
+		
 
 	// static
 	static getObject() {

@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import {Header} from '@primusmoney/react_pwa/react-js-ui';
 
+import AppsPane from '../../core/apps-pane.js';
+
 import ClauseCreateForm from '../../../components/mydeed/clause/clause-create-form.js';
 import ClauseView from '../../../components/mydeed/clause/clause-view.js';
 
@@ -87,11 +89,13 @@ class ClauseHomeScreen extends React.Component {
 		return (
 			<div className="Screen">
 				<Header app = {this.app} />
+				<AppsPane app={this.app}>
 				{(loaded === true ?
 				(action === 'view' ?
 				<ClauseView app = {this.app} /> :
 				<ClauseCreateForm app = {this.app} />)
 				: <div>{clauseinfo}</div>)}
+				</AppsPane>
 			</div>
 		);
 	}

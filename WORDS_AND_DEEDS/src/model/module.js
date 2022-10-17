@@ -174,7 +174,7 @@ var Module = class {
 		var global = this.global;
 		var mvcmodule = global.getModuleObject('mvc');
 
-		var _privkey = await mvcmodule.getCardPrivateKey(sessionuuid, walletuuid, carduuid);
+		var _privkey = await mvcmodule.getCardPrivateKey(sessionuuid, walletuuid, carduuid).catch(err => {});
 
 		return (_privkey ? true : false);
 	}
@@ -439,12 +439,14 @@ var Module = class {
 
 	// minter
 	async _getDeedOwningCard(session, wallet, currency, minter, deed) {
+		var mvcpwa = this._getMvcPWAObject();
+
 		var sessionuuid = session.getSessionUUID();
 		var walletuuid = wallet.getWalletUUID();
 		var currencyuuid = currency.uuid;
 		var address = deed.owner;
 
-		var cardinfo = await this.getCurrencyCardWithAddress(sessionuuid, walletuuid, currencyuuid, address).catch(err => {});
+		var cardinfo = await mvcpwa.getCurrencyCardWithAddress(sessionuuid, walletuuid, currencyuuid, address).catch(err => {});
 
 		if (!cardinfo)
 			return;
@@ -465,8 +467,9 @@ var Module = class {
 			return Promise.reject('currency uuid is undefined');
 		
 		var global = this.global;
-		var mvcmodule = global.getModuleObject('mvc');
 		var _apicontrollers = this._getClientAPI();
+		var mvcpwa = this._getMvcPWAObject();
+
 	
 		var session = await _apicontrollers.getSessionObject(sessionuuid);
 	
@@ -478,19 +481,19 @@ var Module = class {
 		if (!wallet)
 			return;
 
-		var currency = await this.getCurrencyFromUUID(sessionuuid, currencyuuid);
+		var currency = await mvcpwa.getCurrencyFromUUID(sessionuuid, currencyuuid);
 
 		if (!currency)
 			return Promise.reject('could not find currency ' + currencyuuid);
 	
 		var address = deed.owner;
 
-		var cardinfo = await this.getCurrencyCardWithAddress(sessionuuid, walletuuid, currencyuuid, address).catch(err => {});
+		var cardinfo = await mvcpwa.getCurrencyCardWithAddress(sessionuuid, walletuuid, currencyuuid, address).catch(err => {});
 
 		if (!cardinfo)
 			return;
 
-		// we acccept read-only card
+		// we accept read-only card
 /* 		var _privatekey = await this.getCardPrivateKey(sessionuuid, walletuuid, cardinfo.uuid);
 
 		if (_privatekey) */

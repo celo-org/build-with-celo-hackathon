@@ -76,6 +76,28 @@ class ClauseCreateForm extends React.Component {
 		this.setState(state);
 	}
 
+	// deed and connection methods
+	_getRemoteConnectionFromRpc(rpc) {
+		return this.app.getDeedClientObject().getConnectionFromRpc(rpc);
+	}
+
+	_getTxConnection(feelevel) {
+		let connection = {type: 'local', feelevel: feelevel};	
+		
+		if (this.state.remotewallet) {
+			connection = this.app.getDeedClientObject().getTxConnection(this.state.rpc);
+		}
+
+		return connection;
+	}
+
+	async _getDeedOwningCard(currencyuuid, minter, deed) {
+		let context = await this.app.getVariable('AppsPane').getDeedCardContext(currencyuuid, minter, deed);
+
+		this._setState({remotewallet: context.remotewallet, rpc: context.rpc, connection: context.connection});
+
+		return context.deedcard;
+	}
 	
 	// post render commit phase
 	componentDidUpdate(prevProps, prevState) {
@@ -243,10 +265,6 @@ class ClauseCreateForm extends React.Component {
 				let deedcard_balance_int = 0;
 				let deedcard_balance_string = '';
 
-				let remotewallet = false;
-				let rpc = null;
-				let connection = null;
-
 				const cur = await mvcmypwa.getCurrencyFromUUID(rootsessionuuid, currencyuuid)
 				.catch(err => {});
 
@@ -254,7 +272,7 @@ class ClauseCreateForm extends React.Component {
 				currency = cur;
 
 				// get the deed card
-				deedcard = await mvcmypwa.getDeedOwningCard(rootsessionuuid, walletuuid, currencyuuid, minter, deed)
+				deedcard = await this._getDeedOwningCard(currencyuuid, minter, deed)
 				.catch(err => {
 					console.log('error in DeedView.checkNavigationState: ' + err);
 				});
@@ -269,51 +287,10 @@ class ClauseCreateForm extends React.Component {
 					}
 	
 				}
-				else {
-					// check if corresponding currency is set for remote
-					let config = this.app.getConfig('remotewallet');	
-
-					if (config && config.rpc && config.rpc[currency.uuid]) {
-						let curr_rpc_config = config.rpc[currency.uuid];
-
-						if (curr_rpc_config.enabled === true) {
-							remotewallet = true;
-							rpc = curr_rpc_config.rpc;
-
-							// check if we are connected to a remote wallet
-							let deedclient = this.app.getDeedClientObject();
-							let walletconnectclient = deedclient.getWalletConnectClient();
-				
-							connection = walletconnectclient.getRemoteConnectionFromRpc(rpc);
-
-							let remoteaccount = (connection ? walletconnectclient.getRemoteAccount(connection.uuid) : null);
-
-							if (remoteaccount) {
-								let areequal = await mvcmypwa.areAddressesEqual(rootsessionuuid, remoteaccount, deed.owner);
-
-								if (areequal)
-									isOwner = true;
-
-									deedcard = await mvcmypwa.getCurrencyCardWithAddress(rootsessionuuid, walletuuid, currencyuuid,
-										remoteaccount); // creates read-only card if necessary
-
-									let pos = await mvcmypwa.getCurrencyPosition(rootsessionuuid, walletuuid, currencyuuid, deedcard.uuid);
-			
-									if (pos !== undefined) {
-										deedcard_balance_int = await pos.toInteger();
-										deedcard_balance_string = await mvcmypwa.formatCurrencyAmount(rootsessionuuid, currencyuuid, pos);
-									}
-							}
-				
-
-						}
-					}
-				}
 				
 			
 				this._setState({title, description, currency, 
 					isOwner,
-					remotewallet, rpc, connection,
 					deedcard, deedcard_balance_int, deedcard_balance_string });
 			}
 			else {
@@ -339,31 +316,6 @@ class ClauseCreateForm extends React.Component {
 	
 	
 	// user actions
-	_getRemoteConnectionFromRpc(rpc) {
-		let deedclient = this.app.getDeedClientObject();
-		let walletconnectclient = deedclient.getWalletConnectClient();
-
-		return walletconnectclient.getConnectionFromRpc(rpc);
-	}
-
-	_getTxConnection(feelevel) {
-		let connection = {type: 'local', feelevel: feelevel};	
-		
-		if (this.state.remotewallet) {
-			let deedclient = this.app.getDeedClientObject();
-			let walletconnectclient = deedclient.getWalletConnectClient();
-			let walletconnection = walletconnectclient.getConnectionFromRpc(this.state.rpc);
-
-			connection.type = 'remote';
-
-			connection.connectionuuid = walletconnection.uuid;
-			connection.provider = walletconnection.provider;
-			connection.account = walletconnection.account;
-		}
-
-		return connection;
-	}
-	
 	async onSubmit() {
 		console.log('onSubmit pressed!');
 		

@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import {Header} from '@primusmoney/react_pwa/react-js-ui';
 
+import AppsPane from '../../core/apps-pane.js';
+
 import DeedListView from '../../../components/mydeed/deed/deed-list-view.js';
 
 class DeedListScreen extends React.Component {
@@ -76,10 +78,13 @@ class DeedListScreen extends React.Component {
 		return (
 			<div className="Screen">
 				<Header app = {this.app} />
+				<AppsPane app={this.app}>
 				{(loaded === true ?
 				<DeedListView app = {this.app} /> :
 				<div>{deedinfo}</div>
 				)}
+				</AppsPane>
+
 
 			</div>
 		);

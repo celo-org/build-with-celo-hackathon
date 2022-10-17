@@ -68,6 +68,21 @@ class DeedCreateForm extends React.Component {
 		this.setState(state);
 	}
 
+	// connection methods
+	_getRemoteConnectionFromRpc(rpc) {
+		return this.app.getDeedClientObject().getConnectionFromRpc(rpc);
+	}
+
+	_getTxConnection(feelevel) {
+		let connection = {type: 'local', feelevel: feelevel};	
+		
+		if (this.state.remotewallet) {
+			connection = this.app.getDeedClientObject().getTxConnection(this.state.rpc);
+		}
+
+		return connection;
+	}
+	
 	
 	// post render commit phase
 	async _readVisibleCurrencies() {
@@ -173,22 +188,8 @@ class DeedCreateForm extends React.Component {
 
 			const currency = this.state.currency;
 			let currencyuuid = currency.uuid;
-			let cardpromise;
 
-			if (this.state.remotewallet !== true) {
-				cardpromise = this.app.openCurrencyCard(currencyuuid);
-			}
-			else {
-				if (this.state.connection && (this.state.connection.account)) {
-					cardpromise = mvcmypwa.getCurrencyCardWithAddress(rootsessionuuid, walletuuid, currencyuuid, this.state.connection.account);
-										 // creates read-only card if necessary
-				}
-				else {
-					cardpromise = Promise.reject('remote connection is not activated');
-				}
-			}
-
-			cardpromise
+			this._openCurrencyCard(currencyuuid)
 			.then(card => {
 				if (!card)
 					throw 'no current card';
@@ -322,31 +323,34 @@ class DeedCreateForm extends React.Component {
 
 	
 	// user actions
-	_getRemoteConnectionFromRpc(rpc) {
-		let deedclient = this.app.getDeedClientObject();
-		let walletconnectclient = deedclient.getWalletConnectClient();
+	async _openCurrencyCard(currencyuuid) {
+		let mvcmypwa = this.getMvcMyPWAObject();
 
-		return walletconnectclient.getConnectionFromRpc(rpc);
-	}
-
-	_getTxConnection(feelevel) {
-		let connection = {type: 'local', feelevel: feelevel};	
+		let rootsessionuuid = this.props.rootsessionuuid;
+		let walletuuid = this.props.currentwalletuuid;
 		
-		if (this.state.remotewallet) {
-			let deedclient = this.app.getDeedClientObject();
-			let walletconnectclient = deedclient.getWalletConnectClient();
-			let walletconnection = walletconnectclient.getConnectionFromRpc(this.state.rpc);
+		let card;
 
-			connection.type = 'remote';
+		if (this.state.remotewallet !== true) {
+			card = await this.app.openCurrencyCard(currencyuuid);
+		}
+		else {
+			if (this.state.connection && (this.state.connection.account)) {
+				card = await mvcmypwa.getCurrencyCardWithAddress(rootsessionuuid, walletuuid, currencyuuid, this.state.connection.account);
+									 // creates read-only card if necessary
 
-			connection.connectionuuid = walletconnection.uuid;
-			connection.provider = walletconnection.provider;
-			connection.account = walletconnection.account;
+				// TODO: to be coherent, we should call this.app.openCard
+				// but not really usefull, since we don't use redux for cards in pwa-apps
+				// this.app.openCard(card.uuid);
+			}
+			else {
+				return Promise.reject('remote connection is not activated');
+			}
 		}
 
-		return connection;
+		return card;
 	}
-	
+
 	async onSubmit() {
 		console.log('onSubmit pressed!');
 		
