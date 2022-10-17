@@ -3,6 +3,7 @@ import Features from "@/components_/Features";
 import * as React from "react";
 import Stats from "@/components_/HomePage/Stats";
 import FuturePlan from "@/components_/HomePage/FuturePlan";
+import NewsLetter from "@/components_/Newsletter";
 
 const index = () => {
   return (
@@ -11,6 +12,7 @@ const index = () => {
       <Features />
       <Stats/>
       <FuturePlan />
+      <NewsLetter/>
     </div>
   )
 }
