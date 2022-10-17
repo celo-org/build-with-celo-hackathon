@@ -10,8 +10,7 @@ import { Provider } from "react-redux";
 import store from "@/state/index";
 import AppUpdater from "@/state/app/updater";
 import Layout from "@/components_/Layout";
-import '../styles/index.css'
-
+import "../styles/index.css";
 
 function Updaters() {
   return (
