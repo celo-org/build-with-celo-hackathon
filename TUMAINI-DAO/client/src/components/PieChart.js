@@ -25,7 +25,7 @@ const data = {
 const PieChart = () => {
   return (
     <div className="max-w-[350px] w-[100%]">
-      <Doughnut data={data} />
+      <Doughnut data={data} className="max-w-[350px] w-[100%]" />
     </div>
   );
 };

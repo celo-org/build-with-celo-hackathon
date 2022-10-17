@@ -11,7 +11,7 @@ const Navbar = () => {
                     <li className="mr-8"><Link to="/">Home</Link></li>
                     <li className="mr-8"><Link to="/proposals">Proposals</Link></li>
                     <li className="mx-5"><Link to="/community">Community</Link></li>
-                    <li className="ml-8"><Link to="/join">Join the DAO</Link></li>
+                    <li className="ml-8"><Link to="/create_proposal">Propose</Link></li>
                 </ul>
             </div>
             <div>
