@@ -1,0 +1,7 @@
+{
+  "name": "CPay-App",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

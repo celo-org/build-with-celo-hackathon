@@ -1,0 +1,33 @@
+<ion-tabs>
+
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>
+        CPay Card
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="tab1" disabled="{{!isLoggedIn}}">
+      <ion-icon name="list"></ion-icon>
+      <ion-label>History</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab2" disabled="{{!isLoggedIn}}">
+      <ion-icon name="card"></ion-icon>
+      <ion-label>Cards</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab3" disabled="{{!isLoggedIn}}">
+      <ion-icon name="cash"></ion-icon>
+      <ion-label>Transact</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab4" (click)="toggleLogin()">
+      <ion-icon name="person"></ion-icon>
+      <ion-label>Account</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+
+</ion-tabs>
