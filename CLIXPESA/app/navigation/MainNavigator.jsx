@@ -10,7 +10,7 @@ import Icon from 'react-native-remix-icon' //Fix/Add types
 import { HomeScreen, DummyScreen } from 'clixpesa/features/essentials'
 import { AllTokensScreen } from 'clixpesa/features/wallet'
 import { AccountScreen } from 'clixpesa/features/account'
-import { LoansHomeScreen } from 'clixpesa/features/microloans'
+import { LoansTabNavigator, LoanInfoScreen } from 'clixpesa/features/microloans'
 import {
   SpacesHomeScreen,
   RoscaHomeScreen,
@@ -65,6 +65,7 @@ export default function MainNavigator() {
             tempBal: route.params.tempBal,
           })}
         />
+        <MainStack.Screen name="LoanHome" component={LoanInfoScreen} />
       </MainStack.Group>
     </MainStack.Navigator>
   )
@@ -126,7 +127,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Loans"
-        component={LoansHomeScreen}
+        component={LoansTabNavigator}
         options={() => ({
           title: 'Loans',
           tabBarIcon: ({ focused }) => (
