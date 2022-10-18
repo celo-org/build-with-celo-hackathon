@@ -1,8 +1,11 @@
 import { useContext } from "react";
 import { AppContext } from "../contexts/AppContext";
+import { newKitFromWeb3 } from "@celo/contractkit";
+import Web3 from "web3";
 
 const NewProposal = () => {
     const { showModal, setShowModal } = useContext(AppContext);
+    
 
     const handleShowModal = ()=>{
         setShowModal(!showModal)
