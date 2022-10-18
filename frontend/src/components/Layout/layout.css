@@ -3,6 +3,9 @@
     flex-direction: row;
     overflow: hidden;
     position: relative;
+    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+    box-shadow:  8px 8px 16px #9e9e9e,
+                 -8px -8px 16px #ffffff;
   }
   
   .logo {
