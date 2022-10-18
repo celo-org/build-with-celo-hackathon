@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { footerlinks } from "@/data";
-import { Stack, Typography, Box, Grid } from "@mui/material";
+import { Stack, Typography, Grid } from "@mui/material";
 
 const Footer = () => {
   return (
