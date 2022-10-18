@@ -1,0 +1,30 @@
+.listcontainer {
+    display: flex;
+    flex-direction: row;
+    border-radius: 10px;
+    background: linear-gradient(145deg, #fffefe, #f4f4f4);
+    margin: 20px;
+}
+
+#question-div {
+    flex: 7;
+    padding: 10px 20px;
+
+}
+
+#question {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+#creator {
+    color: #7c7c7a;
+}
+
+#reward-div {
+    flex: 3;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+}
