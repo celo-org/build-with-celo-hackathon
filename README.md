@@ -173,3 +173,6 @@ View the [Developer Code Examples page](https://docs.celo.org/developer#quicksta
 - The whole project was bootstrapped and built upon Expo commandline interface.
 - React Native Navigation and its types were used to handle navigation between screens. The composite Navigation was used to handle drawer navigation, stack navigation and bottom navigation between screens and components. 
 - Other packages used were react-native-element-dropdown to handle dropdown between pages, expo icons were used for icons, and react-native-reanimated was used to handle animations. 
+
+
+<!-- https://youtu.be/wIxR_KMXr-s -->
