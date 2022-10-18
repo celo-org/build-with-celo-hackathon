@@ -24,7 +24,7 @@ contract Run3Token is ERC20, Ownable {
     }
 
     modifier maxSupplyWasReched (uint256 amount) {
-        require((totalSupply() + amount) >= MAX_SUPPLY, "Max supply was reached");
+        require((totalSupply() + amount) <= MAX_SUPPLY, "Max supply was reached");
         _;
     }
 

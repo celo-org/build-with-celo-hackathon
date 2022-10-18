@@ -7,7 +7,7 @@ contract Watch is ERC721, Ownable {
   uint256 tokenId = 1;
   uint8 public constant decimals = 18;
   uint256 public constant reward = 10 * (10 ** uint256(decimals));
-  address public constant run3TAddress = 0xe6cc5BB123EBf28257d2fAE9714e211cb29A7D39;
+  address public constant run3TAddress = 0x570b9f03D8Bfb024F0998eb9E8E1B42A97cA3128;
 
 
   struct TokenMetaData {
@@ -18,7 +18,7 @@ contract Watch is ERC721, Ownable {
 
   mapping(address => TokenMetaData) public ownershipRecord;
 
-  constructor(string memory name, string memory symbol) ERC721(name, symbol) {
+  constructor() ERC721("Watch RUN3T", "WR3T") {
      mintWatch(msg.sender);
   }
 
