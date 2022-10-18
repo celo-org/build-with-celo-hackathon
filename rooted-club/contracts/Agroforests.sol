@@ -1,4 +1,8 @@
 // SPDX-License-Identifier: MIT
+
+// Deployed on Celo Alfajores
+// Contract address: 0xf4A0245A29cEDAF5016B1B9C919af6E91aF307e6
+
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
