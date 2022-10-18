@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = (props) => {
     return ( 
         <div className="flex justify-around items-center bg-gray-50 shadow-lg font-open py-1 absolute top-0 z-10 w-[100%] max-w-screen">
             <div>
@@ -15,7 +15,7 @@ const Navbar = () => {
                 </ul>
             </div>
             <div>
-                <button className="py-2 px-4 text-white bg-black rounded-full">Connect Wallet</button>
+                <button  onClick={props.alama} className="py-2 px-4 text-white bg-black rounded-full">Connect Wallet</button>
             </div>
         </div>
      );
