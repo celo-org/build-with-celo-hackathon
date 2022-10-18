@@ -15,7 +15,11 @@ abstract contract Stoppable {
 
   modifier onlyInEmergency { if (stopped) _; }
 
-  function toggleStopped() internal {
-    stopped = !stopped;
+  function stop() public {
+    stopped = true;
+  }
+
+  function resume() public {
+    stopped = false;
   }
 }
