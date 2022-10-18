@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: GPLv3
 // koral.earth smart contracts
 
+// This smart contract is for demo purposes only
+// The protocol is still a WIP and this was made to show basic ideas using a smart contract
+// Specifically, this contract intentionally omits the implementation of the 
+// rules definition & plankton accomplishment tracker - an essential part of the protocol
+
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
