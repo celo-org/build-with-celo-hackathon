@@ -20,6 +20,7 @@ class RemoteWalletView extends React.Component {
 
 		this.connectionuuid = this.props.connectionuuid;
 		this.currencyuuid = this.props.currencyuuid;
+
 		
 		this.closing = false;
 
@@ -28,6 +29,9 @@ class RemoteWalletView extends React.Component {
 
 			currency: {symbol: ''},
 			currencies: [],
+
+			currencycards: [],
+			localcards: [],
 
 			connected: false,
 			rpc: null,
@@ -41,6 +45,12 @@ class RemoteWalletView extends React.Component {
 
 			address: null,
 			address_string: 'loading...',
+
+			to_address: '',
+			transfer_amount: 0,
+			credit_amount: 0,
+
+			targetcard: null,
 
 		}
 	}
@@ -59,6 +69,7 @@ class RemoteWalletView extends React.Component {
 			// wallet has been open (or closed)
 			let connection;
 
+			// view
 			this._getRemoteConnection()
 			.then(cnct => {
 				connection = cnct;
@@ -86,6 +97,20 @@ class RemoteWalletView extends React.Component {
 						address, web3providerurl,
 						address_string, web3providerurl_string});
 				}
+			})
+			.catch(err => {
+				console.log('error in RemoteWalletView.componentDidUpdate: ' + err);
+			});
+
+			// transaction part
+			this._readCurrencyCards().
+			then(cards => {
+				this._setState({currencycards: cards});
+				
+				return this._filterLocalCards(cards);
+			})			
+			.then(cards => {
+				this._setState({localcards: cards});
 			})
 			.catch(err => {
 				console.log('error in RemoteWalletView.componentDidUpdate: ' + err);
@@ -153,6 +178,65 @@ class RemoteWalletView extends React.Component {
 		}
 
 		return account_info;
+	}
+
+	async _readCurrencyCards() {
+		let mvcmypwa = this.getMvcMyPWAObject();
+
+		let rootsessionuuid = this.props.rootsessionuuid;
+		let walletuuid = this.props.currentwalletuuid;
+
+		let currencyuuid = this.currencyuuid;
+		let currency = await mvcmypwa.getCurrencyFromUUID(rootsessionuuid, currencyuuid);
+
+		var cards = [];
+
+		if (!currency || !currency.uuid)
+			return cards;
+
+		if (!walletuuid)
+			return cards;
+
+		let _currencycards = await mvcmypwa.getCurrencyCardList(rootsessionuuid, walletuuid, currency.uuid);
+
+		// enrich items
+		for (var j = 0; j < _currencycards.length; j++) {
+	
+			_currencycards[j].currency = currency;
+			_currencycards[j].currencyuuid = currency.uuid;
+
+			var _privkey = await mvcmypwa.getCardPrivateKey(rootsessionuuid, walletuuid, _currencycards[j].uuid).catch(err => {});
+			_currencycards[j].cansign = (_privkey ? true : false);
+
+			let pos = await mvcmypwa.getCurrencyPosition(rootsessionuuid, walletuuid, currency.uuid, _currencycards[j].uuid);
+		
+			if (pos !== undefined) {
+				_currencycards[j].balance_int = await pos.toInteger();
+				_currencycards[j].balance_string = await mvcmypwa.formatCurrencyAmount(rootsessionuuid, currency.uuid, pos);
+			}
+
+			let credits = await mvcmypwa.getCreditBalance(rootsessionuuid, walletuuid, _currencycards[j].uuid);
+			
+			_currencycards[j].credits = credits;
+		}
+
+		cards = _currencycards;
+
+		return cards;		
+	}
+
+	async _filterLocalCards(currencycards) {
+		let items = [];
+		let cards = (currencycards ? currencycards : []);
+
+		for (var i = 0; i < cards.length; i++) {
+			if (cards[i].cansign !== true)
+				continue;
+			
+			items.push(cards[i]);
+		}
+
+		return items;
 	}
 
 	async _readVisibleCurrencies() {
@@ -224,8 +308,14 @@ class RemoteWalletView extends React.Component {
 		let rootsessionuuid = this.props.rootsessionuuid;
 		let walletuuid = this.props.currentwalletuuid;
 
+		let app_nav_state = this.app.getNavigationState();
+		let app_nav_target = app_nav_state.target;
 
 		try {
+			var params = app_nav_target.params;
+
+			let to_address = (params.to ? params.to : null);
+			let transfer_amount = (params.amount ? params.amount : 0);
 
 			let message_text = 'This is a view of one of the address in your remote wallet. \
 					To get a full view of the content of your wallet, you must directly open\
@@ -255,6 +345,11 @@ class RemoteWalletView extends React.Component {
 				}
 			}
 
+			// read cards for this currency
+			let currencycards = await this._readCurrencyCards();
+			let localcards = await this._filterLocalCards(currencycards);
+
+			// read positions on remote wallet
 			let connected = false;
 			let address;
 			let web3providerurl;
@@ -314,10 +409,12 @@ class RemoteWalletView extends React.Component {
 			// setState
 			this._setState({message_text,
 				currency, currencies: enabled_currencies,
+				currencycards, localcards,
 				connected, rpc,
 				creditbalance, position, position_int, position_string,  
 				address, web3providerurl,
-				address_string, web3providerurl_string});
+				address_string, web3providerurl_string,
+				to_address, transfer_amount});
 		}
 		catch(e) {
 			console.log('exception in RemoteWalletView.checkNavigationState: '+ e);
@@ -369,6 +466,7 @@ class RemoteWalletView extends React.Component {
 						creditbalance, position, position_int, position_string,  
 						address, web3providerurl,
 						address_string, web3providerurl_string});
+
 				}
 			}
 		}
@@ -399,6 +497,10 @@ class RemoteWalletView extends React.Component {
 		if (currency) {
 			this.currencyuuid = currency.uuid;
 
+			// read cards for this currency
+			let currencycards = await this._readCurrencyCards();
+			let localcards = await this._filterLocalCards(currencycards);
+
 			// check if corresponding currency is set for remote
 			let config = this.app.getConfig('remotewallet');	
 
@@ -411,7 +513,7 @@ class RemoteWalletView extends React.Component {
 			}
 
 			// change state
-			this._setState({currency});
+			this._setState({currencycards, localcards, currency});
 		}
 
 		this._setState({rpc});
@@ -447,7 +549,200 @@ class RemoteWalletView extends React.Component {
 		this._changeCurrency(currency);
 	}
 
+	// loading to
+	async onSelectTargetCard(uuid) {
+		var cards = this.state.currencycards;
+		let targetcard;
+
+		for (var i = 0; i < cards.length; i++) {
+			if (uuid === cards[i].uuid) {
+				targetcard = cards[i];
+				break;
+			}
+		}
+
+		if (targetcard) {
+			let to_address = targetcard.address;
+			this._setState({to_address, targetcard});
+		}
+
+		return true;
+	}
+
+	async onLoadTo() {
+		console.log('onLoadTo pressed!');
+	}
+	
+	
 	// rendering
+	renderTransferToPart() {
+		let mvcmypwa = this.getMvcMyPWAObject();
+
+		let { to_address, credit_amount, transfer_amount } = this.state;
+
+		let transfer_disabled = (to_address && to_address.length && ((transfer_amount > 0) || (parseInt(transfer_amount) > 0) ) ? false : true);
+
+		return (
+			<div>
+			<div className="Separator">&nbsp;</div>
+
+			<div className="CurrencyCardPickLine">
+			<span className="CardAddressCol">
+			<FormGroup controlId="transferto">
+				<FormLabel>Transfer to local card</FormLabel>
+				<FormGroup className="TargetCardInput">
+					<FormControl
+						autoFocus
+						type="text"
+						value={(to_address ? to_address : '')}
+						onChange={e => this.setState({to_address: e.target.value})}
+					/>
+				</FormGroup>
+			</FormGroup>
+			</span>
+			<span className="CardPickCol">
+			{(this.state.localcards && this.state.localcards.length ?
+			<div>
+				<FormLabel>Pick card</FormLabel>
+				<DropdownButton
+				id="input-dropdown-addon"
+				title="Card"
+				onSelect={e => this.onSelectTargetCard(e)}
+				>
+					{this.state.localcards.map((item, index) => (
+						<Dropdown.Item key={item.uuid} eventKey={item.uuid} value={item.uuid}>{mvcmypwa.fitString(item.address, 12)}</Dropdown.Item>
+					))}
+				</DropdownButton>
+			</div> :
+			<></>)}
+
+			</span>
+			</div>
+
+
+			<FormGroup controlId="transaction" className="TransactionPickLine">
+					<span className="CreditCol">
+					<FormLabel># credit units</FormLabel>
+					<FormControl
+						className="CurrencyCardBalance"
+						type="text"
+						value={credit_amount}
+						onChange={e => this.setState({credit_amount: e.target.value})}
+					/>
+					</span>
+					<span className="AmountCol">
+					<FormLabel>Amount</FormLabel>
+					<FormControl
+						className="CurrencyCardBalance"
+						type="text"
+						value={transfer_amount}
+						onChange={e => this.setState({transfer_amount: e.target.value})}
+					/>
+					</span>
+					<span className="LoadCol">
+					<FormLabel>Tx</FormLabel>
+					<Button 
+					disabled={transfer_disabled}
+					onClick={this.onLoadTo.bind(this)} 
+					type="submit">
+					Load
+					</Button>
+					</span>
+
+			</FormGroup>
+
+
+			</div>		
+		);
+	}
+
+	renderTransactionPart() {
+		return (
+			<div className="Form">
+				{this.renderTransferToPart()}
+			</div>
+		);
+	}
+
+	renderWalletView() {
+		let {message_text, currency, creditbalance, position_string, address, address_string, web3providerurl, web3providerurl_string} = this.state;
+
+		return (
+			<div className="Form">
+				<FormGroup className="CurrencyCard" controlId="balance">
+				<span>
+					<FormLabel># credit units</FormLabel>
+					<FormControl
+						className="CurrencyCardBalance"
+						disabled
+						autoFocus
+						type="text"
+						value={creditbalance}
+					/>
+				</span>
+				<span>
+					<FormLabel>Balance</FormLabel>
+					<FormControl
+						className="CurrencyCardBalance"
+						disabled
+						autoFocus
+						type="text"
+						value={position_string}
+					/>
+				</span>
+				</FormGroup>
+
+				<FormGroup controlId="address">
+					<FormLabel>Address</FormLabel>
+					<FormGroup className="ClaimerCardLine">
+						<FormControl
+							className="CurrencyCardAddress"
+							disabled
+							autoFocus
+							type="text"
+							value={(address_string ? address_string : '')}
+						/>
+						<div className="ShareIcon">
+							<TextCopyIcon
+								app={this.app}
+								text={address}
+								message="address has been copied to clipboard"
+							/>
+						</div>
+					</FormGroup>
+				</FormGroup>
+
+				<FormGroup controlId="web3providerurl">
+					<FormLabel>RPC URL {(currency && currency.name ? 'for ' + currency.name : '')}</FormLabel>
+					<FormGroup className="ClaimerCardLine">
+						<FormControl
+							className="CurrencyCardAddress"
+							disabled
+							autoFocus
+							type="text"
+							value={(web3providerurl_string ? web3providerurl_string : '')}
+						/>
+						<div className="ShareIcon">
+							<TextCopyIcon
+								app={this.app}
+								text={web3providerurl}
+								message="rpc url has been copied to clipboard"
+							/>
+						</div>
+					</FormGroup>
+				</FormGroup>
+
+				<div className="TextBox">
+					{message_text}
+				</div>
+
+				{this.renderTransactionPart()}
+			</div>	
+		);
+
+	}
+
+
 	renderRemoteWalletConnection() {
 		let {rpc} = this.state;
 
@@ -495,100 +790,19 @@ class RemoteWalletView extends React.Component {
 	}
 
 
-	renderWalletView() {
-		let {currency, creditbalance, position_string, address, address_string, web3providerurl, web3providerurl_string} = this.state;
-
-		return (
-			<div className="Form">
-				<FormGroup className="CurrencyCard" controlId="balance">
-				<span>
-					<FormLabel># credit units</FormLabel>
-					<FormControl
-						className="CurrencyCardBalance"
-						disabled
-						autoFocus
-						type="text"
-						value={creditbalance}
-					/>
-				</span>
-				<span>
-					<FormLabel>Balance</FormLabel>
-					<FormControl
-						className="CurrencyCardBalance"
-						disabled
-						autoFocus
-						type="text"
-						value={position_string}
-					/>
-				</span>
-				</FormGroup>
-
-				<div>{this.connectionuuid}</div>
-
-				<FormGroup controlId="address">
-					<FormLabel>Address</FormLabel>
-					<FormGroup className="ClaimerCardLine">
-						<FormControl
-							className="CurrencyCardAddress"
-							disabled
-							autoFocus
-							type="text"
-							value={(address_string ? address_string : '')}
-						/>
-						<div className="ShareIcon">
-							<TextCopyIcon
-								app={this.app}
-								text={address}
-								message="address has been copied to clipboard"
-							/>
-						</div>
-					</FormGroup>
-				</FormGroup>
-
-				<FormGroup controlId="web3providerurl">
-					<FormLabel>RPC URL {(currency && currency.name ? 'for ' + currency.name : '')}</FormLabel>
-					<FormGroup className="ClaimerCardLine">
-						<FormControl
-							className="CurrencyCardAddress"
-							disabled
-							autoFocus
-							type="text"
-							value={(web3providerurl_string ? web3providerurl_string : '')}
-						/>
-						<div className="ShareIcon">
-							<TextCopyIcon
-								app={this.app}
-								text={web3providerurl}
-								message="rpc url has been copied to clipboard"
-							/>
-						</div>
-					</FormGroup>
-				</FormGroup>
-
-			</div>	
-		);
-
-	}
 
 	render() {
-		let {connected, rpc, message_text} = this.state;
+		let {connected} = this.state;
 
 		return(
 			<div className="Container">
 			<div className="TitleBanner">
 			<div className="Title">Remote Wallet</div>
 			</div>
-
 			{ (connected ? 
 				this.renderWalletView() :
 				this.renderCurrencyPickForm()
 			)}
-
-			<div className="TextBox">
-				{message_text}
-			</div>
-
-
 			</div>
 
 		);

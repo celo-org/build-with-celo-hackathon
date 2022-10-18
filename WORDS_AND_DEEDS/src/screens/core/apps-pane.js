@@ -60,6 +60,10 @@ class AppsPane extends React.Component {
 							if (areequal) {
 								// we are connected to a remote wallet supporting this
 								// currency's rpc and having this card address
+
+								// we connect the card
+								await mvcmydeed.connectCard(rootsessionuuid, walletuuid, deedcard.uuid, context.connection);
+								
 								context.remotewallet = true;
 							}
 							else {

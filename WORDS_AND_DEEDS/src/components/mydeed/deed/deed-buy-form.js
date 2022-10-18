@@ -93,7 +93,7 @@ class DeedBuyForm extends React.Component {
 		let connection = {type: 'local', feelevel: feelevel};	
 		
 		if (this.state.remotewallet) {
-			connection = this.app.getDeedClientObject().getTxConnection(this.state.rpc);
+			connection = this.app.getDeedClientObject().getTxConnection(feelevel, this.state.rpc);
 		}
 
 		return connection;
@@ -255,8 +255,6 @@ class DeedBuyForm extends React.Component {
 		let {currency, saleprice, remotewallet, rpc, deedcard, signingkey} =this.state;
 
 		let remoteaccount;
-
-		let localcard = deedcard;
 
 		this._setState({processing: true});
 

@@ -77,12 +77,28 @@ class DeedCreateForm extends React.Component {
 		let connection = {type: 'local', feelevel: feelevel};	
 		
 		if (this.state.remotewallet) {
-			connection = this.app.getDeedClientObject().getTxConnection(this.state.rpc);
+			connection = this.app.getDeedClientObject().getTxConnection(feelevel, this.state.rpc);
 		}
 
 		return connection;
 	}
 	
+	async _canCompleteTransaction(carduuid, tx_fee, feelevel) {
+		if (this.state.remotewallet) {
+			//TODO: could do a check based on a read-only card
+			return true;
+		}
+
+		let mvcmypwa = this.getMvcMyPWAObject();
+
+		let rootsessionuuid = this.props.rootsessionuuid;
+		let walletuuid = this.props.currentwalletuuid;
+
+		var canspend = await mvcmypwa.canCompleteTransaction(rootsessionuuid, walletuuid, carduuid, tx_fee, feelevel).catch(err => {});
+
+		return canspend;
+	}
+
 	
 	// post render commit phase
 	async _readVisibleCurrencies() {
@@ -368,8 +384,6 @@ class DeedCreateForm extends React.Component {
 
 		let remoteaccount;
 
-		let localcard = currentcard;
-
 		this._setState({processing: true});
 
 		try {
@@ -398,12 +412,6 @@ class DeedCreateForm extends React.Component {
 
 				if (!remoteaccount) {
 					this.app.alert('You need to be connected to a remote wallet');
-					this._setState({processing: false});
-					return;
-				}
-
-				if (!localcard) {
-					this.app.alert('You need to have a local card for this currency');
 					this._setState({processing: false});
 					return;
 				}
@@ -440,7 +448,6 @@ class DeedCreateForm extends React.Component {
 					}
 
 					currentcard = card;
-					localcard = card;
 				}
 				else {
 					this.app.alert('You need to provide your private key for ' + currency.name + ' in order to sign and fund your deed');
@@ -477,14 +484,7 @@ class DeedCreateForm extends React.Component {
 				let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, card.uuid, tx_fee);
 				let connection = this._getTxConnection(_feelevel);
 
-				let canspend;
-				
-				if (remotewallet === true) {
-					canspend = true; //TODO: do a check based on a read-only card
-				}
-				else {
-					canspend = await mvcmypwa.canCompleteTransaction(rootsessionuuid, walletuuid, card.uuid, tx_fee, _feelevel).catch(err => {});
-				}
+				let canspend = await this._canCompleteTransaction(card.uuid, tx_fee, _feelevel).catch(err => {});
 		
 				if (!canspend) {
 					if (tx_fee.estimated_fee.execution_credits > tx_fee.estimated_fee.max_credits) {
@@ -528,18 +528,8 @@ class DeedCreateForm extends React.Component {
 			let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, currentcard.uuid, tx_fee);
 			let connection = this._getTxConnection(_feelevel);
 
-			let canspend;
-				
-			if (remotewallet === true) {
-				canspend = true; //TODO: do a check based on a read-only card
-			}
-			else {
-				canspend = await mvcmypwa.canCompleteTransaction(rootsessionuuid, walletuuid, currentcard.uuid, tx_fee, _feelevel)
-				.catch(err => {
-					console.log('error in DeedCreateForm.onSubmit: ' + err);
-				});
-			}
-	
+			let canspend = await this._canCompleteTransaction(currentcard.uuid, tx_fee, _feelevel).catch(err => {});
+
 			if (!canspend) {
 				if (tx_fee.estimated_fee.execution_credits > tx_fee.estimated_fee.max_credits) {
 					this.app.alert('The execution of this transaction is too large: ' + tx_fee.estimated_fee.execution_units + ' credit units.');
@@ -576,9 +566,9 @@ class DeedCreateForm extends React.Component {
 
 			// add metadata as a clause
 			const metadata_clause = {subtype: 'metadata', title, description, external_url, time: Date.now()};
-			const signingcard = (remotewallet !== true ? currentcard : localcard); // sign clause with local currency card
-			metadata_clause.signature = await mvcmypwa.signString(rootsessionuuid, walletuuid, signingcard.uuid, JSON.stringify(metadata_clause));
-			metadata_clause.signer = signingcard.address;
+
+			await mvcmydeed.signClauseMetaData(rootsessionuuid, walletuuid, currency.uuid, minter, deed, metadata_clause);
+
 
 			// need a higher feelevel than standard feelevel
 			tx_fee = {};
@@ -587,7 +577,7 @@ class DeedCreateForm extends React.Component {
 
 			_feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, currentcard.uuid, tx_fee);
 
-			const metadata_txhash = await mvcmydeed.registerClause(rootsessionuuid, walletuuid, currency.uuid, minter, deed, metadata_clause, connection)
+			const metadata_txhash = await mvcmydeed.registerClause(rootsessionuuid, walletuuid, currency.uuid, minter, deed, metadata_clause, _feelevel)
 			.catch(err => {
 				console.log('error in DeedCreateForm.onSubmit: ' + err);
 				stop = true;
@@ -639,7 +629,9 @@ class DeedCreateForm extends React.Component {
 					if (connection && connection.account) {
 						// we are connected to a remote wallet supporting this
 						// currency's rpc
-						remotewallet = true;
+						if (curr_rpc_config.remotecreate !== false) {
+							remotewallet = true;
+						}
 					}
 				}
 			}

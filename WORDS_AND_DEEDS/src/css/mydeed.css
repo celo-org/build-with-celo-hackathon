@@ -41,3 +41,43 @@
 	font-style: italic;
 	text-align: right;
   }
+
+ /* Remote Wallet */
+  .CurrencyCardPickLine {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+  }
+
+  span.CardAddressCol {
+	width: 80vw;
+	margin-right: 10px;
+  }
+
+  .TargetCardInput [
+	font-size: xx-small;
+  ]
+  
+  span.CardPickCol {
+	width: 20vw;
+  }
+
+  .TransactionPickLine {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+  }
+  
+  span.CreditCol {
+	width: 40vw;
+	margin-right: 10px;
+  }
+
+  span.AmountCol {
+	width: 40vw;
+	margin-right: 10px;
+  }
+
+ span.LoadCol {
+	width: 20vw;
+  }

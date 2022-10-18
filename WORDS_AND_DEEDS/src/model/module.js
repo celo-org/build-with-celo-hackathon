@@ -179,6 +179,14 @@ var Module = class {
 		return (_privkey ? true : false);
 	}
 
+	async _isCardConnected(session, wallet, card) {
+		var cardsession = card._getSession();
+
+		var curr_connection = cardsession.getSessionVariable('remote_connection');
+
+		return (curr_connection ? true : false);
+	}
+
 	async _setConnectedCardSession(session, wallet, card, connection) {
 		var global = this.global;
 		var _apicontrollers = this._getClientAPI();
@@ -192,11 +200,14 @@ var Module = class {
 		if (card_address != connection.account)
 			return Promise.reject('connection account does not match card: ' + card_address);
 
-		var old_connection = cardsession.getSessionVariable('remote_connection');
+		var curr_connection = cardsession.getSessionVariable('remote_connection');
+
+		if (curr_connection)
+			return cardsession;
 
 		cardsession.setSessionVariable('remote_connection', connection);
 
-		var cardscheme = cardsession.getScheme();
+		var cardscheme = card.getScheme();
 
 		if (cardscheme.isRemote() === true) {
 			// remote (or at least for authkey)
@@ -273,7 +284,7 @@ var Module = class {
 	//
 	// Deeds
 	//
-	async _getDeedSigningCard(session, wallet, currency, minter, deed, connection) {
+/*	async _getDeedSigningCard(session, wallet, currency, minter, deed, connection) {
 		var card;
 
 		var mvcpwa = this._getMvcPWAObject();
@@ -377,7 +388,7 @@ var Module = class {
 		signing.signer = card.getAddress();
 
 		return signing
-	}
+	}*/
 
 	async _getMonitoredRemoteWalletSession(session, wallet, currency, connection) {
 		var global = this.global;
@@ -817,7 +828,7 @@ var Module = class {
 		}
 	}
 
-	async _registerClause(session, wallet, currency, minter, deed, clause, connection) {
+/*	async _registerClause(session, wallet, currency, minter, deed, clause, connection) {
 		var global = this.global;
 		var _apicontrollers = this._getClientAPI();
 
@@ -874,7 +885,7 @@ var Module = class {
 		return txhash;
 	}
 
-	async registerClause(sessionuuid, walletuuid, currencyuuid, minter, deed, clause, connection) {
+ 	async registerClause(sessionuuid, walletuuid, currencyuuid, minter, deed, clause, connection) {
 		var mvcpwa = this._getMvcPWAObject();
 
 		if (!connection || !connection.type || (connection.type == 'local')) {
@@ -912,6 +923,166 @@ var Module = class {
 
 			return this._registerClause(session, wallet, currency, minter, deed, clause, connection);
 		}
+	} */
+
+	async signClauseMetaData(sessionuuid, walletuuid, currencyuuid, minter, deed, metadata_clause) {
+		if (!sessionuuid)
+			return Promise.reject('session uuid is undefined');
+		
+		if (!walletuuid)
+			return Promise.reject('wallet uuid is undefined');
+		
+		if (!currencyuuid)
+			return Promise.reject('currency uuid is undefined');
+		
+		
+		var global = this.global;
+		var _apicontrollers = this._getClientAPI();
+		var mvcpwa = this._getMvcPWAObject();
+
+		var session = await _apicontrollers.getSessionObject(sessionuuid);
+		
+		if (!session)
+			return Promise.reject('could not find session ' + sessionuuid);
+		
+		var wallet = await _apicontrollers.getWalletFromUUID(session, walletuuid);
+		
+		if (!wallet)
+			return Promise.reject('could not find wallet ' + walletuuid);
+	
+		var currency = await mvcpwa.getCurrencyFromUUID(sessionuuid, currencyuuid);
+
+		if (!currency)
+			return Promise.reject('could not find currency ' + currencyuuid);
+	
+		var card;
+		if (deed.owner) {
+			// clause can be added by a subsequent owner different from the creator
+			card = await this._getDeedOwningCard(session, wallet, currency, minter, deed);
+		}
+		else {
+			// we are creating the deed and probably adding the first metadata clause
+			card = await mvcpwa._getMinterCard(session, wallet, currency, minter);
+		}
+
+		if (!card)
+			return Promise.reject('could not find minter card');
+
+		var canSign = await this.canCardSign(sessionuuid, walletuuid, card.uuid);
+		var signingcard;
+
+		if (canSign) {
+			signingcard = card;
+		}
+		else {
+			var isconnected = this._isCardConnected(session, wallet, card);
+
+			if (!isconnected)
+				return Promise.reject('card is not connected to sign clauses transactions: ' + card.address);
+
+			// TODO: replace when remote wallet will provide ability to sign string
+
+			// we use the currency card
+			signingcard = await mvcpwa._getCurrencyCard(session, wallet, currency);
+
+			if (!signingcard) {
+				// we create a currency card on the fly
+				let _privatekey = await mvcpwa.generatePrivateKey(sessionuuid);
+				signingcard = await mvcpwa.createCurrencyCard(sessionuuid, walletuuid, currencyuuid, _privatekey);
+			}
+		}
+
+		metadata_clause.signature = await mvcpwa.signString(sessionuuid, walletuuid, signingcard.uuid, JSON.stringify(metadata_clause));
+		metadata_clause.signer = signingcard.address;
+
+		return metadata_clause;
+	}
+
+	async registerClause(sessionuuid, walletuuid, currencyuuid, minter, deed, clause, feelevel = null) {
+		if (!sessionuuid)
+			return Promise.reject('session uuid is undefined');
+		
+		if (!walletuuid)
+			return Promise.reject('wallet uuid is undefined');
+		
+		if (!currencyuuid)
+			return Promise.reject('currency uuid is undefined');
+		
+		
+		var global = this.global;
+		var _apicontrollers = this._getClientAPI();
+		var mvcpwa = this._getMvcPWAObject();
+
+		var session = await _apicontrollers.getSessionObject(sessionuuid);
+		
+		if (!session)
+			return Promise.reject('could not find session ' + sessionuuid);
+		
+		var wallet = await _apicontrollers.getWalletFromUUID(session, walletuuid);
+		
+		if (!wallet)
+			return Promise.reject('could not find wallet ' + walletuuid);
+	
+		var currency = await mvcpwa.getCurrencyFromUUID(sessionuuid, currencyuuid);
+
+		if (!currency)
+			return Promise.reject('could not find currency ' + currencyuuid);
+	
+		var card;
+		if (deed.owner) {
+			// clause can be added by a subsequent owner different from the creator
+			card = await this._getDeedOwningCard(session, wallet, currency, minter, deed);
+		}
+		else {
+			// we are creating the deed and probably adding the first metadata clause
+			card = await mvcpwa._getMinterCard(session, wallet, currency, minter);
+		}
+
+		if (!card)
+			return Promise.reject('could not find minter card');
+	
+		// get proper session to access erc21token for currency
+		var childsession;
+		var fromaccount;
+
+		var canSign = await this.canCardSign(sessionuuid, walletuuid, card.uuid);
+
+		if (canSign) {
+			childsession = await mvcpwa._getMonitoredERC721TokenSession(session, wallet, currency);
+			fromaccount = card._getSessionAccountObject();
+		}
+		else {
+			var isconnected = this._isCardConnected(session, wallet, card);
+
+			if (!isconnected)
+				return Promise.reject('card is not connected to send transactions: ' + card.address);
+
+			childsession = card._getSession();
+			fromaccount = card._getAccountObject(); // read-only card
+		}
+	
+		// get contract
+		var erc721token = await mvcpwa._getERC721TokenObject(childsession, currency, minter);
+
+		var tokenid = deed.tokenid;
+
+		var contentstring = JSON.stringify(clause);
+
+		var ethereumnodeaccessmodule = global.getModuleObject('ethereum-node-access');
+
+		var from_card_scheme = card.getScheme();
+
+		var ethereumtransaction = ethereumnodeaccessmodule.getEthereumTransactionObject(childsession, fromaccount);
+		
+		// fee
+		var fee = await _apicontrollers.createSchemeFee(from_card_scheme, feelevel);
+
+		ethereumtransaction.setGas(fee.gaslimit);
+		ethereumtransaction.setGasPrice(fee.gasPrice);
+
+		const txhash = await erc721token.registerRecord(tokenid, contentstring, ethereumtransaction);
+
+		return txhash;
 	}
 
 	//

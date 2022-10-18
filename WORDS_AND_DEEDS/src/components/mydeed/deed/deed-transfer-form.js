@@ -93,10 +93,26 @@ class DeedTransferForm extends React.Component {
 		let connection = {type: 'local', feelevel: feelevel};	
 		
 		if (this.state.remotewallet) {
-			connection = this.app.getDeedClientObject().getTxConnection(this.state.rpc);
+			connection = this.app.getDeedClientObject().getTxConnection(feelevel, this.state.rpc);
 		}
 
 		return connection;
+	}
+
+	async _canCompleteTransaction(carduuid, tx_fee, feelevel) {
+		if (this.state.remotewallet) {
+			//TODO: could do a check based on a read-only card
+			return true;
+		}
+
+		let mvcmypwa = this.getMvcMyPWAObject();
+
+		let rootsessionuuid = this.props.rootsessionuuid;
+		let walletuuid = this.props.currentwalletuuid;
+
+		var canspend = await mvcmypwa.canCompleteTransaction(rootsessionuuid, walletuuid, carduuid, tx_fee, feelevel).catch(err => {});
+
+		return canspend;
 	}
 
 	async _getDeedOwningCard(currencyuuid, minter, deed) {
@@ -257,8 +273,6 @@ class DeedTransferForm extends React.Component {
 
 		let remoteaccount;
 
-		let localcard = deedcard;
-
 		this._setState({processing: true});
 
 		try {
@@ -280,12 +294,6 @@ class DeedTransferForm extends React.Component {
 
 				if (!remoteaccount) {
 					this.app.alert('You need to be connected to a remote wallet');
-					this._setState({processing: false});
-					return;
-				}
-
-				if (!localcard) {
-					this.app.alert('You need to have a local card for this currency');
 					this._setState({processing: false});
 					return;
 				}
@@ -336,14 +344,7 @@ class DeedTransferForm extends React.Component {
 			let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, deedcard.uuid, tx_fee);
 			let connection = this._getTxConnection(_feelevel);
 
-			let canspend;
-
-			if (remotewallet === true) {
-				canspend = true; //TODO: do a check based on a read-only card
-			}
-			else {
-				canspend = await mvcmypwa.canCompleteTransaction(rootsessionuuid, walletuuid, deedcard.uuid, tx_fee, _feelevel).catch(err => {});
-			}
+			let canspend = await this._canCompleteTransaction(deedcard.uuid, tx_fee, _feelevel).catch(err => {});
 
 			if (!canspend) {
 				if (tx_fee.estimated_fee.execution_credits > tx_fee.estimated_fee.max_credits) {

@@ -85,11 +85,28 @@ class ClauseCreateForm extends React.Component {
 		let connection = {type: 'local', feelevel: feelevel};	
 		
 		if (this.state.remotewallet) {
-			connection = this.app.getDeedClientObject().getTxConnection(this.state.rpc);
+			connection = this.app.getDeedClientObject().getTxConnection(feelevel, this.state.rpc);
 		}
 
 		return connection;
 	}
+
+	async _canCompleteTransaction(carduuid, tx_fee, feelevel) {
+		if (this.state.remotewallet) {
+			//TODO: could do a check based on a read-only card
+			return true;
+		}
+
+		let mvcmypwa = this.getMvcMyPWAObject();
+
+		let rootsessionuuid = this.props.rootsessionuuid;
+		let walletuuid = this.props.currentwalletuuid;
+
+		var canspend = await mvcmypwa.canCompleteTransaction(rootsessionuuid, walletuuid, carduuid, tx_fee, feelevel).catch(err => {});
+
+		return canspend;
+	}
+
 
 	async _getDeedOwningCard(currencyuuid, minter, deed) {
 		let context = await this.app.getVariable('AppsPane').getDeedCardContext(currencyuuid, minter, deed);
@@ -333,8 +350,6 @@ class ClauseCreateForm extends React.Component {
 
 		let remoteaccount;
 
-		let localcard = deedcard;
-
 		this._setState({processing: true});
 
 		try {
@@ -364,12 +379,6 @@ class ClauseCreateForm extends React.Component {
 
 				if (!remoteaccount) {
 					this.app.alert('You need to be connected to a remote wallet');
-					this._setState({processing: false});
-					return;
-				}
-
-				if (!localcard) {
-					this.app.alert('You need to have a local card for this currency');
 					this._setState({processing: false});
 					return;
 				}
@@ -425,7 +434,7 @@ class ClauseCreateForm extends React.Component {
 			var feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, deedcard.uuid, tx_fee);
 			let connection = this._getTxConnection(feelevel);
 
-			var canspend = await mvcmypwa.canCompleteTransaction(rootsessionuuid, walletuuid, deedcard.uuid, tx_fee, feelevel).catch(err => {});
+			var canspend = await this._canCompleteTransaction(deedcard.uuid, tx_fee, feelevel).catch(err => {});
 	
 			if (!canspend) {
 				if (tx_fee.estimated_fee.execution_credits > tx_fee.estimated_fee.max_credits) {
@@ -443,16 +452,9 @@ class ClauseCreateForm extends React.Component {
 			// register clause
 			const article_clause = {subtype: 'article', header, content, time: Date.now()};
 
-/* 			const signingcard = (remotewallet !== true ? currentcard : localcard); // sign clause with local currency card
-			article_clause.signature = await mvcmypwa.signString(rootsessionuuid, walletuuid, signingcard.uuid, JSON.stringify(article_clause));
-			article_clause.signer = signingcard.address; */
+			await mvcmydeed.signClauseMetaData(rootsessionuuid, walletuuid, currency.uuid, minter, deed, article_clause);
 
-			const signing = await mvcmydeed.signDeedString(rootsessionuuid, walletuuid, currency.uuid, minter, deed, JSON.stringify(article_clause), connection);
-			article_clause.signature = signing.signature;
-			article_clause.signer = signing.signer;
-
-
-			const clause_txhash = await mvcmydeed.registerClause(rootsessionuuid, walletuuid, currency.uuid, minter, deed, article_clause, connection)
+			const clause_txhash = await mvcmydeed.registerClause(rootsessionuuid, walletuuid, currency.uuid, minter, deed, article_clause, feelevel)
 			.catch(err => {
 				console.log('error in ClauseCreateForm.onSubmit: ' + err);
 			});
