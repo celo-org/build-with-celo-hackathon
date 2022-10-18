@@ -79,15 +79,18 @@ export default function HomeScreen({ navigation }) {
         <Box mt="2" bg="#fff" width="95%" rounded="2xl" shadow="none">
           <HStack justifyContent="space-between">
             <Stack mx="4" my="3">
-              <Text _light={{ color: 'muted.700' }}>Actual Balance (KES)</Text>
+              <Text _light={{ color: 'muted.700' }}>Actual Balance (cUSD)</Text>
               <Heading size="xl" letterSpacing="0.5" _light={{ color: 'muted.800' }}>
                 {balances
-                  ? (balances[tokenAddrs[1]] * 120.75).toFixed(2)
-                  : tempBal[tokenAddrs[1]] * 120.75}
+                  ? (balances[tokenAddrs[1]] * 1.0).toFixed(2)
+                  : tempBal[tokenAddrs[1]] * 1.0}
               </Heading>
               <Text _light={{ color: 'muted.700' }} lineHeight="sm">
-                ≈ {balances ? (balances[tokenAddrs[1]] * 1.0).toFixed(2) : tempBal[tokenAddrs[1]]}{' '}
-                cUSD
+                ≈{' '}
+                {balances
+                  ? (balances[tokenAddrs[1]] * 120.75).toFixed(2)
+                  : tempBal[tokenAddrs[1]] * 120.75}{' '}
+                KES
               </Text>
             </Stack>
             <Pressable

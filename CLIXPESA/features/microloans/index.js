@@ -1,1 +1,2 @@
-export { default as LoansHomeScreen } from './LoansHomeScreen'
+export { default as LoansTabNavigator } from './LoansTabNavigator'
+export { default as LoanInfoScreen } from './LoanInfoScreen'
