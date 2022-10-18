@@ -8,6 +8,7 @@ contract Cotisation {
     uint numberOfGroups = 0;
     uint numberOfMembers = 0;
 
+    //defining the needed structs 
     struct Tontine {
         address payable owner;
         uint tontineId;
@@ -80,9 +81,9 @@ contract Cotisation {
         );
 
         numberOfMembers++;
-        //After creating a member, we shall add him to a group
     }
 
+    
     function addMemberToGroup (uint _memberId, uint _groupId) public {
         groupMembers[_memberId] = _groupId;
         groups[_groupId].numberOfGroupMembers++;
@@ -97,7 +98,9 @@ contract Cotisation {
             groupId
         );
     }
-
+    
+    
+    //we will modify this function to show all members for a specific tontine
     function listMembersOfTontine(uint _tontineId) public view returns (uint) {
         uint groupId = tontineGroup[_tontineId];
         return groups[groupId].numberOfGroupMembers;
