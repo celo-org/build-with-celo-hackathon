@@ -1,10 +1,43 @@
 import { useContext } from "react";
 import { AppContext } from "../contexts/AppContext";
 import { newKitFromWeb3 } from "@celo/contractkit";
+import { useState,useEffect } from "react";
 import Web3 from "web3";
-
+let kit;
+let contract;
 const NewProposal = () => {
     const { showModal, setShowModal } = useContext(AppContext);
+    const [useraccount,setUserAccount] = useState(null);
+    const connectWallet  =  async function (){
+   
+      if (window.celo) {
+        
+        try {
+          await window.celo.enable()
+         
+    
+          const web3 = new Web3(window.celo);
+          kit = newKitFromWeb3(web3);
+    
+          const accounts = await kit.web3.eth.getAccounts();
+          kit.defaultAccount = accounts[0];
+          setUserAccount(kit.defaultAccount);
+          
+    
+        } catch (error) {
+          notification(`⚠️ ${error}.`)
+        }
+      } else {
+        notification("⚠️ Please install the CeloExtensionWallet.")
+      }
+    }
+    const notification =(text) =>{
+      alert(text)
+    }
+    //onpage reload
+    useEffect(()=>{
+      connectWallet();
+    },[]);
     
 
     const handleShowModal = ()=>{
@@ -21,7 +54,7 @@ const NewProposal = () => {
         </div>
         <div>
           <label className="text-xl">proposer</label>
-          <h4 className="">your Address</h4>
+          <h4 className="">{useraccount}</h4>
         </div>
         <div className="flex flex-col mt-[10px]">
           <label className="text-xl">Proposal Title</label>
