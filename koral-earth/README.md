@@ -26,24 +26,12 @@ Our project also helps with the distribution of funds via Celo to the Global Sou
 **Basic Functionality for the hackathon:**
 
 - carbon footprint calculation tooling that sends privacy-enabled identifiable data on-chain
-- present users with a list of carbon credits existing on a carbon-neutral on-chain like Celo
 - ability to pay for offsetting using a celo-enabled payment channel
+- ability to claim rewards using the Koral Protocol deployed on Celo
 
 **Plan for the future** 
 
-We intend to create an efficient, reliable, trustworthy and transparent carbon offsetting tooling to help corporate clients and individuals to reach their voluntary and regulatory commitments related to net-zero. As such, we see that we'd be building the following:
-
-- Aggregate carbon credits and their projects (based on the metadata they contain); present them as offset offerings to users. Think bundles, subscriptions, packages, auctioning.
-
-- Create carbon footprint trackers for individuals/businesses and store data privately either on-chain or on a de-storage. Think OpenMRV, Aztec, Ceramic + Lit Protocol, etc.
-
-- Collector SDKs for existing carbon footprint tracking apps to collect data to be stored on-chain; 
-
-- Automation toolings to put businesses ahead of the carbon offsetting curve. E.g. offsetting footprints before they’re created.
-
-- Auditing toolings to give businesses an edge in compliance
-
-- NFTs as a proof of offset to give individuals access to real-world green loyalty programs
+We intend to create an efficient, reliable, trustworthy and transparent sets of toolings to help corporate clients and individuals to reach their voluntary and regulatory commitments related to net-zero through the Koral Protocol.
 
 #### URLs
 List any URLs relevant to demonstrating your prototype

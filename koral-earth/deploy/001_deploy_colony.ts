@@ -4,7 +4,7 @@ const contractName = 'Colony';
 
 async function deployer(hre: HardhatRuntimeEnvironment) {
   const [ownerAddress] = await hre.getUnnamedAccounts();
-  console.log('ownerAddress', ownerAddress);
+  
   const { deploy: deployContract } = hre.deployments;
 
   const colony = await deployContract(contractName, {
