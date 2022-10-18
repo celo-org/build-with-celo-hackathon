@@ -1,11 +1,11 @@
-import Head from "next/head";
-import { FC, PropsWithChildren } from "react";
+import Head from 'next/head';
+import { FC, PropsWithChildren } from 'react';
 
-type Props = {
+type Props = PropsWithChildren<{
   title?: string;
-} & PropsWithChildren;
+}>;
 
-export const Frame: FC<Props> = ({ children, title = "Koral Earth" }) => (
+export const Frame: FC<Props> = ({ children, title = 'Koral Earth' }) => (
   <>
     <Head>
       <title>{title}</title>
@@ -14,4 +14,4 @@ export const Frame: FC<Props> = ({ children, title = "Koral Earth" }) => (
     </Head>
     {children}
   </>
-)
+);
