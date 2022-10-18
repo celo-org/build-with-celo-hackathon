@@ -17,10 +17,12 @@ import { faWallet, faArrowLeft, faRefresh } from '@fortawesome/free-solid-svg-ic
 import * as Clipboard from 'expo-clipboard'
 import WebView from 'react-native-webview'
 import { useRun3T } from '../../hooks'
+import { useWatch } from '../../hooks/useWatch'
 
 export default function Home() {
   const { walletWithProvider } = useWalletProvider()
-  const { mintRun3Token, abi } = useRun3T()
+  const { getWatchDataByUser, watchData } = useWatch()
+  const { mintRun3Token, abi, run3TAddress } = useRun3T()
   const [visibleTooltip, setVisibleTooltip] = useState<boolean>(false)
   const [visibleTooltipRun3, setVisibleTooltipRun3] = useState<boolean>(false)
   const [celoBalance, setCeloBalance] = useState<string>('')
@@ -37,6 +39,10 @@ export default function Home() {
   }
 
   useEffect(() => {
+    getWatchDataByUser()
+  }, [])
+
+  useEffect(() => {
     if (shouldRefresh) {
       const getBalance = async () => {
         const value = await walletWithProvider.getBalance()
@@ -46,9 +52,9 @@ export default function Home() {
 
       const getRun3TBalance = async () => {
         try {
-          const run3tContract = new ethers.Contract('0x25cD75A13d91AA792b18F593E0a337E23a774bAe', abi, walletWithProvider)
+          const run3tContract = new ethers.Contract(run3TAddress, abi, walletWithProvider)
           const balance = await run3tContract?.balanceOf(walletWithProvider.address)
-          const formatBalance = Number(ethers.utils.formatEther(balance)).toFixed(2)
+          const formatBalance = ethers.utils.formatEther(balance)
           setRun3TBalance(formatBalance)
         } catch (e) {
           console.log('Error', e)
@@ -59,8 +65,6 @@ export default function Home() {
       setShouldRefresh(false)
     }
   }, [shouldRefresh])
-
-  //0x25cD75A13d91AA792b18F593E0a337E23a774bAe RUN3T address
 
   if (showWebView)
     return (
@@ -154,6 +158,11 @@ export default function Home() {
               Your will receive 100 RUN3T soon
             </Tooltip>
           )}
+        />
+        <Divider />
+        <ListItem
+          title={`${watchData?.name || 'Press Refresh to get this NFT'}`}
+          accessoryLeft={() => <Avatar style={styles.celoLogo} source={require('../../../assets/Reloj_verde.png')} />}
         />
         <Divider />
       </View>

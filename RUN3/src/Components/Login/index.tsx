@@ -26,7 +26,7 @@ global.Buffer = global.Buffer || Buffer
 const resolvedRedirectUrl = Linking.createURL('web3auth', {})
 
 export default function Login({ navigation }: { navigation: any }) {
-  const { setWalletWithProvider } = useWalletProvider()
+  const { setWalletWithProvider, setProvider } = useWalletProvider()
 
   const login = async () => {
     try {
@@ -49,7 +49,7 @@ export default function Login({ navigation }: { navigation: any }) {
         const provider = new CeloProvider(NET_PROVIDER)
         await provider.ready
         const walletWithProvider = new CeloWallet(state.privKey, provider)
-
+        setProvider(provider)
         setWalletWithProvider(walletWithProvider)
         await AsyncStorage.setItem('wallet', JSON.stringify(walletWithProvider))
         navigation.replace('home')

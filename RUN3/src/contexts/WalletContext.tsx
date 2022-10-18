@@ -5,8 +5,12 @@ import { useWallet, WalletWithProvider } from '../hooks/useWallet'
 const WalletContext = React.createContext<WalletWithProvider>({} as any)
 
 export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
-  const { walletWithProvider, setWalletWithProvider } = useWallet()
-  return <WalletContext.Provider value={{ walletWithProvider, setWalletWithProvider }}>{children}</WalletContext.Provider>
+  const { walletWithProvider, setWalletWithProvider, provider, setProvider } = useWallet()
+  return (
+    <WalletContext.Provider value={{ walletWithProvider, setWalletWithProvider, provider, setProvider }}>
+      {children}
+    </WalletContext.Provider>
+  )
 }
 
 export const useWalletProvider = () => {

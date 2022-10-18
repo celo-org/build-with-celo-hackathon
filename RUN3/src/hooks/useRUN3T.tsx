@@ -6,9 +6,9 @@ import { FAKE_KEY, NET_PROVIDER } from 'react-native-dotenv'
 
 export const useRun3T = () => {
   const [run3Contract, setRun3Contract] = useState<Contract>()
-
+  const run3TAddress = '0x570b9f03D8Bfb024F0998eb9E8E1B42A97cA3128'
   const abi = [
-    'function mint(address recipient, uint256 amount)',
+    'function mintRun3T(address recipient, uint256 amount)',
     'function balanceOf(address owner) view returns (uint256)',
   ]
 
@@ -17,7 +17,7 @@ export const useRun3T = () => {
       const provider = new CeloProvider(NET_PROVIDER)
       await provider.ready
       const signer = new ethers.Wallet(FAKE_KEY, provider)
-      const run3tContract = new ethers.Contract('0x25cD75A13d91AA792b18F593E0a337E23a774bAe', abi, signer)
+      const run3tContract = new ethers.Contract(run3TAddress, abi, signer)
 
       setRun3Contract(run3tContract)
     }
@@ -36,8 +36,8 @@ export const useRun3T = () => {
       await provider.ready
       const signer = new CeloWallet(FAKE_KEY, provider)
       const parsedUnits = ethers.utils.parseUnits('100', 18)
-      const estimatedGas = await run3Contract?.estimateGas.mint(address, parsedUnits)
-      const mintTxUnsigned = await run3Contract?.populateTransaction.mint(address, parsedUnits)
+      const estimatedGas = await run3Contract?.estimateGas.mintRun3T(address, parsedUnits)
+      const mintTxUnsigned = await run3Contract?.populateTransaction.mintRun3T(address, parsedUnits)
       if (mintTxUnsigned) {
         mintTxUnsigned.gasLimit = estimatedGas
         mintTxUnsigned.gasPrice = await provider.getGasPrice()
@@ -52,5 +52,5 @@ export const useRun3T = () => {
     }
   }
 
-  return { mintRun3Token, getRun3TokenBalanceByOwner, abi }
+  return { mintRun3Token, getRun3TokenBalanceByOwner, abi, run3TAddress }
 }
