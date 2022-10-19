@@ -6,6 +6,12 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./WalletFactory.sol";
 
 contract Wallet is Ownable {
+    // address public owner = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
+
+    function owner() public pure override returns (address) {
+        return 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266;
+    }
+
     function version() public pure returns (string memory) {
         return "v1.0.0";
     }
