@@ -5,8 +5,28 @@ import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
   {
-    path: 'tabs',
-    component: TabsPage,}
+    path: '',
+    component: TabsPage,
+    children: [
+      {
+        path: 'history',
+        loadChildren: () => import('../history/history.module').then( m => m.HistoryPageModule)
+      },
+      {
+        path: 'card',
+        loadChildren: () => import('../card/card.module').then( m => m.CardPageModule)
+      },
+      {
+        path: 'transact',
+        loadChildren: () => import('../transact/transact.module').then( m => m.TransactPageModule)
+      },
+      {
+        path: '',
+        redirectTo: '/tabs/history',
+        pathMatch: 'full'
+      }
+    ]
+  },
 ];
 
 @NgModule({

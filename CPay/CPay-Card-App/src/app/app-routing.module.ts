@@ -24,18 +24,6 @@ const routes: Routes = [
     loadChildren: () => import('./account/reset/reset.module').then( m => m.ResetPageModule)
   },
   {
-    path: 'history',
-    loadChildren: () => import('./manager/history/history.module').then( m => m.HistoryPageModule)
-  },
-  {
-    path: 'cards',
-    loadChildren: () => import('./manager/cards/cards.module').then( m => m.CardsPageModule)
-  },
-  {
-    path: 'transact',
-    loadChildren: () => import('./manager/transact/transact.module').then( m => m.TransactPageModule)
-  },
-  {
     path: 'tabs',
     loadChildren: () => import('./manager/tabs/tabs.module').then( m => m.TabsPageModule)
   },
