@@ -9,6 +9,7 @@ import CreateProposal from "../pages/CreateProposal";
 import { AppContext } from "../contexts/AppContext";
 import MintTokenPage from "../pages/MintTokenPage";
 
+
 function App() {
 
   const [ showModal, setShowModal ] = useState(false);
