@@ -7,6 +7,7 @@ import Web3 from "web3";
 let kit;
 let contract;
 const Background = () => {
+  const [userbalance,setUserBalance] = useState(null);
   const JointContractAddress = "0x75769b9E326D5E40650c9C1446d0920789f4e5Fe"//"0xe58f4213486fe3bA22F8d7D45ADF85C2107CAe1d";
   const connectWallet  =  async function (){
    
@@ -43,8 +44,18 @@ const Background = () => {
     }
    
   }
-  useEffect(()=>{
-    connectWallet();
+  const checkUserRehemaBalance = async ()=>{
+    try{
+     const bal =  await contract.methods.getBalanceofMember().call({from: kit.defaultAccount});
+     setUserBalance(bal);
+
+
+    }catch(error){
+      notification(error);
+    }
+  }
+  useEffect( ()=>{
+     connectWallet();
   },[]);
 
   return (
@@ -54,8 +65,11 @@ const Background = () => {
         <h3 className="text-white">We believe in empowering africa's daughters for tommorrow</h3>
         <div>
           <button className="py-3 px-8 text-white bg-black rounded-full mx-5">See the Impact</button>
-          <button onClick={()=>{joincommunity()}} className="py-3 px-8 text-black bg-white rounded-full mx-5">Join Us</button>
+    
+          <button onClick={()=>{ checkUserRehemaBalance() }} className="py-3 px-8 text-black bg-white rounded-full mx-5">Join Us</button>
+          <h2>{userbalance}</h2>
         </div>
+
       </div>
     </div>
   );
