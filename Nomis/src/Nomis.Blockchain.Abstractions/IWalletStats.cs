@@ -76,6 +76,11 @@
         public int LastMonthTransactions { get; set; }
 
         /// <summary>
+        /// Last year transactions on wallet (number).
+        /// </summary>
+        public int LastYearTransactions { get; set; }
+
+        /// <summary>
         /// Value of all holding tokens (number).
         /// </summary>
         public int TokensHolding { get; set; }

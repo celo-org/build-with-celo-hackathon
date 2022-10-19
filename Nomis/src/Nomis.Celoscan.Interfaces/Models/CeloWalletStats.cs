@@ -34,6 +34,10 @@ namespace Nomis.Celoscan.Interfaces.Models
         public int TotalTransactions { get; set; }
 
         /// <inheritdoc/>
+        [Description("Total rejected transactions on wallet (number)")]
+        public int TotalRejectedTransactions { get; set; }
+
+        /// <inheritdoc/>
         [Description("Average time interval between transactions (hours)")]
         public double AverageTransactionTime { get; set; }
 
@@ -72,6 +76,10 @@ namespace Nomis.Celoscan.Interfaces.Models
         /// <inheritdoc/>
         [Description("Average transaction per months (number)")]
         public double TransactionsPerMonth => WalletAge != 0 ? (double)TotalTransactions / WalletAge : 0;
+
+        /// <inheritdoc/>
+        [Description("Last year transactions on wallet (number)")]
+        public int LastYearTransactions { get; set; }
 
         /// <inheritdoc/>
         [Description("Value of all holding tokens (number)")]

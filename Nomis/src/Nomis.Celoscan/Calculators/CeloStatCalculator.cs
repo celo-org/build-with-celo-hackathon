@@ -97,6 +97,7 @@ namespace Nomis.Celoscan.Calculators
                     return (decimal)0;
                 }).ToCelo(),
                 LastMonthTransactions = _transactions.Count(x => x.TimeStamp!.ToDateTime() > monthAgo),
+                LastYearTransactions = _transactions.Count(x => x.TimeStamp!.ToDateTime() > yearAgo),
                 TimeFromLastTransaction = (int)((DateTime.UtcNow - _transactions.OrderBy(x => x.TimeStamp).Last().TimeStamp!.ToDateTime()).TotalDays / 30),
                 NftHolding = holdingTokens,
                 NftTrading = (soldSum - buySum).ToCelo(),
