@@ -1,0 +1,13 @@
+.card {
+    border: 1px solid gray;
+    border-radius: 5px;
+    height: 120px;
+    background: linear-gradient(to bottom right, gold, silver);
+    padding: 10px;
+
+    .bottom {
+        float: left;
+        position: relative;
+        bottom: 0;
+    }
+}

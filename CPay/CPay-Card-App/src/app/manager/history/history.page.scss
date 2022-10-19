@@ -1,0 +1,26 @@
+ion-content {
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin: 10px ;
+        overflow: auto;
+
+        .row {
+            display: flex;
+            font-size: small;
+            padding: 5px 0;
+            justify-content: space-between;
+            gap: 10px;
+            text-align: center;
+            border-bottom: 1px solid lightgray;
+        }
+
+        .main {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px solid gray;
+        }
+    }
+}

@@ -1,0 +1,19 @@
+ion-content {
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin: 10px ;
+        overflow: auto;
+    }
+
+    ion-fab-button {
+        bottom: 20px;
+        right: 20px;
+        position: fixed;
+        opacity: 0.7;
+        width: 44px;
+        height: 44px;
+    }
+}

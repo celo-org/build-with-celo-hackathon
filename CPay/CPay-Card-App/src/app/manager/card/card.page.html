@@ -1,3 +1,8 @@
 <ion-content fullscreen="true">
-  Cards
+  <div class="content">
+    <app-my-card *ngFor="let c of cards"></app-my-card>
+  </div>
+  <ion-fab-button>
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
 </ion-content>
