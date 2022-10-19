@@ -89,16 +89,6 @@ class DeedBuyForm extends React.Component {
 		return this.app.getDeedClientObject().getConnectionFromRpc(rpc);
 	}
 
-	_getTxConnection(feelevel) {
-		let connection = {type: 'local', feelevel: feelevel};	
-		
-		if (this.state.remotewallet) {
-			connection = this.app.getDeedClientObject().getTxConnection(feelevel, this.state.rpc);
-		}
-
-		return connection;
-	}
-
 	async _getDeedOwningCard(currencyuuid, minter, deed) {
 		let context = await this.app.getVariable('AppsPane').getDeedCardContext(currencyuuid, minter, deed);
 

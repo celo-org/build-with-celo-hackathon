@@ -37,6 +37,7 @@ class DeedCreateForm extends React.Component {
 		let signingkey = null;
 		let currentcard = null;
 		let card_balance_string = '';
+		let card_creditunits = '';
 		
 		this.closing = false;
 
@@ -53,9 +54,12 @@ class DeedCreateForm extends React.Component {
 			rpc: null,
 			connection: null,
 
+			remotecreate: false, // transactions executed by remote or local
+
 			signingkey,
 			currentcard,
 			card_balance_string,
+			card_creditunits,
 
 			message_text: '',
 			processinginfo: 'processing submission',
@@ -84,9 +88,13 @@ class DeedCreateForm extends React.Component {
 	}
 	
 	async _canCompleteTransaction(carduuid, tx_fee, feelevel) {
-		if (this.state.remotewallet) {
-			//TODO: could do a check based on a read-only card
-			return true;
+		if (this.state.remotewallet && this.state.remotecreate) {
+			let {card_creditunits} = this.state;
+
+			if (card_creditunits > tx_fee.required_units)
+				return true;
+			else
+				return false;
 		}
 
 		let mvcmypwa = this.getMvcMyPWAObject();
@@ -175,6 +183,7 @@ class DeedCreateForm extends React.Component {
 			if ( (currency) && (currency.uuid)) {
 				let currentcard = null;
 				let card_balance_string = '';
+				let card_creditunits = '';
 				
 				let currencyuuid = currency.uuid;
 
@@ -182,16 +191,23 @@ class DeedCreateForm extends React.Component {
 				.then(card => {
 					currentcard = card;
 
-					return mvcmypwa.getCurrencyPosition(rootsessionuuid, walletuuid, currencyuuid)
+					return mvcmypwa.getCurrencyPosition(rootsessionuuid, walletuuid, currencyuuid, currentcard.uuid)
 				})
 				.then((pos) => {
 					return mvcmypwa.formatCurrencyAmount(rootsessionuuid, currencyuuid, pos);
 				})
-				.then((card_balance_string) => {
-					this._setState({currentcard, card_balance_string});
+				.then((balance) => {
+					card_balance_string = balance;
+
+					return mvcmypwa.getCreditBalance(rootsessionuuid, walletuuid, currentcard.uuid);
+				})
+				.then((credits) => {
+					card_creditunits = credits.transactionunits;
+
+					this._setState({currentcard, card_balance_string, card_creditunits})
 				})
 				.catch(err => {
-					this._setState({currentcard, card_balance_string})
+					this._setState({currentcard, card_balance_string, card_creditunits})
 				});
 			}
 		}
@@ -201,6 +217,7 @@ class DeedCreateForm extends React.Component {
 			// we reset the current card
 			let currentcard = null;
 			let card_balance_string = '';
+			let card_creditunits = '';
 
 			const currency = this.state.currency;
 			let currencyuuid = currency.uuid;
@@ -235,12 +252,20 @@ class DeedCreateForm extends React.Component {
 			.then((pos) => {
 				return mvcmypwa.formatCurrencyAmount(rootsessionuuid, currencyuuid, pos);
 			})
-			.then((card_balance_string) => {
-				this._setState({currentcard, card_balance_string});
-			})		
+
+			.then((balance) => {
+				card_balance_string = balance;
+
+				return mvcmypwa.getCreditBalance(rootsessionuuid, walletuuid, currentcard.uuid);
+			})
+			.then((credits) => {
+				card_creditunits = credits.transactionunits;
+
+				this._setState({currentcard, card_balance_string, card_creditunits})
+			})
 			.catch(err => {
 				this._setState({currentminter: null, mintername: ''});
-				this._setState({currentcard, card_balance_string})
+				this._setState({currentcard, card_balance_string, card_creditunits})
 			});
 
 		}
@@ -347,7 +372,9 @@ class DeedCreateForm extends React.Component {
 		
 		let card;
 
-		if (this.state.remotewallet !== true) {
+		let {remotewallet, remotecreate} = this.state;
+
+		if ((remotewallet !== true) || (remotecreate !== true)){
 			card = await this.app.openCurrencyCard(currencyuuid);
 		}
 		else {
@@ -367,6 +394,37 @@ class DeedCreateForm extends React.Component {
 		return card;
 	}
 
+	async _canCardCompleteTransactions(card, tx_fee) {
+		if (!card)
+			return false;
+
+		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
+
+		let rootsessionuuid = this.props.rootsessionuuid;
+		let walletuuid = this.props.currentwalletuuid;
+
+		let { currency, remotewallet, rpc, connection, remotecreate } = this.state;
+
+		let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, card.uuid, tx_fee);
+
+		let canspend = await this._canCompleteTransaction(card.uuid, tx_fee, _feelevel).catch(err => {});
+	
+		if (!canspend && (remotewallet && !remotecreate)) {
+			// we ask to load local card
+			this.app.alert('You must load the local card with at least ' + tx_fee.required_units + ' credit units.');
+
+			let params = {action: 'view', currencyuuid: currency.uuid, connectionuuid: connection.uuid, to: card.address, credits: tx_fee.required_units};
+
+			this.closing = true;
+			this.app.gotoRoute('remotewallet', params);
+
+			return false;
+		}
+
+		return canspend;
+	}
+
 	async onSubmit() {
 		console.log('onSubmit pressed!');
 		
@@ -380,7 +438,7 @@ class DeedCreateForm extends React.Component {
 		let carduuid;
 		let card;
 		
-		let { currentminter, mintername, title, description, external_url, currency, remotewallet, rpc, currentcard, signingkey } = this.state;
+		let { currentminter, mintername, title, description, external_url, currency, remotewallet, remotecreate, rpc, currentcard, signingkey } = this.state;
 
 		let remoteaccount;
 
@@ -406,7 +464,8 @@ class DeedCreateForm extends React.Component {
 				return;
 			}
 
-			if (remotewallet === true) {
+			if ((remotewallet === true) && (remotecreate === true)) {
+				// we are connected and asked to execute transactions on remote wallet
 				let connection = this._getRemoteConnectionFromRpc(rpc);
 				remoteaccount = (connection ? connection.account : null);
 
@@ -457,10 +516,10 @@ class DeedCreateForm extends React.Component {
 		
 			}
 
-			// check card can transfer credit units and tokens
+			// check card can sign transactions
 			let cansign = await mvcmydeed.canCardSign(rootsessionuuid, walletuuid, currentcard.uuid).catch(err => {});
 
-			if ((remotewallet !== true) && (cansign !== true)) {
+			if ((remotecreate !== true) && (cansign !== true)) {
 				this.app.alert('Current card for the currency is read-only');
 				this._setState({processing: false});
 				return;
@@ -470,25 +529,53 @@ class DeedCreateForm extends React.Component {
 			var stop = false;
 			var minter = currentminter;
 
+			// check we have enough credits to perform all the transactions
+			let minter_cost_units = (currency.deeds_v1.create_minter_cost_units ? parseInt(currency.deeds_v1.create_minter_cost_units) : 225);
+			let mint_deed_cost_units = (currency.deeds_v1.create_deed_cost_units ? parseInt(currency.deeds_v1.create_deed_cost_units) : 8);
+			let add_clause_cost_units = (currency.deeds_v1.add_clause_cost_units ? parseInt(currency.deeds_v1.add_clause_cost_units) : 7);
+
+			let tx_fee = {};
+			tx_fee.transferred_credit_units = 0;
+
+			tx_fee.estimated_cost_units = (minter ? 0 : minter_cost_units) + mint_deed_cost_units + add_clause_cost_units;
+
+			var canproceed = await this._canCardCompleteTransactions(card, tx_fee);
+
+			if (!canproceed) {
+				if (this.closing) {
+					this._setState({processing: false});
+					return;
+				}
+				else if (tx_fee.estimated_fee.execution_credits > tx_fee.estimated_fee.max_credits) {
+					this.app.alert('The execution cost of transactions is too large: ' + tx_fee.estimated_fee.execution_units + ' credit units.');
+					this._setState({processing: false});
+					return;
+				}
+				else {
+					this.app.alert('You must add transaction units to the source card. You need at least ' + tx_fee.required_units + ' credit units.');
+					this._setState({processing: false});
+					return;
+				}
+			}
+
 			if (!minter) {
 				// we create minter now
 				minter = {name: mintername, symbol: 'nft' };
 
-				// check we have enough transaction credits
-				let tx_fee = {};
+				// check we have enough transaction credits to deploy
+				tx_fee = {};
 				tx_fee.transferred_credit_units = 0;
-				let minter_cost_units = (currency.deeds_v1.create_minter_cost_units ? parseInt(currency.deeds_v1.create_minter_cost_units) : 225);
 				tx_fee.estimated_cost_units = minter_cost_units;
 
 				// need a higher feelevel than standard this.app.getCurrencyFeeLevel(currencyuuuid)
 				let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, card.uuid, tx_fee);
-				let connection = this._getTxConnection(_feelevel);
+				let txconnection = this._getTxConnection(_feelevel);
 
 				let canspend = await this._canCompleteTransaction(card.uuid, tx_fee, _feelevel).catch(err => {});
 		
 				if (!canspend) {
 					if (tx_fee.estimated_fee.execution_credits > tx_fee.estimated_fee.max_credits) {
-						this.app.alert('The execution of this transaction is too large: ' + tx_fee.estimated_fee.execution_units + ' credit units.');
+						this.app.alert('The execution cost of this transaction is too large: ' + tx_fee.estimated_fee.execution_units + ' credit units.');
 						this._setState({processing: false});
 						return;
 					}
@@ -503,7 +590,7 @@ class DeedCreateForm extends React.Component {
 				// build tokenuri
 				minter.basetokenuri = await this.app.getBaseTokenURI(currency.uuid, currentcard.address);
 				
-				minter = await mvcmydeed.deployDeedMinter(rootsessionuuid, walletuuid, currency.uuid, currentcard.uuid, minter, connection)
+				minter = await mvcmydeed.deployDeedMinter(rootsessionuuid, walletuuid, currency.uuid, currentcard.uuid, minter, txconnection)
 				.catch(err => {
 					console.log('error in DeedCreateForm.onSubmit: ' + err);
 					stop = true;
@@ -519,10 +606,8 @@ class DeedCreateForm extends React.Component {
 			// then mint a deed
 
 			// check we have enough transaction credits to perform both transactions
-			let tx_fee = {};
+			tx_fee = {};
 			tx_fee.transferred_credit_units = 0;
-			let mint_deed_cost_units = (currency.deeds_v1.create_deed_cost_units ? parseInt(currency.deeds_v1.create_deed_cost_units) : 8);
-			let add_clause_cost_units = (currency.deeds_v1.add_clause_cost_units ? parseInt(currency.deeds_v1.add_clause_cost_units) : 7);
 			tx_fee.estimated_cost_units = mint_deed_cost_units + add_clause_cost_units;
 
 			let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, currentcard.uuid, tx_fee);
@@ -532,7 +617,7 @@ class DeedCreateForm extends React.Component {
 
 			if (!canspend) {
 				if (tx_fee.estimated_fee.execution_credits > tx_fee.estimated_fee.max_credits) {
-					this.app.alert('The execution of this transaction is too large: ' + tx_fee.estimated_fee.execution_units + ' credit units.');
+					this.app.alert('The execution cost of this transaction is too large: ' + tx_fee.estimated_fee.execution_units + ' credit units.');
 					this._setState({processing: false});
 					return;
 				}
@@ -613,6 +698,8 @@ class DeedCreateForm extends React.Component {
 		let rpc = null;
 		let connection = null;
 
+		let remotecreate = false;
+
 		if (currency) {
 			// check if corresponding currency is set for remote
 			let config = this.app.getConfig('remotewallet');	
@@ -629,8 +716,10 @@ class DeedCreateForm extends React.Component {
 					if (connection && connection.account) {
 						// we are connected to a remote wallet supporting this
 						// currency's rpc
+						remotewallet = true;
+
 						if (curr_rpc_config.remotecreate !== false) {
-							remotewallet = true;
+							remotecreate = true;
 						}
 					}
 				}
@@ -638,7 +727,7 @@ class DeedCreateForm extends React.Component {
 		}
 
 		// change state
-		this._setState({currency, remotewallet, rpc, connection});
+		this._setState({currency, remotewallet, rpc, connection, remotecreate});
 	}
 
 	async onChangeCurrency(e) {
@@ -692,11 +781,11 @@ class DeedCreateForm extends React.Component {
 	}
 
 	renderMainCardPart() {
-		let { currency, remotewallet, connection, currentcard, signingkey, card_balance_string } = this.state;
+		let { currency, remotewallet, remotecreate, connection, currentcard, signingkey, card_balance_string, card_creditunits } = this.state;
 
 		return (
 			<span>
-				{(remotewallet !== true ?
+				{((remotewallet !== true) || (remotecreate !== true) ?
 					(currentcard ?
 					<FormGroup className="CurrencyCard" controlId="currencycard">
 					<span className="CardIconCol">
@@ -707,13 +796,13 @@ class DeedCreateForm extends React.Component {
 						/>
 					</span>
 					<span className="CardBalanceCol">
-						<FormLabel>Balance</FormLabel>
+						<FormLabel># credit units</FormLabel>
 						<FormControl
 							className="CardBalanceCol"
 							disabled
 							autoFocus
 							type="text"
-							value={card_balance_string}
+							value={card_creditunits}
 						/>
 					</span>
 					</FormGroup> :
@@ -736,13 +825,13 @@ class DeedCreateForm extends React.Component {
 							/>
 					</span>
 					<span className="CardBalanceCol">
-						<FormLabel>Balance</FormLabel>
+						<FormLabel># credit units</FormLabel>
 						<FormControl
 							className="CardBalanceCol"
 							disabled
 							autoFocus
 							type="text"
-							value={card_balance_string}
+							value={card_creditunits}
 						/>
 					</span>
 					</FormGroup>

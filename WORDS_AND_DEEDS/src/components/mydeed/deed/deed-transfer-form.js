@@ -342,7 +342,7 @@ class DeedTransferForm extends React.Component {
 			tx_fee.estimated_cost_units = transfer_deed_cost_units;
 
 			let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, deedcard.uuid, tx_fee);
-			let connection = this._getTxConnection(_feelevel);
+			let txconnection = this._getTxConnection(_feelevel);
 
 			let canspend = await this._canCompleteTransaction(deedcard.uuid, tx_fee, _feelevel).catch(err => {});
 
@@ -363,7 +363,7 @@ class DeedTransferForm extends React.Component {
 
 			deed.data = {url: deed.metadata.external_url};
 
-			const txhash = mvcmydeed.transferDeed(rootsessionuuid, walletuuid, currency.uuid, minter, deed, toaddress, connection)
+			const txhash = mvcmydeed.transferDeed(rootsessionuuid, walletuuid, currency.uuid, minter, deed, toaddress, txconnection)
 			.catch(err => {
 				console.log('error in DeedTransferForm.onTransfer: ' + err);
 			});

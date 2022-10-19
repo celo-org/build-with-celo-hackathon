@@ -81,16 +81,6 @@ class ClauseCreateForm extends React.Component {
 		return this.app.getDeedClientObject().getConnectionFromRpc(rpc);
 	}
 
-	_getTxConnection(feelevel) {
-		let connection = {type: 'local', feelevel: feelevel};	
-		
-		if (this.state.remotewallet) {
-			connection = this.app.getDeedClientObject().getTxConnection(feelevel, this.state.rpc);
-		}
-
-		return connection;
-	}
-
 	async _canCompleteTransaction(carduuid, tx_fee, feelevel) {
 		if (this.state.remotewallet) {
 			//TODO: could do a check based on a read-only card
@@ -432,7 +422,6 @@ class ClauseCreateForm extends React.Component {
 
 			// need a higher feelevel
 			var feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, deedcard.uuid, tx_fee);
-			let connection = this._getTxConnection(feelevel);
 
 			var canspend = await this._canCompleteTransaction(deedcard.uuid, tx_fee, feelevel).catch(err => {});
 	

@@ -16,7 +16,9 @@ class RemoteWalletView extends React.Component {
 		
 		this.app = this.props.app;
 		this.parent = this.props.parent;
+
 		this.getMvcMyPWAObject = this.app.getMvcMyPWAObject;
+		this.getMvcMyDeedObject = this.app.getMvcMyDeedObject;
 
 		this.connectionuuid = this.props.connectionuuid;
 		this.currencyuuid = this.props.currencyuuid;
@@ -25,6 +27,7 @@ class RemoteWalletView extends React.Component {
 		this.closing = false;
 
 		this.state = {
+			loading: true,
 			message_text: 'loading...',
 
 			currency: {symbol: ''},
@@ -51,6 +54,9 @@ class RemoteWalletView extends React.Component {
 			credit_amount: 0,
 
 			targetcard: null,
+
+			processinginfo: 'processing transfer',
+			processing: false
 
 		}
 	}
@@ -126,6 +132,8 @@ class RemoteWalletView extends React.Component {
 		mvcmypwa.registerEventListener('on_walletconnect_connected', this.uuid, this.onWalletConnected.bind(this));
 		mvcmypwa.registerEventListener('on_walletconnect_disconnected', this.uuid, this.onWalletDisconnected.bind(this));
 
+		mvcmypwa.registerEventListener('on_refreshPage', this.uuid, this.onRefreshPage.bind(this));
+
 		this.checkNavigationState().catch(err => {console.log('error in checkNavigationState: ' + err);});
 	}
 
@@ -158,6 +166,8 @@ class RemoteWalletView extends React.Component {
 					remoteaccount); // creates read-only card if necessary
 	
 				let scheme = await mvcmypwa.getSchemeInfo(rootsessionuuid, card.schemeuuid );
+
+				account_info.carduuid = card.uuid;
 	
 				account_info.credits = await mvcmypwa.getCreditBalance(rootsessionuuid, walletuuid, card.uuid);
 				account_info.creditbalance = account_info.credits.transactionunits;
@@ -208,7 +218,7 @@ class RemoteWalletView extends React.Component {
 			var _privkey = await mvcmypwa.getCardPrivateKey(rootsessionuuid, walletuuid, _currencycards[j].uuid).catch(err => {});
 			_currencycards[j].cansign = (_privkey ? true : false);
 
-			let pos = await mvcmypwa.getCurrencyPosition(rootsessionuuid, walletuuid, currency.uuid, _currencycards[j].uuid);
+ 			let pos = await mvcmypwa.getCurrencyPosition(rootsessionuuid, walletuuid, currency.uuid, _currencycards[j].uuid);
 		
 			if (pos !== undefined) {
 				_currencycards[j].balance_int = await pos.toInteger();
@@ -316,6 +326,7 @@ class RemoteWalletView extends React.Component {
 
 			let to_address = (params.to ? params.to : null);
 			let transfer_amount = (params.amount ? params.amount : 0);
+			let credit_amount = (params.credits ? params.credits : 0);
 
 			let message_text = 'This is a view of one of the address in your remote wallet. \
 					To get a full view of the content of your wallet, you must directly open\
@@ -414,11 +425,13 @@ class RemoteWalletView extends React.Component {
 				creditbalance, position, position_int, position_string,  
 				address, web3providerurl,
 				address_string, web3providerurl_string,
-				to_address, transfer_amount});
+				to_address, transfer_amount, credit_amount});
 		}
 		catch(e) {
 			console.log('exception in RemoteWalletView.checkNavigationState: '+ e);
 		}
+
+		this._setState({loading: false});
 	}
 
 	// end of life
@@ -428,6 +441,8 @@ class RemoteWalletView extends React.Component {
 		this.closing = true;
 
 		let mvcmypwa = this.getMvcMyPWAObject();
+
+		mvcmypwa.unregisterEventListener('on_refreshPage', this.uuid);
 
 		mvcmypwa.unregisterEventListener('on_walletconnect_disconnected', this.uuid);
 		mvcmypwa.unregisterEventListener('on_walletconnect_connected', this.uuid);
@@ -476,6 +491,14 @@ class RemoteWalletView extends React.Component {
 
 		return;
 	}
+
+	async onRefreshPage() {
+		console.log('RemoteWalletView.onRefreshPage called');
+
+		this.checkNavigationState().catch(err => {console.log('error in checkNavigationState: ' + err);});
+	}
+	
+
 
 	async onWalletDisconnected(eventname, params) {
 		console.log('RemoteWalletView.onWalletDisconnected called');
@@ -571,6 +594,99 @@ class RemoteWalletView extends React.Component {
 
 	async onLoadTo() {
 		console.log('onLoadTo pressed!');
+
+		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
+
+		let rootsessionuuid = this.props.rootsessionuuid;
+		let walletuuid = this.props.currentwalletuuid;
+
+		this._setState({processing: true});
+
+		try {
+			let { currency, creditbalance, position_int, to_address, credit_amount, transfer_amount } = this.state;
+
+			let connection = await this._getRemoteConnection();
+
+			if (!connection || !connection.account) {
+				this.app.alert('Connection is not valid');
+				this._setState({processing: false});
+				return;
+			}
+
+			let account_info = await this._getRemoteAccountInfo(connection);
+
+			// connect card
+			let remote_card_uuid = account_info.carduuid;
+			let remote_card = await mvcmypwa.getWalletCard(rootsessionuuid, walletuuid, remote_card_uuid) ;
+
+			let connected = await mvcmydeed.connectCard(rootsessionuuid, walletuuid, remote_card_uuid, connection);
+
+
+			if (credit_amount) {
+				//let units_txhash = await mvcmypwa.sendTransactionUnits(rootsessionuuid, walletuuid, remote_card.uuid, to_address, credit_amount)
+				// problems because goes through transferSchemeTransactionUnits which uses the privatekey that is checked for validity
+
+				if (credit_amount >= creditbalance) {
+					this.app.alert('You do not have enough credit units on your remote account');
+					this._setState({processing: false});
+					return;
+				}
+
+				let cardto = await mvcmypwa.getCurrencyCardWithAddress(rootsessionuuid, walletuuid, currency.uuid,
+					to_address); // creates read-only card if necessary
+
+				let units_txhash = await mvcmypwa.transferTransactionUnits(rootsessionuuid, walletuuid, remote_card.uuid, cardto.uuid, credit_amount)
+				.catch(err => {
+					console.log('error in RemoteWalletView.onLoadTo: ' + err);
+				});
+
+				if (!units_txhash || (units_txhash.success === false)) {
+					this.app.alert('Failed to load credit units');
+					this._setState({processing: false});
+					return;
+				}
+			}
+
+			if (transfer_amount) {
+				let tokenamount = await mvcmypwa.getCurrencyAmount(rootsessionuuid, currency.uuid, transfer_amount);
+				let tokenamount_int = await tokenamount.toInteger();
+
+				if (tokenamount_int >= position_int) {
+					this.app.alert('You do not have enough funds on your remote account');
+					this._setState({processing: false});
+					return;
+				}
+	
+				let tx_fee = {};
+				tx_fee.transferred_credit_units = 0;
+				let transfer_cost_units = 3;
+				tx_fee.estimated_cost_units = transfer_cost_units;
+	
+				let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, remote_card.uuid, tx_fee);
+
+				let txhash_payment = await mvcmypwa.payAmount(rootsessionuuid, walletuuid, remote_card.uuid, to_address, currency.uuid, tokenamount_int, _feelevel)
+				.catch(err => {
+					console.log('error in RemoteWalletView.onLoadTo: ' + err);
+				});
+
+				if (!txhash_payment || (txhash_payment.success === false)) {
+					this.app.alert('Failed to load currency amount');
+					this._setState({processing: false});
+					return;
+				}
+			}
+
+			// refresh page to update balances
+			this.app.refreshPage();
+
+		}
+		catch(e) {
+			console.log('exception in RemoteWalletView.onLoadTo: '+ e);
+		}	
+
+		this.setState({processing: false});
+
 	}
 	
 	
@@ -580,7 +696,9 @@ class RemoteWalletView extends React.Component {
 
 		let { to_address, credit_amount, transfer_amount } = this.state;
 
-		let transfer_disabled = (to_address && to_address.length && ((transfer_amount > 0) || (parseInt(transfer_amount) > 0) ) ? false : true);
+		let transfer_disabled = (to_address && to_address.length 
+			&& ((transfer_amount > 0) || (parseInt(transfer_amount) > 0) 
+			|| (credit_amount > 0) || (parseInt(credit_amount) > 0)) ? false : true);
 
 		return (
 			<div>
@@ -589,7 +707,7 @@ class RemoteWalletView extends React.Component {
 			<div className="CurrencyCardPickLine">
 			<span className="CardAddressCol">
 			<FormGroup controlId="transferto">
-				<FormLabel>Transfer to local card</FormLabel>
+				<FormLabel>Transfer to</FormLabel>
 				<FormGroup className="TargetCardInput">
 					<FormControl
 						autoFocus
@@ -603,7 +721,7 @@ class RemoteWalletView extends React.Component {
 			<span className="CardPickCol">
 			{(this.state.localcards && this.state.localcards.length ?
 			<div>
-				<FormLabel>Pick card</FormLabel>
+				<FormLabel>Pick a card</FormLabel>
 				<DropdownButton
 				id="input-dropdown-addon"
 				title="Card"
@@ -614,7 +732,14 @@ class RemoteWalletView extends React.Component {
 					))}
 				</DropdownButton>
 			</div> :
-			<></>)}
+			<div>
+			<FormLabel>Pick a card</FormLabel>
+			<DropdownButton
+			id="input-dropdown-addon"
+			title="Card"
+			disabled
+			/>
+		</div>)}
 
 			</span>
 			</div>
@@ -640,7 +765,7 @@ class RemoteWalletView extends React.Component {
 					/>
 					</span>
 					<span className="LoadCol">
-					<FormLabel>Tx</FormLabel>
+					<FormLabel>Transfer</FormLabel>
 					<Button 
 					disabled={transfer_disabled}
 					onClick={this.onLoadTo.bind(this)} 
@@ -792,17 +917,21 @@ class RemoteWalletView extends React.Component {
 
 
 	render() {
-		let {connected} = this.state;
+		let {loading, connected, message_text} = this.state;
 
 		return(
 			<div className="Container">
 			<div className="TitleBanner">
 			<div className="Title">Remote Wallet</div>
 			</div>
-			{ (connected ? 
+			{ (loading ? 
+			<div className="TextBox">
+				{message_text}
+			</div> :
+			(connected ? 
 				this.renderWalletView() :
 				this.renderCurrencyPickForm()
-			)}
+			))}
 			</div>
 
 		);
