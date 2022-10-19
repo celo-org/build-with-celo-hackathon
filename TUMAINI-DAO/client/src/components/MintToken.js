@@ -9,7 +9,7 @@ let kit ;
 let contract;
 let contractAcivate;
 const MintToken = () => {
-  const JointContractAddress = "0xe58f4213486fe3bA22F8d7D45ADF85C2107CAe1d";
+  const JointContractAddress = "0x75769b9E326D5E40650c9C1446d0920789f4e5Fe"//"0xe58f4213486fe3bA22F8d7D45ADF85C2107CAe1d";
   const RehemaContract = "0x89f6bB154E83D942a0A97147433A2356031fd6Ce";
   const [useraccount,setUserAccount] = useState(null);
   const [rehemaamount,setRehemaAmount] = useState(null);
