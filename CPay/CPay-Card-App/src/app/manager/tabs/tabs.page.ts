@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AnimationOptions } from '@ionic/angular/providers/nav-controller';
+import { NavController } from '@ionic/angular'
 
 @Component({
   selector: 'app-tabs',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabsPage implements OnInit {
 
-  constructor() { }
+  constructor(private navController: NavController) { }
 
   ngOnInit() {
   }
 
+  logout() {
+    let animation: AnimationOptions = {
+      animated: true,
+      animationDirection: "back"
+    }
+    this.navController.navigateRoot('/home', animation);
+  }
 }
