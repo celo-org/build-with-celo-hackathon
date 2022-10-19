@@ -51,6 +51,10 @@
                line-height: 165%;
                color: #FFFEFE;
                float: right;
+
+               @media (max-width: 600px) {
+                 display: none;
+               }
             }
           }
       }
@@ -67,9 +71,9 @@
             gap: 1.5rem;
       }
 
-      @media (max-width: 680px) {
+      @media (max-width: 600px) {
             grid-template-columns: 1fr;
-            gap: 1rem;
+            gap: 40px;
       }
        
        .project_item {

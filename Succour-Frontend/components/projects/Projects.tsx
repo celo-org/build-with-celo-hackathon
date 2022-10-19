@@ -20,11 +20,12 @@ const Projects = () => {
                              <div className={styles.project_header}>
                               <span className={styles.title}>Projects</span>
                               <div className={styles.totheright}>
-                                <Link href="#"><div className={styles.controller_left}>All proposals</div></Link>
-                                <Link href="#"><div className={styles.controller_right}>Approved proposals</div></Link>
+                               <div className={styles.controller_left}>All proposals</div>
+                               <div className={styles.controller_right}>Approved proposals</div>
                               </div>
                             </div>
-                
+                       
+                       <Link href="/ProposePage/ProposePage">
                        <div className={styles.project_grid}>
                                {
                     data?.slice(0, visible)?.map(({ id, time, problemTitle, desc, lowest, etherAmount, voteButton }) => {
@@ -54,6 +55,7 @@ const Projects = () => {
                            })
                          }
                      </div>
+                     </Link>
                       <button onClick={handleMoreProjectItem}
                       className={styles.viewmore_btn}
                       >

@@ -13,20 +13,23 @@ const Propose = () => {
           <>
           <Navbar />
            <div className={styles.propose}>
-             <div className={styles.wrapper}>
-               <div className={styles.back_arrow}>
+             <div className={styles.left_arrow}>
+                <div className={styles.back_arrow}>
                <Link href="/Projects/Projects">
                 <div className={styles.arrow}>
                     <Image src={arrowLeftSvg} alt="" />
                 </div>
                </Link>
-           </div>
+              </div>
+              </div>
+            
+             <div className={styles.wrapper}>
               <div className={styles.top_container}>
                <div className={styles.propose_content}>
                    <h1 className={styles.title}>Propose a project</h1>
                    <form className={styles.propose_form}>
-                     <label>Member ID</label>
-                     <input id="input" name="input" type="text" />
+                     {/* <label>Member ID</label>
+                     <input id="input" name="input" type="text" /> */}
 
                       <label>Project title</label>
                      <input id="input" name="input" type="text" />

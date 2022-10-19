@@ -26,10 +26,7 @@
     //  .project_container {
 
       .project_header{
-        // display: flex;
-        // justify-content: space-between;
-        // align-items: center;
-        // float: right;
+  
 
         .title {
                font-weight: 500;
@@ -89,6 +86,7 @@
        grid-template-columns: repeat(3, 1fr);
        gap: 5.1875rem;
        margin-top: 80px;
+       cursor: pointer;
 
         @media (max-width: 1023.98px) {
             grid-template-columns: 1fr 1fr;

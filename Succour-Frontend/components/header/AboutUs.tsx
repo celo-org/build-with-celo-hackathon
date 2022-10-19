@@ -1,18 +1,20 @@
-import React from 'react'
+import{useState} from 'react'
 import styles from './aboutUs.module.scss'
-import Link from 'next/link'
-import Image from 'next/image'
 import JoinDao from '../../pages/JoinDao/JoinDao'
 
-interface IProps {
-  showModal: any;
-  setShowModal: any;
-  openModal: any;
-}
-const Header = ({ showModal, setShowModal, openModal } : IProps) => {
+const Header = () => {
+
+     
+   const [showModal, setShowModal] = useState(false);
+
+     const openModal = () => {
+       setShowModal(prev => !prev);
+     }
+
      return (
+          <>
+           <JoinDao showModal={showModal} setShowModal={setShowModal} />
           <section className={styles.about}>
-                <JoinDao showModal={showModal} setShowModal={setShowModal} />
                <div className={styles.wrapper}>
                  <div className={styles.container}>
                     <div className={styles.about_content}>
@@ -22,7 +24,6 @@ const Header = ({ showModal, setShowModal, openModal } : IProps) => {
 
                       <div className={styles.about_btn}>
                          <button className={styles.btn} onClick={openModal}>Join DAO</button>
-                    
                       </div>
                     </div>
 
@@ -36,6 +37,7 @@ const Header = ({ showModal, setShowModal, openModal } : IProps) => {
                     </div>
                  </div>
           </section>
+          </>
      )
 }
 

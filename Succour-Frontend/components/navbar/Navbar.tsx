@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import logo from '../../assets/Succour.png'
+import logo from '../../assets/Succour.svg'
 import {TiUserOutline} from 'react-icons/ti'
 import { NavbarContainer, 
      LeftContainer, 
@@ -56,7 +56,7 @@ const Navbar = () => {
                   Join DAO
                </NavbarLink>
                
-               <Link href="/CrowdFunding"><NavbarButton>Crowdfunding</NavbarButton></Link>
+               <Link href="/Crowdfunding/Crowdfunding"><NavbarButton>Crowdfunding</NavbarButton></Link>
                <NavbarUser>
                 <TiUserOutline color="white" fontSize="1.5rem" />
                </NavbarUser>
@@ -77,7 +77,7 @@ const Navbar = () => {
           <NavbarLinkExtended><Link href="/Dao">DAO</Link></NavbarLinkExtended>
           <NavbarLinkExtended><Link href="/Projects/Projects">Projects</Link></NavbarLinkExtended>
           <NavbarLinkExtended onClick={openModal}>Join DAO</NavbarLinkExtended>
-          <NavbarLinkExtended><Link href="/Crowdfunding"><NavbarButtonExtended>Crowdfunding</NavbarButtonExtended></Link></NavbarLinkExtended>
+          <NavbarLinkExtended><Link href="/Crowdfunding/Crowdfunding"><NavbarButtonExtended>Crowdfunding</NavbarButtonExtended></Link></NavbarLinkExtended>
           <NavbarUserExtended>
            <TiUserOutline color="white" fontSize="1.5rem" />
           </NavbarUserExtended>

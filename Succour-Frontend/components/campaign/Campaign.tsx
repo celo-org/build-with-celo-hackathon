@@ -13,7 +13,7 @@ const Campaign = () => {
                           <div className={styles.campaign_content}>
                             <div className={styles.content}>
                                <div className={styles.title}>Contribute to pressing <span>global</span> issues</div>      
-                                <Link href="#"><button className={styles.button}>Vote now</button></Link>
+                                <Link href="/Projects/Projects"><button className={styles.button}>Contribute</button></Link>
                               </div>
 
                               <div className={styles.content_img}></div>

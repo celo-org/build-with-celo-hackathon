@@ -36,8 +36,6 @@ const JoinDao = ({ showModal, setShowModal } : IProps) => {
           return () => document.removeEventListener('keydown', keyPress);
       }, [keyPress])
 
-
-
      return (
           <>
           {showModal ? ( 

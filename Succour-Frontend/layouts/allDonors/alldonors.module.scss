@@ -1,0 +1,98 @@
+
+.donate {
+     width: 100%;
+     height: 100%;
+     background: rgba(3, 3, 3, 0.9);
+     position: fixed;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     overflow: hidden; 
+     z-index: 1000;
+     
+     .wrapper {
+          max-width: 600px;
+          background: #030303;
+          box-shadow: 5px 5px 50px rgba(31, 6, 46, 0.3);
+          border-radius: 20px;
+          display: flex;
+          z-index: 10;
+
+          @media (max-width: 600px) {
+               width: 414px;
+               height: 600px;
+          }
+
+          .container {
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               // flex-direction: column;
+
+               .donate_content {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                    padding: 50px;
+          
+                   .title {
+                    font-weight: 600;
+                    font-size: 25px;
+                    line-height: 140%;
+                    color: #FFFEFE;
+                    text-align: center;
+                    max-width: 300px;
+
+                    @media (max-width: 600px) {
+                         font-size: 24px;
+                         margin-top: 120px;
+                    }
+                   }
+
+                
+               //     .join_btn {
+               //      cursor: pointer;
+               //      margin-top: 80px;
+               //      border: none;
+               //      background: #264D45;
+               //      border-radius: 30px;
+               //      padding: 15px 100px;
+               //      font-weight: 400;
+               //      font-size: 18px;
+               //      line-height: 165%;
+               //      color: #FFFEFE;
+               //      transition: all 100ms ease-out;
+
+               //      &:hover {
+               //         background: #397367;
+               //      }
+                    
+               //        @media (max-width: 600px) {
+               //           font-size: 14px;
+               //           padding: 10px 100px;
+               //      }
+
+               //     }
+               }
+           }    
+           
+           .closeButton {
+               cursor: pointer;
+               background-image: url('../../assets/Exit\ Icon.svg');
+               background-position: 10% 0;
+               background-repeat: no-repeat;
+               background-size: contain;
+               height: 30px;
+               max-width: 40%;
+               position: absolute;
+               right: -100px;
+               // left: 0;
+               padding: 0;
+               top: 30px;
+               width: 100%;
+               z-index: 1;
+           }
+             
+     }
+}

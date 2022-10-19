@@ -21,7 +21,6 @@
    .container {
      display: flex;
      gap: 2.875rem;
-     border: 1px solid red;
      padding-left: 80px;
      padding-right: 100px;
      padding-top: 100px;
@@ -30,12 +29,11 @@
         align-items: center;
         flex-direction: column;
         margin: 0 auto;
-     //    text-align: center;
      }
 
      .about_content {
-            max-width: 50%;
-            width: 100%;
+            // max-width: 50%;
+            // width: 100%;
 
           @media (max-width: 1023.98px) {
             max-width: 100%;
@@ -52,8 +50,9 @@
                 color: #FFFEFE;
                }
 
-               @media (max-width: 700px) {
+               @media (max-width: 600px) {
                  font-size: 20px;
+                 text-align: center;
              }
           }
 
@@ -62,7 +61,8 @@
                font-size: 20px;
                line-height: 170%;
                color: #CCAECC;
-               max-width: 517px;
+               text-align: left;
+               max-width: 600px;
 
               span:nth-child(odd) {
                 color: #FFFEFE;
@@ -70,7 +70,8 @@
 
                @media(max-width: 700px) {
                  font-size: 14px;
-                 max-width: 200px;
+                 max-width: 400px;
+                 text-align: center;
                }
 
                @media(max-width: 480px) {
@@ -81,6 +82,12 @@
 
           .about_btn {
                margin-top: 50px;
+
+               @media (max-width: 600px) {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+               }
 
                .btn {
                     cursor: pointer;

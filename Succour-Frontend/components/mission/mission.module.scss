@@ -28,26 +28,33 @@
      padding-right: 100px;
      padding-top: 100px;
 
+     @media (max-width: 600px) {
+      padding-top: -100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column-reverse;
+     }
+
 
      .mission_img {
          max-width: 50%;
          width: 100%;
 
-        //  .image_content {
-          
-        //  }
+         .image_content {
+            border: 1px solid red;
+         }
      }
 
      .mission_content {
-            max-width: 50%;
+            max-width: 100%;
             width: 100%;
 
           @media (max-width: 1023.98px) {
-            max-width: 100%;
+            margin: 0 auto;
           }
 
           .title {
-            position: relative;
               font-weight: 600;
               font-size: 38px;
               line-height: 145%;
@@ -58,20 +65,11 @@
                 color: #CCAECC;;
               }
 
-          //   .netvector {
-          //    background-image: url('../../assets/vector-fixed.svg'); 
-          //    background-position: 100% 0;
-          //    background-repeat: no-repeat;
-          //    background-size: contain;
-          //    height: 40px;
-          //    max-width: 30%;
-          //    position: absolute;
-          //    left: 30px;
-          //   //  right: 0px;
-          //    top: 40px;
-          //    width: 100%;
-          //    z-index: 1;
-          // }
+              @media (max-width: 600px) {
+                font-size: 20px;
+                text-align: center;
+                // min-width: 300px;
+              }
           }
       
           .desc {
@@ -79,6 +77,12 @@
              font-size: 20px;
              line-height: 170%;
              color: #FFFEFE;
+             text-align: left;
+
+             @media (max-width: 600px) {
+              font-size: 16px;
+              min-width: 300px;
+             }
           }
 
      }
@@ -97,13 +101,6 @@
     top: 0;
     width: 100%;
     z-index: 1;
-
-  //   @media (max-width: 660px) {
-  //   background-position: right -10px bottom 0;
-  //   max-width: 100%;
-  //   top: 300px;
-  //   z-index: -1;
-  //  }
 
     @media (max-width: 1023.98px) {
     background-position: left 10px top 30%;

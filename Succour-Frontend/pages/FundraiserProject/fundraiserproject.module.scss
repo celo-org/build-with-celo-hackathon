@@ -1,0 +1,235 @@
+
+
+.fundraiserproject {
+   padding-top: 120px;
+   padding-bottom: 120px;
+   position: relative;
+   background: #0E0D0D;
+
+   .wrapper {
+    margin: 0 auto;
+    max-width: calc(100% - 2.875rem);
+    width: 100%;
+
+    @media (min-width: 1024px) {
+     max-width: calc(100% - 7.5rem);
+    }
+
+    @media (min-width: 480px) {
+     max-width: calc(100% - 3.75rem);
+   }
+
+    .left_arrow {
+      padding-top: 80px;
+      padding-left: 100px;
+
+       .back_arrow {
+        display: flex;
+        align-items: center;
+         justify-content: center;
+         cursor: pointer;
+          background: linear-gradient(120.83deg, #131313 0%, rgba(54, 53, 53, 0) 100%, rgba(54, 53, 53, 0) 100%);
+          border-radius: 10px;
+          width: 100px;
+          height: 40px;
+
+       .arrow {
+          cursor: pointer;
+       }
+     }
+        
+    }
+
+
+   .container {
+     display: flex;
+     gap: 6.666rem;
+     padding-top: 40px;
+     padding-left: 100px;
+     padding-right: 100px;
+
+     @media (max-width: 1023.98px ) {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          margin: 0 auto;
+     }
+
+     .fundraiser_container {
+         display: flex;
+
+         .fundraiser_item {
+          //    border: 1px solid red;
+
+               .fundraiser_img {
+            height: 15rem;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background: #5E5E5E;
+            max-width: 550px;
+            border-radius: 10px 10px 0px 0px;
+          }
+
+          .fundraiser_text {
+               margin-top: 40px;
+                     
+
+               .fundraiser_titled {
+                    font-weight: 600;
+                    font-size: 40px;
+                    line-height: 145%;
+                    color: #FFFFFF;
+                    max-width: 500px;
+               }
+
+               .id {
+                    font-weight: 500;
+                    font-size: 20px;
+                    line-height: 165%;
+                    color: #EBDFEB;
+               }
+               .fundraiser_desc {
+                    font-weight: 500;
+                    font-size: 16px;
+                    line-height: 165%;
+                    color: #FFFFFF;
+                    max-width: 550px;
+                    user-select: none;
+               }
+          }
+
+
+         }
+
+       
+     }
+
+     .fundraiser_donate_content {
+        
+
+          .donate_content {
+               max-width: 560px;
+                background: #030303;
+               display: flex;
+               flex-direction: column;
+               padding: 2em;
+
+               .donate_title {
+                    font-weight: 600;
+                    font-size: 20px;
+                    line-height: 165%;
+                    color: #FFFEFE;
+               }
+
+               .boxrate {
+                 background: #D7E3E1;
+                 border-radius: 10px;  
+                 height: 8px;
+
+                 .box {
+                    background: #7BA29A;
+                    border-radius: 10px;
+                    height: 8px;
+                    width: 150px;
+                 }
+               }
+
+               span {
+                    margin-top: 15px;
+                    font-weight: 600;
+                    font-size: 18px;
+                    line-height: 165%;
+                    color: #BDD0CC;
+               }
+
+               .donate_btn {
+                    cursor: pointer;
+                    padding: 10px 50px;
+                    border: none;
+                    background: linear-gradient(93.01deg, rgba(22, 222, 181, 0.71) -9.8%, #264D45 65.6%, rgba(7, 51, 42, 0.980365) 94.34%);
+                    border-radius: 30px;
+                    font-weight: 500;
+                    font-size: 18px;
+                    line-height: 165%;
+                    color: #FFFEFE;
+                    margin-top: 60px;
+                    transition: all 100ms ease-in-out;
+
+                    &:hover {
+                         background: linear-gradient(92.97deg, rgba(47, 228, 191, 0.71) 32.76%, #6D837E 95.79%);
+                    }
+               }
+
+               .share_btn {
+                    cursor: pointer;
+                    padding: 10px 50px;
+                    border-radius: 30px;
+                    border: 3px solid #0B1715;
+                    font-weight: 500;
+                    font-size: 18px;
+                    line-height: 165%;
+                    background: transparent;
+                    color: #FFFEFE;
+                    margin-top: 20px;
+                    transition: all 100ms ease-in-out;
+
+                    &:hover {
+                         background: #1C3933;
+                    }
+               }
+
+               .donated_people {
+                     display: flex;
+                     align-items: center;
+                     list-style: none;
+                     margin-top: 50px;
+                    //  margin: 0 0 5rem;
+                     padding: 0;
+
+                     .icon {
+                         cursor: pointer;
+                         display: flex;
+                         justify-content: center;
+                         align-items: center;
+                         width: 40px;
+                         height: 40px;
+                         border: 1px solid #397367;
+                         border-radius: 40px;
+                     }
+
+                     .people_donated {
+                         font-weight: 500;
+                         font-size: 15px;
+                         line-height: 165%;
+                         color: #FFFEFE;
+                         margin-left: 10px;
+                     }
+
+                     .link {
+                         cursor: pointer;
+                          font-weight: 500;
+                         font-size: 16px;
+                         line-height: 165%;
+                         color: #FFFEFE;
+                         margin-left: 25px;
+                     }
+               }
+          }
+     }
+
+   }
+
+//    .more_donation_info {
+//      margin-top: 60px;
+//      padding-left: 100px;
+//      padding-right: 100px;
+//      background: linear-gradient(120.83deg, #131313 0%, rgba(54, 53, 53, 0) 100%, rgba(54, 53, 53, 0) 100%);
+//      border-radius: 10px;
+//      width: 100%;
+//    }
+
+}
+     
+}

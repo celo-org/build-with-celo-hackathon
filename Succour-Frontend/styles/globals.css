@@ -22,7 +22,7 @@ a {
   box-sizing: border-box;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 7px;
 }
 
@@ -38,4 +38,4 @@ a {
 
 ::-webkit-scrollbar-thumb:hover {
  background: linear-gradient(92.59deg, #AF4AAF 6.24%, rgba(49, 7, 49, 0.8) 100%);
-}
+} */

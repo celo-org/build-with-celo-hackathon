@@ -4,7 +4,7 @@ export const NavbarContainer = styled.nav`
  position: fixed;
  width: 100%;
  height: ${(props) => (props.click ? "100vh" : "105px" )};
- background-color: black;
+ background: #070606;
  display: flex;
  z-index: 1000;
  flex-direction: column;
