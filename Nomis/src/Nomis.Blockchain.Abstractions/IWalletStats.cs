@@ -21,6 +21,11 @@
         public int TotalTransactions { get; set; }
 
         /// <summary>
+        /// Total rejected transactions on wallet (number).
+        /// </summary>
+        public int TotalRejectedTransactions { get; set; }
+
+        /// <summary>
         /// Average time interval between transactions (hours).
         /// </summary>
         public double AverageTransactionTime { get; set; }

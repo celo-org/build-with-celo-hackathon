@@ -83,6 +83,7 @@ namespace Nomis.Celoscan.Calculators
                 WalletAge = IStatCalculator<CeloWalletStats>
                     .GetWalletAge(_transactions.Select(x => x.TimeStamp)),
                 TotalTransactions = _transactions.Count(),
+                TotalRejectedTransactions = _transactions.Count(t => t.IsError == "1"),
                 MinTransactionTime = intervals.Min(),
                 MaxTransactionTime = intervals.Max(),
                 AverageTransactionTime = intervals.Average(),
