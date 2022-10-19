@@ -3,11 +3,13 @@ import Navbar from "../components/Navbar";
 import { newKitFromWeb3 } from "@celo/contractkit";
 import { useState } from "react";
 import Web3 from "web3";
+import Minting from "../components/Minting";
 let kit;
 let contract;
 
 const Home = () => {
   const [useraccount,setUserAccount] = useState(null);
+
 
   const connectWallet  =  async function (){
    
@@ -38,14 +40,15 @@ const Home = () => {
     
   
   return (
-    <div id="background">
+    <div id="background" className="bg-gray-50">
       <img
         src={process.env.PUBLIC_URL + "/landing-image.jpg"}
         alt=""
-        className="absolute top-0 z-0 brightness-50 h-screen xl:h-[800px] object-cover w-screen "
+        className="relative top-0 z-0 brightness-50 h-screen xl:h-[800px] object-cover w-screen "
       />
       <Navbar alama={connectWallet} />
       <Background />
+      <Minting />
     </div>
   );
 };
