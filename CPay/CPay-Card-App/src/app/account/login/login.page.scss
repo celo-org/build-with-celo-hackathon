@@ -1,0 +1,38 @@
+ion-content {
+    #header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    
+        img {
+            margin-top: 15%;
+            width: 125px;
+            height: 125px;
+            border-radius: 50%;
+            border: 3px solid purple;
+        }
+    }
+
+    #form {
+        margin-top: 15%;
+        padding-left: 15px;
+        padding-right: 15px;
+        text-align: center;
+
+        a {
+            text-decoration: none;
+        }
+    }
+}
+
+ion-header {
+    ion-toolbar {
+        display: flex;
+        justify-content: space-between;
+
+        ion-title {
+            font-weight: 600;
+            font-size: 22px;
+        }
+    }
+}

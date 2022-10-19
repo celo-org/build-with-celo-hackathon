@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon slot="icon-only" name="arrow-back" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title slot="end">
+      Sign Up
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form id="form">
+    <app-input type="text" placeholder="Firstname"></app-input>
+
+    <app-input type="text" placeholder="Lastname"></app-input>
+
+    <app-input type="phone" placeholder="Phone"></app-input>
+
+    <app-input type="email" placeholder="Email"></app-input>
+
+    <app-input type="password" placeholder="Password"></app-input>
+
+    <app-input type="password" placeholder="Confirm Password"></app-input>
+
+    <app-button value="Sign Up"></app-button>
+  </form>
+</ion-content>

@@ -1,0 +1,48 @@
+ion-content {
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    img {
+      margin-top: 15%;
+      margin-bottom: 15%;
+      width: 225px;
+      height: 225px;
+      border-radius: 25%;
+      border: 3px solid purple;
+    }
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-left: 15px;
+    margin-right: 15px;
+    gap: 10px;
+
+    .divider {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      height: 40px;
+  
+      .line {
+        width: 100%;
+        border-bottom: 2px solid gray;
+        margin-bottom: 20px;
+      }
+  
+      .or {
+        padding-top: 10px;
+      }
+    }
+  }
+}
+
+ion-title {
+  font-weight: 600;
+  font-size: 20px;
+}

@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>CPay-Card</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="header">
+    <img src="assets/favicon1.png">
+  </div>
+  
+  <form class="form">
+    <app-button [routerLink]="['/login']" color="primary" value="Sign In"></app-button>
+    <div class="divider">
+      <span class="line"></span>
+      <span class="or">Or</span>
+      <span class="line"></span>
+    </div>
+    <span>Create New Account.</span>
+    <app-button [routerLink]="['/register']" color="medium" value="Sign Up"></app-button>
+  </form>
+</ion-content>
