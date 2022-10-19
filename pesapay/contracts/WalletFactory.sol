@@ -40,6 +40,7 @@ contract WalletFactory is
     }
 
     function newWallet(string memory userId) public returns (bool) {
+        require(wallets[userId] == address(0), "WI: Already has Wallet");
         require(bytes(userId).length >= 32, "WI: Invalid ID"); //If the passed string is ASCII character i.e 1 byte/character
 
         address _wallet = address(new WalletProxy(address(this)));
