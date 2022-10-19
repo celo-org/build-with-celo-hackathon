@@ -23,11 +23,7 @@ function App() {
             <Route path="/proposals" element={<Proposals />} />
             <Route path="/proposal_page" element={<ProposalPage />} />
             <Route path="/create_proposal" element={<CreateProposal />} />
-<<<<<<< HEAD
-            
-=======
             <Route path="/mint_token" element={<MintTokenPage />} />
->>>>>>> 8a6c92439adc8629e2ae972ca8afa2e4c2401ffb
           </Routes>
         </Router>
       </AppContext.Provider>
