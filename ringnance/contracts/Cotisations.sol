@@ -57,6 +57,7 @@ contract Cotisation {
     }
 
 
+
     function createGroup(uint _tontineId) public {
         
         groups[numberOfGroups+1] = Group(
@@ -109,5 +110,7 @@ contract Cotisation {
     function showMembers (uint _memberId) public view returns (Member memory){
         return members[_memberId];
     }
+    
+    //Ganache Private key : 0xc46eeb86f1e846d2920cce59a6fad5c4656d5211aa9ed5c10d0f62ac0c8a2c6c
     
 }
