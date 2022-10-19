@@ -9,7 +9,7 @@ import { useWalletProvider } from '../contexts/WalletContext'
 export const useWatch = () => {
   const [watchContract, setWatchContract] = useState<Contract>()
   const { walletWithProvider } = useWalletProvider()
-  const watchAddress = '0xE9640adB185b907942ac0Be57028559725DD1083'
+  const watchAddress = '0x0Cad7f1012c6201bed812dF1181c5E5B383D96ee'
   const abi = WatchAbi.abi
   type Watch = {
     id: number

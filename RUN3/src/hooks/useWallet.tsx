@@ -10,7 +10,8 @@ export const useWallet = () => {
   useEffect(() => {
     const getWallet = async () => {
       const value = await AsyncStorage.getItem('wallet')
-      if (value && !walletWithProvider) setWalletWithProvider(JSON.parse(value))
+
+      if (value && !walletWithProvider.address) setWalletWithProvider(JSON.parse(value))
     }
     getWallet()
   }, [])

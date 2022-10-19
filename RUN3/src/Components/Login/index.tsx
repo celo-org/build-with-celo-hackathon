@@ -7,7 +7,7 @@ import '@ethersproject/shims'
 import { ethers } from 'ethers'
 
 import { StatusBar } from 'expo-status-bar'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Image } from 'react-native'
 import { Button, Text } from '@ui-kitten/components'
 import Web3Auth, { LOGIN_PROVIDER, OPENLOGIN_NETWORK, State } from '@web3auth/react-native-sdk'

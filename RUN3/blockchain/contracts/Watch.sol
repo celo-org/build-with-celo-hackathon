@@ -37,7 +37,7 @@ contract Watch is ERC721, Ownable {
   }
 
   modifier validateOwnership (address recipient) {
-      require(ownershipRecord[recipient].tokenId == 0, "User does not have a watch");
+      require(ownershipRecord[recipient].tokenId != 0, "User does not have a watch");
       _;
   }
 

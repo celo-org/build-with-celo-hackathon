@@ -7,7 +7,7 @@ import '@ethersproject/shims'
 // Import ethers now
 import { ethers } from 'ethers'
 
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import { useWalletProvider } from '../../contexts/WalletContext'
 import { colors, globalStyles } from '../../utils/globalStyles'
 import { styles } from './styles'
@@ -23,18 +23,27 @@ export default function Home() {
   const { walletWithProvider } = useWalletProvider()
   const { getWatchDataByUser, watchData } = useWatch()
   const { mintRun3Token, abi, run3TAddress } = useRun3T()
-  const [visibleTooltip, setVisibleTooltip] = useState<boolean>(false)
-  const [visibleTooltipRun3, setVisibleTooltipRun3] = useState<boolean>(false)
+
+  const [tooltipVisible, setTooltipVisible] = useState({
+    type: '',
+    message: '',
+  })
   const [celoBalance, setCeloBalance] = useState<string>('')
   const [run3TBalance, setRun3TBalance] = useState<string>('')
   const [showWebView, setShowWebView] = useState<boolean>(false)
   const [shouldRefresh, setShouldRefresh] = useState<boolean>(true)
 
   const copyToClipboard = async () => {
-    setVisibleTooltip(true)
+    setTooltipVisible({
+      type: 'copyClipboard',
+      message: 'Your wallet address was copied to your clipboard',
+    })
     await Clipboard.setStringAsync(walletWithProvider.address)
     setTimeout(() => {
-      setVisibleTooltip(false)
+      setTooltipVisible({
+        type: '',
+        message: '',
+      })
     }, 3000)
   }
 
@@ -86,10 +95,10 @@ export default function Home() {
                   COPY
                 </Button>
               )}
-              visible={visibleTooltip}
-              onBackdropPress={() => setVisibleTooltip(false)}
+              visible={tooltipVisible.type === 'copyClipboard'}
+              onBackdropPress={() => setTooltipVisible({ type: '', message: '' })}
             >
-              Your wallet address was copied to your clipboard
+              {tooltipVisible.message}
             </Tooltip>
           )}
         />
@@ -105,6 +114,7 @@ export default function Home() {
     <View style={styles.wrapper}>
       <View>
         <ListItem
+          key="1"
           title={`Address: ${walletWithProvider.address}`}
           accessoryLeft={() => <FontAwesomeIcon color={colors.secondary} icon={faWallet} size={50} />}
           accessoryRight={() => (
@@ -114,15 +124,21 @@ export default function Home() {
                   COPY
                 </Button>
               )}
-              visible={visibleTooltip}
-              onBackdropPress={() => setVisibleTooltip(false)}
+              visible={tooltipVisible.type === 'copyClipboard'}
+              onBackdropPress={() =>
+                setTooltipVisible({
+                  type: '',
+                  message: '',
+                })
+              }
             >
-              Your wallet address was copied to your clipboard
+              {tooltipVisible.message}
             </Tooltip>
           )}
         />
         <Divider />
         <ListItem
+          key="2"
           title={`CELO Balance: ${celoBalance}`}
           accessoryLeft={() => <Avatar style={styles.celoLogo} source={require('../../../assets/celo-logo.png')} />}
           accessoryRight={() => (
@@ -133,6 +149,7 @@ export default function Home() {
         />
         <Divider />
         <ListItem
+          key="3"
           title={`RUN3T Balance: ${run3TBalance}`}
           accessoryLeft={() => <Avatar style={styles.celoLogo} source={require('../../../assets/RUN3-isologo-01.png')} />}
           accessoryRight={() => (
@@ -140,10 +157,16 @@ export default function Home() {
               anchor={() => (
                 <Button
                   onPress={async () => {
-                    setVisibleTooltipRun3(true)
+                    setTooltipVisible({
+                      message: 'Your will receive 100 RUN3T soon',
+                      type: 'run3t',
+                    })
                     await mintRun3Token(walletWithProvider.address)
                     setTimeout(() => {
-                      setVisibleTooltip(false)
+                      setTooltipVisible({
+                        message: '',
+                        type: '',
+                      })
                     }, 3000)
                   }}
                   style={[styles.btnItem, globalStyles.secondaryBg]}
@@ -152,17 +175,61 @@ export default function Home() {
                   GET RUN3T
                 </Button>
               )}
-              visible={visibleTooltipRun3}
-              onBackdropPress={() => setVisibleTooltipRun3(false)}
+              visible={tooltipVisible.type === 'run3t'}
+              onBackdropPress={() =>
+                setTooltipVisible({
+                  message: '',
+                  type: '',
+                })
+              }
             >
-              Your will receive 100 RUN3T soon
+              {tooltipVisible.message}
             </Tooltip>
           )}
         />
         <Divider />
         <ListItem
-          title={`${watchData?.name || 'Press Refresh to get this NFT'}`}
+          key="4"
+          title={`${watchData?.name || 'Press "GET NFT", wait a few minutes and press refresh to get the watch'}`}
           accessoryLeft={() => <Avatar style={styles.celoLogo} source={require('../../../assets/Reloj_verde.png')} />}
+          accessoryRight={() => (
+            <Tooltip
+              anchor={() =>
+                !watchData?.name ? (
+                  <Button
+                    onPress={async () => {
+                      setTooltipVisible({
+                        type: 'watch',
+                        message: 'Your will receive an NFT Watch soon',
+                      })
+                      await getWatchDataByUser()
+                      setTimeout(() => {
+                        setTooltipVisible({
+                          type: '',
+                          message: '',
+                        })
+                      }, 3000)
+                    }}
+                    style={[styles.btnItem, globalStyles.secondaryBg]}
+                    size="small"
+                  >
+                    GET NFT
+                  </Button>
+                ) : (
+                  <Text />
+                )
+              }
+              visible={tooltipVisible.type === 'watch'}
+              onBackdropPress={() =>
+                setTooltipVisible({
+                  type: '',
+                  message: '',
+                })
+              }
+            >
+              {tooltipVisible.message}
+            </Tooltip>
+          )}
         />
         <Divider />
       </View>

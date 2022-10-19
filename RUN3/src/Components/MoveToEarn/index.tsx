@@ -11,8 +11,8 @@ import { Pedometer } from 'expo-sensors'
 import { colors, globalStyles } from '../../utils/globalStyles'
 import { AnimatedCircularProgress } from 'react-native-circular-progress'
 import { styles } from './style'
-import { Button } from '@ui-kitten/components'
-import { faWallet } from '@fortawesome/free-solid-svg-icons'
+import { Button, Card } from '@ui-kitten/components'
+import { faCoins } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { useAsyncStorage } from '@react-native-async-storage/async-storage'
 import { useWatch } from '../../hooks/useWatch'
@@ -39,12 +39,10 @@ export default function MoveToEarn() {
 
   const subscribe = () => {
     subscription.current = Pedometer.watchStepCount((result) => {
-      if (result.steps <= stepsToComplete) {
-        setPedometer((prev) => ({
-          ...prev,
-          currentStepCount: result.steps,
-        }))
-      }
+      setPedometer((prev) => ({
+        ...prev,
+        currentStepCount: result.steps,
+      }))
     })
 
     Pedometer.isAvailableAsync().then(
@@ -75,11 +73,20 @@ export default function MoveToEarn() {
         mintTxUnsigned.gasLimit = ethers.BigNumber.from(1000000)
         mintTxUnsigned.gasPrice = await walletWithProvider.getGasPrice()
         const mintTxSigned = await walletWithProvider.signTransaction(mintTxUnsigned)
-        console.log('logP', provider)
         const submittedTx = await provider.sendTransaction(mintTxSigned)
         const mintReceipt = await submittedTx.wait()
 
-        if (mintReceipt.status === 0) throw new Error('Mint transaction failed')
+        if (mintReceipt.status === 0) {
+          alert('Transaction failed, sorry please try again')
+        } else {
+          unsubscribe()
+          setPedometer((prev) => ({
+            ...prev,
+            pastStepCount: 0,
+            currentStepCount: 0,
+          }))
+          subscribe()
+        }
       }
     } catch (e) {
       console.log('error', e)
@@ -121,7 +128,7 @@ export default function MoveToEarn() {
   if (!watchData)
     return (
       <View style={globalStyles.container}>
-        <Text style={{ margin: 8, fontSize: 20 }}>You don't have an NFT Watch yet, press refresh in the user page</Text>
+        <Text style={{ margin: 8, fontSize: 20 }}>You don't have an NFT Watch yet, press "GET NFT" in the user page</Text>
       </View>
     )
   return (
@@ -150,21 +157,21 @@ export default function MoveToEarn() {
       </AnimatedCircularProgress>
       <View style={styles.stepsView}>
         <Text style={styles.circleText}>
-          {progressSteps} / {stepsToComplete}
+          {progressSteps > 100 ? 100 : progressSteps} / {stepsToComplete}
         </Text>
         <View style={styles.stepsLabel}>
           <Text style={styles.stepsText}>STEPS</Text>
         </View>
       </View>
-      {/* {progressSteps >= stepsToComplete && ( */}
-      <Button
-        onPress={collectReward}
-        accessoryLeft={<FontAwesomeIcon color={'#FFF'} icon={faWallet} size={20} />}
-        style={[globalStyles.primaryBg, styles.btnRewards]}
-      >
-        COLLECT REWARDS
-      </Button>
-      {/* )} */}
+      {progressSteps >= stepsToComplete && (
+        <Button
+          onPress={collectReward}
+          accessoryLeft={<FontAwesomeIcon color={'#FFF'} icon={faCoins} size={20} />}
+          style={[globalStyles.primaryBg, styles.btnRewards]}
+        >
+          COLLECT REWARDS
+        </Button>
+      )}
     </View>
   )
 }
