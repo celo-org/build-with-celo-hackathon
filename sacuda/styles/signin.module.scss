@@ -1,0 +1,54 @@
+.pageContainer {
+  margin: 4rem 0 2rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  transition: 1000ms ease-out;
+
+  h1 {
+    font-size: 2rem;
+    margin-top: 1.5rem;
+  }
+}
+
+.form {
+  display: block;
+  width: 100%;
+  max-width: 450px;
+  margin-top: 2rem;
+  padding: 2rem 1.5rem;
+  border: 1px solid rgb(228, 228, 228);
+  box-shadow: rgba(192, 202, 211, 0.2) 0px 8px 24px;
+  border-radius: 0.5rem;
+
+  p {
+    font-size: 1rem;
+  }
+
+  input {
+    display: block;
+    width: 100%;
+    margin-top: 0.7rem;
+    font-size: 1.1rem;
+    padding: 1.5rem 1rem;
+  }
+
+  button {
+    margin-top: 1.2rem;
+    width: 100%;
+  }
+}
+
+.spinner {
+  animation: loading 700ms linear infinite;
+  margin: 0 0.5rem;
+}
+
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
