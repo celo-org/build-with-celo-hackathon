@@ -1,7 +1,9 @@
 import RehemaContractAbi from "../components/contractjsonfiles/RehemaToken.json";
+import JoinCommunityAbi  from "../components/contractjsonfiles/joinCommunity.json";
 import { newKitFromWeb3 } from "@celo/contractkit";
 import { useState,useEffect } from "react";
 import Web3 from "web3";
+
 
 let kit ;
 let contract;
@@ -33,7 +35,8 @@ settotalsup(total);
 
 }
 
-  const connectWallet  =  async function (activate=false){
+
+  const connectWallet  =  async function (){
    
       if (window.celo) {
         
@@ -46,10 +49,7 @@ settotalsup(total);
     
           const accounts = await kit.web3.eth.getAccounts();
           kit.defaultAccount = accounts[0];
-          // setAccounts(accounts[0]);
-          if(activate){
-            contractAcivate = new kit.web3.eth.Contract(RehemaContractAbi,RehemaContract);
-          }
+         
           contract = new kit.web3.eth.Contract(RehemaContractAbi,RehemaContract);
     
         } catch (error) {
@@ -63,9 +63,9 @@ settotalsup(total);
       alert(text)
     }
     useEffect(()=>{
-      connectWallet()
-      connectWallet(true)
-      checkbalance()
+      connectWallet();
+      checkbalance();
+      
     },[])
 
   return (
@@ -79,8 +79,8 @@ settotalsup(total);
             onChange={(e)=>setRehemaAmount(e.target.value)} 
             placeholder="Enter Number of Tokens to Mint.."
           />
-            <button onClick={()=>{}} className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-bold leading-none text-white focus:outline-none bg-blue-500 border rounded hover:bg-blue-600 py-3 px-5 w-[200px] font-open m-5">
-            Activate Tokens
+            <button onClick={()=>{checkbalance()}} className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-bold leading-none text-white focus:outline-none bg-blue-500 border rounded hover:bg-blue-600 py-3 px-5 w-[200px] font-open m-5">
+            Check Balance
           </button>
           <button onClick={()=>{mintRehemaTokens(rehemaamount)}}  className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-bold leading-none text-white focus:outline-none bg-blue-500 border rounded hover:bg-blue-600 py-3 px-5 w-[200px] font-open m-5">
             only Admin Mint
