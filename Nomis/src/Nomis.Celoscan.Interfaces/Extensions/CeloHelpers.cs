@@ -2,7 +2,7 @@
 
 using Nomis.Celoscan.Interfaces.Models;
 
-namespace Nomis.Celoscan.Extensions
+namespace Nomis.Celoscan.Interfaces.Extensions
 {
     /// <summary>
     /// Extension methods for celo.

@@ -1,7 +1,8 @@
 ﻿using System.Numerics;
 
 using Nomis.Blockchain.Abstractions.Calculators;
-using Nomis.Celoscan.Extensions;
+using Nomis.Blockchain.Abstractions.Models;
+using Nomis.Celoscan.Interfaces.Extensions;
 using Nomis.Celoscan.Interfaces.Models;
 using Nomis.Utils.Extensions;
 
@@ -77,6 +78,12 @@ namespace Nomis.Celoscan.Calculators
             var contractsCreated = _transactions.Count(x => !string.IsNullOrWhiteSpace(x.ContractAddress));
             var totalTokens = _ecr20TokenTransfers.Select(x => x.TokenSymbol).Distinct();
 
+            var turnoverIntervalsDataList =
+                _transactions.Select(x => new TurnoverIntervalsData(
+                    x.TimeStamp!.ToDateTime(),
+                    BigInteger.TryParse(x.Value, out var value) ? value : 0,
+                    x.From?.Equals(_address, StringComparison.InvariantCultureIgnoreCase) == true));
+
             return new()
             {
                 Balance = _balance.ToCelo(),
@@ -87,15 +94,9 @@ namespace Nomis.Celoscan.Calculators
                 MinTransactionTime = intervals.Min(),
                 MaxTransactionTime = intervals.Max(),
                 AverageTransactionTime = intervals.Average(),
-                WalletTurnover = _transactions.Sum(x =>
-                {
-                    if (ulong.TryParse(x.Value, out var value))
-                    {
-                        return (decimal)value;
-                    }
-
-                    return (decimal)0;
-                }).ToCelo(),
+                WalletTurnover = _transactions.Sum(x => decimal.TryParse(x.Value, out var value) ? value : 0).ToCelo(),
+                TurnoverIntervals = IStatCalculator<CeloWalletStats>
+                    .GetTurnoverIntervals<CeloTransactionIntervalData>(turnoverIntervalsDataList, _transactions.Min(x => x.TimeStamp!.ToDateTime())),
                 LastMonthTransactions = _transactions.Count(x => x.TimeStamp!.ToDateTime() > monthAgo),
                 LastYearTransactions = _transactions.Count(x => x.TimeStamp!.ToDateTime() > yearAgo),
                 TimeFromLastTransaction = (int)((DateTime.UtcNow - _transactions.OrderBy(x => x.TimeStamp).Last().TimeStamp!.ToDateTime()).TotalDays / 30),

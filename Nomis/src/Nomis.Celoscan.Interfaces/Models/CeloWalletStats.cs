@@ -53,6 +53,12 @@ namespace Nomis.Celoscan.Interfaces.Models
         [Description("The movement of funds on the wallet (CELO)")]
         public decimal WalletTurnover { get; set; }
 
+        /// <summary>
+        /// The intervals of funds movements on the wallet.
+        /// </summary>
+        [Description("The intervals of funds movements on the wallet")]
+        public IEnumerable<CeloTransactionIntervalData>? TurnoverIntervals { get; set; }
+
         /// <inheritdoc/>
         [Description("Total NFTs on wallet (number)")]
         public int NftHolding { get; set; }

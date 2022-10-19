@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 
+using Nomis.Blockchain.Abstractions.Models;
 using Nomis.Utils.Extensions;
 
 namespace Nomis.Blockchain.Abstractions.Calculators
@@ -64,6 +65,52 @@ namespace Nomis.Blockchain.Abstractions.Calculators
             foreach (var data in internalTransactionsDatas.Where(x => transactions.Contains(x.Hash)))
             {
                 result += data.Amount;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Get the intervals of funds movements on the wallet.
+        /// </summary>
+        /// <param name="transactionsAmount">Transactions necessary data.</param>
+        /// <param name="startDate">Start date for getting data.</param>
+        /// <returns>Returns collection of <see cref="ITransactionIntervalData"/>.</returns>
+        public static IEnumerable<TTransactionIntervalData> GetTurnoverIntervals<TTransactionIntervalData>(
+            IEnumerable<TurnoverIntervalsData> transactionsAmount,
+            DateTime startDate)
+            where TTransactionIntervalData : ITransactionIntervalData, new()
+        {
+            var result = new List<TTransactionIntervalData>();
+            while (startDate < DateTime.Now)
+            {
+                var amountSum = new BigInteger();
+                var fromSum = new BigInteger();
+                var transactions = transactionsAmount
+                    .Where(x => x.TimeStamp >= startDate && x.TimeStamp < startDate.AddMonths(1)).ToList();
+                foreach (var transactionData in transactions)
+                {
+                    amountSum += transactionData.Amount;
+                    if (transactionData.From)
+                    {
+                        fromSum += transactionData.Amount;
+                    }
+                }
+
+                if (transactions.Count > 0)
+                {
+                    result.Add(new()
+                    {
+                        StartDate = startDate,
+                        EndDate = startDate.AddMonths(1),
+                        AmountSum = amountSum,
+                        AmountOutSum = fromSum,
+                        AmountInSum = amountSum - fromSum,
+                        Count = transactions.Count
+                    });
+                }
+
+                startDate = startDate.AddMonths(1);
             }
 
             return result;
