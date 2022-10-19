@@ -8,6 +8,7 @@ import ProposalPage from "../pages/ProposalPage";
 import CreateProposal from "../pages/CreateProposal";
 import { AppContext } from "../contexts/AppContext";
 
+
 function App() {
 
   const [ showModal, setShowModal ] = useState(false);
@@ -21,6 +22,7 @@ function App() {
             <Route path="/proposals" element={<Proposals />} />
             <Route path="/proposal_page" element={<ProposalPage />} />
             <Route path="/create_proposal" element={<CreateProposal />} />
+            
           </Routes>
         </Router>
       </AppContext.Provider>
