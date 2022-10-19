@@ -37,6 +37,16 @@ System's Architecture:
 
 - Thanks to the Rapyd APIs we can manage users, checkout, swap and KYC of our app. (https://www.rapyd.net/)
 
+# App Main Screen:
+
+# Crypto Account:
+
+# Fiat Account:
+
+# Swap Function:
+
+
+
 ///////////////////////////////////////////////////////////////////////////
 
 Build with Celo Hackathon is a three (3) phase hackathon event focused on Regenerative Finance (#ReFi) within DAOs, NFTs, Gaming (GameFi), Social Impact (SocialFI) and developer tooling/infrastructure on the Celo platform.
