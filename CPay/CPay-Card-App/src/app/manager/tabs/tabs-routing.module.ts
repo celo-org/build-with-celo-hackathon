@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { HomePage } from 'src/app/home/home.page';
 
 import { TabsPage } from './tabs.page';
 
@@ -27,6 +28,10 @@ const routes: Routes = [
       }
     ]
   },
+  {
+    path: 'logout',
+    component: HomePage
+  }
 ];
 
 @NgModule({
