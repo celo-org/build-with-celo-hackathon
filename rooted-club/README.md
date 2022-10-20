@@ -25,6 +25,8 @@ A Hub for innovation in Agroforestry Commons.
 We are creating Agroforestry-focused spaces, protocols and incentives to support long term positive-sum interactions for knowledge sharing, training and joint ventures, while building reputation and credentials in a membership ID. 
 Thats how we build trustful social relationships to serve as a scaffold for emergent partnerships that will co-own regenerative supply chains.
 
+We think is important to register data from local hands-on agents to get more trustfull metrics about the agro-ecosystem 
+
 #### URLs
 List any URLs relevant to demonstrating your prototype
 (Work in progress...)
@@ -66,6 +68,9 @@ List any URLs relevant to demonstrating your prototype
 
 ### App Mobile
 Agroforest Dapp is a tool for agroforest agents.
+
+**Profile:**
+- 
 
 **Home:**
 - NFT Agroforest Marketplace
