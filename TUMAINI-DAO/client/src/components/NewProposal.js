@@ -2,10 +2,13 @@ import { useContext } from "react";
 import { AppContext } from "../contexts/AppContext";
 import { newKitFromWeb3 } from "@celo/contractkit";
 import { useState,useEffect } from "react";
+import TumainDaoAbi from "../components/contractjsonfiles/tumainiDao.json"
 import Web3 from "web3";
+import BigNumber from "bignumber.js"
 let kit;
 let contract;
 const NewProposal = () => {
+  const TumainiDaoContractAddress = "0xe58f4213486fe3bA22F8d7D45ADF85C2107CAe1d";
     const { showModal, setShowModal } = useContext(AppContext);
     const [useraccount,setUserAccount] = useState(null);
     const connectWallet  =  async function (){
@@ -22,6 +25,7 @@ const NewProposal = () => {
           const accounts = await kit.web3.eth.getAccounts();
           kit.defaultAccount = accounts[0];
           setUserAccount(kit.defaultAccount);
+          contract = new kit.web3.eth.Contract(TumainDaoAbi,TumainiDaoContractAddress);
           
     
         } catch (error) {
@@ -34,6 +38,7 @@ const NewProposal = () => {
     const notification =(text) =>{
       alert(text)
     }
+   
     //onpage reload
     useEffect(()=>{
       connectWallet();
