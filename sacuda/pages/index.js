@@ -4,16 +4,21 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect } from 'react';
-
 import styles from '../styles/home.module.scss';
+import walletConnect from './auth/walletConnect';
+
 
 export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const param = '';
 
   useEffect(() => {
     router.prefetch('/auth/signin');
   });
+
+  function walletRedirect() {
+    router.push('/auth/walletConnect') }
 
   return (
     <main className={styles.container}>
@@ -24,10 +29,7 @@ export default function Home() {
         Sacuda v1 
       </Heading>
       {status === 'authenticated' ? (
-        <>
-          <Text>Iniciaste la sesión como {session.user.email}</Text>
-          <Button onClick={signOut}>Cerrar sesión</Button>
-        </>
+        walletRedirect()
       ) : typeof window !== 'undefined' ? (
         <Button isLoading={status === 'loading'}>
           <Link

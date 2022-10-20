@@ -65,6 +65,7 @@ const sendWelcomeEmail = async ({ user }) => {
 export default NextAuth({
   pages: {
     signIn: '/auth/signin',
+    walletConnectPage: '/auth/walletConnect',
   },
   providers: [
     EmailProvider({
