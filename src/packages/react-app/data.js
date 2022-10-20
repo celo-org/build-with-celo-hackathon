@@ -57,7 +57,7 @@ export const features = [
   {
     heading: "$SAVEH Token",
     content: "Holders of $SAVEH Tokens have the authority to control the protocol's operation and to elect or dismiss new committee members.",
-    subText: "Buy $SAVEH on SwapScanner",
+    subText: "Buy $SAVEH on UbeSwap",
     image: "/images/Features/iconOne.png",
   },
   {
@@ -118,7 +118,7 @@ export const futurePlans = [
     text: "Launch platform through IDO",
   },
   {
-    text: "List $SAVEH token on SwapScanner",
+    text: "List $SAVEH token on UbeSwap",
   },
   {
     text: "Onboard genesis council committee members across Africa, Latin America, and Asia",

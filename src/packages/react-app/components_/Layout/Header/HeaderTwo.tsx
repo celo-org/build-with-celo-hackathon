@@ -1,18 +1,17 @@
-import React from "react";
-import { Stack, Typography } from "@mui/material";
+import * as React from "react";
 import Image from "next/image";
-import { navlinks } from "../../../data";
 import Section from "../Section";
+import Navlinks from "./Navlinks";
+import ResponsiveNav from "./ResponsiveNav";
 
 const HeaderTwo = () => {
   return (
-    <Section className=" nav-shadow">
-      <Image src="/images/Header/SH-Logo.png" width={200} height={50} />
-      <Stack direction="row" justifyContent="space-between" alignItems="center" >
-        {navlinks.map((navlink, index) => (
-          <Typography key={index} ml={2}>{navlink.title}</Typography>
-        ))}
-      </Stack>
+    <Section className="nav-shadow">
+      <a href="/">
+        <Image src="/images/Header/SH-Logo.png" width={200} height={50} />
+      </a>
+      <Navlinks />
+      <ResponsiveNav />
     </Section>
   );
 };

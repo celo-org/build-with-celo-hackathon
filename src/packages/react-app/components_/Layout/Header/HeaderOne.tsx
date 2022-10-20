@@ -11,7 +11,7 @@ const HeaderOne = () => {
 
   return (
     <Section>
-      <Typography variant="body2" className="text-sm">Buy $SAVEH token on SwapScanner</Typography>
+      <Typography variant="body2" className="text-sm">Buy $SAVEH token on UbeSwap</Typography>
       <>
       {address && (
         <>
