@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 
+import "@openzeppelin/contracts/utils/Strings.sol";
+
 pragma solidity >=0.7.0 <0.9.0;
 
 contract ROSCA {
@@ -159,16 +161,16 @@ contract ROSCA {
      *  We think the payment table isn't necessary, we can just match the amount to the "member cotisation"
      *  and consider it as payments
      */
-    function createPayment(uint _memberCotisationId, uint _amount, uint _paymentDateAndTime ) public {
+    function createPayment(uint _memberCotisationId, uint _amount) public {
         payments[numberOfPayments+1] = Payment(
             numberOfPayments+1,
             _memberCotisationId,
             _amount,
-            _paymentDateAndTime
+            block.timestamp
         );
 
         memberCotisations[_memberCotisationId].currentPaidAmount += _amount;
-        if (memberCotisations[_memberCotisationId].currentPaidAmount == getAmount(_memberCotisationId)) {
+        if (keccak256(abi.encodePacked(Strings.toString(memberCotisations[_memberCotisationId].currentPaidAmount)))  == keccak256(abi.encodePacked(Strings.toString(getAmount(_memberCotisationId))))) {
             memberCotisations[_memberCotisationId].memberHasFullyContributed = true;
         }
         paymentForMemberCotisations[numberOfPayments+1] = _memberCotisationId;
@@ -179,6 +181,13 @@ contract ROSCA {
     function getAmount(uint _memberCotisationId) public view returns (uint) {
         return tontines[cotisations[memberCotisations[_memberCotisationId].cotisationId].tontineId].amount;
     }
+
+
+    /**
+     * Functions to read datas from the Truffle Local Network
+     * 
+     */
+
 
     // a test function designed to show some informations about a tontine
     function listGroupOfTontine(uint _tontineId) public view returns (uint, uint, uint, uint) {
@@ -191,6 +200,16 @@ contract ROSCA {
         );
     }
     
+    function listNumberOfEachElements() public view returns (uint numberOfTontines, uint numberOfGroups, uint numberOfMembers, uint numberOfCotisations, uint numberOfPayments, uint numberOfMemberCotisations){
+        return (
+            numberOfTontines,
+            numberOfGroups,
+            numberOfMembers,
+            numberOfCotisations,
+            numberOfPayments,
+            numberOfMemberCotisations
+        )
+    }
     
     //we will modify this function to show all members for a specific tontine
     function listMembersOfTontine(uint _tontineId) public view returns (uint) {
@@ -201,6 +220,26 @@ contract ROSCA {
     // showing a specific member
     function showMember(uint _memberId) public view returns (Member memory){
         return members[_memberId];
+    }
+
+    function getTotalMemberCotisation(uint _memberId, uint _cotisationId) public returns (MemberCotisation memberCotisation){
+       MemberCotisation memberCotisation;
+       for(uint i = 1; i <= numberOfMemberCotisations; i++) {
+            if(keccak256(abi.encodePacked(Strings.toString(memberCotisations[i].memberId))) == keccak256(abi.encodePacked(Strings.toString(_memberId))) && keccak256(abi.encodePacked(Strings.toString(memberCotisations[i].cotisationId))) == keccak256(abi.encodePacked(Strings.toString(_cotisationId)))){
+                memberCotisation = memberCotisations[i];  
+            }
+        }
+        return memberCotisation; 
+    }
+
+    function hasMemberTotallyContributed(uint _memberId, uint _cotisationId) public view returns (bool status){
+        status = false;
+        for(uint i = 1; i <= numberOfMemberCotisations; i++) {
+            if(keccak256(abi.encodePacked(Strings.toString(memberCotisations[i].memberId))) == keccak256(abi.encodePacked(Strings.toString(_memberId))) && keccak256(abi.encodePacked(Strings.toString(memberCotisations[i].cotisationId))) == keccak256(abi.encodePacked(Strings.toString(_cotisationId))) && memberCotisations[i].memberHasFullyContributed == true){
+                status = true;
+            }
+        }
+        return status;
     }
     
     //Ganache Private key : 0xc46eeb86f1e846d2920cce59a6fad5c4656d5211aa9ed5c10d0f62ac0c8a2c6c
