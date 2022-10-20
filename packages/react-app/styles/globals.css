@@ -162,6 +162,7 @@ a {
 }
 
 
+
 .react-tabs li.react-tabs__tab--selected{
     border-color: #DD7D37;
 }
@@ -183,6 +184,22 @@ a {
     color: #3F3F3F;
 
 }
+
+
+
+
+
+
+.individual__orders .react-tabs li.react-tabs__tab--selected{
+  background: #FEF0E6;
+  border-color: #FEF0E6;
+  
+}
+.individual__orders .react-tabs li{
+ border-radius: 0.25rem;
+  
+}
+
 
 
 /* FEATURES */
