@@ -8,7 +8,7 @@ type Props = PropsWithChildren<{
   projectsInRows: Project[][];
 }>;
 
-export const Market: FC<Props> = ({ projectsInRows }) => {
+export const Market = ({ projectsInRows }: Props) => {
   return (
     <>
       <h3 className="mb-4">Toucan Carbon Credit Projects</h3>

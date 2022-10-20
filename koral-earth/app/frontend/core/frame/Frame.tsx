@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { FC, PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 import { Container } from 'react-bootstrap';
 import { TopBar } from './ui/TopBar';
 import classNames from 'classnames';
@@ -8,7 +8,7 @@ type Props = PropsWithChildren<{
   title?: string;
 }>;
 
-export const Frame: FC<Props> = ({ children, title = 'Koral Earth' }) => (
+export const Frame = ({ children, title = 'Koral Earth' }: Props) => (
   <>
     <Head>
       <title>{title}</title>
