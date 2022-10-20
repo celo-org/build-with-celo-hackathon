@@ -16,4 +16,6 @@ contract Payslice is SliceProxyFactory {
         loggerAddress = _loggerAddress;
     }
 
+    
+
 }

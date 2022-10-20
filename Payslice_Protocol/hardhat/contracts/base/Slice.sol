@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "../Logger.sol";
 import "../data/SharedData.sol";
-import "../interfaces/IExchange.sol";
+import "../interfaces/IUniswapV2.sol";
 import "../interfaces/ERC20.sol";
 import "../access/Ownable.sol";
 
@@ -116,22 +116,20 @@ contract Slice is Ownable {
         uint amountToSend;
         uint tokenUnspent;
 
-        uint chain = block.chainid;
-
         _safeTransferFrom(_inputToken, _sender, address(this), _amountInputMaximum);
 
-        if(chain != recipientAddresschainId){
+        if(block.chainid != recipientAddresschainId){
 
             //TODO: use bridge
             revert BridgingNotSupportedYet();
 
         }else if(_inputToken == targetToken){
 
-              amountToSend = _outputAmount;          
+            amountToSend = _outputAmount;          
 
-        }else {
+        } else {
             // initialize DEX exchange
-            IExchange exchange = IExchange(exchangeAddress);
+            IUniswapV2 exchange = IUniswapV2(exchangeAddress);
 
             //Approve exchange to allowance
             ERC20(_inputToken).approve(exchangeAddress, _amountInputMaximum);
@@ -143,7 +141,7 @@ contract Slice is Ownable {
                 address(this)
             );
 
-            //Remove exchange allowance
+            // //Remove exchange allowance
             ERC20(_inputToken).approve(exchangeAddress, 0);
 
             // last index is the amount sent to the targetToken
@@ -170,22 +168,12 @@ contract Slice is Ownable {
 
         
 
-        // if full amount has been collected, pay recipient
+        // if full amount has been collected, transfer tokens to recipient
         if (totalPaid >= totalReceivable) {
-            // clean paid amount record of all payers
-            uint payersNumber = payersCount.current();
-            for (uint idx; idx < payersNumber; idx++) {
-                payers[idx].amountPaid = 0;
-            }
-
-            uint totalCollectedAmount = totalPaid;
-            totalPaid = 0;
-
-            _safeTransfer(targetToken, recipientAddress, totalCollectedAmount);
-            
+            _safeTransfer(targetToken, recipientAddress, totalPaid);
         }
 
-         //send back unspent tokens
+        //send back unspent tokens
         if(tokenUnspent > 0){
             _safeTransfer(_inputToken, _sender, tokenUnspent);
         }

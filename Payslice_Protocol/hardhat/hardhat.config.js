@@ -4,25 +4,25 @@ require("dotenv").config();
 module.exports = {
   solidity: "0.8.15",
   networks: {
-    hardhat: {
-      forking: {
-        url: process.env.CELO_FERNO_RPC
-      }
-    },
-    mainnet: {
-      url: process.env.CELO_FERNO_RPC,
-      accounts: [process.env.MAIN_ACCOUNT_PRIVATE_KEY]
-    },
-    alfajores: {
-      url: process.env.ALFAJORE_FERNO_RPC,
-      accounts: [proccess.env.ACCOUNT_PRIVATE_KEY]
-    }
+    // hardhat: {
+    //   forking: {
+    //     url: process.env.CELO_FERNO_RPC
+    //   }
+    // },
+    // mainnet: {
+    //   url: process.env.CELO_FERNO_RPC,
+    //   accounts: [process.env.MAIN_ACCOUNT_PRIVATE_KEY]
+    // },
+    // alfajores: {
+    //   url: process.env.ALFAJORE_FERNO_RPC,
+    //   accounts: [process.env.ACCOUNT_PRIVATE_KEY]
+    // }
   },
-  etherscan: {
-    apiKey:{
-      alfajores: proccess.env.CELO_SCAN_API_KEY,
-      celo: proccess.env.CELO_SCAN_API_KEY
-    }
-  }
+  // etherscan: {
+  //   apiKey:{
+  //     alfajores: process.env.CELO_SCAN_API_KEY,
+  //     celo: process.env.CELO_SCAN_API_KEY
+  //   }
+  // }
   
 };
