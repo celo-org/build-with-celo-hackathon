@@ -1,8 +1,45 @@
 <ion-content fullscreen="true">
   <div class="content">
-    <app-my-card *ngFor="let c of cards"></app-my-card>
+    <!--<app-my-card *ngFor="let c of cards"></app-my-card>-->
   </div>
-  <ion-fab-button>
+
+  <ion-fab-button id="openCreateCardModal">
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
+
+  <ion-modal trigger="openCreateCardModal" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="back()">
+              <ion-icon slot="icon-only" name="arrow-back" color="primary"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          
+          <ion-title slot="end">
+              Create Card
+          </ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <div class="content">
+          <app-input type="text" placeholder="Title"></app-input>
+          <app-input type="text" placeholder="First Name"></app-input>
+          <app-input type="text" placeholder="Middle Name"></app-input>
+          <app-input type="text" placeholder="Last Name"></app-input>
+          <app-input type="text" placeholder="ID Number"></app-input>
+          <app-input type="text" placeholder="Mobile Phone Area Code"></app-input>
+          <app-input type="phone" placeholder="Mobile Phone Number"></app-input>
+          <app-input type="text" placeholder="Country"></app-input>
+          <app-input type="date" placeholder="Date of Birth"></app-input>
+          <app-input type="radio" placeholder="Request Screening"></app-input>
+          <app-input type="file" placeholder="Image"></app-input>
+
+          <app-button value="Submit" color="success"></app-button>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

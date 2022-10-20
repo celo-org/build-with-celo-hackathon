@@ -6,13 +6,19 @@ ion-content {
     align-items: center;
 
     img {
-      margin-top: 15%;
-      margin-bottom: 15%;
-      width: 225px;
-      height: 225px;
-      border-radius: 25%;
+      margin-top: 20%;
+      width: calc(100% - 30px);
+      height: calc(100% - 300px);
+      border-radius: 50%;
       border: 3px solid purple;
     }
+  }
+
+  app-button {
+    position: fixed;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
   }
 
   .form {
