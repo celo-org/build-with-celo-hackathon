@@ -184,21 +184,23 @@ const NFTDetail = () => {
             />
             <View style={styles.tokenomicsContainer}>
               <Tokenomics tokenId={nftData.tokenId} />
-              <View style={styles.tokenomicsCard}>
-                <Stake tokenId={nftData.tokenId} owner={nftDetails.data[4]} />
-                <Unstake tokenId={nftData.tokenId} />
-                <MakeOffer
-                  tokenId={nftData.tokenId}
-                  owner={nftDetails.data[4]}
-                />
-                <OfferModal
-                  offerModalVisible={offerModalVisible}
-                  setOfferModalVisible={setOfferModalVisible}
-                  chosenEventInfo={chosenEventInfo}
-                  chosenUser={chosenUser}
-                  tokenId={nftData.tokenId}
-                />
-              </View>
+              {nftDetails.data[4] !== connector.accounts[0] && (
+                <View style={styles.tokenomicsCard}>
+                  <Stake tokenId={nftData.tokenId} owner={nftDetails.data[4]} />
+                  <Unstake tokenId={nftData.tokenId} />
+                  <MakeOffer
+                    tokenId={nftData.tokenId}
+                    owner={nftDetails.data[4]}
+                  />
+                  <OfferModal
+                    offerModalVisible={offerModalVisible}
+                    setOfferModalVisible={setOfferModalVisible}
+                    chosenEventInfo={chosenEventInfo}
+                    chosenUser={chosenUser}
+                    tokenId={nftData.tokenId}
+                  />
+                </View>
+              )}
             </View>
           </View>
           <View style={styles.carouselContainer}>

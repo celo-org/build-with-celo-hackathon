@@ -52,7 +52,7 @@ const CreateNFTDetails = () => {
         screen: 'CreateNFTTokenomics',
         params: {
           nft: {
-            resource: route.params.nftImage,
+            resource: route.params.resource,
             description,
           },
         },
