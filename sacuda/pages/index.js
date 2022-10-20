@@ -5,13 +5,10 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import styles from '../styles/home.module.scss';
-import walletConnect from './auth/walletConnect';
-
 
 export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const param = '';
 
   useEffect(() => {
     router.prefetch('/auth/signin');
