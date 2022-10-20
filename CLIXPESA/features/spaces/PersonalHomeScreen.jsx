@@ -3,6 +3,7 @@ import { HeaderBackButton } from '@react-navigation/elements'
 import { useLayoutEffect } from 'react'
 
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { Pressable } from 'react-native'
 
 export default function PersonalHomeScreen({ navigation }) {
   useLayoutEffect(() => {
@@ -46,20 +47,35 @@ export default function PersonalHomeScreen({ navigation }) {
           </Box>
         </Box>
         <HStack space={2} mt={3}>
-          <HStack bg="primary.100" rounded="full" alignItems="center" ml="1" w="30%">
-            <Icon as={MaterialCommunityIcons} name="plus" size="lg" color="primary.600" m="2" />
-            <Text>Fund</Text>
-          </HStack>
-          <HStack bg="primary.100" rounded="full" alignItems="center" ml="1" w="40%">
-            <Icon
-              as={MaterialCommunityIcons}
-              name="arrow-down"
-              size="lg"
-              color="primary.600"
-              m="2"
-            />
-            <Text>Withdraw</Text>
-          </HStack>
+          <Pressable
+            width="30%"
+            onPress={() => {
+              navigation.navigate('addPersonalFund')
+            }}
+          >
+            <HStack bg="primary.100" rounded="full" alignItems="center" ml="1">
+              <Icon as={MaterialCommunityIcons} name="plus" size="lg" color="primary.600" m="2" />
+              <Text>Fund</Text>
+            </HStack>
+          </Pressable>
+
+          <Pressable
+            width="40%"
+            onPress={() => {
+              navigation.navigate('withdrawFund')
+            }}
+          >
+            <HStack bg="primary.100" rounded="full" alignItems="center" ml="1">
+              <Icon
+                as={MaterialCommunityIcons}
+                name="arrow-down"
+                size="lg"
+                color="primary.600"
+                m="2"
+              />
+              <Text>Withdraw</Text>
+            </HStack>
+          </Pressable>
 
           <Box bg="primary.100" rounded="full" alignItems="center" ml="1">
             <Icon as={MaterialCommunityIcons} name="cog" size="lg" color="primary.600" m="2" />
