@@ -9,38 +9,46 @@ import "hardhat/console.sol";
 
 contract GidiFactory is
     Initializable,
-    OwnableUpgradeable,
-    PausableUpgradeable
+    PausableUpgradeable,
+    OwnableUpgradeable
 {
     address public walletImp;
 
     mapping(string => address) public wallets;
 
-    event NewWallet(string uuid, address indexed wallet);
+    event NewWallet(string uuid, address wallet);
 
     function initialize(address _walletImp) public initializer {
+        walletImp = _walletImp;
+
         __Ownable_init();
         __Pausable_init();
-
-        walletImp = _walletImp;
     }
 
     function updateWalletImplementation(address _walletImp)
         public
         onlyOwner
-        whenPaused
+        returns (bool)
     {
         walletImp = _walletImp;
+
+        return true;
     }
 
-    function newWallet(string memory userId) public returns (bool) {
-        require(bytes(userId).length >= 32, "GF: Invalid ID"); //If the passed string is ASCII character i.e 1 byte/character
+    function pause() public onlyOwner returns (bool) {
+        _pause();
 
-        address _wallet = address(new WalletProxy(address(this)));
+        return true;
+    }
 
-        wallets[userId] = _wallet;
+    function newWallet(string memory uuid) public onlyOwner returns (bool) {
+        require(bytes(uuid).length >= 32, "XF: Invalid uuid");
 
-        emit NewWallet(userId, _wallet);
+        address wallet = address(new WalletProxy(address(this)));
+
+        wallets[uuid] = wallet;
+
+        emit NewWallet(uuid, wallet);
 
         return true;
     }
