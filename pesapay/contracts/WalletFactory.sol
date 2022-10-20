@@ -6,6 +6,7 @@ import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "./WalletProxy.sol";
+import "./EscrowProxy.sol";
 import "hardhat/console.sol";
 
 contract WalletFactory is
@@ -15,6 +16,7 @@ contract WalletFactory is
     UUPSUpgradeable
 {
     address public walletImplementation;
+    address public escrowWalletImplementation;
 
     mapping(string => address) public wallets;
 
@@ -39,11 +41,32 @@ contract WalletFactory is
         walletImplementation = _walletImp;
     }
 
+    function updateEscrow(address _escrowWalletImp)
+        public
+        onlyOwner
+        whenPaused
+    {
+        escrowWalletImplementation = _escrowWalletImp;
+    }
+
     function newWallet(string memory userId) public returns (bool) {
         require(wallets[userId] == address(0), "WI: Already has Wallet");
         require(bytes(userId).length >= 32, "WI: Invalid ID"); //If the passed string is ASCII character i.e 1 byte/character
 
         address _wallet = address(new WalletProxy(address(this)));
+
+        wallets[userId] = _wallet;
+
+        emit NewWallet(userId, _wallet);
+
+        return true;
+    }
+
+    function createEscrow(string memory userId) public returns (bool) {
+        require(wallets[userId] == address(0), "WI: Already has Wallet");
+        require(bytes(userId).length >= 32, "WI: Invalid ID"); //If the passed string is ASCII character i.e 1 byte/character
+
+        address _wallet = address(new EscrowProxy(address(this)));
 
         wallets[userId] = _wallet;
 
