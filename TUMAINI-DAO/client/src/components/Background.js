@@ -44,6 +44,7 @@ const Background = () => {
     }
    
   }
+  //todo call user balance
   const checkUserRehemaBalance = async ()=>{
     try{
      const bal =  await contract.methods.getBalanceofMember().call({from: kit.defaultAccount});
@@ -65,8 +66,7 @@ const Background = () => {
         <h3 className="text-white">We believe in empowering africa's daughters for tommorrow</h3>
         <div>
           <button className="py-3 px-8 text-white bg-black rounded-full mx-5">See the Impact</button>
-    
-          <button onClick={()=>{ checkUserRehemaBalance() }} className="py-3 px-8 text-black bg-white rounded-full mx-5">Join Us</button>
+          <button onClick={()=>{joincommunity()}} className="py-3 px-8 text-black bg-white rounded-full mx-5">Join Us</button>
           <h2>{userbalance}</h2>
         </div>
 
