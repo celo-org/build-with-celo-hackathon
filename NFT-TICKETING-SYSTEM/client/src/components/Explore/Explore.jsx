@@ -1,15 +1,18 @@
 import {
   Box,
   Container,
+  Grid,
   IconButton,
   InputAdornment,
   Stack,
+  Typography,
 } from "@mui/material";
 import React from "react";
 import { CssTextField } from "../CustomTextBox/CustomTextBox";
 import Sidebar from "../Sidebar/Sidebar";
 import SearchIcon from "@mui/icons-material/Search";
-import create from "../../assets/create.png";
+import event from "../../assets/event.png";
+import EventCard from "./EventCard";
 
 const Explore = () => {
   return (
@@ -32,37 +35,73 @@ const Explore = () => {
           </Box>
 
           <Box p={2} sx={{ overflowY: "auto", minHeight: "70vh", flex: 2 }}>
-            <Box>
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
               <CssTextField
+                size="small"
                 placeholder="Search for your events"
                 inputProps={{
                   sx: {
                     "&::placeholder": {
-                      color: "grey",
+                      color: "#7228BB",
                     },
-                    color: "grey",
+                    color: "#7228BB",
                   },
                 }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="end">
                       <IconButton type="submit">
-                        <SearchIcon sx={{ color: "red" }} />
+                        <SearchIcon sx={{ color: "#7228BB" }} />
                       </IconButton>
                     </InputAdornment>
                   ),
                 }}
               />
             </Box>
+            <Box color="#fff">
+              <Typography
+                fontWeight={400}
+                fontSize={{ xs: "20px", sm: "32px" }}
+              >
+                Event of the Month
+              </Typography>
+            </Box>
             <Box
               sx={{
-                backgroundImage: `url(${create})`,
+                borderRadius: "10px",
+                backgroundImage: `url(${event})`,
                 backgroundPosition: "center center",
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
                 height: { xs: "200px", sm: "300px" },
               }}
             ></Box>
+            <Grid container spacing={1} mt="2%">
+              <Grid item xs={12} sm={6} md={3}>
+                <EventCard />
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <EventCard />
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <EventCard />
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <EventCard />
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <EventCard />
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <EventCard />
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <EventCard />
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <EventCard />
+              </Grid>
+            </Grid>
           </Box>
         </Stack>
       </Container>
