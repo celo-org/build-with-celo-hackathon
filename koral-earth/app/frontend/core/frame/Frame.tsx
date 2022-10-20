@@ -12,7 +12,14 @@ export const Frame = ({ children, title = 'Koral Earth' }: Props) => (
   <>
     <Head>
       <title>{title}</title>
-      <meta name="description" content="Your gateway to " />
+      <meta
+        name="description"
+        content="Your gateway to getting rewards through carbon offsetting"
+      />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+      />
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <TopBar />
