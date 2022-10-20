@@ -69,9 +69,6 @@ List any URLs relevant to demonstrating your prototype
 ### App Mobile
 Agroforest Dapp is a tool for agroforest agents.
 
-**Profile:**
-- 
-
 **Home:**
 - NFT Agroforest Marketplace
 - Exibition of personal SAF NFT´s
