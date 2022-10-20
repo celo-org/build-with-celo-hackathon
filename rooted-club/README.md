@@ -56,7 +56,7 @@ List any URLs relevant to demonstrating your prototype
 - Goal: Production of tree lines and interlines of annual food species
 - Geolocation: -21.9156039, -43.8083884
 - Species: Banana, Jussara, Avocado, Mulungu, Blackberry, Daisy, Guandú, Rice, Beans, Corn, Peanuts, Andropogon, Cassava, Sugar Cane
-- Calendar of actions and harvests:
+- Calendar of actions and harvests:(linked with Agroforest App Calendar).
 
 #### Benefits
 - Access to common comunication online channel with the stewards and supporters.
@@ -64,7 +64,13 @@ List any URLs relevant to demonstrating your prototype
 - Possibility of interaction between supporters, to combine visits, experiences and access to products.
 - Passport for local events and experiences.
 
+#### App Mobile
+Agroforest Dapp is a tool for agroforest agents.
 
+**Calendars:**
+- Harvest(information about local harvests)
+- Seasonal management(tools to facilitate organization, coordenation and information sharing by the agroforest agents)
+- Events(local gastronomic experiences and cultural events)
 
 #### Next Steps(What we need to do next to turn this prototype into a working solution)
 - ReFine the next NFT´s collections, badges and passports
