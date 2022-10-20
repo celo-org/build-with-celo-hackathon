@@ -26,7 +26,7 @@ global.Buffer = global.Buffer || Buffer
 const resolvedRedirectUrl = Linking.createURL('web3auth', {})
 
 export default function Login({ navigation }: { navigation: any }) {
-  const { setWalletWithProvider, setProvider } = useWalletProvider()
+  const { setWalletWithProvider, setProvider, walletWithProvider } = useWalletProvider()
 
   const login = async () => {
     try {

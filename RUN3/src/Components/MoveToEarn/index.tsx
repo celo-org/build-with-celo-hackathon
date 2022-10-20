@@ -11,7 +11,7 @@ import { Pedometer } from 'expo-sensors'
 import { colors, globalStyles } from '../../utils/globalStyles'
 import { AnimatedCircularProgress } from 'react-native-circular-progress'
 import { styles } from './style'
-import { Button, Card } from '@ui-kitten/components'
+import { Button } from '@ui-kitten/components'
 import { faCoins } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { useAsyncStorage } from '@react-native-async-storage/async-storage'
@@ -28,13 +28,25 @@ export default function MoveToEarn() {
   const { getItem: getSteps, setItem: setSteps } = useAsyncStorage('stepsCount')
   const { watchData, getWatchDataByUser, abi, watchAddress } = useWatch()
   const { walletWithProvider, provider } = useWalletProvider()
+  const [showRunner, setShowRunner] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const subscription = useRef<Pedometer.Subscription | null>(null)
   const stepsToComplete = 100
 
   const unsubscribe = () => {
-    subscription.current && subscription.current.remove()
+    if (subscription.current) {
+      subscription.current.remove()
+    }
     subscription.current = null
+    setSteps('0')
+
+    setPedometer((prev) => ({
+      ...prev,
+      pastStepCount: 0,
+      currentStepCount: 0,
+    }))
+    setLoading(false)
   }
 
   const subscribe = () => {
@@ -65,6 +77,8 @@ export default function MoveToEarn() {
 
   const collectReward = async () => {
     try {
+      setShowRunner(true)
+      setLoading(true)
       const watchContract = new ethers.Contract(watchAddress, abi, walletWithProvider)
       // Not estimable
       // const estimatedGas = await watchContract?.estimateGas.collectReward(walletWithProvider.address)
@@ -78,13 +92,9 @@ export default function MoveToEarn() {
 
         if (mintReceipt.status === 0) {
           alert('Transaction failed, sorry please try again')
+          setLoading(false)
         } else {
           unsubscribe()
-          setPedometer((prev) => ({
-            ...prev,
-            pastStepCount: 0,
-            currentStepCount: 0,
-          }))
           subscribe()
         }
       }
@@ -96,7 +106,7 @@ export default function MoveToEarn() {
   useEffect(() => {
     const setCurrentSteps = async () => {
       if (progressSteps) {
-        //  await setSteps(String(progressSteps))
+        await setSteps(String(progressSteps))
       }
     }
     setCurrentSteps()
@@ -107,6 +117,14 @@ export default function MoveToEarn() {
       getWatchDataByUser()
     }
   }, [watchData])
+
+  useEffect(() => {
+    subscribe()
+
+    return () => {
+      unsubscribe()
+    }
+  }, [])
 
   useEffect(() => {
     const getStoredSteps = async () => {
@@ -121,16 +139,43 @@ export default function MoveToEarn() {
     getStoredSteps()
   }, [])
 
-  useEffect(() => {
-    subscribe()
-  }, [])
-
   if (!watchData)
     return (
       <View style={globalStyles.container}>
         <Text style={{ margin: 8, fontSize: 20 }}>You don't have an NFT Watch yet, press "GET NFT" in the user page</Text>
       </View>
     )
+
+  if (showRunner) {
+    return (
+      <View style={globalStyles.container}>
+        <View style={styles.runnerBox}>
+          <Text style={styles.congratsMsg}>Congratulations! you will receive 10RUN3T soon</Text>
+        </View>
+        <Image
+          source={require('../../../assets/runner.gif')}
+          style={{
+            height: 500,
+            resizeMode: 'contain',
+          }}
+        />
+        {loading ? (
+          <Text style={styles.loading}>Loading...</Text>
+        ) : (
+          <Button
+            onPress={() => {
+              setShowRunner(false)
+            }}
+            disabled={loading}
+            style={[styles.okBtn, globalStyles.primaryBg]}
+          >
+            OK
+          </Button>
+        )}
+      </View>
+    )
+  }
+
   return (
     <View style={globalStyles.container}>
       <Text style={styles.title}>
@@ -155,6 +200,17 @@ export default function MoveToEarn() {
           </View>
         )}
       </AnimatedCircularProgress>
+      <View style={styles.pedBox}>
+        <Text style={styles.pedStatus}>
+          Status:{' '}
+          {pedometer.isPedometerAvailable ? (
+            <Text style={{ fontWeight: '600' }}>Connected</Text>
+          ) : (
+            <Text style={{ fontWeight: '600' }}>Disconnected</Text>
+          )}
+        </Text>
+        <View style={pedometer.isPedometerAvailable ? [styles.circle, globalStyles.lightGreenBg] : styles.circle} />
+      </View>
       <View style={styles.stepsView}>
         <Text style={styles.circleText}>
           {progressSteps > 100 ? 100 : progressSteps} / {stepsToComplete}
