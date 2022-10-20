@@ -17,52 +17,68 @@ const Dashboard = () => {
                                     Dashboard
                                 </h1>
                             </div>
+
+
+                            <div>
+
+                            <div className='grid grids-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
+
+                                <div className="shadow w-full bg-white relative px-6 py-6 rounded border border-[#E4E7EC]">
+                                    <div className="flex items-center justify-between flex-row w-full">
+                                    <h5 className="text-gray-600">Wallet Balance</h5>
+                                    <button className="text-gray-400 text-xs rounded-full hover:bg-gray-200 p-2 transition duration-200 ease">
+                                        <ExpandMoreVertical/>
+                                    </button>
+                                    </div>
+                                    <div className='py-4'>
+                                        <div className='py-4'>
+
+                                            <h3 className="text-neutral800 text-4xl	">$ 2,000.00</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="shadow w-full bg-white relative px-6 py-6 rounded border border-[#E4E7EC">
+                                    <div className="flex items-center justify-between flex-row w-full">
+                                    <h5 className="text-gray-600">Wallet Balance</h5>
+                                    <button className="text-gray-400 text-xs rounded-full hover:bg-gray-200 p-2 transition duration-200 ease">
+                                        <ExpandMoreVertical/>
+                                    </button>
+                                    </div>
+                                    <div className='py-4'>
+                                        <div className='py-4'>
+
+                                            <h3 className="text-neutral800 text-4xl	">$ 2,000.00</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="shadow w-full bg-white relative px-6 py-6 rounded border border-[#E4E7EC">
+                                    <div className="flex items-center justify-between flex-row w-full">
+                                    <h5 className="text-gray-600">Total Offers taken</h5>
+                                    <button className="text-gray-400 text-xs rounded-full hover:bg-gray-200 p-2 transition duration-200 ease">
+                                        <ExpandMoreVertical/>
+                                        
+                                    </button>
+                                    </div>
+                                    <div className='py-4'>
+                                        <div className='py-4'>
+                                            <h3 className="text-neutral800 text-4xl	">242</h3>
+                                        </div>
+
+                                        <div>
+                                            <div className='inline-flex items-center gap-1'>
+                                                <span className='text-[#45CD85] inline-flex items-center gap-1'><UpwardIcon/> 40%</span> vs last month
+                                            </div>
+                                            
+
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
                             <div className="flex my-6 items-stretch w-full space-y-4 md:space-x-4 md:space-y-0 flex-col lg:flex-row">
                             <div className="w-full md:w-full lg:w-8/12 flex-col flex-1 md:space-y-4 h-full">
-                                <div className='grid grids-cols-1 md:grid-cols-2 gap-5'>
-
-                                    <div className="shadow w-full bg-white relative px-6 py-6 rounded">
-                                        <div className="flex items-center justify-between flex-row w-full">
-                                        <h5 className="text-gray-600">Wallet Balance</h5>
-                                        <button className="text-gray-400 text-xs rounded-full hover:bg-gray-200 p-2 transition duration-200 ease">
-                                            <ExpandMoreVertical/>
-                                        </button>
-                                        </div>
-                                        <div className='py-4'>
-                                            <div className='py-4'>
-
-                                                <h3 className="text-neutral800 text-4xl	">$ 2,000.00</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="shadow w-full bg-white relative px-6 py-6 rounded">
-                                        <div className="flex items-center justify-between flex-row w-full">
-                                        <h5 className="text-gray-600">Total Offers taken</h5>
-                                        <button className="text-gray-400 text-xs rounded-full hover:bg-gray-200 p-2 transition duration-200 ease">
-                                            <ExpandMoreVertical/>
-                                            
-                                        </button>
-                                        </div>
-                                        <div className='py-4'>
-                                            <div className='py-4'>
-                                                <h3 className="text-neutral800 text-4xl	">242</h3>
-                                            </div>
-
-                                            <div>
-                                                <div className='inline-flex items-center gap-1'>
-                                                    <span className='text-[#45CD85] inline-flex items-center gap-1'><UpwardIcon/> 40%</span> vs last month
-                                                </div>
-                                                
-
-                                            </div>
-                                            
-                                            
-                                        </div>
-                                    </div>
-
-                                    
-
-                                </div>
                                 
 
 

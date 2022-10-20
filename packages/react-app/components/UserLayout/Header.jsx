@@ -52,14 +52,19 @@ const Header = () => {
                                 </a>
                             </Link>
                             
-                            <Link href="/individual/marketplace">
-                                <a className={`block mt-4 lg:inline-block lg:mt-0 text-[#5B5B5B]  hover:bg-[#FEF0E6] px-3 py-3 mr-4 rounded-md transition-all duration-200 ease-in-out ${router.asPath === "/individual/marketplace" && 'bg-[#FEF0E6]'}`}>
-                                    Marketplace
+                            <Link href="/individual/requests">
+                                <a className={`block mt-4 lg:inline-block lg:mt-0 text-[#5B5B5B]  hover:bg-[#FEF0E6] px-3 py-3 mr-4 rounded-md transition-all duration-200 ease-in-out ${(router.asPath === "/individual/requests" || router.pathname.startsWith("/individual/requests")) && 'bg-[#FEF0E6]'}`}>
+                                    Requests
                                 </a>
                             </Link>
-                            <Link href="/transfer">
-                                <a className={`block mt-4 lg:inline-block lg:mt-0 text-[#5B5B5B]  hover:bg-[#FEF0E6] px-3 py-3 mr-4 rounded-md transition-all duration-200 ease-in-out ${router.asPath === "/transfer" && 'bg-[#FEF0E6]'}`}>
+                            <Link href="/individual/orders">
+                                <a className={`block mt-4 lg:inline-block lg:mt-0 text-[#5B5B5B]  hover:bg-[#FEF0E6] px-3 py-3 mr-4 rounded-md transition-all duration-200 ease-in-out ${router.asPath === "/individual/orders" && 'bg-[#FEF0E6]'}`}>
                                     Orders
+                                </a>
+                            </Link>
+                            <Link href="/transactions">
+                                <a className={`block mt-4 lg:inline-block lg:mt-0 text-[#5B5B5B]  hover:bg-[#FEF0E6] px-3 py-3 mr-4 rounded-md transition-all duration-200 ease-in-out ${router.asPath === "/transfer" && 'bg-[#FEF0E6]'}`}>
+                                    Transactions
                                 </a>
                             </Link>
                             
