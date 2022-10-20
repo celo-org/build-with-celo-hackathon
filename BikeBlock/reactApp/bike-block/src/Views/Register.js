@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Web3 from 'web3';
+import {Buffer} from 'buffer';
+//import * as IPFS from 'ipfs-core'
 
 function Register(props) {
 
-    const [bikeSerial,setBikeSerial] = useState("MTBC49872254357ED");
-    const [bikeMakeModel,setBikeMakeModel] = useState("");
-    const [bikeColor,setBikeColor] = useState("");
-    const [bikeUniqueCharacteristics,setBikeUniqueCharacteristics] = useState("");
+    const [bikeSerial,setBikeSerial] = useState("MTBC49872254357EE");
+    const [bikeMakeModel,setBikeMakeModel] = useState("Trek Session");
+    const [bikeColor,setBikeColor] = useState("Blue");
+    const [bikeYear,setBikeYear] = useState(new Date().getFullYear());
+    const [bikeUniqueCharacteristics,setBikeUniqueCharacteristics] = useState("Mullet Wheelset");
+
+    var imageBuffers = [];
+
+    const [txFee,setTxFee] = useState(false);
 
     let navigate = useNavigate();
+
+    useEffect(() => {
+        console.log(props);
+        getTxFee();
+      }, [props.account]);
 
 
     const handleChange = (event) => {
@@ -30,28 +42,107 @@ function Register(props) {
         
     };
 
-    const handleSubmit = (event) => {
+    const getTxFee = () => {
+        if(props.account == null){return}
+        const serialHash = Web3.utils.keccak256("1");
+        let tx = props.bikeBlock.methods.safeMint(serialHash,props.account,"asset url")
+        let gas = tx.estimateGas();
+        let gasEstimate;
+        gas.then(function(result) {
+            gasEstimate = result;
+            return props.web3.eth.getGasPrice();
+            
+        }).then(function(gasPrice) {
+            // calcualte transaction fee
+            let transactionFee = gasPrice * gasEstimate;
+            let stringTF = Web3.utils.toBN(transactionFee).toString();
+            let eth = Web3.utils.fromWei(stringTF);
+            // Get celo cost
+            console.log(eth);
+            setTxFee(eth);
+        })
+
+        
+        gas.catch((error) => {
+            console.log(error);
+        })
+
+    }
+
+    const retrieveFile = (e) => {
+        for(var f = 0; f < e.target.files.length;f++){
+            const data = e.target.files[f];
+            const reader = new window.FileReader();
+            reader.readAsArrayBuffer(data);
+            reader.onloadend = () => {
+                
+                imageBuffers.push(Buffer(reader.result));
+              console.log("Buffer data: ", Buffer(reader.result));
+            }
+        } 
+        //const data = e.target.files[0];
+
+        e.preventDefault();  
+      }
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
         event.stopPropagation();
-        
+        console.log("SUBMIT MINT");
         const web3 = props.web3;
         const serialHash = Web3.utils.keccak256(bikeSerial);
+        
+        var imageUri = [];
+        
+        for(var b = 0; b < imageBuffers.length;b++){
 
-        let proposalPromise = props.bikeBlock.methods.safeMint(serialHash,props.account,"Asset URL").send({from:props.account,gasPrice: '1000000000',gas: 5_000_000,gasLimit: 300_000});
+
+            //const results = node.add(data)
+
+            // we loop over the results because 'add' supports multiple 
+            // additions, but we only added one entry here so we only see
+            // one log line in the output
+
+            const { cid } = await props.ipfs._ipfs.add(imageBuffers[b]);
+            imageUri.push(cid);
+
+            //for await (const { cid } of results) {
+            // CID (Content IDentifier) uniquely addresses the data
+            // and can be used to get it again.
+            console.log(cid.toString())
+        }
+
+        const json = {
+            'bikeId':serialHash,
+            'bikeYear':bikeYear,
+            'bikeMokeModel':bikeMakeModel,
+            'bikeColor':bikeColor,
+            'unique':bikeUniqueCharacteristics,
+            'images':imageUri
+        }
+
+        let stringJson = JSON.stringify(json)
+        const { cid } = await props.ipfs._ipfs.add(stringJson);
+        console.log(cid);
+      
+        let proposalPromise = props.bikeBlock.methods.safeMint(serialHash,props.account,cid).send({from:props.account,gasPrice: '1000000000',gas: 5_000_000,gasLimit: 300_000});
         proposalPromise.then(function(result) {
           // tell we should reload
-          console.log("true");
+          //  console.log("true");
           console.log(result);
+          // 
+          //navigate('/bike/1');
         })
         proposalPromise.catch((error) => {
           alert(error.message)
         });
-        //navigate('/bike/1');
+      
       }
 
     return (
-        <div className="text-center w-50">
+        <div className="text-center ">
         <h2>Register Bike</h2>
+        
         <form autoComplete="off" onSubmit={handleSubmit}>
             <div className="m-3">
                 <label >Serial Number</label>
@@ -67,7 +158,7 @@ function Register(props) {
             </div>
             <div className="m-3">
                 <label htmlFor="formFileMultiple" className="form-label">Upload pictures</label>
-                <input className="form-control" type="file" id="formFileMultiple" multiple/>
+                <input className="form-control" type="file" id="formFileMultiple" onChange={retrieveFile} multiple/>
             </div>
             <div className="m-3">
                 <label >Unique Characteristics</label>
@@ -76,8 +167,9 @@ function Register(props) {
                 </textarea>
      
             </div>
-
-            <input type="submit" value="Submit" />
+            <p>Tranaction Fee: {txFee} </p>
+            <input type="submit" className="btn btn-primary m-3" value="Mint Digital Asset" />
+           
         </form>
       </div>
     )

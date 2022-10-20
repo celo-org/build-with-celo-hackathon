@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 
+
 import {
   BrowserRouter,
   Routes,
@@ -11,20 +12,26 @@ import Profile from './Views/Profile.js';
 import Bike from './Views/Bike.js';
 
 import Bountys from './Views/Bountys.js';
-import Main from './Views/Main.js';
-import NaviView from './Views/NaviView.js';
+import Main from './components/Main.js';
+import NaviView from './components/NaviView.js';
 import Report from './Views/Report.js';
 
 import { BikeBlockAbi, BikeBlockAddress} from './Contract.js'
 import Web3 from 'web3';
+//import Navbar from './components/Navbar.js';
 //import * as IPFS from 'ipfs-core';
 
 class App extends Component {
   
   constructor(props) {
     super(props)
+  
+    console.log(props.ipfs);
+    
+
     // inject web3 provider
     const web3 = new Web3(window.ethereum);
+    //const web3 = new Web3("https://alfajores-forno.celo-testnet.org")
     // init daoManager contract
     const bikeBlock = new web3.eth.Contract(BikeBlockAbi,BikeBlockAddress);
 
@@ -35,6 +42,7 @@ class App extends Component {
       askForAccount:false,
       ipfs:null
     }
+
     this.loadAccount = this.loadAccount.bind(this);
 
   }
@@ -84,6 +92,7 @@ class App extends Component {
                 bikeBlock = {this.state.bikeBlock}
                 web3 = {this.state.web3}
                 account = {this.state.account}
+                ipfs = {this.props.ipfs}
               />
             }>
             </Route>

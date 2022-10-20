@@ -80,7 +80,7 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
     // Events
     event ReportStolenBike(uint256 tokenId);
     event Mint(uint256 tokenId);
-    event Stolen(uint256 tokenId);
+    event SetStolen(uint256 tokenId);
 
     // Modifiers
     modifier checkAllowance(uint amount) {
@@ -105,12 +105,13 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
         public
         whenNotPaused
     {
-        require(checkIfRegistered(_serialHash),"Bike has already been registered");
+        require(!checkIfRegistered(_serialHash),"Bike has already been registered");
+        _tokenIds.increment();
         // Increment tokenId
         uint256 newTokenId = _tokenIds.current();
+
         _beforeTokenTransfer(address(0),_to,newTokenId);
         
-        _tokenIds.increment();
         // Mint and set uri
         _safeMint(_to, newTokenId);
         _setTokenURI(newTokenId, _uri);
@@ -163,7 +164,7 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
     view
     returns(bool)
     {
-        return(bikes[bikeId] == 0);
+        return(bikes[bikeId] != 0);
     }
 
 
@@ -220,7 +221,8 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
         bikeState[tokenId] = State.Stolen;
         // Push to stolenBikes array
         stolenBikes.push(tokenId); 
-        emit Stolen(tokenId);
+
+        emit SetStolen(tokenId);
     }
 
 

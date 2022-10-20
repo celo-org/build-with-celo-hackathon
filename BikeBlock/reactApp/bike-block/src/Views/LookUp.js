@@ -9,6 +9,9 @@ function LookUp(props) {
 
     const [bikeSerial,setBikeSerial] = useState("MTBC49872254357ED");
 
+    useEffect(() => {
+      }, [props.web3,props.bikeBlock]);
+
     const handleChange = (event) => {
         setBikeSerial(event.target.value);
     };
@@ -22,9 +25,10 @@ function LookUp(props) {
       }
 
     const lookUp = async () => {
-        
+        console.log(props);
         const serialHash = Web3.utils.keccak256(bikeSerial);
         let tokenId = await props.bikeBlock.methods.bikeLookUp(serialHash).call();
+        
         navigate('/bikes/'+tokenId);
         
     }

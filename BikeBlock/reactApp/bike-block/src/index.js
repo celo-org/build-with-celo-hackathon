@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import './App.css';
+import IPFSInfo from './IPFSInfo';
+
 import 'bootstrap/dist/css/bootstrap.css';
 
+const info = new IPFSInfo();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <App />
+    <App 
+        ipfs={info}
+    />
 );
 
 // If you want to start measuring performance in your app, pass a function

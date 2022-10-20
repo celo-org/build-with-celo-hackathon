@@ -1,4 +1,4 @@
-export const BikeBlockAddress = "0xd565502ED297921bb2D2998D10c0fA595F972408";
+export const BikeBlockAddress = "0xF2c3D091dBeA5CcB7DC6e4Da1Cf459078b327F13";
 
 export const BikeBlockAbi = [
   {
@@ -66,6 +66,19 @@ export const BikeBlockAbi = [
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "Mint",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "previousOwner",
@@ -105,6 +118,19 @@ export const BikeBlockAbi = [
       }
     ],
     "name": "ReportStolenBike",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "SetStolen",
     "type": "event"
   },
   {
