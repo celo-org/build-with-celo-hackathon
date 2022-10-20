@@ -41,6 +41,7 @@ class ClauseCreateForm extends React.Component {
 		let deedcard = null;
 		let deedcard_balance_int = 0;
 		let deedcard_balance_string = '';
+		let deedcard_creditunits = '';
 
 		this.closing = false;
 
@@ -63,6 +64,7 @@ class ClauseCreateForm extends React.Component {
 			deedcard,
 			deedcard_balance_int,
 			deedcard_balance_string,
+			deedcard_creditunits,
 			
 			loaded: false,
 			message_text: 'loading...',
@@ -145,6 +147,7 @@ class ClauseCreateForm extends React.Component {
 				let isOwner = false;
 				let deedcard_balance_int = 0;
 				let deedcard_balance_string = '';
+				let deedcard_creditunits = '';
 				
 				let currencyuuid = currency.uuid;
 				let options = {maincard: true, allow_readonly: true};
@@ -178,8 +181,13 @@ class ClauseCreateForm extends React.Component {
 				})
 				.then((pos_string) => {
 					deedcard_balance_string = pos_string;
-					this._setState({deedcard, isOwner, deedcard_balance_int, deedcard_balance_string});
+					return mvcmypwa.getCreditBalance(rootsessionuuid, walletuuid, deedcard.uuid);
 				})
+				.then((credits) => {
+					deedcard_creditunits = credits.transactionunits;
+
+					this._setState({deedcard, isOwner, deedcard_balance_int, deedcard_balance_string, deedcard_creditunits});
+				})				
 				.catch(err => {
 				});
 			}
@@ -271,6 +279,7 @@ class ClauseCreateForm extends React.Component {
 				let deedcard = null;
 				let deedcard_balance_int = 0;
 				let deedcard_balance_string = '';
+				let deedcard_creditunits = '';
 
 				const cur = await mvcmypwa.getCurrencyFromUUID(rootsessionuuid, currencyuuid)
 				.catch(err => {});
@@ -293,12 +302,14 @@ class ClauseCreateForm extends React.Component {
 						deedcard_balance_string = await mvcmypwa.formatCurrencyAmount(rootsessionuuid, currencyuuid, pos);
 					}
 	
+					let credits = deedcard_creditunits = await mvcmypwa.getCreditBalance(rootsessionuuid, walletuuid, deedcard.uuid);
+					deedcard_creditunits = credits.transactionunits;
 				}
 				
 			
 				this._setState({title, description, currency, 
 					isOwner,
-					deedcard, deedcard_balance_int, deedcard_balance_string });
+					deedcard, deedcard_balance_int, deedcard_balance_string, deedcard_creditunits });
 			}
 			else {
 				this.app.error('no data object for clause create form')
@@ -490,7 +501,7 @@ class ClauseCreateForm extends React.Component {
 	
 	// rendering
 	renderDeedCardPart() {
-		let { currency, remotewallet, connection, deedcard, signingkey, deedcard_balance_string } = this.state;
+		let { currency, remotewallet, connection, deedcard, signingkey, deedcard_balance_string, deedcard_creditunits } = this.state;
 
 		return (
 			<span>
@@ -505,13 +516,13 @@ class ClauseCreateForm extends React.Component {
 							/>
 						</span>
 						<span className="CardBalanceCol">
-							<FormLabel>Your Balance</FormLabel>
+							<FormLabel># credits units</FormLabel>
 							<FormControl
 								className="CardBalanceCol"
 								disabled
 								autoFocus
 								type="text"
-								value={deedcard_balance_string}
+								value={deedcard_creditunits}
 							/>
 						</span>
 					</FormGroup> :
@@ -536,13 +547,13 @@ class ClauseCreateForm extends React.Component {
 							/>
 					</span>
 					<span className="CardBalanceCol">
-						<FormLabel>Balance</FormLabel>
+						<FormLabel># credit units</FormLabel>
 						<FormControl
 							className="CardBalanceCol"
 							disabled
 							autoFocus
 							type="text"
-							value={deedcard_balance_string}
+							value={deedcard_creditunits}
 						/>
 					</span>
 					</FormGroup>

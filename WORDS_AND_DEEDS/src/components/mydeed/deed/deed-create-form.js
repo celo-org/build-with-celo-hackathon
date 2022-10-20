@@ -77,19 +77,16 @@ class DeedCreateForm extends React.Component {
 		return this.app.getDeedClientObject().getConnectionFromRpc(rpc);
 	}
 
-	_getTxConnection(feelevel) {
-		let connection = {type: 'local', feelevel: feelevel};	
-		
-		if (this.state.remotewallet) {
-			connection = this.app.getDeedClientObject().getTxConnection(feelevel, this.state.rpc);
-		}
-
-		return connection;
-	}
-	
 	async _canCompleteTransaction(carduuid, tx_fee, feelevel) {
 		if (this.state.remotewallet && this.state.remotecreate) {
 			let {card_creditunits} = this.state;
+
+			tx_fee.required_units = tx_fee.estimated_cost_units;
+			tx_fee.estimated_fee = {};
+
+			tx_fee.estimated_fee.max_credits = 0; // not computed, but must be present
+			tx_fee.estimated_fee.execution_credits = 0; // not computed, but must be present
+			tx_fee.estimated_fee.execution_units = tx_fee.estimated_cost_units;
 
 			if (card_creditunits > tx_fee.required_units)
 				return true;
@@ -366,6 +363,7 @@ class DeedCreateForm extends React.Component {
 	// user actions
 	async _openCurrencyCard(currencyuuid) {
 		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
 
 		let rootsessionuuid = this.props.rootsessionuuid;
 		let walletuuid = this.props.currentwalletuuid;
@@ -381,6 +379,9 @@ class DeedCreateForm extends React.Component {
 			if (this.state.connection && (this.state.connection.account)) {
 				card = await mvcmypwa.getCurrencyCardWithAddress(rootsessionuuid, walletuuid, currencyuuid, this.state.connection.account);
 									 // creates read-only card if necessary
+
+				// we connect the card
+				let connected = await mvcmydeed.connectCard(rootsessionuuid, walletuuid, card.uuid, this.state.connection);
 
 				// TODO: to be coherent, we should call this.app.openCard
 				// but not really usefull, since we don't use redux for cards in pwa-apps
@@ -569,7 +570,6 @@ class DeedCreateForm extends React.Component {
 
 				// need a higher feelevel than standard this.app.getCurrencyFeeLevel(currencyuuuid)
 				let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, card.uuid, tx_fee);
-				let txconnection = this._getTxConnection(_feelevel);
 
 				let canspend = await this._canCompleteTransaction(card.uuid, tx_fee, _feelevel).catch(err => {});
 		
@@ -590,7 +590,7 @@ class DeedCreateForm extends React.Component {
 				// build tokenuri
 				minter.basetokenuri = await this.app.getBaseTokenURI(currency.uuid, currentcard.address);
 				
-				minter = await mvcmydeed.deployDeedMinter(rootsessionuuid, walletuuid, currency.uuid, currentcard.uuid, minter, txconnection)
+				minter = await mvcmydeed.deployDeedMinter(rootsessionuuid, walletuuid, currency.uuid, currentcard.uuid, minter, _feelevel)
 				.catch(err => {
 					console.log('error in DeedCreateForm.onSubmit: ' + err);
 					stop = true;
@@ -611,7 +611,6 @@ class DeedCreateForm extends React.Component {
 			tx_fee.estimated_cost_units = mint_deed_cost_units + add_clause_cost_units;
 
 			let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, currentcard.uuid, tx_fee);
-			let connection = this._getTxConnection(_feelevel);
 
 			let canspend = await this._canCompleteTransaction(currentcard.uuid, tx_fee, _feelevel).catch(err => {});
 
@@ -637,7 +636,7 @@ class DeedCreateForm extends React.Component {
 
 			_feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, currentcard.uuid, tx_fee);
 			
-			const deed = await mvcmydeed.mintDeed(rootsessionuuid, walletuuid, currency.uuid, minter, connection)
+			const deed = await mvcmydeed.mintDeed(rootsessionuuid, walletuuid, currency.uuid, minter, _feelevel)
 			.catch(err => {
 				console.log('error in DeedCreateForm.onSubmit: ' + err);
 				stop = true;

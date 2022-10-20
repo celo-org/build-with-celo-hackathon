@@ -115,22 +115,32 @@ var Module = class {
 	//
 	// Storage
 	//
-	async _putAddressLockerContent(session, wallet, currency, card, contentstring, connection) {
+	async _putAddressLockerContent(session, wallet, currency, card, contentstring) {
 		var global = this.global;
 		var _apicontrollers = this._getClientAPI();
+
+		var sessionuuid = session.getSessionUUID();
+		var walletuuid = wallet.getWalletUUID();
 
 		var mvcpwa = this._getMvcPWAObject();
 
 		var childsession;
 		var fromaccount;
 
-		if (!connection || !connection.type || (connection.type == 'local')) {
+		var canSign = await this.canCardSign(sessionuuid, walletuuid, card.uuid);
+
+		if (canSign) {
 			// get proper session to access erc721token for currency
-			childsession = await mvcpwa._getMonitoredERC721TokenSession(session, wallet, currency);
+			childsession = await this._getMonitoredERC721TokenSession(session, wallet, currency);
 			fromaccount = card._getSessionAccountObject();
 		}
 		else {
-			childsession = await this._getMonitoredRemoteWalletSession(session, wallet, currency, connection);
+			var isconnected = this._isCardConnected(session, wallet, card);
+
+			if (!isconnected)
+				return Promise.reject('card is not connected to send transactions: ' + card.address);
+
+			childsession = card._getSession();
 			fromaccount = card._getAccountObject(); // read-only card
 		}
 
@@ -229,14 +239,23 @@ var Module = class {
 			//return web3.eth.sendTransaction(txjson, callback);
 			return contractkitwrapper.sendTransaction(connection, txjson)
 			.then(res => {
+				if (!res || (res.success === false)) {
+					let err = 'transaction did not succeed in ContractKitWrapper';
+
+					if (callback)
+						callback(err, null);
+
+					throw err;
+				}
+
 				if (callback)
-					return callback(null, res);
+					callback(null, res);
 				
 				return res;
 			})
 			.catch(err => {
 				if (callback)
-					return callback(err, null);
+					callback(err, null);
 
 				throw err;
 			});
@@ -374,7 +393,7 @@ var Module = class {
 		if (!cardinfo)
 			return;
 
-		return await wallet.getCardFromUUID(cardinfo.uuid);
+		return wallet.getCardFromUUID(cardinfo.uuid);
 	}
 
 	
@@ -423,26 +442,133 @@ var Module = class {
 		return cardinfo;
 	}
 
-	async _deployDeedMinter(session, wallet, currency, card, minter, connection) {
+	// minter
+	async _getMonitoredERC721TokenSession(session, wallet, currency) {
+		var mvcpwa = this._getMvcPWAObject();
+
+		return mvcpwa._getMonitoredERC721TokenSession(session, wallet, currency);
+	}
+
+	async _createERC721TokenObject(session, currency, data) {
+		// for local contract objects (before deployment)
+		var global = this.global;
+		var mvcerc721module = global.getModuleObject('mvc-erc721');
+
+		var erc721token = await mvcerc721module.createERC721TokenObject(session, currency, data);
+
+		return erc721token;
+	}
+
+	async _getERC721TokenObject(session, currency, minter) {
+		// for contract objects already deployed
+
+		if (!minter || !minter.address)
+			return Promise.reject('can only instantiate minters already on the chain');
+
+		var global = this.global;
+		var mvcerc721module = global.getModuleObject('mvc-erc721');
+
+		var data = Object.create(null);
+
+		data['address'] = minter.address;
+		data['name'] = minter.name;
+		data['symbol'] = minter.symbol;
+
+		var erc721token = await mvcerc721module.createERC721TokenObject(session, currency, data);
+
+		return erc721token;
+	}
+
+	async _getMinterCard(session, wallet, currency, minter) {
+		var carduuid = minter.card_uuid;
+		var card;
+
+		if (wallet && carduuid) {
+			// if minter created through getMinter()
+			card =  await wallet.getCardFromUUID(carduuid);
+	
+			if (!card)
+				return Promise.reject('could not find card with uuid ' + carduuid);
+		}
+		else {
+			var mvcpwa = this._getMvcPWAObject();
+
+			var sessionuuid = session.getSessionUUID();
+			var walletuuid = wallet.getWalletUUID();
+			var currencyuuid = currency.uuid;
+			var address = minter.card_address;
+	
+			var cardinfo = await mvcpwa.getCurrencyCardWithAddress(sessionuuid, walletuuid, currencyuuid, address).catch(err => {});
+
+			if (!cardinfo)
+				return;
+	
+			card = await wallet.getCardFromUUID(cardinfo.uuid);
+	
+		}
+
+		return card;
+	}
+
+	async deployDeedMinter(sessionuuid, walletuuid, currencyuuid, carduuid, minter, feelevel) {
+		if (!sessionuuid)
+			return Promise.reject('session uuid is undefined');
+		
+		if (!walletuuid)
+			return Promise.reject('wallet uuid is undefined');
+		
+		if (!currencyuuid)
+			return Promise.reject('currency uuid is undefined');
+		
+		if (!carduuid)
+			return Promise.reject('card uuid is undefined');
+		
+		
 		var global = this.global;
 		var _apicontrollers = this._getClientAPI();
-
 		var mvcpwa = this._getMvcPWAObject();
+
+		var session = await _apicontrollers.getSessionObject(sessionuuid);
+		
+		if (!session)
+			return Promise.reject('could not find session ' + sessionuuid);
+		
+		var wallet = await _apicontrollers.getWalletFromUUID(session, walletuuid);
+		
+		if (!wallet)
+			return Promise.reject('could not find wallet ' + walletuuid);
 	
-		var feelevel = connection.feelevel;
+		var currency = await mvcpwa.getCurrencyFromUUID(sessionuuid, currencyuuid);
+
+		if (!currency)
+			return Promise.reject('could not find currency ' + currencyuuid);
+	
+		var card = await wallet.getCardFromUUID(carduuid);
+
+		if (!card)
+			return Promise.reject('could not find card ' + carduuid);
+
+		
+		// get proper session to access erc21token for currency
 		var childsession;
 		var fromaccount;
 
-		if (!connection || !connection.type || (connection.type == 'local')) {
-			// get proper session to access erc721token for currency
-			childsession = await mvcpwa._getMonitoredERC721TokenSession(session, wallet, currency);
+		var canSign = await this.canCardSign(sessionuuid, walletuuid, card.uuid);
+
+		if (canSign) {
+			childsession = await this._getMonitoredERC721TokenSession(session, wallet, currency);
 			fromaccount = card._getSessionAccountObject();
 		}
 		else {
-			childsession = await this._getMonitoredRemoteWalletSession(session, wallet, currency, connection);
-			fromaccount = card._getAccountObject(); // read-only card
-		}
+			var isconnected = this._isCardConnected(session, wallet, card);
 
+			if (!isconnected)
+				return Promise.reject('card is not connected to send transactions: ' + card.address);
+
+			childsession = card._getSession();
+			fromaccount = card._getAccountObject(); // read-only card
+		}			
+			
 		// create contract object (local)
 		var data = Object.create(null);
 
@@ -451,7 +577,7 @@ var Module = class {
 
 		data['basetokenuri'] = minter.basetokenuri;
 
-		var erc721token = await mvcpwa._createERC721TokenObject(childsession, currency, data);
+		var erc721token = await this._createERC721TokenObject(childsession, currency, data);
 
 		var from_card_scheme = card.getScheme();
 
@@ -470,95 +596,77 @@ var Module = class {
 		var erc721tokenaddress = erc721token.getAddress();
 
 		if (!erc721tokenaddress)
-			return Promise.reject('could not generate a minter for currency ' + currency.uuid);
+			return Promise.reject('could not generate a minter for currency ' + currencyuuid);
 
 		minter.address = erc721tokenaddress;
-		minter.card_uuid = card.uuid;
+		minter.card_uuid = carduuid;
 		minter.card_address = card.getAddress();
 
 		// we save the mapping
-		var txhash = await this._putAddressLockerContent(childsession, wallet, currency, card, erc721tokenaddress, connection);
+		var txhash = await this._putAddressLockerContent(session, wallet, currency, card, erc721tokenaddress);
 
 		minter.txhash = txhash;
 	
 		return minter;
 	}
 
-	async deployDeedMinter(sessionuuid, walletuuid, currencyuuid, carduuid, minter, connection) {
-		var mvcpwa = this._getMvcPWAObject();
-
-		if (!connection || !connection.type || (connection.type == 'local')) {
-			// use mvcpwa function, for now
-			return mvcpwa.deployDeedMinter(sessionuuid, walletuuid, currencyuuid, carduuid, minter, (connection && connection.feelevel ? connection.feelevel : null));
-		}
-		else {
-			if (!sessionuuid)
+	async mintDeed(sessionuuid, walletuuid, currencyuuid, minter, feelevel = null) {
+		if (!sessionuuid)
 			return Promise.reject('session uuid is undefined');
 		
-			if (!walletuuid)
-				return Promise.reject('wallet uuid is undefined');
-			
-			if (!currencyuuid)
-				return Promise.reject('currency uuid is undefined');
-			
-			if (!carduuid)
-				return Promise.reject('card uuid is undefined');
-				
-			var global = this.global;
-			var _apicontrollers = this._getClientAPI();
-
-			var session = await _apicontrollers.getSessionObject(sessionuuid);
-			
-			if (!session)
-				return Promise.reject('could not find session ' + sessionuuid);
-			
-			var wallet = await _apicontrollers.getWalletFromUUID(session, walletuuid);
-			
-			if (!wallet)
-				return Promise.reject('could not find wallet ' + walletuuid);
+		if (!walletuuid)
+			return Promise.reject('wallet uuid is undefined');
 		
-			var currency = await mvcpwa.getCurrencyFromUUID(sessionuuid, currencyuuid);
-
-			if (!currency)
-				return Promise.reject('could not find currency ' + currencyuuid);
-
-			var card = await wallet.getCardFromUUID(carduuid);
-	
-			if (!card)
-				return Promise.reject('could not find card ' + carduuid);
-				
-			return this._deployDeedMinter(session, wallet, currency, card, minter, connection);
-		}
-	}
-
-
-	async _mintDeed(session, wallet, currency, minter, connection) {
+		if (!currencyuuid)
+			return Promise.reject('currency uuid is undefined');
+		
+		
 		var global = this.global;
 		var _apicontrollers = this._getClientAPI();
-
 		var mvcpwa = this._getMvcPWAObject();
 
-		var card = await mvcpwa._getMinterCard(session, wallet, currency, minter);
+		var session = await _apicontrollers.getSessionObject(sessionuuid);
+		
+		if (!session)
+			return Promise.reject('could not find session ' + sessionuuid);
+		
+		var wallet = await _apicontrollers.getWalletFromUUID(session, walletuuid);
+		
+		if (!wallet)
+			return Promise.reject('could not find wallet ' + walletuuid);
+	
+		var currency = await mvcpwa.getCurrencyFromUUID(sessionuuid, currencyuuid);
+
+		if (!currency)
+			return Promise.reject('could not find currency ' + currencyuuid);
+
+		var card = await this._getMinterCard(session, wallet, currency, minter);
 
 		if (!card)
 			return Promise.reject('could not find minter card');
 
-		var feelevel = connection.feelevel;
+		// get proper session to access erc21token for currency
 		var childsession;
 		var fromaccount;
 
-		if (!connection || !connection.type || (connection.type == 'local')) {
-			// get proper session to access erc721token for currency
-			childsession = await mvcpwa._getMonitoredERC721TokenSession(session, wallet, currency);
+		var canSign = await this.canCardSign(sessionuuid, walletuuid, card.uuid);
+
+		if (canSign) {
+			childsession = await this._getMonitoredERC721TokenSession(session, wallet, currency);
 			fromaccount = card._getSessionAccountObject();
 		}
 		else {
-			childsession = await this._getMonitoredRemoteWalletSession(session, wallet, currency, connection);
+			var isconnected = this._isCardConnected(session, wallet, card);
+
+			if (!isconnected)
+				return Promise.reject('card is not connected to send transactions: ' + card.address);
+
+			childsession = card._getSession();
 			fromaccount = card._getAccountObject(); // read-only card
 		}
-		
+
 		// get contract
-		var erc721token = await mvcpwa._getERC721TokenObject(childsession, currency, minter);
+		var erc721token = await this._getERC721TokenObject(childsession, currency, minter);
 
 		var from_card_scheme = card.getScheme();
 
@@ -584,7 +692,7 @@ var Module = class {
 
 		var deed = {
 			type: 'deed',
-			currencyuuid: currency.uuid,
+			currencyuuid,
 			minter: minter.address,
 			tokenid: totalsupply,
 			txhash: 'dd-' + minter.address + '-' + totalsupply,
@@ -597,52 +705,35 @@ var Module = class {
 		return deed;
 	}
 
-	async mintDeed(sessionuuid, walletuuid, currencyuuid, minter, connection) {
-		var mvcpwa = this._getMvcPWAObject();
-
-		if (!connection || !connection.type || (connection.type == 'local')) {
-			// use mvcpwa function, for now
-			return mvcpwa.mintDeed(sessionuuid, walletuuid, currencyuuid, minter, (connection && connection.feelevel ? connection.feelevel : null));
-		}
-		else {
-			if (!sessionuuid)
+	async transferDeed(sessionuuid, walletuuid, currencyuuid, minter, deed, toaddress, feelevel = null) {
+		if (!sessionuuid)
 			return Promise.reject('session uuid is undefined');
 		
-			if (!walletuuid)
-				return Promise.reject('wallet uuid is undefined');
-			
-			if (!currencyuuid)
-				return Promise.reject('currency uuid is undefined');
-			
-			
-			var global = this.global;
-			var _apicontrollers = this._getClientAPI();
-
-			var session = await _apicontrollers.getSessionObject(sessionuuid);
-			
-			if (!session)
-				return Promise.reject('could not find session ' + sessionuuid);
-			
-			var wallet = await _apicontrollers.getWalletFromUUID(session, walletuuid);
-			
-			if (!wallet)
-				return Promise.reject('could not find wallet ' + walletuuid);
+		if (!walletuuid)
+			return Promise.reject('wallet uuid is undefined');
 		
-			var currency = await mvcpwa.getCurrencyFromUUID(sessionuuid, currencyuuid);
-
-			if (!currency)
-				return Promise.reject('could not find currency ' + currencyuuid);
-
-			return this._mintDeed(session, wallet, currency, minter, connection);
-		}
-	}
-
-
-	async _transferDeed(session, wallet, currency, minter, deed, toaddress, connection) {
+		if (!currencyuuid)
+			return Promise.reject('currency uuid is undefined');
+		
+		
 		var global = this.global;
 		var _apicontrollers = this._getClientAPI();
-
 		var mvcpwa = this._getMvcPWAObject();
+
+		var session = await _apicontrollers.getSessionObject(sessionuuid);
+		
+		if (!session)
+			return Promise.reject('could not find session ' + sessionuuid);
+		
+		var wallet = await _apicontrollers.getWalletFromUUID(session, walletuuid);
+		
+		if (!wallet)
+			return Promise.reject('could not find wallet ' + walletuuid);
+	
+		var currency = await mvcpwa.getCurrencyFromUUID(sessionuuid, currencyuuid);
+
+		if (!currency)
+			return Promise.reject('could not find currency ' + currencyuuid);
 	
 		// get card owning this deed
 		var card = await this._getDeedOwningCard(session, wallet, currency, minter, deed);
@@ -650,22 +741,28 @@ var Module = class {
 		if (!card)
 			return Promise.reject('could not find minter card');
 		
-		var feelevel = connection.feelevel;
-		var childsession;
+		// get proper session to access erc21token for currency
+		var childsession = await this._getMonitoredERC721TokenSession(session, wallet, currency);
 		var fromaccount;
 
-		if (!connection || !connection.type || (connection.type == 'local')) {
-			// get proper session to access erc721token for currency
-			childsession = await mvcpwa._getMonitoredERC721TokenSession(session, wallet, currency);
+		var canSign = await this.canCardSign(sessionuuid, walletuuid, card.uuid);
+
+		if (canSign) {
+			childsession = await this._getMonitoredERC721TokenSession(session, wallet, currency);
 			fromaccount = card._getSessionAccountObject();
 		}
 		else {
-			childsession = await this._getMonitoredRemoteWalletSession(session, wallet, currency, connection);
+			var isconnected = this._isCardConnected(session, wallet, card);
+
+			if (!isconnected)
+				return Promise.reject('card is not connected to send transactions: ' + card.address);
+
+			childsession = card._getSession();
 			fromaccount = card._getAccountObject(); // read-only card
 		}
-		
+
 		// get contract
-		var erc721token = await mvcpwa._getERC721TokenObject(childsession, currency, minter);
+		var erc721token = await this._getERC721TokenObject(childsession, currency, minter);
 
 		// sender and recipient
 		var from_card_scheme = card.getScheme();
@@ -700,45 +797,6 @@ var Module = class {
 		return txhhash;
 	}
 
-	async transferDeed(sessionuuid, walletuuid, currencyuuid, minter, deed, toaddress, connection) {
-		var mvcpwa = this._getMvcPWAObject();
-
-		if (!connection || !connection.type || (connection.type == 'local')) {
-			// use mvcpwa function, for now
-			return mvcpwa.transferDeed(sessionuuid, walletuuid, currencyuuid, minter, deed, toaddress, (connection && connection.feelevel ? connection.feelevel : null));
-		}
-		else {
-			if (!sessionuuid)
-			return Promise.reject('session uuid is undefined');
-		
-			if (!walletuuid)
-				return Promise.reject('wallet uuid is undefined');
-			
-			if (!currencyuuid)
-				return Promise.reject('currency uuid is undefined');
-			
-			
-			var global = this.global;
-			var _apicontrollers = this._getClientAPI();
-
-			var session = await _apicontrollers.getSessionObject(sessionuuid);
-			
-			if (!session)
-				return Promise.reject('could not find session ' + sessionuuid);
-			
-			var wallet = await _apicontrollers.getWalletFromUUID(session, walletuuid);
-			
-			if (!wallet)
-				return Promise.reject('could not find wallet ' + walletuuid);
-		
-			var currency = await mvcpwa.getCurrencyFromUUID(sessionuuid, currencyuuid);
-
-			if (!currency)
-				return Promise.reject('could not find currency ' + currencyuuid);
-
-			return this._transferDeed(session, wallet, currency, minter, deed, toaddress, connection);
-		}
-	}
 
 	async signClauseMetaData(sessionuuid, walletuuid, currencyuuid, minter, deed, metadata_clause) {
 		if (!sessionuuid)
@@ -777,7 +835,7 @@ var Module = class {
 		}
 		else {
 			// we are creating the deed and probably adding the first metadata clause
-			card = await mvcpwa._getMinterCard(session, wallet, currency, minter);
+			card = await this._getMinterCard(session, wallet, currency, minter);
 		}
 
 		if (!card)
@@ -850,7 +908,7 @@ var Module = class {
 		}
 		else {
 			// we are creating the deed and probably adding the first metadata clause
-			card = await mvcpwa._getMinterCard(session, wallet, currency, minter);
+			card = await this._getMinterCard(session, wallet, currency, minter);
 		}
 
 		if (!card)
@@ -863,7 +921,7 @@ var Module = class {
 		var canSign = await this.canCardSign(sessionuuid, walletuuid, card.uuid);
 
 		if (canSign) {
-			childsession = await mvcpwa._getMonitoredERC721TokenSession(session, wallet, currency);
+			childsession = await this._getMonitoredERC721TokenSession(session, wallet, currency);
 			fromaccount = card._getSessionAccountObject();
 		}
 		else {
@@ -877,7 +935,7 @@ var Module = class {
 		}
 	
 		// get contract
-		var erc721token = await mvcpwa._getERC721TokenObject(childsession, currency, minter);
+		var erc721token = await this._getERC721TokenObject(childsession, currency, minter);
 
 		var tokenid = deed.tokenid;
 

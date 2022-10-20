@@ -42,6 +42,7 @@ class DeedSellForm extends React.Component {
 		let deedcard = null;
 		let deedcard_balance_int = 0;
 		let deedcard_balance_string = '';
+		let deedcard_creditunits = '';
 
 		
 		this.closing = false;
@@ -66,6 +67,7 @@ class DeedSellForm extends React.Component {
 			deedcard,
 			deedcard_balance_int,
 			deedcard_balance_string,
+			deedcard_creditunits,
 
 			loaded: false,
 			registration_text: 'loading...',
@@ -96,6 +98,34 @@ class DeedSellForm extends React.Component {
 
 		return context.deedcard;
 	}
+
+	async _canCompleteTransaction(carduuid, tx_fee, feelevel) {
+		if (this.state.remotewallet && this.state.remotecreate) {
+			let {card_creditunits} = this.state;
+
+			tx_fee.required_units = tx_fee.estimated_cost_units;
+			tx_fee.estimated_fee = {};
+
+			tx_fee.estimated_fee.max_credits = 0; // not computed, but must be present
+			tx_fee.estimated_fee.execution_credits = 0; // not computed, but must be present
+			tx_fee.estimated_fee.execution_units = tx_fee.estimated_cost_units;
+
+			if (card_creditunits > tx_fee.required_units)
+				return true;
+			else
+				return false;
+		}
+
+		let mvcmypwa = this.getMvcMyPWAObject();
+
+		let rootsessionuuid = this.props.rootsessionuuid;
+		let walletuuid = this.props.currentwalletuuid;
+
+		var canspend = await mvcmypwa.canCompleteTransaction(rootsessionuuid, walletuuid, carduuid, tx_fee, feelevel).catch(err => {});
+
+		return canspend;
+	}
+
 	
 	// post render commit phase
 	componentDidMount() {
@@ -182,6 +212,7 @@ class DeedSellForm extends React.Component {
 				let deedcard = await this._getDeedOwningCard(currencyuuid, minter, deed).catch(err => {});
 				let deedcard_balance_int = 0;
 				let deedcard_balance_string = '';
+				let deedcard_creditunits = '';
 
 				if (deedcard) {
 					isOwner = true;
@@ -192,11 +223,14 @@ class DeedSellForm extends React.Component {
 						deedcard_balance_string = await mvcmypwa.formatCurrencyAmount(rootsessionuuid, currencyuuid, pos);
 					}
 	
+					let credits = deedcard_creditunits = await mvcmypwa.getCreditBalance(rootsessionuuid, walletuuid, deedcard.uuid);
+					deedcard_creditunits = credits.transactionunits;
+	
 				}
 
 				this._setState({currency, mintername, 
 					isOwner,
-					deedcard, deedcard_balance_int, deedcard_balance_string,
+					deedcard, deedcard_balance_int, deedcard_balance_string, deedcard_creditunits,
 					registration_text, sharelink});
 
 				dataobj.viewed = true;
@@ -243,13 +277,87 @@ class DeedSellForm extends React.Component {
 		let carduuid;
 		let card;
 
-		let {currency, saleprice, remotewallet, rpc, deedcard, signingkey} =this.state;
-
-		let remoteaccount;
+		let {currency, saleprice, deedcard, signingkey} =this.state;
 
 		this._setState({processing: true});
 
 		try {
+			if (!saleprice || (saleprice.length == 0)) {
+				this.app.alert('You need to enter a price you want for this deed');
+				this._setState({processing: false});
+				return;
+			}
+	
+			// get wallet details
+			wallet = await mvcmypwa.getWalletInfo(rootsessionuuid, walletuuid);
+
+			if (deedcard) {
+				card = deedcard;
+				carduuid = deedcard.uuid;
+			}
+			else {
+				if (signingkey) {
+					let currencyuuid = currency.uuid;
+					let options = {maincard: true, allow_readonly: true};
+		
+					card = await this.app.createCurrencyCard(currencyuuid, signingkey, options)
+					.catch(err => {
+						console.log('error in ClauseCreateForm.onSubmit: ' + err);
+					});
+	
+					if (!card) {
+						this.app.alert('could not create card from private key');
+						this._setState({processing: false});
+						return;
+					}
+				}
+				else {
+					this.app.alert('You need to provide your private key for ' + currency.name + ' in order to being able to transfer this deed');
+					this._setState({processing: false});
+					return;
+				}
+		
+			}
+
+			// register the sell offer
+			let minter = this.minter;
+			let deed = this.deed;
+
+			// check we have enough transaction credits
+			let tx_fee = {};
+			tx_fee.transferred_credit_units = 0;
+			let listing_deed_cost_units = (currency.deeds_v1.listing_deed_cost_units ? parseInt(currency.deeds_v1.listing_deed_cost_units) : 4);
+			tx_fee.estimated_cost_units = listing_deed_cost_units;
+
+			let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, deedcard.uuid, tx_fee);
+
+			let canspend = await this._canCompleteTransaction(deedcard.uuid, tx_fee, _feelevel).catch(err => {});
+
+			if (!canspend) {
+				if (tx_fee.estimated_fee.execution_credits > tx_fee.estimated_fee.max_credits) {
+					this.app.alert('The execution of this transaction is too large: ' + tx_fee.estimated_fee.execution_units + ' credit units.');
+					this._setState({processing: false});
+					return;
+				}
+				else {
+					this.app.alert('You must add transaction units to the source card. You need at least ' + tx_fee.required_units + ' credit units.');
+					this._setState({processing: false});
+					return;
+				}
+			}
+			
+
+			let tokenamount = await mvcmypwa.getCurrencyAmount(rootsessionuuid, currency.uuid, saleprice);
+			let tokenamount_int = await tokenamount.toInteger();
+
+			let txhash = await mvcmydeed.offerDeedOnSale(rootsessionuuid, walletuuid, currency.uuid, minter, deed, tokenamount_int, _feelevel);
+
+			if (!txhash) {
+				this.app.alert('Could not offer deed on sale at this time');
+				this.setState({processing: false});
+				return;
+			}
+
 
 		}
 		catch(e) {
@@ -257,9 +365,9 @@ class DeedSellForm extends React.Component {
 			this.app.error('exception in onOfferOnSale: ' + e);
 
 			this.app.alert('could not set price of deed')
-
-			this._setState({processing: false});
 		}
+
+		this._setState({processing: false});
 
 
 	}
@@ -329,7 +437,7 @@ class DeedSellForm extends React.Component {
 	
 	// rendering
 	renderDeedCardPart() {
-		let { currency, remotewallet, connection, deedcard, signingkey, deedcard_balance_string } = this.state;
+		let { currency, remotewallet, connection, deedcard, signingkey, deedcard_balance_string, deedcard_creditunits } = this.state;
 
 		return (
 			<span>
@@ -344,13 +452,13 @@ class DeedSellForm extends React.Component {
 							/>
 						</span>
 						<span className="CardBalanceCol">
-							<FormLabel>Your Balance</FormLabel>
+							<FormLabel># credit units</FormLabel>
 							<FormControl
 								className="CardBalanceCol"
 								disabled
 								autoFocus
 								type="text"
-								value={deedcard_balance_string}
+								value={deedcard_creditunits}
 							/>
 						</span>
 					</FormGroup> :
@@ -375,13 +483,13 @@ class DeedSellForm extends React.Component {
 							/>
 					</span>
 					<span className="CardBalanceCol">
-						<FormLabel>Balance</FormLabel>
+						<FormLabel># credit units</FormLabel>
 						<FormControl
 							className="CardBalanceCol"
 							disabled
 							autoFocus
 							type="text"
-							value={deedcard_balance_string}
+							value={deedcard_creditunits}
 						/>
 					</span>
 					</FormGroup>

@@ -42,6 +42,7 @@ class DeedTransferForm extends React.Component {
 		let deedcard = null;
 		let deedcard_balance_int = 0;
 		let deedcard_balance_string = '';
+		let deedcard_creditunits = '';
 
 		
 		this.closing = false;
@@ -66,6 +67,7 @@ class DeedTransferForm extends React.Component {
 			deedcard,
 			deedcard_balance_int,
 			deedcard_balance_string,
+			deedcard_creditunits,
 
 			loaded: false,
 			registration_text: 'loading...',
@@ -87,16 +89,6 @@ class DeedTransferForm extends React.Component {
 	// deed and connection methods
 	_getRemoteConnectionFromRpc(rpc) {
 		return this.app.getDeedClientObject().getConnectionFromRpc(rpc);
-	}
-
-	_getTxConnection(feelevel) {
-		let connection = {type: 'local', feelevel: feelevel};	
-		
-		if (this.state.remotewallet) {
-			connection = this.app.getDeedClientObject().getTxConnection(feelevel, this.state.rpc);
-		}
-
-		return connection;
 	}
 
 	async _canCompleteTransaction(carduuid, tx_fee, feelevel) {
@@ -208,6 +200,7 @@ class DeedTransferForm extends React.Component {
 				let deedcard = await this._getDeedOwningCard(currencyuuid, minter, deed).catch(err => {});
 				let deedcard_balance_int = 0;
 				let deedcard_balance_string = '';
+				let deedcard_creditunits = '';
 
 				if (deedcard) {
 					isOwner = true;
@@ -218,11 +211,13 @@ class DeedTransferForm extends React.Component {
 						deedcard_balance_string = await mvcmypwa.formatCurrencyAmount(rootsessionuuid, currencyuuid, pos);
 					}
 	
+					let credits = deedcard_creditunits = await mvcmypwa.getCreditBalance(rootsessionuuid, walletuuid, deedcard.uuid);
+					deedcard_creditunits = credits.transactionunits;
 				}
 
 				this._setState({currency, mintername, 
 					isOwner,
-					deedcard, deedcard_balance_int, deedcard_balance_string,
+					deedcard, deedcard_balance_int, deedcard_balance_string, deedcard_creditunits,
 					registration_text, sharelink});
 
 				dataobj.viewed = true;
@@ -342,7 +337,6 @@ class DeedTransferForm extends React.Component {
 			tx_fee.estimated_cost_units = transfer_deed_cost_units;
 
 			let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, deedcard.uuid, tx_fee);
-			let txconnection = this._getTxConnection(_feelevel);
 
 			let canspend = await this._canCompleteTransaction(deedcard.uuid, tx_fee, _feelevel).catch(err => {});
 
@@ -363,7 +357,7 @@ class DeedTransferForm extends React.Component {
 
 			deed.data = {url: deed.metadata.external_url};
 
-			const txhash = mvcmydeed.transferDeed(rootsessionuuid, walletuuid, currency.uuid, minter, deed, toaddress, txconnection)
+			const txhash = mvcmydeed.transferDeed(rootsessionuuid, walletuuid, currency.uuid, minter, deed, toaddress, _feelevel)
 			.catch(err => {
 				console.log('error in DeedTransferForm.onTransfer: ' + err);
 			});
@@ -461,7 +455,7 @@ class DeedTransferForm extends React.Component {
 	
 	// rendering
 	renderDeedCardPart() {
-		let { currency, remotewallet, connection, deedcard, signingkey, deedcard_balance_string } = this.state;
+		let { currency, remotewallet, connection, deedcard, signingkey, deedcard_balance_string, deedcard_creditunits } = this.state;
 
 		return (
 			<span>
@@ -476,13 +470,13 @@ class DeedTransferForm extends React.Component {
 							/>
 						</span>
 						<span className="CardBalanceCol">
-							<FormLabel>Your Balance</FormLabel>
+							<FormLabel># credit units</FormLabel>
 							<FormControl
 								className="CardBalanceCol"
 								disabled
 								autoFocus
 								type="text"
-								value={deedcard_balance_string}
+								value={deedcard_creditunits}
 							/>
 						</span>
 					</FormGroup> :
@@ -507,13 +501,13 @@ class DeedTransferForm extends React.Component {
 							/>
 					</span>
 					<span className="CardBalanceCol">
-						<FormLabel>Balance</FormLabel>
+						<FormLabel># credit units</FormLabel>
 						<FormControl
 							className="CardBalanceCol"
 							disabled
 							autoFocus
 							type="text"
-							value={deedcard_balance_string}
+							value={deedcard_creditunits}
 						/>
 					</span>
 					</FormGroup>
