@@ -6,23 +6,36 @@ import 'package:sustain/common/app/widgets/wrapper.dart';
 import 'package:sustain/common/theme/theme.dart';
 import 'package:sustain/common/utils/media_query.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:sustain/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(ProviderScope(child: MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
-
-  final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final Future<FirebaseApp> _fbApp = Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  @override
+  void initState() {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     SizeData();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -32,20 +45,21 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.light,
       // home: const OnboardingView(),
       home: FutureBuilder(
-          future: _fbApp,
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              log('Error loading futurebuilder in the main.dart file');
-              return const Text('Something went wrong');
-            } else if (snapshot.hasData) {
-              // return const OnboardingView();
-              return const Wrapper();
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          }),
+        future: _fbApp,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            log('Error loading futurebuilder in the main.dart file');
+            return const Text('Something went wrong');
+          } else if (snapshot.hasData) {
+            // return const OnboardingView();
+            return const Wrapper();
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
     );
   }
 }
