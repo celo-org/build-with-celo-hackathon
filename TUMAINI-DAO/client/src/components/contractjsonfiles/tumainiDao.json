@@ -227,6 +227,19 @@
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "cUSDContract",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -456,6 +469,19 @@
 	{
 		"inputs": [],
 		"name": "getStakeholderBalance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getamountsend",
 		"outputs": [
 			{
 				"internalType": "uint256",
