@@ -35,7 +35,7 @@ Blockchain is meant to revolutionalize the world but 63% of the world's populati
     4. Transfer
         - Transfer celo/cUSD to addresses by inputting the celo address or a phone number that has a linked celo address.
 
-##### Features i would you like to implement?
+##### Features i would like to implement?
 
     1. Swap cUSD to other stable coin.
     2. Transfer any other stable coin.    
