@@ -64,7 +64,7 @@ List any URLs relevant to demonstrating your prototype
 - Possibility of interaction between supporters, to combine visits, experiences and access to products.
 - Passport for local events and experiences.
 
-#### App Mobile
+### App Mobile
 Agroforest Dapp is a tool for agroforest agents.
 
 **Calendars:**
