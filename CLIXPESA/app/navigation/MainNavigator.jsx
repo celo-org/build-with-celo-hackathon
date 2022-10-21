@@ -16,6 +16,11 @@ import {
   RoscaHomeScreen,
   SelectContactsScreen,
   CustomizeGroupScreen,
+  CustomizePersonalScreen,
+  SetPersonalGoalScreen,
+  PersonalHomeScreen,
+  AddPersonalFundScreen,
+  WithdrawFundScreen,
   SetRoscaGoalScreen,
   FundSpaceScreen,
 } from 'clixpesa/features/spaces'
@@ -46,6 +51,12 @@ export default function MainNavigator() {
         <MainStack.Screen name="setRoscaGoal" component={SetRoscaGoalScreen} />
         <MainStack.Screen name="fundSpace" component={FundSpaceScreen} />
         <MainStack.Screen name="DummyModal" component={DummyScreen} />
+        <MainStack.Screen name="PersonalHome" component={PersonalHomeScreen} />
+        <MainStack.Screen name="setPersonalGoal" component={SetPersonalGoalScreen} />
+        <MainStack.Screen name="CustomizePersonal" component={CustomizePersonalScreen} />
+        <MainStack.Screen name="addPersonalFund" component={AddPersonalFundScreen} />
+        <MainStack.Screen name="withdrawFund" component={WithdrawFundScreen} />
+
         <MainStack.Screen
           name="AllTokens"
           component={AllTokensScreen}

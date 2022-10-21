@@ -12,9 +12,8 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { useSelector } from 'react-redux'
 
-export default function SpacesScreen({ navigation, route }) {
+export default function SpacesScreen({ navigation }) {
   const roscaAddress = useSelector((s) => s.spaces.userSpaces.roscas[0])
-  //const navigation = useNavigation();
   return (
     <Box flex={1} bg="muted.50" justifyContent="flex-start" p={6}>
       <Box pt={2} alignItems="center">
@@ -49,7 +48,16 @@ export default function SpacesScreen({ navigation, route }) {
             </HStack>
           </Box>
 
-          <Box bg="#fff" rounded="xl" padding="2" width="50%">
+          <Pressable
+            bg="#fff"
+            rounded="xl"
+            padding="2"
+            marginRight="2"
+            width="50%"
+            onPress={() => {
+              navigation.navigate('CustomizePersonal')
+            }}
+          >
             <AspectRatio w="100%">
               <Image
                 source={{
@@ -68,7 +76,7 @@ export default function SpacesScreen({ navigation, route }) {
                 <Icon as={MaterialCommunityIcons} name="plus" size="lg" color="primary.600" m="2" />
               </Box>
             </HStack>
-          </Box>
+          </Pressable>
         </HStack>
       </Box>
 
