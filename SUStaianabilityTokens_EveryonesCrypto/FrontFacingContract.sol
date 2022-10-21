@@ -44,12 +44,12 @@ contract FrontFace {
 //----------------------- SET ADDRESS FUNCTIONS -----------------------//
     function setTokenFactoryAddress(address _tokenFactoryAddress) public {
         require(_tokenFactoryAddress != address(0), "Account: Zero or Invalid address!");
-        require(IRoles(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT Manager!");
+        require(IRoles(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT Super Admin!");
         tokenFactoryAddress = _tokenFactoryAddress;
     }
 
     function setRolesContractAddress(address _rolesSC) public whenNotPaused {
-        require(IRoles(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT Address Manager!");
+        require(IRoles(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT Super Admin!");
         require(_rolesSC != address(0), "Account: Zero or Invalid address!");
         rolesSC = _rolesSC;
     }
