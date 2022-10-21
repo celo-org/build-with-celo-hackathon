@@ -1,0 +1,1515 @@
+{
+  "contractName": "ERC721Royalty",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "approved",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "Approval",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "operator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "approved",
+          "type": "bool"
+        }
+      ],
+      "name": "ApprovalForAll",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "Transfer",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "approve",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        }
+      ],
+      "name": "balanceOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getApproved",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "operator",
+          "type": "address"
+        }
+      ],
+      "name": "isApprovedForAll",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "name",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "ownerOf",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_salePrice",
+          "type": "uint256"
+        }
+      ],
+      "name": "royaltyInfo",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "safeTransferFrom",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "name": "safeTransferFrom",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "operator",
+          "type": "address"
+        },
+        {
+          "internalType": "bool",
+          "name": "approved",
+          "type": "bool"
+        }
+      ],
+      "name": "setApprovalForAll",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "symbol",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "tokenURI",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "transferFrom",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes4",
+          "name": "interfaceId",
+          "type": "bytes4"
+        }
+      ],
+      "name": "supportsInterface",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.13+commit.abaa5c0e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"approved\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"Approval\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"approved\",\"type\":\"bool\"}],\"name\":\"ApprovalForAll\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"approve\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"getApproved\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"isApprovedForAll\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"ownerOf\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_salePrice\",\"type\":\"uint256\"}],\"name\":\"royaltyInfo\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"safeTransferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"safeTransferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"approved\",\"type\":\"bool\"}],\"name\":\"setApprovalForAll\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"tokenURI\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Extension of ERC721 with the ERC2981 NFT Royalty Standard, a standardized way to retrieve royalty payment information. Royalty information can be specified globally for all token ids via {_setDefaultRoyalty}, and/or individually for specific token ids via {_setTokenRoyalty}. The latter takes precedence over the first. IMPORTANT: ERC-2981 only specifies a way to signal royalty information and does not enforce its payment. See https://eips.ethereum.org/EIPS/eip-2981#optional-royalty-payments[Rationale] in the EIP. Marketplaces are expected to voluntarily pay royalties together with sales, but note that this standard is not yet widely supported. _Available since v4.5._\",\"kind\":\"dev\",\"methods\":{\"approve(address,uint256)\":{\"details\":\"See {IERC721-approve}.\"},\"balanceOf(address)\":{\"details\":\"See {IERC721-balanceOf}.\"},\"getApproved(uint256)\":{\"details\":\"See {IERC721-getApproved}.\"},\"isApprovedForAll(address,address)\":{\"details\":\"See {IERC721-isApprovedForAll}.\"},\"name()\":{\"details\":\"See {IERC721Metadata-name}.\"},\"ownerOf(uint256)\":{\"details\":\"See {IERC721-ownerOf}.\"},\"royaltyInfo(uint256,uint256)\":{\"details\":\"Returns how much royalty is owed and to whom, based on a sale price that may be denominated in any unit of exchange. The royalty amount is denominated and should be paid in that same unit of exchange.\"},\"safeTransferFrom(address,address,uint256)\":{\"details\":\"See {IERC721-safeTransferFrom}.\"},\"safeTransferFrom(address,address,uint256,bytes)\":{\"details\":\"See {IERC721-safeTransferFrom}.\"},\"setApprovalForAll(address,bool)\":{\"details\":\"See {IERC721-setApprovalForAll}.\"},\"supportsInterface(bytes4)\":{\"details\":\"See {IERC165-supportsInterface}.\"},\"symbol()\":{\"details\":\"See {IERC721Metadata-symbol}.\"},\"tokenURI(uint256)\":{\"details\":\"See {IERC721Metadata-tokenURI}.\"},\"transferFrom(address,address,uint256)\":{\"details\":\"See {IERC721-transferFrom}.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/home/frederic/development/p2pmoney-dev/var/lib/git/repos/javascript/primusmoney_mytokens_webapp/react_apps/my-pwa-apps/my-deed/contracts/token/ERC721/extensions/ERC721Royalty.sol\":\"ERC721Royalty\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/frederic/development/p2pmoney-dev/var/lib/git/repos/javascript/primusmoney_mytokens_webapp/react_apps/my-pwa-apps/my-deed/contracts/interfaces/IERC2981.sol\":{\"keccak256\":\"0xa812eed728198acd2c30d06950a5bea8d68436e4f694dd892273266ec2f79f5b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://f5522afc5c222c810d9ad67c45f37cb7169452fcf76692cad10ac8153c068daa\",\"dweb:/ipfs/QmX4XgnDp7pyvojQ6g5tacrUMCf7TED2qC2vERH9Xh9feZ\"]},\"/home/frederic/development/p2pmoney-dev/var/lib/git/repos/javascript/primusmoney_mytokens_webapp/react_apps/my-pwa-apps/my-deed/contracts/token/ERC721/ERC721.sol\":{\"keccak256\":\"0x0b606994df12f0ce35f6d2f6dcdde7e55e6899cdef7e00f180980caa81e3844e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://4c827c981a552d1c76c96060e92f56b52bc20c6f9b4dbf911fe99ddbfb41f2ea\",\"dweb:/ipfs/QmW8xvJdzHrr8Ry34C7viBsgG2b8T1mL4BQWJ5CdfD9JLB\"]},\"/home/frederic/development/p2pmoney-dev/var/lib/git/repos/javascript/primusmoney_mytokens_webapp/react_apps/my-pwa-apps/my-deed/contracts/token/ERC721/IERC721.sol\":{\"keccak256\":\"0xed6a749c5373af398105ce6ee3ac4763aa450ea7285d268c85d9eeca809cdb1f\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://20a97f891d06f0fe91560ea1a142aaa26fdd22bed1b51606b7d48f670deeb50f\",\"dweb:/ipfs/QmTbCtZKChpaX5H2iRiTDMcSz29GSLCpTCDgJpcMR4wg8x\"]},\"/home/frederic/development/p2pmoney-dev/var/lib/git/repos/javascript/primusmoney_mytokens_webapp/react_apps/my-pwa-apps/my-deed/contracts/token/ERC721/IERC721Receiver.sol\":{\"keccak256\":\"0xa82b58eca1ee256be466e536706850163d2ec7821945abd6b4778cfb3bee37da\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6e75cf83beb757b8855791088546b8337e9d4684e169400c20d44a515353b708\",\"dweb:/ipfs/QmYvPafLfoquiDMEj7CKHtvbgHu7TJNPSVPSCjrtjV8HjV\"]},\"/home/frederic/development/p2pmoney-dev/var/lib/git/repos/javascript/primusmoney_mytokens_webapp/react_apps/my-pwa-apps/my-deed/contracts/token/ERC721/extensions/ERC721Royalty.sol\":{\"keccak256\":\"0x7cdc887a364b6e3f9669bb4b16582e135121437399ac69d41db15012e09b96cc\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ce1c4fcd6eafe8f6b8daf541a2cccfcd44368aa0a697c567a5b875edc8c43fea\",\"dweb:/ipfs/QmcN4HhvYveWTtcGfUY3vnzSbJyAtmgvprUW58rDLY7Vdf\"]},\"/home/frederic/development/p2pmoney-dev/var/lib/git/repos/javascript/primusmoney_mytokens_webapp/react_apps/my-pwa-apps/my-deed/contracts/token/ERC721/extensions/IERC721Metadata.sol\":{\"keccak256\":\"0x75b829ff2f26c14355d1cba20e16fe7b29ca58eb5fef665ede48bc0f9c6c74b9\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a0a107160525724f9e1bbbab031defc2f298296dd9e331f16a6f7130cec32146\",\"dweb:/ipfs/QmemujxSd7gX8A9M8UwmNbz4Ms3U9FG9QfudUgxwvTmPWf\"]},\"/home/frederic/development/p2pmoney-dev/var/lib/git/repos/javascript/primusmoney_mytokens_webapp/react_apps/my-pwa-apps/my-deed/contracts/token/common/ERC2981.sol\":{\"keccak256\":\"0x9bc4d7eb03c4e87fd5122e03cdff5f60fa360d76925980ad022b2c6fac9876f3\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9c6d7cfaac6b54599068126b75474c86ccbbaf386c3581abf82d9cda21b35c81\",\"dweb:/ipfs/QmPZteoCvkiUgv4TZxv2wiEKR5KqM83UCohHnSGw1RytpM\"]},\"/home/frederic/development/p2pmoney-dev/var/lib/git/repos/javascript/primusmoney_mytokens_webapp/react_apps/my-pwa-apps/my-deed/contracts/utils/Address.sol\":{\"keccak256\":\"0xd6153ce99bcdcce22b124f755e72553295be6abcd63804cfdffceb188b8bef10\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://35c47bece3c03caaa07fab37dd2bb3413bfbca20db7bd9895024390e0a469487\",\"dweb:/ipfs/QmPGWT2x3QHcKxqe6gRmAkdakhbaRgx3DLzcakHz5M4eXG\"]},\"/home/frederic/development/p2pmoney-dev/var/lib/git/repos/javascript/primusmoney_mytokens_webapp/react_apps/my-pwa-apps/my-deed/contracts/utils/Context.sol\":{\"keccak256\":\"0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6df0ddf21ce9f58271bdfaa85cde98b200ef242a05a3f85c2bc10a8294800a92\",\"dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3\"]},\"/home/frederic/development/p2pmoney-dev/var/lib/git/repos/javascript/primusmoney_mytokens_webapp/react_apps/my-pwa-apps/my-deed/contracts/utils/Strings.sol\":{\"keccak256\":\"0xaf159a8b1923ad2a26d516089bceca9bdeaeacd04be50983ea00ba63070f08a3\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6f2cf1c531122bc7ca96b8c8db6a60deae60441e5223065e792553d4849b5638\",\"dweb:/ipfs/QmPBdJmBBABMDCfyDjCbdxgiqRavgiSL88SYPGibgbPas9\"]},\"/home/frederic/development/p2pmoney-dev/var/lib/git/repos/javascript/primusmoney_mytokens_webapp/react_apps/my-pwa-apps/my-deed/contracts/utils/introspection/ERC165.sol\":{\"keccak256\":\"0xd10975de010d89fd1c78dc5e8a9a7e7f496198085c151648f20cba166b32582b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://fb0048dee081f6fffa5f74afc3fb328483c2a30504e94a0ddd2a5114d731ec4d\",\"dweb:/ipfs/QmZptt1nmYoA5SgjwnSgWqgUSDgm4q52Yos3xhnMv3MV43\"]},\"/home/frederic/development/p2pmoney-dev/var/lib/git/repos/javascript/primusmoney_mytokens_webapp/react_apps/my-pwa-apps/my-deed/contracts/utils/introspection/IERC165.sol\":{\"keccak256\":\"0x447a5f3ddc18419d41ff92b3773fb86471b1db25773e07f877f548918a185bf1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://be161e54f24e5c6fae81a12db1a8ae87bc5ae1b0ddc805d82a1440a68455088f\",\"dweb:/ipfs/QmP7C3CHdY9urF4dEMb9wmsp1wMxHF6nhA2yQE5SKiPAdy\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\n// OpenZeppelin Contracts (last updated v4.5.0) (token/ERC721/extensions/ERC721Royalty.sol)\n\npragma solidity ^0.8.0;\n\nimport \"../ERC721.sol\";\nimport \"../../common/ERC2981.sol\";\nimport \"../../../utils/introspection/ERC165.sol\";\n\n/**\n * @dev Extension of ERC721 with the ERC2981 NFT Royalty Standard, a standardized way to retrieve royalty payment\n * information.\n *\n * Royalty information can be specified globally for all token ids via {_setDefaultRoyalty}, and/or individually for\n * specific token ids via {_setTokenRoyalty}. The latter takes precedence over the first.\n *\n * IMPORTANT: ERC-2981 only specifies a way to signal royalty information and does not enforce its payment. See\n * https://eips.ethereum.org/EIPS/eip-2981#optional-royalty-payments[Rationale] in the EIP. Marketplaces are expected to\n * voluntarily pay royalties together with sales, but note that this standard is not yet widely supported.\n *\n * _Available since v4.5._\n */\nabstract contract ERC721Royalty is ERC2981, ERC721 {\n    /**\n     * @dev See {IERC165-supportsInterface}.\n     */\n    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721, ERC2981) returns (bool) {\n        return super.supportsInterface(interfaceId);\n    }\n\n    /**\n     * @dev See {ERC721-_burn}. This override additionally clears the royalty information for the token.\n     */\n    function _burn(uint256 tokenId) internal virtual override {\n        super._burn(tokenId);\n        _resetTokenRoyalty(tokenId);\n    }\n}\n",
+  "sourcePath": "/home/frederic/development/p2pmoney-dev/var/lib/git/repos/javascript/primusmoney_mytokens_webapp/react_apps/my-pwa-apps/my-deed/contracts/token/ERC721/extensions/ERC721Royalty.sol",
+  "ast": {
+    "absolutePath": "/home/frederic/development/p2pmoney-dev/var/lib/git/repos/javascript/primusmoney_mytokens_webapp/react_apps/my-pwa-apps/my-deed/contracts/token/ERC721/extensions/ERC721Royalty.sol",
+    "exportedSymbols": {
+      "Address": [
+        4285
+      ],
+      "Context": [
+        4541
+      ],
+      "ERC165": [
+        5992
+      ],
+      "ERC2981": [
+        3990
+      ],
+      "ERC721": [
+        2759
+      ],
+      "ERC721Royalty": [
+        3344
+      ],
+      "IERC165": [
+        6004
+      ],
+      "IERC2981": [
+        1107
+      ],
+      "IERC721": [
+        2875
+      ],
+      "IERC721Metadata": [
+        3527
+      ],
+      "IERC721Receiver": [
+        2893
+      ],
+      "Strings": [
+        4841
+      ]
+    },
+    "id": 3345,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3300,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "125:23:17"
+      },
+      {
+        "absolutePath": "/home/frederic/development/p2pmoney-dev/var/lib/git/repos/javascript/primusmoney_mytokens_webapp/react_apps/my-pwa-apps/my-deed/contracts/token/ERC721/ERC721.sol",
+        "file": "../ERC721.sol",
+        "id": 3301,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 3345,
+        "sourceUnit": 2760,
+        "src": "150:23:17",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/home/frederic/development/p2pmoney-dev/var/lib/git/repos/javascript/primusmoney_mytokens_webapp/react_apps/my-pwa-apps/my-deed/contracts/token/common/ERC2981.sol",
+        "file": "../../common/ERC2981.sol",
+        "id": 3302,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 3345,
+        "sourceUnit": 3991,
+        "src": "174:34:17",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/home/frederic/development/p2pmoney-dev/var/lib/git/repos/javascript/primusmoney_mytokens_webapp/react_apps/my-pwa-apps/my-deed/contracts/utils/introspection/ERC165.sol",
+        "file": "../../../utils/introspection/ERC165.sol",
+        "id": 3303,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 3345,
+        "sourceUnit": 5993,
+        "src": "209:49:17",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": true,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 3305,
+              "name": "ERC2981",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 3990,
+              "src": "1016:7:17"
+            },
+            "id": 3306,
+            "nodeType": "InheritanceSpecifier",
+            "src": "1016:7:17"
+          },
+          {
+            "baseName": {
+              "id": 3307,
+              "name": "ERC721",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 2759,
+              "src": "1025:6:17"
+            },
+            "id": 3308,
+            "nodeType": "InheritanceSpecifier",
+            "src": "1025:6:17"
+          }
+        ],
+        "canonicalName": "ERC721Royalty",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 3304,
+          "nodeType": "StructuredDocumentation",
+          "src": "260:720:17",
+          "text": " @dev Extension of ERC721 with the ERC2981 NFT Royalty Standard, a standardized way to retrieve royalty payment\n information.\n Royalty information can be specified globally for all token ids via {_setDefaultRoyalty}, and/or individually for\n specific token ids via {_setTokenRoyalty}. The latter takes precedence over the first.\n IMPORTANT: ERC-2981 only specifies a way to signal royalty information and does not enforce its payment. See\n https://eips.ethereum.org/EIPS/eip-2981#optional-royalty-payments[Rationale] in the EIP. Marketplaces are expected to\n voluntarily pay royalties together with sales, but note that this standard is not yet widely supported.\n _Available since v4.5._"
+        },
+        "fullyImplemented": false,
+        "id": 3344,
+        "linearizedBaseContracts": [
+          3344,
+          2759,
+          3527,
+          2875,
+          3990,
+          5992,
+          1107,
+          6004,
+          4541
+        ],
+        "name": "ERC721Royalty",
+        "nameLocation": "999:13:17",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "baseFunctions": [
+              1986,
+              3838
+            ],
+            "body": {
+              "id": 3324,
+              "nodeType": "Block",
+              "src": "1207:60:17",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 3321,
+                        "name": "interfaceId",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3311,
+                        "src": "1248:11:17",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes4",
+                          "typeString": "bytes4"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bytes4",
+                          "typeString": "bytes4"
+                        }
+                      ],
+                      "expression": {
+                        "id": 3319,
+                        "name": "super",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 4294967271,
+                        "src": "1224:5:17",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_super$_ERC721Royalty_$3344_$",
+                          "typeString": "type(contract super ERC721Royalty)"
+                        }
+                      },
+                      "id": 3320,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "supportsInterface",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 1986,
+                      "src": "1224:23:17",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_view$_t_bytes4_$returns$_t_bool_$",
+                        "typeString": "function (bytes4) view returns (bool)"
+                      }
+                    },
+                    "id": 3322,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1224:36:17",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "functionReturnParameters": 3318,
+                  "id": 3323,
+                  "nodeType": "Return",
+                  "src": "1217:43:17"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 3309,
+              "nodeType": "StructuredDocumentation",
+              "src": "1038:56:17",
+              "text": " @dev See {IERC165-supportsInterface}."
+            },
+            "functionSelector": "01ffc9a7",
+            "id": 3325,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "supportsInterface",
+            "nameLocation": "1108:17:17",
+            "nodeType": "FunctionDefinition",
+            "overrides": {
+              "id": 3315,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [
+                {
+                  "id": 3313,
+                  "name": "ERC721",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 2759,
+                  "src": "1175:6:17"
+                },
+                {
+                  "id": 3314,
+                  "name": "ERC2981",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 3990,
+                  "src": "1183:7:17"
+                }
+              ],
+              "src": "1166:25:17"
+            },
+            "parameters": {
+              "id": 3312,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3311,
+                  "mutability": "mutable",
+                  "name": "interfaceId",
+                  "nameLocation": "1133:11:17",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3325,
+                  "src": "1126:18:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes4",
+                    "typeString": "bytes4"
+                  },
+                  "typeName": {
+                    "id": 3310,
+                    "name": "bytes4",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1126:6:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes4",
+                      "typeString": "bytes4"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1125:20:17"
+            },
+            "returnParameters": {
+              "id": 3318,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3317,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3325,
+                  "src": "1201:4:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3316,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1201:4:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1200:6:17"
+            },
+            "scope": 3344,
+            "src": "1099:168:17",
+            "stateMutability": "view",
+            "virtual": true,
+            "visibility": "public"
+          },
+          {
+            "baseFunctions": [
+              2529
+            ],
+            "body": {
+              "id": 3342,
+              "nodeType": "Block",
+              "src": "1452:74:17",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 3335,
+                        "name": "tokenId",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3328,
+                        "src": "1474:7:17",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "expression": {
+                        "id": 3332,
+                        "name": "super",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 4294967271,
+                        "src": "1462:5:17",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_super$_ERC721Royalty_$3344_$",
+                          "typeString": "type(contract super ERC721Royalty)"
+                        }
+                      },
+                      "id": 3334,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "_burn",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 2529,
+                      "src": "1462:11:17",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_uint256_$returns$__$",
+                        "typeString": "function (uint256)"
+                      }
+                    },
+                    "id": 3336,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1462:20:17",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 3337,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1462:20:17"
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 3339,
+                        "name": "tokenId",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3328,
+                        "src": "1511:7:17",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "id": 3338,
+                      "name": "_resetTokenRoyalty",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3989,
+                      "src": "1492:18:17",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_uint256_$returns$__$",
+                        "typeString": "function (uint256)"
+                      }
+                    },
+                    "id": 3340,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1492:27:17",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 3341,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1492:27:17"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 3326,
+              "nodeType": "StructuredDocumentation",
+              "src": "1273:116:17",
+              "text": " @dev See {ERC721-_burn}. This override additionally clears the royalty information for the token."
+            },
+            "id": 3343,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_burn",
+            "nameLocation": "1403:5:17",
+            "nodeType": "FunctionDefinition",
+            "overrides": {
+              "id": 3330,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "1443:8:17"
+            },
+            "parameters": {
+              "id": 3329,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3328,
+                  "mutability": "mutable",
+                  "name": "tokenId",
+                  "nameLocation": "1417:7:17",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3343,
+                  "src": "1409:15:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3327,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1409:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1408:17:17"
+            },
+            "returnParameters": {
+              "id": 3331,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1452:0:17"
+            },
+            "scope": 3344,
+            "src": "1394:132:17",
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 3345,
+        "src": "981:547:17",
+        "usedErrors": []
+      }
+    ],
+    "src": "125:1404:17"
+  },
+  "legacyAST": {
+    "absolutePath": "/home/frederic/development/p2pmoney-dev/var/lib/git/repos/javascript/primusmoney_mytokens_webapp/react_apps/my-pwa-apps/my-deed/contracts/token/ERC721/extensions/ERC721Royalty.sol",
+    "exportedSymbols": {
+      "Address": [
+        4285
+      ],
+      "Context": [
+        4541
+      ],
+      "ERC165": [
+        5992
+      ],
+      "ERC2981": [
+        3990
+      ],
+      "ERC721": [
+        2759
+      ],
+      "ERC721Royalty": [
+        3344
+      ],
+      "IERC165": [
+        6004
+      ],
+      "IERC2981": [
+        1107
+      ],
+      "IERC721": [
+        2875
+      ],
+      "IERC721Metadata": [
+        3527
+      ],
+      "IERC721Receiver": [
+        2893
+      ],
+      "Strings": [
+        4841
+      ]
+    },
+    "id": 3345,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3300,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "125:23:17"
+      },
+      {
+        "absolutePath": "/home/frederic/development/p2pmoney-dev/var/lib/git/repos/javascript/primusmoney_mytokens_webapp/react_apps/my-pwa-apps/my-deed/contracts/token/ERC721/ERC721.sol",
+        "file": "../ERC721.sol",
+        "id": 3301,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 3345,
+        "sourceUnit": 2760,
+        "src": "150:23:17",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/home/frederic/development/p2pmoney-dev/var/lib/git/repos/javascript/primusmoney_mytokens_webapp/react_apps/my-pwa-apps/my-deed/contracts/token/common/ERC2981.sol",
+        "file": "../../common/ERC2981.sol",
+        "id": 3302,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 3345,
+        "sourceUnit": 3991,
+        "src": "174:34:17",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/home/frederic/development/p2pmoney-dev/var/lib/git/repos/javascript/primusmoney_mytokens_webapp/react_apps/my-pwa-apps/my-deed/contracts/utils/introspection/ERC165.sol",
+        "file": "../../../utils/introspection/ERC165.sol",
+        "id": 3303,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 3345,
+        "sourceUnit": 5993,
+        "src": "209:49:17",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": true,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 3305,
+              "name": "ERC2981",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 3990,
+              "src": "1016:7:17"
+            },
+            "id": 3306,
+            "nodeType": "InheritanceSpecifier",
+            "src": "1016:7:17"
+          },
+          {
+            "baseName": {
+              "id": 3307,
+              "name": "ERC721",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 2759,
+              "src": "1025:6:17"
+            },
+            "id": 3308,
+            "nodeType": "InheritanceSpecifier",
+            "src": "1025:6:17"
+          }
+        ],
+        "canonicalName": "ERC721Royalty",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 3304,
+          "nodeType": "StructuredDocumentation",
+          "src": "260:720:17",
+          "text": " @dev Extension of ERC721 with the ERC2981 NFT Royalty Standard, a standardized way to retrieve royalty payment\n information.\n Royalty information can be specified globally for all token ids via {_setDefaultRoyalty}, and/or individually for\n specific token ids via {_setTokenRoyalty}. The latter takes precedence over the first.\n IMPORTANT: ERC-2981 only specifies a way to signal royalty information and does not enforce its payment. See\n https://eips.ethereum.org/EIPS/eip-2981#optional-royalty-payments[Rationale] in the EIP. Marketplaces are expected to\n voluntarily pay royalties together with sales, but note that this standard is not yet widely supported.\n _Available since v4.5._"
+        },
+        "fullyImplemented": false,
+        "id": 3344,
+        "linearizedBaseContracts": [
+          3344,
+          2759,
+          3527,
+          2875,
+          3990,
+          5992,
+          1107,
+          6004,
+          4541
+        ],
+        "name": "ERC721Royalty",
+        "nameLocation": "999:13:17",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "baseFunctions": [
+              1986,
+              3838
+            ],
+            "body": {
+              "id": 3324,
+              "nodeType": "Block",
+              "src": "1207:60:17",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 3321,
+                        "name": "interfaceId",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3311,
+                        "src": "1248:11:17",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes4",
+                          "typeString": "bytes4"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bytes4",
+                          "typeString": "bytes4"
+                        }
+                      ],
+                      "expression": {
+                        "id": 3319,
+                        "name": "super",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 4294967271,
+                        "src": "1224:5:17",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_super$_ERC721Royalty_$3344_$",
+                          "typeString": "type(contract super ERC721Royalty)"
+                        }
+                      },
+                      "id": 3320,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "supportsInterface",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 1986,
+                      "src": "1224:23:17",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_view$_t_bytes4_$returns$_t_bool_$",
+                        "typeString": "function (bytes4) view returns (bool)"
+                      }
+                    },
+                    "id": 3322,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1224:36:17",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "functionReturnParameters": 3318,
+                  "id": 3323,
+                  "nodeType": "Return",
+                  "src": "1217:43:17"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 3309,
+              "nodeType": "StructuredDocumentation",
+              "src": "1038:56:17",
+              "text": " @dev See {IERC165-supportsInterface}."
+            },
+            "functionSelector": "01ffc9a7",
+            "id": 3325,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "supportsInterface",
+            "nameLocation": "1108:17:17",
+            "nodeType": "FunctionDefinition",
+            "overrides": {
+              "id": 3315,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [
+                {
+                  "id": 3313,
+                  "name": "ERC721",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 2759,
+                  "src": "1175:6:17"
+                },
+                {
+                  "id": 3314,
+                  "name": "ERC2981",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 3990,
+                  "src": "1183:7:17"
+                }
+              ],
+              "src": "1166:25:17"
+            },
+            "parameters": {
+              "id": 3312,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3311,
+                  "mutability": "mutable",
+                  "name": "interfaceId",
+                  "nameLocation": "1133:11:17",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3325,
+                  "src": "1126:18:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes4",
+                    "typeString": "bytes4"
+                  },
+                  "typeName": {
+                    "id": 3310,
+                    "name": "bytes4",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1126:6:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes4",
+                      "typeString": "bytes4"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1125:20:17"
+            },
+            "returnParameters": {
+              "id": 3318,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3317,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3325,
+                  "src": "1201:4:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3316,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1201:4:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1200:6:17"
+            },
+            "scope": 3344,
+            "src": "1099:168:17",
+            "stateMutability": "view",
+            "virtual": true,
+            "visibility": "public"
+          },
+          {
+            "baseFunctions": [
+              2529
+            ],
+            "body": {
+              "id": 3342,
+              "nodeType": "Block",
+              "src": "1452:74:17",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 3335,
+                        "name": "tokenId",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3328,
+                        "src": "1474:7:17",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "expression": {
+                        "id": 3332,
+                        "name": "super",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 4294967271,
+                        "src": "1462:5:17",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_super$_ERC721Royalty_$3344_$",
+                          "typeString": "type(contract super ERC721Royalty)"
+                        }
+                      },
+                      "id": 3334,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "_burn",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 2529,
+                      "src": "1462:11:17",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_uint256_$returns$__$",
+                        "typeString": "function (uint256)"
+                      }
+                    },
+                    "id": 3336,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1462:20:17",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 3337,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1462:20:17"
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 3339,
+                        "name": "tokenId",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3328,
+                        "src": "1511:7:17",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "id": 3338,
+                      "name": "_resetTokenRoyalty",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3989,
+                      "src": "1492:18:17",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_uint256_$returns$__$",
+                        "typeString": "function (uint256)"
+                      }
+                    },
+                    "id": 3340,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1492:27:17",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 3341,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1492:27:17"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 3326,
+              "nodeType": "StructuredDocumentation",
+              "src": "1273:116:17",
+              "text": " @dev See {ERC721-_burn}. This override additionally clears the royalty information for the token."
+            },
+            "id": 3343,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_burn",
+            "nameLocation": "1403:5:17",
+            "nodeType": "FunctionDefinition",
+            "overrides": {
+              "id": 3330,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "1443:8:17"
+            },
+            "parameters": {
+              "id": 3329,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3328,
+                  "mutability": "mutable",
+                  "name": "tokenId",
+                  "nameLocation": "1417:7:17",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3343,
+                  "src": "1409:15:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3327,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1409:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1408:17:17"
+            },
+            "returnParameters": {
+              "id": 3331,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1452:0:17"
+            },
+            "scope": 3344,
+            "src": "1394:132:17",
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 3345,
+        "src": "981:547:17",
+        "usedErrors": []
+      }
+    ],
+    "src": "125:1404:17"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.13+commit.abaa5c0e.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.3.4",
+  "updatedAt": "2022-10-12T13:38:27.034Z",
+  "devdoc": {
+    "details": "Extension of ERC721 with the ERC2981 NFT Royalty Standard, a standardized way to retrieve royalty payment information. Royalty information can be specified globally for all token ids via {_setDefaultRoyalty}, and/or individually for specific token ids via {_setTokenRoyalty}. The latter takes precedence over the first. IMPORTANT: ERC-2981 only specifies a way to signal royalty information and does not enforce its payment. See https://eips.ethereum.org/EIPS/eip-2981#optional-royalty-payments[Rationale] in the EIP. Marketplaces are expected to voluntarily pay royalties together with sales, but note that this standard is not yet widely supported. _Available since v4.5._",
+    "kind": "dev",
+    "methods": {
+      "approve(address,uint256)": {
+        "details": "See {IERC721-approve}."
+      },
+      "balanceOf(address)": {
+        "details": "See {IERC721-balanceOf}."
+      },
+      "getApproved(uint256)": {
+        "details": "See {IERC721-getApproved}."
+      },
+      "isApprovedForAll(address,address)": {
+        "details": "See {IERC721-isApprovedForAll}."
+      },
+      "name()": {
+        "details": "See {IERC721Metadata-name}."
+      },
+      "ownerOf(uint256)": {
+        "details": "See {IERC721-ownerOf}."
+      },
+      "royaltyInfo(uint256,uint256)": {
+        "details": "Returns how much royalty is owed and to whom, based on a sale price that may be denominated in any unit of exchange. The royalty amount is denominated and should be paid in that same unit of exchange."
+      },
+      "safeTransferFrom(address,address,uint256)": {
+        "details": "See {IERC721-safeTransferFrom}."
+      },
+      "safeTransferFrom(address,address,uint256,bytes)": {
+        "details": "See {IERC721-safeTransferFrom}."
+      },
+      "setApprovalForAll(address,bool)": {
+        "details": "See {IERC721-setApprovalForAll}."
+      },
+      "supportsInterface(bytes4)": {
+        "details": "See {IERC165-supportsInterface}."
+      },
+      "symbol()": {
+        "details": "See {IERC721Metadata-symbol}."
+      },
+      "tokenURI(uint256)": {
+        "details": "See {IERC721Metadata-tokenURI}."
+      },
+      "transferFrom(address,address,uint256)": {
+        "details": "See {IERC721-transferFrom}."
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

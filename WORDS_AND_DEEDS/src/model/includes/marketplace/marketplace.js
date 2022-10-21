@@ -1,18 +1,191 @@
+'use strict';
 class NftMarketplace {
-	constructor(session) {
+	constructor(session, contractaddress, web3providerurl) {
 		this.session = session;
+		this.address = contractaddress;
+		
+		this.web3providerurl = web3providerurl;
+
+		this.contractpath = './contracts/erc721_marketplace_v1/Marketplace.json';
+		
+		// operating variables
+		this.contractinstance = null;
+
 	}
 
-	async listNft(tokenaddress, nftid, price) {
-
+	getContractPath() {
+		return this.contractpath;
 	}
 
-	async buyNft(tokenaddress, nftid) {
+	setContractPath(path) {
+		this.contractpath = path;
+		this.contractinstance = null;
+	}
+	
+	getContractInstance() {
+		if (this.contractinstance)
+			return this.contractinstance;
+		
+		var session = this.session;
+		var global = session.getGlobalObject();
+		var ethnodemodule = global.getModuleObject('ethnode');
 
+		var contractpath = this.getContractPath();
+		
+		this.contractinstance = ethnodemodule.getContractInstance(session, this.address, contractpath, this.web3providerurl);
+		
+		return this.contractinstance;
 	}
 
-	async resellNft(tokenaddress, nftid, price) {
+	// contract methods
 
+	// read
+	async getListingFee() {
+		var contractinstance = this.getContractInstance();
+
+		var params = [];
+	
+		const valstr = await contractinstance.method_call('getListingFee', params);
+		
+		return valstr;
+	}
+
+	async getListedNfts() {
+		var contractinstance = this.getContractInstance();
+
+		var params = [];
+	
+		const arr = await contractinstance.method_call('getListedNfts', params);
+		
+		return arr;
+	}
+
+	async getMyNfts() {
+		var contractinstance = this.getContractInstance();
+
+		var params = [];
+	
+		const arr = await contractinstance.method_call('getMyNfts', params);
+		
+		return arr;
+	}
+
+	async getMyListedNfts() {
+		var contractinstance = this.getContractInstance();
+
+		var params = [];
+	
+		const arr = await contractinstance.method_call('getMyListedNfts', params);
+		
+		return arr;
+	}
+
+	// transactions
+	async listNft(tokenaddress, nftid, price, ethtx) {
+		var contractinstance = this.getContractInstance();
+
+		var fromaccount = ethtx.getFromAccount();
+		var payingaccount = ethtx.getPayingAccount();
+
+		payingaccount = (payingaccount ? payingaccount : fromaccount);
+
+		var gas = ethtx.getGas();
+		var gasPrice = ethtx.getGasPrice();
+
+		var transactionuuid = ethtx.getTransactionUUID();
+		var value = ethtx.getValue();
+
+
+		var contractinstance = this.getContractInstance();
+		var contracttransaction = contractinstance.getContractTransactionObject(payingaccount, gas, gasPrice);
+
+		contracttransaction.setArguments(args);
+		
+		contracttransaction.setContractTransactionUUID(transactionuuid);
+		contracttransaction.setValue(value);
+
+		contracttransaction.setMethodName('listNft');		
+		
+		var args = [];
+	
+		args.push(tokenaddress);
+		args.push(nftid);
+		args.push(price);
+		
+		contracttransaction.setArguments(args);
+
+		return contractinstance.method_send(contracttransaction);
+	}
+
+	async buyNft(tokenaddress, nftid, ethtx) {
+		var contractinstance = this.getContractInstance();
+
+		var fromaccount = ethtx.getFromAccount();
+		var payingaccount = ethtx.getPayingAccount();
+
+		payingaccount = (payingaccount ? payingaccount : fromaccount);
+
+		var gas = ethtx.getGas();
+		var gasPrice = ethtx.getGasPrice();
+
+		var transactionuuid = ethtx.getTransactionUUID();
+		var value = ethtx.getValue();
+
+
+		var contractinstance = this.getContractInstance();
+		var contracttransaction = contractinstance.getContractTransactionObject(payingaccount, gas, gasPrice);
+
+		contracttransaction.setArguments(args);
+		
+		contracttransaction.setContractTransactionUUID(transactionuuid);
+		contracttransaction.setValue(value);
+
+		contracttransaction.setMethodName('buyNft');		
+		
+		var args = [];
+	
+		args.push(tokenaddress);
+		args.push(nftid);
+		
+		contracttransaction.setArguments(args);
+
+		return contractinstance.method_send(contracttransaction);
+	}
+
+	async resellNft(tokenaddress, nftid, price, ethtx) {
+		var contractinstance = this.getContractInstance();
+
+		var fromaccount = ethtx.getFromAccount();
+		var payingaccount = ethtx.getPayingAccount();
+
+		payingaccount = (payingaccount ? payingaccount : fromaccount);
+
+		var gas = ethtx.getGas();
+		var gasPrice = ethtx.getGasPrice();
+
+		var transactionuuid = ethtx.getTransactionUUID();
+		var value = ethtx.getValue();
+
+
+		var contractinstance = this.getContractInstance();
+		var contracttransaction = contractinstance.getContractTransactionObject(payingaccount, gas, gasPrice);
+
+		contracttransaction.setArguments(args);
+		
+		contracttransaction.setContractTransactionUUID(transactionuuid);
+		contracttransaction.setValue(value);
+
+		contracttransaction.setMethodName('resellNft');		
+		
+		var args = [];
+	
+		args.push(tokenaddress);
+		args.push(nftid);
+		args.push(price);
+		
+		contracttransaction.setArguments(args);
+
+		return contractinstance.method_send(contracttransaction);
 	}
 
 	// static

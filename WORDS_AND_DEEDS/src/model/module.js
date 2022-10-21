@@ -24,6 +24,9 @@ var Module = class {
 		this.Linker = global.getModuleClass('common', 'Linker');
 
 		this.ContractKitWrapper = global.getModuleClass('common', 'ContractKitWrapper');
+
+		this.NftMarketplace = global.getModuleClass('common', 'NftMarketplace');
+
 	}
 	
 	// compulsory  module functions
@@ -491,20 +494,8 @@ var Module = class {
 				return Promise.reject('could not find card with uuid ' + carduuid);
 		}
 		else {
-			var mvcpwa = this._getMvcPWAObject();
-
-			var sessionuuid = session.getSessionUUID();
-			var walletuuid = wallet.getWalletUUID();
-			var currencyuuid = currency.uuid;
-			var address = minter.card_address;
-	
-			var cardinfo = await mvcpwa.getCurrencyCardWithAddress(sessionuuid, walletuuid, currencyuuid, address).catch(err => {});
-
-			if (!cardinfo)
-				return;
-	
-			card = await wallet.getCardFromUUID(cardinfo.uuid);
-	
+			// TODO: find better way to find back card from minter address
+			card = await this._getCurrencyCard(session, wallet, currency);
 		}
 
 		return card;
@@ -961,7 +952,22 @@ var Module = class {
 	//
 	// Deed marketplace
 	//
-	async offerDeedOnSale(sessionuuid, walletuuid, currencyuuid, minter, deed, amount, connection) {
+	async _getNftMarketplaceObject(session, wallet, currency) {
+		var global = this.global;
+
+		var contractaddress = currency.deeds_v1.marketplace;
+		var currenciesmodule = global.getModuleObject('currencies');
+
+		var web3providerurl = await currenciesmodule.getCurrencyWeb3ProviderUrl(session, currency);
+
+		const NftMarketplaceClass = this.NftMarketplace;
+
+		var nftMarketplace = new NftMarketplaceClass(session, contractaddress, web3providerurl);
+
+		return nftMarketplace;
+	}
+
+	async offerDeedOnSale(sessionuuid, walletuuid, currencyuuid, minter, deed, amount, feelevel) {
 		if (!sessionuuid)
 		return Promise.reject('session uuid is undefined');
 	
@@ -991,9 +997,85 @@ var Module = class {
 		if (!currency)
 			return Promise.reject('could not find currency ' + currencyuuid);
 
+		var card;
+		if (deed.owner) {
+			// clause can be added by a subsequent owner different from the creator
+			card = await this._getDeedOwningCard(session, wallet, currency, minter, deed);
+		}
+		else {
+			// we are creating the deed and probably listing the deed on the fly
+			card = await this._getMinterCard(session, wallet, currency, minter);
+		}
+	
+		if (!card)
+			return Promise.reject('could not find minter card');
+	
+		// instantiate NftMarketplace
+		var nftMarketplace = await this._getNftMarketplaceObject(session, wallet, currency);
+
+		if (!nftMarketplace)
+			return Promise.reject('could not find nft market place');
+
+		var tokenaddress = deed.minter;
+		var tokenid = deed.tokenid;
+
+		var childsession;
+		var fromaccount;
+
+		var canSign = await this.canCardSign(sessionuuid, walletuuid, card.uuid);
+
+		if (canSign) {
+			// get proper session to access erc721token for currency
+			childsession = await this._getMonitoredERC721TokenSession(session, wallet, currency);
+			fromaccount = card._getSessionAccountObject();
+		}
+		else {
+			var isconnected = this._isCardConnected(session, wallet, card);
+
+			if (!isconnected)
+				return Promise.reject('card is not connected to send transactions: ' + card.address);
+
+			childsession = card._getSession();
+			fromaccount = card._getAccountObject(); // read-only card
+		}
+
+		// create ethereum transaction
+		var from_card_scheme = card.getScheme();
+
+		var ethereumnodeaccessmodule = global.getModuleObject('ethereum-node-access');
+
+		var ethereumtransaction = ethereumnodeaccessmodule.getEthereumTransactionObject(childsession, fromaccount);
+		
+		// create fee
+		var fee = await _apicontrollers.createSchemeFee(from_card_scheme, feelevel);
+
+		ethereumtransaction.setGas(fee.gaslimit);
+		ethereumtransaction.setGasPrice(fee.gasPrice);
+
+		var tokenamount = amount;
+		var tokenamount_string = tokenamount.toString(); // use string to avoid "fault='overflow', operation='BigNumber.from'"
+
+		// listing fee
+		var ethnodemodule = global.getModuleObject('ethnode');
+		var ethnodecontrollers = ethnodemodule.getControllersObject();
+		
+		let listing_fee_wei = await nftMarketplace.getListingFee();
+		let listing_fee_eth = ethnodecontrollers.getEtherStringFromWei(listing_fee_wei, 18);
+		let listing_units = await mvcpwa._getUnitsFromCredits(session, from_card_scheme, listing_fee_wei);
+
+		ethereumtransaction.setValue(listing_fee_eth);
+
+
+		let listed_nfts = await nftMarketplace.getListedNfts();
+		let my_nfts = await nftMarketplace.getMyNfts();
+		let my_listed_nfts = await nftMarketplace.getMyListedNfts();
+
+		var txhash = await nftMarketplace.listNft(tokenaddress, tokenid, tokenamount_string, ethereumtransaction);
+
+		return txhash;
 	}
 	
-	async buyDeed(sessionuuid, walletuuid, currencyuuid, minter, deed, amount, connection) {
+	async buyDeed(sessionuuid, walletuuid, currencyuuid, minter, deed, amount) {
 		if (!sessionuuid)
 		return Promise.reject('session uuid is undefined');
 	
