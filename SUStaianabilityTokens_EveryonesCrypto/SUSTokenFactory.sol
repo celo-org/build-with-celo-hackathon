@@ -6,14 +6,25 @@ import "@openzeppelin/contracts@4.7.3/token/ERC20/extensions/ERC20Burnable.sol";
 import "@openzeppelin/contracts@4.7.3/security/Pausable.sol";
 import "@openzeppelin/contracts@4.7.3/access/AccessControl.sol";
 
+interface IRoles {
+    function isSuperAdmin(address account) external view returns(bool);
+
+    function isMinter(address account) external view returns(bool);
+    function isPauser(address account) external view returns(bool);
+}
+
 contract SUStaianablilityTokens is ERC20, ERC20Burnable, Pausable, AccessControl {
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-    constructor() ERC20("SUStaianable Tokens", "SUST") {
+    address private rolesSC;
+
+    constructor(address _rolesContractAddress) ERC20("SUStaianable Tokens", "SUST") {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(PAUSER_ROLE, msg.sender);
         _grantRole(MINTER_ROLE, msg.sender);
+
+        rolesSC = _rolesContractAddress;
     }
 
     function pause() public onlyRole(PAUSER_ROLE) {
@@ -25,6 +36,7 @@ contract SUStaianablilityTokens is ERC20, ERC20Burnable, Pausable, AccessControl
     }
 
     function mintSUST(address to, uint256 amount) public { //onlyRole(MINTER_ROLE) {
+        require(IRoles(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT Super Admin!");
         _mint(to, amount);
     }
 
@@ -37,7 +49,7 @@ contract SUStaianablilityTokens is ERC20, ERC20Burnable, Pausable, AccessControl
     }
 
     function killContract() public {
-        //require(IRoles(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT SUPER ADMIN!");
+        require(IRoles(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT SUPER ADMIN!");
 		selfdestruct(payable(msg.sender));
 	}
 }
