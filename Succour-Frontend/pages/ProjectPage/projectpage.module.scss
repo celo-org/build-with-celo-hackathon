@@ -1,6 +1,6 @@
 
 
-.page {
+.projectpage {
    padding-top: 140px;
    padding-bottom: 20px;
    position: relative;
@@ -48,27 +48,59 @@
      .page_content {
     
        .page_info {
+
+          @media (max-width: 1028.98px) {
+               text-align: center;
+          }
         
           h1 {
             font-weight: 500;
             font-size: 18px;
             line-height: 165%;
             color: #EBDFEB;
+
+            
+              @media (max-width: 1028.98px) {
+                    font-size: 16px;
+              }
           }
 
-          p {
+          .address {
             font-weight: 500;
             font-size: 18px;
             line-height: 165%;
             color: #EBDFEB; 
+            
+              @media (max-width: 1028.98px) {
+                    font-size: 14px;
+                    max-width: 20px;
+            }
           }
 
-      //  .status {
-      //       font-weight: 500;
-      //       font-size: 18px;
-      //       line-height: 165%;
-      //       color: #EBDFEB; 
-      //  }
+       .status {
+            display: flex;
+
+          @media (max-width: 1028.98px) {
+              justify-content: center;
+              align-items: center;
+              text-align: center;
+          }
+
+            p {
+                 font-weight: 500;
+                font-size: 16px;
+                line-height: 165%;
+                color: #EBDFEB; 
+                margin-right: 20px;
+            }
+
+            .time {
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 165%;
+                color: #EBDFEB; 
+            }
+       }
 
        }
 
@@ -85,29 +117,41 @@
           font-size: 43px;
           line-height: 145%;
           color: #FFFFFF;
+
+            @media (max-width: 1028.98px) {
+                    font-size: 18px;
+            }
         }
 
         .proposal_id {
           font-weight: 500;
-          font-size: 18px;
+          font-size: 16px;
           line-height: 165%;
           color: #D4D4D4;
           margin-bottom: 20px;
+
+           @media (max-width: 1028.98px) {
+                    font-size: 14px;
+            }
         }
 
         .proposal_amount {
            font-weight: 500;
-          font-size: 20px;
+          font-size: 18px;
           line-height: 165%;
            color: #FFFFFF;
           margin-bottom: 15px;
+
+           @media (max-width: 1028.98px) {
+                    font-size: 16px;
+            }
         }
 
         .amount {
           font-weight: 500;
           font-size: 18px;
           line-height: 165%;
-          color: #D4D4D4;
+          color: #FFFEFE;
         }
 
       }
@@ -118,6 +162,10 @@
         line-height: 165%;
         color: #FFFFFF;
         text-align: left;
+
+            @media (max-width: 1028.98px) {
+                    font-size: 13px;
+            }
       }
        
       }

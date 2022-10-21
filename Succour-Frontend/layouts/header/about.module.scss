@@ -94,11 +94,12 @@
         flex-direction: column;
        }
 
-        .contribute_btn {
+        .create_btn {
         cursor: pointer;
         background: linear-gradient(93.01deg, rgba(22, 222, 181, 0.71) -9.8%, #264D45 65.6%, rgba(7, 51, 42, 0.980365) 94.34%);
         border-radius: 30px;
-        padding: 10px 90px;
+        width: 300px;
+        height: 60px;
         border: none;
         font-weight: 400;
         font-size: 19px;
@@ -118,9 +119,9 @@
       }
       }
 
-      .crowdfunding_btn {
+      .see_btn {
         cursor: pointer;
-        border: 3px solid rgba(22, 222, 181, 0.71);
+        border: 2px solid rgba(22, 222, 181, 0.71);
         border-radius: 30px;
         width: 300px;
         height: 60px;

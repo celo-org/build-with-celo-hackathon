@@ -13,11 +13,13 @@ const Projects = () => {
                              <div className={styles.project_header}>
                               <span className={styles.title}>Projects</span>
                               <div className={styles.totheright}>
-                                <Link href="/Projects"><div className={styles.controller_link}>View all projects</div></Link>
+                                <Link href="/Projects/Projects"><div className={styles.controller_link}>View all projects</div></Link>
                               </div>
                             </div>
                 
-                       <div className={styles.project_grid}>
+                       
+                    <Link href="/ProposePage/ProposePage">
+                     <div className={styles.project_grid}>
                                {
                     data.map(({ id, time, problemTitle, desc, lowest, etherAmount, voteButton }) => {
                        return (
@@ -46,7 +48,7 @@ const Projects = () => {
                            })
                          }
                      </div>
-
+                      </Link>
 
                     </div>
                     </div>

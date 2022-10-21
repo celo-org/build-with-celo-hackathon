@@ -1,6 +1,7 @@
-import { useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { useSpring, animated } from 'react-spring'
 import styles from './joindao.module.scss'
+import JoinModal from '../../components/joinModal/JoinModal'
 
 interface IProps {
      showModal: any;
@@ -8,6 +9,17 @@ interface IProps {
 }
 
 const JoinDao = ({ showModal, setShowModal } : IProps) => {
+
+         
+
+    // @dev - this is for JoinModal function
+
+   const [showJoinModal, setShowJoinModal] = useState(false);
+
+     const openJoinModal = () => {
+       setShowJoinModal(prev => !prev);
+     }
+
 
        const modalRef = useRef<any | any>();
       
@@ -67,12 +79,14 @@ const JoinDao = ({ showModal, setShowModal } : IProps) => {
                                   <label htmlFor="check">No</label>
                               </div>
 
-                              <button className={styles.join_btn}>Connect Wallet</button>
+                              <button className={styles.join_btn} onClick={openJoinModal}>Continue</button>
                      </div>
 
                     </div>                  
                </div>
                </animated.div>
+               {/* JoinModal component is here */}
+               <JoinModal showJoinModal={showJoinModal} setShowJoinModal={setShowJoinModal} />
           </div>
             ): null}
           </>

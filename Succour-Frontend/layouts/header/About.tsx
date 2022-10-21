@@ -20,13 +20,14 @@ const About = () => {
          </p>
 
         <div className={styles.banner_links}>
-          <Link href="/DAO/dao">
-          <button className={styles.contribute_btn}>Contribute</button>
+          
+          <Link href="/CreateFunding/CreateFunding">
+          <button className={styles.create_btn}>Create funding request</button>
           </Link>
 
-            <Link href="/CreateFunding/CreateFunding">
-               <button className={styles.crowdfunding_btn}>
-                Create funding request
+            <Link href="">
+               <button className={styles.see_btn}>
+                See all funding
               </button>
             </Link> 
         </div>

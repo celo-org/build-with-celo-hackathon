@@ -22,20 +22,34 @@ import { NavbarContainer,
 import {GiHamburgerMenu} from 'react-icons/gi'
 import {MdClose} from 'react-icons/md'
 import JoinDao from '../../pages/JoinDao/JoinDao'
+import Dropdown from './Dropdown'
+import Profile from  '../../components/profilePoPUP/Profile'
 
 const Navbar = () => {
   const [click, setClick] = useState<any | any>(false);
+  const [dropdown, setDropdown] = useState(false);
 
   const handleClick = () => setClick(!click)
 
    const [showModal, setShowModal] = useState(false);
+    const [showProfileModal, setShowProfileModal] = useState(false);
 
      const openModal = () => {
        setShowModal(prev => !prev);
      }
 
+     // this function is powering Profile Modal page
+
+     const openProfileModal = () => {
+      setShowProfileModal(prev => !prev);
+     }
+
+
      return (
       <>
+      {/* Profile Modal pop up */}
+      <Profile showProfileModal={showProfileModal} setShowProfileModal={setShowProfileModal} />
+
       <NavbarContainer click={click}>
           {/* Modal component is here */}
         <JoinDao showModal={showModal} setShowModal={setShowModal} />
@@ -58,7 +72,7 @@ const Navbar = () => {
                
                <Link href="/Crowdfunding/Crowdfunding"><NavbarButton>Crowdfunding</NavbarButton></Link>
                <NavbarUser>
-                <TiUserOutline color="white" fontSize="1.5rem" />
+                <TiUserOutline color="white" fontSize="1.5rem" onMouseOver={openProfileModal} />
                </NavbarUser>
                 <OpenLinksButton 
                   onClick={() => {setClick((curr : any) => !curr);
@@ -84,6 +98,9 @@ const Navbar = () => {
         </NavbarExtendedContainer>
         )}
      </NavbarContainer>
+      {/* Profile Drop down */}
+         {/* <Dropdown /> */}
+         {/* Profile Drop down ends */}
      </>             
      )
 }

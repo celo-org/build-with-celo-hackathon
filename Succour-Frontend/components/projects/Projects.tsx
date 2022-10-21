@@ -25,8 +25,8 @@ const Projects = () => {
                               </div>
                             </div>
                        
-                       <Link href="/ProposePage/ProposePage">
-                       <div className={styles.project_grid}>
+                  <Link href="/ProposePage/ProposePage">
+                    <div className={styles.project_grid}>
                                {
                     data?.slice(0, visible)?.map(({ id, time, problemTitle, desc, lowest, etherAmount, voteButton }) => {
                        return (

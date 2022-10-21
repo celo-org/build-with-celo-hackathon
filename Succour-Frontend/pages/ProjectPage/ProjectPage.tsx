@@ -1,18 +1,18 @@
-import React from 'react'
-import styles from './proposepage.module.scss'
+import {useState} from 'react'
+import styles from './projectpage.module.scss'
 import Navbar from '../../components/navbar/Navbar'
 import Footer from '../../components/footer/Footer'
 import Image from 'next/image'
 import Link from 'next/link'
 import arrowLeftSvg from '../../assets/arrow-left.svg'
-import Votetime from '../../components/votetime/Votetime'
-import Otherproposal from '../../components/otherproposal/Otherproposal'
+import Donatetime from '../../components/donatetime/Donatetime'
 
-const PrososePage = () => {
+const ProjectPage = () => {
+
   return (
      <>
      <Navbar />
-     <div className={styles.page}>
+     <div className={styles.projectpage}>
             
       <div className={styles.wrapper}>
          <div className={styles.left}>
@@ -27,10 +27,13 @@ const PrososePage = () => {
         <div className={styles.container}>
           <div className={styles.page_content}>
           <div className={styles.page_info}>
-               <h1>Proposal by</h1>
-               <p>0x15106aDcb41101434F12D9a666887a1292a397Ec</p>
+               <h1>John Doe</h1>
+               <p className={styles.address}>0x15106aDcb41101434F12D9a666887a1292a397Ec</p>
       
-            {/* <div className={styles.status}>Project</div> */}
+            <div className={styles.status}>
+               <p>Project</p>
+               <p className={styles.time}>21h ago</p>
+            </div>
           </div>
         </div>
 
@@ -50,11 +53,10 @@ const PrososePage = () => {
         </div>
       </div>
      </div>
-     <Votetime />
-     <Otherproposal />
+    <Donatetime />
     <Footer />
     </>
   )
 }
 
-export default PrososePage
+export default ProjectPage

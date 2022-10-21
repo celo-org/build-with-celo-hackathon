@@ -23,7 +23,6 @@
    .container {
      display: flex;
      gap: 2.875rem;
-    //  border: 1px solid red;
      padding-left: 80px;
      padding-right: 100px;
      padding-top: 100px;
@@ -41,9 +40,9 @@
          max-width: 50%;
          width: 100%;
 
-         .image_content {
-            border: 1px solid red;
-         }
+        //  .image_content {
+        //     border: 1px solid red;
+        //  }
      }
 
      .mission_content {

@@ -1,6 +1,8 @@
 import{useState} from 'react'
 import styles from './aboutUs.module.scss'
 import JoinDao from '../../pages/JoinDao/JoinDao'
+import Loader from './loader'
+import Loader2 from './loader2'
 
 const Header = () => {
 
@@ -28,10 +30,8 @@ const Header = () => {
                     </div>
 
                     <div className={styles.about__image}>
-                         {/* <Image src={} alt="Succour Logo" /> */}
-                         {/* <div className={styles.image__container}>
-                           
-                         </div> */}
+                         <Loader />
+                         <Loader2 />
                     </div>
 
                     </div>

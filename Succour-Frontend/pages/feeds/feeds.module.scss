@@ -1,0 +1,141 @@
+
+.feeds {
+   padding-top: 120px;
+//    padding-bottom: 120px;
+   position: relative;
+   background: #0E0D0D;
+
+     .wrapper {
+    margin: 0 auto;
+    max-width: calc(100% - 2.875rem);
+    width: 100%;
+
+    @media (min-width: 1024px) {
+     max-width: calc(100% - 7.5rem);
+    }
+
+    @media (min-width: 480px) {
+     max-width: calc(100% - 3.75rem);
+   }
+
+   .container {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+
+     .header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 20rem;
+          padding: 30px 10%;
+          
+          .title {
+               font-weight: 600;
+               font-size: 40px;
+               line-height: 145%;
+               background: linear-gradient(92.59deg, #F164F1 6.24%, rgba(128, 16, 128, 0.8) 100%);
+               -webkit-background-clip: text;
+               -webkit-text-fill-color: transparent;
+               background-clip: text;
+               text-fill-color: transparent;
+          }
+
+          .search_bar {
+               border-radius: 60px;
+               max-width: 600px;
+               width: 100%;
+               display: flex;
+               align-items: center;
+               padding: 10px 20px;
+               border: 1px solid #995D99;
+
+               .icon {
+                    flex: 1;
+                    width: 30px;
+                    border: none;
+                    cursor: pointer;
+                    background: transparent;
+               }
+
+               .search_input {
+                    background: transparent;
+                    border: 0;
+                    outline: none;
+                    padding: 10px 20px;
+                    font-size: 20px;
+                     color: #D4D4D4;
+               }
+          }
+     }
+
+}
+
+.feeds_container {
+
+.feeds_content {
+     padding-left: 100px;
+     padding-right: 100px;
+      border-bottom: 1px solid #4C2E4C;
+  
+     .user_info {
+          display: flex;
+          align-items: center;
+
+          .name {
+               font-weight: 500;
+               font-size: 18px;
+               line-height: 165%;
+               color: #EBDFEB;
+               margin-right: 20px;
+          }
+
+          .address {
+                font-weight: 500;
+               font-size: 18px;
+               line-height: 165%;
+               color: #EBDFEB;
+          }
+     }
+
+     .status {
+
+          .type {
+               font-weight: 500;
+               font-size: 18px;
+               line-height: 165%;
+               color: #EBDFEB;
+               margin-right: 20px;
+          }
+
+          .time {
+               font-weight: 500;
+               font-size: 18px;
+               line-height: 165%;
+               color: #EBDFEB;
+          }
+     }
+
+     .problem_title {
+          margin-top: 40px;
+          font-weight: 500;
+          font-size: 18px;
+          line-height: 165%;
+          color: #FFFFFF;
+     }
+
+     .desc {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 165%;
+        color: #FFFFFF;
+        margin-bottom: 20px;
+     }
+}
+
+     }
+
+}
+
+
+}
