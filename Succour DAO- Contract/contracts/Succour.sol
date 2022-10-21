@@ -262,8 +262,8 @@ contract Succour is Proxiable{
        uint proposedAmountGotten = propose.amountGotten;
        require(proposedAmountGotten >= proposedAmount, "Proposed amount not gotten");
        uint approvalPower = projectRequiredPercentage();
-       uint gottenVote = (propose.approveWithdraw / totalVotingPower) * 100;
-       require(gottenVote >= approvalPower, "You can't withdraw yet");
+       //uint gottenVote = (propose.approveWithdraw / totalVotingPower) * 100;
+       require(propose.approveWithdraw  >= approvalPower, "You can't withdraw yet");
        propose.amountGotten = 0;
        approvedProposals[IdofProposal -1].amountGotten = 0;
        IERC20(celoTokenAddress).transferFrom(address(this), addr, proposedAmountGotten);
@@ -300,6 +300,7 @@ contract Succour is Proxiable{
             uint amountNeeded;
             uint amountGotten;
             bool status;
+            address[] donators;
         } 
         uint GOFUNDId = 1;
         mapping (address => individualFundMe) GoFunds;
@@ -324,6 +325,7 @@ contract Succour is Proxiable{
             uint idOfGoFund = GOFUND.goFundID;
             GOFUND.amountGotten += amount;
             goFunds[idOfGoFund - 1].amountGotten += amount;
+            GOFUND.donators.push(msg.sender);
         }
 
         function withdrawFromGoFund (address addr)public {

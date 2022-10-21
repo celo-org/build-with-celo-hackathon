@@ -9,17 +9,17 @@ async function main() {
   await succour.deployed();
   console.log(`Succour contract deployed to ${succour.address}`);
 
-  // const minimumRequirement = await ethers.utils.parseEther("10");
-  // const maximumRequirement = await ethers.utils.parseEther("200");
-  // const tokenAddress = "0x9b7Fb05121f7AAC62a324e109c10F138eCd5C342";
+  const minimumRequirement = await ethers.utils.parseEther("10");
+  const maximumRequirement = await ethers.utils.parseEther("200");
+  const tokenAddress = "0x9b7Fb05121f7AAC62a324e109c10F138eCd5C342";
 
-  // const constructData = await succour.encode(minimumRequirement, maximumRequirement,tokenAddress )
+  const constructData = await succour.encode(minimumRequirement, maximumRequirement,tokenAddress )
   
-  // console.log("Deploying Succour proxy contract")
-  // const Proxy = await ethers.getContractFactory("Proxy");
-  // const proxy = await Proxy.deploy(constructData, succour.address)
-  // await proxy.deployed();
-  // console.log("Proxy contract deployed to ", proxy.address);
+  console.log("Deploying Succour proxy contract")
+  const Proxy = await ethers.getContractFactory("Proxy");
+  const proxy = await Proxy.deploy(constructData, succour.address)
+  await proxy.deployed();
+  console.log("Proxy contract deployed to ", proxy.address);
   
 }
 
