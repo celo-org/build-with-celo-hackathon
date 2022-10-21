@@ -2,7 +2,7 @@ import { Box, FlatList } from 'native-base'
 import { LoanItem } from 'clixpesa/components'
 
 export default function LoanRequestsScreen() {
-  const offers = [
+  const requests = [
     {
       id: 0x01,
       loanee: 'Akimbo Keya',
@@ -54,14 +54,14 @@ export default function LoanRequestsScreen() {
       <FlatList
         width="95%"
         mt={2}
-        data={offers}
+        data={requests}
         renderItem={({ item, index }) => (
           <Box
             bg="white"
             opacity={85}
             mt={1}
             roundedTop={index == 0 ? '2xl' : 'md'}
-            roundedBottom={index == offers.length - 1 ? '2xl' : 'md'}
+            roundedBottom={index == requests.length - 1 ? '2xl' : 'md'}
           >
             <LoanItem
               isOffer={false}

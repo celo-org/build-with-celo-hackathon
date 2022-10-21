@@ -1,7 +1,7 @@
-import { Box, FlatList } from 'native-base'
+import { Box, Button, FlatList, Stack, VStack, Spacer } from 'native-base'
 import { LoanItem } from 'clixpesa/components'
 
-export default function LoanOffersScreen() {
+export default function LoanOffersScreen({ navigation }) {
   const offers = [
     {
       id: 0x01,
@@ -51,31 +51,48 @@ export default function LoanOffersScreen() {
   ]
   return (
     <Box flex={1} bg="#F5F5F5" alignItems="center">
-      <FlatList
-        width="95%"
-        mt={2}
-        data={offers}
-        renderItem={({ item, index }) => (
-          <Box
-            bg="white"
-            opacity={85}
-            mt={1}
-            roundedTop={index == 0 ? '2xl' : 'md'}
-            roundedBottom={index == offers.length - 1 ? '2xl' : 'md'}
+      <VStack width="95%" space={3}>
+        <Stack>
+          <FlatList
+            mt={2}
+            data={offers}
+            renderItem={({ item, index }) => (
+              <Box
+                bg="white"
+                opacity={85}
+                mt={1}
+                roundedTop={index == 0 ? '2xl' : 'md'}
+                roundedBottom={index == offers.length - 1 ? '2xl' : 'md'}
+              >
+                <LoanItem
+                  isOffer={true}
+                  itemTitle={item.lender}
+                  type={item.lenderType}
+                  principal={item.principal}
+                  interest={item.interest}
+                  duration={item.duration}
+                  limit={item.limit}
+                  screen="applyLoan"
+                />
+              </Box>
+            )}
+            keyExtractor={(item) => item.id}
+          />
+        </Stack>
+        <Spacer />
+        <Stack alignItems="center" space={3} mb={8}>
+          <Button
+            rounded="3xl"
+            w="60%"
+            _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
+            onPress={() => {
+              navigation.navigate('createOffer')
+            }}
           >
-            <LoanItem
-              isOffer={true}
-              itemTitle={item.lender}
-              type={item.lenderType}
-              principal={item.principal}
-              interest={item.interest}
-              duration={item.duration}
-              limit={item.limit}
-            />
-          </Box>
-        )}
-        keyExtractor={(item) => item.id}
-      />
+            Create an Offer
+          </Button>
+        </Stack>
+      </VStack>
     </Box>
   )
 }
