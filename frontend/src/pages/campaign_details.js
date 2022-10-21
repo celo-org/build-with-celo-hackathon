@@ -101,12 +101,12 @@ const CampaignDetails = () => {
                             <div class="row">
                                 <div class="col-md-6 pr-md-5">
                                     <Carousel autoPlay="true" >
-
-                                        {photos.map((el, i) => {
-                                            <div>
-                                                <img src={el.url} alt="" />
-                                            </div>
-                                        })}
+                                        <d
+                                            {photos.map((el, i) => {
+                                                <div>
+                                                    <img src={el.url} alt="" />
+                                                </div>
+                                            })}
                                     </Carousel>
 
                                 </div>
