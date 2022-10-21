@@ -18,7 +18,12 @@ const config: HardhatUserConfig = {
     ropsten: {
       url: process.env.ROPSTEN_URL,
       accounts: [process.env.PRIVATE_KEY] as HttpNetworkAccountsUserConfig | undefined,
-    }
+    },
+    alfajores: {
+      url: process.env.CELO_ALFAJORES,
+      accounts:  [process.env.PRIVATE_KEY] as HttpNetworkAccountsUserConfig | undefined,
+      chainId: 44787,
+   },
   },
   etherscan: {
     apiKey: process.env.API_TOKEN

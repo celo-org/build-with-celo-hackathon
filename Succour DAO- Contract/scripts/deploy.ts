@@ -11,7 +11,7 @@ async function main() {
 
   const minimumRequirement = await ethers.utils.parseEther("10");
   const maximumRequirement = await ethers.utils.parseEther("200");
-  const tokenAddress = "0x9b7Fb05121f7AAC62a324e109c10F138eCd5C342";
+  const tokenAddress = "0x07b8b15Afd654e9334A3D63396B5f9092bfb0D9E";
 
   const constructData = await succour.encode(minimumRequirement, maximumRequirement,tokenAddress )
   
