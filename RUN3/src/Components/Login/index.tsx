@@ -20,6 +20,7 @@ import { styles } from './styles'
 import { useWalletProvider } from '../../contexts/WalletContext'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { globalStyles } from '../../utils/globalStyles'
+import { createUser, getUserByEmail } from '../../api/users/users'
 
 global.Buffer = global.Buffer || Buffer
 
@@ -45,12 +46,22 @@ export default function Login({ navigation }: { navigation: any }) {
         redirectUrl: resolvedRedirectUrl,
         loginProvider: LOGIN_PROVIDER.GOOGLE,
       })
+
       if (state.privKey) {
         const provider = new CeloProvider(NET_PROVIDER)
         await provider.ready
         const walletWithProvider = new CeloWallet(state.privKey, provider)
         setProvider(provider)
         setWalletWithProvider(walletWithProvider)
+        // const user = await getUserByEmail(state.userInfo.email)
+        // if (user === 'User not found') {
+        //   await createUser({
+        //     email: state.userInfo.email,
+        //     name: state.userInfo.name,
+        //     publicaddress: walletWithProvider.address,
+        //   })
+        // }
+
         await AsyncStorage.setItem('wallet', JSON.stringify(walletWithProvider))
         navigation.replace('home')
       }
