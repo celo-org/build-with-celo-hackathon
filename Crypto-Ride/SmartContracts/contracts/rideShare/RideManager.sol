@@ -12,13 +12,13 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
  * @author Mitchell Tucker
  * @dev 
  *
- * TODO could add time base escrow for drivers
- * TODO users need to fund a security deposit
+ * note could add time base escrow for drivers
+ * note users need to fund a security deposit
+ * note need kill contract method
  */
 
 contract RideManager is ReputationManager, AdminControls {
 
-    //address constant private cUSD = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
     IERC20 _token;
 
 
@@ -55,7 +55,6 @@ contract RideManager is ReputationManager, AdminControls {
     }
 
     mapping(address => bytes32) private activeRides; // Links passenger & driver to there current active ride
-    //mapping(address => uint256) balance;
 
     // Note this keeps cost down as the drivers arrays isn't encoded every function
     mapping(bytes32 => address[]) private proposedDrivers; // drivers for announcedRides 
@@ -80,15 +79,17 @@ contract RideManager is ReputationManager, AdminControls {
     /**
     * @dev returns rideId for msg.sender
     *
+    * @param _user Bytes32 keccak hash of the ride
+    *
     * @return bytes32 keccak hash of the ride
     */
     
-    function getActiveRide()
+    function getActiveRide(address _user)
     public
     view 
     returns(bytes32)
     {
-        return(activeRides[msg.sender]);
+        return(activeRides[_user]);
     }
     
     /**
