@@ -3,6 +3,7 @@ import { Feather, Ionicons } from '@expo/vector-icons'
 import { useSelector } from 'react-redux'
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 export default function SpacesScreen({ navigation }) {
   const roscaAddress = useSelector((s) => s.spaces.userSpaces.roscas[0])
   return (
@@ -131,6 +132,32 @@ export default function SpacesScreen({ navigation, route }) {
     },
   ]
   return (
+=======
+import { FeatureHomeCard, FeatureItem } from 'clixpesa/components'
+
+export default function SpacesScreen({ navigation, route }) {
+  const roscaAddress = useSelector((s) => s.spaces.userSpaces.roscas[0])
+  //const navigation = useNavigation();
+  const spaces = [
+    {
+      addr: '0x001',
+      name: 'Chamma',
+      initiated: false,
+      value: 300,
+      repaid: 10,
+      dueDate: '14 Sep 2022',
+    },
+    {
+      addr: '0x002',
+      name: 'Sherehe',
+      initiated: true,
+      value: 500,
+      repaid: 200,
+      dueDate: '24 Oct 2022',
+    },
+  ]
+  return (
+>>>>>>> c235832250d5e17afceaed8cfcf91903f6177ce6
     <Box flex={1} bg="muted.100" alignItems="center">
       <FeatureHomeCard
         balance="30.3780"
@@ -157,7 +184,10 @@ export default function SpacesScreen({ navigation, route }) {
             roundedTop="md"
             roundedBottom={index == spaces.length - 1 ? '2xl' : 'md'}
             mt={1}
+<<<<<<< HEAD
 >>>>>>> setup loans feature
+=======
+>>>>>>> c235832250d5e17afceaed8cfcf91903f6177ce6
           >
             {index == 0 ? (
               <HStack justifyContent="space-between" mx={4} mt={2} mb={1}>
