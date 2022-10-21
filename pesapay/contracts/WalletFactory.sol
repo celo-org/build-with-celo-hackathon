@@ -30,6 +30,7 @@ contract WalletFactory is
     function initialize(address _walletImp) public initializer {
         __Ownable_init();
         __Pausable_init();
+        __UUPSUpgradeable_init();
         walletImplementation = _walletImp;
     }
 
