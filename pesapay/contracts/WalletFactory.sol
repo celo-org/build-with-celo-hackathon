@@ -41,13 +41,13 @@ contract WalletFactory is
         walletImplementation = _walletImp;
     }
 
-    function updateEscrow(address _escrowWalletImp)
-        public
-        onlyOwner
-        whenPaused
-    {
-        escrowWalletImplementation = _escrowWalletImp;
-    }
+    // function updateEscrow(address _escrowWalletImp)
+    //     public
+    //     onlyOwner
+    //     whenPaused
+    // {
+    //     escrowWalletImplementation = _escrowWalletImp;
+    // }
 
     function newWallet(string memory userId) public returns (bool) {
         require(wallets[userId] == address(0), "WI: Already has Wallet");
@@ -62,18 +62,18 @@ contract WalletFactory is
         return true;
     }
 
-    function createEscrow(string memory userId) public returns (bool) {
-        require(wallets[userId] == address(0), "WI: Already has Wallet");
-        require(bytes(userId).length >= 32, "WI: Invalid ID"); //If the passed string is ASCII character i.e 1 byte/character
+    // function createEscrow(string memory userId) public returns (bool) {
+    //     require(wallets[userId] == address(0), "WI: Already has Wallet");
+    //     require(bytes(userId).length >= 32, "WI: Invalid ID"); //If the passed string is ASCII character i.e 1 byte/character
 
-        address _wallet = address(new EscrowProxy(address(this)));
+    //     // address _wallet = address(new EscrowProxy(address(this)));
 
-        wallets[userId] = _wallet;
+    //     wallets[userId] = _wallet;
 
-        emit NewWallet(userId, _wallet);
+    //     emit NewWallet(userId, _wallet);
 
-        return true;
-    }
+    //     return true;
+    // }
 
     function _authorizeUpgrade(address) internal override onlyOwner {}
 }

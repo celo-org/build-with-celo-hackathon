@@ -16,7 +16,7 @@ import "hardhat/console.sol";
  *
  * The success and return data of the delegated call will be returned back to the caller of the proxy.
  */
-contract WalletProxy {
+contract escrowWalletProxy {
     WalletFactory xFactory;
 
     constructor(address _walletFactoryContract) {

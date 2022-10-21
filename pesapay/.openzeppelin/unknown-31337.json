@@ -12,15 +12,40 @@
       "kind": "uups"
     },
     {
+      "address": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+      "txHash": "0xc83d8213423a2f7963198a3dad2b53d2b35f73e2d3bc2aa6bf0adb73146c2878",
+      "kind": "uups"
+    },
+    {
+      "address": "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
+      "txHash": "0xfaa56e2f3aa8244226e4ebbd052bfbe526308fea5bb81773f7563caa9289857b",
+      "kind": "uups"
+    },
+    {
+      "address": "0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE",
+      "txHash": "0xd8311618fedf49dd26c9360b427f2922ad146780f9e558f71ad56b9da801b4a3",
+      "kind": "uups"
+    },
+    {
+      "address": "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82",
+      "txHash": "0x962c1c21f3c364b7a9934620c723dfbcde7c03368016a3bb031be629f54b7c88",
+      "kind": "uups"
+    },
+    {
       "address": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
-      "txHash": "0x3f460cb801ccb756ab5c6a2f3b56febbfe341ff79d7f6dd74036ed8c9aad5c4d",
+      "txHash": "0x636455ba5d645217a0eed2bb676c4748aabcc9f6e916a8619bb05bffc6915748",
+      "kind": "uups"
+    },
+    {
+      "address": "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
+      "txHash": "0xaa1a2779d8ba41d53cf0efc1e553a0f39b0ad63eb2abf640b1c4d0768759b2e2",
       "kind": "uups"
     }
   ],
   "impls": {
-    "9911503c78d48c6b55d780d3e06404ef825538921eb97ca5b50a4f6eff50d17d": {
+    "e4acd2db775622bdccfdd2573cb7309b2c0a2073cac687ed714401b527f81e75": {
       "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
-      "txHash": "0xf502823c334ba5c609a390d6c786258b7441b52e3fcbc9ad42e68aab1a3a8db5",
+      "txHash": "0x888f40b0bdf3e410828136b4c5901d9f45471ba1ca51ec91e2950539f67d00f2",
       "layout": {
         "solcVersion": "0.8.11",
         "storage": [
@@ -103,15 +128,166 @@
             "slot": "251",
             "type": "t_address",
             "contract": "WalletFactory",
-            "src": "contracts\\WalletFactory.sol:17"
+            "src": "contracts\\WalletFactory.sol:18"
+          },
+          {
+            "label": "escrowWalletImplementation",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_address",
+            "contract": "WalletFactory",
+            "src": "contracts\\WalletFactory.sol:19"
           },
           {
             "label": "wallets",
             "offset": 0,
-            "slot": "252",
+            "slot": "253",
             "type": "t_mapping(t_string_memory_ptr,t_address)",
             "contract": "WalletFactory",
+            "src": "contracts\\WalletFactory.sol:21"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_string_memory_ptr,t_address)": {
+            "label": "mapping(string => address)",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          },
+          "t_string_storage": {
+            "label": "string"
+          }
+        }
+      }
+    },
+    "261af6470c4fb75de0efcf27af71cbd538f0eca397aa361c1508778c16111b45": {
+      "address": "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
+      "txHash": "0xf3178f24d7481ff0ab84903d612bd9e2d3cb69672d9325c18ac0b21ed8c2bcfa",
+      "layout": {
+        "solcVersion": "0.8.11",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "_paused",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_bool",
+            "contract": "PausableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\PausableUpgradeable.sol:29"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "PausableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\PausableUpgradeable.sol:116"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\ERC1967\\ERC1967UpgradeUpgradeable.sol:211"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\UUPSUpgradeable.sol:107"
+          },
+          {
+            "label": "walletImplementation",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_address",
+            "contract": "WalletFactory",
+            "src": "contracts\\WalletFactory.sol:18"
+          },
+          {
+            "label": "escrowWalletImplementation",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_address",
+            "contract": "WalletFactory",
             "src": "contracts\\WalletFactory.sol:19"
+          },
+          {
+            "label": "wallets",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_mapping(t_string_memory_ptr,t_address)",
+            "contract": "WalletFactory",
+            "src": "contracts\\WalletFactory.sol:21"
           }
         ],
         "types": {

@@ -3,7 +3,7 @@ const { loadFixture } = require("@nomicfoundation/hardhat-network-helpers")
 const { expect } = require("chai")
 const assert = require("assert")
 
-describe("verify correct upgradeable contract implementaion", function () {
+describe("Test Functionality", function () {
   // We define a fixture to reuse the same setup in every test.
   // We use loadFixture to run this setup once, snapshot that state,
   // and reset Hardhat Network to that snapshot in every test.
@@ -102,6 +102,40 @@ describe("verify correct upgradeable contract implementaion", function () {
       const bal = ethers.utils.parseEther("80")
       expect(tx).to.be.lessThanOrEqual(bal)
       expect(ty).to.be.lessThanOrEqual(bal)
+    })
+  })
+})
+
+describe("test Upgradeability", async () => {
+  async function deploy() {
+    const WT = await ethers.getContractFactory("Wallet")
+    const WTx = await WT.deploy()
+    await WTx.deployed()
+    const WF = await ethers.getContractFactory("WalletFactory")
+    const WFx = await upgrades.deployProxy(
+      WF,
+      [WTx.address],
+      { intializer: "initialize" },
+      {
+        kind: "uups",
+      }
+    )
+    const WY = await ethers.getContractFactory("WalletFactoryV2")
+    const WYx = await upgrades.upgradeProxy(WFx, WY)
+    return { WFx, WYx, WTx }
+  }
+  describe("test2", async () => {
+    it("testing upgrade to V2", async () => {
+      const { WFx, WYx } = await loadFixture(deploy)
+      const Tx = await WYx.version()
+      const Ty = await WYx.walletImplementation()
+      assert(Tx === "V2")
+    })
+    it("V2 extends fron V!", async () => {
+      const { WFx, WYx } = await loadFixture(deploy)
+      const Ty = await WYx.walletImplementation()
+      const Tx = await WFx.walletImplementation()
+      assert(Tx === Ty)
     })
   })
 })
