@@ -14,6 +14,7 @@ export default function LoansHomeScreen({ navigation }) {
     {
       addr: '0x001',
       loanName: 'Majengo Nyumbani',
+      party: 'Akimbo Kenya',
       initiated: false,
       value: 300,
       repaid: 10,
@@ -22,6 +23,7 @@ export default function LoansHomeScreen({ navigation }) {
     {
       addr: '0x002',
       loanName: 'Mboga Stock',
+      party: 'Dekan Kachi',
       initiated: true,
       value: 500,
       repaid: 200,
@@ -37,7 +39,7 @@ export default function LoansHomeScreen({ navigation }) {
         btn1={{
           icon: <Icon as={Feather} name="arrow-down-left" size="md" color="primary.600" mr="1" />,
           name: 'Borrow',
-          screen: 'DummyModal',
+          screen: 'fromOffers',
         }}
         btn2={{
           icon: <Icon as={Feather} name="arrow-up-right" size="md" color="primary.600" mr="1" />,
@@ -66,7 +68,7 @@ export default function LoansHomeScreen({ navigation }) {
             ) : null}
             <FeatureItem
               initiated={item.initiated}
-              itemTitle={item.loanName}
+              itemTitle={item.party}
               payProgress={
                 item.repaid.toFixed(2).toString() + '/' + item.value.toFixed(2).toString() + ' Paid'
               }

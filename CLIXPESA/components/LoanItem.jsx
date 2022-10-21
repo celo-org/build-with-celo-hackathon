@@ -22,7 +22,7 @@ const LoanItem = (props) => {
   ).toFixed(0)
 
   return (
-    <Pressable onPress={() => navigation.navigate(props.screen)}>
+    <>
       <HStack alignItems="flex-start" justifyContent="space-between" my={3} mx={4}>
         <HStack alignItems="center" space={2}>
           <Avatar size="sm">{initials}</Avatar>
@@ -56,6 +56,12 @@ const LoanItem = (props) => {
             mt={2}
             ml="20%"
             _text={{ fontWeight: 'medium', mb: '0.5' }}
+            onPress={() =>
+              navigation.navigate(
+                props.screen,
+                props.scrnParams ? { loanParams: props.scrnParams } : null,
+              )
+            }
           >
             {props.isOffer ? 'Borrow' : 'Lend'}
           </Button>
@@ -72,7 +78,7 @@ const LoanItem = (props) => {
             : 'Score: ' + props.creditScore.value + ' (' + props.creditScore.status + ')'}
         </Text>
       </VStack>
-    </Pressable>
+    </>
   )
 }
 
