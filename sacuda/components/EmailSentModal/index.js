@@ -8,10 +8,10 @@ export default function EmailSentModal({ email }) {
   return createPortal(
     <div className={styles.container}>
       <HiOutlineMailOpen fontSize={'2.5rem'} color="#346DF1" />
-      <Heading as="h1">Revisa tu correo</Heading>
+      <Heading as="h1">Check your email</Heading>
       <Text>
-        Te enviamos un link mágico a <b>{email}</b>. Revisa tu bandeja de entrada
-        donde encontrarás un botón para iniciar sesión en Sacuda.
+        We sent a magic link to <b>{email}</b>. Check your inbox
+        where you will find a button to login to Sacuda.
       </Text>
     </div>,
     document.body

@@ -1,5 +1,5 @@
 import { FaMagic } from 'react-icons/fa';
-import { Heading, Input, Button } from '@chakra-ui/react';
+import { Heading, Text, Input, Button } from '@chakra-ui/react';
 import { signIn, getSession, getProviders } from 'next-auth/react';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
@@ -40,19 +40,25 @@ export default function SignIn() {
   return (
     <>
       <Head>
-        <title>Iniciar sesión | Sacuda</title>
+        <title>Login | Sacuda</title>
       </Head>
       <main
         className={styles.pageContainer}
         style={{ filter: show && 'blur(10px)' }}
       >
         <FaMagic fontSize="3rem" color="#346DF1" />
-        <Heading as={'h1'}>Iniciar sesión en Sacuda</Heading>
+        <Heading as={'h1'}>Login to Sacuda</Heading>
+        <Text 
+          as={'h2'}
+          marginTop='1%'
+          >
+          We will send you a magic link to your email, review your inbox and follow the instructions to login
+        </Text>
         <form className={styles.form} onSubmit={onSubmit}>
           <label>
-            <p>Ingresa tu correo</p>
+            <p>Please enter your email address</p>
             <Input
-              placeholder="hola@sacuda.net"
+              placeholder="hi@sacuda.net"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -65,7 +71,7 @@ export default function SignIn() {
             type="submit"
             as="button"
           >
-            Iniciar sesión
+            Login
           </Button>
         </form>
       </main>

@@ -22,20 +22,35 @@ export default function Home() {
       <Head>
         <title>Bienvenidos a Sacuda</title>
       </Head>
-      <Heading as={'h1'}>
-        Sacuda v1 
+      <Heading as={'h0'}>
+        Welcome to Sacuda!
       </Heading>
+
       {status === 'authenticated' ? (
         walletRedirect()
       ) : typeof window !== 'undefined' ? (
-        <Button isLoading={status === 'loading'}>
-          <Link
-            href={'/auth/signin?callbackUrl=' + window?.location.origin || ''}
-            prefetch
-          >
-            Iniciar sesión
-          </Link>
-        </Button>
+        <>
+          <Text 
+            as={'h1'}
+            marginTop='1%'
+            >
+              We make women led bussinesses visible!
+          </Text>
+          <Text 
+            as={'h2'}
+            marginTop='1%'
+            >
+              Click on the login button below to start your journey with us
+          </Text>
+            <Button isLoading={status === 'loading'}>
+              <Link
+                href={'/auth/signin?callbackUrl=' + window?.location.origin || ''}
+                prefetch
+              >
+                Login
+              </Link>
+          </Button>
+        </>
       ) : (
         ''
       )}
