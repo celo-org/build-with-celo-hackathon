@@ -10,15 +10,15 @@ const FuturePlan = () => {
       <img src="/images/FuturePlan/outline.png" />
     </Box>
     <div className="mobile-future-plan">
-      <h1 className="text-[white] font-bold text-xl text-center">
+      <h1 style={{textAlign:'center', color: '#fff'}} className="text-[white] font-bold text-xl text-center">
         Our Future Plans
       </h1>
-      <div className="text-center my-10">
+      <Box textAlign={'center'} className="text-center my-10">
         <Image src="/images/Footer/Logo.png" width={80} height={80} />
-      </div>
-      <ul className=" list-disc">
+      </Box>
+      <ul style={{margin: "0 10px"}} className="list-disc">
         {futurePlans.map((plan, index) => (
-          <li key={index} className="my-5">
+          <li key={index} style={{marginTop: 10}} className="my-5">
             {plan.text}{" "}
           </li>
         ))}

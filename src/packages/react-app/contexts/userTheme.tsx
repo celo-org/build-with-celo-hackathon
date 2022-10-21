@@ -29,6 +29,20 @@ export const CustomThemeProvider = (props: PropsWithChildren<{}>) => {
         },
         typography: {
           fontFamily: "Euclid Circular A",
+          h2: {
+            "@media (max-width:768px)": {
+              fontSize: "2.5rem",
+            },
+          },
+          h6: {
+            "@media (max-width:768px)": {
+              fontSize: "1rem",
+            },
+          },  body2: {
+            "@media (max-width:768px)": {
+              fontSize: "0.7rem",
+            },
+          },
         },
         components: {
           MuiCssBaseline: {

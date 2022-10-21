@@ -1,12 +1,13 @@
 import React from "react";
-import { Stack, Typography } from "@mui/material";
+import { Typography, Grid } from "@mui/material";
 import Section from "@/components_/Layout/Section";
 import { heroText } from "@/data";
+import Image from "next/image";
 
 const Hero = () => {
   return (
-    <Section className="bg-ash" py={4}>
-      <Stack mr={2}>
+    <Grid container justifyContent='space-between' sx={{ paddingX: { xs: 4, md: 8 } }} className="bg-ash" py={4}>
+      <Grid item xs={12} lg={5}  mr={2}>
         <Typography fontWeight="bold" variant="h2">
           {heroText.heading}
         </Typography>
@@ -19,11 +20,11 @@ const Hero = () => {
         <Typography variant="body2" mt={2}>
           {heroText.subText} <span className="font-semibold">Learn More</span>
         </Typography>
-      </Stack>
-      <div className="px-5 mt-10 md:mt-0">
-        <img src="/images/Hero/Image.png" width={600} height={580} />
-      </div>
-    </Section>
+      </Grid>
+      <Grid item xs={12} lg={6} textAlign='center' >
+        <Image src="/images/Hero/Image.png" className="hero-image" width={600} height={580} />
+      </Grid>
+    </Grid>
   );
 };
 

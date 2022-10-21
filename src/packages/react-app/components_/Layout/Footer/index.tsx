@@ -8,8 +8,7 @@ const Footer = () => {
     <Grid
       container
       justifyContent="space-between"
-      alignItems="flex-end
-    "
+      alignItems="flex-end"
       bgcolor="#312D22"
       py={6}
       px={4}
@@ -19,17 +18,17 @@ const Footer = () => {
           {" "}
           <Image src="/images/Footer/Logo.png" width={45} height={45} />
         </div>
-        <Stack direction={"row"}>
+        <Stack sx={{ flexDirection: { xs: "column", sm: "row" } }} mt={4}>
           {" "}
           {footerlinks.map((link, index) => (
-            <Typography component="a" key={index} color="#ffffff" mr={2} mt={4} fontWeight="light">
+            <Typography component="a" key={index} color="#ffffff" mr={2} mt={1} fontWeight="light">
               {link.title}
             </Typography>
           ))}
         </Stack>
       </Grid>
       {/* <hr color='#9E9887' /> */}
-      <Grid item className="mt-10 md:mt-0">
+      <Grid item mt={2}>
         <Typography color="#C9C4B5">
           © 2022 savingHistory. All rights reserved.
         </Typography>

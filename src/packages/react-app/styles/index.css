@@ -51,8 +51,8 @@ body {
   width: 8%;
 }
 
-.btn-primary{
-  background-color: #FACA4F;
+.btn-primary {
+  background-color: #faca4f;
   border: 0;
   outline: none;
   padding: 10px 20px;
@@ -60,11 +60,11 @@ body {
   cursor: pointer;
 }
 .nav-shadow {
-  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
 }
 
-.bg-ash{
-  background-color: #F1F0F0;
+.bg-ash {
+  background-color: #f1f0f0;
 }
 #hero-cta {
   justify-content: center;
@@ -93,7 +93,17 @@ body {
   width: 80%;
 }
 
+@media screen and (max-width: 1024px) {
+  .hero-image {
+    margin-top: 20px !important;
+  }
+}
+
 @media screen and (max-width: 768px) {
+  .header-one {
+    display: none !important;
+  }
+
   .nav-links {
     display: none !important;
   }
@@ -116,6 +126,6 @@ body {
     width: 100%;
   }
 }
-.border{
+.border {
   border: 1px solid red;
 }
