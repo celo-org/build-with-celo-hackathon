@@ -10,7 +10,13 @@ import Icon from 'react-native-remix-icon' //Fix/Add types
 import { HomeScreen, DummyScreen } from 'clixpesa/features/essentials'
 import { AllTokensScreen } from 'clixpesa/features/wallet'
 import { AccountScreen } from 'clixpesa/features/account'
-import { LoansHomeScreen } from 'clixpesa/features/microloans'
+import {
+  LoansTabNavigator,
+  LoanInfoScreen,
+  ApplyLoanScreen,
+  CreateOfferScreen,
+  FilterByAmountScreen,
+} from 'clixpesa/features/microloans'
 import {
   SpacesHomeScreen,
   RoscaHomeScreen,
@@ -22,7 +28,7 @@ import {
   AddPersonalFundScreen,
   WithdrawFundScreen,
   SetRoscaGoalScreen,
-  FundSpaceScreen,
+  FundRoundScreen,
 } from 'clixpesa/features/spaces'
 import { useSelector } from 'react-redux'
 
@@ -42,14 +48,14 @@ export default function MainNavigator() {
           name="RoscaHome"
           component={RoscaHomeScreen}
           options={({ route }) => ({
-            //unmountOnBlur: true,
+            unmountOnBlur: true,
             roscaAddress: route.params.roscaAddress,
           })}
         />
         <MainStack.Screen name="selectContacts" component={SelectContactsScreen} />
         <MainStack.Screen name="customizeGroup" component={CustomizeGroupScreen} />
         <MainStack.Screen name="setRoscaGoal" component={SetRoscaGoalScreen} />
-        <MainStack.Screen name="fundSpace" component={FundSpaceScreen} />
+        <MainStack.Screen name="fundRound" component={FundRoundScreen} />
         <MainStack.Screen name="DummyModal" component={DummyScreen} />
         <MainStack.Screen name="PersonalHome" component={PersonalHomeScreen} />
         <MainStack.Screen name="setPersonalGoal" component={SetPersonalGoalScreen} />
@@ -65,6 +71,17 @@ export default function MainNavigator() {
             tempBal: route.params.tempBal,
           })}
         />
+        <MainStack.Screen name="LoanHome" component={LoanInfoScreen} />
+        <MainStack.Screen name="fromOffers" component={FilterByAmountScreen} />
+        <MainStack.Screen
+          name="applyLoan"
+          component={ApplyLoanScreen}
+          options={({ route }) => ({
+            unmountOnBlur: true,
+            loanParams: route.params ? route.params.loanParams : {},
+          })}
+        />
+        <MainStack.Screen name="createOffer" component={CreateOfferScreen} />
       </MainStack.Group>
     </MainStack.Navigator>
   )
@@ -126,7 +143,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Loans"
-        component={LoansHomeScreen}
+        component={LoansTabNavigator}
         options={() => ({
           title: 'Loans',
           tabBarIcon: ({ focused }) => (
