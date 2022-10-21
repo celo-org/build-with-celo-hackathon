@@ -44,11 +44,12 @@ contract FrontFace {
 //----------------------- SET ADDRESS FUNCTIONS -----------------------//
     function setTokenFactoryAddress(address _tokenFactoryAddress) public {
         require(_tokenFactoryAddress != address(0), "Account: Zero or Invalid address!");
+        require(IRoles(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT Manager!");
         tokenFactoryAddress = _tokenFactoryAddress;
     }
 
     function setRolesContractAddress(address _rolesSC) public whenNotPaused {
-        require(IRoles(rolesSC).isAddressManager(msg.sender), "Access Denied: Caller is NOT Address Manager!");
+        require(IRoles(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT Address Manager!");
         require(_rolesSC != address(0), "Account: Zero or Invalid address!");
         rolesSC = _rolesSC;
     }
@@ -56,11 +57,12 @@ contract FrontFace {
     function sendReceipt(address walletAddress, uint256 amount) public {
         //require(receiptNum != 0, "Input Error: Receipt number is zero or invalid!");
         require(walletAddress != address(0), "Input Error: Recepient address is zero or invalid!");
+        require(amount != 0, "Input Error: Amount entered is zero or invalid!");
         SUSTokenFactory(tokenFactoryAddress).mintSUST((walletAddress), amount);
     }
 
     function killContract() public {
-        //require(IRoles(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT SUPER ADMIN!");
+        require(IRoles(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT SUPER ADMIN!");
 		selfdestruct(payable(msg.sender));
 	}
 }
