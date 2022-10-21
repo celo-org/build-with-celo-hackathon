@@ -15,6 +15,8 @@ const CreateProposal = () => {
   const TumainiDaoContractAddress = "0xC9c5B8a5595c7fB8e7053c3AEcaB369854068650"
   const { showModal, setShowModal } = useContext(AppContext);
   const [useraccount,setUserAccount] = useState(null);
+  //proposal details
+  
     const connectWallet  =  async function (){
    
       if (window.celo) {
