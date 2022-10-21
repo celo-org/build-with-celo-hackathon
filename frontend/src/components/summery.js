@@ -15,7 +15,7 @@ const Summery = () => {
     const [registered, setRegistered] = useState(false)
 
     useEffect(() => {
-        checkStatus(sd)
+        checkStatus()
     }, [address, chain])
 
     async function checkStatus() {
