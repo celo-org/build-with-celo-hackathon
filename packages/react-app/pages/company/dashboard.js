@@ -87,12 +87,15 @@ const Dashboard = () => {
                                             </div>
                                         </div>
                                     <div className='pt-4 border-t border-gray-100 flex items-center justify-end w-full'>
-                                        <h3 className="text-[#DD7D37] text-base px-6">view offers</h3>
+                                        <Link href='/company/offers'>
+                                            <a className="text-[#DD7D37] text-base px-6">view offers</a>
+                                        </Link>
+                                        
                                     </div>
                                 </div>
                                 <div className="shadow w-full bg-white relative  py-6 rounded flex flex-col justify-between">
                                     <div className="flex items-center justify-between flex-row w-full px-6">
-                                    <h5 className="text-gray-600 text-lg">Today's Dropoffs</h5>
+                                    <h5 className="text-gray-600 text-lg">Today's Deliveries</h5>
                                     <button className="text-gray-400 text-xs rounded-full hover:bg-gray-200 p-2 transition duration-200 ease">
                                         <ExpandMoreVertical/>
                                     </button>
@@ -112,7 +115,9 @@ const Dashboard = () => {
                                             
                                     </div>
                                     <div className='pt-4 border-t border-gray-100 flex items-center justify-end w-full'>
-                                        <h3 className="text-[#DD7D37] text-base px-6">view offers</h3>
+                                        <Link href='/company/offers'>
+                                            <a className="text-[#DD7D37] text-base px-6">view offers</a>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
