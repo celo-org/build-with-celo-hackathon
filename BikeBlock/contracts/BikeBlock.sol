@@ -5,7 +5,6 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 // As for now we are going to treat this contract as escrow
-// TODO use celos escrow contract
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
@@ -48,7 +47,8 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
 
     // Stolen details of the stolen bike
     struct Stolen{
-        uint256 time;
+        uint256 endTime;
+        uint256 duration;
         Coordinate location;
         uint256 bountyPayOut;
         uint256 index;
@@ -87,12 +87,15 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
         require(_token.allowance(msg.sender, address(this)) >= amount, "Incorrect allowance amount");
         _;
     }
+
+
     
     constructor(address _tokenAddress) 
     ERC721("BikeBlock", "Bike") 
     {
         _token = IERC20(_tokenAddress);
     }
+
 
 
     /**
@@ -106,11 +109,13 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
         whenNotPaused
     {
         require(!checkIfRegistered(_serialHash),"Bike has already been registered");
-        _tokenIds.increment();
-        // Increment tokenId
+
         uint256 newTokenId = _tokenIds.current();
 
         _beforeTokenTransfer(address(0),_to,newTokenId);
+
+        // Increment tokenId
+        _tokenIds.increment();
         
         // Mint and set uri
         _safeMint(_to, newTokenId);
@@ -121,6 +126,8 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
 
         emit Mint(newTokenId);
     }
+
+
 
     /**
      * @dev given a serial hash returns the related token id
@@ -164,7 +171,8 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
     view
     returns(bool)
     {
-        return(bikes[bikeId] != 0);
+        return(bikeState[bikes[bikeId]] != State.None);
+        //return(bikes[bikeId] != 0);
     }
 
 
@@ -185,7 +193,6 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
     }
 
 
-/***************** Bike Stolen **********************/
 
     /**
      * @dev setStolenBike allow bike owner to set bike as stolen
@@ -195,13 +202,13 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
      *      - If bike was not found within a certain time frame reward is returned back to owner
      *
      * @param tokenId id of token (NFT) 
-     * @param _time time bike was stolen
+     * @param _duration open time for bounty
      * @param _location location bike was stolen (Might change to address)
      * @param _bountyPayOut amount set for bike bounty
      *
      */
 
-    function setStolenBike(uint256 tokenId,uint256 _time,Coordinate memory _location, uint256 _bountyPayOut) 
+    function setStolenBike(uint256 tokenId,uint256 _duration,Coordinate memory _location, uint256 _bountyPayOut) 
     public
     whenNotPaused
     {
@@ -212,7 +219,8 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
         require(_token.transferFrom(msg.sender,address(this),_bountyPayOut),"transfer Failed");
 
         Stolen memory stolenInfo;
-        stolenInfo.time = _time;
+        stolenInfo.endTime = block.timestamp;
+        stolenInfo.duration = _duration;
         stolenInfo.location = _location;
         stolenInfo.bountyPayOut = _bountyPayOut;
         stolenInfo.index = stolenBikes.length;
@@ -223,6 +231,27 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
         stolenBikes.push(tokenId); 
 
         emit SetStolen(tokenId);
+    }
+
+
+
+    /**
+    * @dev sets bike state to normal removing the stolenState entry
+    * @param tokenId id for token
+    * Could add time requirement 
+    */
+    function setNormal(uint256 tokenId)
+    public
+    {
+        require(isStolen(tokenId),"State must be stolen");
+        require(isTokenOwner(msg.sender,tokenId),"Not token owner");
+        // get pay out amount
+        Stolen memory stolenInfo = stolenState[tokenId];
+        delete stolenState[tokenId];
+        // Set state back to normal
+        bikeState[tokenId] = State.Normal;
+        // tranfer bounty payout back to token owner
+        require(_token.transfer(msg.sender,stolenInfo.bountyPayOut),"transfer Failed");
     }
 
 
@@ -242,6 +271,11 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
     }
 
 
+
+    /**
+    * @dev getStolenBikeAtIndex
+    * @return Stolen details for a report 
+    */
     function getStolenBikeAtIndex(uint256 _startIndex,uint256 _count)
     public
     view
@@ -258,6 +292,12 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
     }
  
 
+
+
+    /**
+    * @dev getStolenBikeCount
+    * @return uint256 amount of stolen tokens (bikes)
+    */
     function getStolenBikeCount()
     public
     view
@@ -267,6 +307,11 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
     }
 
 
+
+    /**
+    * @dev getStolenInfo
+    * @return Stolen report details for a given stolen token 
+    */
     function getStolenInfo(uint256 _tokenId)
     public
     view
@@ -276,12 +321,11 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
     }
 
 
-/***************** Bike Recovery **********************/
 
     /**
-    *@dev returns amount of reports for a token
-    *@param _tokenId token for reports
-    *@return uint256 amount of reports
+    * @dev returns amount of reports for a token
+    * @param _tokenId token for reports
+    * @return uint256 amount of reports
     */
     function getReportCountForToken(uint256 _tokenId) 
     public
@@ -290,6 +334,8 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
     {
         return(reports[_tokenId].length);
     }
+
+
 
     /**
     *@dev returns reportId 
@@ -305,6 +351,8 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
         return(reports[_tokenId][_index]);
     }
 
+
+
     /**
     *@dev returns recovery report 
     *@param _reportId reportId for report
@@ -317,6 +365,7 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
     {
         return(recovery[_reportId]);
     }
+
 
 
     /**
@@ -335,7 +384,7 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
         State state = bikeState[tokenId];
     
         require(state != State.None,"Bike isn't registered");
-        require(state == State.Stolen,"Bike isn't stolen");
+        require(state == State.Stolen,"Bike isn't stolen"); 
         
         // Create recovery struct with the address who report bike
         RecoveryReport memory report;
@@ -351,6 +400,7 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
 
         emit ReportStolenBike(tokenId);
     }
+
 
 
     /**
@@ -390,12 +440,15 @@ contract BikeBlock is  ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Own
 
     /**
     * @dev See {ERC721Enumerable-_beforeTokenTransfer}.
+    *
+    * note require bike state to be not stolen
     */
     function _beforeTokenTransfer(address from, address to, uint256 tokenId)
         internal
         whenNotPaused
         override(ERC721, ERC721Enumerable)
     {
+        require(!isStolen(tokenId),"Cant transfer ownership of a stolen bike");
         super._beforeTokenTransfer(from, to, tokenId);
     }
 

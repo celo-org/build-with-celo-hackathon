@@ -6,6 +6,7 @@ const BN = web3.utils.BN;
 contract('Test BikeBlock',function(accounts) {
 let contractOwner = accounts[0];
 let bikeOwner = accounts[1];
+let bikeOwnerTwo = accounts[3];
 let reporter = accounts[2];
 
 let bikeBlock;
@@ -41,29 +42,29 @@ it("Test Mint",async function() {
     let mintTokenUri = await bikeBlock.tokenURI(tokenId);
 
     assert.equal(ownerTokenAmount,1,"Bike owner should only own one token");
-    assert.equal(tokenId,1,"Bike owner should own tokenId with 0");
+    assert.equal(tokenId,0,"Bike owner should own tokenId with 0");
     assert.equal(mintTokenUri,tokenURI,"Token URI is incorrect");
 
 }) 
 
 it("Minting Twice", async function() {
     let registered = await bikeBlock.checkIfRegistered(serialHash);
-    assert.equal(registered,true,"is Registered is incorrect")
+    assert.equal(registered,true,"is Registered is incorrect");
     try{
         await bikeBlock.safeMint(serialHash,bikeOwner,tokenURI,{from:bikeOwner});
     }catch(e) {
-        
+        assert.equal(true,true,"Mint twice should fail");
     }
     
 })
 
 it("Test Bike Lookup",async function() {
     let rawTokenId = await bikeBlock.bikeLookUp(serialHash);
-    assert.equal(rawTokenId,1);
+    assert.equal(rawTokenId,0);
 })
 
 it("Test get bike state",async function() {
-    let rawBikeState = await bikeBlock.getBikeState(1);
+    let rawBikeState = await bikeBlock.getBikeState(0);
     let bikeState = BN(rawBikeState).toString();
     assert.equal(bikeState,1); // normal state is zero in enum
 })
@@ -74,35 +75,52 @@ it("Test check if registered",async function() {
 })
 
 it("Test is token owner",async function() {
-    let isTokenOwner = await bikeBlock.isTokenOwner(bikeOwner,1);
+    let isTokenOwner = await bikeBlock.isTokenOwner(bikeOwner,0);
     assert.equal(isTokenOwner,true,"token owner is incorrect");
+})
+
+it("Test set bike state to normal", async function() {
+    await token.approve(bikeBlock.address,bountyPayOut,{from:bikeOwner});
+    await token.allowance(bikeOwner,bikeBlock.address);
+
+    await bikeBlock.setStolenBike(0,stolenTime,stolenLocation,10,{from:bikeOwner});
+    let isStolen = await bikeBlock.isStolen(0);
+    assert.equal(isStolen,true,"token stolen state should be true");
+    
+    await bikeBlock.setNormal(0,{from:bikeOwner});
+    let isNotStolen = await bikeBlock.isStolen(0);
+    assert.equal(isNotStolen,false,"token stolen state should be false");
+    let rawBikeState = await bikeBlock.getBikeState(0);
+    let bikeState = BN(rawBikeState).toString();
+    assert.equal(bikeState,1); // normal state is zero in enum
+
 })
 
 it("Test set stolen bike",async function() {
 
-    
     await token.approve(bikeBlock.address,bountyPayOut,{from:bikeOwner});
     await token.allowance(bikeOwner,bikeBlock.address);
 
-    await bikeBlock.setStolenBike(1,stolenTime,stolenLocation,10,{from:bikeOwner});
-    let isStolen = await bikeBlock.isStolen(1);
+    await bikeBlock.setStolenBike(0,stolenTime,stolenLocation,10,{from:bikeOwner});
+    let isStolen = await bikeBlock.isStolen(0);
     assert.equal(isStolen,true,"token is in incorrect state");
 })
+
 
 it("Test report stolen bike",async function() {
 
     await token.approve(bikeBlock.address,bountyPayOut,{from:bikeOwner});
     await token.allowance(bikeOwner,bikeBlock.address);
 
-    await bikeBlock.setStolenBike(1,stolenTime,stolenLocation,10,{from:bikeOwner});
+    await bikeBlock.setStolenBike(0,stolenTime,stolenLocation,10,{from:bikeOwner});
 
     //let utf8Encode = new TextEncoder();
     //let data = utf8Encode.encode("Stolen asset uri");
     await bikeBlock.reportStolenBike(bikeSerialNumber,"Stolen asset uri",{from:reporter});
-    let reportCount = await bikeBlock.getReportCountForToken(1);
+    let reportCount = await bikeBlock.getReportCountForToken(0);
     assert.equal(reportCount,1,"Incorrect report count");
 
-    let reportId = await bikeBlock.getReportAtIndex(1,0);
+    let reportId = await bikeBlock.getReportAtIndex(0,0);
 
     let report = await bikeBlock.getRecoveryReport(reportId);
 
@@ -117,18 +135,34 @@ it("Test pay out bounty",async function() {
     await token.approve(bikeBlock.address,bountyPayOut,{from:bikeOwner});
     await token.allowance(bikeOwner,bikeBlock.address);
 
-    await bikeBlock.setStolenBike(1,stolenTime,stolenLocation,10,{from:bikeOwner});
+    await bikeBlock.setStolenBike(0,stolenTime,stolenLocation,10,{from:bikeOwner});
 
     await bikeBlock.reportStolenBike(bikeSerialNumber,"Stolen asset uri",{from:reporter});
 
-    let reportId = await bikeBlock.getReportAtIndex(1,0);
-    await bikeBlock.payOutBounty(1,reportId,{from:bikeOwner});
+    let reportId = await bikeBlock.getReportAtIndex(0,0);
+    await bikeBlock.payOutBounty(0,reportId,{from:bikeOwner});
     
     let reportBalanceAfter = await token.balanceOf(reporter);
     let balanceAfter = BN(reportBalanceAfter).toString();
 
     assert.notEqual(balanceBefore,balanceAfter,"Bala");
 
+})
+
+
+it("Test stolen token tranfer",async function() {
+
+    await token.approve(bikeBlock.address,bountyPayOut,{from:bikeOwner});
+    await token.allowance(bikeOwner,bikeBlock.address);
+
+    await bikeBlock.setStolenBike(0,stolenTime,stolenLocation,10,{from:bikeOwner});
+    try{
+        await bikeBlock.transferFrom(bikeOwner,bikeOwnerTwo,0,{from:bikeOwner});
+    }catch(e){
+        assert.equal(true,true,"Stolen transfer incorrect");
+    }
+    
+    
 })
 
 })
