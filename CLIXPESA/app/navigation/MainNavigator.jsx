@@ -12,10 +12,12 @@ import { AllTokensScreen } from 'clixpesa/features/wallet'
 import { AccountScreen } from 'clixpesa/features/account'
 import {
   LoansTabNavigator,
+  AllLoansScreen,
   LoanInfoScreen,
   ApplyLoanScreen,
   CreateOfferScreen,
   FilterByAmountScreen,
+  RepayLoanScreen,
 } from 'clixpesa/features/microloans'
 import {
   SpacesHomeScreen,
@@ -72,6 +74,7 @@ export default function MainNavigator() {
           })}
         />
         <MainStack.Screen name="LoanHome" component={LoanInfoScreen} />
+        <MainStack.Screen name="AllLoans" component={AllLoansScreen} />
         <MainStack.Screen name="fromOffers" component={FilterByAmountScreen} />
         <MainStack.Screen
           name="applyLoan"
@@ -82,6 +85,14 @@ export default function MainNavigator() {
           })}
         />
         <MainStack.Screen name="createOffer" component={CreateOfferScreen} />
+        <MainStack.Screen
+          name="repayLoan"
+          component={RepayLoanScreen}
+          options={({ route }) => ({
+            unmountOnBlur: true,
+            loanParams: route.params ? route.params.loanParams : {},
+          })}
+        />
       </MainStack.Group>
     </MainStack.Navigator>
   )
