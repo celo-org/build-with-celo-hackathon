@@ -167,8 +167,16 @@ Simply the ride has four steps from start to finish, anywhere within the ride is
 
 ![Important State Diagram](ReadMeAssets/RideStates.png)
 
+## iOS Location Demo
+
+Location services is still a work in progress. Using the firebase database for the geo query of local drivers. The query will also retrieve the general working location of the driver. Then listen for changes within the realtime database for the drivers current location. Drivers are referenced by there ethereum address. The address will allow the passenger to request driver rates and driver details (Profiles).
+
+
+![DEMO](ReadMeAssets/locationDemo.gif)
 
 ## Completed
+
+**As this project is in prototype phase changes might occure**
 
 1. General smart contract structure 
 
@@ -198,6 +206,8 @@ Simply the ride has four steps from start to finish, anywhere within the ride is
 
     ```
     3. **When a ride is canceled ride funds are split according based on ride state**
+    
+
     ```js
         // Check what state the ride is in and refund 
     if(prevState == RideState.Announced){
@@ -233,16 +243,22 @@ Simply the ride has four steps from start to finish, anywhere within the ride is
 5. Testing and implentatation of location services in iOS apps.
 
 
+
+
 ## TODO
 
 - iOS apps 
 
-1. UI design 
+    1. UI design 
 
-2. Both driver and passenger iOS apps have been started but are a still work in progress. Both apps currently allow passengers to find drivers through Firebase. This was one of the first steps to complete, making sure it was possible. Both apps implement `web3swift` library to carry out wallet creation and contract calls.
+    2. Both driver and passenger iOS apps have been started but are a still work in progress. Both apps currently allow passengers to find drivers through Firebase. This was one of the first steps to complete, making sure it was possible. Both apps implement `web3swift` library to carry out wallet creation and contract calls.
 
-3. Static security audit
-    - Slither Static Analysis Tool for audit
+    3. iOS smart contract integration
+
+- Contract 
+
+    1. Static security audit
+        - Slither Static Analysis Tool for audit
 
 
 ## Licence
