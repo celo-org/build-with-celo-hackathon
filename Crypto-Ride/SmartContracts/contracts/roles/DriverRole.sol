@@ -7,8 +7,8 @@ contract DriverRole {
     struct Driver {
         bool isDriver;          
         uint256 rate;           // Driver rate 
-        bytes carAssetUrl;      // Car image and description ie four door , two door color
-        bytes infoAssetUrl;     // Driver image, name , age
+        string carAssetUrl;      // Car image and description ie four door , two door color
+        string infoAssetUrl;     // Driver image, name , age
     }
 
     event DriverAdded(address indexed account);
@@ -43,7 +43,7 @@ contract DriverRole {
     * @dev Adds driver
     *
     */
-    function addDriver(uint256 _startingRate, bytes memory _carAssetUrl, bytes memory _profileAssetUrl) 
+    function addDriver(uint256 _startingRate, string memory _carAssetUrl, string memory _profileAssetUrl) 
     public 
     {
         Driver memory driverDetails;
@@ -61,6 +61,7 @@ contract DriverRole {
     */
     function removeDriver() 
     public
+    virtual
     onlyDriver
     {
         delete drivers[msg.sender];
@@ -71,7 +72,9 @@ contract DriverRole {
     * @dev Allows driver to update rate
     *
     */
-    function updateRate(uint256 _newRate) public 
+    function updateRate(uint256 _newRate) 
+    public 
+    virtual
     onlyDriver()
     {
         Driver memory driverDetails = drivers[msg.sender];

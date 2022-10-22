@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 import '../reputationManager/ReputationManager.sol';
 import './AdminControls.sol';
+import '../roles/DriverRole.sol';
 
 // Modulars 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -17,10 +18,9 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
  * note need kill contract method
  */
 
-contract RideManager is ReputationManager, AdminControls {
+contract RideManager is ReputationManager, AdminControls, DriverRole {
 
     IERC20 _token;
-
 
     event DriversForRide(bytes32 rideId,address[] drivers);
     event DriverAcceptedRide(bytes32 rideId,address driver);
@@ -75,6 +75,32 @@ contract RideManager is ReputationManager, AdminControls {
         _token = IERC20(token);
     }
 
+    /**
+    * @dev DriverRole override 
+    *
+    * @param _newRate uint256 of the new rate
+    *
+    */
+    function updateRate(uint256 _newRate) 
+    override
+    public
+    inRide
+    {
+        super.updateRate(_newRate);
+    }
+
+    /**
+    * @dev DriverRole overide 
+    *
+    *
+    */
+    function removeDriver()
+    override
+    public
+    inRide
+    {
+        super.removeDriver();
+    } 
 
     /**
     * @dev returns rideId for msg.sender
@@ -214,6 +240,7 @@ contract RideManager is ReputationManager, AdminControls {
     function driverAcceptsRide(bytes32 _rideId) 
     public 
     notCanceled(_rideId)
+    onlyDriver()
     {   
         Ride memory ride = rides[_rideId];
         require(ride.state == RideState.Announced,"Check ride state");
@@ -387,6 +414,5 @@ contract RideManager is ReputationManager, AdminControls {
         updateReputation(msg.sender,0,10,true);
         emit RideCanceled(_rideId);
     }
-
 
 }

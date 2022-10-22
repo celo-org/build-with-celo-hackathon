@@ -33,6 +33,18 @@ contract('RideManager', function(accounts) {
     const ridePrice = web3.utils.toWei('5', 'ether');
     const totalSupply = web3.utils.toWei('10', 'ether');
 
+    async function getBalance(account) {
+        let rawBalance = await testToken.balanceOf(account);
+        let balance = BN(rawBalance).toString();
+        return(balance);
+    }
+
+
+    const rate = 24;
+
+    const carAsset = "CarURL";
+    const profileAsset = "ProfileURL";
+
 
     beforeEach(async () => {
         testToken = await TestToken.new(totalSupply,{from:passenger});
@@ -40,7 +52,7 @@ contract('RideManager', function(accounts) {
         //await testToken.transfer(rideManager.address,ridePrice,{from:passenger});
     })
 
-    it('Testing announcing a ride',async function() {
+    it.skip('Testing announcing a ride',async function() {
         let rawPassengerBalance = await testToken.balanceOf(passenger);
         let passengerBalanceBefore = BN(rawPassengerBalance).toString();
         //console.log("Passenger balanceBefore",passengerBalanceBefore);
@@ -94,10 +106,9 @@ contract('RideManager', function(accounts) {
         
     })
 
-    it('Testing driver Accept ride',async function() {
+    it.skip('Testing driver Accept ride',async function() {
             
         await testToken.approve(rideManager.address,ridePrice,{from:passenger});
-        await testToken.allowance(passenger,rideManager.address);
         await rideManager.announceRide(startLocation,endLocation,drivers,ridePrice,false,{from:passenger});
         
         let logData;
@@ -126,9 +137,8 @@ contract('RideManager', function(accounts) {
         
     })
 
-    it('Testing passenger confirms puckup', async function() {
+    it.skip('Testing passenger confirms puckup', async function() {
         await testToken.approve(rideManager.address,ridePrice,{from:passenger});
-        await testToken.allowance(passenger,rideManager.address);
         await rideManager.announceRide(startLocation,endLocation,drivers,ridePrice,false,{from:passenger});
 
         let logData;
@@ -158,9 +168,8 @@ contract('RideManager', function(accounts) {
         
     })
 
-    it('Testing driver confirms dropOff', async function() {
+    it.skip('Testing driver confirms dropOff', async function() {
         await testToken.approve(rideManager.address,ridePrice,{from:passenger});
-        await testToken.allowance(passenger,rideManager.address);
         await rideManager.announceRide(startLocation,endLocation,drivers,ridePrice,false,{from:passenger});
 
         let logData;
@@ -199,10 +208,9 @@ contract('RideManager', function(accounts) {
         
     })
 
-    it('Testing passenger confirms dropOff', async function() {
-        let prevDriverBalance = await testToken.balanceOf(driverOne);
+    it.skip('Testing passenger confirms dropOff', async function() {
+
         await testToken.approve(rideManager.address,ridePrice,{from:passenger});
-        await testToken.allowance(passenger,rideManager.address);
         await rideManager.announceRide(startLocation,endLocation,drivers,ridePrice,false,{from:passenger});
 
         let logData;
@@ -257,6 +265,212 @@ contract('RideManager', function(accounts) {
         assert.equal(driverActiveRide,"0x0000000000000000000000000000000000000000000000000000000000000000","Driver active ride is incorrect");
     })
 
+
+    it.skip('Testing paused contract', async function() {
+        await rideManager.pause({from:owner});
+
+        await testToken.approve(rideManager.address,ridePrice,{from:passenger});
+ 
+        try {
+            await rideManager.announceRide(startLocation,endLocation,drivers,ridePrice,false,{from:passenger});
+        } catch(e) {
+            
+        }
+       
+    })
+
+    it.skip('Testing canceling ride at announce ride', async function() {
+        await testToken.approve(rideManager.address,ridePrice,{from:passenger});
+        await rideManager.announceRide(startLocation,endLocation,drivers,ridePrice,true,{from:passenger});
+
+        let activeRide = await rideManager.getActiveRide({from:passenger});
+        await rideManager.cancelRide(activeRide,{from:passenger});
+         
+        let passengerBalanceAfter = await getBalance(passenger);
+        //console.log("Passenger",passengerBalanceAfter);
+
+        let contractBalanceAfter = await getBalance(rideManager.address);
+        //console.log("Contract",contractBalanceAfter);
+
+        assert.equal(passengerBalanceAfter,totalSupply,"Passenger balance is incorrect");
+        assert.equal(contractBalanceAfter,0,"Contract balance is incorrect");
+        let ride = await rideManager.getRide(activeRide);
+        assert.equal(ride.state,6,"Ride state is incorrect");
+
+    })
+
+
+    it.skip('Testing canceling ride at driver accepts ride', async function() {
+        await testToken.approve(rideManager.address,ridePrice,{from:passenger});
+        await rideManager.announceRide(startLocation,endLocation,drivers,ridePrice,true,{from:passenger});
+        let activeRide = await rideManager.getActiveRide({from:passenger});
+        await rideManager.driverAcceptsRide(activeRide,{from:driverOne});
+
+        await rideManager.cancelRide(activeRide,{from:driverOne});
+
+        let passengerBalanceAfter = await getBalance(passenger);
+        //console.log(passengerBalanceAfter);
+
+        let contractBalanceAfter = await getBalance(rideManager.address);
+        //console.log(contractBalanceAfter);
+
+        let driverBalanceAfter = await getBalance(driverOne);
+        //console.log(driverBalanceAfter);
+        
+        assert.equal(passengerBalanceAfter,"9000000000000000000","Passenger balance is incorrect");
+        assert.equal(contractBalanceAfter,"0","Contract balance is incorrect");
+        assert.equal(driverBalanceAfter,"1000000000000000000","Driver balance is incorrect");
+
+        let ride = await rideManager.getRide(activeRide);
+        assert.equal(ride.state,6,"Ride state is incorrect");
+
+        let canceled = await rideManager.isCanceled(activeRide);
+        assert.notEqual(canceled,"Ride state is incorrect from isCanceled");
+
+
+    })
+
+    it.skip('Testing canceling ride at passenger confrms pickup ride', async function() {
+        await testToken.approve(rideManager.address,ridePrice,{from:passenger});
+        await rideManager.announceRide(startLocation,endLocation,drivers,ridePrice,true,{from:passenger});
+        let activeRide = await rideManager.getActiveRide({from:passenger});
+        await rideManager.driverAcceptsRide(activeRide,{from:driverOne});
+        await rideManager.passengerConfirmsPickUp(activeRide,{from:passenger});
+
+        await rideManager.cancelRide(activeRide,{from:passenger});
+
+        let passengerBalanceAfter = await getBalance(passenger);
+        //console.log(passengerBalanceAfter);
+
+        let contractBalanceAfter = await getBalance(rideManager.address);
+        //console.log(contractBalanceAfter);
+
+        let driverBalanceAfter = await getBalance(driverOne);
+        //console.log(driverBalanceAfter);
+
+        assert.equal(passengerBalanceAfter,"7500000000000000000","Passenger balance is incorrect");
+        assert.equal(contractBalanceAfter,"0","Contract balance is incorrect");
+        assert.equal(driverBalanceAfter,"2500000000000000000","Driver balance is incorrect");
+
+        let ride = await rideManager.getRide(activeRide);
+        assert.equal(ride.state,6,"Ride state is incorrect");
+
+        let canceled = await rideManager.isCanceled(activeRide);
+        assert.notEqual(canceled,"Ride state is incorrect from isCanceled");
+
+    })
+
+
+    it.skip('Testing canceling ride at driver confims drop off ride', async function() {
+        await testToken.approve(rideManager.address,ridePrice,{from:passenger});
+        await rideManager.announceRide(startLocation,endLocation,drivers,ridePrice,true,{from:passenger});
+        let activeRide = await rideManager.getActiveRide({from:passenger});
+        await rideManager.driverAcceptsRide(activeRide,{from:driverOne});
+        await rideManager.passengerConfirmsPickUp(activeRide,{from:passenger});
+
+        await rideManager.driverConfirmsDropOff(activeRide,3,{from:driverOne});
+
+        await rideManager.cancelRide(activeRide,{from:driverOne});
+
+        let passengerBalanceAfter = await getBalance(passenger);
+        //console.log(passengerBalanceAfter);
+
+        let contractBalanceAfter = await getBalance(rideManager.address);
+        //console.log(contractBalanceAfter);
+
+        let driverBalanceAfter = await getBalance(driverOne);
+        //console.log(driverBalanceAfter);
+
+        assert.equal(passengerBalanceAfter,"6000000000000000000","Passenger balance is incorrect");
+        assert.equal(contractBalanceAfter,"0","Contract balance is incorrect");
+        assert.equal(driverBalanceAfter,"4000000000000000000","Driver balance is incorrect");
+
+        let ride = await rideManager.getRide(activeRide);
+        assert.equal(ride.state,6,"Ride state is incorrect");
+
+        let canceled = await rideManager.isCanceled(activeRide);
+        assert.notEqual(canceled,"Ride state is incorrect from isCanceled");
+    })
+
+
+    it.skip('Testing canceling ride at passenger confims drop off ride', async function() {
+        
+        await testToken.approve(rideManager.address,ridePrice,{from:passenger});
+        await rideManager.announceRide(startLocation,endLocation,drivers,ridePrice,true,{from:passenger});
+
+        let activeRide = await rideManager.getActiveRide({from:passenger});
+        await rideManager.driverAcceptsRide(activeRide,{from:driverOne});
+        await rideManager.passengerConfirmsPickUp(activeRide,{from:passenger});
+        await rideManager.driverConfirmsDropOff(activeRide,3,{from:driverOne});
+        await rideManager.passengerConfirmsDropOff(activeRide,3,{from:passenger});
+        try{
+            await rideManager.cancelRide(activeRide,{from:driverOne});
+        }catch(e){
+
+        }
+
+        let passengerBalanceAfter = await getBalance(passenger);
+        //console.log(passengerBalanceAfter);
+
+        let contractBalanceAfter = await getBalance(rideManager.address);
+        //console.log(contractBalanceAfter);
+
+        let driverBalanceAfter = await getBalance(driverOne);
+        //console.log(driverBalanceAfter);
+
+        assert.equal(passengerBalanceAfter,"5000000000000000000","Passenger balance is incorrect");
+        assert.equal(contractBalanceAfter,"0","Contract balance is incorrect");
+        assert.equal(driverBalanceAfter,"5000000000000000000","Driver balance is incorrect");
+
+        let ride = await rideManager.getRide(activeRide);
+        assert.equal(ride.state,5,"Ride state is incorrect");
+
+    })
+
+    it.skip('Testing creating two active rides', async function() {
+        await testToken.approve(rideManager.address,ridePrice,{from:passenger});
+        await rideManager.announceRide(startLocation,endLocation,drivers,ridePrice,true,{from:passenger});
+        try {
+            await rideManager.announceRide(startLocation,endLocation,drivers,ridePrice,true,{from:passenger});
+        } catch(e) {
+            //console.log(e);
+        }
+        
+    })
+
+    it('Add address to driver role', async function() {
+
+        await rideManager.addDriver(rate,carAsset,profileAsset,{from:driverOne});
+        
+        let driverDetails = await rideManager.getDriverRate(driverOne);
+        assert.notEqual(driverDetails.isDriver,"Driver address is not driver role");
+        assert.equal(driverDetails.rate,rate,"Driver rate is incorrect");
+
+        assert.equal(driverDetails.carAssetUrl,carAsset,"Car asset is incorrect");
+        assert.equal(driverDetails.infoAssetUrl,profileAsset,"Profile asset is incorrect");
+    })
+
+
+    it('Remove address to driver role', async function() {
+        await rideManager.addDriver(rate,carAsset,profileAsset,{from:driverOne});
+        let isDriver = await rideManager.isDriver(driverOne);
+        assert.equal(isDriver,true,"Driver address is not driver role");
+
+        await rideManager.removeDriver({from:driverOne});
+        let isDriverAfter = await rideManager.isDriver(driverOne);
+        assert.equal(isDriverAfter,false,"Driver address was not removed");
+        
+    })
+
+    it('Update driver rate', async function() {
+        await rideManager.addDriver(rate,carAsset,profileAsset,{from:driverOne});
+        let driverDetails = await rideManager.getDriverRate(driverOne);
+        assert.equal(driverDetails.rate,rate,"Driver old rate is incorrect");
+        await rideManager.updateRate(35,{from:driverOne});
+        let newDriverDetails = await rideManager.getDriverRate(driverOne);
+        assert.equal(newDriverDetails.rate,35,"Driver new rate is incorrect");
+    })
+    
 
 
 })
