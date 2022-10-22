@@ -171,6 +171,8 @@ Simply the ride has four steps from start to finish, anywhere within the ride is
 
 Location services is still a work in progress. Using the firebase database for the geo query of local drivers. The query will also retrieve the general working location of the driver. Then listen for changes within the realtime database for the drivers current location. Drivers are referenced by there ethereum address. The address will allow the passenger to request driver rates and driver details (Profiles).
 
+Please wait for the GIF to load.
+
 
 ![DEMO](ReadMeAssets/locationDemo.gif)
 
