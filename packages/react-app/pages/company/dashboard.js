@@ -9,6 +9,8 @@ const Dashboard = () => {
     const [createOffer, setCreateOffer] = useState();
     const [catDropdown, setCatDropdown] = useState();
     const [typeDropdown, setypeDropdown] = useState();
+    const [alertModal, setAlertModal] = useState();
+    const [approveOfferModal, setApproveOfferModal] = useState();
 
     const handleCat = () =>{
         setCatDropdown(!catDropdown)
@@ -18,6 +20,15 @@ const Dashboard = () => {
     }
     const handleCreateOffer = () =>{
         setCreateOffer(!createOffer)
+    }
+    const verifyOffer = () =>{
+        setAlertModal(!alertModal)
+    }
+    const submitOffer = () =>{
+        setCreateOffer(false)
+
+        setAlertModal(false)
+        setApproveOfferModal(!approveOfferModal)
     }
   return (
     <>
@@ -565,12 +576,98 @@ const Dashboard = () => {
                     </div>
 
                     <div className='flex justify-center items-center mx-auto w-1/2'>
-                        <button className='px-8 py-3 rounded-full shadow-md bg-[#DD7D37] hover:shadow-lg text-white transition duration-150 ease-in-out border-0 w-full' onClick={handleCreateOffer}>Create Offer</button>
+                        <button className='px-8 py-3 rounded-full shadow-md bg-[#DD7D37] hover:shadow-lg text-white transition duration-150 ease-in-out border-0 w-full' type='button' onClick={verifyOffer}>Create Offer</button>
                     </div>
                 </form>
                 </div>
             </div>
 
+            <div  className={`modal__box ${alertModal ? 'show' : ''}`}>
+                <div className="modal__box-wrapper alert--bx shadow-lg rounded-2xl">
+        
+                <div className="flex items-start justify-between mb-6">
+
+                    <div className="grow">
+                        <h1 className="text-2xl font-semibold mb-3">Are you sure of this offer?</h1>
+
+                        <p className='text-base text-gray-500'>Please note that this offer cannot be edited once it has been created and placed on the market</p>
+                        
+                    </div>
+
+                    
+                    <button className=" flex items-center rounded-full border-2 border-gray-700 absolute top-3 right-2  " onClick={()=>setAlertModal(false)}>
+                           <span className="pointer-events-none flex items-center p-1">
+                               <svg className='h-3 w-3 ' viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"></path>
+                                </svg>
+                           </span>             
+                        
+                    </button>
+
+                </div>
+
+                    <div className='flex items-center justify-center gap-4 mt-5 mx-auto'>
+                        <button className='px-4 py-2 border border-gray-300 bg-white text-gray-700 rounded-full' type='button'  onClick={()=>setAlertModal(false)}>Go back to offer</button>
+                        <button className='px-4 py-2 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full' onClick={submitOffer}>Yes, I'm sure</button>
+                        
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div  className={`modal__box ${approveOfferModal ? 'show' : ''}`}>
+                <div className="modal__box-wrapper shadow-lg rounded-2xl relative">
+
+                    <button className=" flex items-center rounded-full border-2 border-gray-700 absolute top-3 right-2  " onClick={()=>setApproveOfferModal(false)}>
+                           <span className="pointer-events-none flex items-center p-1">
+                               <svg className='h-3 w-3 ' viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"></path>
+                                </svg>
+                           </span>             
+                        
+                    </button>
+
+                    <div className='px-2 py-6   '>
+
+                        <div className='flex items-center justify-around py-4'>
+                            <div className='h-16'>
+                                <img src='/images/metamask2.svg' className='h-full object-cover'/>
+                            </div>
+                            <div className='h-12'>
+                                <img src='/images/wood.svg' className='h-full object-cover'/>
+                            </div>
+
+                        </div>
+
+                        <div className="flex items-center justify-center text-center mb-6 w-full">
+
+                            <div className="grow w-full">
+                                <h1 className="text-2xl font-semibold mb-2">Approve transfer to escrow wallet </h1>
+
+                                <p className='text-sm text-[#878A90] font-normal'>This is to enable gidiscrap deduct the exact amount you're being charged</p>
+                                
+                            </div>
+
+                        </div>
+                        <div className="flex items-center justify-center flex-col gap-2 text-center my-6 py-4 w-full">
+
+                                <p className='text-sm text-gray-700'>You're about to approve this amount to gidiscrap escrow wallet</p>
+                                <h1 className="text-3xl font-semibold mb-2">cUSD7,500</h1>
+                                
+
+                        </div>
+
+                        <div className='flex items-center justify-center gap-4 mt-5 mx-auto w-full'>
+                            <button className='px-9 w-1/2 py-2 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full' onClick={submitOffer}>Approve</button>
+
+                        </div>
+
+                    </div>
+        
+                    
+                </div>
+            </div>
         </CompanyLayout>
     </>
   )

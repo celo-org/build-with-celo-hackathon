@@ -5,9 +5,15 @@ import DropdownIcon from '../../components/Icons/DropdownIcon'
 
 const DropOffs = () => {
     const [createDispute, setCreateDispute] = useState();
+    const [requestSuccessModal, setRequestSuccessModal] = useState();
 
     const handleDispute = () =>{
         setCreateDispute(!createDispute)
+    }
+    const submitDispute = () =>{
+
+        setCreateDispute(false)
+        setRequestSuccessModal(!requestSuccessModal)
     }
 
   return (
@@ -280,9 +286,18 @@ const DropOffs = () => {
                                                 </div>
                                             </div>
 
-                                            <div className='flex items-center justify-center gap-4 mt-5 mx-auto'>
-                                                <button className='px-9 py-3 border border-gray-300 bg-white text-gray-700 rounded-full' onClick={handleDispute}>Raise Dispute</button>
-                                                <button className='px-9 py-3 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full '>Confirm</button>
+                                            <div className='text-center text-sm py-7 max-w-md mx-auto px-4'>
+                                                <div>
+                                                    <p className='text-[#6D747D] font-medium'>Cool down Period:  <span className='text-xl font-semibold'>48hrs : 59mins : 32secs</span></p>
+                                                </div>
+                                                <div className='text-[#A4A5A8] font-thin py-3'>
+                                                    <p>Cooldown period is the time you can get to raise a complaint on a product.</p>
+                                                    <p>Want to read more on cooldown Period? <a href="">Read Here</a></p>
+                                                </div>
+                                            </div>
+
+                                            <div className='flex items-center justify-center gap-4 mt-5 mx-auto w-full'>
+                                                <button className='px-9 py-3 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full w-1/2' onClick={handleDispute}>Raise Dispute</button>
                                             </div>
                                         </div>
                                     </div>
@@ -366,10 +381,45 @@ const DropOffs = () => {
                     </div>
 
                     <div className='flex items-center justify-center gap-4 mt-5 mx-auto'>
-                        <button className='px-9 py-3 border border-gray-300 bg-white text-gray-700 rounded-full' type='button' onClick={handleDispute}>Cancel</button>
-                        <button className='px-9 py-3 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full '>Send dispute</button>
+                        <button className='px-9 py-2 border border-gray-300 bg-white text-gray-700 rounded-full' type='button' onClick={handleDispute}>Cancel</button>
+                        <button className='px-9 py-2 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full ' type='button' onClick={submitDispute}>Send dispute</button>
                     </div>
                 </form>
+                </div>
+            </div>
+
+            <div  className={`modal__box ${requestSuccessModal ? 'show' : ''}`}>
+                <div className="modal__box-wrapper shadow-lg rounded-2xl">
+        
+                <div className="flex items-start justify-between mb-6">
+
+                    <div className="grow">
+                        <h1 className="text-2xl font-semibold mb-3">Dispute has been sent</h1>
+                        
+                        <ul className='list-disc px-4'>
+                            <li className='text-sm text-gray-500'>The Individual would not be able to get his pay unless dispute is resolved.</li>
+                        </ul>
+                    </div>
+
+                    
+                    <button className=" flex items-center rounded-full border-2 border-gray-700 absolute top-3 right-2  " onClick={()=>setRequestSuccessModal(false)}>
+                           <span className="pointer-events-none flex items-center p-2">
+                               <svg className='h-5 w-5 ' viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"></path>
+                                </svg>
+                           </span>             
+                        
+                    </button>
+
+                </div>
+
+                    <div className='flex items-center justify-center gap-4 mt-5 mx-auto'>
+                        <button className='px-9 py-2 border border-gray-300 bg-white text-gray-700 rounded-full' type='button' >Cancel</button>
+                        <Link href="">
+                            <a className='px-9 py-2 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full '>Back to Offers</a>
+                        </Link>
+                        
+                    </div>
                 </div>
             </div>
 
