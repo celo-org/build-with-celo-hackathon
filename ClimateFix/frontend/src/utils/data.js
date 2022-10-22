@@ -1,3 +1,10 @@
+import Nigeria from "../assets/images/nigeria.jpeg";
+import SouthAfrica from "../assets/images/south-africa.jpeg";
+import usa from "../assets/images/planting-trees.jpeg";
+import Turkey from "../assets/images/turkey.jpeg";
+import Ghana from "../assets/images/ghana.jpeg";
+import Mexico from "../assets/images/mexico.jpeg";
+
 export const countries = [
   "Nigeria",
   "Afghanistan",
@@ -208,6 +215,37 @@ export const countries = [
 
  export const userType = [
   'Expert', 'User'
-]
+];
 
-// export default { countries, userType };
+export const locations = [
+  {
+    image: Nigeria,
+    country: "Nigeria",
+    figure: "12, 454"
+  },
+  {
+    image: SouthAfrica,
+    country: "South Africa",
+    figure: "5, 204"
+  },
+  {
+    image: Mexico,
+    country: "Mexico",
+    figure: "14, 719"
+  },
+  {
+    image: Ghana,
+    country: "Ghana",
+    figure: "2, 303"
+  },
+  {
+    image: usa,
+    country: "USA",
+    figure: "24, 843"
+  },
+  {
+    image: Turkey,
+    country: "Turkey",
+    figure: "4,923"
+  },
+]

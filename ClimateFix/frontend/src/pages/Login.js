@@ -36,7 +36,9 @@ const Login = () => {
               label="Password"
               color="brand.dark"
             />
-            <CustomButton m="30px 0" w="100%" p="25px" bg="brand.lightGreen" color="brand.white" hoverBg="brand.green">Log In</CustomButton>
+            <a href="/home">
+              <CustomButton m="30px 0" w="100%" p="25px" bg="brand.lightGreen" color="brand.white" hoverBg="brand.green">Log In</CustomButton>
+            </a>
           </form>
           <Flex fontSize="14px" mt="-15px" justifyContent="center">
             <Text>Don't have an account yet?</Text>
