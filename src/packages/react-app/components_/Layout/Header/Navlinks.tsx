@@ -4,6 +4,8 @@ import { KeyboardArrowDown } from "@mui/icons-material";
 import { Stack, Button, Menu, MenuItem, Divider, MenuProps, Box } from "@mui/material";
 import { navlinks } from "../../../data";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import Image from "next/image";
 
 const Navlinks = () => {
   const router = useRouter();
@@ -48,25 +50,28 @@ const Navlinks = () => {
             onClose={handleClose}
           >
             <MenuItem onClick={handleClose} disableRipple>
-              <a href="/history/open-proposal" style={{ textDecoration: "none" }}>
-                Open Proposal
-              </a>
+              <Link href="/history/open-proposal">
+                <a style={{ textDecoration: "none" }}>Open Proposal</a>
+              </Link>
             </MenuItem>
             <Divider sx={{ my: 0.5 }} />
             <MenuItem onClick={handleClose} disableRipple>
-              <a href="/history/open-proposal" style={{ textDecoration: "none" }}>
-                Browse Proposal
-              </a>
+              <Link href="/history/browse-proposal">
+                <a style={{ textDecoration: "none" }}>Browse Proposal</a>
+              </Link>
             </MenuItem>
             <Divider sx={{ my: 0.5 }} />
             <MenuItem onClick={handleClose} disableRipple>
-              <a href="/history/open-proposal" style={{ textDecoration: "none" }}>
-                Browse History
-              </a>
+              <Link href="/history/browse-history">
+                <a style={{ textDecoration: "none" }}>Browse History</a>
+              </Link>
             </MenuItem>
           </StyledMenu>
         </Box>
       ))}
+           <a href="https://github.com/Giftea/savingHistory" target="_blank">
+        <Image src="/images/Header/github-icon.png" width={24} height={24} />
+      </a>
     </Stack>
   );
 };

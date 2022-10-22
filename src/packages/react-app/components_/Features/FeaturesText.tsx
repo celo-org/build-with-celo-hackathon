@@ -4,7 +4,7 @@ import { Typography, Box, Grid } from "@mui/material";
 
 const FeaturesText = () => {
   return (
-    <Grid item xs={12} md={5} sx={{ paddingX: { xs: 8, md: 0 } }}>
+    <Grid item xs={12} md={5} sx={{ paddingX: { xs: 2, sm:4, md: 0 } }}>
     {features.map((feature, index) => (
       <Box key={index} mb={8}>
         <img

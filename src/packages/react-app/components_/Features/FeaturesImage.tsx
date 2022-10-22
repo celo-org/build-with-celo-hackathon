@@ -4,7 +4,7 @@ import { Box, Grid } from "@mui/material";
 
 const FeaturesImage = () => {
   return (
-    <Grid item xs={12} md={5} sx={{ paddingX: { xs: 8, md: 0 } }}>
+    <Grid item xs={12} md={5} sx={{ paddingX: { xs: 2, sm:4, md: 0 } }}>
         <Box mb={4} sx={{ textAlign: { xs: "right", md: "unset" } }}>
           {" "}
           <Image src="/images/Features/Image1.png" width={550} height={480} />

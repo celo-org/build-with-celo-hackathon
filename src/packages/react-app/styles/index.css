@@ -93,6 +93,13 @@ body {
   width: 80%;
 }
 
+.saveh-card {
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(49, 45, 34, 0.2);
+  background-color: #ffffff;
+  padding: 50px 40px;
+}
+
 @media screen and (max-width: 1024px) {
   .hero-image {
     margin-top: 20px !important;

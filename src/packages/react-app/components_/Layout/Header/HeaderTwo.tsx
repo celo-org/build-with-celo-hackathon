@@ -1,5 +1,6 @@
 import * as React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import Section from "../Section";
 import Navlinks from "./Navlinks";
 import ResponsiveNav from "./ResponsiveNav";
@@ -7,9 +8,9 @@ import ResponsiveNav from "./ResponsiveNav";
 const HeaderTwo = () => {
   return (
     <Section className="nav-shadow">
-      <a href="/">
+      <Link href="/">
         <Image src="/images/Header/SH-Logo.png" width={200} height={50} />
-      </a>
+      </Link>
       <Navlinks />
       <ResponsiveNav />
     </Section>

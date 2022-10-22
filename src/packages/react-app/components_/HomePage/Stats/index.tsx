@@ -12,7 +12,7 @@ const Stats = () => {
       <Stack justifyContent="space-around"  sx={{ flexDirection: { xs: "column", md: "row" }, marginY: { xs: 4, md: 10 } }}>
         {stats.statistics.map((stat, index) => (
           <Box key={`${stat.number}-${stat.text}-${index}`} sx={{ marginTop: { xs: 4, md: "unset" } }}>
-            <Typography variant="h1" fontWeight="bold" sx={{ fontSize: { xs: "40px", md: "auto" } }}>
+            <Typography variant="h2" fontWeight="bold" >
               {stat.number}{" "}
             </Typography>
             <Typography>{stat.text} </Typography>
