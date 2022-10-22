@@ -24,9 +24,9 @@ const Navbar = () => {
     window.addEventListener('scroll', changeColor);
   }, []);
 
-function Navbar() {
+// function Navbar() {
   return (
-    <div className='fixed left-0 top-0 w-full z-10 ease-in duration-300'>
+    <div className='style={{ backgroundColor: `${color}` }} fixed left-0 top-0 w-full z-10 ease-in duration-300'>
       <div className='max-w-[1240px] m-auto flex justify-between items-center p-4 text-[#4b006f]'>
         <Link href='/'>
           <h1 className='font-bold text-4xl'>Crypto ventures</h1>    
@@ -40,6 +40,9 @@ function Navbar() {
           </li>
           <li className='p-4'>
             <Link href='/funding'>Funding</Link>
+          </li>
+          <li className='p-4'>
+            <Link href='/login'> Login </Link>
           </li>
         </ul>
 
@@ -58,13 +61,16 @@ function Navbar() {
               sm:hidden absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center w-full h-screen bg-black text-center ease-in duration-300'>
            <ul>
           <li className='p-4 text-4xl hover:text-grey-500'>
-            <Link href='/'>Home</Link>
+            <Link href='/homepage'> Home </Link>
           </li>
-          <li className='p-4 text-4xl hover:text-grey-500'> 
+           <li className='p-4 text-4xl hover:text-grey-500'> 
             <Link href='/startups'>Startups</Link>
           </li>
           <li className='p-4 text-4xl hover:text-grey-500'>
             <Link href='/funding'>Funding</Link>
+          </li>
+          <li className='p-4 text-4xl hover:text-grey-500'>
+            <Link href='/hero'> Login </Link>
           </li>
         </ul>
         </div>
@@ -73,6 +79,6 @@ function Navbar() {
     </div>
   )
 }
-}
+// }
 
 export default Navbar
