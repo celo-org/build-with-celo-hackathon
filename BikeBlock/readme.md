@@ -38,11 +38,16 @@ Smart Contracts
 
 Dapps 
     - React js
-    - iOS swiftUI
 
 Build Plan
 
-Build plan will be split between two phases Smart Contract &amp; Dapps. Each given three weeks of build time. Contracts will need to be built first then dapps.
+Build plan will be split between two phases Smart Contract &amp; Dapps. Each given three weeks of build time. Contracts will need to be built first then dapp.
+
+## Dapp DEMO
+
+The dapp is still a work in progress. But currently allows users to connect there metamask account and safeMint a bike token. The details about there bike are including during the minting process link directly to the NFT. The hash can also be traced on the alfajores testnet.
+
+![DEMO](readmeAssets/dappDemo.gif)
 
 ## Finished 
 
@@ -52,7 +57,7 @@ Build plan will be split between two phases Smart Contract &amp; Dapps. Each giv
 
 3. Built in smart contract escrow allowing for bike bountys
 
-    1. **Transfer bounty funds from token owner to contract when setting a bike stolen**
+    1. **Transfer funds bounty funds from token owner to contract when setting a bike stolen**
     ```js
             // BikeBlock.sol
             // Line 203-224
