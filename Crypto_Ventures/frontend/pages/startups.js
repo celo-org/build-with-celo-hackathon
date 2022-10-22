@@ -1,9 +1,10 @@
 import React from 'react'
+import Startup from '../components/Startup';
 
 function Startups() {
     return (
         <div>
-            Hello World!
+            <Startup />
         </div>
     )
 }

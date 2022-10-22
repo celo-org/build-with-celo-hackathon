@@ -4,8 +4,8 @@ function Homepage() {
   return (
     <div className='w-[1200px]'>
       
-      <div className='pt-20'>
-         <img src="https://mdbootstrap.com/img/new/slides/041.jpg" className="max-w-full h-auto" alt="..." />
+      <div className='mt-20 custom-im flex items-center justify-start h-[400px] bg-fixed bg-center bg-cover'>
+         <h2 className='font-bold text-[40px] text-center text-[#ffffff]'>a successful business strategy begins with <br /> discovering the right investors</h2>
       </div>
 
 <div className="sm:flex flex-wrap justify-center items-center text-center gap-8">
