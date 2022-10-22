@@ -41,17 +41,20 @@ struct ContentView: View {
                 
                 VStack{
                     Spacer()
+                    
                     containedView()
                     
                     Button {
                         switch(viewState){
+                            
                         case .buildingRide:
-                            //mmapView.buildRoute()
-                            ride.startLocation = CLLocationCoordinate2D(latitude: 37.33181096291165, longitude: -122.03052832066865)
-                            ride.endLocation = CLLocationCoordinate2D(latitude: 37.35404519029139, longitude: -122.10911711833442)
+                            if ride.startDropLocation == nil || ride.endDropLocation == nil{
+                                print("Cant have empty")
+                                return
+                            }
+                            
                             viewState = .selectDriver
-                            //mmapView.findRoute(startLocation: ride.startLocation, endLocation: ride.endLocation)
-                            //$manager.findRoute() // done in mapView at route
+                            
                         case .selectDriver:
                             viewState = .rideOverView
                         case .rideOverView:
@@ -70,7 +73,9 @@ struct ContentView: View {
                     } label: {
                         Text("Next")
                     }.buttonStyle(.borderedProminent)
+                    
                 } .padding(.bottom, 10)
+                    
             }
             .safeAreaInset(edge: .top, content: {
                 Color.clear
@@ -96,7 +101,7 @@ struct ContentView: View {
     
     func containedView() -> AnyView {
             switch viewState {
-            case .buildingRide: return AnyView(BuildRide().environmentObject(ride))
+            case .buildingRide: return AnyView(RideLocation().environmentObject(ride))
             case .selectDriver: return AnyView(SelectDrivers().environmentObject(manager))
             case .rideOverView: return AnyView(RideOverView().environmentObject(manager))
             case .broadCastRide: return AnyView(BroadCastRide())

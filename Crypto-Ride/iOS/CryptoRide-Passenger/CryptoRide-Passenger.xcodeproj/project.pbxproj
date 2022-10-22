@@ -25,7 +25,7 @@
 		30AA5ADF28D2DB6D00EEB7A4 /* Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5ADE28D2DB6D00EEB7A4 /* Driver.swift */; };
 		30AA5AE128D2DE0300EEB7A4 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AE028D2DE0300EEB7A4 /* LocationManager.swift */; };
 		30AA5AE628D2E72000EEB7A4 /* Ride.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AE528D2E72000EEB7A4 /* Ride.swift */; };
-		30AA5AEC28D2ECB700EEB7A4 /* BuildRide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AEB28D2ECB700EEB7A4 /* BuildRide.swift */; };
+		30AA5AEC28D2ECB700EEB7A4 /* RideLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AEB28D2ECB700EEB7A4 /* RideLocation.swift */; };
 		30AA5AEE28D2ECDE00EEB7A4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30AA5AED28D2ECDE00EEB7A4 /* GoogleService-Info.plist */; };
 		30AA5AF028D2EE6A00EEB7A4 /* Drivers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AEF28D2EE6A00EEB7A4 /* Drivers.swift */; };
 		30AA5AF228D2F89E00EEB7A4 /* SelectDrivers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AF128D2F89E00EEB7A4 /* SelectDrivers.swift */; };
@@ -86,7 +86,7 @@
 		30AA5ADE28D2DB6D00EEB7A4 /* Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Driver.swift; sourceTree = "<group>"; };
 		30AA5AE028D2DE0300EEB7A4 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		30AA5AE528D2E72000EEB7A4 /* Ride.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ride.swift; sourceTree = "<group>"; };
-		30AA5AEB28D2ECB700EEB7A4 /* BuildRide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildRide.swift; sourceTree = "<group>"; };
+		30AA5AEB28D2ECB700EEB7A4 /* RideLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RideLocation.swift; sourceTree = "<group>"; };
 		30AA5AED28D2ECDE00EEB7A4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		30AA5AEF28D2EE6A00EEB7A4 /* Drivers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Drivers.swift; sourceTree = "<group>"; };
 		30AA5AF128D2F89E00EEB7A4 /* SelectDrivers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDrivers.swift; sourceTree = "<group>"; };
@@ -237,12 +237,11 @@
 		30AA5AE428D2E2C500EEB7A4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				30D850D228FF262E00E59D4B /* RideBuilder */,
 				30D850C528FDEE5F00E59D4B /* ViewModels */,
 				30D850B628FDC28D00E59D4B /* ContentView */,
 				30D850B128FDBD1F00E59D4B /* Profile */,
 				30AA5AF528D2FBC500EEB7A4 /* BroadCastRide.swift */,
-				30AA5AEB28D2ECB700EEB7A4 /* BuildRide.swift */,
-				30AA5AF128D2F89E00EEB7A4 /* SelectDrivers.swift */,
 				30AA5AF328D2FB3100EEB7A4 /* RideOverView.swift */,
 			);
 			path = Views;
@@ -272,6 +271,15 @@
 				30D850BB28FDD76A00E59D4B /* BalanceViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		30D850D228FF262E00E59D4B /* RideBuilder */ = {
+			isa = PBXGroup;
+			children = (
+				30AA5AF128D2F89E00EEB7A4 /* SelectDrivers.swift */,
+				30AA5AEB28D2ECB700EEB7A4 /* RideLocation.swift */,
+			);
+			path = RideBuilder;
 			sourceTree = "<group>";
 		};
 		67B42C160993BA63C384F7B4 /* Pods */ = {
@@ -545,7 +553,7 @@
 				30AA5ADF28D2DB6D00EEB7A4 /* Driver.swift in Sources */,
 				30AA5AF228D2F89E00EEB7A4 /* SelectDrivers.swift in Sources */,
 				30A17ABE28F8E37800635D7D /* Network.swift in Sources */,
-				30AA5AEC28D2ECB700EEB7A4 /* BuildRide.swift in Sources */,
+				30AA5AEC28D2ECB700EEB7A4 /* RideLocation.swift in Sources */,
 				30A17ABC28F8DFEA00635D7D /* Abi.swift in Sources */,
 				30AA5AE628D2E72000EEB7A4 /* Ride.swift in Sources */,
 				30D850C928FDF09800E59D4B /* ContractError.swift in Sources */,

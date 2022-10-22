@@ -20,25 +20,26 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
     
     @Published var drivers:[DriverDetails] = []
     @Published var driverPoints:[MKPointAnnotation] = []
-    
-    var localDrivers:[String:MKPointAnnotation] = [:]
 
     @Published var selectedDrivers:DriverDetails?
     @Published var normalizedPrice:Double = 0.00
     @Published var route:MKRoute?
+    
+    // Map driver address to point index
+    private var localDrivers:[String:Int] = [:]
     
     private let manager = CLLocationManager()
     
     private var currentLocation:CLLocation?
     private var lastGeocodeTime:Date? = Date()
 
-    private var driverRate = 23.00 // This is also 23 dollars a hour
+    private var driverRate = 23.00
 
     private var db:Firestore!
     
     override init() {
         super.init()
-        //ContractServices()
+
         FirebaseApp.configure()
         db = Firestore.firestore()
         
@@ -66,7 +67,7 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
                     return
                 }
                 lastGeocodeTime = currentTime
-                print("Fetching local drivers")
+                //print("Fetching local drivers")
                 geoQuery(userLocation: $0.coordinate)
       
             }
@@ -77,6 +78,7 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
         if(route == nil){return}
         for driver in drivers{
             // TODO take the amount of drivers and avarage the rates to get a normalized price
+            
             var dr = driver
             let priceWithDriverRate = 60 / driverRate
             let driverRateAppliedToRide = route!.expectedTravelTime *  (priceWithDriverRate / 60)
@@ -90,28 +92,39 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
     func listenForChanges(driver:String) {
         
         let ref = Database.database().reference().child("driver").child(driver)
+        
         //refHandle = postRef.observe(DataEventType.value, with: { snapshot in
         ref.observe(.value, with: {(snapshot) in
-            let userDict = snapshot.value as? [String:Any]
-            print(userDict) 
+            let driverAddress = snapshot.key as String
+            let driverLocation = snapshot.value as? [String:Any]
             
-        })
+            let lat = driverLocation!["lat"] as! Double
+            let long = driverLocation!["long"] as! Double
+                             
+            let index = self.localDrivers[driverAddress]
+            
+            let newLocation = CLLocationCoordinate2D(latitude: lat, longitude: long)
+            self.driverPoints[index!].coordinate = newLocation
+            //print(snapshot)
         
-        //ref.observe(of:.value, with: { (snapshot) in
-        //     if let userDict = snapshot.value as? [String:Any] {
-                  //Do not cast print it directly may be score is Int not string
-        //          print("Change to driver data")
-        //          print(userDict)
-        //     }else{
-        //         print("faled")
-        //     }
-        //})
+        })
+    
     }
     
+    // MARK: geoQuery
+    /// Queries local driver info based on users geo location
+    ///
+    /// - Note: Read data from FireBase.
+    ///
+    /// - Parameters:
+    ///                 - `userLocation`: CLLocationCoordinate2D of passenger.
+    ///
+    ///
+    ///
+    ///
     func geoQuery(userLocation:CLLocationCoordinate2D) {
      
-        // Find drivers within 5 miles of passenger
-       
+        // Find drivers within 50 miles of passenger
         let radiusInM: Double = 50 * 1000
 
         
@@ -150,16 +163,26 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
                     let driver = DriverDetails(address: document.data()["driver"] as! String)
                     
                     if localDrivers.contains(where: { $0.key.hasPrefix(driver.address) }){
-                        print("driver already listed")
+                        // Driver already listed
+                        print("Driver already listed")
                     }else{
                         let driverPin = MKPointAnnotation()
-                            driverPin.title = driver.address
-                            driverPin.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lng)
-                            //driverPoints.append(driverPin)
+                        driverPin.title = driver.address
+                        driverPin.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lng)
+                        // Add driver pointAnnotation to driverPoints
+                        let index = driverPoints.count
+                        driverPoints.append(driverPin)
+                            
+                        // TODO get driverRates and ride state
                         
-                        localDrivers[driver.address] = driverPin
+                        // Maps driver address to MKPoint array index
+                        localDrivers[driver.address] = index
+                        drivers.append(driver)
+                        
+                        // List for location changes in realTime DB
                         listenForChanges(driver: driver.address)
                     }
+                    
                     //let glyphIndex = driverPoints.firstIndex(where: { $0.key.hasPrefix(driver.address) })
                     //if driverPoints.count == 1 {
                         // Update annotation

@@ -1,0 +1,23 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'CryptoRide-Driver' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for CryptoRide-Driver
+  pod 'GeoFire', '~> 4.0'
+  pod 'FirebaseFirestore'
+  pod 'FirebaseDatabase'
+  pod 'web3swift'
+
+  target 'CryptoRide-DriverTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'CryptoRide-DriverUITests' do
+    # Pods for testing
+  end
+
+end

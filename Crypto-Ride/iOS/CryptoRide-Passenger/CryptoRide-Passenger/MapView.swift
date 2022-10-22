@@ -12,9 +12,14 @@ import MapKit
 struct MapView: UIViewRepresentable {
     typealias UIViewType = MKMapView
     
+    let mapView = MKMapView()
+    
     @EnvironmentObject var manager:LocationManager
     @EnvironmentObject var ride:Ride
     
+    var startAnnotation:MKPointAnnotation = MKPointAnnotation()
+    var endAnnotation:MKPointAnnotation = MKPointAnnotation()
+
     
     func makeCoordinator() -> MapViewCoordinator {
         return MapViewCoordinator()
@@ -22,11 +27,10 @@ struct MapView: UIViewRepresentable {
     
     
     func makeUIView(context: Context) -> MKMapView {
-        let mapView = MKMapView()
-        
         mapView.delegate = context.coordinator
         mapView.showsUserLocation = true
         mapView.setUserTrackingMode(.follow, animated: true)
+        mapView.showsCompass = true
         mapView.region = manager.region
         
         // interactionModes: MapInteractionModes.all,
@@ -66,6 +70,23 @@ struct MapView: UIViewRepresentable {
     
     
     func updateUIView(_ uiView: MKMapView, context: Context) {
+        if(ride.showDropOnStart && ride.startDropLocation != nil) {
+            
+            let coordinate = self.mapView.convert(ride.startDropLocation!, toCoordinateFrom: self.mapView)
+    
+            startAnnotation.title = "Start"
+            startAnnotation.coordinate = coordinate
+            uiView.addAnnotation(startAnnotation)
+            
+        }else if(ride.showDropOnEnd && ride.endDropLocation != nil){
+            
+            let coordinate = self.mapView.convert(ride.endDropLocation!, toCoordinateFrom: self.mapView)
+
+            endAnnotation.title = "End"
+            endAnnotation.coordinate = coordinate
+            uiView.addAnnotation(endAnnotation)
+        }
+        
         if(manager.route != nil ) {
             return
         }
@@ -90,11 +111,11 @@ struct MapView: UIViewRepresentable {
       
         }
         
-        if(ride.startLocation == nil || ride.endLocation == nil) {return}
+        if(ride.startDropLocation == nil || ride.endDropLocation == nil) {return}
        
-        let p1 = MKPlacemark(coordinate: ride.startLocation!)
+        let p1 = MKPlacemark(coordinate: startAnnotation.coordinate)
         
-        let p2 = MKPlacemark(coordinate: ride.endLocation!)
+        let p2 = MKPlacemark(coordinate: endAnnotation.coordinate)
         
         let request = MKDirections.Request()
         request.source = MKMapItem(placemark: p1)
@@ -107,7 +128,7 @@ struct MapView: UIViewRepresentable {
             guard let route = response?.routes.first else { return }
             manager.route = route
             manager.getRideEstimates()
-            uiView.addAnnotations([p1, p2])
+            //uiView.addAnnotations([p1, p2])
             uiView.addOverlay(route.polyline)
             uiView.setVisibleMapRect(
                 route.polyline.boundingMapRect,
