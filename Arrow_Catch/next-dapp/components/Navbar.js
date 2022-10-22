@@ -9,7 +9,9 @@ const style = {
 }
 
 const Navbar = () => {
-  const { connect, address, destroy } = useCelo();
+  const { connect, network, updateNetwork , address, destroy } = useCelo();
+
+  console.log()
   return (
     <nav className="bg-white px-2 sm:px-4 py-2.5 dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
       <div className="container flex flex-wrap justify-between items-center mx-auto">
@@ -26,7 +28,7 @@ const Navbar = () => {
             <div className={style.headerItem}> Profile</div>
           </Link>
         <div className="flex md:order-2">
-          <span className='text-white font-semibold mx-4 my-2' > {address} </span>
+          <span className='text-gray-500 font-semibold mx-4 my-2' > {address} </span>
           <button className={style.button} onClick={() => address ? destroy() : connect()} >
             {address ? "Disconnect" : "Connect"}
           </button>

@@ -5,7 +5,7 @@ import Arrowimg from '../assets/arrow.png'
 import boardimg from '../assets/board.png'
 import Board from '../assets/board.svg'
 import home from '../assets/home2.png'
-import { useCelo } from "@celo/react-celo";
+import { Alfajores, useCelo } from "@celo/react-celo";
 import ArrowCatch from '../../hardhat/artifacts/contracts/ArrowCatch.sol/ArrowCatch.json'
 import { Transition } from "@headlessui/react";
 import { Toaster, ToastIcon, toast, resolveValue } from "react-hot-toast";
@@ -52,8 +52,9 @@ const TailwindToaster = () => {
   );
 };
 const Arrow = () => {
-  const { address, getConnectedKit } = useCelo();
+  const { address, network, updateNetwork , getConnectedKit } = useCelo();
   const [loading, setLoading] = useState(false)
+  const [networkname, setnetwork] = useState(network)
   const [svg, setSVG] = useState()
   async function RandomMint(){
     setLoading(true)
@@ -71,16 +72,19 @@ const Arrow = () => {
     setLoading(false)
   }
 async function loadNFT(tokenId){
-  const kit = await getConnectedKit();
-  const nftContract = new kit.connection.web3.eth.Contract(ArrowCatch.abi, contractaddress)
-  const uri = await nftContract.methods.tokenURI(tokenId).call()
-  uri = uri.replace('data:application/json;base64,', '')
-  uri = Buffer.from(uri, 'base64')
-  uri = JSON.parse(uri);
-  const svgmeta = uri.image
-  setSVG(svgmeta)
+  try {
+    const kit = await getConnectedKit();
+    const nftContract = new kit.connection.web3.eth.Contract(ArrowCatch.abi, contractaddress)
+    const uri = await nftContract.methods.tokenURI(tokenId).call()
+    uri = uri.replace('data:application/json;base64,', '')
+    uri = Buffer.from(uri, 'base64')
+    uri = JSON.parse(uri);
+    const svgmeta = uri.image
+    setSVG(svgmeta)
+  } catch{
+    toast.success("Error")
+  }
 }
-
   return (
     <div className={style.wrapper}>
               {address ? (loading ? (
@@ -110,6 +114,7 @@ async function loadNFT(tokenId){
         <div className={style.walletConnectWrapper}>
             <div className='mx-auto justify justify-center '>
             <p className='mx-10 px-10 py-10 text-xl'>Connect your wallet to use this App</p>
+           
             </div>
         </div>
         

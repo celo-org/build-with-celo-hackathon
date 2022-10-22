@@ -68,34 +68,38 @@ fetchMarket()
 setLoading(false)
   }
   async function fetchMarket() {
-    const kit = await getConnectedKit();
-    const nftContract = new kit.connection.web3.eth.Contract(ArrowCatch.abi, contractaddress)
-    const maketItem = await nftContract.methods.fetchMarketItems().call()
-    const items = await Promise.all(
-      maketItem.map(async (i) => {
-        console.log(i)
-        const uri = await nftContract.methods.tokenURI(i.tokenId).call()
-        uri = uri.replace('data:application/json;base64,', '')
-        uri = Buffer.from(uri, 'base64')
-        uri = JSON.parse(uri);
-        const svgmeta = uri.image
-        let prize = i.prize.toString()
-        let item = {
-          prize,
-          itemId: i.tokenId,
-          owner: i.tokenowner,
-          radius: i.radius,
-          angle: i.angle,
-          points: i.points,
-          prize: prize,
-          state: i.state,
-          svg: svgmeta
-        }
-        return item;
-      })
-    )
-    setItems(items)
-    console.log(items)
+    try {
+      const kit = await getConnectedKit();
+      const nftContract = new kit.connection.web3.eth.Contract(ArrowCatch.abi, contractaddress)
+      const maketItem = await nftContract.methods.fetchMarketItems().call()
+      const items = await Promise.all(
+        maketItem.map(async (i) => {
+          console.log(i)
+          const uri = await nftContract.methods.tokenURI(i.tokenId).call()
+          uri = uri.replace('data:application/json;base64,', '')
+          uri = Buffer.from(uri, 'base64')
+          uri = JSON.parse(uri);
+          const svgmeta = uri.image
+          let prize = i.prize.toString()
+          let item = {
+            prize,
+            itemId: i.tokenId,
+            owner: i.tokenowner,
+            radius: i.radius,
+            angle: i.angle,
+            points: i.points,
+            prize: prize,
+            state: i.state,
+            svg: svgmeta
+          }
+          return item;
+        })
+      )
+      setItems(items)
+    } catch{
+      toast.success("Error")
+    } 
+
   }
 
   return (

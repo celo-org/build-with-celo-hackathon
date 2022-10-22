@@ -57,6 +57,7 @@ const profile = ( ) => {
     
       }, [address])
     async function fetchMarket() {
+      try {
         const kit = await getConnectedKit();
         const nftContract = new kit.connection.web3.eth.Contract(ArrowCatch.abi, contractaddress)
         const maketItem = await nftContract.methods.fetchMyItem().call()
@@ -86,7 +87,10 @@ const profile = ( ) => {
             })
           )
           setMyItems(items)
-          console.log(items)
+      } catch{
+        toast.success("Error")
+      }
+
     }
 
     async function openContest(tokenId){
