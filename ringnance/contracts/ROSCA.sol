@@ -4,7 +4,22 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 
 pragma solidity >=0.7.0 <0.9.0;
 
+interface IERC20Token {
+  function transfer(address, uint256) external returns (bool);
+  function approve(address, uint256) external returns (bool);
+  function transferFrom(address, address, uint256) external returns (bool);
+  function totalSupply() external view returns (uint256);
+  function balanceOf(address) external view returns (uint256);
+  function allowance(address, address) external view returns (uint256);
+
+  event Transfer(address indexed from, address indexed to, uint256 value);
+  event Approval(address indexed owner, address indexed spender, uint256 value);
+}
+
 contract ROSCA {
+
+    //Celo Alfajores testnet contract's address
+    address internal cUsdTokenAddress = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
 
     uint numberOfTontines = 0;
     uint numberOfGroups = 0;
@@ -89,6 +104,7 @@ contract ROSCA {
         
         createGroup(numberOfTontines+1);
         createCotisation(numberOfTontines+1,1,(block.timestamp) + _startingDate);
+        createMemberCotisation(numberOfMembers, numberOfCotisations);
         numberOfTontines++;
         
     }
@@ -114,7 +130,7 @@ contract ROSCA {
     }
 
     // now we create members only using their name and wallet address
-    function createMember(string memory _name, address _memberWalletAddress) public {
+    function createMember(string memory _name, address payable _memberWalletAddress) public {
         members[numberOfMembers+1] = Member(
             numberOfMembers+1,
             _name,
@@ -161,7 +177,15 @@ contract ROSCA {
      *  We think the payment table isn't necessary, we can just match the amount to the "member cotisation"
      *  and consider it as payments
      */
-    function createPayment(uint _memberCotisationId, uint _amount) public {
+    function createPayment(uint _memberCotisationId, uint _amount) public payable {
+        //only a member can contribute for himself
+        //if(members[memberCotisations[_memberCotisationId].memberId].memberWalletAddress == msg.sender) {
+        IERC20Token(cUsdTokenAddress).transferFrom(
+            msg.sender,
+            address(this),
+            _amount
+          );
+        //saving the payment 
         payments[numberOfPayments+1] = Payment(
             numberOfPayments+1,
             _memberCotisationId,
@@ -169,19 +193,30 @@ contract ROSCA {
             block.timestamp
         );
 
+        // we should also add a member to a memberCotisation after the first payment
         memberCotisations[_memberCotisationId].currentPaidAmount += _amount;
         if (keccak256(abi.encodePacked(Strings.toString(memberCotisations[_memberCotisationId].currentPaidAmount)))  == keccak256(abi.encodePacked(Strings.toString(getAmount(_memberCotisationId))))) {
             memberCotisations[_memberCotisationId].memberHasFullyContributed = true;
         }
+
         paymentForMemberCotisations[numberOfPayments+1] = _memberCotisationId;
         numberOfPayments++;
+        //}
+        
     }
 
+    //This function should pay the total cotisation amount to a designated beneficiary
+    function payTheBeneficiary(uint _cotisationId) public payable {
+
+    }
     // a specific function to get the tontine's contribution amount knowing the member cotisation identifier
     function getAmount(uint _memberCotisationId) public view returns (uint) {
         return tontines[cotisations[memberCotisations[_memberCotisationId].cotisationId].tontineId].amount;
     }
 
+    function getContractBalance() public view returns(uint) {
+        return IERC20Token(cUsdTokenAddress).balanceOf(address(this));
+    }
 
     /**
      * Functions to read datas from the Truffle Local Network
@@ -200,7 +235,7 @@ contract ROSCA {
         );
     }
     
-    function listNumberOfEachElements() public view returns (uint numberOfTontines, uint numberOfGroups, uint numberOfMembers, uint numberOfCotisations, uint numberOfPayments, uint numberOfMemberCotisations){
+    function listNumberOfEachElements() public view returns (uint, uint, uint, uint, uint, uint){
         return (
             numberOfTontines,
             numberOfGroups,
@@ -208,7 +243,7 @@ contract ROSCA {
             numberOfCotisations,
             numberOfPayments,
             numberOfMemberCotisations
-        )
+        );
     }
     
     //we will modify this function to show all members for a specific tontine
@@ -222,8 +257,7 @@ contract ROSCA {
         return members[_memberId];
     }
 
-    function getTotalMemberCotisation(uint _memberId, uint _cotisationId) public returns (MemberCotisation memberCotisation){
-       MemberCotisation memberCotisation;
+    function getMemberCotisation(uint _memberId, uint _cotisationId) public view returns (MemberCotisation  memory memberCotisation){
        for(uint i = 1; i <= numberOfMemberCotisations; i++) {
             if(keccak256(abi.encodePacked(Strings.toString(memberCotisations[i].memberId))) == keccak256(abi.encodePacked(Strings.toString(_memberId))) && keccak256(abi.encodePacked(Strings.toString(memberCotisations[i].cotisationId))) == keccak256(abi.encodePacked(Strings.toString(_cotisationId)))){
                 memberCotisation = memberCotisations[i];  
