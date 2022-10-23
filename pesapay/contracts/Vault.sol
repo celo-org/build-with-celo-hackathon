@@ -8,7 +8,7 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/metatx/MinimalForwarderUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/metatx/ERC2771ContextUpgradeable.sol";
+import "./ERC2771ContextUpgradeable.sol";
 
 contract Vault is
     Initializable,
@@ -26,28 +26,27 @@ contract Vault is
         address indexed withdrawAddress,
         uint256 amountWithdrawn
     );
-    event CeloFundsWithdrawn(
-        address indexed withdrawAddresscelo,
-        uint256 amountWithdrawncelo
+    event CoinFundsWithdrawn(
+        address indexed withdrawAddresscoin,
+        uint256 amountWithdrawncoin
     );
     event UniqueTokenAdded(address indexed addedToken);
     event contractTokenBalanceAdjusted(address indexed token, uint256 amount);
-    uint256 public celoBalance;
+    uint256 public coinBalance;
     address[] public allowedTokensAddresses;
     mapping(address => uint256) public contractTokenBalances;
     mapping(address => bool) public tokenIsAllowed;
 
     /// @custom:oz-upgrades-unsafe-allow constructor
-    constructor(MinimalForwarderUpgradeable forwarder)
-        ERC2771ContextUpgradeable(address(forwarder))
-    {
+    constructor() {
         _disableInitializers();
     }
 
-    function initialize() public initializer {
+    function initialize(address forwarder) public initializer {
         __Pausable_init();
         __Ownable_init();
         __UUPSUpgradeable_init();
+        __ERC2771ContextUpgradeable_init(forwarder);
     }
 
     function pause() public onlyOwner {
@@ -59,7 +58,7 @@ contract Vault is
     }
 
     receive() external payable {
-        celoBalance += msg.value;
+        coinBalance += msg.value;
     }
 
     fallback() external payable {}
@@ -71,13 +70,12 @@ contract Vault is
         emit UniqueTokenAdded(_token);
     }
 
-    function DepositCelo() public payable {
+    function depositCoin() public payable {
         require(msg.value > 0, "the amount should be greater than zero");
-        celoBalance += msg.value;
+        coinBalance += msg.value;
     }
 
     function depositToken(address _token, uint256 _amount) public {
-        require(_amount > 0, "the amount should be greater than zero");
         require(tokenIsAllowed[_token], "the token is not currently allowed");
         address caller = _msgSender();
         require(
@@ -107,7 +105,7 @@ contract Vault is
         emit TokenFundsWithdrawn(_token, _withdrawerAddress, _amount);
     }
 
-    function withdrawCelo(address _withdrawerAddress, uint256 _amount)
+    function withdrawCoin(address _withdrawerAddress, uint256 _amount)
         public
         payable
         onlyOwner
@@ -115,13 +113,13 @@ contract Vault is
     {
         require(_amount > 0, "Withdraw an amount greater than 0");
         require(
-            celoBalance >= _amount,
-            "insufficient celo available in the contract"
+            coinBalance >= _amount,
+            "insufficient coins available in the contract"
         );
         (bool success, ) = payable(_withdrawerAddress).call{value: _amount}("");
-        require(success, "Failed to withdraw celo to address");
-        celoBalance -= _amount;
-        emit CeloFundsWithdrawn(_withdrawerAddress, _amount);
+        require(success, "Failed to withdraw coins to address");
+        coinBalance -= _amount;
+        emit CoinFundsWithdrawn(_withdrawerAddress, _amount);
     }
 
     function _authorizeUpgrade(address) internal override onlyOwner {}

@@ -15,7 +15,7 @@ async function main() {
   const WY = await WFx.walletImplementation()
   console.log("address of WF is", WFx.address)
   console.log("address of WT is", WTx.address)
-  console.log("address of WT is", WY)
+  console.log("address of WY is", WY.address)
 }
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
