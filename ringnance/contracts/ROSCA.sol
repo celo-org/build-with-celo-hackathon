@@ -176,6 +176,7 @@ contract ROSCA {
      *  we bind each payment to the member's cotisation and we increase the current paid amount
      *  We think the payment table isn't necessary, we can just match the amount to the "member cotisation"
      *  and consider it as payments
+     * It's cool that now the members can contribute to a specific cotisation
      */
     function createPayment(uint _memberCotisationId, uint _amount) public payable {
         //only a member can contribute for himself
