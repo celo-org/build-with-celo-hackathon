@@ -191,7 +191,9 @@ const Header = () => {
                 </div>
 
                     <div className='flex items-center justify-center gap-4 mt-5 mx-auto w-full'>
-                        <button className='px-9 py-2 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full w-1/2 transition duration-150 ease-in-out'  disabled={getStartedBtn == 0 ? true : false} >Continue</button>
+                        <Link href={`${getStartedBtn == 1 ? '/connect-wallet' : '/signup'}`}>
+                            <a className={`px-9 py-2 border border-[#DD7D37] bg-[#DD7D37] text-white hover:shadow-lg rounded-full w-1/2 transition duration-150 ease-in-out flex items-center justify-center get__started__link ${getStartedBtn == 0 ? 'disabled' : ''}`} >Continue</a>
+                        </Link>
                     </div>
                 </div>
             </div>

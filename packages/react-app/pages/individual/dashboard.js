@@ -20,7 +20,7 @@ const Dashboard = () => {
                             </div>
 
 
-                            <div className='mb-6'>
+                            <div className='mb-12'>
 
                                 <div className='grid grids-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
 
@@ -98,12 +98,12 @@ const Dashboard = () => {
 
                                     <div className=" bg-white mt-3 md:mt-0  py-6 w-full  relative overflow-hidden rounded">
                                             
-                                        <div className="flex items-center justify-between flex-row w-full border-b border-gray-200 pb-4 ">
+                                        <div className="flex items-center justify-between flex-row w-full border-b border-gray-200 pb-4 flex-wrap">
                                             <h5 className=" text-2xl text-gray-700">Requests in your location</h5>
-                                                <span className='flex items-center text-gray-400 bg-white text-sm border-gray-300 border px-5 py-2 rounded-full h-12 gap-5'>
+                                                <span className='flex items-center text-gray-400 bg-white text-sm border-gray-300 border px-5 py-2 rounded-full h-12 gap-5 mt-3 md:mt-0'>
                                                     Filter By:
                                                     <button className="flex items-center text-gray-600 ">
-                                                    IKeja, Lagos
+                                                    Ikeja, Lagos
                                                         <span className='text-sm'>
                                                         <DropdownIcon className="text-sm  "/>
                                                         </span>
@@ -358,14 +358,85 @@ const Dashboard = () => {
                                             </Link>
 
                                         </div>
-                                        <div className='h-full flex-1 grow'>
-                                            <div className='flex items-center justify-center h-full flex-col gap-9 py-14'>
-                                            <div>
-                                                <img src='/images/file-not-found.svg'/>
-                                            </div>
-                                            <div>No recent activities</div>
+                                        <div className='h-full flex-1 grow px-5 py-4'>
+
+                                                <ul className="list-disc activities__list">
+                                                    <li>
+                                                        <div className='flex items-start gap-3'>
+                                                            <div className='text-base'>
+                                                                <h3 className='text-[#667085] font-medium'>25kg of PET Bottles</h3>
+                                                                <p className='text-[#9C9EA1]'>Received $250 </p>
+                                                            </div>
+                                                            
+                                                            <div>
+                                                                <span className='text-xs text-[#667085]'>2 mins ago</span>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className='flex items-start gap-3'>
+                                                            <div className='text-base'>
+                                                                <h3 className='text-[#667085] font-medium'>25kg of PET Bottles</h3>
+                                                                <p className='text-[#9C9EA1]'>Received $250 </p>
+                                                            </div>
+                                                            
+                                                            <div>
+                                                                <span className='text-xs text-[#667085]'>2 mins ago</span>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className='flex items-start gap-3'>
+                                                            <div className='text-base'>
+                                                                <h3 className='text-[#667085] font-medium'>25kg of PET Bottles</h3>
+                                                                <p className='text-[#9C9EA1]'>Received $250 </p>
+                                                            </div>
+                                                            
+                                                            <div>
+                                                                <span className='text-xs text-[#667085]'>2 mins ago</span>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className='flex items-start gap-3'>
+                                                            <div className='text-base'>
+                                                                <h3 className='text-[#667085] font-medium'>25kg of PET Bottles</h3>
+                                                                <p className='text-[#9C9EA1]'>Received $250 </p>
+                                                            </div>
+                                                            
+                                                            <div>
+                                                                <span className='text-xs text-[#667085]'>2 mins ago</span>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className='flex items-start gap-3'>
+                                                            <div className='text-base'>
+                                                                <h3 className='text-[#667085] font-medium'>25kg of PET Bottles</h3>
+                                                                <p className='text-[#9C9EA1]'>Received $250 </p>
+                                                            </div>
+                                                            
+                                                            <div>
+                                                                <span className='text-xs text-[#667085]'>2 mins ago</span>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                        
+
+
+                                            {/* <div className='flex items-center justify-center h-full flex-col gap-9 py-14'>
+                                                <div>
+                                                    <img src='/images/file-not-found.svg'/>
+                                                </div>
+                                                <div>No recent activities</div>
                                             
-                                            </div>
+                                            </div> */}
                                             
                                         </div>
                                     </div>

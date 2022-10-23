@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
-import CompanyLayout from '../../components/CompanyLayout/Layout'
-import DropdownIcon from '../../components/Icons/DropdownIcon'
+import CompanyLayout from '../../../components/CompanyLayout/Layout'
+import DropdownIcon from '../../../components/Icons/DropdownIcon'
 
 const Offers = () => {
   return (
@@ -277,7 +277,7 @@ const Offers = () => {
                                             </div>
 
                                             <div className='mx-auto w-full flex items-center justify-center mt-6'>
-                                                <Link href='/company/dropoffs'>
+                                                <Link href='/company/offers/1/dropoffs'>
                                                     <a className='px-4 py-2 border border-gray-300 bg-white text-gray-600 rounded-md'>View all Dropoffs</a>
                                                 </Link>
                                                 
