@@ -499,3 +499,13 @@ background-color: #45CD85;
   .activities__list li:not(:last-child){
     margin-bottom: 20px;
   }
+
+
+
+/* 
+  .test::before{
+    content: '';
+    height: 2px;
+    width: 2px;
+    background: #DD7D37;
+  } */

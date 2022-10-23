@@ -110,22 +110,30 @@ const Header = () => {
                             <ExpandMoreIcon/>
                             </a>
 
-                            <div className={`absolute user-menu ${depthLevel = 3} ${dropdownClass} ${dropdown ? 'show' : ''} dropdown-menu large-dropdown shadow-md rounded-md w-full border-0 fade-in transition duration-300 ease bg-white`} >
+                            <div className={`absolute user-menu ${depthLevel = 3} ${dropdownClass} ${dropdown ? 'show' : ''} dropdown-menu large-dropdown shadow-md rounded-md w-full border-0 fade-in transition duration-300 min-w-max ease bg-white`} >
                                         
                                             <div className=" py-2">
-                                                <button className="flex items-center py-2 px-4 text-sm justify-start bg-white border-0 w-full hover:bg-gray-100 ">
-                                                    <span className="mr-3">
-
-                                                        
-                                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M8.89844 7.55999C9.20844 3.95999 11.0584 2.48999 15.1084 2.48999H15.2384C19.7084 2.48999 21.4984 4.27999 21.4984 8.74999V15.27C21.4984 19.74 19.7084 21.53 15.2384 21.53H15.1084C11.0884 21.53 9.23844 20.08 8.90844 16.54" stroke="#EF4444" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                                                            <path d="M15.0011 12H3.62109" stroke="#EF4444" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                                                            <path d="M5.85 8.6499L2.5 11.9999L5.85 15.3499" stroke="#EF4444" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                                                        </svg>
-                                                            
-                                                    </span>
-                                                    Sign Out
-                                                </button>
+                                                <Link href="/">
+                                                    <a className="flex items-center py-2 px-4 text-sm justify-start bg-white border-0 w-full hover:bg-gray-100 ">
+                                                    GidiScrap Marketplace
+                                                    </a>
+                                                </Link>
+                                                <Link href="/">
+                                                    <a className="flex items-center py-2 px-4 text-sm justify-start bg-white border-0 w-full hover:bg-gray-100 ">
+                                                    GidiScrap NFT - GSCredit
+                                                    </a>
+                                                </Link>
+                                                <Link href="/">
+                                                    <a className="flex items-center py-2 px-4 text-sm justify-start bg-white border-0 w-full hover:bg-gray-100 ">
+                                                    GidiScrap Tracking
+                                                    </a>
+                                                </Link>
+                                                <Link href="/">
+                                                    <a className="flex items-center py-2 px-4 text-sm justify-start bg-white border-0 w-full hover:bg-gray-100 ">
+                                                    Token-based Governance
+                                                    </a>
+                                                </Link>
+                                                
                                             </div>
                                     </div>
 

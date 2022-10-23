@@ -34,7 +34,7 @@ const Offers = () => {
                         </div>
 
                         <div className=" w-full bg-white mt-3 md:mt-0  relative overflow-hidden rounded h-full">
-                            <div className='absolute h-full border border-[#E4E7EC] inset-0 z-0 mx-auto w-[0.5px]'></div>
+                            <div className='absolute h-full border border-[#E4E7EC] inset-0 z-0 mx-auto w-[0.5px] hidden md:block'></div>
                             <div className=" grid grid-cols-2 py-6 w-full gap-6 relative">
 
                                 <div className=" flex flex-col px-4 justify-between">

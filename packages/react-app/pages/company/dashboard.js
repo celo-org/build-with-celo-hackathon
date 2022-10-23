@@ -358,8 +358,8 @@ const Dashboard = () => {
 
                     
                     <button className=" flex items-center rounded-full border-2 border-gray-700  " onClick={()=>setCreateOffer(false)}>
-                           <span className="pointer-events-none flex items-center p-2">
-                               <svg className='h-5 w-5 ' viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                           <span className="pointer-events-none flex items-center p-1">
+                               <svg className='h-4 w-4 ' viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"></path>
                                 </svg>
                            </span>             
@@ -372,12 +372,12 @@ const Dashboard = () => {
                 
                     
                     <div>
-                        <div className="mb-3">
+                        <div className="mb-6">
                             <div className="flex justify-between items-center">                                
-                                <label className="text-gray-700 font-medium" htmlFor="token">Category of Scrap</label>
+                                <label className="text-gray-700 font-medium"  >Category of Scrap</label>
                             </div>
-                            <div className="dropdown relative grow mb-4 w-full" >
-                                <button className="w-full bg-white h-12 focus:outline-none active:outline-none  flex items-center justify-between border border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease" id="token"  type="button" onClick={handleCat} >
+                            <div className="dropdown relative grow w-full" >
+                                <button className="w-full bg-white h-12 focus:outline-none active:outline-none  flex items-center justify-between border border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease"    type="button" onClick={handleCat} >
                                     <span className="pointer-events-none flex items-center gap-2 text-gray-400">
                                     Select the Scrap category
                                     </span>
@@ -423,14 +423,14 @@ const Dashboard = () => {
                             
                             </div>
                         </div>
-                        <div className="mb-3">
+                        <div className="mb-6">
                             <div className="flex justify-between items-center">                                
-                                <label className="text-gray-700 font-medium" htmlFor="token">Type of Scrap</label>
+                                <label className="text-gray-700 font-medium"  >Subcategory of Scrap</label>
                             </div>
-                            <div className="dropdown relative grow mb-4 w-full">
-                                <button className="w-full bg-white h-12 focus:outline-none active:outline-none  flex items-center justify-between border border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease" id="token" type="button" onClick={handleType}>
+                            <div className="dropdown relative grow w-full">
+                                <button className="w-full bg-white h-12 focus:outline-none active:outline-none  flex items-center justify-between border border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease"   type="button" onClick={handleType}>
                                     <span className="pointer-events-none flex items-center gap-2 text-gray-400">
-                                        Select the Scrap type   
+                                    Select the Scrap subcategory 
                                     </span>
                                     <span className="pointer-events-none ">
                                         <DropdownIcon />
@@ -462,19 +462,84 @@ const Dashboard = () => {
                             
                             </div>
                         </div>
-                        <div className="mb-3">
+                        <div className="mb-6">
                             <div className="flex justify-between items-center">                                
-                                <label className="text-gray-700 font-medium" htmlFor="token">Quantity Required</label>
+                                <label className="text-gray-700 font-medium">Description</label>
+                            </div>
+                            <div className=" relative grow w-full h-full" >
+                                <textarea className="w-full bg-white focus:outline-none active:outline-none  flex items-center justify-between border border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease" rows="3" placeholder='Description of the scrap' ></textarea>
+                            </div>
+                        </div>
+                        <div className="mb-6">
+                            <div className="flex justify-between items-center mb-2">                                
+                                <label className="text-gray-700 font-medium"  >Quantity Required</label>
+                            </div>
+                            <div className="dropdown relative grow w-full" data-large-dropdown="">
+                                <div className=" relative rounded-lg  items-center flex w-full h-12 ">
+                                    <button className=" absolute inset-y-0 right-0 px-1 flex items-center h-full border-l border-gray-300" type="button">
+                                        <span className=" text-gray-500 px-3 flex items-center bg-white ">
+                                            kg
+                                            <DropdownIcon/>
+
+                                        </span>
+                                    </button>
+                                    <input type="text" className=" border border-gray-300 py-3 px-4  block w-full pl-4 pr-20 rounded-lg h-full focus:outline-none focus:border-gray-400 transition duration-300 ease" placeholder="What's the quantity you need"/>
+                                    
+                                </div>
+
+                                
+
+                                    <div className={` absolute border bg-white form-submenu large-dropdown px-3 py-3 shadow-md rounded-md w-full h-40 max-w-full overflow-y-auto scrollbar-change fade-in`}>
+                                                
+                                        
+                                        <div className=" py-4">
+                                            
+                                            <button className="flex items-center py-2 px-1 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
+                                                <div className="flex items-center justify-center gap-2 pr-2">
+                                                    <img src="/images/metamask.png" className='h-8 w-8'/>
+                                                </div>
+                                                <div className="flex grow flex-col justify-center items-start text-left">
+                                                        <p className="text-neutral700 font-normal text-base">MetaMask</p>
+                                                </div>
+                                            </button>
+                                            <button className="flex items-center py-2 px-1 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
+                                                <div className="flex items-center justify-center gap-2 pr-2">
+                                                    <img src="/images/metamask.png" className='h-8 w-8'/>
+                                                </div>
+                                                <div className="flex grow flex-col justify-center items-start text-left">
+                                                        <p className="text-neutral700 font-normal text-base">MetaMask</p>
+                                                </div>
+                                            </button>
+                                            <button className="flex items-center py-2 px-1 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
+                                                <div className="flex items-center justify-center gap-2 pr-2">
+                                                    <img src="/images/metamask.png" className='h-8 w-8'/>
+                                                </div>
+                                                <div className="flex grow flex-col justify-center items-start text-left">
+                                                        <p className="text-neutral700 font-normal text-base">MetaMask</p>
+                                                </div>
+                                            </button>
+                                        
+                                        </div>
+                                </div>
+                            
+                            </div>
+                        </div>
+                        <div className="mb-6">
+                            <div className="flex justify-between items-center mb-2">                                
+                                <label className="text-gray-700 font-medium"  >Set amount</label>
                             </div>
                             <div className="dropdown relative grow  w-full" data-large-dropdown="">
-                                <button className="w-full bg-white h-12 focus:outline-none active:outline-none  flex items-center justify-between border border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease" id="token" data-large-dropdown-btn="" type="button" >
-                                    <span className="pointer-events-none flex items-center gap-2 text-gray-400">
-                                        What's the quantity you need
-                                    </span>
-                                    <span className="pointer-events-none ">
-                                        <DropdownIcon />
-                                    </span>
-                                </button>
+                                <div className=" relative rounded-lg  items-center flex w-full h-12 ">
+                                    <button className=" absolute inset-y-0 right-0 px-1 flex items-center h-full border-l border-gray-300" type="button">
+                                        <span className=" text-gray-500 px-3 flex items-center bg-white ">
+                                            kg
+                                            <DropdownIcon/>
+
+                                        </span>
+                                    </button>
+                                    <input type="text" className=" border border-gray-300 py-3 px-4  block w-full pl-4 pr-20 rounded-lg h-full focus:outline-none focus:border-gray-400 transition duration-300 ease" placeholder="How much are you willing to pay for this?"/>
+                                    
+                                </div>
 
                                 
 
@@ -514,15 +579,16 @@ const Dashboard = () => {
                             </div>
                             <div className='flex items-center justify-between'>
                                 <p className='text-sm text-gray-500'>1kg = $50</p>
-                                <p className='text-gray-700'>150kg = $7,500</p>
+                                <p className='text-gray-700'><span className='font-thin text-xs text-gray-400'>suggested amount</span> 150kg = $7,500</p>
                             </div>
                         </div>
-                        <div className="mb-3">
+                        <div className="mb-6">
                             <div className="flex justify-between items-center">                                
-                                <label className="text-gray-700 font-medium" htmlFor="token">Collection Center</label>
+                                <span className="text-gray-700 font-medium"  >Collection Center</span>
+                                <button className='text-[#DD7D37] text-sm'>+ Add Collection Center</button>
                             </div>
                             <div className="dropdown relative grow mb-4 w-full" data-large-dropdown="">
-                                <button className="w-full bg-white h-12 focus:outline-none active:outline-none  flex items-center justify-between border border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease" id="token" data-large-dropdown-btn="" type="button" >
+                                <button className="w-full bg-white h-12 focus:outline-none active:outline-none  flex items-center justify-between border border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease"   data-large-dropdown-btn="" type="button" >
                                     <span className="pointer-events-none flex items-center gap-2 text-gray-400">
                                         Select where your collection center would be
                                     </span>
@@ -530,6 +596,7 @@ const Dashboard = () => {
                                         <DropdownIcon />
                                     </span>
                                 </button>
+                                
 
                                 
 

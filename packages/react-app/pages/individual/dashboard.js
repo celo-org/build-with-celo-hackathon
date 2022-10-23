@@ -73,17 +73,24 @@ const Dashboard = () => {
                                             
                                         </button>
                                         </div>
-                                        <div className='py-4'>
-                                            <div className='py-4'>
-                                                <h3 className="text-neutral800 text-4xl	">10</h3>
+                                        <div className='py-4 flex items-center justify-between'>
+                                            <div>
+                                                <div className='py-4'>
+                                                    <h3 className="text-neutral800 text-4xl	">10</h3>
+                                                </div>
+
+                                                <div className=''>
+                                                    <div className='inline-flex items-center gap-1'>
+                                                        <span className='text-[#45CD85] inline-flex items-center gap-1'><UpwardIcon/> 40%</span> vs last month
+                                                    </div>
+
+                                                </div>
                                             </div>
+                                           
+
 
                                             <div>
-                                                <div className='inline-flex items-center gap-1'>
-                                                    <span className='text-[#45CD85] inline-flex items-center gap-1'><UpwardIcon/> 40%</span> vs last month
-                                                </div>
-                                                
-
+                                                <img src='/images/_Chart.svg'/>
                                             </div>
                                             
                                             

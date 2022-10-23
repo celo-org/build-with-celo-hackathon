@@ -228,7 +228,7 @@ const RequestDetail = () => {
 
                                                     <div className='flex items-center justify-center gap-4 mt-5 mx-auto w-full'>
                                                         
-                                                        <button className='px-9 py-3 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full  w-1/2' onClick={handlefulfillRequest}>Fulfill Request</button>
+                                                        <button className='px-9 py-3 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full w-full md:w-1/2 ' onClick={handlefulfillRequest}>Fulfill Request</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -337,10 +337,10 @@ const RequestDetail = () => {
                                                         
                                                     </div>
 
-                                                    <div className='flex items-center justify-center gap-4 mt-5 mx-auto w-full'>
+                                                    <div className='flex items-center justify-center flex-col md:flex-row gap-4 mt-5 mx-auto w-full'>
                                                         
-                                                        <button className='px-9 py-3  border border-gray-300 bg-white text-gray-700  rounded-full  w-1/2'>Cancel Request</button>
-                                                        <button className='px-9 py-3 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full  w-1/2'>Deliver Plastics</button>
+                                                        <button className='px-9 py-3  border border-gray-300 bg-white text-gray-700  rounded-full w-full md:w-1/2 '>Cancel Request</button>
+                                                        <button className='px-9 py-3 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full w-full md:w-1/2 '>Deliver Plastics</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -451,10 +451,10 @@ const RequestDetail = () => {
                                                         
                                                     </div>
 
-                                                    <div className='flex items-center justify-center gap-4 mt-5 mx-auto w-full'>
+                                                    <div className='flex items-center justify-center flex-col md:flex-row gap-4 mt-5 mx-auto w-full'>
                                                         
-                                                        <button className='px-9 py-3  border border-gray-300 bg-white text-gray-700  rounded-full  w-1/2'>Cancel Request</button>
-                                                        <button className='px-9 py-3 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full  w-1/2'>Upload Proof of Delivery</button>
+                                                        <button className='px-9 py-3  border border-gray-300 bg-white text-gray-700  rounded-full w-full md:w-1/2 '>Cancel Request</button>
+                                                        <button className='px-9 py-3 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full  w-full md:w-1/2 '>Upload Proof of Delivery</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -593,7 +593,7 @@ const RequestDetail = () => {
 
                                                     <div className='flex items-center justify-center flex-col gap-4 mt-4 mx-auto w-full'>
                                                         
-                                                        <button className='px-9 py-3 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full  w-1/2 disabled' disabled="true">Claim $70</button>
+                                                        <button className='px-9 py-3 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full w-full md:w-1/2 disabled' disabled="true">Claim $70</button>
                                                         <small className='text-xs font-thin mt-2 text-[#6D747D]'>Gidiscrap would collect <span className='text-gray-700 font-bold'>2.5% </span></small>
                                                     </div>
                                                 </div>
@@ -735,7 +735,7 @@ const RequestDetail = () => {
 
                                                     <div className='flex items-center justify-center flex-col gap-4 mt-4 mx-auto w-full'>
                                                         
-                                                        <button className='px-9 py-3 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full  w-1/2 ' onClick={handleconfirmTransfer}>Claim $70</button>
+                                                        <button className='px-9 py-3 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full w-full md:w-1/2  ' onClick={handleconfirmTransfer}>Claim $70</button>
                                                         <small className='text-xs font-thin mt-2 text-[#6D747D]'>Gidiscrap would collect <span className='text-gray-700 font-bold'>2.5% </span></small>
                                                     </div>
                                                 </div>
@@ -908,6 +908,7 @@ const RequestDetail = () => {
                     </div>  
                 
                 </section>
+
 
             </div>
 

@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 import { Tabs } from 'react-tabs'
 import Tab from 'react-tabs/lib/components/Tab'
@@ -40,199 +41,220 @@ const transactions = () => {
                         </div>
 
 
-                                <div className='tab-content py-6'>
+                                <div className=' py-6'>
                                     <TabPanel>
                                     <div className=" w-full bg-white mt-3 md:mt-0  relative overflow-hidden rounded h-full fade-in">
-                                        <div className=" w-full bg-white  relative overflow-hidden">
+                                        <div className='absolute h-full border border-[#E4E7EC] inset-0 z-0 mx-auto w-[0.25px] hidden md:block'></div>
+
                                             <div className=" py-6 w-full relative">
 
                                                 <div className=" grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 lg:gap-x-12 gap-y-4">
-                                                    <div className="flex items-center py-3 mb-2 text-sm w-full border-b border-gray-200">
-                                                        <div className="flex items-start gap-4 w-full">
+                                                    <div className="flex items-start gap-4 mb-7 px-4">
+                                                        <div className='h-2 w-2 bg-[#DD7D37] rounded-full mt-2'></div>
 
-                                                            <div className='h-12 w-12 '>
-                                                                <img src='/images/Avatar.png' className='w-full object-cover rounded-full  '/>
-                                                            </div>
-                                                    
-                                                            <div  className='w-full grow'>
-                                                                <div className="flex gap-1 items-center flex-row justify-between w-full">
-                                                                    <p className="text-lg text-[#5B5B5B] font-semibold">Demi Wikinson <span className='font-thin text-graay-400 text-xs'>2 mins ago</span></p>
+                                                        <div className='flex items-start justify-between gap-9 w-full md:w-2/3 '>
+                                                            <div className=' flex items-start flex-col gap-3'>
+                                                                <h3 className='text-[#9C9EA1] text-base'>Received <span className='font-bold text-[#3D4044]'>$250 </span></h3>
 
-                                                                </div>
-                                                                <div className="flex gap-1 flex-row justify-between items-center w-full">
-                                                                    <p className="text-sm  text-[#5B2D0B] font-normal"><span className='font-thin text-[#5B5B5B] text-xs'>Deposited</span> 10kg 0f PET Bottles</p>
-                                                                </div>
-                                                                <div className="flex gap-2 flex-row justify-start items-start w-full mt-2">
-                                                                    <div className='p-2 bg-[#FEF8F3] rounded-full flex items-center justify-center'>
-                                                                        <img src="/images/Icon.png" alt="" />
-                                                                    </div>
-                                                                    <div className="flex gap-1 flex-col items-start w-full">
-                                                                        <p className="text-base  text-[#344054] font-normal"> 10kg 0f PET Bottles</p>
-                                                                        <p className="text-sm  text-[#667085] font-normal">720KB</p>
-                                                                    </div>
-                                                                </div>
-                                                            
+                                                                <span className='text-[#3D4044] text-sm font-medium underline'>25kg of PET Bottles</span>
                                                             </div>
-                                                            
+                                                            <div className='text-base flex items-start flex-col gap-3'>
+                                                                <h3 className='text-[#9C9EA1]'>20th Oct. 2022</h3>
+
+                                                                <Link href="">
+                                                                    <a className='text-[#DD7D37] text-xs underline italic'>View on etherscan</a>
+                                                                </Link>
+                                                                
+                                                            </div>
                                                             
                                                         </div>
                                                     </div>
-                                                    <div className="flex items-center py-3 mb-2 text-sm w-full border-b border-gray-200">
-                                                        <div className="flex items-start gap-4 w-full">
+                                                    <div className="flex items-start gap-4 mb-7 px-4">
+                                                        <div className='h-2 w-2 bg-[#DD7D37] rounded-full mt-2'></div>
 
-                                                            <div className='h-12 w-12 '>
-                                                                <img src='/images/Avatar.png' className='w-full object-cover rounded-full  '/>
-                                                            </div>
-                                                    
-                                                            <div  className='w-full grow'>
-                                                                <div className="flex gap-1 items-center flex-row justify-between w-full">
-                                                                    <p className="text-lg text-[#5B5B5B] font-semibold">Demi Wikinson <span className='font-thin text-graay-400 text-xs'>2 mins ago</span></p>
+                                                        <div className='flex items-start justify-between gap-9 w-full md:w-2/3 '>
+                                                            <div className=' flex items-start flex-col gap-3'>
+                                                                <h3 className='text-[#9C9EA1] text-base'>Received <span className='font-bold text-[#3D4044]'>$250 </span></h3>
 
-                                                                </div>
-                                                                <div className="flex gap-1 flex-row justify-between items-center w-full">
-                                                                    <p className="text-sm  text-[#5B2D0B] font-normal"><span className='font-thin text-[#5B5B5B] text-xs'>Deposited</span> 10kg 0f PET Bottles</p>
-                                                                </div>
-                                                                <div className="flex gap-2 flex-row justify-start items-start w-full mt-2">
-                                                                    <div className='p-2 bg-[#FEF8F3] rounded-full flex items-center justify-center'>
-                                                                        <img src="/images/Icon.png" alt="" />
-                                                                    </div>
-                                                                    <div className="flex gap-1 flex-col items-start w-full">
-                                                                        <p className="text-base  text-[#344054] font-normal"> 10kg 0f PET Bottles</p>
-                                                                        <p className="text-sm  text-[#667085] font-normal">720KB</p>
-                                                                    </div>
-                                                                </div>
-                                                            
+                                                                <span className='text-[#3D4044] text-sm font-medium underline'>25kg of PET Bottles</span>
                                                             </div>
-                                                            
+                                                            <div className='text-base flex items-start flex-col gap-3'>
+                                                                <h3 className='text-[#9C9EA1]'>20th Oct. 2022</h3>
+
+                                                                <Link href="">
+                                                                    <a className='text-[#DD7D37] text-xs underline italic'>View on etherscan</a>
+                                                                </Link>
+                                                                
+                                                            </div>
                                                             
                                                         </div>
                                                     </div>
-                                                    <div className="flex items-center py-3 mb-2 text-sm w-full border-b border-gray-200">
-                                                        <div className="flex items-start gap-4 w-full">
+                                                    <div className="flex items-start gap-4 mb-7 px-4">
+                                                        <div className='h-2 w-2 bg-[#DD7D37] rounded-full mt-2'></div>
 
-                                                            <div className='h-12 w-12 '>
-                                                                <img src='/images/Avatar.png' className='w-full object-cover rounded-full  '/>
-                                                            </div>
-                                                    
-                                                            <div  className='w-full grow'>
-                                                                <div className="flex gap-1 items-center flex-row justify-between w-full">
-                                                                    <p className="text-lg text-[#5B5B5B] font-semibold">Demi Wikinson <span className='font-thin text-graay-400 text-xs'>2 mins ago</span></p>
+                                                        <div className='flex items-start justify-between gap-9 w-full md:w-2/3 '>
+                                                            <div className=' flex items-start flex-col gap-3'>
+                                                                <h3 className='text-[#9C9EA1] text-base'>Received <span className='font-bold text-[#3D4044]'>$250 </span></h3>
 
-                                                                </div>
-                                                                <div className="flex gap-1 flex-row justify-between items-center w-full">
-                                                                    <p className="text-sm  text-[#5B2D0B] font-normal"><span className='font-thin text-[#5B5B5B] text-xs'>Deposited</span> 10kg 0f PET Bottles</p>
-                                                                </div>
-                                                                <div className="flex gap-2 flex-row justify-start items-start w-full mt-2">
-                                                                    <div className='p-2 bg-[#FEF8F3] rounded-full flex items-center justify-center'>
-                                                                        <img src="/images/Icon.png" alt="" />
-                                                                    </div>
-                                                                    <div className="flex gap-1 flex-col items-start w-full">
-                                                                        <p className="text-base  text-[#344054] font-normal"> 10kg 0f PET Bottles</p>
-                                                                        <p className="text-sm  text-[#667085] font-normal">720KB</p>
-                                                                    </div>
-                                                                </div>
-                                                            
+                                                                <span className='text-[#3D4044] text-sm font-medium underline'>25kg of PET Bottles</span>
                                                             </div>
-                                                            
+                                                            <div className='text-base flex items-start flex-col gap-3'>
+                                                                <h3 className='text-[#9C9EA1]'>20th Oct. 2022</h3>
+
+                                                                <Link href="">
+                                                                    <a className='text-[#DD7D37] text-xs underline italic'>View on etherscan</a>
+                                                                </Link>
+                                                                
+                                                            </div>
                                                             
                                                         </div>
                                                     </div>
-                                                    <div className="flex items-center py-3 mb-2 text-sm w-full border-b border-gray-200">
-                                                        <div className="flex items-start gap-4 w-full">
+                                                    <div className="flex items-start gap-4 mb-7 px-4">
+                                                        <div className='h-2 w-2 bg-[#DD7D37] rounded-full mt-2'></div>
 
-                                                            <div className='h-12 w-12 '>
-                                                                <img src='/images/Avatar.png' className='w-full object-cover rounded-full  '/>
-                                                            </div>
-                                                    
-                                                            <div  className='w-full grow'>
-                                                                <div className="flex gap-1 items-center flex-row justify-between w-full">
-                                                                    <p className="text-lg text-[#5B5B5B] font-semibold">Demi Wikinson <span className='font-thin text-graay-400 text-xs'>2 mins ago</span></p>
+                                                        <div className='flex items-start justify-between gap-9 w-full md:w-2/3 '>
+                                                            <div className=' flex items-start flex-col gap-3'>
+                                                                <h3 className='text-[#9C9EA1] text-base'>Received <span className='font-bold text-[#3D4044]'>$250 </span></h3>
 
-                                                                </div>
-                                                                <div className="flex gap-1 flex-row justify-between items-center w-full">
-                                                                    <p className="text-sm  text-[#5B2D0B] font-normal"><span className='font-thin text-[#5B5B5B] text-xs'>Deposited</span> 10kg 0f PET Bottles</p>
-                                                                </div>
-                                                                <div className="flex gap-2 flex-row justify-start items-start w-full mt-2">
-                                                                    <div className='p-2 bg-[#FEF8F3] rounded-full flex items-center justify-center'>
-                                                                        <img src="/images/Icon.png" alt="" />
-                                                                    </div>
-                                                                    <div className="flex gap-1 flex-col items-start w-full">
-                                                                        <p className="text-base  text-[#344054] font-normal"> 10kg 0f PET Bottles</p>
-                                                                        <p className="text-sm  text-[#667085] font-normal">720KB</p>
-                                                                    </div>
-                                                                </div>
-                                                            
+                                                                <span className='text-[#3D4044] text-sm font-medium underline'>25kg of PET Bottles</span>
                                                             </div>
-                                                            
+                                                            <div className='text-base flex items-start flex-col gap-3'>
+                                                                <h3 className='text-[#9C9EA1]'>20th Oct. 2022</h3>
+
+                                                                <Link href="">
+                                                                    <a className='text-[#DD7D37] text-xs underline italic'>View on etherscan</a>
+                                                                </Link>
+                                                                
+                                                            </div>
                                                             
                                                         </div>
                                                     </div>
-                                                    <div className="flex items-center py-3 mb-2 text-sm w-full border-b border-gray-200">
-                                                        <div className="flex items-start gap-4 w-full">
+                                                    <div className="flex items-start gap-4 mb-7 px-4">
+                                                        <div className='h-2 w-2 bg-[#DD7D37] rounded-full mt-2'></div>
 
-                                                            <div className='h-12 w-12 '>
-                                                                <img src='/images/Avatar.png' className='w-full object-cover rounded-full  '/>
-                                                            </div>
-                                                    
-                                                            <div  className='w-full grow'>
-                                                                <div className="flex gap-1 items-center flex-row justify-between w-full">
-                                                                    <p className="text-lg text-[#5B5B5B] font-semibold">Demi Wikinson <span className='font-thin text-graay-400 text-xs'>2 mins ago</span></p>
+                                                        <div className='flex items-start justify-between gap-9 w-full md:w-2/3 '>
+                                                            <div className=' flex items-start flex-col gap-3'>
+                                                                <h3 className='text-[#9C9EA1] text-base'>Received <span className='font-bold text-[#3D4044]'>$250 </span></h3>
 
-                                                                </div>
-                                                                <div className="flex gap-1 flex-row justify-between items-center w-full">
-                                                                    <p className="text-sm  text-[#5B2D0B] font-normal"><span className='font-thin text-[#5B5B5B] text-xs'>Deposited</span> 10kg 0f PET Bottles</p>
-                                                                </div>
-                                                                <div className="flex gap-2 flex-row justify-start items-start w-full mt-2">
-                                                                    <div className='p-2 bg-[#FEF8F3] rounded-full flex items-center justify-center'>
-                                                                        <img src="/images/Icon.png" alt="" />
-                                                                    </div>
-                                                                    <div className="flex gap-1 flex-col items-start w-full">
-                                                                        <p className="text-base  text-[#344054] font-normal"> 10kg 0f PET Bottles</p>
-                                                                        <p className="text-sm  text-[#667085] font-normal">720KB</p>
-                                                                    </div>
-                                                                </div>
-                                                            
+                                                                <span className='text-[#3D4044] text-sm font-medium underline'>25kg of PET Bottles</span>
                                                             </div>
-                                                            
+                                                            <div className='text-base flex items-start flex-col gap-3'>
+                                                                <h3 className='text-[#9C9EA1]'>20th Oct. 2022</h3>
+
+                                                                <Link href="">
+                                                                    <a className='text-[#DD7D37] text-xs underline italic'>View on etherscan</a>
+                                                                </Link>
+                                                                
+                                                            </div>
                                                             
                                                         </div>
                                                     </div>
-                                                    <div className="flex items-center py-3 mb-2 text-sm w-full border-b border-gray-200">
-                                                        <div className="flex items-start gap-4 w-full">
+                                                    <div className="flex items-start gap-4 mb-7 px-4">
+                                                        <div className='h-2 w-2 bg-[#DD7D37] rounded-full mt-2'></div>
 
-                                                            <div className='h-12 w-12 '>
-                                                                <img src='/images/Avatar.png' className='w-full object-cover rounded-full  '/>
-                                                            </div>
-                                                    
-                                                            <div  className='w-full grow'>
-                                                                <div className="flex gap-1 items-center flex-row justify-between w-full">
-                                                                    <p className="text-lg text-[#5B5B5B] font-semibold">Demi Wikinson <span className='font-thin text-graay-400 text-xs'>2 mins ago</span></p>
+                                                        <div className='flex items-start justify-between gap-9 w-full md:w-2/3 '>
+                                                            <div className=' flex items-start flex-col gap-3'>
+                                                                <h3 className='text-[#9C9EA1] text-base'>Received <span className='font-bold text-[#3D4044]'>$250 </span></h3>
 
-                                                                </div>
-                                                                <div className="flex gap-1 flex-row justify-between items-center w-full">
-                                                                    <p className="text-sm  text-[#5B2D0B] font-normal"><span className='font-thin text-[#5B5B5B] text-xs'>Deposited</span> 10kg 0f PET Bottles</p>
-                                                                </div>
-                                                                <div className="flex gap-2 flex-row justify-start items-start w-full mt-2">
-                                                                    <div className='p-2 bg-[#FEF8F3] rounded-full flex items-center justify-center'>
-                                                                        <img src="/images/Icon.png" alt="" />
-                                                                    </div>
-                                                                    <div className="flex gap-1 flex-col items-start w-full">
-                                                                        <p className="text-base  text-[#344054] font-normal"> 10kg 0f PET Bottles</p>
-                                                                        <p className="text-sm  text-[#667085] font-normal">720KB</p>
-                                                                    </div>
-                                                                </div>
-                                                            
+                                                                <span className='text-[#3D4044] text-sm font-medium underline'>25kg of PET Bottles</span>
                                                             </div>
-                                                            
+                                                            <div className='text-base flex items-start flex-col gap-3'>
+                                                                <h3 className='text-[#9C9EA1]'>20th Oct. 2022</h3>
+
+                                                                <Link href="">
+                                                                    <a className='text-[#DD7D37] text-xs underline italic'>View on etherscan</a>
+                                                                </Link>
+                                                                
+                                                            </div>
                                                             
                                                         </div>
                                                     </div>
+                                                    <div className="flex items-start gap-4 mb-7 px-4">
+                                                        <div className='h-2 w-2 bg-[#DD7D37] rounded-full mt-2'></div>
+
+                                                        <div className='flex items-start justify-between gap-9 w-full md:w-2/3 '>
+                                                            <div className=' flex items-start flex-col gap-3'>
+                                                                <h3 className='text-[#9C9EA1] text-base'>Received <span className='font-bold text-[#3D4044]'>$250 </span></h3>
+
+                                                                <span className='text-[#3D4044] text-sm font-medium underline'>25kg of PET Bottles</span>
+                                                            </div>
+                                                            <div className='text-base flex items-start flex-col gap-3'>
+                                                                <h3 className='text-[#9C9EA1]'>20th Oct. 2022</h3>
+
+                                                                <Link href="">
+                                                                    <a className='text-[#DD7D37] text-xs underline italic'>View on etherscan</a>
+                                                                </Link>
+                                                                
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex items-start gap-4 mb-7 px-4">
+                                                        <div className='h-2 w-2 bg-[#DD7D37] rounded-full mt-2'></div>
+
+                                                        <div className='flex items-start justify-between gap-9 w-full md:w-2/3 '>
+                                                            <div className=' flex items-start flex-col gap-3'>
+                                                                <h3 className='text-[#9C9EA1] text-base'>Received <span className='font-bold text-[#3D4044]'>$250 </span></h3>
+
+                                                                <span className='text-[#3D4044] text-sm font-medium underline'>25kg of PET Bottles</span>
+                                                            </div>
+                                                            <div className='text-base flex items-start flex-col gap-3'>
+                                                                <h3 className='text-[#9C9EA1]'>20th Oct. 2022</h3>
+
+                                                                <Link href="">
+                                                                    <a className='text-[#DD7D37] text-xs underline italic'>View on etherscan</a>
+                                                                </Link>
+                                                                
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex items-start gap-4 mb-7 px-4">
+                                                        <div className='h-2 w-2 bg-[#DD7D37] rounded-full mt-2'></div>
+
+                                                        <div className='flex items-start justify-between gap-9 w-full md:w-2/3 '>
+                                                            <div className=' flex items-start flex-col gap-3'>
+                                                                <h3 className='text-[#9C9EA1] text-base'>Received <span className='font-bold text-[#3D4044]'>$250 </span></h3>
+
+                                                                <span className='text-[#3D4044] text-sm font-medium underline'>25kg of PET Bottles</span>
+                                                            </div>
+                                                            <div className='text-base flex items-start flex-col gap-3'>
+                                                                <h3 className='text-[#9C9EA1]'>20th Oct. 2022</h3>
+
+                                                                <Link href="">
+                                                                    <a className='text-[#DD7D37] text-xs underline italic'>View on etherscan</a>
+                                                                </Link>
+                                                                
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex items-start gap-4 mb-7 px-4">
+                                                        <div className='h-2 w-2 bg-[#DD7D37] rounded-full mt-2'></div>
+
+                                                        <div className='flex items-start justify-between gap-9 w-full md:w-2/3 '>
+                                                            <div className=' flex items-start flex-col gap-3'>
+                                                                <h3 className='text-[#9C9EA1] text-base'>Received <span className='font-bold text-[#3D4044]'>$250 </span></h3>
+
+                                                                <span className='text-[#3D4044] text-sm font-medium underline'>25kg of PET Bottles</span>
+                                                            </div>
+                                                            <div className='text-base flex items-start flex-col gap-3'>
+                                                                <h3 className='text-[#9C9EA1]'>20th Oct. 2022</h3>
+
+                                                                <Link href="">
+                                                                    <a className='text-[#DD7D37] text-xs underline italic'>View on etherscan</a>
+                                                                </Link>
+                                                                
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    
                                                     
 
 
                                                 </div>
                                             </div>
-                                        </div>
                                     </div>
 
                                     </TabPanel>
