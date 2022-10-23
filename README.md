@@ -39,11 +39,19 @@ System's Architecture:
 
 # App Main Screen:
 
+Screen Image
+
 # Crypto Account:
+
+
 
 # Fiat Account:
 
+
+
 # Swap Function:
+
+
 
 
 
