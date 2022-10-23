@@ -88,6 +88,8 @@ contract Succour is Proxiable{
     } 
 
     function joinDAO (string memory _name, uint amount) public {
+        bool joined = checkDAOEligibility(msg.sender);
+        require (!joined, "You can't join again with this account");
          memberID++;
          depositMember(amount);
          DAOMembers storage DM = members[msg.sender];

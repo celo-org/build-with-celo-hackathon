@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback } from 'react'
+import { useRef, useEffect, useCallback, useState } from 'react'
 import { useSpring, animated } from 'react-spring'
 import styles from './joinmodal.module.scss'
 import walletIcon from '../../assets/wallet-1.svg'
@@ -12,6 +12,8 @@ interface IProps {
 const JoinModal = ({ showJoinModal, setShowJoinModal } : IProps) => {
 
        const modalRef = useRef<any | any>();
+       const [name, setName ] = useState("");
+       const [amount, setAmount] = useState("");
       
       const animation = useSpring({
         config: {
@@ -38,6 +40,7 @@ const JoinModal = ({ showJoinModal, setShowJoinModal } : IProps) => {
           return () => document.removeEventListener('keydown', keyPress);
       }, [keyPress])
 
+
      return (
           <>
           {showJoinModal ? ( 
@@ -52,7 +55,11 @@ const JoinModal = ({ showJoinModal, setShowJoinModal } : IProps) => {
                          
                          <div className={styles.join_input1}>
                           <label>Name</label>
-                          <input className={styles.input} type="text"></input>
+                          <input
+                          className={styles.input}
+                          type="text"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}/>
                          </div>
 
                          <div className={styles.text}>
@@ -61,7 +68,11 @@ const JoinModal = ({ showJoinModal, setShowJoinModal } : IProps) => {
                               <div className={styles.wallet_icon}>
                                <Image src={walletIcon} alt="" />
                               </div>
-                              <input type="number"></input>
+                              <input
+                              type="number"
+                              value={amount}
+                              onChange={(e) => setAmount(e.target.value)}
+                              />
                                <select name="choice">
                               <option value="BTC">BTC</option>
                               <option value="ETH">ETH</option>
@@ -75,7 +86,11 @@ const JoinModal = ({ showJoinModal, setShowJoinModal } : IProps) => {
                          </div>
                  
                         
-                         <button className={styles.join_btn}>Connect Wallet</button>
+                         <button
+                         className={styles.join_btn}
+                         
+                         >
+                         </button>
                      </div>
 
                     </div>                  
