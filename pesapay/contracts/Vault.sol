@@ -89,8 +89,8 @@ contract Vault is
     }
 
     function withdrawToken(
-        address _withdrawerAddress,
         address _token,
+        address _withdrawerAddress,
         uint256 _amount
     ) public onlyOwner whenNotPaused {
         require(_amount > 0, "Withdraw an amount greater than 0");
@@ -119,6 +119,7 @@ contract Vault is
         (bool success, ) = payable(_withdrawerAddress).call{value: _amount}("");
         require(success, "Failed to withdraw coins to address");
         coinBalance -= _amount;
+
         emit CoinFundsWithdrawn(_withdrawerAddress, _amount);
     }
 

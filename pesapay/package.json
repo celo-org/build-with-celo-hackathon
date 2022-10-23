@@ -37,6 +37,7 @@
     "@openzeppelin/contracts": "^4.7.3",
     "@openzeppelin/contracts-upgradeable": "^4.8.0-rc.1",
     "@openzeppelin/hardhat-upgrades": "^1.21.0",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "eth-sig-util": "^3.0.1"
   }
 }
