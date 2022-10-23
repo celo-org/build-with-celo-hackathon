@@ -8,24 +8,14 @@ const { ethers } = require("hardhat");
 const hre = require("hardhat");
 
 async function main() {
-  const kdaiContract = await ethers.getContractFactory("KDAI");
-  const wklayContract = await ethers.getContractFactory("WKLAY");
-  const ousdcContract = await ethers.getContractFactory("oUSDC");
   const factoryContract = await ethers.getContractFactory("ZuniswapV2Factory");
   const libraryContract = await ethers.getContractFactory("ZuniswapV2Library");
 
-
-  const deployedKDAI = await kdaiContract.deploy();
-  const deployedWKLAY = await wklayContract.deploy();
-  const deployedoUSDC = await ousdcContract.deploy();
   const deployedfactory = await factoryContract.deploy();
+
   const deployedlibrary = await libraryContract.deploy();
 
-
   await deployedlibrary.deployed();
-  await deployedKDAI.deployed();
-  await deployedWKLAY.deployed();
-  await deployedoUSDC.deployed();
 
   const routerContract = await ethers.getContractFactory("ZuniswapV2Router", {
     libraries: {
@@ -38,44 +28,8 @@ async function main() {
   await deployedfactory.deployed();
   await deployedRouter.deployed();
 
-  //fund exchange
-  const fundAmount = ethers.utils.parseEther("10000000000");
-  const [signer ] =  await ethers.getSigners();
-
-  console.log(fundAmount.toString());
-
-  await Promise.all([deployedKDAI.mint(fundAmount),
-  deployedWKLAY.mint(fundAmount),
-  deployedoUSDC.mint(fundAmount)]);
-
-  await Promise.all([deployedKDAI.approve(deployedRouter.address, fundAmount),
-  deployedWKLAY.approve(deployedRouter.address, fundAmount),
-  deployedKDAI.approve(deployedRouter.address, fundAmount)]);
-
-  await deployedRouter.addLiquidity(
-    deployedKDAI.address, 
-    deployedWKLAY.address, 
-    fundAmount, 
-    fundAmount, 
-    ethers.utils.parseEther("100000"), 
-    ethers.utils.parseEther("100000"),
-    signer.address
-    )
-
-
-  storeContractData(deployedKDAI, "KDAI");
-  storeContractData(deployedWKLAY, "WKLAY");
-  storeContractData(deployedoUSDC, "oUSDC");
   storeContractData(deployedRouter, "ZuniswapV2Router");
   storeContractData(deployedfactory, "ZuniswapV2Factory");
-
-  console.log(
-    `KDAI: ${deployedKDAI.address} \r\n 
-    WKLAY: ${deployedWKLAY.address} \r\n 
-    oUSDC: ${deployedoUSDC.address} \r\n 
-    ZuniswapV2Library: ${deployedlibrary.address} \r\n 
-    ZuniswapV2Router: ${deployedRouter.address} \r\n `
-  )
 }
 
 const storeContractData = (contract, contractName) => {

@@ -16,7 +16,8 @@ contract Logger {
         address owner,
         address recipientAddress,
         uint totalReceivable,
-        address targetToken
+        address targetToken,
+        bytes userData
     );
     event PayerAdded(address proxy, bytes payeruid);
 
@@ -46,13 +47,15 @@ contract Logger {
         return true;
     }
     
-    function LogSliceCreated(address _proxy,
+    function LogSliceCreated(
+        address _proxy,
         address _sender,
         address _recipientAddress,
         uint _totalReceivable,
-        address _targetToken
+        address _targetToken,
+        bytes calldata userData
         ) external notPaused returns (bool){
-            emit SliceCreated(_proxy, _sender, _recipientAddress, _totalReceivable, _targetToken);
+            emit SliceCreated(_proxy, _sender, _recipientAddress, _totalReceivable, _targetToken, userData);
         return true;
     }
 

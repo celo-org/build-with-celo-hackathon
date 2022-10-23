@@ -17,12 +17,14 @@ contract SliceProxyFactory {
     event ProxyCreated(address proxy, address indexed owner);
     /// @dev deploy new invoice
     
-    function createNewSlice(address _token,
+    function createNewSlice(
+        address _token,
         address _recipientAddress,
         uint _recipientAddresschainId, uint _totalReceivable,
         string memory _title,
         string memory _description,
-        SPayer[] memory _payers) external returns (address) {
+        SPayer[] memory _payers,
+        bytes calldata userData) external returns (address) {
 
         Proxy proxy = new Proxy(mastercopy);
 
@@ -35,7 +37,8 @@ contract SliceProxyFactory {
             _totalReceivable,
             _title,
             _description,
-            _payers
+            _payers,
+            userData
         );
 
         require(success, "Failed to setup slice");

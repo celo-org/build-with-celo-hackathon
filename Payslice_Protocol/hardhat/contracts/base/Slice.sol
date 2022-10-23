@@ -30,8 +30,7 @@ contract Slice is Ownable {
     uint totalReceivable;
     uint totalPaid;
 
-    string title;
-    string description;
+    bytes public userData;
 
     Counters.Counter public payersCount;
     Counters.Counter public transactionsCount;
@@ -71,9 +70,8 @@ contract Slice is Ownable {
         address _exchangeAddress,
         address _loggerAddress,
         uint _totalReceivable,
-        string memory _title,
-        string memory _description,
-        SPayer[] memory _payers
+        SPayer[] memory _payers,
+        bytes calldata _userData
     )  external returns (bool) {
         require(owner() == address(0), "Cannot Initialize");
         require(_exchangeAddress != address(0), "Exchange address required");
@@ -81,14 +79,13 @@ contract Slice is Ownable {
         require(_recipientAddresschainId != uint(0), "Recipient address chain required");
         require(_payers.length > 0, "Vvoucher should have at least one payer");
 
-        title = _title;
-        description = _description;
         targetToken = _token;
         recipientAddress = _recipientAddress;
         totalReceivable = _totalReceivable;
         exchangeAddress = _exchangeAddress;
         logger = Logger(_loggerAddress);
         recipientAddresschainId = _recipientAddresschainId;
+        userData = _userData;
 
         for (uint i = 0; i < _payers.length; i++) {
             _addPayer(_payers[i].payeruid, _payers[i].amountDue);
@@ -96,7 +93,7 @@ contract Slice is Ownable {
 
         setupOwnable();
 
-        logger.LogSliceCreated(address(this), msg.sender, _recipientAddress, _totalReceivable, _token);
+        logger.LogSliceCreated(address(this), msg.sender, _recipientAddress, _totalReceivable, _token, _userData);
 
         return true;
     }
@@ -192,23 +189,21 @@ contract Slice is Ownable {
         external
         view
         returns (
-            string memory,
-            string memory,
             address,
             address,
             address,
             uint,
-            uint
+            uint,
+            bytes memory
         )
     {
         return (
-            title,
-            description,
             exchangeAddress,
             targetToken,
             recipientAddress,
             totalReceivable,
-            totalPaid
+            totalPaid,
+            userData
         );
     }
 

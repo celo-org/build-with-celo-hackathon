@@ -3,12 +3,16 @@ require("dotenv").config();
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
-  solidity: "0.8.17",
-
+  solidity: "0.8.15",
   networks: {
-    baobab: {
-      url: "https://public-node-api.klaytnapi.com/v1/baobab",
-      accounts: [process.env.ACCOUNT_KEY]
+    alfajores: {
+      url: process.env.ALFAJORE_FERNO_RPC,
+      accounts: [process.env.ACCOUNT_PRIVATE_KEY]
+    }
+  },
+  etherscan: {
+    apiKey:{
+      alfajores: process.env.CELO_SCAN_API_KEY
     }
   }
 };
