@@ -30,6 +30,9 @@ module.exports = {
     },
   },
   networks: {
+    local: {
+      url: "http://localhost:8545",
+    },
     alfajores: {
       url: "https://alfajores-forno.celo-testnet.org",
       accounts: [process.env.PRIVATE_KEY],
@@ -45,7 +48,10 @@ module.exports = {
       accounts: [process.env.PRIVATE_KEY],
     },
     goerli: {
-      url: `https://eth-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`,
+      // url: `https://eth-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY_GOERLI}`,
+      url: `https://goerli.infura.io/v3/${process.env.INFURA_API_KEY}`,
+      chainId: 5,
+      gasPrice: 21000000,
       accounts: [process.env.PRIVATE_KEY],
     },
     bscTestnet: {
@@ -65,7 +71,7 @@ module.exports = {
       accounts: [process.env.PRIVATE_KEY],
     },
     mumbai: {
-      url: "https://rpc-mumbai.maticvigil.com",
+      url: `https://polygon-mumbai.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY_MUMBAI}`,
       accounts: [process.env.PRIVATE_KEY],
     },
     fantom: {
@@ -78,6 +84,9 @@ module.exports = {
       gasPrice: 1000000000,
       accounts: [process.env.PRIVATE_KEY],
     },
+  },
+  mocha: {
+    timeout: 80000,
   },
 }
 // customChains: [

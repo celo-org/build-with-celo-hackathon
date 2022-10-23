@@ -33,6 +33,9 @@
     "hardhat": "^2.11.2",
     "hardhat-celo": "^0.0.3"
   },
+  "peerDependencies": {
+    "ethers": "^4.0.47 || ^5.7.1"
+  },
   "dependencies": {
     "@openzeppelin/contracts": "^4.7.3",
     "@openzeppelin/contracts-upgradeable": "^4.8.0-rc.1",

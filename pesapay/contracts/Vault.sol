@@ -130,18 +130,20 @@ contract Vault is
     function _msgSender()
         internal
         view
+        virtual
         override(ContextUpgradeable, ERC2771ContextUpgradeable)
         returns (address sender)
     {
-        return super._msgSender();
+        return ERC2771ContextUpgradeable._msgSender();
     }
 
     function _msgData()
         internal
         view
+        virtual
         override(ContextUpgradeable, ERC2771ContextUpgradeable)
         returns (bytes calldata)
     {
-        return super._msgData();
+        return ERC2771ContextUpgradeable._msgData();
     }
 }
