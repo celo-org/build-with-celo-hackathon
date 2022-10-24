@@ -81,7 +81,7 @@ contract EventHub {
         return idToEvent[eventId].eventId;
     }
 
-    function createNewRSVP(string calldata eventId) public payable {
+    function createNewRSVP(string calldata eventId) external payable {
         // look up event from our mapping
         CreateEvent storage myEvent = idToEvent[eventId];
 

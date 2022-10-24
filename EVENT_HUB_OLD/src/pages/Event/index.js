@@ -1,18 +1,15 @@
 import { useEffect, useState } from 'react'
-import { useCelo } from '@celo/react-celo'
-
 import { Link } from 'react-router-dom'
 import { ethers } from 'ethers'
 import styles from './Event.module.css'
-import { contract, createNewEvent } from '../../utils'
+import useIsConnected from '../../hooks/useIsConnected'
+import { connectWallet, eventHubContract, createNewEvent } from '../../utils/interact'
 import { addToIPFS } from '../../utils/ipfs'
-import EventHub from "../../artifacts/contracts/EventHub.sol/EventHub.json";
-const eventHubContractAddress = '0x51d98518269ebA8A2ceD329e8552a72A2932a6F9'
 
 function Event() {
-  const { connect, address, kit } = useCelo()
 
-  const [eventHubContract, setEventHubContract] = useState('')
+  const [isConnected, address] = useIsConnected()
+  const [contract, setContract] = useState()
   const [status, setStatus] = useState('')
   const [eventName, setEventName] = useState("");
   const [eventDate, setEventDate] = useState("");
@@ -26,8 +23,8 @@ function Event() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-
-    if (address) {
+debugger
+    if (isConnected) {
       const CID = await saveToIPFS()
 
       let deposit = ethers.utils.parseEther(refund);
@@ -35,7 +32,7 @@ function Event() {
       let eventDateAndTime = new Date(`${eventDate} ${eventTime}`);
       let eventTimestamp = eventDateAndTime.getTime();
 
-      const { status } = await createNewEvent(eventHubContract, address, {
+      const { status } = await createNewEvent(address, {
         eventTimestamp,
         deposit,
         maxCapacity,
@@ -63,8 +60,6 @@ function Event() {
 
   async function addSmartContractListener() {
 
-    const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
-
     eventHubContract.events.NewEventCreated({}, (error, data) => {
       if (error) {
         console.log("😥 " + error.message);
@@ -76,8 +71,8 @@ function Event() {
   }
 
   useEffect(() => {
+    setContract(connectWallet())
     addSmartContractListener()
-    setEventHubContract(contract(kit))
   }, [])
 
   return (

@@ -4,7 +4,7 @@ import axios  from 'axios'
 export const eventList = async () => {
 
   const url = `https://api.pinata.cloud/data/pinList?status=pinned`
-  return await axios
+  return axios
     .get(url, {
       headers: {
         'Content-Type': 'application/json',
