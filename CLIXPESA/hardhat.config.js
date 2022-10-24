@@ -23,7 +23,7 @@ module.exports = {
   },
   abiExporter: {
     path: './blockchain/Abis/Jsons',
-    only: ['Spaces', 'Rosca'],
+    only: ['Spaces', 'Rosca', 'Loans', 'P2PLoan', 'LoanONRs'],
     runOnCompile: true,
     clear: true,
     flat: true,
