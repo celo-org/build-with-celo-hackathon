@@ -7,6 +7,10 @@ import { Fragment, useState, useEffect } from "react";
 import axios from "axios";
 import Content from "./Content";
 
+const { REACT_APP_BACKEND_API } = process.env;
+
+console.log(REACT_APP_BACKEND_API);
+
 export default function Modal() {
   const [open, setOpen] = useRecoilState(walletOpenState);
   const [shouldMint, setMint] = useRecoilState(mintState);
@@ -16,7 +20,7 @@ export default function Modal() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios("http://localhost:3001/api/users/1");
+      const result = await axios(`${REACT_APP_BACKEND_API}/api/users/1`);
       setData(result.data);
     };
 

@@ -2,6 +2,8 @@ import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+const { REACT_APP_BACKEND_API } = process.env;
+
 const Balance = ({ token }: any) => {
   const [loading, setLoading] = useState(false);
   const [balance, setData] = useState<any>();
@@ -9,7 +11,7 @@ const Balance = ({ token }: any) => {
     setLoading(true);
     const fetchData = async () => {
       const result = await axios(
-        `http://localhost:3001/api/users/1/balance/${token}`
+        `${REACT_APP_BACKEND_API}/api/users/1/balance/${token}`
       );
       setData(result.data);
       setLoading(false);
