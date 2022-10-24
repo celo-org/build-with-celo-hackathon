@@ -1,0 +1,30 @@
+{
+  "name": "register-number",
+  "version": "1.0.0",
+  "description": "A repo to show how to register a phone number with ODIS on Celo",
+  "main": "index.js",
+  "scripts": {
+    "new-account": "node printNewAccount.js",
+    "sample-script": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/critesjosh/register-number.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/critesjosh/register-number/issues"
+  },
+  "homepage": "https://github.com/critesjosh/register-number#readme",
+  "dependencies": {
+    "@celo/base": "^1.5.0",
+    "@celo/contractkit": "^1.5.0",
+    "@celo/identity": "^1.5.1",
+    "@celo/utils": "^1.5.0",
+    "dotenv": "^10.0.0",
+    "web3": "^1.6.1"
+  }
+}
