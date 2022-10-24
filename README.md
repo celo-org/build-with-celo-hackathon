@@ -58,3 +58,7 @@ What do you need to do next to turn this prototype into a working solution?
 
 #### License
 This repository includes an [unlicensed](http://unlicense.org/) statement though you may want to [choose a different license](https://choosealicense.com/).
+
+<h3> 
+ <img src="https://raw.githubusercontent.com/ABSphreak/ABSphreak/master/gifs/Hi.gif" width="20px"> <b>critesjosh</b>, Attestation code/ ODIS interaction code gotten from your work at <a href =https://github.com/critesjosh/register-number><img src='https://img.icons8.com/color/2x/github--v1.png' alt='github' height='25'></a>
+ </h3>
