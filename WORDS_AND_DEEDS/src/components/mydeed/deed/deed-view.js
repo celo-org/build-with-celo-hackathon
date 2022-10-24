@@ -56,6 +56,9 @@ class DeedView extends React.Component {
 			deedcard,
 
 			isOwner: false,
+			deedowner: '',
+			isOnSale: false,
+
 			loaded: false,
 			registration_text: 'loading...',
 			registration_signature: 'loading...',
@@ -111,6 +114,7 @@ class DeedView extends React.Component {
 
 	async checkNavigationState() {
 		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
 
 		let rootsessionuuid = this.props.rootsessionuuid;
 		let walletuuid = this.props.currentwalletuuid;
@@ -142,6 +146,14 @@ class DeedView extends React.Component {
 				let deed = await mvcmypwa.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid);
 				this.deed = deed;
 
+				// check if deed is on sale
+				let isOnSale = false;
+				let listing_info = await mvcmydeed.getDeedSaleInfo(rootsessionuuid, walletuuid, currencyuuid, minter, deed).catch(err => {});
+
+				if (listing_info && (listing_info.onsale === true)) {
+					isOnSale = true;
+				}
+
 				// time
 				let registration_time = (deed.metadata ? deed.metadata.time/1000 : null);
 				let registration_text = mvcmypwa.t('This deed has been registered on');
@@ -169,7 +181,7 @@ class DeedView extends React.Component {
 					isOwner = true;
 				}
 
-				this._setState({currency, mintername, isOwner, deedcard, 
+				this._setState({currency, mintername, isOwner, isOnSale, deedcard, 
 					registration_text, registration_signature, sharelink});
 
 				dataobj.viewed = true;
@@ -247,6 +259,16 @@ class DeedView extends React.Component {
 		return true;
 	}
 
+	async onBuy() {
+		console.log('onBuy pressed!');
+		
+		let params = {action: 'buy', currencyuuid: this.dataobject.currencyuuid, txhash: this.dataobject.txhash, address: this.deed.minter, tokenid: this.deed.tokenid, dataobject: this.deed};
+
+		await this.app.gotoRoute('deed', params);		
+		
+		return true;
+	}
+
 
 	async onShareLinkClick() {
 		const {sharelink} = this.state;
@@ -299,7 +321,7 @@ class DeedView extends React.Component {
 	
 	// rendering
 	renderDeedButtons() {
-		let { loaded, isOwner} = this.state;
+		let { loaded, isOwner, isOnSale} = this.state;
 
 		if (loaded) {
 			return(
@@ -319,11 +341,15 @@ class DeedView extends React.Component {
 				Transfer</Button>
 				</span>
 				<span className="DeedButton">
+				{(isOnSale ? 
+				<Button onClick={this.onBuy.bind(this)} 
+				type="submit">
+				Buy</Button> :
 				<Button onClick={this.onOfferOnSale.bind(this)} 
 				disabled={(isOwner ? false : true)} 
 				variant={(isOwner ? "primary" : "secondary")} 
 				type="submit">
-				Offer on sale</Button>
+				Offer on sale</Button>)}
 				</span>
 				</div>
 			);

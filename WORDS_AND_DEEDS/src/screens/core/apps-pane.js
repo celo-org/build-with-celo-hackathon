@@ -75,6 +75,9 @@ class AppsPane extends React.Component {
 						}
 	
 					}
+					else {
+						deedcard = null;
+					}
 				}
 				else {
 					deedcard = null;

@@ -39,9 +39,9 @@ class DeedBuyForm extends React.Component {
 		let currency = {symbol: ''};
 
 		let signingkey = null;
-		let deedcard = null;
-		let deedcard_balance_int = 0;
-		let deedcard_balance_string = '';
+		let currentcard = null;
+		let card_balance_int = 0;
+		let card_balance_string = '';
 
 		
 		this.closing = false;
@@ -52,6 +52,7 @@ class DeedBuyForm extends React.Component {
 			title,
 			description,
 
+			isOnSale: false,
 			saleprice,
 
 			currency,
@@ -63,9 +64,9 @@ class DeedBuyForm extends React.Component {
 			rpc: null,
 			connection: null,
 
-			deedcard,
-			deedcard_balance_int,
-			deedcard_balance_string,
+			currentcard,
+			card_balance_int,
+			card_balance_string,
 
 			loaded: false,
 			registration_text: 'loading...',
@@ -96,8 +97,89 @@ class DeedBuyForm extends React.Component {
 
 		return context.deedcard;
 	}
+
+	async _openCurrencyCard(currencyuuid) {
+		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
+
+		let rootsessionuuid = this.props.rootsessionuuid;
+		let walletuuid = this.props.currentwalletuuid;
+		
+		let card;
+
+		let {remotewallet, remotecreate} = this.state;
+
+		if ((remotewallet !== true) || (remotecreate !== true)){
+			card = await this.app.openCurrencyCard(currencyuuid);
+		}
+		else {
+			if (this.state.connection && (this.state.connection.account)) {
+				card = await mvcmypwa.getCurrencyCardWithAddress(rootsessionuuid, walletuuid, currencyuuid, this.state.connection.account);
+									 // creates read-only card if necessary
+
+				// we connect the card
+				let connected = await mvcmydeed.connectCard(rootsessionuuid, walletuuid, card.uuid, this.state.connection);
+
+				// TODO: to be coherent, we should call this.app.openCard
+				// but not really usefull, since we don't use redux for cards in pwa-apps
+				// this.app.openCard(card.uuid);
+			}
+			else {
+				return Promise.reject('remote connection is not activated');
+			}
+		}
+
+		return card;
+	}
 	
 	// post render commit phase
+	componentDidUpdate(prevProps, prevState) {
+		//console.log('DeedCreateForm.componentDidUpdate called');
+		
+		let mvcmypwa = this.getMvcMyPWAObject();
+
+		let rootsessionuuid = this.props.rootsessionuuid;
+		let walletuuid = this.props.currentwalletuuid;
+
+		// entered a private key
+		if (this.state.signingkey != prevState.signingkey) {
+			const {currency} = this.state;
+
+			if ( (currency) && (currency.uuid)) {
+				let currentcard = null;
+				let card_balance_string = '';
+				let card_creditunits = '';
+				
+				let currencyuuid = currency.uuid;
+
+				this.app.createCurrencyCard(currencyuuid, this.state.signingkey, {maincard: true})
+				.then(card => {
+					currentcard = card;
+
+					return mvcmypwa.getCurrencyPosition(rootsessionuuid, walletuuid, currencyuuid, currentcard.uuid)
+				})
+				.then((pos) => {
+					return mvcmypwa.formatCurrencyAmount(rootsessionuuid, currencyuuid, pos);
+				})
+				.then((balance) => {
+					card_balance_string = balance;
+
+					return mvcmypwa.getCreditBalance(rootsessionuuid, walletuuid, currentcard.uuid);
+				})
+				.then((credits) => {
+					card_creditunits = credits.transactionunits;
+
+					this._setState({currentcard, card_balance_string, card_creditunits})
+				})
+				.catch(err => {
+					this._setState({currentcard, card_balance_string, card_creditunits})
+				});
+			}
+		}
+
+
+	}
+
 	componentDidMount() {
 		console.log('DeedBuyForm.componentDidMount called');
 		
@@ -127,12 +209,37 @@ class DeedBuyForm extends React.Component {
 
 	async checkNavigationState() {
 		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
 
 		let rootsessionuuid = this.props.rootsessionuuid;
 		let walletuuid = this.props.currentwalletuuid;
 
 		let app_nav_state = this.app.getNavigationState();
 		let app_nav_target = app_nav_state.target;
+
+		// check wallet is unlocked
+		let unlocked = await this.app.checkWalletUnlocked()
+		.catch(err => {
+		});
+
+		if (!unlocked) {
+			let params = (app_nav_target ? app_nav_target.params : null);
+			this.app.gotoRoute('login', params);
+			return;
+			}
+			else {
+			// check it is not the device wallet, because we need a safer wallet
+			let isdevicewallet = await this.app.isDeviceWallet();
+			
+			if (isdevicewallet) {
+				await this.app.resetWallet();
+				
+				let params = (app_nav_target ? app_nav_target.params : null);
+				this.app.gotoRoute('login', params);
+				return;
+			}
+		}
+
 
 		if (app_nav_target && (app_nav_target.route == 'deed') && (app_nav_target.reached == false)) {
 			var params = app_nav_target.params;
@@ -176,26 +283,38 @@ class DeedBuyForm extends React.Component {
 					return Promise.reject('could not find currency ' + currencyuuid);
 	
 				var sharelink = await this.app.getShareLink(txhash, currency.uuid);
+
+				// check if deed is on sale
+				let isOnSale = false;
+				let saleprice = 0;
+				let listing_info = await mvcmydeed.getDeedSaleInfo(rootsessionuuid, walletuuid, currencyuuid, minter, deed).catch(err => {});
+
+				if (listing_info && (listing_info.onsale === true)) {
+					isOnSale = true;
+					saleprice = listing_info.saleprice;
+				}
 	
+				// check if is owner (should not be)
 				let isOwner = false;
 				
-				let deedcard = await this._getDeedOwningCard(currencyuuid, minter, deed).catch(err => {});
-				let deedcard_balance_int = 0;
-				let deedcard_balance_string = '';
+				let currentcard = await this._openCurrencyCard(currencyuuid).catch(err => {});
+				let card_balance_int = 0;
+				let card_balance_string = '';
 
-				if (deedcard) {
+				if (currentcard) {
 					isOwner = true;
-					let pos = await mvcmypwa.getCurrencyPosition(rootsessionuuid, walletuuid, currencyuuid, deedcard.uuid);
+					let pos = await mvcmypwa.getCurrencyPosition(rootsessionuuid, walletuuid, currencyuuid, currentcard.uuid);
 			
 					if (pos !== undefined) {
-						deedcard_balance_int = await pos.toInteger();
-						deedcard_balance_string = await mvcmypwa.formatCurrencyAmount(rootsessionuuid, currencyuuid, pos);
+						card_balance_int = await pos.toInteger();
+						card_balance_string = await mvcmypwa.formatCurrencyAmount(rootsessionuuid, currencyuuid, pos);
 					}
 				}
 
 				this._setState({currency, mintername, 
 					isOwner,
-					deedcard, deedcard_balance_int, deedcard_balance_string,
+					currentcard, card_balance_int, card_balance_string,
+					isOnSale, saleprice,
 					registration_text, sharelink});
 
 				dataobj.viewed = true;
@@ -229,8 +348,8 @@ class DeedBuyForm extends React.Component {
 	
 	
 	// user actions
-	async onOfferOnSale() {
-		console.log('onOfferOnSale pressed!');
+	async onBuy() {
+		console.log('onBuy pressed!');
 		
 		let mvcmypwa = this.getMvcMyPWAObject();
 		let mvcmydeed = this.getMvcMyDeedObject();
@@ -242,25 +361,73 @@ class DeedBuyForm extends React.Component {
 		let carduuid;
 		let card;
 
-		let {currency, saleprice, remotewallet, rpc, deedcard, signingkey} =this.state;
+		let {currency, saleprice, remotewallet, rpc, currentcard, signingkey} =this.state;
 
 		let remoteaccount;
 
 		this._setState({processing: true});
 
 		try {
+			// get wallet details
+			wallet = await mvcmypwa.getWalletInfo(rootsessionuuid, walletuuid);
+
+			if (currentcard) {
+				card = currentcard;
+				carduuid = currentcard.uuid;
+			}
+			else {
+				if (signingkey) {
+					let currencyuuid = currency.uuid;
+					let options = {maincard: true, allow_readonly: true};
+		
+					card = await this.app.createCurrencyCard(currencyuuid, signingkey, options)
+					.catch(err => {
+						console.log('error in ClauseCreateForm.onSubmit: ' + err);
+					});
+	
+					if (!card) {
+						this.app.alert('could not create card from private key');
+						this._setState({processing: false});
+						return;
+					}
+				}
+				else {
+					this.app.alert('You need to provide your private key for ' + currency.name + ' in order to being able to transfer this deed');
+					this._setState({processing: false});
+					return;
+				}
+		
+			}
+
+			if (remotewallet === true) {
+				// we are connected and asked to execute transactions on remote wallet
+				let connection = this._getRemoteConnectionFromRpc(rpc);
+				remoteaccount = (connection ? connection.account : null);
+
+				if (!remoteaccount) {
+					this.app.alert('You need to be connected to a remote wallet');
+					this._setState({processing: false});
+					return;
+				}
+
+				// get card for remoteaccount
+				currentcard = await mvcmypwa.getCurrencyCardWithAddress(rootsessionuuid, walletuuid, currency.uuid,
+					remoteaccount); // creates read-only card if necessary
+			}
+
+			// send the buy transaction
+			let minter = this.minter;
+			let deed = this.deed;
 
 		}
 		catch(e) {
-			console.log('exception in onOfferOnSale: ' + e);
-			this.app.error('exception in onOfferOnSale: ' + e);
+			console.log('exception in onBuy: ' + e);
+			this.app.error('exception in onBuy: ' + e);
 
 			this.app.alert('could not set price of deed')
-
-			this._setState({processing: false});
 		}
 
-
+		this._setState({processing: false});
 	}
 
 	async onBack() {
@@ -328,18 +495,18 @@ class DeedBuyForm extends React.Component {
 	
 	// rendering
 	renderDeedCardPart() {
-		let { currency, remotewallet, connection, deedcard, signingkey, deedcard_balance_string } = this.state;
+		let { currency, remotewallet, connection, currentcard, signingkey, card_balance_string } = this.state;
 
 		return (
 			<span>
 				{( remotewallet !== true ?
-					(deedcard ?
+					(currentcard ?
 					<FormGroup className="CurrencyCard" controlId="currencycard">
 						<span className="CardIconCol">
 							<CurrencyCardIcon
 								app={this.app}
 								currency={currency}
-								card={deedcard}
+								card={currentcard}
 							/>
 						</span>
 						<span className="CardBalanceCol">
@@ -349,7 +516,7 @@ class DeedBuyForm extends React.Component {
 								disabled
 								autoFocus
 								type="text"
-								value={deedcard_balance_string}
+								value={card_balance_string}
 							/>
 						</span>
 					</FormGroup> :
@@ -380,7 +547,7 @@ class DeedBuyForm extends React.Component {
 							disabled
 							autoFocus
 							type="text"
-							value={deedcard_balance_string}
+							value={card_balance_string}
 						/>
 					</span>
 					</FormGroup>
@@ -391,14 +558,14 @@ class DeedBuyForm extends React.Component {
 	}
 
 	renderDeedButtons() {
-		let { loaded, isOwner} = this.state;
+		let { loaded, isOwner, isOnSale} = this.state;
 
 		if (loaded) {
 			return(
 				<div>
 				<span>
-				<Button onClick={this.onOfferOnSale.bind(this)} disabled={(isOwner ? false : true)} type="submit">
-				Offer on sale</Button>
+				<Button onClick={this.onBuy.bind(this)} disabled={(isOnSale ? false : true)} type="submit">
+				Buy</Button>
 				</span>
 				</div>
 			);
@@ -459,7 +626,7 @@ class DeedBuyForm extends React.Component {
 				{this.renderDeedCardPart()}
 				
 				<FormGroup controlId="title">
-				  <FormLabel>Enter sell price</FormLabel>
+				  <FormLabel>Sale price is</FormLabel>
 				  <FormControl
 					autoFocus
 					type="text"
@@ -515,7 +682,7 @@ class DeedBuyForm extends React.Component {
 		return (
 			<div className="Container">
 				<div className="TitleBanner">
-				<div className="Title">Sell Deed</div>
+				<div className="Title">Buy Deed</div>
 				<div className="BackIcon" onClick={this.onBack.bind(this)}><FontAwesomeIcon icon={faUndo} /></div>
 				</div>
 				{ this.renderDeedBuyForm()}

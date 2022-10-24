@@ -13,6 +13,10 @@ class NftMarketplace {
 
 	}
 
+	getAddress() {
+		return this.address;
+	}
+
 	getContractPath() {
 		return this.contractpath;
 	}
@@ -60,23 +64,91 @@ class NftMarketplace {
 		return arr;
 	}
 
-	async getMyNfts() {
+	async getMyNfts(address) {
 		var contractinstance = this.getContractInstance();
 
 		var params = [];
-	
-		const arr = await contractinstance.method_call('getMyNfts', params);
 		
+		/* const arr = await contractinstance.method_call('getMyNfts', params); */
+		
+		// Note: we need to by-pass contractinstance.method_call because EthereumNodeAccess
+		// does not handle msg.sender that is used in the smartcontract
+		var session = this.session;
+		var global = session.getGlobalObject();
+		
+		var ethnodemodule = global.getModuleObject('ethnode');
+
+		var ethereum_node_access_instance = ethnodemodule.getEthereumNodeAccessInstance(session);
+		var web3_contract_instance = await contractinstance.activate();
+
+		var abi = web3_contract_instance.getAbi();
+		let args = (params ? params.slice(0,-1) : null);
+		var abidef = ethereum_node_access_instance._getMethodAbiDefinition(abi, 'getMyNfts', args);
+
+		var instance = web3_contract_instance['instance'];
+		
+		var signature = abidef.signature;
+
+		var funcname = instance.methods[signature];
+
+
+		var arr = await funcname(...params).call({from: address}, (err, res) => {
+			if (err) {
+				console.log('error: ' + err);
+			}
+			else {
+				console.log('result');
+			}
+		})
+		.catch(err => {
+			console.log('catched error in EthereumNodeAccess.web3_contract_dynamicMethodCall ' + err);
+		});
+
+	
 		return arr;
 	}
 
-	async getMyListedNfts() {
+	async getMyListedNfts(address) {
 		var contractinstance = this.getContractInstance();
 
 		var params = [];
-	
-		const arr = await contractinstance.method_call('getMyListedNfts', params);
+
+		/* const arr = await contractinstance.method_call('getMyListedNfts', params); */
 		
+	
+		// Note: we need to by-pass contractinstance.method_call because EthereumNodeAccess
+		// does not handle msg.sender that is used in the smartcontract
+		var session = this.session;
+		var global = session.getGlobalObject();
+		
+		var ethnodemodule = global.getModuleObject('ethnode');
+
+		var ethereum_node_access_instance = ethnodemodule.getEthereumNodeAccessInstance(session);
+		var web3_contract_instance = await contractinstance.activate();
+
+		var abi = web3_contract_instance.getAbi();
+		let args = (params ? params.slice(0,-1) : null);
+		var abidef = ethereum_node_access_instance._getMethodAbiDefinition(abi, 'getMyListedNfts', args);
+
+		var instance = web3_contract_instance['instance'];
+		
+		var signature = abidef.signature;
+
+		var funcname = instance.methods[signature];
+
+
+		var arr = await funcname(...params).call({from: address}, (err, res) => {
+			if (err) {
+				console.log('error: ' + err);
+			}
+			else {
+				console.log('result');
+			}
+		})
+		.catch(err => {
+			console.log('catched error in EthereumNodeAccess.web3_contract_dynamicMethodCall ' + err);
+		});
+
 		return arr;
 	}
 

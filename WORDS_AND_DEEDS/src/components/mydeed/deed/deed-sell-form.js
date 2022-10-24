@@ -568,7 +568,7 @@ class DeedSellForm extends React.Component {
 				{this.renderDeedCardPart()}
 				
 				<FormGroup controlId="title">
-				  <FormLabel>Enter sell price</FormLabel>
+				  <FormLabel>Enter sale price</FormLabel>
 				  <FormControl
 					autoFocus
 					type="text"

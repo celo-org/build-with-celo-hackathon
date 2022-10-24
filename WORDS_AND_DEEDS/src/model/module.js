@@ -967,6 +967,100 @@ var Module = class {
 		return nftMarketplace;
 	}
 
+	async getDeedSaleInfo(sessionuuid, walletuuid, currencyuuid, minter, deed) {
+		if (!sessionuuid)
+		return Promise.reject('session uuid is undefined');
+	
+		if (!walletuuid)
+			return Promise.reject('wallet uuid is undefined');
+		
+		if (!currencyuuid)
+			return Promise.reject('currency uuid is undefined');
+		
+		
+		var global = this.global;
+		var _apicontrollers = this._getClientAPI();
+		var mvcpwa = this._getMvcPWAObject();
+
+		var session = await _apicontrollers.getSessionObject(sessionuuid);
+		
+		if (!session)
+			return Promise.reject('could not find session ' + sessionuuid);
+		
+		var wallet = await _apicontrollers.getWalletFromUUID(session, walletuuid);
+		
+		if (!wallet)
+			return Promise.reject('could not find wallet ' + walletuuid);
+	
+		var currency = await mvcpwa.getCurrencyFromUUID(sessionuuid, currencyuuid);
+
+		if (!currency)
+			return Promise.reject('could not find currency ' + currencyuuid);
+
+		var card;
+		if (deed.owner) {
+			// clause can be added by a subsequent owner different from the creator
+			card = await this._getDeedOwningCard(session, wallet, currency, minter, deed);
+		}
+		else {
+			// we are creating the deed and probably listing the deed on the fly
+			card = await this._getMinterCard(session, wallet, currency, minter);
+		}
+	
+		if (!card)
+			return Promise.reject('could not find minter card');
+	
+		// instantiate NftMarketplace
+		var nftMarketplace = await this._getNftMarketplaceObject(session, wallet, currency);
+
+		if (!nftMarketplace)
+			return Promise.reject('could not find nft market place');
+
+		var tokenaddress = deed.minter;
+		var tokenid = deed.tokenid;
+
+		var childsession;
+		var fromaccount;
+
+		var canSign = await this.canCardSign(sessionuuid, walletuuid, card.uuid);
+
+		if (canSign) {
+			// get proper session to access erc721token for currency
+			childsession = await this._getMonitoredERC721TokenSession(session, wallet, currency);
+			fromaccount = card._getSessionAccountObject();
+		}
+		else {
+			var isconnected = this._isCardConnected(session, wallet, card);
+
+			if (!isconnected)
+				return Promise.reject('card is not connected to send transactions: ' + card.address);
+
+			childsession = card._getSession();
+			fromaccount = card._getAccountObject(); // read-only card
+		}
+
+		var listing_info = {onsale: false, tokenaddress, tokenid};
+
+		var listed_nfts = await nftMarketplace.getListedNfts();
+
+		for (var i = 0; i < (listed_nfts ? listed_nfts.length: 0); i++) {
+			let _nft = listed_nfts[i];
+			let _nft_tokenaddress = _nft[0]
+			let _nft_tokenid = _nft[1];
+			let areequal = childsession.areAddressesEqual(_nft_tokenaddress, tokenaddress);
+
+			if ( _nft.listed && areequal && (_nft_tokenid == tokenid)) {
+				listing_info.onsale = true;
+				listing_info.saleprice = _nft.price;
+				listing_info.owner = _nft.owner;
+				listing_info.seller = _nft.seller;
+			}
+		}
+
+		return listing_info;
+	}
+
+
 	async offerDeedOnSale(sessionuuid, walletuuid, currencyuuid, minter, deed, amount, feelevel) {
 		if (!sessionuuid)
 		return Promise.reject('session uuid is undefined');
@@ -1039,6 +1133,50 @@ var Module = class {
 			fromaccount = card._getAccountObject(); // read-only card
 		}
 
+		// we first approve the marketplace contract to let marketplaceobj transfer ownership
+		var nftmarketplace_address = nftMarketplace.getAddress();
+
+		var erc721token = await this._getERC721TokenObject(childsession, currency, minter);
+
+		// TEST
+		var _from_addr = fromaccount.getAddress();
+
+		var listed_nfts = await nftMarketplace.getListedNfts();
+		var my_nfts = await nftMarketplace.getMyNfts(_from_addr);
+		var my_listed_nfts = await nftMarketplace.getMyListedNfts(_from_addr);
+
+		var _current_owner = await erc721token.ownerOf(tokenid);
+		var _balance_of = await erc721token.balanceOf(fromaccount);
+		var _is_approved_for_all = await erc721token.isApprovedForAll(_from_addr, nftmarketplace_address);
+		// TEST
+
+		var nft_approved_addr = await erc721token.getApproved(tokenid);
+		var areequal = childsession.areAddressesEqual(nftmarketplace_address, nft_approved_addr);
+
+		if (!areequal) {
+			let _ethtx = ethereumnodeaccessmodule.getEthereumTransactionObject(childsession, fromaccount);
+		
+			// compute feelevel then create fee
+			let _tx_fee = {};
+			_tx_fee.transferred_credit_units = 0;
+			let approval_cost_units = 3;
+			_tx_fee.estimated_cost_units = approval_cost_units;
+	
+			let _feelevel = await mvcpwa._getRecommendedFeeLevel(session, wallet, card, _tx_fee);
+	
+			let _fee = await _apicontrollers.createSchemeFee(from_card_scheme, _feelevel);
+	
+			_ethtx.setGas(_fee.gaslimit);
+			_ethtx.setGasPrice(_fee.gasPrice);
+	
+			let tx_approved = await erc721token.approve(nftmarketplace_address, tokenid, _ethtx);
+
+			if (!tx_approved || (tx_approved.success === false))
+				return Promise.reject('could not approve nft market place');
+		}
+
+		// then list the deed
+
 		// create ethereum transaction
 		var from_card_scheme = card.getScheme();
 
@@ -1059,23 +1197,18 @@ var Module = class {
 		var ethnodemodule = global.getModuleObject('ethnode');
 		var ethnodecontrollers = ethnodemodule.getControllersObject();
 		
-		let listing_fee_wei = await nftMarketplace.getListingFee();
-		let listing_fee_eth = ethnodecontrollers.getEtherStringFromWei(listing_fee_wei, 18);
-		let listing_units = await mvcpwa._getUnitsFromCredits(session, from_card_scheme, listing_fee_wei);
+		var listing_fee_wei = await nftMarketplace.getListingFee();
+		var listing_fee_eth = ethnodecontrollers.getEtherStringFromWei(listing_fee_wei, 18);
+		var listing_units = await mvcpwa._getUnitsFromCredits(session, from_card_scheme, listing_fee_wei);
 
 		ethereumtransaction.setValue(listing_fee_eth);
-
-
-		let listed_nfts = await nftMarketplace.getListedNfts();
-		let my_nfts = await nftMarketplace.getMyNfts();
-		let my_listed_nfts = await nftMarketplace.getMyListedNfts();
-
+		
 		var txhash = await nftMarketplace.listNft(tokenaddress, tokenid, tokenamount_string, ethereumtransaction);
 
 		return txhash;
 	}
 	
-	async buyDeed(sessionuuid, walletuuid, currencyuuid, minter, deed, amount) {
+	async buyDeed(sessionuuid, walletuuid, currencyuuid, minter, deed, feelevel) {
 		if (!sessionuuid)
 		return Promise.reject('session uuid is undefined');
 	
@@ -1104,6 +1237,116 @@ var Module = class {
 
 		if (!currency)
 			return Promise.reject('could not find currency ' + currencyuuid);
+
+		
+		var listing_info = await this.getDeedSaleInfo(sessionuuid, walletuuid, currencyuuid, minter, deed);
+
+		if (!listing_info || (listing_info.onsale !== true))
+			return Promise.reject('deed is not on sale');
+		
+		
+		var card;
+		if (deed.owner) {
+			// clause can be added by a subsequent owner different from the creator
+			card = await this._getDeedOwningCard(session, wallet, currency, minter, deed);
+		}
+		else {
+			// we are creating the deed and probably listing the deed on the fly
+			card = await this._getMinterCard(session, wallet, currency, minter);
+		}
+	
+		if (!card)
+			return Promise.reject('could not find minter card');
+	
+		// instantiate NftMarketplace
+		var nftMarketplace = await this._getNftMarketplaceObject(session, wallet, currency);
+
+		if (!nftMarketplace)
+			return Promise.reject('could not find nft market place');
+
+		var tokenaddress = deed.minter;
+		var tokenid = deed.tokenid;
+
+		var childsession;
+		var fromaccount;
+
+		var canSign = await this.canCardSign(sessionuuid, walletuuid, card.uuid);
+
+		if (canSign) {
+			// get proper session to access erc721token for currency
+			childsession = await this._getMonitoredERC721TokenSession(session, wallet, currency);
+			fromaccount = card._getSessionAccountObject();
+		}
+		else {
+			var isconnected = this._isCardConnected(session, wallet, card);
+
+			if (!isconnected)
+				return Promise.reject('card is not connected to send transactions: ' + card.address);
+
+			childsession = card._getSession();
+			fromaccount = card._getAccountObject(); // read-only card
+		}
+	
+
+		// TODO:
+		// for payments in currency, before sendin buyNft transaction
+		// we must approve the mark for listing_info.price amount in tokens
+		var nftmarketplace_address = nftMarketplace.getAddress();
+
+		// get token object to access erc20 data
+		var erc20credittokenobject = await from_card_scheme.getTokenObject(card.address);
+
+		// initialize
+		erc20credittokenobject._getERC20TokenContract(childsession);
+
+		// synchronize
+		const Token = global.getModuleClass('wallet', 'Token');
+		await Token.synchronizeERC20TokenContract(childsession, erc20credittokenobject);
+
+		// erc20 contract
+		var erc20contract = erc20credittokenobject._getERC20TokenContract(childsession);
+
+		var alloweeaccount = childsession.createBlankAccountObject();
+		alloweeaccount.setAddress(nftmarketplace_address);
+		var payingaccount = card._getAccountObject();
+		var gas = fee.gaslimit;
+		var gasPrice = fee.gasPrice;
+
+		// pass string to avoid BigNumber error
+		var saleprice = listing_info.price
+		var balance = await erc20contract.balanceOf(payingaccount);
+
+		if (balance < saleprice)
+			return Promise.reject('not enough funds on ' + card.address + ' to spend ' + saleprice);
+
+
+		var allowance = await erc20contract.allowance(payingaccount, alloweeaccount);
+
+		if (saleprice > allowance) {
+			let _allowance = saleprice.toString();
+			let _txhash = await erc20contract.approve(alloweeaccount, _allowance, payingaccount, gas, gasPrice);
+
+			if (!_txhash)
+			return Promise.reject('could not approve marketplace contract as spender for token ' + card.address);
+		}		
+	
+		// create ethereum transaction
+		var from_card_scheme = card.getScheme();
+
+		var ethereumnodeaccessmodule = global.getModuleObject('ethereum-node-access');
+
+		var ethereumtransaction = ethereumnodeaccessmodule.getEthereumTransactionObject(childsession, fromaccount);
+		
+		// create fee
+		var fee = await _apicontrollers.createSchemeFee(from_card_scheme, feelevel);
+
+		ethereumtransaction.setGas(fee.gaslimit);
+		ethereumtransaction.setGasPrice(fee.gasPrice);
+
+		var txhash = null;//await nftMarketplace.buyNft(tokenaddress, tokenid, ethereumtransaction);
+
+		return txhash;
+	
 
 	}
 }
