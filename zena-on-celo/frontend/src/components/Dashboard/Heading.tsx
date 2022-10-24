@@ -1,5 +1,8 @@
 export default function Heading() {
-  const session = JSON.parse(localStorage.getItem("zena-session") || "");
+  const localStorageItem = localStorage.getItem("zena-session");
+  const session = (localStorageItem && JSON.parse(localStorageItem)) || null;
+
+  if (!session) return null;
 
   return (
     <div>
