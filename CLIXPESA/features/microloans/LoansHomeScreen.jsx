@@ -1,4 +1,4 @@
-import { Box, Text, HStack, Icon, FlatList } from 'native-base'
+import { Box, Text, HStack, Icon, FlatList, Pressable } from 'native-base'
 import { Feather, Ionicons } from '@expo/vector-icons'
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
@@ -44,7 +44,7 @@ export default function LoansHomeScreen({ navigation }) {
         btn2={{
           icon: <Icon as={Feather} name="arrow-up-right" size="md" color="primary.600" mr="1" />,
           name: 'Repay',
-          screen: 'DummyModal',
+          screen: 'AllLoans',
         }}
       />
       <FlatList
@@ -63,7 +63,9 @@ export default function LoansHomeScreen({ navigation }) {
                 <Text fontWeight="medium" color="blueGray.600">
                   Loans
                 </Text>
-                <Text color="primary.600">See all</Text>
+                <Pressable onPress={() => navigation.navigate('AllLoans')}>
+                  <Text color="primary.600">See all</Text>
+                </Pressable>
               </HStack>
             ) : null}
             <FeatureItem
