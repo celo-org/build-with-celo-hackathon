@@ -4,7 +4,9 @@
   "description": "cash out crpto for fiat",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup -c",
+    "create-autotask": "npm run build && node scripts/createAutotask.js"
   },
   "repository": {
     "type": "git",
@@ -40,7 +42,14 @@
     "@openzeppelin/contracts": "^4.7.3",
     "@openzeppelin/contracts-upgradeable": "^4.8.0-rc.1",
     "@openzeppelin/hardhat-upgrades": "^1.21.0",
+    "@rollup/plugin-commonjs": "^23.0.2",
+    "@rollup/plugin-json": "^5.0.1",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "builtin-modules": "^3.3.0",
+    "defender-autotask-client": "^1.31.1",
+    "defender-relay-client": "^1.31.1",
     "dotenv": "^16.0.3",
-    "eth-sig-util": "^3.0.1"
+    "eth-sig-util": "^3.0.1",
+    "rollup": "^3.2.3"
   }
 }

@@ -1,0 +1,13 @@
+{
+  "relayer": {
+    "relayerId": "dd9d8ae8-fd74-448e-b6f8-7a9a716f5729",
+    "name": "MetaTxRelayer",
+    "address": "0x8a2da6ad06673742ef161ecee94e49b30786d492",
+    "network": "mumbai",
+    "createdAt": "2022-10-24T04:36:07.907Z",
+    "paused": false,
+    "policies": {},
+    "minBalance": "100000000000000000",
+    "pendingTxCost": "0"
+  }
+}
