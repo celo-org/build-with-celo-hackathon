@@ -11,7 +11,7 @@ const CommonHero = ({ heading, paragraph, buttonText }) => {
         <Typography variant="h6" my={4}>
           {paragraph}
         </Typography>
-        <button className=" btn-primary">{buttonText}</button>
+        <button className="btn-primary">{buttonText}</button>
       </Box>
     </Stack>
   );
