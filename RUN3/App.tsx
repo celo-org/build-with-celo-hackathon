@@ -14,6 +14,7 @@ import { faUser, faRunning, faRoad } from '@fortawesome/free-solid-svg-icons'
 import MoveToEarn from './src/Components/MoveToEarn'
 import { colors, globalStyles } from './src/utils/globalStyles'
 import MoveToBuild from './src/Components/MoveToBuild'
+import Builder from './src/Components/MoveToBuild/builder'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -61,15 +62,8 @@ export default function App() {
             {/* Auth Navigator: Include Login and Signup */}
             <Stack.Screen name="login" component={Login} options={{ headerShown: false }} />
             {/* Navigation Drawer as a landing page */}
-            <Stack.Screen
-              name="home"
-              component={HomeApp}
-              // Hiding header for Navigation Drawer
-              options={{ headerTitle: (props) => <Header /> }}
-              // options={({ route }) => ({
-              //   headerTitle: getHeaderTitle(route),
-              // })}
-            />
+            <Stack.Screen name="home" component={HomeApp} options={{ headerTitle: (props) => <Header /> }} />
+            <Stack.Screen name="builder" component={Builder} options={{ headerTitle: (props) => <Header /> }} />
           </Stack.Navigator>
         </NavigationContainer>
       </WalletProvider>
