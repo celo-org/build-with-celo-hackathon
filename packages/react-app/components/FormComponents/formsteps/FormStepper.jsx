@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const Stepper = ({ steps, currentStep }) => {
+const FormStepper = ({ steps, currentStep }) => {
   const [newStep, setNewStep] = useState([]);
   const stepsRef = useRef();
 
@@ -73,11 +73,11 @@ const Stepper = ({ steps, currentStep }) => {
             : "flex items-center"
         }
       >
-        <div className="relative flex flex-col items-center text-teal-600">
+        <div className="relative flex flex-col items-center text-gray-500">
           <div
             className={`rounded-full transition duration-500 ease-in-out border-2 border-gray-300 h-12 w-12 flex items-center justify-center py-3  ${
               step.selected
-                ? "bg-green-600 text-white font-bold border border-green-600 "
+                ? "bg-[#DD7D37] text-white font-bold border border-[#DD7D37] "
                 : ""
             }`}
           >
@@ -96,8 +96,8 @@ const Stepper = ({ steps, currentStep }) => {
           </div>
         </div>
         <div
-          className={`flex-auto border-t-2 transition duration-500 ease-in-out  ${
-            step.completed ? "border-green-600" : "border-gray-300 "
+          className={`flex-auto border-t-2 border-dotted transition duration-500 ease-in-out  ${
+            step.completed ? "border-[#DD7D37]" : "border-gray-300 "
           }  `}
         ></div>
       </div>
@@ -105,9 +105,9 @@ const Stepper = ({ steps, currentStep }) => {
   });
 
   return (
-    <div className="mx-4 p-4 flex justify-between items-center">
+    <div className="mx-4 p-4 mb-7 flex justify-between items-center">
       {stepsDisplay}
     </div>
   );
 };
-export default Stepper;
+export default FormStepper;
