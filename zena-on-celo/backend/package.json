@@ -6,8 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node lib/index.js",
-    "dev": "node src/index.js"
+    "start": "node src/index.js"
   },
   "author": "",
   "license": "ISC",
