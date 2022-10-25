@@ -33,7 +33,10 @@ apiRouter.post('/users', async (req, res) => {
             "quiz1": 0,
             "quiz2": 0,
             "quiz3": 0,
-            "quiz4": 0
+            "quiz4": 0,
+            "quiz5": 0,
+            "quiz6": 0
+
         }
     }
     const newUsers = [...db.data.users, newUser];

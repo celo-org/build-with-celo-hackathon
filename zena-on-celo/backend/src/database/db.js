@@ -14,15 +14,18 @@ const initDB = async () => {
         "users": [
             {
                 "id": 1,
-                "name": "Blue",
-                "email": "blue@zenaorg.de",
+                "name": "Placeholder_User",
+                "email": "placeholder@zena.org",
                 "pubKey": process.env.USER_ADDRESS,
                 "privKey": process.env.USER_PRIVATE_KEY,
                 "stats": {
                     "quiz1": 0,
                     "quiz2": 0,
                     "quiz3": 0,
-                    "quiz4": 0
+                    "quiz4": 0,
+                    "quiz5": 0,
+                    "quiz6": 0,
+
                 }
             }
         ]

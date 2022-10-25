@@ -1,9 +1,8 @@
+import { User } from "../../utils/hooks";
+
 type Props = {
   setUserData: Function;
-  userData: {
-    name: string;
-    avatar: string;
-  };
+  userData?: User;
 };
 
 export default function Step1({ setUserData, userData }: Props) {

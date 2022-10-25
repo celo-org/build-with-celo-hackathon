@@ -1,19 +1,19 @@
-import { useEffect } from "react";
+import { useCallback, useState } from "react";
 import Layout from "../components/Layout";
 import Home from "./Home";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { useSession } from "../utils/hooks";
 
 export default function Dashboard() {
-  let navigate = useNavigate();
-  useEffect(() => {
-    const session = localStorage.getItem("zena-session");
-    if (!session) {
-      navigate("/onboarding");
-    }
-  }, [localStorage]);
+  const { isLoggedIn } = useSession();
+  const [, updateState] = useState();
+  const forceUpdate = useCallback(() => updateState({} as any), []);
+  if (!isLoggedIn) {
+    return <Navigate to="/onboarding" replace={true} />;
+  }
   return (
     <Layout>
-      <Home />
+      <Home forceUpdate={forceUpdate} />
     </Layout>
   );
 }

@@ -7,53 +7,99 @@ import {
   BiCheckbox,
 } from "react-icons/bi";
 import { RiPlantLine } from "react-icons/ri";
+import { useSession } from "../../utils/hooks";
 const iconSize = "3em";
 
-export default function Chapters() {
+export default function Chapters({ forceUpdate }: any) {
+  const { user } = useSession();
   const chapters = [
     {
       name: "Web3 Basics",
       path: "/1",
+      id: "1",
       url: "/Kachel-1_Web3-basics.jpg",
       icon: <BiNetworkChart size={iconSize} />,
       enabled: false,
+      done: user?.stats?.quiz1 === "1" ? true : false,
     },
     {
       name: "Blockchain und Token",
       path: "/2",
+      id: "2",
       url: "/Kachel-2_Blockchain.jpg",
       icon: <BiCheckbox size={iconSize} />,
       enabled: false,
+      done: user?.stats?.quiz2 === "1" ? true : false,
     },
     {
       name: "ReFi",
       path: "/4",
+      id: "4",
       url: "/kachel-4_mint.jpg",
       icon: <RiPlantLine size={iconSize} />,
       enabled: false,
+      done: user?.stats?.quiz4 === "1" ? true : false,
     },
     {
       name: "NFTs",
       path: "/3",
+      id: "3",
       url: "/kachel-4_mint.jpg",
       icon: <BiImage size={iconSize} />,
-      enabled: true,
+      enabled: false, // not for celo hackathon
+      done: user?.stats?.quiz3 === "1" ? true : false,
     },
     {
       name: "Wallets / Schlüssel-verwahrung",
       path: "/5",
+      id: "5",
       url: "/kachel-3_wallet.jpg",
       icon: <BiKey size={iconSize} />,
       enabled: false,
+      done: user?.stats?.quiz5 === "1" ? true : false,
     },
     {
       name: "DAOs",
       path: "/6",
+      id: "6",
       url: "/Kachel-5_Dao.jpg",
       icon: <BiGroup size={iconSize} />,
       enabled: false,
+      done: user?.stats?.quiz6 === "1" ? true : false,
     },
   ];
+
+  const finishChapter = (id: string) => {
+    const quizKey = `quiz${id}`;
+    const oldStats = Object.assign({}, user?.stats);
+    localStorage.setItem(
+      "zena-session",
+      JSON.stringify({
+        ...user,
+        stats: {
+          ...oldStats,
+          [quizKey]: "1",
+        },
+      })
+    );
+    forceUpdate();
+  };
+
+  const resetChapter = (id: string) => {
+    const quizKey = `quiz${id}`;
+    const oldStats = Object.assign({}, user?.stats);
+    localStorage.setItem(
+      "zena-session",
+      JSON.stringify({
+        ...user,
+        stats: {
+          ...oldStats,
+          [quizKey]: "0",
+        },
+      })
+    );
+    forceUpdate();
+  };
 
   return (
     <div className="container mx-auto pb-12">
@@ -79,23 +125,44 @@ export default function Chapters() {
                     {chapter.name}
                   </h5>
                 </Link>
-                <div className="grid bg-slate-50	 border border-green/20 h-32 place-items-center">
+                <div className="grid bg-slate-50 mb-5 border border-green/20 h-32 place-items-center">
                   {chapter.icon}
                 </div>
 
                 <Link
                   to={`/chapters${chapter.path}`}
-                  className="mt-3 inline-flex items-center text-blue-600 w-full"
+                  className="mt-3 mr-3 text-blue-600 w-full"
                 >
                   <button
                     disabled={!chapter.enabled}
-                    className={`bg-green rounded-lg ${
+                    className={`${
+                      chapter.enabled ? "bg-green" : "bg-gray-300"
+                    } rounded-lg ${
                       chapter.enabled ? "hover:bg-green-dark" : ""
                     } text-white font-bold py-2 px-4 rounded-full`}
                   >
                     Los!
                   </button>
                 </Link>
+                {!chapter.done ? (
+                  <button
+                    onClick={() => finishChapter(chapter.id)}
+                    className={`bg-green rounded-lg ${
+                      chapter.enabled ? "hover:bg-green-dark" : ""
+                    } text-white font-bold py-2 px-4 rounded-full`}
+                  >
+                    Abschließen
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => resetChapter(chapter.id)}
+                    className={`bg-white rounded-lg ${
+                      chapter.enabled ? "hover:bg-green-dark" : ""
+                    } text-green font-bold py-2 px-4 rounded-full`}
+                  >
+                    Reset
+                  </button>
+                )}
               </div>
             </div>
           );

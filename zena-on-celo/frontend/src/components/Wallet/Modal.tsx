@@ -1,31 +1,19 @@
-import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
 import { mintState, walletOpenState } from "../../utils/store";
 import { useRecoilState } from "recoil";
 // import tree from "../../images/tree.jpg";
 import { Transition, Dialog } from "@headlessui/react";
-import { Fragment, useState, useEffect } from "react";
-import axios from "axios";
+import { Fragment } from "react";
 import Content from "./Content";
+import { useSession } from "../../utils/hooks";
 
-const { REACT_APP_BACKEND_API } = process.env;
-
-console.log(REACT_APP_BACKEND_API);
+const { REACT_APP_USER_ADDRESS } = process.env;
 
 export default function Modal() {
+  const { user } = useSession();
+
   const [open, setOpen] = useRecoilState(walletOpenState);
-  const [shouldMint, setMint] = useRecoilState(mintState);
-  const [userData, setData] = useState<any>();
-  const zena = localStorage.getItem("zena-session");
-  const session = zena ? JSON.parse(zena) : null;
+  const [_, setMint] = useRecoilState(mintState);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios(`${REACT_APP_BACKEND_API}/api/users/1`);
-      setData(result.data);
-    };
-
-    fetchData();
-  }, []);
   if (!open) return null;
 
   return (
@@ -62,11 +50,11 @@ export default function Modal() {
                         <div className="flex justify-between p-5 rounded-t border-b dark:border-gray-600">
                           <div className="ml-4 mt-4">
                             <h2 className="text-2xl font-bold leading-7 text-font sm:truncate sm:text-3xl sm:tracking-tight">
-                              {session.name}'s Wallet
+                              {user?.name}'s Wallet
                             </h2>
 
                             <p className="mt-1 text-sm text-font-light">
-                              Öffentliche Adresse: {userData?.pubKey}
+                              Öffentliche Adresse: {REACT_APP_USER_ADDRESS}
                             </p>
                           </div>
                           <h3 className="text-xl font-medium text-font dark:text-white"></h3>

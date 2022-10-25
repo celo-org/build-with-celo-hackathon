@@ -1,24 +1,19 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import Final from "../components/Onboarding/Final";
 import Step1 from "../components/Onboarding/Step1";
 // import Step2 from "../components/Onboarding/Step2";
 import Step3 from "../components/Onboarding/Step3";
+import { User, useSession } from "../utils/hooks";
 
 export default function Onboarding() {
+  const { isLoggedIn } = useSession();
   let navigate = useNavigate();
-  useEffect(() => {
-    const session = localStorage.getItem("zena-session");
-    if (session) {
-      navigate("/dashboard");
-    }
-  }, [localStorage]);
   const [step, setStep] = useState(1);
-  const [userData, setUserData] = useState({
-    name: "",
-    avatar: "",
-  });
-  console.log(userData);
+  const [userData, setUserData] = useState<User>();
+  if (isLoggedIn) {
+    return <Navigate to="/dashboard" replace={true} />;
+  }
 
   return (
     <div className="grid h-screen place-items-center">

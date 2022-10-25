@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useRecoilState } from "recoil";
 import Title from "../components/Chapter/Title";
 import Layout from "../components/Layout";
 import tree from "../images/tree.jpg"; // Tell webpack this JS file uses this image
-import { mintState, walletOpenState } from "../utils/store";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
 import { useNavigate } from "react-router-dom";
@@ -193,8 +191,8 @@ const NFTQuiz = ({ step, setStep }: any) => {
 };
 
 const NFTMint = ({ step, setStep }: any) => {
-  const [shouldMint, setMint] = useRecoilState(mintState);
-  const [open, setOpen] = useRecoilState(walletOpenState);
+  // const [_, setMint] = useRecoilState(mintState);
+  // const [_, setOpen] = useRecoilState(walletOpenState);
 
   return (
     <>
@@ -207,8 +205,8 @@ const NFTMint = ({ step, setStep }: any) => {
 
       <button
         onClick={() => {
-          setOpen(true);
-          setMint(true);
+          // setOpen(true);
+          // setMint(true);
           setStep(step + 1);
         }}
         className="bg-green hover:bg-green-medium text-white font-bold py-2 px-4 rounded-full"
