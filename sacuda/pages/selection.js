@@ -1,5 +1,5 @@
 import { FaMagic } from 'react-icons/fa';
-import { Text, Heading, Input, Button } from '@chakra-ui/react';
+import { Text, Heading, Input, Button, Link } from '@chakra-ui/react';
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from 'next/router';
 import Head from 'next/head';
@@ -8,30 +8,26 @@ import { ConnectButton} from "@rainbow-me/rainbowkit";
 import styles from '../styles/home.module.scss';
 import '@rainbow-me/rainbowkit/styles.css';
 
-
-export default function walletConnect() {
-
-
-//   const { status } = useSession({
-//     required: true,
-//     onUnauthenticated() {
-//      signIn(); //What to show to unathenticated users
-//     }
-//   })
-
-//   if (status === "loading") {
-//     return "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA..."
-//   }
-
-const router = useRouter();
-  
-const { isConnected } = useAccount()
-
-  function walletRedirect() {
-     router.push('/auth/walletConnect') }
+export default function selectionPage() {
 
 
-    if (isConnected)
+    const { status } = useSession({
+    required: true,
+    onUnauthenticated() {
+        signIn(); //What to show to unathenticated users
+    }
+    })
+
+    const router = useRouter();
+
+    const { isConnected } = useAccount();
+
+    if (status === "loading") {
+    return "Loading..."
+    }
+
+
+    if (isConnected) {
 
         return(
             <>
@@ -39,7 +35,7 @@ const { isConnected } = useAccount()
                 <Head>
                 <title>Sacuda | A finantial revolution!</title>
                 </Head>
-                <Heading as={'h0'}>
+                <Heading as={'h1'}>
                     Welcome!
                 </Heading>
                 <Text 
@@ -47,12 +43,19 @@ const { isConnected } = useAccount()
                     marginTop='1%'
                     marginBottom='1%'
                 >
-                    Bla bla bla 
+                    To start your Sacuda journey, we need to know if you are a Woman of Bussiness or a Potentiator
                 </Text>
+                <Button isLoading={status === 'loading'} onClick={() => router.push('/wobIn')}> 
+                    I´m a WOB
+                </Button>
+                <Button isLoading={status === 'loading'} onClick={() => router.push('/potIn')}> 
+                    I´m a potentiator
+                </Button>
                 </main>
             </>
         )
-    
+        }
+
         return(
             <>
             <main className={styles.container}>
@@ -76,4 +79,4 @@ const { isConnected } = useAccount()
 
         
 
-}
+    }
