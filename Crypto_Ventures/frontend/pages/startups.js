@@ -1,11 +1,12 @@
-import React from 'react'
+import React from "react";
+import StartupsPage from "../components/Startups";
 
 function Startups() {
-    return (
-        <div>
-            Hello World!
-        </div>
-    )
+  return (
+    <div>
+      <StartupsPage />
+    </div>
+  );
 }
 
 export default Startups;
