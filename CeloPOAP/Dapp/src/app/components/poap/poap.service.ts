@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ethers } from 'ethers';
 import { Web3Service } from '../../../app/services/web3.service';
-import { Poap } from '../../../app/models/Poap';
+import { Poap } from '../../../app/models/poap';
 import { PoapFactoryService } from './poap-factory.service';
 const PoapAbi = require('../../../assets/Poap.json');
 import {utils} from 'ethers';
@@ -34,15 +34,17 @@ export class PoapService {
     const [success,evtAddress] = await poapFactoryContract.tryGetEventByKey(eventId);
 
     const poapContract = this.getPoapContract(evtAddress);
-
     
-    let {eventName, desc, logo, website,maxCapacity,date, poapsMinted, orgName,eventOwner} = await poapContract.eventDetails();
+    let {eventName, desc, logo, website,maxCapacity,date, poapsMinted, orgName,eventOwner, email} = await poapContract.eventDetails();
+
+    const isOpenForClaim = await poapContract._allowMinting();
 
     const owner = await poapContract.owner();
     
     
 
     return {
+      address: evtAddress,
       eventName, 
       desc, 
       logo, 
@@ -51,7 +53,9 @@ export class PoapService {
       poapsMinted, 
       orgName,
       eventOwner,
-      date: getDateFromEther(date)
+      date: getDateFromEther(date),
+      email,
+      isOpenForClaim
     };
 
   }

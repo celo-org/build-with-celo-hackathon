@@ -12,3 +12,5 @@ interface Window {
   web3: any,
   celo: any
 }
+
+declare let  Email: any;

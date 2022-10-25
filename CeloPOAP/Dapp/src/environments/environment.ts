@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   BaseApiUrl: 'https://localhost:3053',
   web3StorageToken: '',
-  poapFactoryAddress: '0x6783aBFf9dc04204332Cc2cc5CA8873f4306af01'
+  poapFactoryAddress: '0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9'
 };
 
 /*

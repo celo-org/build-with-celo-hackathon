@@ -111,8 +111,13 @@
           },
           {
             "internalType": "string",
-            "name": "date",
+            "name": "email",
             "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "date",
+            "type": "uint256"
           },
           {
             "internalType": "string",

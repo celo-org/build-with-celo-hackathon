@@ -15,13 +15,16 @@ import { ToasterComponent, ToasterPlacement } from '@coreui/angular';
 import { AppToastComponent } from '../../../views/notifications/toasters/toast-simple/toast.component';
 import { NgxSpinnerService } from "ngx-spinner";
 
-
+import {sendEmail} from '../../../utils/mailer';
 
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Web3Storage } from 'web3.storage';
 import { IconSetService } from '@coreui/icons-angular';
 import { brandSet,  freeSet } from '@coreui/icons';
+
+
+
 
 @Component({
   selector: 'app-poap-detail',
@@ -33,6 +36,8 @@ export class PoapDetailComponent implements OnInit {
   poap: Poap|undefined;
   
   mainFormGroup!: FormGroup;
+  emailListFormGroup!: FormGroup;	
+  mintPoapFormGroup!: FormGroup;		
   
 
   formSubscriptions: Subscription[]=[];
@@ -41,8 +46,9 @@ export class PoapDetailComponent implements OnInit {
   web3ServiceConnect$: Subscription|undefined;
   userChain: string|null = 'celot';
 
-  isOpenForClaim = false;
+  
   isOwner = false;
+  isPoapOwner=false;
 
   now = Date.now();
 
@@ -71,10 +77,15 @@ export class PoapDetailComponent implements OnInit {
        //'less': 'End date cannot be less than Start date'
        // 'pattern'   :   'Contact No. should only contain Numbers '
      },
-     'whitelistAddresses': {
+     'emaillistAddresses': {
        'required': 'Required',
-       'minLength': 'Minimum Length not reached',
-        'maxLength': 'Maximum Length exceeded'
+       'minlength': 'Minimum Length not reached(3)',
+        'maxlength': 'Maximum Length exceeded'
+     },
+	 'mintEventCode': {
+       'required': 'Required',
+       'minlength': 'Minimum Length(6) not reached',
+        'maxlength': 'Maximum Length(6) exceeded'
      }
    };
 
@@ -87,6 +98,7 @@ export class PoapDetailComponent implements OnInit {
   
   
   listOfMinters? : string[] = undefined;
+  poapOwners?: {owner: string, tokenId: string}[]=undefined;
   
 
   // supportedPurchaseCoins: {
@@ -96,6 +108,9 @@ export class PoapDetailComponent implements OnInit {
   // }[] ;
   
   currentChainId: number;
+  
+  emaiListModalVisible = false;
+  mintPoapModalVisible = false;
 
   
 
@@ -136,12 +151,7 @@ export class PoapDetailComponent implements OnInit {
           this.currentChainId = await this.web3Service.getCurrentChainId();
           this.nativeCoin = (await this.web3Service.getCurrentChain())?.nativeCurrency;
         
-          const purchaseTokenAddress =await this.poapService.getCampaignPurchaseToken(environment.poapFactoryAddress, this.poapId!);
-
-          const pToken = await this.web3Service.getERC20Details(purchaseTokenAddress);
-          this.purchaseCoin = pToken?.symbol??this.nativeCoin?.symbol;
-          this.purchaseCoinDecimals = pToken?.decimals??18;
-
+          
           this.poap = await this.poapService.getPoapDetails(environment.poapFactoryAddress, this.poapId!);
 
           
@@ -149,46 +159,36 @@ export class PoapDetailComponent implements OnInit {
           
           this.mainFormGroup = this.fb.group({
           
-            amount: ['', [Validators.required,Validators.min(+this.campaign.minAllocationPerUser ),Validators.max(+this.campaign.maxAllocationPerUserTierTwo )]],
+            amount: ['', [Validators.required]],
       
           })
-
-          this.postponeSaleFormGroup = this.fb.group({
+		  
+		  this.emailListFormGroup = this.fb.group({
           
-            startDate: [this.campaign.saleStartTime, [Validators.required,ValidateDateIsNotInPast]],
-            endDate: [this.campaign.saleEndTime, [Validators.required,ValidateDateIsNotInPast, ValidateEndDateLaterThanStartDate]],
+            
+            addresses: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(42000) /*42 * 1000*/]],
+			mintEventCode: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6) ]],
       
           })
 
-          this.whitelistFormGroup = this.fb.group({
+		  this.mintPoapFormGroup = this.fb.group({
           
-            enable: [this.campaign.useWhiteList, []],
-            addresses: ['', [Validators.required, Validators.minLength(32), Validators.maxLength(42000) /*42 * 1000*/]],
+            
+            mintEventCode: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6) ]],
       
           })
-
-
-          this.validationMessages['amount'].min = `Amount must be at least ${ this.campaign.minAllocationPerUser} `
-          this.validationMessages['amount'].max = `Amount must be at most ${this.campaign.maxAllocationPerUserTierTwo} `
-
+		  
           let now = Date.now();
-          this.isOpenForClaim = this.campaign.saleStartTime.getTime() < now  && this.campaign.saleEndTime.getTime() > now && this.campaign.totalCoinReceived < this.campaign.hardCap ;
+          
           
           // this.isOwner = this.web3Service.accounts.findIndex(f=>f==this.campaign?.owner??'none')>=0;
-          this.isOwner = this.web3Service.accounts[0] == (this.campaign?.owner??'none' );
+          this.isOwner = this.web3Service.accounts[0] == (this.poap?.eventOwner??'none' );
 
-          const amount = parseFloat( this.campaign.totalCoinReceived ) ;
-          const hardCap = parseFloat( this.campaign.hardCap );
-          const softCap = parseFloat( this.campaign.softCap );
-
-          this.saleProgress = 100 * Math.min( amount/softCap ,  amount/ hardCap)
-          if(this.saleProgress==100){
-            this.saleProgress = 100 * amount/ hardCap;
-          }
-
-          this.campaignContract = await this.poapService.getCampaignContractWithSigner(this.campaign!.campaignAddress);
+          this.poapContract = await this.poapService.getPoapContract(this.poap!.address);
             
-          
+          this.isPoapOwner = await this.checkIfAddressIsPoapOwner(this.web3Service.accounts[0] )
+		  
+		  this.poapOwners = await this.getAllPOAPOwners();
 
           // await this.retrieveDescriptionFromIpfs(this.campaign.description);
         }
@@ -204,7 +204,86 @@ export class PoapDetailComponent implements OnInit {
     this.titleService.setTitle('Participate in Campaign | ZSale');
     // this.icons = this.getIconsView('cib');
     
+	//sendEmail(`Claim your POAP for `, 'xcelsis02@gmail.com', 
+	//	`<html><h2>CELO POAP</h2> <b>Thanks for attending <strong><a href="https://localhost:4200/poaps/m/${this.poapId}">Claim Your POAP now</a> </strong><br></br></html>` );
+        
+	
   } 
+  
+  
+  async checkIfAddressIsPoapOwner(address: string){
+	  
+	  let currentUserBalance = await this.poapContract.balanceOf(address);
+		return currentUserBalance > 0;
+		
+  }
+  
+  
+  async getAllPOAPOwners(){
+	  
+	  let currentUserBalance = await this.poapContract.balanceOf(this.web3Service.accounts[0]);
+		
+		let supply = await this.poapContract.totalSupply();
+		
+	  let owners = [];
+		for(let i=1;i<= supply ; i++){
+		// this will check each nft owner
+		// i is the id of each nft.
+
+		// this will return the owner address
+		let owner = await this.poapContract.ownerOf(i);
+		owners.push({
+			owner: owner,
+			tokenId: i
+		});
+		// if owner == msg.sender then we know he owns this token id
+
+		}
+		
+		return owners;
+		
+  }
+  
+  
+  openEmailModal(){
+    this.emaiListModalVisible=true;
+  }
+  
+  
+  closeEmailModal(){
+    this.emaiListModalVisible=false;
+  }
+  
+  
+  async emailList(){
+    this.spinner.show();
+   
+		const code = this.emailListFormGroup.get('mintEventCode')!.value;
+      const addresses = this.emailListFormGroup.get('addresses')!.value.split(/[, \n]+/).map((m: string) => m.trim());
+      
+      
+      var uniqueAddresses = addresses.filter((value: any, index: number, self: any) => {
+        return self.indexOf(value) === index;
+      });
+            
+      try{
+
+        await sendEmail(`Claim your POAP for ${this.poap.eventName}`, uniqueAddresses, 
+		`<html><h2>CELO POAP</h2> <b>Thanks for attending ${this.poap.eventName} </b> <br/> <strong><a href="http://localhost:4200/poaps/d/${this.poapId}"> Claim Your POAP now</a> </strong><br><strong>Use Event Code ${code} </strong></br></html>` );
+        
+		this.spinner.hide();
+		this.emaiListModalVisible=false;
+		this.showToast('Success!','Email Sent');
+      }catch(eerr) {
+        console.error(eerr);
+        this.spinner.hide();
+        this.emaiListModalVisible=false;
+        this.showToast('Oops!','Email Sending Failed', 'danger');
+        return;
+      }
+
+      
+  }
 
   toKebabCase(str: string) {
     return str.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2').toLowerCase();
@@ -214,6 +293,117 @@ export class PoapDetailComponent implements OnInit {
     return Object.entries(this.iconSet.icons).filter((icon) => {
       return icon[0].startsWith(prefix);
     });
+  }
+
+  async enableDisable(status: boolean) {
+	    try{
+			this.spinner.show();
+			const poapContractSigner = await this.poapService.getPoapContractWithSigner(this.poap!.address);
+			let tx = await poapContractSigner.allowMint(status , {        
+				gasLimit: 18000000
+			} );
+
+			const txResult = await tx.wait();
+			this.poap.isOpenForClaim = status;
+			this.showToast('Success!','Your Event has been created succesfully!');
+	    }catch(err){
+		  this.showToast('Oops!','Something went wrong!', 'danger');
+		  console.log('Error Creating: ', err);
+		}
+		finally{
+		  this.spinner.hide();
+		}
+    
+  }
+  
+  
+  
+   openMintFormModal(){
+    this.mintPoapModalVisible=true;
+  }
+  
+  
+  closeMintFormModal(){
+    this.mintPoapModalVisible=false;
+  }
+  
+  
+  async mintPoap(){
+	   try{
+			this.spinner.show();
+			const code = this.mintPoapFormGroup.get('mintEventCode')!.value;
+		   //~ if(code != this.poap.eventCode){
+			   //~ this.mintPoapModalVisible=false;
+			   //~ this.showToast('Oops!','Your Event Code was wrong!', 'danger');
+			   //~ this.spinner.hide();
+			   //~ return;			   
+		   //~ }
+		   
+		   
+		   const poapContractSigner = await this.poapService.getPoapContractWithSigner(this.poap!.address);
+			let tx = await poapContractSigner.mintPOAP(code , {        
+				gasLimit: 18000000
+			} );
+
+			const txResult = await tx.wait();
+			
+			this.isPoapOwner = true;
+			this.showToast('Success!','Your POAP has been minted succesfully!');
+			this.mintPoapModalVisible=false;
+			   
+			this.spinner.hide();
+	    }catch(err){
+		  this.showToast('Oops!','Something went wrong!', 'danger');
+		  console.log('Error Creating: ', err);
+		}
+		finally{
+		  this.spinner.hide();
+		}
+	  
+  }
+  
+  
+  
+  
+  /*Colors 
+  primary = 'primary',
+  secondary = 'secondary',
+  success = 'success',
+  info = 'info',
+  warning = 'warning',
+  danger = 'danger',
+  dark = 'dark',
+  light = 'light',*/
+  showToast(title: string, body: string, color='info') {
+    const options = {
+      title,
+      delay: 5000,
+      placement: this.placement,
+      color,
+      autohide: true,
+      body
+    }
+    const componentRef = this.toaster.addToast(AppToastComponent, { ...options });
+  }
+
+  addToast() {
+    const options = {
+      title: `Successful`,
+      delay: 5000,
+      placement: this.placement,
+      color: 'info',
+      autohide: true,
+      body: 'Token Minted Successfuly!'
+    }
+    const componentRef = this.toaster.addToast(AppToastComponent, { ...options });
+  }
+  
+  
+  objectKeys(o: any){
+    if(!o){
+      return []
+    }
+    return Object.keys(o)
   }
 
 }
