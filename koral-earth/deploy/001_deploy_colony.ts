@@ -4,7 +4,7 @@ const contractName = 'Colony';
 
 async function deployer(hre: HardhatRuntimeEnvironment) {
   const [ownerAddress] = await hre.getUnnamedAccounts();
-  
+
   const { deploy: deployContract } = hre.deployments;
 
   const colony = await deployContract(contractName, {
@@ -14,15 +14,15 @@ async function deployer(hre: HardhatRuntimeEnvironment) {
     proxy: {
       owner: ownerAddress,
       execute: {
-        methodName: "initialize",
-        args: ["DataCooper", 10, 2]
-      }
-    }
+        methodName: 'initialize',
+        args: ['AB Airline', 10, 2],
+      },
+    },
   });
 
   await hre.ethernal.push({
     name: contractName,
-    address: colony.address
+    address: colony.address,
   });
 
   console.log(`Deployed colony successfully`, colony.address);
