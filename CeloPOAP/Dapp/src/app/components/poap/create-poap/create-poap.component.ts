@@ -154,9 +154,9 @@ export class CreatePoapComponent implements OnInit {
       eventName: ['HackBer', [Validators.required]],
       desc: ['Global Hackathon', [Validators.required]],
       orgName: ['Celo', [Validators.required]],
-      eventCode: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
+      eventCode: ['123456', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
       logo: ['https://place-hold.it/200?text=HB', [Validators.required]], // , Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')
-      date: ['', [Validators.required, ValidateDateIsNotInPast ] ],
+      date: ['2022-11-10', [Validators.required, ValidateDateIsNotInPast ] ],
       //expiryDate: ['', [Validators.required , ValidateDateIsNotInPast] ],    
       website: ['http://www.mysite.com', [Validators.required, , Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?') ]],
       
@@ -243,20 +243,27 @@ export class CreatePoapComponent implements OnInit {
         website: form.value.website,
         poapsMinted:0,
         maxCapacity: form.value.maxCapacity,
-        eventOwner: '0x0000000000000000000000000000000000000000'
+        eventOwner:  '0x0000000000000000000000000000000000000000',
+        email: form.value.email
       };
-      if(gasFeeData){
-        tx = await poapFactoryContract.createNewEvent(eventDetails, form.value.eventCode, {
-            value: utils.parseEther(fee),
-            maxFeePerGas: gasFeeData.maxFeePerGas,// should use geasprice for bsc, since it doesnt support eip 1559 yet
-            maxPriorityFeePerGas: gasFeeData.maxPriorityFeePerGas
-        });
-      }else{
-        tx = await poapFactoryContract.createNewEvent(eventDetails,form.value.eventCode , {
-          value: utils.parseEther(fee),
-          gasLimit: 18000000
-        } );
-      }
+
+      tx = await poapFactoryContract.createNewEvent(eventDetails,form.value.eventCode , {
+        value: utils.parseEther(fee),
+        gasLimit: 18000000
+      } );
+
+      // if(gasFeeData){
+      //   tx = await poapFactoryContract.createNewEvent(eventDetails, form.value.eventCode, {
+      //       value: utils.parseEther(fee),
+      //       maxFeePerGas: gasFeeData.maxFeePerGas,// should use geasprice for bsc, since it doesnt support eip 1559 yet
+      //       maxPriorityFeePerGas: gasFeeData.maxPriorityFeePerGas
+      //   });
+      // }else{
+      //   tx = await poapFactoryContract.createNewEvent(eventDetails,form.value.eventCode , {
+      //     value: utils.parseEther(fee),
+      //     gasLimit: 18000000
+      //   } );
+      // }
       
 
       const txResult = await tx.wait();
