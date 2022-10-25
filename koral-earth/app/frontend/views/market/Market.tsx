@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 import { Button, Card, Row, Col } from 'react-bootstrap';
-import { Project } from '../../../backend/shared/models/market';
+import { Project } from '../../../backend/market/market.entity';
 import classNames from 'classnames';
 import {
   PaginatedItemsComponent,
