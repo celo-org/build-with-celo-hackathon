@@ -10,6 +10,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@celo/contractkit": "^2.3.0",
+    "@celo/react-celo": "^4.2.1",
     "bootstrap": "^5.2.2",
     "classnames": "^2.3.2",
     "next": "12.3.1",
