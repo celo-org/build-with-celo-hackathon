@@ -1,3 +1,5 @@
+import { Registry } from '../registry/registry.repo';
+
 export type Project = {
   creator?: User | null;
   owner?: User | null;
@@ -5,7 +7,7 @@ export type Project = {
   tx?: string | null;
   projectId: string | null;
   vintages?: ProjectVintage[] | null;
-  standard?: string | null;
+  standard?: Registry | null;
   methodology?: string | null;
   region?: string | null;
   storageMethod?: string | null;
