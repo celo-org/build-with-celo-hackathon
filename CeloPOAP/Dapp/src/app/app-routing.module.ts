@@ -87,12 +87,7 @@ const routes: Routes = [
           import('./views/pages/pages.module').then((m) => m.PagesModule)
       },
 
-      {
-        path: 'campaigns',
-        loadChildren: () =>
-          import('./components/campaigns/campaigns.module').then((m) => m.CampaignsModule)
-      },
-
+      
       {
         path: 'poaps',
         loadChildren: () =>

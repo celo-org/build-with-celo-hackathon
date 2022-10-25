@@ -14,10 +14,10 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.slides[0] = {
       id: 0,
-      src: './assets/images/carouselback.jpg',
-      title: 'ZSales Launchpad',
-      subtitle: 'Multi-Chain Crypto Launchpad protocol for web3 creators.',
-      subtitle2: 'Create your Token and Raise your IDO/Presales (no coding required).'
+      src: './assets/images/celo-poap.jpg',
+      title: 'Celo POAP',
+      subtitle: 'Make your events Memorable.',
+      subtitle2: 'Issue a POAP for it today.'
     };
     
   }

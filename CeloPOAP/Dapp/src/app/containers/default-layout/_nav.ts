@@ -37,10 +37,10 @@ export const navItems: INavData[] = [
     url: '/poaps/create',
     iconComponent: { name: 'cil-dollar' }
   },
-  {
-    title: true,
-    name: 'Tokens'
-  },
+  // {
+  //   title: true,
+  //   name: 'Tokens'
+  // },
   // {
   //   name: 'Token List',
   //   url: '/tokens',
