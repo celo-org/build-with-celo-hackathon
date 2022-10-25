@@ -36,8 +36,6 @@ class ClauseListScreen extends React.Component {
 	async checkNavigationState() {
 		let mvcmypwa = this.getMvcMyPWAObject();
 
-		let rootsessionuuid = this.props.rootsessionuuid;
-
 		let app_nav_state = this.app.getNavigationState();
 		let app_nav_target = app_nav_state.target;
 

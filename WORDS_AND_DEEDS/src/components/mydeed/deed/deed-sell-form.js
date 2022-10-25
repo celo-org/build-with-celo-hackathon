@@ -9,6 +9,8 @@ import { Dots } from 'react-activity';
 import { faCopy, faUndo} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import QRCodeReact from 'qrcode.react';
+
 import {CurrencyCardIcon} from '@primusmoney/react_pwa/react-js-ui';
 import RemoteWalletIcon from '../../remote-wallet/remote-wallet-icon.js'
 
@@ -54,6 +56,7 @@ class DeedSellForm extends React.Component {
 			description,
 
 			saleprice,
+			canbelisted: false,
 
 			currency,
 
@@ -68,6 +71,9 @@ class DeedSellForm extends React.Component {
 			deedcard_balance_int,
 			deedcard_balance_string,
 			deedcard_creditunits,
+
+			sell_mode: null,
+			pay_url: null,
 
 			loaded: false,
 			registration_text: 'loading...',
@@ -89,6 +95,12 @@ class DeedSellForm extends React.Component {
 	// deed and connection methods
 	_getRemoteConnectionFromRpc(rpc) {
 		return this.app.getDeedClientObject().getConnectionFromRpc(rpc);
+	}
+
+	async _getBaseTokenURI(currencyuuid, cardaddress) {
+		let uri = await this.app.getVariable('AppsPane').getBaseTokenURI(currencyuuid, cardaddress);
+
+		return uri;
 	}
 
 	async _getDeedOwningCard(currencyuuid, minter, deed) {
@@ -157,6 +169,7 @@ class DeedSellForm extends React.Component {
 
 	async checkNavigationState() {
 		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
 
 		let rootsessionuuid = this.props.rootsessionuuid;
 		let walletuuid = this.props.currentwalletuuid;
@@ -188,6 +201,21 @@ class DeedSellForm extends React.Component {
 
 				let deed = await mvcmypwa.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid);
 				this.deed = deed;
+
+				// check if deed can be listed on a marketplace
+				let canbelisted = false;
+				let listing_info = await mvcmydeed.getDeedSaleInfo(rootsessionuuid, walletuuid, currencyuuid, minter, deed).catch(err => {});
+
+				if (listing_info) {
+					if (listing_info.onsale === true) {
+						// we shouldn't be here
+						return this.onBack();
+					}
+
+					if (listing_info.canbelisted === true)
+					canbelisted = true;
+				}
+
 
 				// time
 				let registration_time = (deed.metadata ? deed.metadata.time/1000 : null);
@@ -264,6 +292,58 @@ class DeedSellForm extends React.Component {
 	
 	
 	// user actions
+	async onBuildQRCode() {
+		console.log('onBuildQRCode pressed!');
+
+		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
+
+		let rootsessionuuid = this.props.rootsessionuuid;
+		let walletuuid = this.props.currentwalletuuid;
+
+		let {currency, deedcard, saleprice} =this.state;
+
+		
+		this._setState({processing: true});
+
+		try {
+			if (!this.deed) {
+				this.app.alert('No deed selected');
+				this._setState({processing: false});
+				return;
+			}
+
+			if (!saleprice || (saleprice.length == 0)) {
+				this.app.alert('You need to enter a price you want for this deed');
+				this._setState({processing: false});
+				return;
+			}
+	
+			let pay_url = this.deed.tokenuri;
+
+			pay_url += '&route=deedview&action=buy&mode=qrcode';
+
+			let tokenamount = await mvcmypwa.getCurrencyAmount(rootsessionuuid, currency.uuid, saleprice);
+			let tokenamount_int = await tokenamount.toInteger();
+
+			pay_url += '&amount=' + tokenamount_int;
+
+
+			this._setState({sell_mode: 'qrcode', pay_url});
+
+		}
+		catch(e) {
+			console.log('exception in onBuildQRCode: ' + e);
+			this.app.error('exception in onBuildQRCode: ' + e);
+
+			this.app.alert('could not set price of deed')
+		}
+
+		this._setState({processing: false});
+
+
+	}
+
 	async onOfferOnSale() {
 		console.log('onOfferOnSale pressed!');
 		
@@ -500,14 +580,21 @@ class DeedSellForm extends React.Component {
 	}
 
 	renderDeedButtons() {
-		let { loaded, isOwner} = this.state;
+		let { loaded, isOwner, canbelisted} = this.state;
 
 		if (loaded) {
 			return(
 				<div>
 				<span>
-				<Button onClick={this.onOfferOnSale.bind(this)} disabled={(isOwner ? false : true)} type="submit">
-				Offer on sale</Button>
+				<Button className="DeedButton" onClick={this.onBuildQRCode.bind(this)} disabled={(isOwner ? false : true)} type="submit">
+				QR Code</Button>
+				</span>
+				<span>
+				{(canbelisted ? 
+				<Button className="DeedButton" onClick={this.onOfferOnSale.bind(this)} disabled={(isOwner ? false : true)} type="submit">
+				Offer on sale</Button> :
+				<Button disabled type="submit">
+				Offer on sale</Button>)}
 				</span>
 				</div>
 			);
@@ -516,7 +603,12 @@ class DeedSellForm extends React.Component {
 			return(	
 				<div>
 				<span>
-				<Button disabled type="submit">
+				<Button className="DeedButton" disabled type="submit">
+					loading...
+				</Button>
+				</span>
+				<span>
+				<Button className="DeedButton" disabled type="submit">
 					loading...
 				</Button>
 				</span>
@@ -526,7 +618,10 @@ class DeedSellForm extends React.Component {
 	}
 
 	renderDeedSellForm() {
-		let { mintername, title, description, currency, registration_text, message_text, sharelinkmessage, sharelink, saleprice, external_url } = this.state;
+		let { mintername, title, description, currency, registration_text, message_text,
+			sharelinkmessage, sharelink,
+			sell_mode, pay_url,
+			saleprice, external_url } = this.state;
 		
 		return (
 			<div className="Form">
@@ -552,9 +647,11 @@ class DeedSellForm extends React.Component {
 				  />
 				</FormGroup>
 
-				<FormGroup controlId="description">
-				  <FormLabel>Description</FormLabel>
-				  <FormControl 
+				{(!sell_mode || (sell_mode != 'qrcode') ?
+				<>
+					<FormGroup controlId="description">
+					<FormLabel>Description</FormLabel>
+					<FormControl 
 					disabled
 					as="textarea" 
 					rows="5" 
@@ -562,20 +659,29 @@ class DeedSellForm extends React.Component {
 					type="text"
 					value={description}
 					onChange={e => this._setState({description: e.target.value})}
-				  />
-				</FormGroup>
+					/>
+					</FormGroup>
 
-				{this.renderDeedCardPart()}
-				
-				<FormGroup controlId="title">
-				  <FormLabel>Enter sale price</FormLabel>
-				  <FormControl
-					autoFocus
-					type="text"
-					value={saleprice}
-					onChange={e => this._setState({saleprice: e.target.value})}
-				  />
-				</FormGroup>
+					{this.renderDeedCardPart()}
+					
+					<FormGroup controlId="title">
+						<FormLabel>Enter sale price</FormLabel>
+						<FormControl
+						autoFocus
+						type="text"
+						value={saleprice}
+						onChange={e => this._setState({saleprice: e.target.value})}
+						/>
+					</FormGroup>
+				</>	:
+				<QRCodeReact
+				value={pay_url}
+				renderas='svg'
+				size={360}
+				includeMargin={true}
+				/>
+				)}
+
 
 				<FormGroup controlId="asseturl">
 				  <FormLabel>Asset url</FormLabel>
@@ -585,6 +691,7 @@ class DeedSellForm extends React.Component {
 				  </div>
 				</FormGroup>
 
+				{this.renderDeedButtons()}
 
 				<div className="TextBox">
 				  {registration_text}
@@ -597,8 +704,6 @@ class DeedSellForm extends React.Component {
 					<span className="ShareIcon" onClick={this.onShareLinkClick.bind(this)}><FontAwesomeIcon icon={faCopy} /></span>
 					</div>
 				</div>
-
-				{this.renderDeedButtons()}
 
 				<div className="TextBox">
 				  {message_text}

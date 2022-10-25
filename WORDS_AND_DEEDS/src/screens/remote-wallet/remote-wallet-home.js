@@ -43,8 +43,6 @@ class RemoteWalletHomeScreen extends React.Component {
 
 		let mvcmypwa = this.getMvcMyPWAObject();
 
-		let rootsessionuuid = this.props.rootsessionuuid;
-		
 		let app_nav_target = this.app.getNavigationState('target');
 
 		try {

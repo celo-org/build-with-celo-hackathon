@@ -10,6 +10,15 @@
 	  margin-right: 5px;
   }
    
+  .BuyDeedButton {
+	width: 80pt;
+  }
+
+  .SellDeedButton {
+	width: 80pt;
+  }
+ 
+
   .DeedCurrencyPickLine {
 	display: flex;
 	flex-direction: row;
@@ -80,4 +89,12 @@
 
  span.LoadCol {
 	width: 20vw;
+  }
+
+/*QR Code*/
+
+.QRCoderReader {
+	width: 100%;
+	margin-top: 30pt;
+	margin-bottom: 10pt;
   }

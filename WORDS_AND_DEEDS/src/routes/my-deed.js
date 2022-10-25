@@ -7,6 +7,9 @@ import ClauseListScreen from '../screens/mydeed/clause/clause-list-screen.js';
 import CeloHomeScreen from '../screens/remote-wallet/celo/celo-home.js';
 import RemoteWalletHomeScreen from '../screens/remote-wallet/remote-wallet-home.js';
 
+import QRCodeReaderHomeScreen from '../screens/common/qr-code-reader/qr-code-reader-home.js';
+
+
 import '../css/mydeed.css';
 class Routes {
 
@@ -21,6 +24,11 @@ class Routes {
 				name: 'deed',
 				path: '/deed',
 				dataobject: {type: 'deed', path: 'deed', action: 'view', params: ['txhash', 'currencyuuid', 'minter', 'tokenid']},
+				screen: DeedHomeScreen
+			},	
+			{
+				name: 'deedview',
+				path: '/deedview',
 				screen: DeedHomeScreen
 			},
 			{
@@ -43,6 +51,11 @@ class Routes {
 				name: 'celo',
 				path: '/celo',
 				screen: CeloHomeScreen
+			},
+			{
+				name: 'qrcodereader',
+				path: '/qrcodereader',
+				screen: QRCodeReaderHomeScreen
 			}
 		];
 	}

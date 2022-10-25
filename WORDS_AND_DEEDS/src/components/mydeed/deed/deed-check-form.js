@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {CurrencyCardIcon} from '@primusmoney/react_pwa/react-js-ui';
 import RemoteWalletIcon from '../../remote-wallet/remote-wallet-icon.js'
 
-class DeedBuyForm extends React.Component {
+class DeedCheckForm extends React.Component {
 	
 	constructor(props) {
 		super(props);
@@ -34,8 +34,7 @@ class DeedBuyForm extends React.Component {
 		let title = '';
 		let description = '';
 
-		let saleprice = 0;
-		let saleprice_string = '';
+		let saleprice = '';
 
 		let currency = {symbol: ''};
 
@@ -54,9 +53,7 @@ class DeedBuyForm extends React.Component {
 			description,
 
 			isOnSale: false,
-			buy_mode: 'market',
 			saleprice,
-			saleprice_string,
 
 			currency,
 
@@ -184,7 +181,7 @@ class DeedBuyForm extends React.Component {
 	}
 
 	componentDidMount() {
-		console.log('DeedBuyForm.componentDidMount called');
+		console.log('DeedCheckForm.componentDidMount called');
 		
 		let mvcmypwa = this.getMvcMyPWAObject();
 
@@ -206,7 +203,7 @@ class DeedBuyForm extends React.Component {
 		
 		this._setState({registration_text, message_text, sharelinkmessage});
 
-		this.checkNavigationState().catch(err => {console.log('error in DeedBuyForm.checkNavigationState: ' + err);});
+		this.checkNavigationState().catch(err => {console.log('error in DeedCheckForm.checkNavigationState: ' + err);});
 	}
 
 
@@ -279,7 +276,7 @@ class DeedBuyForm extends React.Component {
 				// share link
 				let currency = await mvcmypwa.getCurrencyFromUUID(rootsessionuuid, currencyuuid)
 				.catch(err => {
-					console.log('error in DeedBuyForm.checkNavigationState: ' + err);
+					console.log('error in DeedCheckForm.checkNavigationState: ' + err);
 				});
 
 				if (!currency)
@@ -289,7 +286,6 @@ class DeedBuyForm extends React.Component {
 
 				// check if deed is on sale
 				let isOnSale = false;
-				let buy_mode;
 				let saleprice = 0;
 				let listing_info = await mvcmydeed.getDeedSaleInfo(rootsessionuuid, walletuuid, currencyuuid, minter, deed).catch(err => {});
 
@@ -297,17 +293,7 @@ class DeedBuyForm extends React.Component {
 					isOnSale = true;
 					saleprice = listing_info.saleprice;
 				}
-				else {
-					if (params.amount) {
-						isOnSale = true;
-						buy_mode = (params.mode ? params.mode : 'market');
-						saleprice = parseInt(params.amount);
-					}
-				}
-
-				let options = {showdecimals: true, decimalsshown: 2 /* currency.decimals */};
- 				let saleprice_string = await mvcmydeed._formatCurrencyIntAmount(rootsessionuuid, currency.uuid, saleprice, options);
-
+	
 				// check if is owner (should not be)
 				let isOwner = false;
 				
@@ -328,7 +314,7 @@ class DeedBuyForm extends React.Component {
 				this._setState({currency, mintername, 
 					isOwner,
 					currentcard, card_balance_int, card_balance_string,
-					isOnSale, buy_mode, saleprice, saleprice_string,
+					isOnSale, saleprice,
 					registration_text, sharelink});
 
 				dataobj.viewed = true;
@@ -355,7 +341,7 @@ class DeedBuyForm extends React.Component {
 
  	// end of life
 	componentWillUnmount() {
-		console.log('DeedBuyForm.componentWillUnmount called');
+		console.log('DeedCheckForm.componentWillUnmount called');
 		
 		this.closing = true;
 	}
@@ -375,7 +361,7 @@ class DeedBuyForm extends React.Component {
 		let carduuid;
 		let card;
 
-		let {currency, buy_mode, saleprice, remotewallet, rpc, currentcard, signingkey} =this.state;
+		let {currency, saleprice, remotewallet, rpc, currentcard, signingkey} =this.state;
 
 		let remoteaccount;
 
@@ -578,7 +564,7 @@ class DeedBuyForm extends React.Component {
 			return(
 				<div>
 				<span>
-				<Button className="BuyDeedButton" onClick={this.onBuy.bind(this)} disabled={(isOnSale ? false : true)} type="submit">
+				<Button onClick={this.onBuy.bind(this)} disabled={(isOnSale ? false : true)} type="submit">
 				Buy</Button>
 				</span>
 				</div>
@@ -588,7 +574,7 @@ class DeedBuyForm extends React.Component {
 			return(	
 				<div>
 				<span>
-				<Button className="BuyDeedButton" disabled type="submit">
+				<Button disabled type="submit">
 					loading...
 				</Button>
 				</span>
@@ -597,9 +583,8 @@ class DeedBuyForm extends React.Component {
 		}
 	}
 
-	renderDeedBuyForm() {
-		let { mintername, title, description, currency, registration_text, message_text, sharelinkmessage, sharelink,
-			 saleprice, saleprice_string, external_url } = this.state;
+	renderDeedCheckForm() {
+		let { mintername, title, description, currency, registration_text, message_text, sharelinkmessage, sharelink, saleprice, external_url } = this.state;
 		
 		return (
 			<div className="Form">
@@ -643,10 +628,10 @@ class DeedBuyForm extends React.Component {
 				<FormGroup controlId="title">
 				  <FormLabel>Sale price is</FormLabel>
 				  <FormControl
-					disabled
 					autoFocus
 					type="text"
-					value={saleprice_string}
+					value={saleprice}
+					onChange={e => this._setState({saleprice: e.target.value})}
 				  />
 				</FormGroup>
 
@@ -658,10 +643,8 @@ class DeedBuyForm extends React.Component {
 				  </div>
 				</FormGroup>
 
-				{this.renderDeedButtons()}
 
-
- 				<div className="TextBox">
+				<div className="TextBox">
 				  {registration_text}
 			  	</div>
 
@@ -672,6 +655,8 @@ class DeedBuyForm extends React.Component {
 					<span className="ShareIcon" onClick={this.onShareLinkClick.bind(this)}><FontAwesomeIcon icon={faCopy} /></span>
 					</div>
 				</div>
+
+				{this.renderDeedButtons()}
 
 				<div className="TextBox">
 				  {message_text}
@@ -697,10 +682,10 @@ class DeedBuyForm extends React.Component {
 		return (
 			<div className="Container">
 				<div className="TitleBanner">
-				<div className="Title">Buy Deed</div>
+				<div className="Title">Check Deed</div>
 				<div className="BackIcon" onClick={this.onBack.bind(this)}><FontAwesomeIcon icon={faUndo} /></div>
 				</div>
-				{ this.renderDeedBuyForm()}
+				{ this.renderDeedCheckForm()}
 			</div>
 		  );
 	}
@@ -709,7 +694,7 @@ class DeedBuyForm extends React.Component {
 
 
 // propTypes validation
-DeedBuyForm.propTypes = {
+DeedCheckForm.propTypes = {
 	app: PropTypes.object.isRequired,
 	rootsessionuuid: PropTypes.string,
 	currentwalletuuid: PropTypes.string,
@@ -734,6 +719,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-export {DeedBuyForm};
-export default connect(mapStateToProps, mapDispatchToProps)(DeedBuyForm);
+export {DeedCheckForm};
+export default connect(mapStateToProps, mapDispatchToProps)(DeedCheckForm);
 

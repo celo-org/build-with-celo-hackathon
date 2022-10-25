@@ -326,30 +326,30 @@ class DeedView extends React.Component {
 		if (loaded) {
 			return(
 				<div className="DeedButtonsLine">
-				<span className="DeedButton">
-				<Button onClick={this.onAddClause.bind(this)} 
+				<span>
+				<Button className="DeedButton" onClick={this.onAddClause.bind(this)} 
 				disabled={(isOwner ? false : true)} 
 				variant={(isOwner ? "primary" : "secondary")} 
 				type="submit">
 				Add a clause</Button>
 				</span>
-				<span className="DeedButton">
-				<Button onClick={this.onTransfer.bind(this)} 
+				<span>
+				<Button className="DeedButton" onClick={this.onTransfer.bind(this)} 
 				disabled={(isOwner ? false : true)} 
 				variant={(isOwner ? "primary" : "secondary")} 
 				type="submit">
 				Transfer</Button>
 				</span>
-				<span className="DeedButton">
+				<span>
 				{(isOnSale ? 
-				<Button onClick={this.onBuy.bind(this)} 
+				<Button className="SellDeedButton" onClick={this.onBuy.bind(this)} 
 				type="submit">
 				Buy</Button> :
-				<Button onClick={this.onOfferOnSale.bind(this)} 
+				<Button className="SellDeedButton" onClick={this.onOfferOnSale.bind(this)} 
 				disabled={(isOwner ? false : true)} 
 				variant={(isOwner ? "primary" : "secondary")} 
 				type="submit">
-				Offer on sale</Button>)}
+				Sell</Button>)}
 				</span>
 				</div>
 			);
@@ -357,18 +357,18 @@ class DeedView extends React.Component {
 		else {
 			return(	
 				<div className="DeedButtonsLine">
-				<span className="DeedButton">
-				<Button disabled type="submit">
+				<span>
+				<Button className="DeedButton" disabled type="submit">
 					loading...
 				</Button>
 				</span>
-				<span className="DeedButton">
-				<Button disabled type="submit">
+				<span>
+				<Button className="DeedButton" disabled type="submit">
 					loading...
 				</Button>
 				</span>
-				<span className="DeedButton">
-				<Button disabled type="submit">
+				<span>
+				<Button className="DeedButton" disabled type="submit">
 					loading...
 				</Button>
 				</span>

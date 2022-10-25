@@ -1011,10 +1011,16 @@ var Module = class {
 			return Promise.reject('could not find minter card');
 	
 		// instantiate NftMarketplace
-		var nftMarketplace = await this._getNftMarketplaceObject(session, wallet, currency);
+		var nftMarketplace = await this._getNftMarketplaceObject(session, wallet, currency).catch(err => {});
 
-		if (!nftMarketplace)
-			return Promise.reject('could not find nft market place');
+		var listing_info = {canbelisted: false, onsale: false, tokenaddress, tokenid};
+
+		if (!nftMarketplace) {
+			return listing_info;
+		}
+		else {
+			listing_info.canbelisted = true;
+		}
 
 		var tokenaddress = deed.minter;
 		var tokenid = deed.tokenid;
@@ -1038,8 +1044,6 @@ var Module = class {
 			childsession = card._getSession();
 			fromaccount = card._getAccountObject(); // read-only card
 		}
-
-		var listing_info = {onsale: false, tokenaddress, tokenid};
 
 		var listed_nfts = await nftMarketplace.getListedNfts();
 
@@ -1349,6 +1353,118 @@ var Module = class {
 	
 
 	}
+
+
+	//
+	// utils
+	//
+
+
+	async _fitAmountString(session, amount_string, decimals, options) {
+		if (amount_string === undefined)
+			return;
+		
+		var _inputamountstring = amount_string;
+		var amountstring;
+
+		if (_inputamountstring.includes(".")) {
+			const parts = _inputamountstring.split('.');
+
+			// integer part
+			var integerpart = parts[0];
+			var decimalpart;
+
+			if (parts[1].length > decimals)
+				decimalpart = parts[1].substring(decimals); // cut
+			else {
+				decimalpart = parts[1]; // fill if necessary
+				for (var i = 0; i < (decimals -parts[1].length) ; i++) decimalpart += '0';
+			}
+
+			amountstring = integerpart + '.' + decimalpart;
+		}
+		else {
+			if (_inputamountstring.length > decimals) {
+				// integer part
+				var integerpart = _inputamountstring.substring(0, _inputamountstring.length - decimals);
+				var decimalpart = _inputamountstring.substring(_inputamountstring.length - decimals);
+	
+				amountstring = integerpart + '.' + decimalpart;
+			}
+			else {
+				var leading = '';
+				for (var i = 0; i < (decimals -_inputamountstring.length) ; i++) leading += '0';
+				amountstring = '0.' + leading + _inputamountstring;
+			}
+		}
+		
+
+
+		if (options) {
+			if (typeof options.showdecimals !== 'undefined') {
+				if (options.showdecimals === false) {
+					// we remove . and after
+					amountstring = amountstring.substring(0, amountstring.indexOf('.'));
+				}
+				else {
+					var decimalsshown = (options.decimalsshown ? options.decimalsshown : decimals);
+					amountstring = amountstring.substring(0, amountstring.indexOf('.') + 1 + decimalsshown);
+				}
+
+			}
+		}
+
+		return amountstring;
+	}
+	
+
+	async _formatMonetaryAmountString(session, amount_string, symbol, decimals, options) {
+		var amountstring = await this._fitAmountString(session, amount_string, decimals, options);
+		
+		return amountstring + ' ' + symbol;
+	}
+
+	async _formatCurrencyIntAmount(sessionuuid, currencyuuid, amount_int, options) {
+		// because of issues with double points when formatting  
+		// with mvccurrencies formatCurrencyAmount (e.g. 0.30.10) from integer
+
+		if (!sessionuuid)
+			return Promise.reject('session uuid is undefined');
+	
+		if (!currencyuuid)
+			return Promise.reject('currency uuid is undefined');
+		
+	
+		
+		var global = this.global;
+		var _apicontrollers = this._getClientAPI();
+		var mvcpwa = this._getMvcPWAObject();
+
+		var session = await _apicontrollers.getSessionObject(sessionuuid);
+		
+		if (!session)
+			return Promise.reject('could not find session ' + sessionuuid);
+		
+		var currency = await mvcpwa.getCurrencyFromUUID(sessionuuid, currencyuuid);
+
+		if (!currency)
+			return Promise.reject('could not find currency ' + currencyuuid);
+
+		var currency_amount = await mvcpwa.getCurrencyAmount(sessionuuid, currency.uuid, amount_int);
+		var tokenamountstring = await currency_amount.toString();
+
+		//var currency_amount_string = await mvcpwa.formatCurrencyAmount(sessionuuid, currency.uuid, currency_amount, options);
+		var _options = (options ? options : {showdecimals: true, decimalsshown: 2});
+		
+		var tokenamountstring = await currency_amount.toString(); 
+		// !!! faulty because of _formatAmount (see above)
+		
+		var currencyamountstring = await this._formatMonetaryAmountString(session, tokenamountstring, currency.symbol, currency.decimals, _options);
+
+
+		return currencyamountstring;
+	}
+
 }
 
 

@@ -77,6 +77,13 @@ class DeedCreateForm extends React.Component {
 		return this.app.getDeedClientObject().getConnectionFromRpc(rpc);
 	}
 
+	// erc721 methods
+	async _getBaseTokenURI(currencyuuid, cardaddress) {
+		let uri = await this.app.getVariable('AppsPane').getBaseTokenURI(currencyuuid, cardaddress);
+
+		return uri;
+	}
+
 	async _canCompleteTransaction(carduuid, tx_fee, feelevel) {
 		if (this.state.remotewallet && this.state.remotecreate) {
 			let {card_creditunits} = this.state;
@@ -588,7 +595,7 @@ class DeedCreateForm extends React.Component {
 
 
 				// build tokenuri
-				minter.basetokenuri = await this.app.getBaseTokenURI(currency.uuid, currentcard.address);
+				minter.basetokenuri = await this._getBaseTokenURI(currency.uuid, currentcard.address);
 				
 				minter = await mvcmydeed.deployDeedMinter(rootsessionuuid, walletuuid, currency.uuid, currentcard.uuid, minter, _feelevel)
 				.catch(err => {

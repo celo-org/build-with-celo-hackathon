@@ -40,8 +40,6 @@ class ClauseHomeScreen extends React.Component {
 	async checkNavigationState() {
 		let mvcmypwa = this.getMvcMyPWAObject();
 
-		let rootsessionuuid = this.props.rootsessionuuid;
-		
 		let app_nav_target = this.app.getNavigationState('target');
 
 		if (app_nav_target && (app_nav_target.route == 'clause') && (app_nav_target.reached == false)) {

@@ -19,6 +19,18 @@ class AppsPane extends React.Component {
 		return this.app.getDeedClientObject().getConnectionFromRpc(rpc);
 	}
 
+	// erc721 methods
+	async getBaseTokenURI(currencyuuid, cardaddress) {
+		var basetokenuri = await this.getCleanUrl();
+
+		basetokenuri += '?ccy=' + currencyuuid;
+		basetokenuri += '&card=' + cardaddress;
+		basetokenuri += '&tokenid=';
+
+		return basetokenuri;
+	}
+
+
 	// deeds methods
 	async getDeedCardContext(currencyuuid, minter, deed) {
 		let context = {remotewallet: false};
