@@ -26,7 +26,7 @@ const Projects: PaginatedItemsComponent<Project> = ({ currentItems }) => (
                   Some quick example text to occupy space for the project&apos;s
                   content.
                 </Card.Text>
-                <Button variant="primary">Donate</Button>
+                <Button variant="primary">Buy carbon credits</Button>
               </Card.Body>
             </Card>
           </Col>
