@@ -8,11 +8,11 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
 import "base64-sol/base64.sol";
 
-contract POAP is ERC721URIStorage,  Ownable {
+contract POAP is ERC721Enumerable, ERC721URIStorage,  Ownable {
     using Counters for Counters.Counter;
 
     struct EventStruct {
@@ -20,7 +20,8 @@ contract POAP is ERC721URIStorage,  Ownable {
         string desc;
         string orgName;
         string logo;
-        string date;
+        string email;
+        uint256 date;
         string website;
         uint poapsMinted;
         uint maxCapacity;
@@ -46,19 +47,20 @@ contract POAP is ERC721URIStorage,  Ownable {
 
     string _tokenUri ;
 
-    bool _allowMinting=false;
+    bool public _allowMinting=false;
     
     
-
     constructor(string memory name, string memory symbol, EventStruct memory _eventDetails, string memory eventCode) ERC721(name,symbol) 
     {
+        // console.log('StartiIn  1');
         fee = 0.0001 * 10 ** 18; // 0.0001
         eventDetails=_eventDetails;
         eventDetails.poapsMinted=0;
         eventCodeHashed = keccak256(abi.encodePacked(eventCode));
         _tokenUri = generateTokenURI();
-
+        
         _transferOwnership(_eventDetails.eventOwner);
+        
     }
 
 
@@ -122,6 +124,7 @@ contract POAP is ERC721URIStorage,  Ownable {
     
     function generateTokenURI() public view returns(string memory)
     {
+        
         return string(
                 abi.encodePacked(
                     "data:application/json;base64,",
@@ -132,7 +135,7 @@ contract POAP is ERC721URIStorage,  Ownable {
                                 '"description":"',eventDetails.desc,'", ',
                                 '"attributes":['
                                 '{"trait_type":"Org Name","value":"',eventDetails.orgName,'"}, ',
-                                '{"trait_type":"Date","value":"',eventDetails.date,'"}, ',
+                                '{"display_type": "date","trait_type":"Date","value":"',eventDetails.date,'"}, ',
                                 '{"trait_type":"Website","value":"',eventDetails.website,'"}, ',
                                 // '{"trait_type":"Date","value":"',date,'"}, ',
                                 // '{"trait_type":"Org Name","value":"',orgName,'"}, ',
@@ -143,5 +146,35 @@ contract POAP is ERC721URIStorage,  Ownable {
                     )
                 )
             );
+    }
+
+
+    function _beforeTokenTransfer(address from, address to, uint256 tokenId)
+        internal
+        override(ERC721, ERC721Enumerable)
+    {
+        super._beforeTokenTransfer(from, to, tokenId);
+    }
+
+    function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
+        super._burn(tokenId);
+    }
+
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        override(ERC721, ERC721URIStorage)
+        returns (string memory)
+    {
+        return super.tokenURI(tokenId);
+    }
+
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        override(ERC721, ERC721Enumerable)
+        returns (bool)
+    {
+        return super.supportsInterface(interfaceId);
     }
 }
