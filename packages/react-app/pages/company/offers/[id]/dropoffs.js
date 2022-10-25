@@ -1,13 +1,25 @@
 import Link from 'next/link'
 import React, {useState} from 'react'
-import CompanyLayout from '../../components/CompanyLayout/Layout'
-import DropdownIcon from '../../components/Icons/DropdownIcon'
+import CompanyLayout from '../../../../components/CompanyLayout/Layout'
+import DropdownIcon from '../../../../components/Icons/DropdownIcon'
+
+
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
+
 
 const DropOffs = () => {
     const [createDispute, setCreateDispute] = useState();
+    const [requestSuccessModal, setRequestSuccessModal] = useState();
 
     const handleDispute = () =>{
         setCreateDispute(!createDispute)
+    }
+    const submitDispute = () =>{
+
+        setCreateDispute(false)
+        setRequestSuccessModal(!requestSuccessModal)
     }
 
   return (
@@ -17,32 +29,45 @@ const DropOffs = () => {
         <section>
             <div className='container mx-auto px-6'>
 
-                <div className='h-full pb-24 px-4 md:px-12 py-12'>
-                        <div className='flex items-center py-4 mb-6 flex-col lg:flex-row'>
-                            <div className='flex-1 w-full'>
-                                <h3 className='h2'>Requests</h3>
+                <div className='h-full pb-24 md:px-4 py-12'>
+                        <div className='flex items-center py-6 mb-8 flex-col lg:flex-row border-b border-gray-300'>
+                            <div className='flex-1 w-full flex-col items-start'>
+                                <h3 className='h2'>120kg of PET Bottles</h3>
+                                <p>Ikeja, Lagos</p>
                             </div>
 
-                            <div className="mt-1 relative rounded-full flex-1  items-center grow flex h-12 w-full ">
-                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none h-full">
-                                            <span className="text-gray-500 px-3">
-                                                <svg width="22" height="22" viewBox="0 0 20 20" className="mr-3 pr-2" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z" stroke="#9998A9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                                                    <path d="M17.5 17.5L13.875 13.875" stroke="#9998A9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                                                    </svg>
-                                            </span>
-                                        </div>
-                                        <input type="text" name="price" id="price" className="border border-gray-300 py-2 px-4  block w-full pl-12 pr-12 sm:text-sm rounded-full h-full focus:outline-none focus:border-gray-400" placeholder="Search for different scaps, company"/>
-                                        
+                            <div className="mt-1 relative rounded-full flex-1  items-center grow flex w-full ">
+
+                                {/* <div className='h-15 grow'>
+                                    <progress className="progress w-full" value="40" max="100"></progress>
+                                </div> */}
+
+
+                                
+
+                                <div class="rounded-full w-full bg-gray-200 h-2">
+                                    
+                                    <div class="bg-[#DD7D37] h-2 rounded-full wrapper relative " style={{'width' : '55%'}}>
+                                    {/* <span class="tooltipper text-[10px]">Celo explorer</span> */}
+
                                     </div>
+                                </div>
+
+                                
+
+                                <div className='h-12 w-12'>
+                                    <img src="/images/plastics.svg " className='h-full w-full object-cover'/>
+                                </div>
+
+                            </div>
 
                             
                         </div>
 
-                        <div className=" w-full bg-white mt-3 md:mt-0  relative overflow-hidden rounded h-full">
-                        <div className='absolute h-full border border-[#E4E7EC] inset-0 z-0 mx-auto w-[0.5px]'></div>
+                        <div className=" w-full bg-white mt-3 py-6 md:mt-0  relative overflow-hidden rounded h-full">
+                        <div className='absolute h-full border border-[#E4E7EC] inset-0 z-0 mx-auto w-[0.5px] hidden md:block'></div>
 
-                            <div className=" grid grid-cols-1 md:grid-cols-2 py-6 w-full gap-6 relative">
+                            <div className=" grid grid-cols-1 md:grid-cols-2  w-full gap-6 relative">
 
                                 <div className="px-4 flex flex-col">
                                     <div className="flex items-center py-4 px-4 mb-2 text-sm w-full border-b bg-gray-100 border-gray-200 hover:bg-gray-100 transition duration-200 ease-in-out">
@@ -280,9 +305,18 @@ const DropOffs = () => {
                                                 </div>
                                             </div>
 
-                                            <div className='flex items-center justify-center gap-4 mt-5 mx-auto'>
-                                                <button className='px-9 py-3 border border-gray-300 bg-white text-gray-700 rounded-full' onClick={handleDispute}>Raise Dispute</button>
-                                                <button className='px-9 py-3 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full '>Confirm</button>
+                                            <div className='text-center text-sm py-7 max-w-md mx-auto px-4'>
+                                                <div>
+                                                    <p className='text-[#6D747D] font-medium'>Cool down Period:  <span className='text-xl font-semibold'>48hrs : 59mins : 32secs</span></p>
+                                                </div>
+                                                <div className='text-[#A4A5A8] font-thin py-3'>
+                                                    <p>Cooldown period is the time you can get to raise a complaint on a product.</p>
+                                                    <p>Want to read more on cooldown Period? <a href="" className='text-[#DD7D37]'>Read Here</a></p>
+                                                </div>
+                                            </div>
+
+                                            <div className='flex items-center justify-center gap-4 mt-5 mx-auto w-full'>
+                                                <button className='px-9 py-3 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full w-1/2' onClick={handleDispute}>Raise Dispute</button>
                                             </div>
                                         </div>
                                     </div>
@@ -329,15 +363,15 @@ const DropOffs = () => {
                         
                         <div className="mb-3">
                             <div className="flex justify-between items-center">                                
-                                <label className="text-gray-700 font-medium" htmlFor="token">Reasons for Dispute (Compulsory)</label>
+                                <label className="text-gray-700 font-medium">Reasons for Dispute (Compulsory)</label>
                             </div>
                             <div className=" relative grow mb-4 w-full" >
-                                <input className="w-full bg-white h-12 focus:outline-none active:outline-none  flex items-center justify-between border border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease" id="token"  />
+                                <input className="w-full bg-white h-12 focus:outline-none active:outline-none  flex items-center justify-between border border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease"  />
                             </div>
                         </div>
                         <div className="mb-3">
                             <div className="flex justify-between items-center">                                
-                                <label className="text-gray-700 font-medium" htmlFor="token">Description</label>
+                                <label className="text-gray-700 font-medium" >Description</label>
                             </div>
                             <div className=" relative grow mb-4 w-full h-full" >
                                 <textarea className="w-full bg-white focus:outline-none active:outline-none  flex items-center justify-between border border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease" placeholder='Kindly provide as much information as possible' rows="5" ></textarea>
@@ -345,11 +379,11 @@ const DropOffs = () => {
                         </div>
                         <div className="mb-3">
                             <div className="">                                
-                                <label className="text-gray-700 font-medium" htmlFor="token">Upload Proof (Compulsory)</label>
+                                <label className="text-gray-700 font-medium">Upload Proof (Compulsory)</label>
                                 <p className='text-sm text-gray-500'>Upload pictures, screenshots less than 3mb</p>
 
                             </div>
-                            <div className="dropdown relative grow mb-4 w-full">
+                            <div className="relative grow w-full">
                                 <button className=" bg-white focus:outline-none active:outline-none  flex items-center justify-between border border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease text-[#6D747D]" type="button" >
                                     <span>
                                         <svg className='h-12 w-12' viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -366,10 +400,45 @@ const DropOffs = () => {
                     </div>
 
                     <div className='flex items-center justify-center gap-4 mt-5 mx-auto'>
-                        <button className='px-9 py-3 border border-gray-300 bg-white text-gray-700 rounded-full' type='button' onClick={handleDispute}>Cancel</button>
-                        <button className='px-9 py-3 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full '>Send dispute</button>
+                        <button className='px-9 py-2 border border-gray-300 bg-white text-gray-700 rounded-full' type='button' onClick={handleDispute}>Cancel</button>
+                        <button className='px-9 py-2 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full ' type='button' onClick={submitDispute}>Send dispute</button>
                     </div>
                 </form>
+                </div>
+            </div>
+
+            <div  className={`modal__box ${requestSuccessModal ? 'show' : ''}`}>
+                <div className="modal__box-wrapper shadow-lg rounded-2xl">
+        
+                <div className="flex items-start justify-between mb-6">
+
+                    <div className="grow">
+                        <h1 className="text-2xl font-semibold mb-3">Dispute has been sent</h1>
+                        
+                        <ul className='list-disc px-4'>
+                            <li className='text-sm text-gray-500'>The Individual would not be able to get his pay unless dispute is resolved.</li>
+                        </ul>
+                    </div>
+
+                    
+                    <button className=" flex items-center rounded-full border-2 border-gray-700 absolute top-3 right-2  " onClick={()=>setRequestSuccessModal(false)}>
+                           <span className="pointer-events-none flex items-center p-2">
+                               <svg className='h-5 w-5 ' viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"></path>
+                                </svg>
+                           </span>             
+                        
+                    </button>
+
+                </div>
+
+                    <div className='flex items-center justify-center gap-4 mt-5 mx-auto'>
+                        <button className='px-9 py-2 border border-gray-300 bg-white text-gray-700 rounded-full' type='button' >Cancel</button>
+                        <Link href="/company/offers">
+                            <a className='px-9 py-2 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full '>Back to Offers</a>
+                        </Link>
+                        
+                    </div>
                 </div>
             </div>
 

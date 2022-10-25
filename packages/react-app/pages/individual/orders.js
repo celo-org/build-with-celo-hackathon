@@ -38,10 +38,9 @@ const Orders = () => {
                         </div>
 
 
-                                <div className='tab-content py-6'>
+                                <div className='py-6'>
                                     <TabPanel>
                                     <div className=" w-full bg-white mt-3 md:mt-0  relative overflow-hidden rounded h-full fade-in">
-                                        <div className=" w-full bg-white  relative overflow-hidden">
                                             <div className=" py-6 w-full relative">
 
                                                 <div className=" grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 lg:gap-x-12 gap-y-4">
@@ -230,7 +229,6 @@ const Orders = () => {
 
                                                 </div>
                                             </div>
-                                        </div>
                                     </div>
 
                                     </TabPanel>
