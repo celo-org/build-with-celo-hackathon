@@ -1,4 +1,5 @@
 ﻿using Nomis.Blockchain.Abstractions;
+using Nomis.Celoscan.Interfaces.Models;
 
 namespace Nomis.Celoscan.Calculators
 {
@@ -143,9 +144,9 @@ namespace Nomis.Celoscan.Calculators
         /// <summary>
         /// Get wallet score.
         /// </summary>
-        /// <param name="stats"><see cref="IWalletStats"/>.</param>
+        /// <param name="stats"><see cref="IWalletStats{T}"/>.</param>
         /// <returns>Returns wallet score.</returns>
-        public static double GetScore(this IWalletStats stats)
+        public static double GetScore(this IWalletStats<CeloTransactionIntervalData> stats)
         {
             var result = 0.0;
             result += WalletAgeScore(stats.WalletAge) / 100 * WalletAgePercents;

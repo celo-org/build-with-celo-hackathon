@@ -1,15 +1,15 @@
 ﻿using System.Numerics;
 
 using Nomis.Blockchain.Abstractions.Models;
-using Nomis.Utils.Extensions;
 
 namespace Nomis.Blockchain.Abstractions.Calculators
 {
     /// <summary>
     /// Blockchain wallet stats calculator.
     /// </summary>
-    public interface IStatCalculator<out TWalletStats>
-        where TWalletStats : IWalletStats
+    public interface IStatCalculator<out TWalletStats, TTransactionIntervalData>
+        where TWalletStats : IWalletStats<TTransactionIntervalData>
+        where TTransactionIntervalData : class, ITransactionIntervalData, new()
     {
         /// <summary>
         /// Get wallet age.
@@ -17,10 +17,10 @@ namespace Nomis.Blockchain.Abstractions.Calculators
         /// <param name="timeStamps">Collection of timestamps.</param>
         /// <returns>Returns the wallet age (month).</returns>
         public static int GetWalletAge(
-            IEnumerable<string?> timeStamps)
+            IEnumerable<DateTime> timeStamps)
         {
-            var firstTransaction = timeStamps.OrderBy(x => x).First(x => x != null);
-            var age = firstTransaction == null ? 0 : (int)((DateTime.UtcNow - firstTransaction.ToDateTime()).TotalDays / 30);
+            var firstTransaction = timeStamps.Min();
+            var age = (int)((DateTime.UtcNow - firstTransaction).TotalDays / 30);
             return age == 0 ? 1 : age;
         }
 
@@ -76,10 +76,9 @@ namespace Nomis.Blockchain.Abstractions.Calculators
         /// <param name="transactionsAmount">Transactions necessary data.</param>
         /// <param name="startDate">Start date for getting data.</param>
         /// <returns>Returns collection of <see cref="ITransactionIntervalData"/>.</returns>
-        public static IEnumerable<TTransactionIntervalData> GetTurnoverIntervals<TTransactionIntervalData>(
+        public static IEnumerable<TTransactionIntervalData> GetTurnoverIntervals(
             IEnumerable<TurnoverIntervalsData> transactionsAmount,
             DateTime startDate)
-            where TTransactionIntervalData : ITransactionIntervalData, new()
         {
             var result = new List<TTransactionIntervalData>();
             while (startDate < DateTime.Now)
@@ -114,6 +113,34 @@ namespace Nomis.Blockchain.Abstractions.Calculators
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Get balance change value in the last month (Native token).
+        /// </summary>
+        public static decimal GetBalanceChangeInLastMonth(IEnumerable<TTransactionIntervalData>? turnoverIntervals)
+        {
+            var lastMonthIntervalData = turnoverIntervals?.LastOrDefault();
+            if (lastMonthIntervalData == null)
+            {
+                return 0;
+            }
+
+            return lastMonthIntervalData.AmountInSumValue - lastMonthIntervalData.AmountOutSumValue;
+        }
+
+        /// <summary>
+        /// Get balance change value in the last year (Native token).
+        /// </summary>
+        public static decimal GetBalanceChangeInLastYear(IEnumerable<TTransactionIntervalData>? turnoverIntervals)
+        {
+            var turnoverIntervalsList = turnoverIntervals?.ToList();
+            if (turnoverIntervalsList?.Any() != true)
+            {
+                return 0;
+            }
+
+            return turnoverIntervalsList.Sum(x => x.AmountInSumValue) - turnoverIntervalsList.Sum(x => x.AmountOutSumValue);
         }
 
         /// <summary>
