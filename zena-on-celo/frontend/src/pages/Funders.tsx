@@ -7,19 +7,18 @@ import { treasuryabi } from "../utils/treasuryabi";
 import { useEffect, useState } from "react";
 import { CeloProvider } from "@celo-tools/celo-ethers-wrapper";
 
+const { REACT_APP_ZENA_TREASURY, REACT_APP_FAKE_DEX } = process.env;
+
 const Funders = () => {
   const { data: signer } = useSigner();
   const provider = new CeloProvider(process.env.REACT_APP_RPC_URL);
   const [BCT, setBCT] = useState<string>();
   const [sequestered, setSequestered] = useState<string>();
 
-  const dexContract = new ethers.Contract(
-    "0x3162DAC7Ee5e5d39468099178274A8BD050Ec22E",
-    dexabi
-  );
+  const dexContract = new ethers.Contract(REACT_APP_FAKE_DEX || "", dexabi);
 
   const treasuryContract = new ethers.Contract(
-    "0x73a132d1340f7363Cf328099Bf9BE70284dcbeE1",
+    REACT_APP_ZENA_TREASURY || "",
     treasuryabi
   );
 
