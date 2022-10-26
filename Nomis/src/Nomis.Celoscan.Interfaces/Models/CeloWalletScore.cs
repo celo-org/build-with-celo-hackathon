@@ -1,10 +1,17 @@
-﻿namespace Nomis.Celoscan.Interfaces.Models
+﻿using Nomis.Blockchain.Abstractions;
+
+namespace Nomis.Celoscan.Interfaces.Models
 {
     /// <summary>
     /// Celo wallet score.
     /// </summary>
-    public class CeloWalletScore
+    public class CeloWalletScore :
+        IWalletScore<CeloWalletStats, CeloTransactionIntervalData>
     {
+        /// <summary>
+        /// Wallet address.
+        /// </summary>
+        public string? Address { get; set; }
         /// <summary>
         /// Nomis Score in range of [0; 1].
         /// </summary>
