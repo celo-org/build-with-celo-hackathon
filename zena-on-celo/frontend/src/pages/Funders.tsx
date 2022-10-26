@@ -2,24 +2,61 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useSigner } from "wagmi";
 import { ethers } from "ethers";
-import { abi } from "../utils/abi";
+import { dexabi } from "../utils/dexabi";
+import { treasuryabi } from "../utils/treasuryabi";
+import { useEffect, useState } from "react";
+import { CeloProvider } from "@celo-tools/celo-ethers-wrapper";
 
 const Funders = () => {
   const { data: signer } = useSigner();
-  const contract = new ethers.Contract(
-    "0xAfF16af16CE65B1dC308c53CA1dc65c39fD5F82A",
-    abi
+  const provider = new CeloProvider(process.env.REACT_APP_RPC_URL);
+  const [BCT, setBCT] = useState<string>();
+  const [sequestered, setSequestered] = useState<string>();
+
+  const dexContract = new ethers.Contract(
+    "0x3162DAC7Ee5e5d39468099178274A8BD050Ec22E",
+    dexabi
   );
+
+  const treasuryContract = new ethers.Contract(
+    "0x73a132d1340f7363Cf328099Bf9BE70284dcbeE1",
+    treasuryabi
+  );
+
+  useEffect(() => {
+    const fetchTreasuryInfo = async () => {
+      const tx = await treasuryContract
+        .connect(provider as any)
+        .getTreasuryBCT();
+      const formattedBalance = ethers.utils.formatUnits(tx);
+      setBCT(formattedBalance);
+    };
+
+    const fetchSequesteredInfo = async () => {
+      const tx1 = await treasuryContract
+        .connect(provider as any)
+        .getAllSequesteredBCT();
+      const formattedBalance1 = ethers.utils.formatUnits(tx1);
+      setSequestered(formattedBalance1);
+    };
+
+    fetchTreasuryInfo();
+    fetchSequesteredInfo();
+  }, []);
 
   const buy = async (event: any) => {
     event.preventDefault();
     const amount = event.target[0].value;
-    const tx = await contract
+    const tx = await dexContract
       .connect(signer as any)
       .buy(ethers.utils.parseEther(amount.toString()));
     const receipt = await tx.wait();
-    console.log(receipt);
   };
+
+  const stats = [
+    { name: "$BCT in Treasury", stat: BCT },
+    { name: "Sequestered $BCT", stat: sequestered },
+  ];
 
   return (
     <div className="min-h-full">
@@ -34,6 +71,23 @@ const Funders = () => {
               <div className="relative overflow-hidden bg-white h-screen">
                 <ConnectButton />
                 <div className="mx-auto mt-8 max-w-7xl">
+                  <div>
+                    <dl className="mt-5 mb-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                      {stats.map((item) => (
+                        <div
+                          key={item.name}
+                          className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6"
+                        >
+                          <dt className="truncate text-sm font-medium text-gray-500">
+                            {item.name}
+                          </dt>
+                          <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
+                            {item.stat}
+                          </dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </div>
                   <div className="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                     <a href="#">
                       <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">

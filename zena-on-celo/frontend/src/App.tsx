@@ -7,7 +7,6 @@ import Funders from "./pages/Funders";
 
 import WalletModal from "./components/Wallet/Modal";
 import { useSession } from "./utils/hooks";
-import { useState } from "react";
 
 export default function App() {
   const { isLoggedIn } = useSession();

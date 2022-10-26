@@ -24,6 +24,7 @@ contract ZenaTreasury is Ownable, ERC721, ERC721URIStorage {
     IERC20 _token;
     IERC20 _bct;
     uint256 private _mintingFee;
+    uint256 _bctSequestered;
 
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
@@ -34,11 +35,29 @@ contract ZenaTreasury is Ownable, ERC721, ERC721URIStorage {
         _token = new ZenaToken(address(this));
     }
 
+
+    function getAllSequesteredBCT()
+        public
+        view
+        returns (uint256)
+    {
+        return _bctSequestered;
+    }
+
+    function getTreasuryBCT()
+        public
+        view
+        returns (uint256)
+    {
+        return _bct.balanceOf(address(this));
+    }
+
     function mintNFT(string memory metadataURI) public returns (uint256) {
         // address from = msg.sender;
         // _bct.transferFrom(from, address(this), _mintingFee);
         uint256 bctBalance = _bct.balanceOf(address(this));
-        require(bctBalance >= _mintingFee, "Not enough BCT in the reserve");
+        uint256 availableBalance = bctBalance - _bctSequestered;
+        require(availableBalance >= _mintingFee, "Not enough unsequestered BCT in the reserve");
 
         uint256 newItemId = _tokenIds.current();
 
@@ -52,6 +71,8 @@ contract ZenaTreasury is Ownable, ERC721, ERC721URIStorage {
             newItemId,
             msg.sender
         );
+
+        _bctSequestered = _bctSequestered + _mintingFee;
         return newItemId;
     }
 

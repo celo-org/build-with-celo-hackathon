@@ -1079,6 +1079,11 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@celo-tools/celo-ethers-wrapper@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@celo-tools/celo-ethers-wrapper/-/celo-ethers-wrapper-0.3.0.tgz#14e19edde1c71da912927344590029e9ffcb3a97"
+  integrity sha512-qJgVQ3EeVYzM0uvGcVxPB4cH8BaEnoLMyG8k/gAWzSCjJFIgNTlRs05IFGzAb7U0GlbDKCDSualHSGMXq+OHEw==
+
 "@celo/rainbowkit-celo@^0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@celo/rainbowkit-celo/-/rainbowkit-celo-0.2.0.tgz#dc99a01561c7a9f530ed8ab776ce2ec923e531b8"

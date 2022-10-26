@@ -2,7 +2,9 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "website": "./",
   "dependencies": {
+    "@celo-tools/celo-ethers-wrapper": "^0.3.0",
     "@celo/rainbowkit-celo": "^0.2.0",
     "@headlessui/react": "^1.7.2",
     "@heroicons/react": "^2.0.11",
