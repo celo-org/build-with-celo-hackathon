@@ -104,16 +104,16 @@ contract Sacuda is ERC721, AccessControl {
     /** @notice Credit Score of the user */
     function score(uint256 _tokenId) public view returns (uint256) {
         CreditReportPercentages storage r = report[_tokenId];
-        uint256 userScore = (r.paymentHistory *
-            paymentHistoryWeight +
-            r.amountOwed *
-            amountOwedWeight +
-            r.creditLength *
-            creditLengthWeight +
-            r.creditMix *
-            creditLengthWeight +
-            r.newCredit *
-            newCreditWeight) / 100;
+        uint256 userScore = (uint256(r.paymentHistory) *
+            uint256(paymentHistoryWeight) +
+            uint256(r.amountOwed) *
+            uint256(amountOwedWeight) +
+            uint256(r.creditLength) *
+            uint256(creditLengthWeight) +
+            uint256(r.creditMix) *
+            uint256(creditLengthWeight) +
+            uint256(r.newCredit) *
+            uint256(newCreditWeight)) / 100;
         return userScore;
     }
 

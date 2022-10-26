@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.11;
 
-// import "forge-std/console.sol";
+import "forge-std/console.sol";
 import "forge-std/Test.sol";
 import "../src/Sacuda.sol";
 
@@ -36,8 +36,12 @@ contract SacudaTest is Test {
         (uint8 paymentHistory, , , , ) = sacuda.report(2);
         assertEq(paymentHistory, 0);
         sacuda.mint(betty, "Betty");
-        sacuda.updateReport(2, abi.encode(num, num, num, num, num));
+        sacuda.updateReport(
+            2,
+            abi.encode(num, num - 50, num + 10, num - 30, num + 20)
+        );
         (paymentHistory, , , , ) = sacuda.report(2);
+        console.log("User Score: ", sacuda.score(2));
         assertEq(paymentHistory, num);
     }
 }
