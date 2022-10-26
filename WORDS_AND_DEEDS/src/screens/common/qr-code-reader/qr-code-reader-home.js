@@ -109,25 +109,30 @@ class QRCodeReaderHomeScreen extends React.Component {
 	}
 
 	async onRead(result, error) {
-		if (!!result) {
-			let url = result.text;
-			let isUrl = await this._isValidUrl(url);
-			
-			if (isUrl) {
-				let _cr = '\r\n';
-				let message = 'Go to? ' + _cr + _cr + url;
+		try {
+			if (!!result) {
+				let url = result.text;
+				let isUrl = await this._isValidUrl(url);
+				
+				if (isUrl) {
+					let _cr = '\r\n';
+					let message = 'Go to? ' + _cr + _cr + url;
 
-				let choice = await this._confirm(message);
+					let choice = await this._confirm(message);
 
-				if (choice) {
-					console.log('Jumping to ' + url);
-					await this.app.gotoUrl(url);
+					if (choice) {
+						console.log('Jumping to ' + url);
+						await this.app.gotoUrl(url);
+					}
 				}
+				else {
+					this.app.alert('Could not read a proper url!')
+				}
+				
 			}
-			else {
-				this.app.alert('Could not read a proper url!')
-			}
-			
+		}
+		catch(e) {
+			console.log('exception in onRead' + e);
 		}
 	}
 
@@ -183,7 +188,7 @@ class QRCodeReaderHomeScreen extends React.Component {
 				<div className="Title">QR Code Reader</div>
 				</div>
 
-				<div className="QRCoderReader">
+				<div className="QRCodeReader">
 				<QrReader
 					key={(facingMode == 'user' ? 'user' : 'environment')}
 					onResult={this.onRead.bind(this)}

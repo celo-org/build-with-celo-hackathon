@@ -9,8 +9,10 @@ import { Dots } from 'react-activity';
 import { faCopy, faUndo} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import {CurrencyCardIcon} from '@primusmoney/react_pwa/react-js-ui';
-import RemoteWalletIcon from '../../remote-wallet/remote-wallet-icon.js'
+import QRCodeReadForm from '../../common/qr-code-reader/qr-code-read-form.js';
+
+import QRCodeReact from 'qrcode.react';
+
 
 class DeedCheckForm extends React.Component {
 	
@@ -34,14 +36,9 @@ class DeedCheckForm extends React.Component {
 		let title = '';
 		let description = '';
 
-		let saleprice = '';
-
 		let currency = {symbol: ''};
 
-		let signingkey = null;
 		let currentcard = null;
-		let card_balance_int = 0;
-		let card_balance_string = '';
 
 		
 		this.closing = false;
@@ -52,21 +49,20 @@ class DeedCheckForm extends React.Component {
 			title,
 			description,
 
-			isOnSale: false,
-			saleprice,
-
 			currency,
 
-			signingkey,
 			isOwner: false,
+
+			action: '',
+			challenge_text: null,
+			response_text: null,
+			ownership_proof: null,
 
 			remotewallet: false,
 			rpc: null,
 			connection: null,
 
 			currentcard,
-			card_balance_int,
-			card_balance_string,
 
 			loaded: false,
 			registration_text: 'loading...',
@@ -97,6 +93,23 @@ class DeedCheckForm extends React.Component {
 
 		return context.deedcard;
 	}
+
+	async _isValidUrl(url_string) {
+		var inputElement = document.createElement('input');
+		inputElement.type = 'url';
+		inputElement.value = url_string;
+  
+		if (!inputElement.checkValidity()) {
+		  return false;
+		} else {
+		  return true;
+		}
+	}
+
+	async _confirm(message) {
+		return window.confirm(message);
+	}
+
 
 	async _openCurrencyCard(currencyuuid) {
 		let mvcmypwa = this.getMvcMyPWAObject();
@@ -141,42 +154,6 @@ class DeedCheckForm extends React.Component {
 		let rootsessionuuid = this.props.rootsessionuuid;
 		let walletuuid = this.props.currentwalletuuid;
 
-		// entered a private key
-		if (this.state.signingkey != prevState.signingkey) {
-			const {currency} = this.state;
-
-			if ( (currency) && (currency.uuid)) {
-				let currentcard = null;
-				let card_balance_string = '';
-				let card_creditunits = '';
-				
-				let currencyuuid = currency.uuid;
-
-				this.app.createCurrencyCard(currencyuuid, this.state.signingkey, {maincard: true})
-				.then(card => {
-					currentcard = card;
-
-					return mvcmypwa.getCurrencyPosition(rootsessionuuid, walletuuid, currencyuuid, currentcard.uuid)
-				})
-				.then((pos) => {
-					return mvcmypwa.formatCurrencyAmount(rootsessionuuid, currencyuuid, pos);
-				})
-				.then((balance) => {
-					card_balance_string = balance;
-
-					return mvcmypwa.getCreditBalance(rootsessionuuid, walletuuid, currentcard.uuid);
-				})
-				.then((credits) => {
-					card_creditunits = credits.transactionunits;
-
-					this._setState({currentcard, card_balance_string, card_creditunits})
-				})
-				.catch(err => {
-					this._setState({currentcard, card_balance_string, card_creditunits})
-				});
-			}
-		}
-
 
 	}
 
@@ -216,29 +193,6 @@ class DeedCheckForm extends React.Component {
 
 		let app_nav_state = this.app.getNavigationState();
 		let app_nav_target = app_nav_state.target;
-
-		// check wallet is unlocked
-		let unlocked = await this.app.checkWalletUnlocked()
-		.catch(err => {
-		});
-
-		if (!unlocked) {
-			let params = (app_nav_target ? app_nav_target.params : null);
-			this.app.gotoRoute('login', params);
-			return;
-			}
-			else {
-			// check it is not the device wallet, because we need a safer wallet
-			let isdevicewallet = await this.app.isDeviceWallet();
-			
-			if (isdevicewallet) {
-				await this.app.resetWallet();
-				
-				let params = (app_nav_target ? app_nav_target.params : null);
-				this.app.gotoRoute('login', params);
-				return;
-			}
-		}
 
 
 		if (app_nav_target && (app_nav_target.route == 'deed') && (app_nav_target.reached == false)) {
@@ -286,35 +240,75 @@ class DeedCheckForm extends React.Component {
 
 				// check if deed is on sale
 				let isOnSale = false;
-				let saleprice = 0;
 				let listing_info = await mvcmydeed.getDeedSaleInfo(rootsessionuuid, walletuuid, currencyuuid, minter, deed).catch(err => {});
 
 				if (listing_info && (listing_info.onsale === true)) {
 					isOnSale = true;
-					saleprice = listing_info.saleprice;
 				}
 	
-				// check if is owner (should not be)
+				// check if is owner
 				let isOwner = false;
-				
-				let currentcard = await this._openCurrencyCard(currencyuuid).catch(err => {});
-				let card_balance_int = 0;
-				let card_balance_string = '';
+				let action = '';
+				let challenge_text = (params.challenge ? params.challenge : null);
+				let response_text = (params.response ? params.response : null);
+				let ownership_proof = null;
 
-				if (currentcard) {
+				let deedcard = await this._getDeedOwningCard(currencyuuid, minter, deed).catch(err => {});
+
+				if (deedcard) {
 					isOwner = true;
-					let pos = await mvcmypwa.getCurrencyPosition(rootsessionuuid, walletuuid, currencyuuid, currentcard.uuid);
-			
-					if (pos !== undefined) {
-						card_balance_int = await pos.toInteger();
-						card_balance_string = await mvcmypwa.formatCurrencyAmount(rootsessionuuid, currencyuuid, pos);
+				}
+
+				let currentcard = await this._openCurrencyCard(currencyuuid).catch(err => {});
+
+				if (isOwner) {
+					if ((challenge_text) && (!response_text)) {
+						// we are challenged
+
+						// we build the response
+						response_text = await this.app.getCleanUrl();
+
+						response_text += '?route=deedview&action=check';
+						response_text += '&challenge=' + challenge_text;
+						response_text += '&response=' + await mvcmypwa.signString(rootsessionuuid, walletuuid, deedcard.uuid, challenge_text);
+				
+						response_text += '&ccy=' + this.deed.currencyuuid;
+						response_text += '&minter=' + this.deed.minter;
+						response_text += '&tokenid=' + this.deed.tokenid;
+
+						action = 'showing_response';
 					}
 				}
+				else {
+					if (challenge_text && response_text) {
+						// check response
+						let deedproxycard = await await mvcmypwa.getCurrencyCardWithAddress(rootsessionuuid, walletuuid, currency.uuid,
+																								deed.owner); // creates read-only card if necessary
+						let signed = await mvcmypwa.validateStringCardSignature(rootsessionuuid, walletuuid, deedproxycard.uuid, challenge_text, response_text);
+
+						if (signed) {
+							// check it's a proper challenges
+							let ischallenge = await this._isChallenge(challenge_text);
+
+							if (ischallenge)
+								ownership_proof = 'success';
+							else
+								ownership_proof = 'maybe';
+						}
+						else {
+							ownership_proof = 'failure';
+						}
+
+					}
+	
+				}
+
 
 				this._setState({currency, mintername, 
 					isOwner,
-					currentcard, card_balance_int, card_balance_string,
-					isOnSale, saleprice,
+					currentcard,
+					isOnSale,
+					action, challenge_text, response_text, ownership_proof,
 					registration_text, sharelink});
 
 				dataobj.viewed = true;
@@ -348,88 +342,6 @@ class DeedCheckForm extends React.Component {
 	
 	
 	// user actions
-	async onBuy() {
-		console.log('onBuy pressed!');
-		
-		let mvcmypwa = this.getMvcMyPWAObject();
-		let mvcmydeed = this.getMvcMyDeedObject();
-
-		let rootsessionuuid = this.props.rootsessionuuid;
-		let walletuuid = this.props.currentwalletuuid;
-		
-		let wallet;
-		let carduuid;
-		let card;
-
-		let {currency, saleprice, remotewallet, rpc, currentcard, signingkey} =this.state;
-
-		let remoteaccount;
-
-		this._setState({processing: true});
-
-		try {
-			// get wallet details
-			wallet = await mvcmypwa.getWalletInfo(rootsessionuuid, walletuuid);
-
-			if (currentcard) {
-				card = currentcard;
-				carduuid = currentcard.uuid;
-			}
-			else {
-				if (signingkey) {
-					let currencyuuid = currency.uuid;
-					let options = {maincard: true, allow_readonly: true};
-		
-					card = await this.app.createCurrencyCard(currencyuuid, signingkey, options)
-					.catch(err => {
-						console.log('error in ClauseCreateForm.onSubmit: ' + err);
-					});
-	
-					if (!card) {
-						this.app.alert('could not create card from private key');
-						this._setState({processing: false});
-						return;
-					}
-				}
-				else {
-					this.app.alert('You need to provide your private key for ' + currency.name + ' in order to being able to transfer this deed');
-					this._setState({processing: false});
-					return;
-				}
-		
-			}
-
-			if (remotewallet === true) {
-				// we are connected and asked to execute transactions on remote wallet
-				let connection = this._getRemoteConnectionFromRpc(rpc);
-				remoteaccount = (connection ? connection.account : null);
-
-				if (!remoteaccount) {
-					this.app.alert('You need to be connected to a remote wallet');
-					this._setState({processing: false});
-					return;
-				}
-
-				// get card for remoteaccount
-				currentcard = await mvcmypwa.getCurrencyCardWithAddress(rootsessionuuid, walletuuid, currency.uuid,
-					remoteaccount); // creates read-only card if necessary
-			}
-
-			// send the buy transaction
-			let minter = this.minter;
-			let deed = this.deed;
-
-		}
-		catch(e) {
-			console.log('exception in onBuy: ' + e);
-			this.app.error('exception in onBuy: ' + e);
-
-			this.app.alert('could not set price of deed')
-		}
-
-		this._setState({processing: false});
-	}
-
 	async onBack() {
 		console.log('onBack pressed!');
 
@@ -441,6 +353,102 @@ class DeedCheckForm extends React.Component {
 		let params = {action: 'view', currencyuuid, txhash, address, tokenid, dataobject: this.deed};
 
 		this.app.gotoRoute('deed', params);
+	}
+
+	async _getNewChallenge() {
+		let challenge = await this.app.guid();
+
+		let challenges = this.app.getVariable('deed_challenges');
+
+		if (!challenges) {
+			challenges = [];
+			this.app.setVariable('deed_challenges', challenges);
+		}
+
+		challenges.push(challenge);
+
+		return challenge;
+	}
+
+	async _isChallenge(challenge) {
+		if (!challenge)
+			return false;
+
+		let challenges = this.app.getVariable('deed_challenges');
+
+		if (!challenges) {
+			challenges = [];
+			this.app.setVariable('deed_challenges', challenges);
+		}
+
+		return challenges.includes(challenge);
+	}
+
+
+	async onBuildQRCodeChallenge() {
+		console.log('onBuildQRCodeChallenge pressed!');
+
+		try {
+			let challenge_text = await this.app.getCleanUrl();
+
+			challenge_text += '?route=deedview&action=check';
+			challenge_text += '&challenge=' + await this._getNewChallenge();
+	
+			challenge_text += '&ccy=' + this.deed.currencyuuid;
+			challenge_text += '&minter=' + this.deed.minter;
+			challenge_text += '&tokenid=' + this.deed.tokenid;
+	
+			this._setState({ownership_proof: null, action: 'asking_challenge', challenge_text});
+		}
+		catch(e) {
+			console.log('exception in onBuildQRCodeChallenge' + e);
+		}
+	}
+
+	async onScanQRCodeChallenge()  {
+		console.log('onScanQRCodeChallenge pressed!');
+
+		this._setState({ownership_proof: null, action: 'reading_challenge'});
+	}
+
+	async onBuildQRCodeResponse() {
+		console.log('onBuildQRCodeResponse pressed!');
+
+		this._setState({ownership_proof: null, action: 'showing_response'});
+	}
+
+	async onScanQRCodeResponse() {
+		console.log('onScanQRCodeResponse pressed!');
+
+		this._setState({ownership_proof: null, action: 'reading_response'});
+	}
+
+	async onRead(result, error) {
+		try {
+			if (!!result) {
+				let url = result.text;
+				let isUrl = await this._isValidUrl(url);
+				
+				if (isUrl) {
+					let _cr = '\r\n';
+					let message = 'Go to? ' + _cr + _cr + url;
+	
+					let choice = await this._confirm(message);
+	
+					if (choice) {
+						console.log('Jumping to ' + url);
+						await this.app.gotoUrl(url);
+					}
+				}
+				else {
+					this.app.alert('Could not read a proper url!')
+				}
+				
+			}
+		}
+		catch(e) {
+			console.log('exception in onRead' + e);
+		}
 	}
 
 
@@ -494,79 +502,105 @@ class DeedCheckForm extends React.Component {
 
 	
 	// rendering
-	renderDeedCardPart() {
-		let { currency, remotewallet, connection, currentcard, signingkey, card_balance_string } = this.state;
+	renderQRCodePart() {
+		let {ownership_proof, action, challenge_text, response_text} = this.state;
 
-		return (
-			<span>
-				{( remotewallet !== true ?
-					(currentcard ?
-					<FormGroup className="CurrencyCard" controlId="currencycard">
-						<span className="CardIconCol">
-							<CurrencyCardIcon
-								app={this.app}
-								currency={currency}
-								card={currentcard}
-							/>
-						</span>
-						<span className="CardBalanceCol">
-							<FormLabel>Your Balance</FormLabel>
-							<FormControl
-								className="CardBalanceCol"
-								disabled
-								autoFocus
-								type="text"
-								value={card_balance_string}
-							/>
-						</span>
-					</FormGroup> :
-					<FormGroup controlId="signingkey">
-						<FormLabel>'Your Private Key '{(currency && currency.name ? 'for ' + currency.name : '')}</FormLabel>
-						<FormGroup>
-							<FormControl
-								autoFocus
-								type="text"
-								value={(signingkey ? signingkey : '')}
-								onChange={e => this._setState({signingkey: e.target.value})}
-							/>
-						</FormGroup>
-					</FormGroup>) :
-
-					<FormGroup className="CurrencyCard" controlId="remotewallet">
-					<span className="CardIconCol">
-						<RemoteWalletIcon
-								app={this.app}
-								currency={currency}
-								connection={connection}
-							/>
-					</span>
-					<span className="CardBalanceCol">
-						<FormLabel>Balance</FormLabel>
-						<FormControl
-							className="CardBalanceCol"
-							disabled
-							autoFocus
-							type="text"
-							value={card_balance_string}
+		if (ownership_proof) {
+			switch(ownership_proof) {
+				case 'success':
+					return (
+						<div className="OwnershipTrue">
+							Correspondent is the rightful owner!
+						</div>
+					);
+				case 'failure':
+					return (
+						<div className="OwnershipTrue">
+							Correspondent is NOT the owner!
+						</div>
+					);
+				case 'maybe':
+					return (
+						<div className="OwnershipUnsure">
+							Correspondent provided proof on a challenge, but we can not certify the challenge!
+						</div>
+					);				
+				default:
+					return (
+						<div className="OwnershipTrue">
+							Error happened!
+						</div>
+					);
+			}
+		}
+		else {
+			switch(action) {
+				case 'asking_challenge':
+					return (
+						<QRCodeReact
+						value={challenge_text}
+						renderas='svg'
+						size={360}
+						includeMargin={true}
 						/>
-					</span>
-					</FormGroup>
-				)}
-			</span>
+					);
+				case 'reading_challenge':
+					return (
+						<QRCodeReadForm app={this.app} onRead={this.onRead.bind(this)} />
+					);
+	
+				case 'showing_response':
+					return (
+						<QRCodeReact
+						value={response_text}
+						renderas='svg'
+						size={360}
+						includeMargin={true}
+						/>
+					);
+				case 'reading_response':
+					return (
+						<QRCodeReadForm app={this.app} onRead={this.onRead.bind(this)} />
+					);
+	
+			
+	
+				default:
+					return(<></>);
+			}
+		}
 
-		);
+
 	}
 
 	renderDeedButtons() {
-		let { loaded, isOwner, isOnSale} = this.state;
+		let { loaded, isOwner} = this.state;
 
 		if (loaded) {
 			return(
 				<div>
+				{(isOwner ?
+				<>
 				<span>
-				<Button onClick={this.onBuy.bind(this)} disabled={(isOnSale ? false : true)} type="submit">
-				Buy</Button>
+				<Button  className="DeedButton" onClick={this.onBuildQRCodeResponse.bind(this)} type="submit">
+				Build QR Code</Button>
 				</span>
+				<span>
+				<Button className="DeedButton" onClick={this.onScanQRCodeChallenge.bind(this)} type="submit">
+				Read Challenge</Button>
+				</span>
+				</>	:
+				<>
+				<span>
+				<Button  className="DeedButton" onClick={this.onBuildQRCodeChallenge.bind(this)} type="submit">
+				Build Challenge</Button>
+				</span>				
+				<span>
+				<Button className="DeedButton" onClick={this.onScanQRCodeResponse.bind(this)} type="submit">
+				Read Response</Button>
+				</span>
+				</> 
+				)}
 				</div>
 			);
 		}
@@ -574,7 +608,12 @@ class DeedCheckForm extends React.Component {
 			return(	
 				<div>
 				<span>
-				<Button disabled type="submit">
+				<Button className="DeedButton" disabled type="submit">
+					loading...
+				</Button>
+				</span>
+				<span>
+				<Button className="DeedButton" disabled type="submit">
 					loading...
 				</Button>
 				</span>
@@ -584,7 +623,7 @@ class DeedCheckForm extends React.Component {
 	}
 
 	renderDeedCheckForm() {
-		let { mintername, title, description, currency, registration_text, message_text, sharelinkmessage, sharelink, saleprice, external_url } = this.state;
+		let { mintername, title, description, ownership_proof, action, registration_text, message_text, sharelinkmessage, sharelink, external_url } = this.state;
 		
 		return (
 			<div className="Form">
@@ -610,30 +649,24 @@ class DeedCheckForm extends React.Component {
 				  />
 				</FormGroup>
 
-				<FormGroup controlId="description">
-				  <FormLabel>Description</FormLabel>
-				  <FormControl 
-					disabled
-					as="textarea" 
-					rows="5" 
-					autoFocus
-					type="text"
-					value={description}
-					onChange={e => this._setState({description: e.target.value})}
-				  />
-				</FormGroup>
+				{(!ownership_proof && (!action || !action.length) ?
+ 				<FormGroup controlId="description">
+				 <FormLabel>Description</FormLabel>
+				 <FormControl 
+				   disabled
+				   as="textarea" 
+				   rows="5" 
+				   autoFocus
+				   type="text"
+				   value={description}
+				   onChange={e => this._setState({description: e.target.value})}
+				 />
+				</FormGroup> :
+				this.renderQRCodePart()
+				)}
 
-				{this.renderDeedCardPart()}
-				
-				<FormGroup controlId="title">
-				  <FormLabel>Sale price is</FormLabel>
-				  <FormControl
-					autoFocus
-					type="text"
-					value={saleprice}
-					onChange={e => this._setState({saleprice: e.target.value})}
-				  />
-				</FormGroup>
+				{this.renderDeedButtons()}
+
 
 				<FormGroup controlId="asseturl">
 				  <FormLabel>Asset url</FormLabel>
@@ -655,8 +688,6 @@ class DeedCheckForm extends React.Component {
 					<span className="ShareIcon" onClick={this.onShareLinkClick.bind(this)}><FontAwesomeIcon icon={faCopy} /></span>
 					</div>
 				</div>
-
-				{this.renderDeedButtons()}
 
 				<div className="TextBox">
 				  {message_text}

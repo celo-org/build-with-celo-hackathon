@@ -249,6 +249,16 @@ class DeedView extends React.Component {
 		return true;
 	}
 
+	async onCheckOwnership() {
+		console.log('onTransfer pressed!');
+		
+		let params = {action: 'check', currencyuuid: this.dataobject.currencyuuid, txhash: this.dataobject.txhash, address: this.deed.minter, tokenid: this.deed.tokenid, dataobject: this.deed};
+
+		await this.app.gotoRoute('deed', params);		
+		
+		return true;
+	}
+
 	async onOfferOnSale() {
 		console.log('onOfferOnSale pressed!');
 		
@@ -333,13 +343,17 @@ class DeedView extends React.Component {
 				type="submit">
 				Add a clause</Button>
 				</span>
+
 				<span>
+				{(isOwner ?
 				<Button className="DeedButton" onClick={this.onTransfer.bind(this)} 
-				disabled={(isOwner ? false : true)} 
-				variant={(isOwner ? "primary" : "secondary")} 
 				type="submit">
-				Transfer</Button>
+				Transfer</Button> :
+				<Button className="DeedButton" onClick={this.onCheckOwnership.bind(this)} 
+				type="submit">
+				Check</Button>)}
 				</span>
+
 				<span>
 				{(isOnSale ? 
 				<Button className="SellDeedButton" onClick={this.onBuy.bind(this)} 

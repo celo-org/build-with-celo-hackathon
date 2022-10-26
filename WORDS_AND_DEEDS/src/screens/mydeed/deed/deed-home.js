@@ -51,7 +51,7 @@ class DeedHomeScreen extends React.Component {
 
 		if (app_nav_target && (app_nav_target.route == 'deedview')) {
 			// particular re-entry
-			// we re-set to reserved routes and params that are forbidden in Root._gotoUrl
+			// we redirect to reserved routes and set params that are also reserved in Root._gotoUrl
 
 			// check wallet is unlocked
 			let unlocked = await this.app.checkWalletUnlocked()
@@ -66,16 +66,22 @@ class DeedHomeScreen extends React.Component {
 
 			let walletuuid = this.props.currentwalletuuid;
 
-			var params = app_nav_target.params;
-
-			app_nav_target.route = 'deed';
+			let params = Object.assign({}, app_nav_target.params)
 
 			if (params && !params.dataobject) {
 				let currencyuuid = params.ccy;
+				let minteraddress = params.minter;
 				let cardaddress = params.card;
 				let tokenid = params.tokenid;
 
-				let minter = await mvcmypwa.fetchDeedMinterFromOwner(rootsessionuuid, walletuuid, currencyuuid, cardaddress).catch(err => {});
+				let minter;
+				
+				if (minteraddress) {
+					minter = await mvcmypwa.fetchDeedMinterFromAddress(rootsessionuuid, walletuuid, currencyuuid, minteraddress).catch(err => {});
+				}
+				else if (cardaddress) {
+					minter = await mvcmypwa.fetchDeedMinterFromOwner(rootsessionuuid, walletuuid, currencyuuid, cardaddress).catch(err => {});
+				}
 
 				if (minter) {
 					let dataobject = await mvcmypwa.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid)
@@ -83,12 +89,16 @@ class DeedHomeScreen extends React.Component {
 						console.log('error in DeedClient._getDataObjectFromCard:' + err);
 					});
 	
-					params.dataobject = dataobject;
 					params.currencyuuid = currencyuuid;
+					params.dataobject = dataobject;
+					params.txhash = dataobject.txhash;
 					params.address = minter.address;
 				}
 			}
-			
+
+			await this.app.gotoRoute('deed', params);		
+	
+			return;
 		}
 
 
