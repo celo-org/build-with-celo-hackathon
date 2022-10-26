@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Nethereum.Util" Version="4.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Nomis.Celoscan.Interfaces\Nomis.Celoscan.Interfaces.csproj" />
   </ItemGroup>
 
