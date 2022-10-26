@@ -149,3 +149,6 @@ const ForwarderAbi = [
     type: "function",
   },
 ]
+module.exports = {
+  ForwarderAbi,
+}

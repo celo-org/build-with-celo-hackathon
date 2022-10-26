@@ -6,7 +6,6 @@ const {
 
 const { ForwarderAbi } = require("../../src/forwarder")
 const ForwarderAddress = require("../../deploy.json").MinimalForwarder
-const VaultAddress = require("../../deploy.json").Vault
 
 async function relay(forwarder, request, signature, whitelist) {
   // Decide if we want to relay this request based on a whitelist
@@ -26,7 +25,7 @@ async function handler(event) {
   // Parse webhook payload
   if (!event.request || !event.request.body) throw new Error(`Missing payload`)
   const { request, signature } = event.request.body
-  console.log(`Relaying`, request)
+  console.log(`Relaying`, request, signature)
 
   // Initialize Relayer provider and signer, and forwarder contract
   const credentials = { ...event }
