@@ -3,6 +3,8 @@ import Onboarding from "./pages/Onboarding";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Chapter from "./pages/Chapter";
+import Funders from "./pages/Funders";
+
 import WalletModal from "./components/Wallet/Modal";
 import { useSession } from "./utils/hooks";
 import { useState } from "react";
@@ -63,6 +65,7 @@ export default function App() {
         <WalletModal />
         <Routes>
           <Route path="/" element={<Start />} />
+          <Route path="/funders" element={<Funders />} />
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path={`/chapters/:chapterId`} element={<Chapter />} />
