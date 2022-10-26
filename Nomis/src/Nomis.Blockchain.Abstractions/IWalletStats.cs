@@ -1,14 +1,23 @@
-﻿namespace Nomis.Blockchain.Abstractions
+﻿using Nomis.Blockchain.Abstractions.Models;
+
+namespace Nomis.Blockchain.Abstractions
 {
     /// <summary>
     /// Wallet stats.
     /// </summary>
-    public interface IWalletStats
+    /// <typeparam name="TTransactionIntervalData"><see cref="ITransactionIntervalData"/>.</typeparam>
+    public interface IWalletStats<TTransactionIntervalData>
+        where TTransactionIntervalData : class, ITransactionIntervalData
     {
         /// <summary>
         /// Wallet balance (Native token).
         /// </summary>
         public decimal Balance { get; set; }
+
+        /// <summary>
+        /// Wallet balance (USD).
+        /// </summary>
+        public decimal BalanceUSD { get; set; }
 
         /// <summary>
         /// Wallet age (months).
@@ -44,6 +53,21 @@
         /// The movement of funds on the wallet (Native token).
         /// </summary>
         public decimal WalletTurnover { get; set; }
+
+        /// <summary>
+        /// The intervals of funds movements on the wallet.
+        /// </summary>
+        public IEnumerable<TTransactionIntervalData>? TurnoverIntervals { get; set; }
+
+        /// <summary>
+        /// The balance change value in the last month (Native token).
+        /// </summary>
+        public decimal BalanceChangeInLastMonth { get; set; }
+
+        /// <summary>
+        /// The balance change value in the last year (Native token).
+        /// </summary>
+        public decimal BalanceChangeInLastYear { get; set; }
 
         /// <summary>
         /// Total NFTs on wallet (number).
@@ -84,5 +108,10 @@
         /// Value of all holding tokens (number).
         /// </summary>
         public int TokensHolding { get; set; }
+
+        /// <summary>
+        /// Wallet stats descriptions.
+        /// </summary>
+        public Dictionary<string, PropertyData> StatsDescriptions { get; }
     }
 }
