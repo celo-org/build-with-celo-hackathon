@@ -7,6 +7,9 @@
 
 import Foundation
 
+enum CusdMethods:String {
+    case balanceOf = "balanceOf"
+}
 
 enum RideManagerMethods:String {
     case getActiveRide = "getActiveRide"

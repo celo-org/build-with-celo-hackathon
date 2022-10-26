@@ -173,21 +173,21 @@ let rideManagerAbi =
     },
     {
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_startingRate",
-          "type": "uint256"
-        },
-        {
-          "internalType": "string",
-          "name": "_carAssetUrl",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "_profileAssetUrl",
-          "type": "string"
-        }
+              {
+                "internalType": "uint256",
+                "name": "_startingRate",
+                "type": "uint256"
+              },
+              {
+                "internalType": "string",
+                "name": "_carAssetUrl",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "_profileAssetUrl",
+                "type": "string"
+              }
       ],
       "name": "addDriver",
       "outputs": [],

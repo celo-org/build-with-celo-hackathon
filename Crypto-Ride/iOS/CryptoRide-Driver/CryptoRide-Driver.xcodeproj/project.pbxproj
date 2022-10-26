@@ -8,6 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		2BBF3A5F4368EAFC0B13F337 /* Pods_CryptoRide_DriverTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7236A3BFB4FC237F26321A8 /* Pods_CryptoRide_DriverTests.framework */; };
+		30A6EC062905A3C6007830FB /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC052905A3C6007830FB /* LoginView.swift */; };
+		30A6EC082905A60D007830FB /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC072905A60D007830FB /* LoginViewModel.swift */; };
+		30A6EC0C2905A872007830FB /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC0B2905A872007830FB /* Credentials.swift */; };
+		30A6EC0E2905AB20007830FB /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC0D2905AB20007830FB /* Authentication.swift */; };
+		30A6EC1129064D49007830FB /* ProfileRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC1029064D49007830FB /* ProfileRegistration.swift */; };
+		30A6EC1329064D8E007830FB /* CarRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC1229064D8E007830FB /* CarRegistration.swift */; };
+		30A6EC1529064DE0007830FB /* RateRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC1429064DE0007830FB /* RateRegistration.swift */; };
+		30A6EC172906556C007830FB /* FundRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC162906556C007830FB /* FundRegistration.swift */; };
+		30A6EC19290662A8007830FB /* SendRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC18290662A8007830FB /* SendRegistration.swift */; };
+		30A6EC1B29071DA0007830FB /* WebSockets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC1A29071DA0007830FB /* WebSockets.swift */; };
+		30A6EC1D29071DD0007830FB /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC1C29071DD0007830FB /* Events.swift */; };
 		30CAE5BC29033B2B001271FB /* CryptoRide_DriverApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAE5BB29033B2B001271FB /* CryptoRide_DriverApp.swift */; };
 		30CAE5BE29033B2B001271FB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAE5BD29033B2B001271FB /* ContentView.swift */; };
 		30CAE5C029033B2C001271FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30CAE5BF29033B2C001271FB /* Assets.xcassets */; };
@@ -53,6 +64,17 @@
 
 /* Begin PBXFileReference section */
 		1607254953683559F0AA7E19 /* Pods-CryptoRide-Driver-CryptoRide-DriverUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoRide-Driver-CryptoRide-DriverUITests.debug.xcconfig"; path = "Target Support Files/Pods-CryptoRide-Driver-CryptoRide-DriverUITests/Pods-CryptoRide-Driver-CryptoRide-DriverUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		30A6EC052905A3C6007830FB /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		30A6EC072905A60D007830FB /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		30A6EC0B2905A872007830FB /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
+		30A6EC0D2905AB20007830FB /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
+		30A6EC1029064D49007830FB /* ProfileRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRegistration.swift; sourceTree = "<group>"; };
+		30A6EC1229064D8E007830FB /* CarRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarRegistration.swift; sourceTree = "<group>"; };
+		30A6EC1429064DE0007830FB /* RateRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateRegistration.swift; sourceTree = "<group>"; };
+		30A6EC162906556C007830FB /* FundRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FundRegistration.swift; sourceTree = "<group>"; };
+		30A6EC18290662A8007830FB /* SendRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendRegistration.swift; sourceTree = "<group>"; };
+		30A6EC1A29071DA0007830FB /* WebSockets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSockets.swift; sourceTree = "<group>"; };
+		30A6EC1C29071DD0007830FB /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
 		30CAE5B829033B2B001271FB /* CryptoRide-Driver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CryptoRide-Driver.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		30CAE5BB29033B2B001271FB /* CryptoRide_DriverApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoRide_DriverApp.swift; sourceTree = "<group>"; };
 		30CAE5BD29033B2B001271FB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -117,6 +139,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		30A6EC042905A3B2007830FB /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				30A6EC052905A3C6007830FB /* LoginView.swift */,
+				30A6EC072905A60D007830FB /* LoginViewModel.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		30A6EC0F29064D13007830FB /* Registration */ = {
+			isa = PBXGroup;
+			children = (
+				30A6EC1029064D49007830FB /* ProfileRegistration.swift */,
+				30A6EC1229064D8E007830FB /* CarRegistration.swift */,
+				30A6EC1429064DE0007830FB /* RateRegistration.swift */,
+				30A6EC162906556C007830FB /* FundRegistration.swift */,
+				30A6EC18290662A8007830FB /* SendRegistration.swift */,
+			);
+			path = Registration;
+			sourceTree = "<group>";
+		};
 		30CAE5AF29033B2B001271FB = {
 			isa = PBXGroup;
 			children = (
@@ -148,10 +191,11 @@
 				30CAE61029034F7E001271FB /* Modules */,
 				30CAE5EB29033BA7001271FB /* Views */,
 				30CAE5EC29033BAC001271FB /* Services */,
-				30CAE5BB29033B2B001271FB /* CryptoRide_DriverApp.swift */,
 				30CAE5BD29033B2B001271FB /* ContentView.swift */,
 				30CAE5BF29033B2C001271FB /* Assets.xcassets */,
 				30CAE5C129033B2C001271FB /* Preview Content */,
+				30A6EC0D2905AB20007830FB /* Authentication.swift */,
+				30CAE5BB29033B2B001271FB /* CryptoRide_DriverApp.swift */,
 			);
 			path = "CryptoRide-Driver";
 			sourceTree = "<group>";
@@ -190,6 +234,7 @@
 				30CAE5F329033BEF001271FB /* Wallet.swift */,
 				30CAE5F529033BF8001271FB /* Methods.swift */,
 				30CAE5F729033C02001271FB /* Contracts.swift */,
+				30A6EC1C29071DD0007830FB /* Events.swift */,
 			);
 			path = Contract;
 			sourceTree = "<group>";
@@ -197,6 +242,7 @@
 		30CAE5EB29033BA7001271FB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				30A6EC042905A3B2007830FB /* Login */,
 				30CAE60729034CF4001271FB /* Profile */,
 				30CAE5F929033C0F001271FB /* Map */,
 				30CAE605290342BA001271FB /* DriverRegistration.swift */,
@@ -210,6 +256,7 @@
 				30CAE5FC29033C2C001271FB /* LocationManager.swift */,
 				30CAE5FE29033C3A001271FB /* WalletServices.swift */,
 				30CAE60C29034E61001271FB /* ContractServices.swift */,
+				30A6EC1A29071DA0007830FB /* WebSockets.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -225,6 +272,7 @@
 		30CAE60729034CF4001271FB /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				30A6EC0F29064D13007830FB /* Registration */,
 				30CAE60829034D02001271FB /* ProfileView.swift */,
 				30CAE60A29034D10001271FB /* ProfileViewModel.swift */,
 			);
@@ -235,6 +283,7 @@
 			isa = PBXGroup;
 			children = (
 				30CAE60E29034F78001271FB /* ContractError.swift */,
+				30A6EC0B2905A872007830FB /* Credentials.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -503,17 +552,28 @@
 			files = (
 				30CAE5FF29033C3A001271FB /* WalletServices.swift in Sources */,
 				30CAE60929034D02001271FB /* ProfileView.swift in Sources */,
+				30A6EC0C2905A872007830FB /* Credentials.swift in Sources */,
 				30CAE5F429033BEF001271FB /* Wallet.swift in Sources */,
 				30CAE60D29034E61001271FB /* ContractServices.swift in Sources */,
 				30CAE5F629033BF8001271FB /* Methods.swift in Sources */,
+				30A6EC1D29071DD0007830FB /* Events.swift in Sources */,
 				30CAE5FD29033C2C001271FB /* LocationManager.swift in Sources */,
 				30CAE60F29034F78001271FB /* ContractError.swift in Sources */,
 				30CAE5F229033BE1001271FB /* Network.swift in Sources */,
+				30A6EC1329064D8E007830FB /* CarRegistration.swift in Sources */,
+				30A6EC1129064D49007830FB /* ProfileRegistration.swift in Sources */,
+				30A6EC082905A60D007830FB /* LoginViewModel.swift in Sources */,
 				30CAE60B29034D10001271FB /* ProfileViewModel.swift in Sources */,
 				30CAE5F829033C02001271FB /* Contracts.swift in Sources */,
+				30A6EC1529064DE0007830FB /* RateRegistration.swift in Sources */,
+				30A6EC062905A3C6007830FB /* LoginView.swift in Sources */,
 				30CAE5F029033BD8001271FB /* Abi.swift in Sources */,
+				30A6EC1B29071DA0007830FB /* WebSockets.swift in Sources */,
+				30A6EC172906556C007830FB /* FundRegistration.swift in Sources */,
+				30A6EC0E2905AB20007830FB /* Authentication.swift in Sources */,
 				30CAE5EE29033BD2001271FB /* Address.swift in Sources */,
 				30CAE5BE29033B2B001271FB /* ContentView.swift in Sources */,
+				30A6EC19290662A8007830FB /* SendRegistration.swift in Sources */,
 				30CAE606290342BA001271FB /* DriverRegistration.swift in Sources */,
 				30CAE5FB29033C1C001271FB /* MapView.swift in Sources */,
 				30CAE5BC29033B2B001271FB /* CryptoRide_DriverApp.swift in Sources */,
