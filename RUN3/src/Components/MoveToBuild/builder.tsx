@@ -3,39 +3,27 @@ import { View, Text } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE, Polyline } from 'react-native-maps'
 import { colors, globalStyles } from '../../utils/globalStyles'
 import * as Location from 'expo-location'
-import { Spinner, Button, Card } from '@ui-kitten/components'
+import { Spinner, Button } from '@ui-kitten/components'
+import { BuildForm } from './buildForm'
 import { styles } from './style'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
 export default function Builder() {
-  const [routeCoords, setRouteCoords] = useState<Location.LocationObjectCoords[]>([])
+  const [routeCoords, setRouteCoords] = useState<(Location.LocationObjectCoords & { id: number })[]>([])
   const [buildStarted, setBuildStarted] = useState(false)
+  const [showBuildForm, setShowBuildForm] = useState(false)
   const [loadingCalc, setLoadingCalc] = useState(false)
-
+  const [markerIndex, setMarkerIndex] = useState<number>(0)
   const addCoordToRoute = async () => {
     const currentCoord = await Location.getCurrentPositionAsync({ accuracy: Location.LocationAccuracy.Balanced })
-    setRouteCoords((prev) => [...prev, currentCoord.coords])
+    const index = routeCoords.findIndex(
+      (route) => route.latitude === currentCoord.coords.latitude && route.longitude === currentCoord.coords.longitude
+    )
+    if (index === -1) setRouteCoords((prev) => [...prev, { ...currentCoord.coords, id: Date.now() }])
   }
 
-  const recalculatePoint = async () => {
-    setLoadingCalc(true)
-    if (routeCoords.length) {
-      const currentCoord = await Location.getCurrentPositionAsync({ accuracy: Location.LocationAccuracy.High })
-      setRouteCoords((prev) => {
-        const temp = [...prev]
-        temp[temp.length - 1] = currentCoord.coords
-        return [...temp]
-      })
-    }
-    setLoadingCalc(false)
+  const closeForm = () => {
+    setShowBuildForm(false)
   }
-
-  const LoadingIndicator = (props: any) => (
-    <View style={[props.style, styles.indicator]}>
-      <Spinner size="small" />
-    </View>
-  )
 
   useEffect(() => {
     ;(async () => {
@@ -69,6 +57,7 @@ export default function Builder() {
           Warning: you don't have enough RUN3T to build this route
         </Text> */}
       </View>
+      {showBuildForm && <BuildForm closeForm={closeForm} />}
       <View>
         <MapView
           initialRegion={
@@ -82,49 +71,65 @@ export default function Builder() {
           provider={PROVIDER_GOOGLE}
           style={styles.map}
         >
-          {routeCoords.map((marker, index) => (
+          {routeCoords.map((marker) => (
             <Marker
-              key={index}
+              onDragStart={(e) => {
+                const coords = e.nativeEvent.coordinate
+                const index = routeCoords.findIndex(
+                  (route) => route.latitude === coords.latitude && route.longitude === coords.longitude
+                )
+                setMarkerIndex(index)
+                setLoadingCalc(true)
+              }}
+              onDragEnd={(e) => {
+                const coords = e.nativeEvent.coordinate
+                setRouteCoords((prev) => {
+                  const routes = [...prev]
+                  routes[markerIndex] = {
+                    ...routes[markerIndex],
+                    latitude: coords.latitude,
+                    longitude: coords.longitude,
+                  }
+
+                  return routes
+                })
+                setLoadingCalc(false)
+              }}
+              key={marker.id}
               coordinate={{
                 longitude: marker.longitude,
                 latitude: marker.latitude,
               }}
-              title="test"
-              description="desc"
+              draggable
+              tappable
+              title="Starting Point"
             />
           ))}
-          <Polyline tappable coordinates={routeCoords} strokeColor={colors.lightGreen} strokeWidth={5} />
+          <Polyline tappable coordinates={routeCoords} strokeColor={colors.primary} strokeWidth={4} />
         </MapView>
       </View>
-      <View style={styles.floatActions}>
-        <Button
-          accessoryLeft={loadingCalc ? LoadingIndicator : undefined}
-          style={[styles.btntFloat]}
-          onPress={recalculatePoint}
-          disabled={loadingCalc}
-          status="control"
-        >
-          RECALCULATE POINT
-        </Button>
-        {!buildStarted ? (
-          <Button
-            disabled={loadingCalc}
-            onPress={() => setBuildStarted(true)}
-            style={[styles.btntFloat, globalStyles.primaryBg]}
-          >
-            START BUILDING
-          </Button>
-        ) : (
-          <Button onPress={addCoordToRoute} disabled={loadingCalc} style={[styles.btntFloat, globalStyles.primaryBg]}>
-            SAVE POINT
-          </Button>
-        )}
-        {routeCoords.length > 1 && (
-          <Button disabled={loadingCalc} style={[styles.btntFloat, globalStyles.secondaryBg]}>
-            BUILD ROUTE
-          </Button>
-        )}
-      </View>
+      {!loadingCalc && (
+        <View style={styles.floatActions}>
+          {!buildStarted ? (
+            <Button
+              disabled={loadingCalc}
+              onPress={() => setBuildStarted(true)}
+              style={[styles.btntFloat, globalStyles.primaryBg]}
+            >
+              START BUILDING
+            </Button>
+          ) : (
+            <Button onPress={addCoordToRoute} style={[styles.btntFloat, globalStyles.primaryBg]}>
+              SAVE POINT
+            </Button>
+          )}
+          {routeCoords.length > 1 && (
+            <Button onPress={() => setShowBuildForm(true)} style={[styles.btntFloat, globalStyles.secondaryBg]}>
+              BUILD ROUTE
+            </Button>
+          )}
+        </View>
+      )}
     </View>
   )
 }

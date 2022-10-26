@@ -25,6 +25,7 @@ export const styles = StyleSheet.create({
   btntFloat: {
     width: 250,
     marginBottom: 22,
+    opacity: 0.8,
   },
   floatingBox: {
     position: 'absolute',
@@ -59,5 +60,21 @@ export const styles = StyleSheet.create({
   indicator: {
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  cardForm: {
+    position: 'absolute',
+    zIndex: 2,
+    width: '100%',
+  },
+  formInput: {
+    width: '100%',
+    marginVertical: 12,
+  },
+  footerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  footerControl: {
+    marginHorizontal: 2,
   },
 })
