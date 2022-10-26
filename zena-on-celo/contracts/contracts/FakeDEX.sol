@@ -20,3 +20,4 @@ contract FakeDEX {
                 _token.transfer(_zena, _amount);
         emit Bought(_amount);
     }
+}
