@@ -1,12 +1,36 @@
-import { Box, Flex, FormLabel, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, FormLabel, Image, Spinner, Text } from "@chakra-ui/react";
 import CustomButton from "../components/CustomButton/customButton";
 import TextInput from "../components/TextInputs/TextInput";
 import brandLogo from "../assets/icons/brand-logo-dark.svg";
 import PasswordInput from "../components/TextInputs/PasswordInput";
 import { Select } from "@chakra-ui/react";
 import { countries, userType } from "../utils/data";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, registerWithEmailAndPassword } from "../firebase";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [location, setLocation] = useState('');
+  const [password, setPassword] = useState('');
+  const [typeUser, setTypeUser] = useState('');
+  const [user, loading, error] = useAuthState(auth);
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    registerWithEmailAndPassword(name, email, password);
+  };
+
+  useEffect(() => {
+    if (loading) {
+      <Spinner />;
+    }
+    if (user) navigate("/login");
+  }, [user, loading]);
+  
   return (
     <Flex w="100%">
       <Box w="55%" className="main-bg" h="100vh">
@@ -25,18 +49,22 @@ const SignUp = () => {
           <Text color="brand.dark" fontWeight="extrabold" fontSize="25px">
             Create an Account Here
           </Text>
-          <form>
+          <form onSubmit={handleSubmit}>
             <TextInput
               type="text"
               placeholder="Enter your full name"
               label="Full Name"
               color="brand.dark"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
             <TextInput
               type="email"
               placeholder="Enter your email"
               label="Email"
               color="brand.dark"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <FormLabel
               mt="20px"
@@ -53,6 +81,8 @@ const SignUp = () => {
               color="brand.dark"
               h="48px"
               fontSize="14px"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
             >
               {countries.map((res) => (
                 <option value={res}>{res}</option>
@@ -73,6 +103,8 @@ const SignUp = () => {
               color="brand.dark"
               h="48px"
               fontSize="14px"
+              value={typeUser}
+              onChange={(e) => setTypeUser(e.target.value)}
             >
               {userType.map((res) => (
                 <option value={res}>{res}</option>
@@ -83,6 +115,8 @@ const SignUp = () => {
               placeholder="Enter your password"
               label="Password"
               color="brand.dark"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <CustomButton
               m="30px 0"

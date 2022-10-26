@@ -2,15 +2,46 @@ import { Box, Flex, Image, SimpleGrid, Text } from "@chakra-ui/react";
 import AuthNav from "../components/Navbar/AuthNav";
 import ImageBg from "../assets/images/trees-bg.jpeg";
 import CustomButton from "../components/CustomButton/customButton";
-import { locations } from "../utils/data";
+import { myTrees, locations } from "../utils/data";
 import { location } from "../assets/svgs/svg";
+import { auth, db, logout } from "../firebase";
+import { query, collection, getDocs, where } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toaster } from "evergreen-ui";
 
 const Home = () => {
+    const [user, loading, error] = useAuthState(auth);
+    const [name, setName] = useState("");
+    const navigate = useNavigate();
+
+    const fetchUserName = async () => {
+        try {
+            const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+            const doc = await getDocs(q);
+            console.log(doc);
+            const data = doc.docs[0].data();
+            setName(data.name);
+        } catch (error) {
+            toaster.danger('An error occured while fetching user data');
+        }
+    };
+
+    useEffect(() => {
+        if (loading) return;
+        if (!user) return navigate("/");
+        fetchUserName();
+    }, [user, loading]);
+
     return (
         <Box>
             <AuthNav />
             <Box p="20px">
                 <Image src={ImageBg} borderRadius="8px" h="400px" w="100%" objectFit="cover" alt="bg" />
+                <Box mt="20px">
+                    <Text fontSize="20px" color="brand.orange">Welcome back {name}</Text>
+                </Box>
 
                 {/* Locations */}
                 <Box mt="40px" px="40px">
@@ -26,9 +57,11 @@ const Home = () => {
                                     <Text color="brand.dark" fontWeight="bold">{location.country}</Text>
                                     <Text mt="8px" color="brand.lightGreen" fontSize="14px">{location.figure} trees planted</Text>
                                     <Box mt="20px">
-                                        <CustomButton border="1px solid #18541A" bg="none" color="brand.dark" hoverColor="brand.white" hoverBg="brand.lightGreen">
-                                            <Text fontWeight="medium">Plant here</Text>
-                                        </CustomButton>
+                                        <a href={location.route}>
+                                            <CustomButton border="1px solid #18541A" bg="none" color="brand.dark" hoverColor="brand.white" hoverBg="brand.lightGreen">
+                                                <Text fontWeight="medium">Plant here</Text>
+                                            </CustomButton>
+                                        </a>
                                     </Box>
                                 </Box>
                             </Box>
@@ -42,15 +75,16 @@ const Home = () => {
                         <Text fontSize="25px" fontWeight="normal">My Trees</Text>
                     </Flex>
                     <SimpleGrid columns={4} gap="38">
-                        {locations.map((location) => (
-                            <Box key={location.country} mt="10px" borderRadius="8px" style={{ boxShadow: "rgba(0, 0, 0, 0.04) 0px 3px 5px" }} minH="310px">
-                                <Image src={location.image} borderTopRightRadius="8px" borderTopLeftRadius="8px" w="100%" objectFit="cover" h="400px" maxH="200px" alt={location.country} />
+                        {myTrees.map((myTree) => (
+                            <Box key={myTree.type} mt="10px" borderRadius="8px" style={{ boxShadow: "rgba(0, 0, 0, 0.04) 0px 3px 5px" }} minH="310px">
+                                <Image src={myTree.image} borderTopRightRadius="8px" borderTopLeftRadius="8px" w="100%" objectFit="cover" h="400px" maxH="200px" alt={myTree.country} />
                                 <Box p="20px">
-                                    <Text color="brand.dark" fontWeight="bold">{location.country}</Text>
-                                    <Text mt="8px" color="brand.lightGreen" fontSize="14px">{location.figure} trees planted</Text>
+                                    <Text color="brand.dark" fontWeight="bold">{myTree.country}</Text>
+                                    <Text mt="8px" color="brand.lightGreen" fontSize="14px">{myTree.figure}</Text>
+                                    <Text mt="8px" color="brand.lightGreen" fontSize="14px">{myTree.type}</Text>
                                     <Box mt="20px">
                                         <CustomButton border="1px solid #18541A" bg="none" color="brand.dark" hoverColor="brand.white" hoverBg="brand.lightGreen">
-                                            <Text fontWeight="medium">Plant here</Text>
+                                                <Text fontWeight="medium">View</Text>
                                         </CustomButton>
                                     </Box>
                                 </Box>

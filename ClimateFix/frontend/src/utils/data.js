@@ -4,6 +4,14 @@ import usa from "../assets/images/planting-trees.jpeg";
 import Turkey from "../assets/images/turkey.jpeg";
 import Ghana from "../assets/images/ghana.jpeg";
 import Mexico from "../assets/images/mexico.jpeg";
+import MyTree1 from "../assets/images/my-tree1.jpeg";
+import MyTree2 from "../assets/images/my-tree2.jpeg";
+import MyTree3 from "../assets/images/my-tree3.jpeg";
+import Expert1 from "../assets/images/expert-img.png";
+import Expert2 from "../assets/images/expert2.png";
+import Expert3 from "../assets/images/expert3.png";
+import Expert4 from "../assets/images/expert4.png";
+import Expert5 from "../assets/images/expert5.png";
 
 export const countries = [
   "Nigeria",
@@ -221,31 +229,132 @@ export const locations = [
   {
     image: Nigeria,
     country: "Nigeria",
-    figure: "12, 454"
+    figure: "12, 454",
+    route: "/plant-now"
   },
   {
     image: SouthAfrica,
     country: "South Africa",
-    figure: "5, 204"
+    figure: "5, 204",
+    route: "/plant-now"
   },
   {
     image: Mexico,
     country: "Mexico",
-    figure: "14, 719"
+    figure: "14, 719",
+    route: "/plant-now"
   },
   {
     image: Ghana,
     country: "Ghana",
-    figure: "2, 303"
+    figure: "2, 303",
+    route: "/plant-now"
   },
   {
     image: usa,
     country: "USA",
-    figure: "24, 843"
+    figure: "24, 843",
+    route: "/plant-now"
   },
   {
     image: Turkey,
     country: "Turkey",
-    figure: "4,923"
+    figure: "4,923",
+    route: "/plant-now"
+  },
+];
+
+export const myTrees = [
+  {
+    image: MyTree1,
+    country: "United Kingdom",
+    type: "Mahogany",
+  },
+  {
+    image: MyTree2,
+    country: "United Kingdom",
+    type: "Coast Redwood",
+  },
+  {
+    image: MyTree3,
+    country: "Sweden",
+    type: "Willow",
+  },
+];
+
+export const states = [
+  "Abia",
+  "Adamawa",
+  "Akwa Ibom",
+  "Anambra",
+  "Bauchi",
+  "Bayelsa",
+  "Benue",
+  "Borno",
+  "Cross River",
+  "Delta",
+  "Ebonyi",
+  "Edo",
+  "Ekiti",
+  "Enugu",
+  "FCT - Abuja",
+  "Gombe",
+  "Imo",
+  "Jigawa",
+  "Kaduna",
+  "Kano",
+  "Katsina",
+  "Kebbi",
+  "Kogi",
+  "Kwara",
+  "Lagos",
+  "Nasarawa",
+  "Niger",
+  "Ogun",
+  "Ondo",
+  "Osun",
+  "Oyo",
+  "Plateau",
+  "Rivers",
+  "Sokoto",
+  "Taraba",
+  "Yobe",
+  "Zamfara"
+];
+
+export const allTrees = [
+  "Mountain Fig", "Bush Fig", "Sycamore", "Gmelina Tree", "Jan Yaro", "Mahogany", "Bakin Faru", "Mango", "Moringa", "Cashew", "African Peach"
+];
+
+export const allExperts = [
+  {
+    name: "Chuks Dave",
+    email: "chuksdave@gmail.com",
+    title: "Mango Experts",
+    image: Expert1
+  },
+  {
+    name: "Danny Ace",
+    email: "danny@gmail.com",
+    title: "Mahogany Expert",
+    image: Expert2
+  },
+  {
+    name: "Hexdee",
+    email: "hexdee@gmail.com",
+    title: "Cashew Expert",
+    image: Expert3
+  },
+  {
+    name: "Jessica Jean",
+    email: "jessica@gmail.com",
+    title: "Moringa Expert",
+    image: Expert4
+  },
+  {
+    name: "Olalademi Asake",
+    email: "asake@gmail.com",
+    title: "African Peach Expert",
+    image: Expert5
   },
 ]

@@ -17,6 +17,8 @@ const TextInput = ({
   color,
   isReadOnly,
   hideIcon,
+  value,
+  onChange
 }) => {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(() => !show);
@@ -38,6 +40,8 @@ const TextInput = ({
           color={color}
           isReadOnly={isReadOnly}
           fontSize="14px"
+          onChange={onChange}
+          value={value}
         />
         {!hideIcon && (
           <InputRightElement

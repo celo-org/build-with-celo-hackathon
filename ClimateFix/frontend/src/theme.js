@@ -20,6 +20,8 @@ const colors = {
     dark: "#212529",
     secondary: "#C2E189",
     orange: "#FE9D1A",
+    gray: '#A2ADBE',
+    grey: '#F0F2F5',
   },
 };
 

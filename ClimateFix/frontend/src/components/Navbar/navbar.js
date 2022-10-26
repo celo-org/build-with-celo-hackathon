@@ -1,6 +1,6 @@
 import { Flex, Image, Text } from "@chakra-ui/react";
 import brandLogo from "../../assets/icons/brand-logo.svg";
-import {lockIcon} from "../../assets/svgs/svg";
+import { lockIcon } from "../../assets/svgs/svg";
 import CustomButton from "../CustomButton/customButton";
 
 const NavBar = () => {
@@ -13,7 +13,9 @@ const NavBar = () => {
       fontSize="14px"
     >
       <Flex alignItems="center" color="brand.white">
-        <Image src={brandLogo} alt="brand-logo" />
+        <a href="/">
+          <Image cursor="pointer" src={brandLogo} alt="brand-logo" />
+        </a>
         <Flex alignItems="center" ml="120px">
           <Text
             mr="50px"
@@ -23,16 +25,25 @@ const NavBar = () => {
           >
             How it Works
           </Text>
-          <Text style={{ transition: "all 0.8s ease" }} cursor="pointer" _hover={{ color: "brand.yellow" }}>
+          <Text
+            style={{ transition: "all 0.8s ease" }}
+            cursor="pointer"
+            _hover={{ color: "brand.yellow" }}
+          >
             About ClimateFix
           </Text>
         </Flex>
       </Flex>
       <Flex justifyContent="space-evenly" alignItems="center">
         <a href="/signup">
-            <CustomButton bg="brand.orange" hoverBg="brand.yellow" hoverColor="brand.green"  color="brand.white">
+          <CustomButton
+            bg="brand.orange"
+            hoverBg="brand.yellow"
+            hoverColor="brand.green"
+            color="brand.white"
+          >
             Sign Up
-            </CustomButton>
+          </CustomButton>
         </a>
         <a href="/login">
           <Flex
@@ -42,7 +53,12 @@ const NavBar = () => {
             ml="80px"
           >
             {lockIcon}
-            <Text ml="10px" color="white" _hover={{ color: "brand.yellow" }} style={{ transition: "all 0.8s ease" }}>
+            <Text
+              ml="10px"
+              color="white"
+              _hover={{ color: "brand.yellow" }}
+              style={{ transition: "all 0.8s ease" }}
+            >
               Login
             </Text>
           </Flex>

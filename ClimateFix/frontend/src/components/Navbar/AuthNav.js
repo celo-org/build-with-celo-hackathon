@@ -1,6 +1,7 @@
 import { Flex, Image, Text } from "@chakra-ui/react";
 import brandLogo from "../../assets/icons/brand-logo.svg";
 import {logoutIcon} from "../../assets/svgs/svg";
+import { logout } from "../../firebase";
 
 const AuthNav = () => {
     return (
@@ -12,16 +13,20 @@ const AuthNav = () => {
           fontSize="14px"
         >
           <Flex alignItems="center" color="brand.white">
-            <Image src={brandLogo} alt="brand-logo" />
+            <a href="/">
+              <Image cursor="pointer" src={brandLogo} alt="brand-logo" />
+            </a>
             <Flex alignItems="center" ml="120px">
-              <Text
-                mr="50px"
-                style={{ transition: "all 0.8s ease" }}
-                cursor="pointer"
-                _hover={{ color: "brand.yellow" }}
-              >
-                View Experts
-              </Text>
+              <a href="/experts">
+                <Text
+                  mr="50px"
+                  style={{ transition: "all 0.8s ease" }}
+                  cursor="pointer"
+                  _hover={{ color: "brand.yellow" }}
+                >
+                  View Experts
+                </Text>
+              </a>
               <Text mr="50px" style={{ transition: "all 0.8s ease" }} cursor="pointer" _hover={{ color: "brand.yellow" }}>
                 Market Place
               </Text>
@@ -30,8 +35,7 @@ const AuthNav = () => {
               </Text>
             </Flex>
           </Flex>
-          <Flex justifyContent="space-evenly" alignItems="center">
-            <a href="/login">
+          <Flex justifyContent="space-evenly" alignItems="center" onClick={logout}>
               <Flex
                 alignItems="center"
                 style={{ transition: "all 0.8s ease" }}
@@ -43,7 +47,6 @@ const AuthNav = () => {
                   Logout
                 </Text>
               </Flex>
-            </a>
           </Flex>
         </Flex>
       );
