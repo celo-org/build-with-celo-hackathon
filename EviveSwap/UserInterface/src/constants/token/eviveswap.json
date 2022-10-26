@@ -1,0 +1,63 @@
+{
+    "name": "EviveSwap Default List",
+    "timestamp": "2022-10-13T09:56:23Z",
+    "version": {
+      "major": 2,
+      "minor": 10,
+      "patch": 0
+    },
+    "tags": {},
+    "logoURI": "https://exchange.pancakeswap.finance/images/pancakeswap.png",
+    "keywords": ["evive", "default"],
+    "tokens": [
+      {
+        "name": "WBNB Token",
+        "symbol": "WBNB",
+        "address": "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+        "chainId": 56,
+        "decimals": 18,
+        "logoURI": "https://exchange.pancakeswap.finance/images/coins/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c.png"
+      },
+      {
+        "name": "Bakery Token",
+        "symbol": "BAKE",
+        "address": "0xe02df9e3e622debdd69fb838bb799e3f168902c5",
+        "chainId": 56,
+        "decimals": 18,
+        "logoURI": "https://exchange.pancakeswap.finance/images/coins/0xe02df9e3e622debdd69fb838bb799e3f168902c5.png"
+      },
+      {
+        "name": "BUSD Token",
+        "symbol": "BUSD",
+        "address": "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+        "chainId": 56,
+        "decimals": 18,
+        "logoURI": "https://exchange.pancakeswap.finance/images/coins/0xe9e7cea3dedca5984780bafc599bd69add087d56.png"
+      },
+      {
+        "name": "Ethereum Token",
+        "symbol": "ETH",
+        "address": "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
+        "chainId": 56,
+        "decimals": 18,
+        "logoURI": "https://exchange.pancakeswap.finance/images/coins/0x2170ed0880ac9a755fd29b2688956bd959f933f8.png"
+      },
+      {
+        "name": "BTCB Token",
+        "symbol": "BTCB",
+        "address": "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
+        "chainId": 56,
+        "decimals": 18,
+        "logoURI": "https://exchange.pancakeswap.finance/images/coins/0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c.png"
+      },
+      {
+        "name": "BAND Protocol Token",
+        "symbol": "BAND",
+        "address": "0xad6caeb32cd2c308980a548bd0bc5aa4306c6c18",
+        "chainId": 56,
+        "decimals": 18,
+        "logoURI": "https://exchange.pancakeswap.finance/images/coins/0xad6caeb32cd2c308980a548bd0bc5aa4306c6c18.png"
+      }
+    ]
+  }
+  
