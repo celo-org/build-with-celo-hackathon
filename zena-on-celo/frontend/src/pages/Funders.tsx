@@ -7,11 +7,11 @@ import { abi } from "../utils/abi";
 const Funders = () => {
   const { data: signer } = useSigner();
   const contract = new ethers.Contract(
-    "0xeF8f20f629A5b9637F7AB40a153890a54f5ece46",
+    "0xAfF16af16CE65B1dC308c53CA1dc65c39fD5F82A",
     abi
   );
 
-  const mint = async (event: any) => {
+  const buy = async (event: any) => {
     event.preventDefault();
     const amount = event.target[0].value;
     const tx = await contract
@@ -45,7 +45,7 @@ const Funders = () => {
                       sed diam nonumy eirmod tempor invidunt ut labore et dolore
                       magna aliquyam erat, sed diam voluptua
                     </p>
-                    <form onSubmit={mint}>
+                    <form onSubmit={buy}>
                       <input
                         required
                         step="0.01"

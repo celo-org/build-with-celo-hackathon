@@ -51,6 +51,16 @@ export default function App() {
                     </a>
                   </div>
                 </div>
+                <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+                  <div className="rounded-md shadow">
+                    <Link
+                      to={"/funders"}
+                      className="flex w-full items-center justify-center rounded-md border border-transparent bg-green px-8 py-3 text-base font-medium text-white hover:bg-green-medium md:py-4 md:px-10 md:text-lg"
+                    >
+                      Für Supporter
+                    </Link>
+                  </div>
+                </div>
               </div>
             </main>
           </div>

@@ -1,6 +1,6 @@
 import express from 'express';
 import { db } from './database/db.js'
-import { createWallet, getBalance, rewardBTC } from "./celoService.js";
+import { createWallet, getBalance, mintNFT } from "./celoService.js";
 import * as dotenv from 'dotenv'
 dotenv.config()
 
@@ -64,15 +64,26 @@ apiRouter.get('/users/:id/balance/:token', async (req, res) => {
     res.send(balance)
 })
 
-apiRouter.post('/users/:id/reward', async (req, res) => {
+// deprecated
+// apiRouter.post('/users/:id/reward', async (req, res) => {
+//     await db.read();
+//     const userId = req.params.id;
+//     const reward = req.body.reward;
+//     const user = db.data.users?.find(user => user.id === parseInt(userId))
+//     if (!reward) return res.send(400);
+//     const result = rewardBTC(user.pubKey, "0.01");
+//     if (result) return res.send(204);
+// })
+
+apiRouter.get('/users/:id/mintNFT', async (req, res) => {
     await db.read();
     const userId = req.params.id;
-    const reward = req.body.reward;
     const user = db.data.users?.find(user => user.id === parseInt(userId))
-    if (!reward) return res.send(400);
-    const result = rewardBTC(user.pubKey, "0.01");
-    if (result) return res.send(204);
+
+    const result = mintNFT(user.pubKey);
+    if (result) return res.sendStatus(204);
 })
+
 
 apiRouter.put('/users/:id', async (req, res) => {
     await db.read()
