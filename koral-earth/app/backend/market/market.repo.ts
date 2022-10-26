@@ -1,38 +1,29 @@
-import { Project } from './market.entity';
-import toucanProjects from '../shared/data/toucanProjects.json';
+import { TCO2Token } from './market.entity';
 import axios from 'axios';
+import { tco2Tokens } from './market.query';
+import toucanTco2Tokens from '../shared/data/toucanTco2Tokens.json';
 
-type ProjectsResponse = {
+type TCO2TokenResponse = {
   data: {
-    projects: Project[];
+    tco2Tokens: TCO2Token[];
   };
 };
 
-export const getProjects = async (): Promise<Project[]> => {
+export const getTokens = async (): Promise<TCO2Token[]> => {
   try {
-    const results = await axios.post<ProjectsResponse>(
+    const results = await axios.post<TCO2TokenResponse>(
       'https://api.thegraph.com/subgraphs/name/toucanprotocol/matic',
       {
-        query: `{
-        projects(where: {}) {
-          region
-          standard
-          methodology
-          projectId
-          vintages {
-            id
-          }
-        }
-      }`,
+        query: tco2Tokens,
         variables: null,
       }
     );
-    return results.data.data.projects;
+    return results.data.data.tco2Tokens;
   } catch (error) {
     console.log(
       'Getting projects failed! Defaulting to pre-fetched projects',
       error
     );
-    return toucanProjects.data.projects as Project[];
+    return toucanTco2Tokens.data.tco2Tokens as TCO2Token[];
   }
 };

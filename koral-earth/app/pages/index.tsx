@@ -1,21 +1,23 @@
 import type { GetStaticPropsResult, NextPage, NextPageContext } from 'next';
-import { Project } from '../backend/market/market.entity';
+import { TCO2Token } from '../backend/market/market.entity';
 import { Market } from '../frontend/views/market/Market';
-import { getProjects } from '../backend/market/market.repo';
+import { getTokens } from '../backend/market/market.repo';
 
 type Props = {
-  projects: Project[];
+  tco2Tokens: TCO2Token[];
 };
 
-const Home: NextPage<Props> = ({ projects }) => <Market projects={projects} />;
+const Home: NextPage<Props> = ({ tco2Tokens }) => (
+  <Market tco2Tokens={tco2Tokens} />
+);
 
 export const getStaticProps = async (
   _context: NextPageContext
 ): Promise<GetStaticPropsResult<Props>> => {
-  const projects = await getProjects();
+  const tco2Tokens = await getTokens();
 
   return {
-    props: { projects },
+    props: { tco2Tokens },
   };
 };
 
