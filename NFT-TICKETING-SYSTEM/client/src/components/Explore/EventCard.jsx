@@ -6,7 +6,7 @@ import create from "../../assets/create.png";
 
 const EventCard = () => {
   return (
-    <Card sx={{ maxWidth: "250px" }}>
+    <Card sx={{ maxWidth: "400px" }}>
       <CardMedia component="img" image={food2} />
       <CardContent
         sx={{

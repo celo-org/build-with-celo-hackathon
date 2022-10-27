@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Container,
   Grid,
   IconButton,
@@ -13,6 +14,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import SearchIcon from "@mui/icons-material/Search";
 import event from "../../assets/event.png";
 import EventCard from "./EventCard";
+import create from "../../assets/create.png";
 
 const Explore = () => {
   return (
@@ -76,32 +78,121 @@ const Explore = () => {
                 height: { xs: "200px", sm: "300px" },
               }}
             ></Box>
-            <Grid container spacing={1} mt="2%">
-              <Grid item xs={12} sm={6} md={3}>
+            <Grid container spacing={2} mt="2%">
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={3}
+                sx={{ display: "flex", justifyContent: "center" }}
+              >
                 <EventCard />
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={3}
+                sx={{ display: "flex", justifyContent: "center" }}
+              >
                 <EventCard />
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={3}
+                sx={{ display: "flex", justifyContent: "center" }}
+              >
                 <EventCard />
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={3}
+                sx={{ display: "flex", justifyContent: "center" }}
+              >
                 <EventCard />
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={3}
+                sx={{ display: "flex", justifyContent: "center" }}
+              >
                 <EventCard />
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={3}
+                sx={{ display: "flex", justifyContent: "center" }}
+              >
                 <EventCard />
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={3}
+                sx={{ display: "flex", justifyContent: "center" }}
+              >
                 <EventCard />
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={3}
+                sx={{ display: "flex", justifyContent: "center" }}
+              >
                 <EventCard />
               </Grid>
             </Grid>
+            <Box
+              sx={{
+                backgroundImage: `url(${create})`,
+                backgroundPosition: "center center",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                height: { xs: "200px", sm: "400px" },
+                mt: "4%",
+                pt: "2%",
+                pl: "1%",
+                pr: "2%",
+              }}
+            >
+              <Typography
+                color="#fff"
+                fontSize={{ xs: "20px", sm: "27px", md: "48px" }}
+                fontWeight={900}
+              >
+                Create Your First NFT Ticket
+              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  mt: { xs: "120px", sm: "300px", md: "250px" },
+                }}
+              >
+                <Button
+                  variant="outlined"
+                  sx={{
+                    border: "1px solid #fff",
+                    "&:hover": { border: "1px solid #fff" },
+                    borderRadius: "10px",
+                    color: "#fff",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  Create Event
+                </Button>
+              </Box>
+            </Box>
           </Box>
         </Stack>
       </Container>
