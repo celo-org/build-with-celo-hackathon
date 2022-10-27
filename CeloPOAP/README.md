@@ -13,19 +13,24 @@ Please [__fork this repo__](https://help.github.com/articles/fork-a-repo/) and u
 - Yinka T, Developer
 
 #### Project Description
-Provide a clear statement of the challenges/issues/problems/gaps your project engages as well as a brief, high-level description of how your project engages the areas you've identified. What is the value of your approach? Who are the intended users?
+A POAP Dapp for CELO Blockchain.
+Features
+- POAP Management platform for event owners
+- POAP NFT Marketplace for selling POAPS earned
 
 #### Summary
-Describe the basic functionality of your project. What are the features you were able to implement? What features would you like to implement?
+A POAP Dapp for CELO Blockchain.
+Features
+- POAP Management platform for event owners
+- POAP NFT Marketplace for selling POAPS earned
 
-#### URLs
-List any URLs relevant to demonstrating your prototype
 
 #### Presentation
 List any links to your presentation or any related visuals you want to share.
 
 #### Next Steps
-What do you need to do next to turn this prototype into a working solution?
+Testnet Deployment
+Live Deployment
 
 #### License
 This repository includes an [unlicensed](http://unlicense.org/) statement though you may want to [choose a different license](https://choosealicense.com/).
