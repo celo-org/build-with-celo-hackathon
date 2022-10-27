@@ -25,7 +25,8 @@
 
       <ion-content>
         <div class="content">
-          <app-input type="text" placeholder="Title"></app-input>
+          <app-image></app-image>
+          <app-single-select [options]="titleList" placeholder="Title"></app-single-select>
           <app-input type="text" placeholder="First Name"></app-input>
           <app-input type="text" placeholder="Middle Name"></app-input>
           <app-input type="text" placeholder="Last Name"></app-input>
@@ -34,10 +35,9 @@
           <app-input type="phone" placeholder="Mobile Phone Number"></app-input>
           <app-input type="text" placeholder="Country"></app-input>
           <app-input type="date" placeholder="Date of Birth"></app-input>
-          <app-input type="radio" placeholder="Request Screening"></app-input>
-          <app-input type="file" placeholder="Image"></app-input>
+          <app-checkbox label="Request Screening"></app-checkbox>
 
-          <app-button value="Submit" color="success"></app-button>
+          <app-button (click)="confirmCreateCardAlert()" value="Submit" color="success"></app-button>
         </div>
       </ion-content>
     </ng-template>

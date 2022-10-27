@@ -2,7 +2,7 @@ import { formatDate } from '@angular/common';
 import { Component, Inject, LOCALE_ID, OnInit, ViewChild } from '@angular/core';
 import { VirtualCard } from 'src/app/models/models';
 
-import { IonModal } from '@ionic/angular';
+import { AlertController, IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 
 @Component({
@@ -17,8 +17,13 @@ export class CardPage implements OnInit {
   name: string;
 
   cards: VirtualCard [] = [];
+  titleList: any[] = [
+    { "name": "Mr", "value": "Mr" }, { "name": "Mrs", "value": "Mrs" }, { "name": "Ms", "value": "Ms" },
+    { "name": "Miss", "value": "Miss" }
+  ];
 
-  constructor(@Inject(LOCALE_ID) private locale: string) { }
+  constructor(@Inject(LOCALE_ID) private locale: string, 
+    private alertController: AlertController) { }
 
   ngOnInit() {
     this.getCards();
@@ -54,5 +59,24 @@ export class CardPage implements OnInit {
   formatDate(date: Date) {
     return formatDate(date, 'yyyy/MM/dd', this.locale);
   }
+
+ async confirmCreateCardAlert() {
+  const alert = await this.alertController.create({
+    header: 'Request new card?',
+    cssClass: '',
+    buttons: [
+      {
+        text: 'Cancel',
+        cssClass: ''
+      },
+      {
+        text: 'Confirm',
+        cssClass: ''
+      }
+    ]
+  });
+
+  await alert.present();
+ }
 
 }

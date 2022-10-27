@@ -10,6 +10,9 @@ import { CardPage } from './card.page';
 import { ButtonComponent } from 'src/app/components/button/button.component';
 import { MyCardComponent } from 'src/app/components/my-card/my-card.component';
 import { InputComponent } from 'src/app/components/input/input.component';
+import { SingleSelectComponent } from 'src/app/components/single-select/single-select.component';
+import { ImageComponent } from 'src/app/components/image/image.component';
+import { CheckboxComponent } from 'src/app/components/checkbox/checkbox.component';
 
 @NgModule({
   imports: [
@@ -18,6 +21,7 @@ import { InputComponent } from 'src/app/components/input/input.component';
     IonicModule,
     CardPageRoutingModule
   ],
-  declarations: [CardPage, ButtonComponent, MyCardComponent, InputComponent]
+  declarations: [CardPage, ButtonComponent, MyCardComponent, InputComponent, 
+    SingleSelectComponent, ImageComponent, CheckboxComponent]
 })
 export class CardPageModule {}

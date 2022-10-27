@@ -1,0 +1,12 @@
+ion-list {
+    border-radius: 10px;
+    height: 44px;
+    box-shadow: 1px 1px 1px 1px gray;
+    --highlight-hight: 0px;
+    ion-item, ion-select {
+        display: flex;
+        justify-content: space-between;
+        width: calc(100% + 30px);
+        margin: 0;
+    }
+}
