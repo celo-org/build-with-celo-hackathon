@@ -7,7 +7,7 @@
       "patch": 0
     },
     "tags": {},
-    "logoURI": "https://exchange.pancakeswap.finance/images/pancakeswap.png",
+    "logoURI": "",
     "keywords": ["evive", "default"],
     "tokens": [
       {
@@ -16,47 +16,23 @@
         "address": "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
         "chainId": 44787,
         "decimals": 18,
-        "logoURI": "https://exchange.pancakeswap.finance/images/coins/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c.png"
+        "logoURI": ""
       },
       {
-        "name": "Bakery Token",
-        "symbol": "BAKE",
-        "address": "0xe02df9e3e622debdd69fb838bb799e3f168902c5",
-        "chainId": 56,
+        "name": "Celo Euro",
+        "symbol": "cEUR",
+        "address": "0x10c892A6EC43a53E45D0B916B4b7D383B1b78C0F",
+        "chainId": 44787,
         "decimals": 18,
-        "logoURI": "https://exchange.pancakeswap.finance/images/coins/0xe02df9e3e622debdd69fb838bb799e3f168902c5.png"
+        "logoURI": ""
       },
       {
-        "name": "BUSD Token",
-        "symbol": "BUSD",
-        "address": "0xe9e7cea3dedca5984780bafc599bd69add087d56",
-        "chainId": 56,
+        "name": "Celo Brazilian Real",
+        "symbol": "cREAL",
+        "address": "0xE4D517785D091D3c54818832dB6094bcc2744545",
+        "chainId": 44787,
         "decimals": 18,
-        "logoURI": "https://exchange.pancakeswap.finance/images/coins/0xe9e7cea3dedca5984780bafc599bd69add087d56.png"
-      },
-      {
-        "name": "Ethereum Token",
-        "symbol": "ETH",
-        "address": "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
-        "chainId": 56,
-        "decimals": 18,
-        "logoURI": "https://exchange.pancakeswap.finance/images/coins/0x2170ed0880ac9a755fd29b2688956bd959f933f8.png"
-      },
-      {
-        "name": "BTCB Token",
-        "symbol": "BTCB",
-        "address": "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
-        "chainId": 56,
-        "decimals": 18,
-        "logoURI": "https://exchange.pancakeswap.finance/images/coins/0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c.png"
-      },
-      {
-        "name": "BAND Protocol Token",
-        "symbol": "BAND",
-        "address": "0xad6caeb32cd2c308980a548bd0bc5aa4306c6c18",
-        "chainId": 56,
-        "decimals": 18,
-        "logoURI": "https://exchange.pancakeswap.finance/images/coins/0xad6caeb32cd2c308980a548bd0bc5aa4306c6c18.png"
+        "logoURI": ""
       }
     ]
   }
