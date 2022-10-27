@@ -1,12 +1,12 @@
-import React from 'react'
-import Hero from '../components/Hero'
+import React from "react";
+import Hero from "../components/login/Hero";
 
 function login() {
   return (
     <div>
-      <Hero title='Login' />
+      <Hero title="Login" />
     </div>
-  )
+  );
 }
 
-export default login
+export default login;

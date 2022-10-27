@@ -1,5 +1,5 @@
 import React from "react";
-import StartupsPage from "../components/Startups";
+import StartupsPage from "../components/startups/Startups";
 
 function Startups() {
   return (

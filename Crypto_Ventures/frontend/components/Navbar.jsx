@@ -1,84 +1,87 @@
-import Link from 'next/link';
-import React, { useState, useEffect } from 'react';
-import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
+import Link from "next/link";
+import React, { useState, useEffect } from "react";
+import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
-  const [color, setColor] = useState('transparent');
-  const [textColor, setTextColor] = useState('white');
+  const [scrolled, setScrolled] = useState(false);
 
   const handleNav = () => {
     setNav(!nav);
   };
-
+  const scrollHandler = () => {
+    if (window.scrollY >= 10) {
+      setScrolled(true);
+    } else {
+      setScrolled(false);
+    }
+  };
   useEffect(() => {
-    const changeColor = () => {
-      if (window.scrollY >= 90) {
-        setColor('#ffffff');
-        setTextColor('#000000');
-      } else {
-        setColor('transparent');
-        setTextColor('#ffffff');
-      }
-    };
-    window.addEventListener('scroll', changeColor);
+    window.addEventListener("scroll", scrollHandler);
+    return () => window.removeEventListener("scroll", scrollHandler);
   }, []);
-
-// function Navbar() {
   return (
-    <div className='style={{ backgroundColor: `${color}` }} fixed left-0 top-0 w-full z-10 ease-in duration-300'>
-      <div className='max-w-[1240px] m-auto flex justify-between items-center p-4 text-[#4b006f]'>
-        <Link href='/'>
-          <h1 className='font-bold text-4xl'>Crypto ventures</h1>    
+    <div
+      className={`fixed left-0 top-0 w-full z-10 ease-in duration-300 ${
+        scrolled ? "bg-white shadow-md" : "bg-transparent "
+      } `}
+    >
+      <div className="max-w-[1240px] m-auto flex justify-between items-center p-4 text-[#4b006f]">
+        <Link href="/">
+          <h1 className="font-bold text-2xl">Crypto ventures</h1>
         </Link>
-        <ul className='hidden sm:flex'>
-          <li className='p-4'>
-            <Link href='/'>Home</Link>
+        <ul className="hidden sm:flex">
+          <li className="p-4">
+            <Link href="/">Home</Link>
           </li>
-          <li className='p-4'>
-            <Link href='/startups'>Startups</Link>
+          <li className="p-4">
+            <Link href="/startups">Startups</Link>
           </li>
-          <li className='p-4'>
-            <Link href='/funding'>Funding</Link>
+          <li className="p-4">
+            <Link href="/funding">Funding</Link>
           </li>
-          <li className='p-4'>
-            <Link href='/login'> Login </Link>
+          <li className="p-4">
+            <Link href="/login"> Login </Link>
           </li>
         </ul>
-
-        
-        {/* <div className='block sm:hidden z-10'>
-          <AiOutlineMenu size={20} />
-          </div> */}
-          <div onClick={handleNav} className='block sm:hidden z-10'>
+        <div onClick={handleNav} className="block sm:hidden z-10">
           {nav ? (
-            <AiOutlineClose size={20} style={{ color: `${textColor}` }} />
+            <AiOutlineClose
+              size={20}
+              style={{ color: nav ? "white" : "#4b006f" }}
+            />
           ) : (
-            <AiOutlineMenu size={20} style={{ color: `${textColor}` }} />
+            <AiOutlineMenu
+              size={20}
+              style={{ color: nav ? "white" : "#4b006f" }}
+            />
           )}
         </div>
-        <div className='
-              sm:hidden absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center w-full h-screen bg-black text-center ease-in duration-300'>
-           <ul>
-          <li className='p-4 text-4xl hover:text-grey-500'>
-            <Link href='/homepage'> Home </Link>
-          </li>
-           <li className='p-4 text-4xl hover:text-grey-500'> 
-            <Link href='/startups'>Startups</Link>
-          </li>
-          <li className='p-4 text-4xl hover:text-grey-500'>
-            <Link href='/funding'>Funding</Link>
-          </li>
-          <li className='p-4 text-4xl hover:text-grey-500'>
-            <Link href='/hero'> Login </Link>
-          </li>
-        </ul>
+        <div
+          className={`sm:hidden absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center w-full ${
+            nav ? "h-screen bg-black" : "h-0 bg-transparent"
+          }  text-center ease-out duration-300`}
+        >
+          {nav && (
+            <ul>
+              <li className="p-4 text-4xl hover:text-grey-500">
+                <Link href="/homepage"> Home </Link>
+              </li>
+              <li className="p-4 text-4xl hover:text-grey-500">
+                <Link href="/startups">Startups</Link>
+              </li>
+              <li className="p-4 text-4xl hover:text-grey-500">
+                <Link href="/funding">Funding</Link>
+              </li>
+              <li className="p-4 text-4xl hover:text-grey-500">
+                <Link href="/hero"> Login </Link>
+              </li>
+            </ul>
+          )}
         </div>
-        
       </div>
     </div>
-  )
-}
-// }
+  );
+};
 
-export default Navbar
+export default Navbar;

@@ -2,12 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-
 html {
   scroll-behavior: smooth;
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
 }
 
 .custom-img {
-  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0jnFJLDYT7xiDXxIen6h_b5NPAWJPuO7HUw&usqp=CAU')
+  background-color: #c7aa9b;
+}
+@media (min-width: 600px) {
+  .custom-img {
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0jnFJLDYT7xiDXxIen6h_b5NPAWJPuO7HUw&usqp=CAU");
+  }
 }
