@@ -11,15 +11,14 @@ function getInstance(name) {
 async function main() {
   const forwarder = await getInstance("MinimalForwarderUpgradeable")
   const mainContract = await getInstance("Vault")
-  // const Tx = await getInstance("Token")
   const { PRIVATE_KEY: signer } = process.env
   const from = new ethers.Wallet(signer).address
-  const depositAmount = ethers.utils.parseEther("0.0002")
   const data = mainContract.interface.encodeFunctionData("depositCoin", [])
   const result = await signMetaTxRequest(signer, forwarder, {
     to: mainContract.address,
     from,
     data,
+    value: 20000000000,
   })
 
   writeFileSync("tmp/request.json", JSON.stringify(result, null, 2))
