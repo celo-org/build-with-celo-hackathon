@@ -11,10 +11,10 @@
     "keywords": ["evive", "default"],
     "tokens": [
       {
-        "name": "WBNB Token",
-        "symbol": "WBNB",
-        "address": "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
-        "chainId": 56,
+        "name": "Celo Dollar",
+        "symbol": "cUSD",
+        "address": "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+        "chainId": 44787,
         "decimals": 18,
         "logoURI": "https://exchange.pancakeswap.finance/images/coins/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c.png"
       },
