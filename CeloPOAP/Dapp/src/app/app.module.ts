@@ -57,6 +57,8 @@ import { ToastModule } from '@coreui/angular';
 import { HomeComponent } from './components/home/home.component';
 import { CarouselModule } from '@coreui/angular';
 import { SafePipe } from './safe.pipe';
+import { GraphQLModule } from './graphql.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -104,6 +106,8 @@ const APP_CONTAINERS = [
     NgxSpinnerModule,
     ToastModule,
     CarouselModule,
+    GraphQLModule,
+    HttpClientModule,
     // NgxEditorModule
     // NgHelmetModule.forRoot({
     //   baseTitle: "| ZSale",

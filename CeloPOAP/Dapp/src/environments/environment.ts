@@ -6,7 +6,14 @@ export const environment = {
   production: false,
   BaseApiUrl: 'https://localhost:3053',
   web3StorageToken: '',
-  poapFactoryAddress: '0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9'
+
+  // //harhat
+  // poapFactoryAddress: '0xa513E6E4b8f2a923D98304ec87F64353C4D5C853',
+  // poapMarketAddress: '0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9'
+
+  //celotest
+  poapFactoryAddress: '0xac8B204895d7d8B51A46ed7D2B37079C14a0CD54',
+  poapMarketAddress: '0xb90F1858B0E6D6B30D711c70241F045063b378bF'
 };
 
 /*

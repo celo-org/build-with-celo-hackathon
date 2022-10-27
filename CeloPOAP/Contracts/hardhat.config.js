@@ -75,6 +75,11 @@ module.exports = {
       accounts: [process.env.PRIVATE_KEY],
       chainId: 44787,
     },
+    alfajoresLava: {
+      url: "https://celo-hackathon.lavanet.xyz/celo-alfajores/http",
+      accounts: [process.env.PRIVATE_KEY],
+      chainId: 44787,
+    },
     alfajoresDatahub: {
       url: "https://celo-alfajores--rpc.datahub.figment.io/apikey/<API KEY>",
       accounts: [process.env.PRIVATE_KEY],
@@ -82,6 +87,11 @@ module.exports = {
     },
     celo: {
       url: "https://forno.celo.org",
+      accounts: [process.env.PRIVATE_KEY],
+      chainId: 42220,
+    },
+    celoLava: {
+      url: "https://celo-hackathon.lavanet.xyz/celo/http",
       accounts: [process.env.PRIVATE_KEY],
       chainId: 42220,
     },

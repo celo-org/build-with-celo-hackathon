@@ -8,12 +8,8 @@ import "hardhat/console.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-
-
-
 import "@openzeppelin/contracts/utils/structs/EnumerableMap.sol";
-
-
+import {IPOAPMarket} from "./POAPMarket.sol";
 import "./POAP.sol";
 
 contract POAPFactory is   Ownable {
@@ -33,11 +29,12 @@ contract POAPFactory is   Ownable {
 
     
     event eventAdded(address owner, uint256 eventID);
-    
+    IPOAPMarket public _poapMarket;
 
-    constructor()  
+    constructor(IPOAPMarket poapMarket)  
     {
         fee = 0.0001 * 10 ** 18;
+        _poapMarket=poapMarket;
         
     }
 
@@ -54,7 +51,7 @@ contract POAPFactory is   Ownable {
         
         eventDetails.eventOwner= msg.sender;
         
-        address payable newEventAddress = payable(address(new POAP("POAP", "POAP", eventDetails, eventCode) ) );
+        address payable newEventAddress = payable(address(new POAP("POAP", "POAP", eventDetails, eventCode, _poapMarket) ) );
 
         _events.set(_counter.current(), newEventAddress);
         _ownersEvents[msg.sender].push( _counter.current());        

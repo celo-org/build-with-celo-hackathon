@@ -9,8 +9,9 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
-
+import {IPOAPMarket} from "./POAPMarket.sol";
 import "base64-sol/base64.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract POAP is ERC721Enumerable, ERC721URIStorage,  Ownable {
     using Counters for Counters.Counter;
@@ -48,9 +49,9 @@ contract POAP is ERC721Enumerable, ERC721URIStorage,  Ownable {
     string _tokenUri ;
 
     bool public _allowMinting=false;
+    IPOAPMarket public _poapMarket;
     
-    
-    constructor(string memory name, string memory symbol, EventStruct memory _eventDetails, string memory eventCode) ERC721(name,symbol) 
+    constructor(string memory name, string memory symbol, EventStruct memory _eventDetails, string memory eventCode, IPOAPMarket poapMarket) ERC721(name,symbol) 
     {
         // console.log('StartiIn  1');
         fee = 0.0001 * 10 ** 18; // 0.0001
@@ -60,7 +61,7 @@ contract POAP is ERC721Enumerable, ERC721URIStorage,  Ownable {
         _tokenUri = generateTokenURI();
         
         _transferOwnership(_eventDetails.eventOwner);
-        
+        _poapMarket=poapMarket;
     }
 
 
@@ -91,8 +92,21 @@ contract POAP is ERC721Enumerable, ERC721URIStorage,  Ownable {
         // emit a confirmation,
         // include tokenID of new NFTicket
         emit minted(msg.sender, tokenID);
-        
+
+                
         return tokenID;
+    }
+
+    function listPOAPOnMarketplace(uint tokenId, uint256 price) 
+        public 
+    {         
+        _poapMarket.createListingForSeller(msg.sender, address(this), tokenId, price);
+    }
+
+    function isListed(uint tokenId) 
+        public view returns (bool)
+    {         
+        return _poapMarket.isNftListed( address(this), tokenId);
     }
 
     // function markAttendance(string memory eventCode) public {
@@ -135,8 +149,8 @@ contract POAP is ERC721Enumerable, ERC721URIStorage,  Ownable {
                                 '"description":"',eventDetails.desc,'", ',
                                 '"attributes":['
                                 '{"trait_type":"Org Name","value":"',eventDetails.orgName,'"}, ',
-                                '{"display_type": "date","trait_type":"Date","value":"',eventDetails.date,'"}, ',
-                                '{"trait_type":"Website","value":"',eventDetails.website,'"}, ',
+                                '{"display_type": "date","trait_type":"Date","value":"', Strings.toString(eventDetails.date),'"}, ',
+                                '{"trait_type":"Website","value":"',eventDetails.website,'"} ',
                                 // '{"trait_type":"Date","value":"',date,'"}, ',
                                 // '{"trait_type":"Org Name","value":"',orgName,'"}, ',
                                 '],',

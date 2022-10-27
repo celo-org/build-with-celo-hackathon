@@ -12,4 +12,5 @@ export interface Poap{
     eventOwner: any; 
     email?: any;
     isOpenForClaim: boolean;
+    
 }

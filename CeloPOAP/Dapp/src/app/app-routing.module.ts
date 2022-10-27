@@ -94,6 +94,14 @@ const routes: Routes = [
           import('./components/poap/poap.module').then((m) => m.PoapModule)
       },
 
+
+      {
+        path: 'market',
+        loadChildren: () =>
+          import('./components/poap-market/poap-market.module').then((m) => m.PoapMarketModule)
+      },
+
+
       {
         path: 'docs',
         loadChildren: () =>

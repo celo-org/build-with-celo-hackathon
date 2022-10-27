@@ -4,6 +4,7 @@ import { ActivatedRoute, ParamMap, Router,Params } from '@angular/router';
 import { firstValueFrom, Subscription } from 'rxjs';
 import { Web3Service } from '../../../services/web3.service';
 import { PoapService } from '../../../components/poap/poap.service';
+import { PoapNFTService } from '../../../components/poap-market/poap-nft.service';
 import { Poap } from '../../../models/poap';
 import contractList from '../../../models/contract-list';
 import {getDateFromEther, formatEtherDateToJs, formatDateToJsString} from '../../../utils/date';
@@ -37,7 +38,8 @@ export class PoapDetailComponent implements OnInit {
   
   mainFormGroup!: FormGroup;
   emailListFormGroup!: FormGroup;	
-  mintPoapFormGroup!: FormGroup;		
+  mintPoapFormGroup!: FormGroup;	
+  listPoapForSaleFormGroup!: FormGroup;  	
   
 
   formSubscriptions: Subscription[]=[];
@@ -49,6 +51,7 @@ export class PoapDetailComponent implements OnInit {
   
   isOwner = false;
   isPoapOwner=false;
+  isOwnerPOAPListedOnMarket=false;
 
   now = Date.now();
 
@@ -86,7 +89,12 @@ export class PoapDetailComponent implements OnInit {
        'required': 'Required',
        'minlength': 'Minimum Length(6) not reached',
         'maxlength': 'Maximum Length(6) exceeded'
-     }
+     },
+     'salePrice': {
+      'required'  :   'Sale Price is Required.',
+      'min': 'Sale Price must be at least 0.1',
+      'max': 'Sale Price must be at most 1,000,000,000 '
+    }
    };
 
    placement = ToasterPlacement.TopCenter;
@@ -111,6 +119,9 @@ export class PoapDetailComponent implements OnInit {
   
   emaiListModalVisible = false;
   mintPoapModalVisible = false;
+  listPoapOnMarketModalVisible=false;
+
+  tokenId = undefined;
 
   
 
@@ -127,6 +138,7 @@ export class PoapDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private poapService: PoapService,
+    private poapNFTService:PoapNFTService,
     private fb: FormBuilder,
     private spinner: NgxSpinnerService,
     private http: HttpClient, public iconSet: IconSetService) {
@@ -153,9 +165,6 @@ export class PoapDetailComponent implements OnInit {
         
           
           this.poap = await this.poapService.getPoapDetails(environment.poapFactoryAddress, this.poapId!);
-
-          
-          
           
           this.mainFormGroup = this.fb.group({
           
@@ -163,21 +172,26 @@ export class PoapDetailComponent implements OnInit {
       
           })
 		  
-		  this.emailListFormGroup = this.fb.group({
-          
-            
+    		  this.emailListFormGroup = this.fb.group({
             addresses: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(42000) /*42 * 1000*/]],
-			mintEventCode: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6) ]],
-      
+    			  mintEventCode: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6) ]],
+          
           })
 
-		  this.mintPoapFormGroup = this.fb.group({
-          
-            
+    		  this.mintPoapFormGroup = this.fb.group({
+              
+                
             mintEventCode: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6) ]],
       
           })
-		  
+
+          this.listPoapForSaleFormGroup = this.fb.group({
+          
+            salePrice: ['', [Validators.required, Validators.min(0.1), Validators.max(1000000000)]],
+      
+          })
+
+      
           let now = Date.now();
           
           
@@ -187,8 +201,15 @@ export class PoapDetailComponent implements OnInit {
           this.poapContract = await this.poapService.getPoapContract(this.poap!.address);
             
           this.isPoapOwner = await this.checkIfAddressIsPoapOwner(this.web3Service.accounts[0] )
-		  
-		  this.poapOwners = await this.getAllPOAPOwners();
+    		  
+    		  this.poapOwners = await this.getAllPOAPOwners();
+
+
+          if(this.isPoapOwner){
+            this.tokenId = this.poapOwners.find(f=>f.owner==this.web3Service.accounts[0])?.tokenId??0;
+            this.isOwnerPOAPListedOnMarket = await this.poapContract.isListed(this.tokenId);
+          }
+          
 
           // await this.retrieveDescriptionFromIpfs(this.campaign.description);
         }
@@ -201,7 +222,7 @@ export class PoapDetailComponent implements OnInit {
     
 
 
-    this.titleService.setTitle('Participate in Campaign | ZSale');
+    this.titleService.setTitle('View POAP | Celo POAP');
     // this.icons = this.getIconsView('cib');
     
 	//sendEmail(`Claim your POAP for `, 'xcelsis02@gmail.com', 
@@ -209,6 +230,14 @@ export class PoapDetailComponent implements OnInit {
         
 	
   } 
+
+  
+  ngOnDestroy(){
+    this.web3ServiceConnect$!.unsubscribe();
+    // this.formSubscriptions.forEach( sub=>{
+    //   sub.unsubscribe();
+    // });
+  }
   
   
   async checkIfAddressIsPoapOwner(address: string){
@@ -227,16 +256,16 @@ export class PoapDetailComponent implements OnInit {
 		
 	  let owners = [];
 		for(let i=1;i<= supply ; i++){
-		// this will check each nft owner
-		// i is the id of each nft.
+  		// this will check each nft owner
+  		// i is the id of each nft.
 
-		// this will return the owner address
-		let owner = await this.poapContract.ownerOf(i);
-		owners.push({
-			owner: owner,
-			tokenId: i
-		});
-		// if owner == msg.sender then we know he owns this token id
+  		// this will return the owner address
+  		let owner = await this.poapContract.ownerOf(i);
+  		owners.push({
+  			owner: owner,
+  			tokenId: i
+  		});
+  		// if owner == msg.sender then we know he owns this token id
 
 		}
 		
@@ -315,10 +344,90 @@ export class PoapDetailComponent implements OnInit {
 		}
     
   }
+
+
   
   
+  openListFormModal(){
+    this.listPoapOnMarketModalVisible=true;
+  }
   
-   openMintFormModal(){
+  
+  closeListFormModal(){
+    this.listPoapOnMarketModalVisible=false;
+  }
+
+  async listPoap(){
+    try{
+      this.spinner.show();
+      const price =   utils.formatUnits( utils.parseEther(this.listPoapForSaleFormGroup.get('salePrice')!.value.toString()), 'wei');
+      console.log('Price s:', price)  
+
+      const poapContractSigner =  await this.poapService.getPoapContractWithSigner(this.poap!.address);
+
+      //approve token for contract
+      // let transaction = await contract.setApprovalForAll(nftMarketAddress, true);
+      // await transaction.wait();
+
+      let transaction = await poapContractSigner.setApprovalForAll(environment.poapMarketAddress, true);
+      await transaction.wait();
+
+      
+      let tx = await poapContractSigner.listPOAPOnMarketplace(this.tokenId, price, {        
+        gasLimit: 18000000
+      } );
+
+      const txResult = await tx.wait();
+      
+      this.isOwnerPOAPListedOnMarket = true;
+      this.showToast('Success!','Your POAP has been listed succesfully!');
+      this.listPoapOnMarketModalVisible=false;
+         
+      this.spinner.hide();
+    } catch(err){
+      this.showToast('Oops!','Something went wrong!', 'danger');
+      console.log('Error Creating: ', err);
+    }
+    finally{
+      this.spinner.hide();
+      this.listPoapOnMarketModalVisible=false;
+    }
+    
+  }
+
+
+  async delistOnMarket(){
+    if(confirm('Are you sure you want to delist?')){
+      try{
+        this.spinner.show();
+        
+        const marketContractSigner =  await this.poapNFTService.getMarketContractWithSigner(environment.poapMarketAddress);
+
+        let tx = await marketContractSigner.cancelListing(this.poap!.address, this.tokenId,  {        
+          gasLimit: 10000000
+        } );
+
+        const txResult = await tx.wait();
+        
+        this.isOwnerPOAPListedOnMarket = false;
+        this.showToast('Success!','Your POAP has been delisted succesfully!');
+        
+           
+        this.spinner.hide();
+      } catch(err){
+        this.showToast('Oops!','Something went wrong!', 'danger');
+        console.log('Error delisting: ', err);
+      }
+      finally{
+        this.spinner.hide();
+        
+      }
+    }
+  }
+  
+
+  
+  openMintFormModal(){
     this.mintPoapModalVisible=true;
   }
   
@@ -358,6 +467,7 @@ export class PoapDetailComponent implements OnInit {
 		}
 		finally{
 		  this.spinner.hide();
+      this.mintPoapModalVisible=false;
 		}
 	  
   }

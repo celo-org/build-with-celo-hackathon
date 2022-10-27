@@ -272,19 +272,15 @@ export class CreatePoapComponent implements OnInit {
       // // console.log('New Token Address: ', this.newTokenAddress);
 
       // this.mode = "display";
+      let poapEvent = txResult.events.filter((f: any)=>f.event=='eventAdded')[0];
+      let poapOwnerAddress = poapEvent.args['owner'];
+      let eventIndex = poapEvent.args['eventID'].toString();
 
-      try{
-        let poapEvent = txResult.events.filter((f: any)=>f.event=='eventAdded')[0];
-        let poapOwnerAddress = poapEvent.args['owner'];
-        let eventIndex = poapEvent.args['eventID'].toString();
-
-        console.log(poapOwnerAddress, ', ', eventIndex)
-
-      }catch(errorEvent){
-        console.error('Error getting event', txResult.events, ', ', errorEvent);
-      }
+      console.log(poapOwnerAddress, ', ', eventIndex)
 
       this.showToast('Success!','Your Event has been created succesfully!');
+
+      this.router.navigate(['/poaps', 'd',  eventIndex ]);
     }catch(err){
       this.showToast('Oops!','Something went wrong!', 'danger');
       console.log('Error Creating: ', err);

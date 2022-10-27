@@ -68,6 +68,13 @@
 		
 				<img [src]="poap.logo" alt="event logo"  class="img-fluid rounded-circle"/>
 				<h4>Congratulations, You own this POAP</h4>
+
+                <button class="btn btn-primary mx-2 my-2" *ngIf="!isOwnerPOAPListedOnMarket" (click)="openListFormModal()">List on POAP Market</button>
+
+                <div *ngIf="isOwnerPOAPListedOnMarket">
+                    <button class="btn btn-primary mx-2 my-2"  >View on POAP Market</button>
+                    <button class="btn btn-primary mx-2 my-2"  (click)="delistOnMarket()">Delist on POAP Market</button>
+                </div>
 			</div>
 			
 			<div class="my-3" *ngIf="!isPoapOwner ">
@@ -238,6 +245,50 @@
   </c-modal-footer>
 </c-modal>
 
+
+<c-modal id="listPoapOnMarketPlaceModal" [visible]="listPoapOnMarketModalVisible" >
+  <c-modal-header>
+    <h5 cModalTitle>Sell/List your POAP</h5>
+    <button (click)="closeListFormModal()" cButtonClose>x</button>
+  </c-modal-header>
+
+  <c-modal-body>
+    <form *ngIf="listPoapForSaleFormGroup"  [formGroup]="listPoapForSaleFormGroup" class="mint-form needs-validation"  novalidate [validated]="false"  cForm>
+        <div class="row">
+            <div class="col-10">
+                <div [cFormFloating]="true" class="my-3" >
+                    <input cFormControl id="salePrice"  placeholder="" formControlName="salePrice" type="text"  sizing="sm"  [ngClass]="{ 'is-invalid': listPoapForSaleFormGroup.get('salePrice').touched && listPoapForSaleFormGroup.get('salePrice').invalid, 'is-valid': listPoapForSaleFormGroup.get('salePrice').touched && listPoapForSaleFormGroup.get('salePrice').valid }"/>
+                    <label cLabel for="salePrice">List Price</label>
+                    
+                    <div cFormText class="mt-2">
+                        Enter the Price you will like to sell this POAP.
+                    </div>
+
+                    <div class="error-message" *ngIf="listPoapForSaleFormGroup.get('salePrice').invalid && listPoapForSaleFormGroup.get('salePrice').touched">
+                        <div *ngFor="let error of  objectKeys(listPoapForSaleFormGroup.get('salePrice')?.errors)">                                        
+                        {{validationMessages.salePrice[error]}}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-2 text-left">
+                <div class="my-5">CELO</div>
+            </div>
+                       
+
+        </div>
+    </form>
+  </c-modal-body>
+
+  <c-modal-footer>
+    <button (click)="closeListFormModal()" class="btn btn-secondary">
+      Close
+    </button>
+    <button class="btn btn-primary" *ngIf="listPoapForSaleFormGroup" [disabled]="listPoapForSaleFormGroup.invalid " (click)="listPoap()">List</button>
+  </c-modal-footer>
+</c-modal>
 
 
 

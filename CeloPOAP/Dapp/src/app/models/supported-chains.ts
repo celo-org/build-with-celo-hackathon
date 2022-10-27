@@ -225,6 +225,15 @@ function getSupportedChains(){
         
             });
         }
+        else{
+            //https://alfajores-forno.celo-testnet.org
+            let r = supportedChains.find(f=>f.chainId==44787);
+            
+            if (r != undefined) {
+                r.rpc=['https://celo-hackathon.lavanet.xyz/celo-alfajores/http'];
+            }
+            
+        }
 
         if(!supportedChains.find(f=>f.chainId == 42220)){
             supportedChains.push({

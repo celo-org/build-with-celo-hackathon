@@ -1,6 +1,12 @@
 [
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "contract IPOAPMarket",
+        "name": "poapMarket",
+        "type": "address"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
@@ -41,6 +47,19 @@
     ],
     "name": "eventAdded",
     "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "_poapMarket",
+    "outputs": [
+      {
+        "internalType": "contract IPOAPMarket",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "inputs": [
