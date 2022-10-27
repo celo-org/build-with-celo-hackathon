@@ -193,6 +193,68 @@ const Explore = () => {
                 </Button>
               </Box>
             </Box>
+            <Box
+              sx={{
+                width: { xs: "99%" },
+                height: "333px",
+                border: "2px solid #7228BB",
+                borderRadius: "10px",
+                mt: "5%",
+                background: "rgba(190, 104, 241, 0.25)",
+                boxShadow: "0px 1px 10px #D189FD",
+              }}
+            >
+              <Box
+                sx={{
+                  border: "2px solid #fff",
+                  m: "32px",
+                  height: "268px",
+                  borderRadius: "10px",
+                  background: "rgba(190, 104, 241, 0.25)",
+                }}
+              >
+                <Box sx={{ m: "4%" }}>
+                  <Typography fontWeight={600} fontSize="24px" color="#fff">
+                    Receive notifications of new and popular events.
+                  </Typography>
+                  <Grid container spacing={3} mt="3%">
+                    <Grid item xs={12} sm={8}>
+                      <CssTextField
+                        placeholder="Enter email"
+                        fullWidth
+                        sx={{
+                          ".MuiInputBase-root": {
+                            background: "rgba(151, 109, 220, 0.35)",
+                          },
+                        }}
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      xs={12}
+                      sm={4}
+                      sx={{ display: "flex", justifyContent: "flex-end" }}
+                    >
+                      <Button
+                        sx={{
+                          background:
+                            "linear-gradient(180deg, #7228BB 0%, rgba(151, 109, 220, 0.35) 100%)",
+                          boxShadow: "0px 0px 20px #7228BB",
+                          borderRadius: "35px",
+                          backdropFilter: "blur(75px)",
+                          width: { sm: "179px", xs: "50px" },
+
+                          color: "#fff",
+                          textTransform: "capitalize",
+                        }}
+                      >
+                        Submit
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Box>
+            </Box>
           </Box>
         </Stack>
       </Container>
