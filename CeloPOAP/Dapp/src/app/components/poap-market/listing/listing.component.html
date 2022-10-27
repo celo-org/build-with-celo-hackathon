@@ -1,0 +1,240 @@
+<c-toaster class="p-3" position="fixed" [placement]="placement"></c-toaster>
+
+
+<div *ngIf="!poapNft">
+    Loading ..
+</div>
+
+<div class="row" *ngIf="poapNft">
+    <div class="col-12">
+        <!-- <div class="card ">
+            <div class="card-body" >
+				<div class="d-flex justify-content-left">
+					<div class="mx-2 px-2"> 
+						<img [src]="poapNft.imageURI" alt="event logo"  class="img-fluid img-thumbnail img-rounded"/> 
+					</div>
+					<div class="mx-2 px-2 d-flex justify-content-between">
+						<span>
+			              <b>
+			                {{name}} - #{{poapNft.tokenId}}
+			              </b>
+			            </span>
+			            <span>Price: {{formatEther(poapNft.price)}} CELO   formatEther(props.price)</span>
+			            <span>
+			              Seller: {{isOwner ? "You" : seller.substring(0, 6) + "..."}}
+			            </span>
+					</div>
+					
+				</div>
+			
+                               
+
+            </div>
+        </div>
+ -->
+        
+    </div>
+	
+
+</div>
+
+
+<!-- 
+
+<c-modal id="emailListModal" [visible]="emaiListModalVisible" >
+    <c-modal-header>
+      <h5 cModalTitle>Email Your Attendees</h5>
+      <button (click)="closeEmailModal()" cButtonClose>x</button>
+    </c-modal-header>
+  
+    <c-modal-body>
+    
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-info">
+                    All attendees that get the Mint Link will be ble to claim ther POAP.
+                </div>
+            </div>
+        </div>
+
+      <form *ngIf="emailListFormGroup"  [formGroup]="emailListFormGroup" class="email-form needs-validation"  novalidate [validated]="false"  cForm>
+          <div class="row">
+		  
+			<div class="col-12">
+                <div [cFormFloating]="true" class="my-3" >
+                    <input cFormControl id="emailListEventCode"  placeholder="" formControlName="mintEventCode" type="text"  sizing="sm"  [ngClass]="{ 'is-invalid': emailListFormGroup.get('mintEventCode').touched && emailListFormGroup.get('mintEventCode').invalid, 'is-valid': emailListFormGroup.get('mintEventCode').touched && emailListFormGroup.get('mintEventCode').valid }"/>
+                    <label cLabel for="mintPoapEventCode">Event Code</label>
+                    
+                    <div cFormText class="mt-2">
+                        Enter the Event Code you used when you created this Event
+                    </div>
+
+                    <div class="error-message" *ngIf="emailListFormGroup.get('mintEventCode').invalid && emailListFormGroup.get('mintEventCode').touched">
+                        <div *ngFor="let error of  objectKeys(emailListFormGroup.get('mintEventCode')?.errors)">                                        
+                        {{validationMessages.mintEventCode[error]}}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+              
+              <div class="col-12" >
+                  <div [cFormFloating]="true" class="my-3" >
+                    <textarea cFormControl style="height: 100px;font-size: 1.15rem" rows="3" id="email-list" placeholder="" formControlName="addresses" type="text" sizing="lg" [ngClass]="{ 'is-invalid': emailListFormGroup.get('addresses').touched && emailListFormGroup.get('addresses').invalid, 'is-valid': emailListFormGroup.get('addresses').touched && emailListFormGroup.get('addresses').valid }">
+                    </textarea>
+                    <label cLabel for="emil-list">Email Addresses (Enter each Email address on a separate line or separated by comma)</label>
+                      
+                    <div cFormText class="mt-2">
+                        Anyone with the Mint link will be able to claim a POAP <br/>
+                        
+                        
+                    </div>
+  
+                      <div class="error-message" *ngIf="emailListFormGroup.get('addresses').invalid && emailListFormGroup.get('addresses').touched">
+                          <div *ngFor="let error of  objectKeys(emailListFormGroup.get('addresses')?.errors)">                                        
+                          {{validationMessages.emaillistAddresses[error]}}
+                          </div>
+                      </div>
+  
+                  </div>
+              </div>
+              
+  
+          </div>
+      </form>
+    </c-modal-body>
+  
+    <c-modal-footer>
+        
+      <button (click)="closeEmailModal()" cButton color="secondary">
+        Close
+      </button>
+      <button class="btn btn-primary" *ngIf="emailListFormGroup" [disabled]="emailListFormGroup.invalid " (click)="emailList()">Email</button>
+    </c-modal-footer>
+</c-modal>
+
+
+<c-modal id="mintPoapModal" [visible]="mintPoapModalVisible" >
+  <c-modal-header>
+    <h5 cModalTitle>Mint your POAP</h5>
+    <button (click)="closeMintFormModal()" cButtonClose>x</button>
+  </c-modal-header>
+
+  <c-modal-body>
+    <form *ngIf="mintPoapFormGroup"  [formGroup]="mintPoapFormGroup" class="mint-form needs-validation"  novalidate [validated]="false"  cForm>
+        <div class="row">
+            <div class="col-12">
+                <div [cFormFloating]="true" class="my-3" >
+                    <input cFormControl id="mintPoapEventCode"  placeholder="" formControlName="mintEventCode" type="text"  sizing="sm"  [ngClass]="{ 'is-invalid': mintPoapFormGroup.get('mintEventCode').touched && mintPoapFormGroup.get('mintEventCode').invalid, 'is-valid': mintPoapFormGroup.get('mintEventCode').touched && mintPoapFormGroup.get('mintEventCode').valid }"/>
+                    <label cLabel for="mintPoapEventCode">Event Code</label>
+                    
+                    <div cFormText class="mt-2">
+                        Enter the Evevnt Code sent to you in the email you received
+                    </div>
+
+                    <div class="error-message" *ngIf="mintPoapFormGroup.get('mintEventCode').invalid && mintPoapFormGroup.get('mintEventCode').touched">
+                        <div *ngFor="let error of  objectKeys(mintPoapFormGroup.get('mintEventCode')?.errors)">                                        
+                        {{validationMessages.mintEventCode[error]}}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+                       
+
+        </div>
+    </form>
+  </c-modal-body>
+
+  <c-modal-footer>
+    <button (click)="closeMintFormModal()" class="btn btn-secondary">
+      Close
+    </button>
+    <button class="btn btn-primary" *ngIf="mintPoapFormGroup" [disabled]="mintPoapFormGroup.invalid " (click)="mintPoap()">Mint</button>
+  </c-modal-footer>
+</c-modal>
+
+
+<c-modal id="listPoapOnMarketPlaceModal" [visible]="listPoapOnMarketModalVisible" >
+  <c-modal-header>
+    <h5 cModalTitle>Sell/List your POAP</h5>
+    <button (click)="closeListFormModal()" cButtonClose>x</button>
+  </c-modal-header>
+
+  <c-modal-body>
+    <form *ngIf="listPoapForSaleFormGroup"  [formGroup]="listPoapForSaleFormGroup" class="mint-form needs-validation"  novalidate [validated]="false"  cForm>
+        <div class="row">
+            <div class="col-12">
+                <div [cFormFloating]="true" class="my-3" >
+                    <input cFormControl id="salePrice"  placeholder="" formControlName="salePrice" type="text"  sizing="sm"  [ngClass]="{ 'is-invalid': listPoapForSaleFormGroup.get('salePrice').touched && listPoapForSaleFormGroup.get('salePrice').invalid, 'is-valid': listPoapForSaleFormGroup.get('salePrice').touched && listPoapForSaleFormGroup.get('salePrice').valid }"/>
+                    <label cLabel for="salePrice">List Price</label>
+                    
+                    <div cFormText class="mt-2">
+                        Enter the Price you will like to sell this POAP.
+                    </div>
+
+                    <div class="error-message" *ngIf="listPoapForSaleFormGroup.get('salePrice').invalid && listPoapForSaleFormGroup.get('salePrice').touched">
+                        <div *ngFor="let error of  objectKeys(listPoapForSaleFormGroup.get('salePrice')?.errors)">                                        
+                        {{validationMessages.salePrice[error]}}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+                       
+
+        </div>
+    </form>
+  </c-modal-body>
+
+  <c-modal-footer>
+    <button (click)="closeListFormModal()" class="btn btn-secondary">
+      Close
+    </button>
+    <button class="btn btn-primary" *ngIf="listPoapForSaleFormGroup" [disabled]="listPoapForSaleFormGroup.invalid " (click)="listPoap()">List</button>
+  </c-modal-footer>
+</c-modal>
+ -->
+
+
+
+
+<!--
+  <c-modal id="viewWhitelistModal" [visible]="viewWhitelistModalVisible" >
+    <c-modal-header>
+      <h5 cModalTitle>View Whitelist</h5>
+      <button (click)="closeViewWhitelistModal()" cButtonClose>x</button>
+    </c-modal-header>
+  
+    <c-modal-body>
+    
+        <div class="row" *ngIf="whitelist">
+            <div class="col">
+
+                <ol class="list-group list-group-numbered mt-4" >
+                    <li *ngIf="whitelist.length<1" class="list-group-item ">
+                        No Address in Whitelist
+                    </li>
+                    <li *ngFor="let add of whitelist" class="list-group-item " style="font-weight: bold;">
+                        {{add}}
+                    </li>
+
+
+                </ol>
+            </div>
+        </div>
+
+    </c-modal-body>
+  
+    <c-modal-footer>
+        
+      <button (click)="closeViewWhitelistModal()" cButton color="secondary">
+        Close
+      </button>
+      
+    </c-modal-footer>
+  </c-modal> -->
+
+
+
+  
