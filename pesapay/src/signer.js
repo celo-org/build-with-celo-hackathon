@@ -23,7 +23,7 @@ function getMetaTxTypeData(chainId, verifyingContract) {
       ForwardRequest,
     },
     domain: {
-      name: "MinimalForwarderUpgradeable",
+      name: "MinimalForwarder",
       version: "0.0.1",
       chainId,
       verifyingContract,
@@ -41,7 +41,10 @@ async function signTypedData(signer, from, data) {
 
   // Otherwise, send the signTypedData RPC call
   // Note that hardhatvm and metamask require different EIP712 input
-  const [method, argData] = ["eth_signTypedData_v4", JSON.stringify(data)]
+  const isHardhat = data.domain.chainId == 31337
+  const [method, argData] = isHardhat
+    ? ["eth_signTypedData", data]
+    : ["eth_signTypedData_v4", JSON.stringify(data)]
   return await signer.send(method, [from, argData])
 }
 

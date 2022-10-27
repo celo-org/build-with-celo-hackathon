@@ -4,8 +4,9 @@ const {
   DefenderRelayProvider,
 } = require("defender-relay-client/lib/ethers")
 
-const { ForwarderAbix } = require("../../src/forwarderx")
-const ForwarderAddress = require("../../deployRegistry.json").MinimalForwarder
+const { ForwarderAbi } = require("../../src/forwarder")
+const ForwarderAddress =
+  require("../../deploy.json").MinimalForwarderUpgradeable
 // const Vault = require("../../deploy.json").Vault
 
 async function relay(forwarder, request, signature, whitelist) {
@@ -34,7 +35,7 @@ async function handler(event) {
   const signer = new DefenderRelaySigner(credentials, provider, {
     speed: "fast",
   })
-  const forwarder = new ethers.Contract(ForwarderAddress, ForwarderAbix, signer)
+  const forwarder = new ethers.Contract(ForwarderAddress, ForwarderAbi, signer)
 
   // Relay transaction!
   const tx = await relay(forwarder, request, signature)

@@ -1,5 +1,9 @@
 {
   "manifestVersion": "3.2",
+  "admin": {
+    "address": "0x2eeFF91eb4BD1154DBAD4480ba912aDd092aBd0e",
+    "txHash": "0x7919f1cb5757d229240091afd8a0b5005bbba2e6a28592ade1ee25fdb2ea3737"
+  },
   "proxies": [
     {
       "address": "0xa808c739Bb1e649A8B3D8E348647bC6dBE69536F",
@@ -100,6 +104,21 @@
       "address": "0xa0cACce889a427054f48C784EF3C55702772a668",
       "txHash": "0xb86eff2ee74e08b66ec5e711a272532b792922a5a817ae46f1794c1b01903515",
       "kind": "uups"
+    },
+    {
+      "address": "0x29f36426D7ef94c02baf56cA72E82D4Bf8C06809",
+      "txHash": "0x8bc068c81784b76b9482dbd7f86c4d68d1252fe939884ea442cc7febc7bf1be3",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x64672F0291d9959ed97DeF1a538B3EE1e37fb329",
+      "txHash": "0x1156cce3c7ec8e6f6513aca82471190e336992f7574efd503afe5ea8bd2cc39b",
+      "kind": "uups"
+    },
+    {
+      "address": "0xcB43f8eaDa93AFa73402dF47013224246dca3599",
+      "txHash": "0x540b24742be824913b7d963bba6b976122ceddda1c5d4f2713ffcbd69ab3151c",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -258,6 +277,110 @@
           },
           "t_mapping(t_address,t_uint256)": {
             "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "615f374cfe3dfbacc0ec50ad73730733d86f281f8ba78415dbf8376f40369340": {
+      "address": "0x02d0f8DE667e988963FD0e93DE48bfAb5567Ed97",
+      "txHash": "0xddbd1f51071a0256fce549fb802f40926969d4963f8013a768a37c89674a8ead",
+      "layout": {
+        "solcVersion": "0.8.11",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_trustedForwarder",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "ERC2771ContextUpgradeable",
+            "src": "contracts\\ERC2771ContextUpgradeable.sol:16"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC2771ContextUpgradeable",
+            "src": "contracts\\ERC2771ContextUpgradeable.sol:74"
+          },
+          {
+            "label": "names",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_mapping(t_address,t_string_storage)",
+            "contract": "Registry",
+            "src": "contracts\\Registry.sol:11"
+          },
+          {
+            "label": "owners",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_mapping(t_string_memory_ptr,t_address)",
+            "contract": "Registry",
+            "src": "contracts\\Registry.sol:12"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_string_storage)": {
+            "label": "mapping(address => string)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_string_memory_ptr,t_address)": {
+            "label": "mapping(string => address)",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
             "numberOfBytes": "32"
           },
           "t_uint256": {

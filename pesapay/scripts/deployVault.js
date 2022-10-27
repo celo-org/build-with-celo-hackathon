@@ -25,13 +25,18 @@ async function main() {
     { initializer: "initialize" },
     { kind: "uups" }
   )
+  const Xw = await ethers.getContractFactory("Registry")
+  const XW = await upgrades.deployProxy(Xw.connect(relaySigner), [XY.address], {
+    initializer: "initialize",
+  })
   console.log("address of Vault deployed at", XZ.address)
   writeFileSync(
     "deploy.json",
     JSON.stringify(
       {
-        MinimalForwarder: XY.address,
+        MinimalForwarderUpgradeable: XY.address,
         Vault: XZ.address,
+        Registry: XW.address,
       },
       null,
       2
