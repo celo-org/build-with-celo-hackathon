@@ -4,6 +4,7 @@ import { Dimensions, StyleSheet } from 'react-native'
 export const styles = StyleSheet.create({
   listContainer: {
     backgroundColor: '#fff',
+    height: '100%',
   },
   map: {
     width: Dimensions.get('window').width,

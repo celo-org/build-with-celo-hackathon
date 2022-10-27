@@ -57,7 +57,7 @@ export default function Builder() {
           Warning: you don't have enough RUN3T to build this route
         </Text> */}
       </View>
-      {showBuildForm && <BuildForm closeForm={closeForm} />}
+      {showBuildForm && <BuildForm routeCoords={routeCoords} closeForm={closeForm} />}
       <View>
         <MapView
           initialRegion={
