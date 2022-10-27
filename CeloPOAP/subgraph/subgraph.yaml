@@ -1,0 +1,33 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: POAPMarket
+    network: celo-alfajores
+    source:
+      address: "0xb90F1858B0E6D6B30D711c70241F045063b378bF"
+      abi: POAPMarket
+      startBlock: 14286030
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - ListingCanceled
+        - ListingCreated
+        - ListingPurchased
+        - ListingUpdated
+      abis:
+        - name: POAPMarket
+          file: ./abis/POAPMarket.json
+      eventHandlers:
+        - event: ListingCanceled(address,uint256,address)
+          handler: handleListingCanceled
+        - event: ListingCreated(address,uint256,uint256,address)
+          handler: handleListingCreated
+        - event: ListingPurchased(address,uint256,address,address)
+          handler: handleListingPurchased
+        - event: ListingUpdated(address,uint256,uint256,address)
+          handler: handleListingUpdated
+      file: ./src/poap-market.ts
