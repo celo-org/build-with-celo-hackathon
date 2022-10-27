@@ -14,6 +14,18 @@ class AppsPane extends React.Component {
 		this.getMvcMyDeedObject = this.app.getMvcMyDeedObject;
 	}
 
+	// utils
+	async isInternalUrl(url) {
+		let cleanurl = await this.app.getCleanUrl();
+
+		if (url && (url.startsWith(cleanurl) === true)) {
+			return true;
+		}
+
+		return false;
+	
+	}
+
 	// connection methods
 	_getRemoteConnectionFromRpc(rpc) {
 		return this.app.getDeedClientObject().getConnectionFromRpc(rpc);
@@ -21,7 +33,7 @@ class AppsPane extends React.Component {
 
 	// erc721 methods
 	async getBaseTokenURI(currencyuuid, cardaddress) {
-		var basetokenuri = await this.getCleanUrl();
+		var basetokenuri = await this.app.getCleanUrl();
 
 		basetokenuri += '?ccy=' + currencyuuid;
 		basetokenuri += '&card=' + cardaddress;
@@ -48,7 +60,9 @@ class AppsPane extends React.Component {
 	
 			let currency = await mvcmypwa.getCurrencyFromUUID(rootsessionuuid, currencyuuid);
 	
-			deedcard = await mvcmydeed.getDeedOwningCard(rootsessionuuid, walletuuid, currencyuuid, minter, deed).catch(err => {});
+			//deedcard = await mvcmydeed.getDeedOwningCard(rootsessionuuid, walletuuid, currencyuuid, minter, deed).catch(err => {});
+			deedcard = await await mvcmypwa.getCurrencyCardWithAddress(rootsessionuuid, walletuuid, currencyuuid,
+																				deed.owner); // creates read-only card if necessary
 
 			// check if card is read-only
 			let cansign = await mvcmydeed.canCardSign(rootsessionuuid, walletuuid, deedcard.uuid);

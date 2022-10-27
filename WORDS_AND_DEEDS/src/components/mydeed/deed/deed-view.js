@@ -136,14 +136,14 @@ class DeedView extends React.Component {
 				let tokenid = (params.tokenid ? params.tokenid : dataobj.tokenid);
 
 				// we fetch the deed to have a proper record
-				let minter = await mvcmypwa.fetchDeedMinterFromAddress(rootsessionuuid, walletuuid, currencyuuid, minter_address);
+				let minter = await mvcmydeed.fetchDeedMinterFromAddress(rootsessionuuid, walletuuid, currencyuuid, minter_address);
 
 				if (!minter)
 					throw 'could not find minter with address ' + minter_address;
 
 				let mintername = minter.name;
 
-				let deed = await mvcmypwa.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid);
+				let deed = await mvcmydeed.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid);
 				this.deed = deed;
 
 				// check if deed is on sale
@@ -262,7 +262,7 @@ class DeedView extends React.Component {
 	async onOfferOnSale() {
 		console.log('onOfferOnSale pressed!');
 		
-		let params = {action: 'offeronsale', currencyuuid: this.dataobject.currencyuuid, txhash: this.dataobject.txhash, address: this.deed.minter, tokenid: this.deed.tokenid, dataobject: this.deed};
+		let params = {action: 'sell', currencyuuid: this.dataobject.currencyuuid, txhash: this.dataobject.txhash, address: this.deed.minter, tokenid: this.deed.tokenid, dataobject: this.deed};
 
 		await this.app.gotoRoute('deed', params);		
 		

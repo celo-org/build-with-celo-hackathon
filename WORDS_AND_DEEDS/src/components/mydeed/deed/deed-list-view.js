@@ -18,6 +18,7 @@ class DeedListView extends React.Component {
 		this.parent = this.props.parent;
 		
 		this.getMvcMyPWAObject = this.app.getMvcMyPWAObject;
+		this.getMvcMyDeedObject = this.app.getMvcMyDeedObject;
 
 		this.uuid = this.app.guid();
 
@@ -51,11 +52,12 @@ class DeedListView extends React.Component {
 
 	async _readAllDeeds() {
 		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
 
 		let rootsessionuuid = this.props.rootsessionuuid;
 		let walletuuid = this.props.currentwalletuuid;
 
-		let deeds = await mvcmypwa.readDeeds(rootsessionuuid, walletuuid);
+		let deeds = await mvcmydeed.readDeeds(rootsessionuuid, walletuuid);
 
 		// enrich items
 		for (var i = 0; i < deeds.length; i++) {
@@ -68,8 +70,37 @@ class DeedListView extends React.Component {
 		return deeds;
 	}
 
+	async _checkDeedCurrency(deed) {
+		try {
+			const URL = require("url");
+			return;
+
+			// we retrieve the basetokenuri we entered to check currency and minter match
+			let minter = deed.minterobject;
+			let basetokenuri = minter.basetokenuri;
+
+			if (basetokenuri) {
+				let {query} = URL.parse(basetokenuri, true);
+				let minter_currencyuuid = query.ccy;
+
+				if (minter_currencyuuid && (minter_currencyuuid !== deed.currencyuuid)) {
+					console.log('fixing currency of deed ' + deed.txhash + ' to ' + minter_currencyuuid);
+					deed.currencyuuid = minter_currencyuuid;
+				}
+			}
+			else {
+				return; // can not check
+			}
+		}
+		catch(e) {
+		}
+
+		return;
+	}
+
 	async _fetchChainDeeds() {
 		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
 
 		let rootsessionuuid = this.props.rootsessionuuid;
 		let walletuuid = this.props.currentwalletuuid;
@@ -94,13 +125,13 @@ class DeedListView extends React.Component {
 			for (var j = 0; j < _currencycards.length; j++) {
 				let _currencycard = _currencycards[j];
 
-				var minter = await mvcmypwa.fetchDeedMinter(rootsessionuuid, walletuuid, _currency.uuid, _currencycard.uuid).catch(err => {
+				var minter = await mvcmydeed.fetchDeedMinter(rootsessionuuid, walletuuid, _currency.uuid, _currencycard.uuid).catch(err => {
 					console.log('error: ' + err);
 				});
 
 				if (!minter) continue;
 
-				let _currencycarddeeds = await mvcmypwa.fetchDeeds(rootsessionuuid, walletuuid, _currency.uuid, minter).catch(err => {
+				let _currencycarddeeds = await mvcmydeed.fetchDeeds(rootsessionuuid, walletuuid, _currency.uuid, minter).catch(err => {
 					console.log('error: ' + err);
 				});
 
@@ -118,6 +149,8 @@ class DeedListView extends React.Component {
 					_currencycarddeed.currencyuuid = _currency.uuid;
 					_currencycarddeed.minterobject = minter;
 
+					// check the currency of the card did match the currency of the minter (in case deed was created on another device)
+					await this._checkDeedCurrency( _currencycarddeed);
 				}
 
 				_currencydeeds = _currencydeeds.concat(_currencycarddeeds);
@@ -151,6 +184,7 @@ class DeedListView extends React.Component {
 
 	async checkNavigationState() {
 		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
 
 		let rootsessionuuid = this.props.rootsessionuuid;
 		let walletuuid = this.props.currentwalletuuid;
@@ -186,7 +220,7 @@ class DeedListView extends React.Component {
 		let chaindeeds = await this._fetchChainDeeds();
 
 		for (var i = 0; i < chaindeeds.length; i++) {
-			await mvcmypwa.saveDeed(rootsessionuuid, walletuuid, chaindeeds[i]);
+			await mvcmydeed.saveDeed(rootsessionuuid, walletuuid, chaindeeds[i]);
 		}
 
 		// refresh deeds list from local (updated) list
@@ -224,7 +258,7 @@ class DeedListView extends React.Component {
 		let minter = item.minter;
 		let tokenid = item.tokenid;
 
-		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
 
 		let rootsessionuuid = this.props.rootsessionuuid;
 		let walletuuid = this.props.currentwalletuuid;
@@ -232,14 +266,14 @@ class DeedListView extends React.Component {
 		let minterobj = item.minterobject;
 
 		if (!minterobj) {
-			minterobj = await mvcmypwa.fetchDeedMinterFromAddress(rootsessionuuid, walletuuid, currencyuuid, minter).catch(err => {
+			minterobj = await mvcmydeed.fetchDeedMinterFromAddress(rootsessionuuid, walletuuid, currencyuuid, minter).catch(err => {
 				console.log('error: ' + err);
 			});
 		}
 
 
 		let stop = false;
-		let deed = await mvcmypwa.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minterobj, tokenid)
+		let deed = await mvcmydeed.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minterobj, tokenid)
 		.catch(err => {
 			console.log('error in DeedListView.onClickItem ' + err);
 

@@ -145,6 +145,7 @@ class DeedTransferForm extends React.Component {
 
 	async checkNavigationState() {
 		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
 
 		let rootsessionuuid = this.props.rootsessionuuid;
 		let walletuuid = this.props.currentwalletuuid;
@@ -166,7 +167,7 @@ class DeedTransferForm extends React.Component {
 				let tokenid = params.tokenid;
 
 				// we fetch the deed to have a proper record
-				let minter = await mvcmypwa.fetchDeedMinterFromAddress(rootsessionuuid, walletuuid, currencyuuid, minter_address);
+				let minter = await mvcmydeed.fetchDeedMinterFromAddress(rootsessionuuid, walletuuid, currencyuuid, minter_address);
 
 				if (!minter)
 					throw 'could not find minter with address ' + minter_address;
@@ -174,7 +175,7 @@ class DeedTransferForm extends React.Component {
 				this.minter = minter;
 				let mintername = minter.name;
 
-				let deed = await mvcmypwa.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid);
+				let deed = await mvcmydeed.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid);
 				this.deed = deed;
 
 				// time
@@ -309,7 +310,7 @@ class DeedTransferForm extends React.Component {
 		
 					card = await this.app.createCurrencyCard(currencyuuid, signingkey, options)
 					.catch(err => {
-						console.log('error in ClauseCreateForm.onSubmit: ' + err);
+						console.log('error in DeedTransferForm.onTransfer: ' + err);
 					});
 	
 					if (!card) {
@@ -357,7 +358,7 @@ class DeedTransferForm extends React.Component {
 
 			deed.data = {url: deed.metadata.external_url};
 
-			const txhash = mvcmydeed.transferDeed(rootsessionuuid, walletuuid, currency.uuid, minter, deed, toaddress, _feelevel)
+			const txhash = await mvcmydeed.transferDeed(rootsessionuuid, walletuuid, currency.uuid, minter, deed, toaddress, _feelevel)
 			.catch(err => {
 				console.log('error in DeedTransferForm.onTransfer: ' + err);
 			});

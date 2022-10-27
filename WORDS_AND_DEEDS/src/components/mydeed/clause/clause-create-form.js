@@ -214,6 +214,7 @@ class ClauseCreateForm extends React.Component {
 
 	async checkNavigationState() {
 		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
 
 		let rootsessionuuid = this.props.rootsessionuuid;
 		let walletuuid = this.props.currentwalletuuid;
@@ -256,7 +257,7 @@ class ClauseCreateForm extends React.Component {
 			let tokenid = dataobj.tokenid;
 
 			// we fetch the deed to have a proper record
-			let minter = await mvcmypwa.fetchDeedMinterFromAddress(rootsessionuuid, walletuuid, currencyuuid, minter_address);
+			let minter = await mvcmydeed.fetchDeedMinterFromAddress(rootsessionuuid, walletuuid, currencyuuid, minter_address);
 			this.minter = minter;
 
 			if (!minter)
@@ -264,7 +265,7 @@ class ClauseCreateForm extends React.Component {
 
 			let mintername = minter.name;
 
-			let deed = await mvcmypwa.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid);
+			let deed = await mvcmydeed.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid);
 			this.deed = deed;
 
 			if (deed) {

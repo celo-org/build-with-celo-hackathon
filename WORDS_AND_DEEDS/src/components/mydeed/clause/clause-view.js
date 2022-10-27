@@ -22,6 +22,7 @@ class ClauseView extends React.Component {
 		this.parent = this.props.parent;
 
 		this.getMvcMyPWAObject = this.app.getMvcMyPWAObject;
+		this.getMvcMyDeedObject = this.app.getMvcMyDeedObject;
 		
 		this.uuid = this.app.guid();
 
@@ -112,6 +113,7 @@ class ClauseView extends React.Component {
 	
 	async checkNavigationState() {
 		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
 
 		let rootsessionuuid = this.props.rootsessionuuid;
 		let walletuuid = this.props.currentwalletuuid;
@@ -135,7 +137,7 @@ class ClauseView extends React.Component {
 				let clauseindex = dataobj.index;
 	
 				// we fetch the deed to have a proper record
-				let minter = await mvcmypwa.fetchDeedMinterFromAddress(rootsessionuuid, walletuuid, currencyuuid, minter_address);
+				let minter = await mvcmydeed.fetchDeedMinterFromAddress(rootsessionuuid, walletuuid, currencyuuid, minter_address);
 				this.minter = minter;
 	
 				if (!minter)
@@ -143,7 +145,7 @@ class ClauseView extends React.Component {
 	
 				let mintername = minter.name;
 	
-				let deed = await mvcmypwa.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid);
+				let deed = await mvcmydeed.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid);
 				this.deed = deed;
 	
 				if (deed) {

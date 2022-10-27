@@ -92,6 +92,18 @@ class QRCodeReaderHomeScreen extends React.Component {
 		this.setState({action: flag});
 	}
 
+	// utils
+	async _isInternalUrl(url) {
+		let cleanurl = await this.app.getCleanUrl();
+
+		if (url && (url.startsWith(cleanurl) === true)) {
+			return true;
+		}
+
+		return false;
+	
+	}
+
 	async _isValidUrl(url_string) {
 		var inputElement = document.createElement('input');
 		inputElement.type = 'url';
@@ -115,10 +127,21 @@ class QRCodeReaderHomeScreen extends React.Component {
 				let isUrl = await this._isValidUrl(url);
 				
 				if (isUrl) {
-					let _cr = '\r\n';
-					let message = 'Go to? ' + _cr + _cr + url;
+					let isinternal = await this._isInternalUrl(url);
 
-					let choice = await this._confirm(message);
+					let _cr = '\r\n';
+					let message = '';
+					let choice = false;
+					
+					if (isinternal) {
+						// we could directly jump if it is an internal url
+						message = 'Jump to internal url? ' + _cr + _cr + url;
+						choice = await this._confirm(message);
+					}
+					else {
+						message = 'Go to? ' + _cr + _cr + url;
+						choice = await this._confirm(message);
+					}
 
 					if (choice) {
 						console.log('Jumping to ' + url);

@@ -19,6 +19,7 @@ class ClauseListView extends React.Component {
 		this.parent = this.props.parent;
 
 		this.getMvcMyPWAObject = this.app.getMvcMyPWAObject;
+		this.getMvcMyDeedObject = this.app.getMvcMyDeedObject;
 
 		this.deed = this.props.deed;
 

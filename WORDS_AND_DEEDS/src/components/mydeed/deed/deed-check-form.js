@@ -106,6 +106,11 @@ class DeedCheckForm extends React.Component {
 		}
 	}
 
+	async _isInternalUrl(url_string) {
+		return this.app.getVariable('AppsPane').isInternalUrl(url_string);
+
+	}
+
 	async _confirm(message) {
 		return window.confirm(message);
 	}
@@ -209,7 +214,7 @@ class DeedCheckForm extends React.Component {
 				let tokenid = params.tokenid;
 
 				// we fetch the deed to have a proper record
-				let minter = await mvcmypwa.fetchDeedMinterFromAddress(rootsessionuuid, walletuuid, currencyuuid, minter_address);
+				let minter = await mvcmydeed.fetchDeedMinterFromAddress(rootsessionuuid, walletuuid, currencyuuid, minter_address);
 
 				if (!minter)
 					throw 'could not find minter with address ' + minter_address;
@@ -217,7 +222,7 @@ class DeedCheckForm extends React.Component {
 				this.minter = minter;
 				let mintername = minter.name;
 
-				let deed = await mvcmypwa.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid);
+				let deed = await mvcmydeed.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid);
 				this.deed = deed;
 
 				// time
@@ -430,10 +435,21 @@ class DeedCheckForm extends React.Component {
 				let isUrl = await this._isValidUrl(url);
 				
 				if (isUrl) {
+					let isinternal = await this._isInternalUrl(url);
+
 					let _cr = '\r\n';
-					let message = 'Go to? ' + _cr + _cr + url;
-	
-					let choice = await this._confirm(message);
+					let message = '';
+					let choice = false;
+					
+					if (isinternal) {
+						// we could directly jump if it is an internal url
+						message = 'Jump to internal url? ' + _cr + _cr + url;
+						choice = await this._confirm(message);
+					}
+					else {
+						message = 'Go to? ' + _cr + _cr + url;
+						choice = await this._confirm(message);
+					}
 	
 					if (choice) {
 						console.log('Jumping to ' + url);

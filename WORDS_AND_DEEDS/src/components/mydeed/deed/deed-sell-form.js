@@ -9,6 +9,8 @@ import { Dots } from 'react-activity';
 import { faCopy, faUndo} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import QRCodeReadForm from '../../common/qr-code-reader/qr-code-read-form.js';
+
 import QRCodeReact from 'qrcode.react';
 
 import {CurrencyCardIcon} from '@primusmoney/react_pwa/react-js-ui';
@@ -36,8 +38,6 @@ class DeedSellForm extends React.Component {
 		let title = '';
 		let description = '';
 
-		let saleprice = '';
-
 		let currency = {symbol: ''};
 
 		let signingkey = null;
@@ -55,7 +55,8 @@ class DeedSellForm extends React.Component {
 			title,
 			description,
 
-			saleprice,
+			saleprice: 0,
+			saleprice_string: '',
 			canbelisted: false,
 
 			currency,
@@ -74,6 +75,8 @@ class DeedSellForm extends React.Component {
 
 			sell_mode: null,
 			pay_url: null,
+			payer_address: null,
+			payment_txhash: null,
 
 			loaded: false,
 			registration_text: 'loading...',
@@ -190,8 +193,16 @@ class DeedSellForm extends React.Component {
 				let minter_address = params.address;
 				let tokenid = params.tokenid;
 
+				let currency = await mvcmypwa.getCurrencyFromUUID(rootsessionuuid, currencyuuid)
+				.catch(err => {
+					console.log('error in DeedSellForm.checkNavigationState: ' + err);
+				});
+
+				if (!currency)
+					return Promise.reject('could not find currency ' + currencyuuid);
+	
 				// we fetch the deed to have a proper record
-				let minter = await mvcmypwa.fetchDeedMinterFromAddress(rootsessionuuid, walletuuid, currencyuuid, minter_address);
+				let minter = await mvcmydeed.fetchDeedMinterFromAddress(rootsessionuuid, walletuuid, currencyuuid, minter_address);
 
 				if (!minter)
 					throw 'could not find minter with address ' + minter_address;
@@ -199,7 +210,7 @@ class DeedSellForm extends React.Component {
 				this.minter = minter;
 				let mintername = minter.name;
 
-				let deed = await mvcmypwa.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid);
+				let deed = await mvcmydeed.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid);
 				this.deed = deed;
 
 				// check if deed can be listed on a marketplace
@@ -225,14 +236,6 @@ class DeedSellForm extends React.Component {
 				
 	
 				// share link
-				let currency = await mvcmypwa.getCurrencyFromUUID(rootsessionuuid, currencyuuid)
-				.catch(err => {
-					console.log('error in DeedSellForm.checkNavigationState: ' + err);
-				});
-
-				if (!currency)
-					return Promise.reject('could not find currency ' + currencyuuid);
-	
 				var sharelink = await this.app.getShareLink(txhash, currency.uuid);
 	
 				let isOwner = false;
@@ -241,6 +244,11 @@ class DeedSellForm extends React.Component {
 				let deedcard_balance_int = 0;
 				let deedcard_balance_string = '';
 				let deedcard_creditunits = '';
+
+				let saleprice = 0;
+				let saleprice_string = '';
+				let payment_txhash = null;
+				let payer_address = null;
 
 				if (deedcard) {
 					isOwner = true;
@@ -253,13 +261,49 @@ class DeedSellForm extends React.Component {
 	
 					let credits = deedcard_creditunits = await mvcmypwa.getCreditBalance(rootsessionuuid, walletuuid, deedcard.uuid);
 					deedcard_creditunits = credits.transactionunits;
-	
+
+					// re-entry in qrcode mode
+					payment_txhash = (params.tx ? params.tx : null);
+
+					if (payment_txhash) {
+						let transaction = await mvcmydeed.getSchemeEthereumTransaction(rootsessionuuid, walletuuid, currency.scheme_uuid, payment_txhash)
+						.catch(err => {
+							console.log('could not retrieve transaction in DeedSellForm.checkNavigationState: ' + err);
+						});
+
+						let tx = (transaction ? transaction._ethtx : null);
+
+						if (tx) {
+							// get transaction receipt
+							let tx_receipt = await mvcmydeed.getSchemeEthereumTransactionReceipt(rootsessionuuid, walletuuid, currency.scheme_uuid, payment_txhash).catch(err => {});
+			
+							if (tx_receipt) {
+								let tx_amount = (tx_receipt.logs && tx_receipt.logs[0] ? parseInt(tx_receipt.logs[0].data) : null);
+								payer_address = tx_receipt.from;
+
+								let to_address = (tx_receipt.logs && tx_receipt.logs[0] && tx_receipt.logs[0].topics && tx_receipt.logs[0].topics[2] ? '0x' + tx_receipt.logs[0].topics[2].substring(26) : null);
+								let areequal = await mvcmypwa.areAddressesEqual(rootsessionuuid, deedcard.address, to_address);
+								if (!areequal) {
+									// payment is not for our card
+									payment_txhash = null;
+									saleprice = 0;
+									saleprice_string = '';
+								}
+								else {
+									saleprice = tx_amount
+									let options = {showdecimals: true, decimalsshown: 2 /* currency.decimals */};
+									saleprice_string = await mvcmydeed._formatCurrencyIntAmount(rootsessionuuid, currency.uuid, saleprice, options);
+								}
+							}
+						}		
+					}
 				}
 
 				this._setState({currency, mintername, 
 					isOwner,
 					deedcard, deedcard_balance_int, deedcard_balance_string, deedcard_creditunits,
-					registration_text, sharelink});
+					registration_text, sharelink,
+					saleprice, saleprice_string, payer_address, payment_txhash});
 
 				dataobj.viewed = true;
 			}
@@ -301,7 +345,7 @@ class DeedSellForm extends React.Component {
 		let rootsessionuuid = this.props.rootsessionuuid;
 		let walletuuid = this.props.currentwalletuuid;
 
-		let {currency, deedcard, saleprice} =this.state;
+		let {currency, deedcard, saleprice_string} =this.state;
 
 		
 		this._setState({processing: true});
@@ -313,7 +357,7 @@ class DeedSellForm extends React.Component {
 				return;
 			}
 
-			if (!saleprice || (saleprice.length == 0)) {
+			if (!saleprice_string || (saleprice_string.length == 0)) {
 				this.app.alert('You need to enter a price you want for this deed');
 				this._setState({processing: false});
 				return;
@@ -323,13 +367,15 @@ class DeedSellForm extends React.Component {
 
 			pay_url += '&route=deedview&action=buy&mode=qrcode';
 
-			let tokenamount = await mvcmypwa.getCurrencyAmount(rootsessionuuid, currency.uuid, saleprice);
+			pay_url += '&price=' + saleprice_string;
+
+			let tokenamount = await mvcmypwa.getCurrencyAmount(rootsessionuuid, currency.uuid, saleprice_string);
 			let tokenamount_int = await tokenamount.toInteger();
 
 			pay_url += '&amount=' + tokenamount_int;
 
 
-			this._setState({sell_mode: 'qrcode', pay_url});
+			this._setState({sell_mode: 'qrcode', action: 'asking_challenge', pay_url});
 
 		}
 		catch(e) {
@@ -340,8 +386,206 @@ class DeedSellForm extends React.Component {
 		}
 
 		this._setState({processing: false});
+	}
+
+	async onScanQRCode() {
+		console.log('onScanQRCode pressed!');
+
+		this._setState({payment_txhash: null, action: 'reading_response'});
+	}
+
+	async _isValidUrl(url_string) {
+		var inputElement = document.createElement('input');
+		inputElement.type = 'url';
+		inputElement.value = url_string;
+  
+		if (!inputElement.checkValidity()) {
+		  return false;
+		} else {
+		  return true;
+		}
+	}
+
+	async _isInternalUrl(url_string) {
+		return this.app.getVariable('AppsPane').isInternalUrl(url_string);
+
+	}
+
+	async _confirm(message) {
+		return window.confirm(message);
+	}
+
+	async onRead(result, error) {
+		try {
+			if (!!result) {
+				let url = result.text;
+				let isUrl = await this._isValidUrl(url);
+				
+				if (isUrl) {
+					let isinternal = await this._isInternalUrl(url);
+
+					let _cr = '\r\n';
+					let message = '';
+					let choice = false;
+					
+					if (isinternal) {
+						// we could directly jump if it is an internal url
+						message = 'Jump to internal url? ' + _cr + _cr + url;
+						choice = await this._confirm(message);
+					}
+					else {
+						message = 'Go to? ' + _cr + _cr + url;
+						choice = await this._confirm(message);
+					}
+	
+					if (choice) {
+						console.log('Jumping to ' + url);
+						await this.app.gotoUrl(url);
+					}
+				}
+				else {
+					this.app.alert('Could not read a proper url!')
+				}
+				
+			}
+		}
+		catch(e) {
+			console.log('exception in onRead' + e);
+		}
+	}
+
+	async onDeliver() {
+		console.log('onDeliver called!');
+
+		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
+
+		let rootsessionuuid = this.props.rootsessionuuid;
+		let walletuuid = this.props.currentwalletuuid;
+		
+		let wallet;
+		let carduuid;
+		let card;
+
+		let remoteaccount;
+
+		let {currency, payer_address, payment_txhash, remotewallet, rpc, deedcard, signingkey} = this.state;
+
+		this._setState({processing: true});
+
+		try {
+			let toaddress = payer_address;
+
+			// check address
+			let validaddress = await mvcmypwa.isValidAddress(rootsessionuuid, toaddress)
+			.catch(err => {
+				console.log('error in DeedTransferForm.onTransfer: ' + err);
+			});
+
+			if (!validaddress) {
+				this.app.alert('This address is not valid');
+				this._setState({processing: false});
+				return;
+			}
+
+			if (remotewallet === true) {
+				let connection = this._getRemoteConnectionFromRpc(rpc);
+				remoteaccount = (connection ? connection.account : null);
+
+				if (!remoteaccount) {
+					this.app.alert('You need to be connected to a remote wallet');
+					this._setState({processing: false});
+					return;
+				}
+
+			}
+	
+			// get wallet details
+			wallet = await mvcmypwa.getWalletInfo(rootsessionuuid, walletuuid);
+
+			if (deedcard) {
+				card = deedcard;
+				carduuid = deedcard.uuid;
+			}
+			else {
+				if (signingkey) {
+					let currencyuuid = currency.uuid;
+					let options = {maincard: true, allow_readonly: true};
+		
+					card = await this.app.createCurrencyCard(currencyuuid, signingkey, options)
+					.catch(err => {
+						console.log('error in DeedTransferForm.onTransfer: ' + err);
+					});
+	
+					if (!card) {
+						this.app.alert('could not create card from private key');
+						this._setState({processing: false});
+						return;
+					}
+				}
+				else {
+					this.app.alert('You need to provide your private key for ' + currency.name + ' in order to being able to transfer this deed');
+					this._setState({processing: false});
+					return;
+				}
+		
+			}
+
+			// transfer
+			let minter = this.minter;
+			let deed = this.deed;
+
+			// check we have enough transaction credits
+			let tx_fee = {};
+			tx_fee.transferred_credit_units = 0;
+			let transfer_deed_cost_units = (currency.deeds_v1.transfer_deed_cost_units ? parseInt(currency.deeds_v1.transfer_deed_cost_units) : 4);
+			tx_fee.estimated_cost_units = transfer_deed_cost_units;
+
+			let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, deedcard.uuid, tx_fee);
+
+			let canspend = await this._canCompleteTransaction(deedcard.uuid, tx_fee, _feelevel).catch(err => {});
+
+			if (!canspend) {
+				if (tx_fee.estimated_fee.execution_credits > tx_fee.estimated_fee.max_credits) {
+					this.app.alert('The execution of this transaction is too large: ' + tx_fee.estimated_fee.execution_units + ' credit units.');
+					this._setState({processing: false});
+					return;
+				}
+				else {
+					this.app.alert('You must add transaction units to the source card. You need at least ' + tx_fee.required_units + ' credit units.');
+					this._setState({processing: false});
+					return;
+				}
+			}
+						
+			
+
+			deed.data = {url: deed.metadata.external_url};
+
+			const txhash = await mvcmydeed.transferDeed(rootsessionuuid, walletuuid, currency.uuid, minter, deed, toaddress, _feelevel)
+			.catch(err => {
+				console.log('error in DeedTransferForm.onTransfer: ' + err);
+			});
+
+			if (!txhash) {
+				this.app.alert('Transfer did not complete');
+				this._setState({processing: false});
+				return;
+			}
 
 
+			// go to list deed view
+			let params = {action: 'view', currencyuuid: this.dataobject.currencyuuid, txhash: this.dataobject.txhash, address: this.deed.minter, tokenid: this.deed.tokenid, dataobject: this.deed};
+
+			await this.app.gotoRoute('deed', params);		}
+		catch(e) {
+			console.log('exception in onDeliver: ' + e);
+			this.app.error('exception in onDeliver: ' + e);
+
+			this.app.alert('Could not deliver the deed to payer. Please do the transfer manually!')
+		}
+
+		this._setState({processing: false});
 	}
 
 	async onOfferOnSale() {
@@ -382,7 +626,7 @@ class DeedSellForm extends React.Component {
 		
 					card = await this.app.createCurrencyCard(currencyuuid, signingkey, options)
 					.catch(err => {
-						console.log('error in ClauseCreateForm.onSubmit: ' + err);
+						console.log('error in DeedSellForm.onOfferOnSale: ' + err);
 					});
 	
 					if (!card) {
@@ -516,6 +760,31 @@ class DeedSellForm extends React.Component {
 
 	
 	// rendering
+	renderQRCodePart() {
+		let {action, pay_url} = this.state;
+
+		switch(action) {
+			case 'asking_challenge':
+				return (
+					<QRCodeReact
+					value={pay_url}
+					renderas='svg'
+					size={360}
+					includeMargin={true}
+					/>
+				);
+			case 'reading_response':
+				return (
+					<QRCodeReadForm app={this.app} onRead={this.onRead.bind(this)} />
+				);
+
+		
+
+			default:
+				return(<></>);
+		}
+	}
+
 	renderDeedCardPart() {
 		let { currency, remotewallet, connection, deedcard, signingkey, deedcard_balance_string, deedcard_creditunits } = this.state;
 
@@ -580,14 +849,22 @@ class DeedSellForm extends React.Component {
 	}
 
 	renderDeedButtons() {
-		let { loaded, isOwner, canbelisted} = this.state;
+		let { loaded, isOwner, canbelisted, pay_url, payment_txhash} = this.state;
 
 		if (loaded) {
 			return(
 				<div>
 				<span>
+				{(payment_txhash ?
+				<Button className="DeedButton" onClick={this.onDeliver.bind(this)} disabled={(isOwner ? false : true)} type="submit">
+				Deliver</Button> :
+				(pay_url ?
+				<Button className="DeedButton" onClick={this.onScanQRCode.bind(this)} disabled={(isOwner ? false : true)} type="submit">
+				Scan QR Code</Button> :
 				<Button className="DeedButton" onClick={this.onBuildQRCode.bind(this)} disabled={(isOwner ? false : true)} type="submit">
-				QR Code</Button>
+				Build QR Code</Button>
+				)
+				)}
 				</span>
 				<span>
 				{(canbelisted ? 
@@ -621,7 +898,8 @@ class DeedSellForm extends React.Component {
 		let { mintername, title, description, currency, registration_text, message_text,
 			sharelinkmessage, sharelink,
 			sell_mode, pay_url,
-			saleprice, external_url } = this.state;
+			saleprice_string, payment_txhash,
+			external_url } = this.state;
 		
 		return (
 			<div className="Form">
@@ -664,22 +942,29 @@ class DeedSellForm extends React.Component {
 
 					{this.renderDeedCardPart()}
 					
-					<FormGroup controlId="title">
-						<FormLabel>Enter sale price</FormLabel>
+					<FormGroup className="DeedSalePriceLine" controlId="saleprice">
+						<span className="DeedSalePriceCol">
+						<FormLabel>{(payment_txhash ? "Amount paid:" : "Enter sale price:")}</FormLabel>
 						<FormControl
+						disabled={(payment_txhash ? true : false)}
 						autoFocus
 						type="text"
-						value={saleprice}
-						onChange={e => this._setState({saleprice: e.target.value})}
+						value={(saleprice_string ? saleprice_string : '')}
+						onChange={e => this._setState({saleprice_string: e.target.value})}
 						/>
+						</span>
+						<span className="DeedCurrencyCol">
+						<FormLabel>Currency</FormLabel>
+						<FormControl
+						disabled
+						type="text"
+						value={(currency ? currency.symbol : '')}
+						/>
+						</span>
+
 					</FormGroup>
 				</>	:
-				<QRCodeReact
-				value={pay_url}
-				renderas='svg'
-				size={360}
-				includeMargin={true}
-				/>
+				this.renderQRCodePart()
 				)}
 
 

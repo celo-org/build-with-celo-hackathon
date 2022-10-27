@@ -34,6 +34,19 @@
 	  word-break: break-word;
   }
 
+   .DeedSalePriceLine {
+	   display: flex;
+   }
+
+   .DeedSalePriceCol {
+	width: 80vw;
+	margin-right: 20pt;
+  }
+
+  .DeedCurrencyCol {
+	   width: 20vw;
+   }
+
   /* Deed Articles */
   .ClauseArticleHeader {
 	font-weight: bold;
@@ -105,6 +118,7 @@
 	padding-top: 50pt;
     padding-left: 10pt;
     padding-right: 10pt;
+	font-size: xx-large;
   }
 
 .OwnershipUnsure {
@@ -113,6 +127,7 @@
 	padding-top: 50pt;
     padding-left: 10pt;
     padding-right: 10pt;
+	font-size: xx-large;
 }
 .OwnershipFalse {
 	color: red;
@@ -120,4 +135,5 @@
 	padding-top: 50pt;
     padding-left: 10pt;
     padding-right: 10pt;
+	font-size: xx-large;
 }

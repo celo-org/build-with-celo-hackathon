@@ -120,7 +120,7 @@ class DeedClient {
 		console.log('getDataObjectFromComposedHash_asynchook called for ' + this.name);
 
 		try {
-			let mvcmypwa = this.getMvcMyPWAObject();
+			let mvcmydeed = this.getMvcMyDeedObject();
 			
 			let rootsessionuuid = params[0];
 			let walletuuid = params[1];
@@ -140,12 +140,12 @@ class DeedClient {
 
 				if (currencyuuid) {
 
-					let minter = await mvcmypwa.fetchDeedMinterFromAddress(rootsessionuuid, walletuuid, currencyuuid, minteraddress);
+					let minter = await mvcmydeed.fetchDeedMinterFromAddress(rootsessionuuid, walletuuid, currencyuuid, minteraddress);
 		
 					if (!minter)
 						return Promise.reject('could not find minter linked to address ' + minteraddress);
 		
-					deed = await mvcmypwa.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid)
+					deed = await mvcmydeed.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid)
 					.catch(err => {
 						console.log('error in DeedClient._getDeedDataObjectFromMinter:' + err);
 					});
@@ -200,7 +200,7 @@ class DeedClient {
 		console.log('getDataObjectFromCard_asynchook called for ' + this.name);
 
 		try {
-			let mvcmypwa = this.getMvcMyPWAObject();
+			let mvcmydeed = this.getMvcMyDeedObject();
 
 			let rootsessionuuid = params[0];
 			let walletuuid = params[1];
@@ -208,12 +208,12 @@ class DeedClient {
 			let cardaddress = params[3];
 			let tokenid = params[4];
 
-			let minter = await mvcmypwa.fetchDeedMinterFromOwner(rootsessionuuid, walletuuid, currencyuuid, cardaddress);
+			let minter = await mvcmydeed.fetchDeedMinterFromOwner(rootsessionuuid, walletuuid, currencyuuid, cardaddress);
 
 			if (!minter)
 				return Promise.reject('could not find minter linked to address ' + cardaddress);
 
-			var dataobject = await mvcmypwa.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid)
+			var dataobject = await mvcmydeed.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid)
 			.catch(err => {
 				console.log('error in DeedClient._getDataObjectFromCard:' + err);
 			});
@@ -228,16 +228,16 @@ class DeedClient {
 	}
 
 	async _getDeedDataObjectFromMinter(sessionuuid, walletuuid, currencyuuid, minteraddress, tokenid) {
-		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
 
 		if (currencyuuid) {
 
-			let minter = await mvcmypwa.fetchDeedMinterFromAddress(sessionuuid, walletuuid, currencyuuid, minteraddress);
+			let minter = await mvcmydeed.fetchDeedMinterFromAddress(sessionuuid, walletuuid, currencyuuid, minteraddress);
 
 			if (!minter)
 				return Promise.reject('could not find minter linked to address ' + minteraddress);
 
-			var dataobject = await mvcmypwa.fetchDeed(sessionuuid, walletuuid, currencyuuid, minter, tokenid)
+			var dataobject = await mvcmydeed.fetchDeed(sessionuuid, walletuuid, currencyuuid, minter, tokenid)
 			.catch(err => {
 				console.log('error in DeedClient._getDeedDataObjectFromMinter:' + err);
 			});

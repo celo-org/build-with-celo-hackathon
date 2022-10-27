@@ -9,6 +9,8 @@ import { Dots } from 'react-activity';
 import { faCopy, faUndo} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import QRCodeReact from 'qrcode.react';
+
 import {CurrencyCardIcon} from '@primusmoney/react_pwa/react-js-ui';
 import RemoteWalletIcon from '../../remote-wallet/remote-wallet-icon.js'
 
@@ -34,9 +36,6 @@ class DeedBuyForm extends React.Component {
 		let title = '';
 		let description = '';
 
-		let saleprice = 0;
-		let saleprice_string = '';
-
 		let currency = {symbol: ''};
 
 		let signingkey = null;
@@ -55,8 +54,9 @@ class DeedBuyForm extends React.Component {
 
 			isOnSale: false,
 			buy_mode: 'market',
-			saleprice,
-			saleprice_string,
+			saleprice: 0,
+			saleprice_string: null,
+			payment_txhash: null,
 
 			currency,
 
@@ -70,6 +70,9 @@ class DeedBuyForm extends React.Component {
 			currentcard,
 			card_balance_int,
 			card_balance_string,
+
+			buy_mode: null,
+			payment_url: null,
 
 			loaded: false,
 			registration_text: 'loading...',
@@ -258,7 +261,7 @@ class DeedBuyForm extends React.Component {
 				let tokenid = params.tokenid;
 
 				// we fetch the deed to have a proper record
-				let minter = await mvcmypwa.fetchDeedMinterFromAddress(rootsessionuuid, walletuuid, currencyuuid, minter_address);
+				let minter = await mvcmydeed.fetchDeedMinterFromAddress(rootsessionuuid, walletuuid, currencyuuid, minter_address);
 
 				if (!minter)
 					throw 'could not find minter with address ' + minter_address;
@@ -266,7 +269,7 @@ class DeedBuyForm extends React.Component {
 				this.minter = minter;
 				let mintername = minter.name;
 
-				let deed = await mvcmypwa.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid);
+				let deed = await mvcmydeed.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid);
 				this.deed = deed;
 
 				// time
@@ -296,11 +299,19 @@ class DeedBuyForm extends React.Component {
 				if (listing_info && (listing_info.onsale === true)) {
 					isOnSale = true;
 					saleprice = listing_info.saleprice;
+					buy_mode = 'market';
 				}
 				else {
-					if (params.amount) {
+					if (params.price) {
 						isOnSale = true;
-						buy_mode = (params.mode ? params.mode : 'market');
+						buy_mode = (params.mode ? params.mode : 'qrcode');
+
+						let tokenamount = await mvcmypwa.getCurrencyAmount(rootsessionuuid, currency.uuid, params.price);
+						saleprice = await tokenamount.toInteger();
+					}
+					else if (params.amount) {
+						isOnSale = true;
+						buy_mode = (params.mode ? params.mode : 'qrcode');
 						saleprice = parseInt(params.amount);
 					}
 				}
@@ -396,7 +407,7 @@ class DeedBuyForm extends React.Component {
 		
 					card = await this.app.createCurrencyCard(currencyuuid, signingkey, options)
 					.catch(err => {
-						console.log('error in ClauseCreateForm.onSubmit: ' + err);
+						console.log('error in DeedBuyForm.onBuy: ' + err);
 					});
 	
 					if (!card) {
@@ -432,6 +443,54 @@ class DeedBuyForm extends React.Component {
 			// send the buy transaction
 			let minter = this.minter;
 			let deed = this.deed;
+
+			// perform payment
+			let to_address = deed.owner;
+
+			// check we have enough transaction credits
+			let tx_fee = {};
+			tx_fee.transferred_credit_units = 0;
+			let transfer_cost_units = 3;
+			tx_fee.estimated_cost_units = transfer_cost_units;
+
+			let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, currentcard.uuid, tx_fee);
+
+
+			var canspend = await mvcmypwa.canCompleteTransaction(rootsessionuuid, walletuuid, currentcard.uuid, tx_fee, _feelevel).catch(err => {});
+
+			if (!canspend) {
+				if (tx_fee.estimated_fee.execution_credits > tx_fee.estimated_fee.max_credits) {
+					this.app.alert('The execution of this transaction is too large: ' + tx_fee.estimated_fee.execution_units + ' credit units.');
+					this._setState({processing: false});
+					return;
+				}
+				else {
+					this.app.alert('You must add transaction units to the source card. You need at least ' + tx_fee.required_units + ' credit units.');
+					this._setState({processing: false});
+					return;
+				}
+			}
+						
+
+			let payment_txhash = await mvcmypwa.payAmount(rootsessionuuid, walletuuid, currentcard.uuid, to_address, currency.uuid, saleprice, _feelevel)
+			.catch(err => {
+				console.log('error in DeedBuyForm.onBuy: ' + err);
+			});
+	
+			if (!payment_txhash) {
+				this.app.alert('Could not transfer amount');
+				this.setState({processing: false});
+				return;
+			}
+
+			// display the txhash to the seller
+			let payment_url = this.deed.tokenuri;
+
+			payment_url += '&route=deedview&action=sell&mode=qrcode';
+
+			payment_url += '&tx=' + payment_txhash;
+
+			this._setState({buy_mode: 'qrcode', payment_txhash, payment_url});
 
 		}
 		catch(e) {
@@ -572,13 +631,13 @@ class DeedBuyForm extends React.Component {
 	}
 
 	renderDeedButtons() {
-		let { loaded, isOwner, isOnSale} = this.state;
+		let { loaded, isOwner, isOnSale, payment_txhash} = this.state;
 
 		if (loaded) {
 			return(
 				<div>
 				<span>
-				<Button className="BuyDeedButton" onClick={this.onBuy.bind(this)} disabled={(isOnSale ? false : true)} type="submit">
+				<Button className="BuyDeedButton" onClick={this.onBuy.bind(this)} disabled={(isOnSale && (payment_txhash === null) ? false : true)} type="submit">
 				Buy</Button>
 				</span>
 				</div>
@@ -599,6 +658,7 @@ class DeedBuyForm extends React.Component {
 
 	renderDeedBuyForm() {
 		let { mintername, title, description, currency, registration_text, message_text, sharelinkmessage, sharelink,
+			buy_mode, payment_url,
 			 saleprice, saleprice_string, external_url } = this.state;
 		
 		return (
@@ -625,6 +685,9 @@ class DeedBuyForm extends React.Component {
 				  />
 				</FormGroup>
 
+				{(!payment_url || !payment_url.length ?
+				<>
+
 				<FormGroup controlId="description">
 				  <FormLabel>Description</FormLabel>
 				  <FormControl 
@@ -640,15 +703,33 @@ class DeedBuyForm extends React.Component {
 
 				{this.renderDeedCardPart()}
 				
-				<FormGroup controlId="title">
-				  <FormLabel>Sale price is</FormLabel>
-				  <FormControl
+				<FormGroup className="DeedSalePriceLine" controlId="saleprice">
+					<span className="DeedSalePriceCol">
+					<FormLabel>Sale price</FormLabel>
+					<FormControl
 					disabled
-					autoFocus
 					type="text"
-					value={saleprice_string}
-				  />
+					value={(saleprice_string ? saleprice_string : '')}
+					/>
+					</span>
+					<span className="DeedCurrencyCol">
+					<FormLabel>Currency</FormLabel>
+					<FormControl
+					disabled
+					type="text"
+					value={(currency ? currency.symbol : '')}
+					/>
+					</span>
 				</FormGroup>
+				</>	:
+				<QRCodeReact
+				value={payment_url}
+				renderas='svg'
+				size={360}
+				includeMargin={true}
+				/>
+				)}
+
 
 				<FormGroup controlId="asseturl">
 				  <FormLabel>Asset url</FormLabel>

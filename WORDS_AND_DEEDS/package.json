@@ -1,6 +1,6 @@
 {
   "name": "my-deed",
-  "version": "0.15.38",
+  "version": "0.15.39",
   "private": true,
   "license": "UNLICENSED",
   "dependencies": {
@@ -9,7 +9,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.0",
     "@fortawesome/free-solid-svg-icons": "^5.15.0",
     "@fortawesome/react-fontawesome": "^0.1.11",
-    "@primusmoney/react_pwa": "0.30.22",
+    "@primusmoney/react_pwa": "0.30.23",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",

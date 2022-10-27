@@ -19,7 +19,9 @@ class DeedHomeScreen extends React.Component {
 		super(props);
 		
 		this.app = this.props.app;
+
 		this.getMvcMyPWAObject = this.app.getMvcMyPWAObject;
+		this.getMvcMyDeedObject = this.app.getMvcMyDeedObject;
 		
 		this.uuid = this.app.guid();
 		
@@ -42,7 +44,7 @@ class DeedHomeScreen extends React.Component {
 	}
 
 	async checkNavigationState() {
-		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
 
 		let rootsessionuuid = this.props.rootsessionuuid;
 
@@ -77,14 +79,14 @@ class DeedHomeScreen extends React.Component {
 				let minter;
 				
 				if (minteraddress) {
-					minter = await mvcmypwa.fetchDeedMinterFromAddress(rootsessionuuid, walletuuid, currencyuuid, minteraddress).catch(err => {});
+					minter = await mvcmydeed.fetchDeedMinterFromAddress(rootsessionuuid, walletuuid, currencyuuid, minteraddress).catch(err => {});
 				}
 				else if (cardaddress) {
-					minter = await mvcmypwa.fetchDeedMinterFromOwner(rootsessionuuid, walletuuid, currencyuuid, cardaddress).catch(err => {});
+					minter = await mvcmydeed.fetchDeedMinterFromOwner(rootsessionuuid, walletuuid, currencyuuid, cardaddress).catch(err => {});
 				}
 
 				if (minter) {
-					let dataobject = await mvcmypwa.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid)
+					let dataobject = await mvcmydeed.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid)
 					.catch(err => {
 						console.log('error in DeedClient._getDataObjectFromCard:' + err);
 					});
@@ -147,7 +149,7 @@ class DeedHomeScreen extends React.Component {
 				return (<DeedCreateForm app = {this.app} parent={this}/>);
 			case 'transfer':
 				return (<DeedTransferForm app = {this.app} parent={this}/>);
-			case 'offeronsale':
+			case 'sell':
 				return (<DeedSellForm app = {this.app} parent={this}/>);
 			case 'buy':
 				return (<DeedBuyForm app = {this.app} parent={this}/>);

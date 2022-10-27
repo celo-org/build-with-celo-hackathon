@@ -111,7 +111,29 @@ class DeedCreateForm extends React.Component {
 		return canspend;
 	}
 
-	
+	async _checkMinterCurrency(currencyuuid, minter) {
+		try {
+			const URL = require("url");
+
+			// we retrieve the basetokenuri we entered to check currency and minter match
+			let basetokenuri = minter.basetokenuri;
+
+			if (basetokenuri) {
+				let {query} = URL.parse(basetokenuri, true);
+
+				return (query.ccy === currencyuuid);
+			}
+			else {
+				return; // can not check
+			}
+		}
+		catch(e) {
+		}
+
+		return;
+	}
+
+
 	// post render commit phase
 	async _readVisibleCurrencies() {
 		let mvcmypwa = this.getMvcMyPWAObject();
@@ -140,6 +162,7 @@ class DeedCreateForm extends React.Component {
 		//console.log('DeedCreateForm.componentDidUpdate called');
 		
 		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
 
 		let rootsessionuuid = this.props.rootsessionuuid;
 		let walletuuid = this.props.currentwalletuuid;
@@ -226,6 +249,8 @@ class DeedCreateForm extends React.Component {
 			const currency = this.state.currency;
 			let currencyuuid = currency.uuid;
 
+			let minter;
+
 			this._openCurrencyCard(currencyuuid)
 			.then(card => {
 				if (!card)
@@ -233,9 +258,26 @@ class DeedCreateForm extends React.Component {
 
 				currentcard = card;
 
-				return mvcmypwa.fetchDeedMinter(rootsessionuuid, walletuuid, currency.uuid, currentcard.uuid).catch(err => {});
+				return mvcmydeed.fetchDeedMinter(rootsessionuuid, walletuuid, currency.uuid, currentcard.uuid).catch(err => {});
 			})
-			.then((minter) => {
+			.then((mntr) => {
+				minter = mntr;
+
+				if (minter) {
+					// we are checking for collisions because we don't handle mutliple minters 
+					// on different currencies for same card address
+					return this._checkMinterCurrency(currency.uuid, minter); 
+				}
+				else
+					return;
+			})
+			.then((checked) => {
+				if (checked === false) {
+					this.app.alert('You must use a card with another address than ' + currentcard.address + ' to mint on ' + currency.symbol);
+
+					throw 'do not use same card address for different currencies'
+				}
+
 				if ((minter) && (minter.name )) {
 					// minter correctly deployed (at least answers to getChainName)
 					this._setState({currentminter: minter, mintername: minter.name});
@@ -488,7 +530,7 @@ class DeedCreateForm extends React.Component {
 					remoteaccount); // creates read-only card if necessary
 
 				// check corresponding minter
-				currentminter = await mvcmypwa.fetchDeedMinter(rootsessionuuid, walletuuid, currency.uuid, currentcard.uuid).catch(err => {});
+				currentminter = await mvcmydeed.fetchDeedMinter(rootsessionuuid, walletuuid, currency.uuid, currentcard.uuid).catch(err => {});
 
 			}
 	

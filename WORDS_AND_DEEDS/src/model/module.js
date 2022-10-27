@@ -172,6 +172,166 @@ var Module = class {
 	}
 
 	//
+	// Scheme functions
+	//
+
+	async _getMonitoredSchemeSession(session, wallet, scheme) {
+		var mvcpwa = this._getMvcPWAObject();
+
+		return mvcpwa._getMonitoredSchemeSession(session, wallet, scheme);
+	}
+
+	async _getEthereumTransaction(session, txhash) {
+		var global = this.global;
+
+		var ethereumnodeaccessmodule = global.getModuleObject('ethereum-node-access');
+
+		const result = new Promise((resolve, reject) => { 
+			ethereumnodeaccessmodule.readEthereumTransactionObject(session, txhash, (err, res) => {
+				if (err) reject(err);
+				else {
+					var ethereumnodeaccessmodule = global.getModuleObject('ethereum-node-access');
+					var data = res.data;
+					try {
+						// can throw invalid UTF8 detected
+						res.data_decoded_utf8 = ethereumnodeaccessmodule.web3ToUTF8(session, data);
+					}
+					catch(e) {}
+				
+					resolve(res);
+				}
+			})
+			.then(res => {
+				// fixing missing callback call when data == null
+				// in EthereumNodeAccess.readEthereumTransactionObject
+				if (res)
+					return res;
+				else
+					throw new Error('no transaction found with hash ' + txhash);
+			})
+			.catch(err => {
+				reject(err);
+			});
+		});
+		
+		return result;
+	}
+
+	async _readTransaction(session, txhash) {
+		var global = this.global;
+		
+		var ethchainreadermodule = global.getModuleObject('ethchainreader');
+		
+		var chainreaderinterface = ethchainreadermodule.getChainReaderInterface(session);
+		
+		const result = new Promise((resolve, reject) => { 
+			chainreaderinterface.getTransaction(txhash,(err, res) => {
+				if (err) reject(err); 
+				else {
+					var ethereumnodeaccessmodule = global.getModuleObject('ethereum-node-access');
+					var input = res.input;
+					try {
+						res.input_decoded_utf8 = ethereumnodeaccessmodule.web3ToUTF8(session, input);
+					}
+					catch(e) {}
+				
+					resolve(res);
+				}
+			})			
+			.then(res => {
+				// fixing missing callback calls when data == null
+				// because of error read property of null in Transaction._createTransactionObject
+				if (res)
+					return res;
+				else
+					throw new Error('no transaction found with hash ' + txhash);
+			})
+			.catch(err => {
+				reject(err);
+			});
+		});
+		
+		return result;
+	}
+
+
+	async getSchemeEthereumTransaction(sessionuuid, walletuuid, schemeuuid, txhash) {
+		if (!sessionuuid)
+			return Promise.reject('session uuid is undefined');
+		
+		if (!walletuuid)
+			return Promise.reject('wallet uuid is undefined');
+
+		if (!schemeuuid)
+			return Promise.reject('scheme uuid is undefined');
+		
+		var global = this.global;
+		var _apicontrollers = this._getClientAPI();
+
+		var session = await _apicontrollers.getSessionObject(sessionuuid);
+		
+		if (!session)
+			return Promise.reject('could not find session ' + sessionuuid);
+		
+		var wallet = await _apicontrollers.getWalletFromUUID(session, walletuuid);
+		
+		if (!wallet)
+			return Promise.reject('could not find wallet ' + walletuuid);
+	
+		var	scheme = await _apicontrollers.getSchemeFromUUID(session, schemeuuid)
+		.catch(err => {});
+
+		if (!scheme)
+			return Promise.reject('could not find scheme ' + schemeuuid);
+
+		var childsession = await this._getMonitoredSchemeSession(session, wallet, scheme);
+
+		// TODO: uncomment for version >= 0.30.8
+		//var ethereumtransaction = await _apicontrollers.getEthereumTransaction(childsession, txhash);
+		var ethereumtransaction = await this._getEthereumTransaction(childsession, txhash);
+		
+		ethereumtransaction._ethtx = await this._readTransaction(childsession, txhash);
+		//ethereumtransaction._ethtx = await apicontrollers.readTransaction(childsession, txhash);
+
+		return ethereumtransaction;
+	}
+
+	async getSchemeEthereumTransactionReceipt(sessionuuid, walletuuid, schemeuuid, txhash) {
+		if (!sessionuuid)
+			return Promise.reject('session uuid is undefined');
+		
+		if (!walletuuid)
+			return Promise.reject('wallet uuid is undefined');
+
+		if (!schemeuuid)
+			return Promise.reject('scheme uuid is undefined');
+		
+		var global = this.global;
+		var _apicontrollers = this._getClientAPI();
+
+		var session = await _apicontrollers.getSessionObject(sessionuuid);
+		
+		if (!session)
+			return Promise.reject('could not find session ' + sessionuuid);
+		
+		var wallet = await _apicontrollers.getWalletFromUUID(session, walletuuid);
+		
+		if (!wallet)
+			return Promise.reject('could not find wallet ' + walletuuid);
+	
+		var	scheme = await _apicontrollers.getSchemeFromUUID(session, schemeuuid)
+		.catch(err => {});
+
+		if (!scheme)
+			return Promise.reject('could not find scheme ' + schemeuuid);
+
+		var childsession = await this._getMonitoredSchemeSession(session, wallet, scheme);
+
+		return _apicontrollers.getEthereumTransactionReceipt(childsession, txhash);
+	}
+
+
+	//
 	// Wallet functions
 	//
 	async setWalletLabel(sessionuuid, walletuuid, label) {
@@ -438,18 +598,74 @@ var Module = class {
 		if (!cardinfo)
 			return;
 
-		// we accept read-only card
-/* 		var _privatekey = await this.getCardPrivateKey(sessionuuid, walletuuid, cardinfo.uuid);
+ 		var _privatekey = await this.getCardPrivateKey(sessionuuid, walletuuid, cardinfo.uuid);
 
-		if (_privatekey) */
+		if (_privatekey)
 		return cardinfo;
 	}
 
 	// minter
 	async _getMonitoredERC721TokenSession(session, wallet, currency) {
+		var global = this.global;
+		var _apicontrollers = this._getClientAPI();
 		var mvcpwa = this._getMvcPWAObject();
+		
+		var currencyscheme = await mvcpwa._getCurrencyScheme(session, currency);
+		var childsession = await mvcpwa._getMonitoredSchemeSession(session, wallet, currencyscheme);
 
-		return mvcpwa._getMonitoredERC721TokenSession(session, wallet, currency);
+		if (currencyscheme.isRemote() === true) {
+			// remote (or at least for authkey, we could check that ehtnodeserver is indeed remote)
+			var ethnodemodule = global.getModuleObject('ethnode');
+			var ethereumnodeaccessinstance = ethnodemodule.getEthereumNodeAccessInstance(childsession);
+			// TODO: could be better to use
+			// var ethereumnodeaccessinstance = _apicontrollers.getEthereumNodeAccessInstance(childsession);
+	
+			if (this.contract_path_root_uri && ethereumnodeaccessinstance.web3_setArtifactRootUri) {
+				// we set the root uri for contracts in EthereumNodeAccess
+				await ethereumnodeaccessinstance.web3_setArtifactRootUri(this.contract_path_root_uri);
+			}
+
+		}
+		else {
+			// local
+
+			// TODO: remove when ethereum_core will use newer web3 version
+			// than 1.0.0-beta.34 (e.g. 1.3.5)
+			// overload is necessary to be able reading arrays in fetchRecords
+/* 			var ethnodemodule = global.getModuleObject('ethnode');
+			var EthereumNodeAccess = global.getModuleObject('ethereum-node-access');
+
+			var ethereum_node_access_instance = ethnodemodule.getEthereumNodeAccessInstance(childsession);
+			var web3providerurl = ethnodemodule.getWeb3ProviderUrl(childsession);
+
+			var web3_upgraded = childsession.getSessionVariable('ERC721_WEB3_UPGRADED', true);
+
+			if (web3_upgraded !== true) {
+				const Web3 = require("web3");
+	
+				var web3Provider = EthereumNodeAccess.getWeb3Provider(childsession, web3providerurl);
+					  
+				var web3instance = new Web3(web3Provider);
+				web3instance.OVERLOADED_BY_MYDEED = true;
+				
+				await ethereum_node_access_instance.web3_setProviderUrl(web3providerurl);
+				ethereum_node_access_instance.web3instance = web3instance; // overload
+				ethereum_node_access_instance.OVERLOADED_BY_MYDEED = true;
+		
+				// put in session map for this url
+				var web3ProviderObject = ethnodemodule.createWeb3ProviderObject(childsession, web3providerurl, ethereum_node_access_instance)
+				ethnodemodule.putWeb3ProviderObject(childsession, web3ProviderObject)
+				//childsession.web3instancemap[web3providerurl] = web3instance;
+	
+				childsession.ERC721TOKEN = true;
+				childsession.setSessionVariable('ERC721_WEB3_UPGRADED', true);	
+			} */
+			// END Remove
+		}
+
+
+	
+		return childsession;
 	}
 
 	async _createERC721TokenObject(session, currency, data) {
@@ -461,6 +677,187 @@ var Module = class {
 
 		return erc721token;
 	}
+
+	async _getAddressLockerContent(session, wallet, currency, card_address) {
+		var global = this.global;
+		var _apicontrollers = this._getClientAPI();
+
+		// get proper session to access erc21token for currency
+		var childsession = await this._getMonitoredERC721TokenSession(session, wallet, currency);
+
+		var mvcerc721module = global.getModuleObject('mvc-erc721');
+
+		return mvcerc721module.getLockerContent(childsession, currency, card_address);
+	}
+
+	async _fetchDeedMinterFromAddress(session, wallet, currency, minteraddress) {
+		// for contract objects already deployed
+
+		if (!minteraddress)
+		return Promise.reject('can only instantiate minters already on the chain');
+
+		var global = this.global;
+
+		// get proper session to access erc721token for currency
+		var childsession = await this._getMonitoredERC721TokenSession(session, wallet, currency);
+
+		// we read the token elements
+		var minter = {address: minteraddress};
+
+		// create contract object (already deployed)
+		var data = Object.create(null);
+		data['address'] = minteraddress;
+
+		var mvcerc721module = global.getModuleObject('mvc-erc721');
+
+		var erc721token = await mvcerc721module.createERC721TokenObject(childsession, currency, data);
+
+		var basetokenuri = await erc721token.getChainTokenURI(0);
+		var name = await erc721token.getChainName();
+		var symbol = await erc721token.getChainSymbol();
+
+		minter.name = name;
+		minter.symbol = symbol;
+		minter.basetokenuri = basetokenuri;
+
+		minter.currencyuuid = currency.uuid;
+		minter.address = minteraddress;
+
+		return minter;
+	}
+
+	async fetchDeedMinterFromAddress(sessionuuid, walletuuid, currencyuuid, minteraddress) {
+		if (!sessionuuid)
+			return Promise.reject('session uuid is undefined');
+		
+/* 		if (!walletuuid)
+			return Promise.reject('wallet uuid is undefined');
+*/	
+		if (!currencyuuid)
+			return Promise.reject('currency uuid is undefined');
+		
+		
+		var global = this.global;
+		var _apicontrollers = this._getClientAPI();
+		var mvcpwa = this._getMvcPWAObject();
+
+		var session = await _apicontrollers.getSessionObject(sessionuuid);
+		
+		if (!session)
+			return Promise.reject('could not find session ' + sessionuuid);
+		
+		var wallet = await _apicontrollers.getWalletFromUUID(session, walletuuid).catch(err => {});
+		
+/* 		if (!wallet)
+			return Promise.reject('could not find wallet ' + walletuuid);
+*/
+ 		var currency = await mvcpwa.getCurrencyFromUUID(sessionuuid, currencyuuid);
+
+		if (!currency)
+			return Promise.reject('could not find currency ' + currencyuuid);
+	
+
+		// we read the contract elements
+		var minter = await this._fetchDeedMinterFromAddress(session, wallet, currency, minteraddress);
+
+		return minter;
+	}
+
+	async fetchDeedMinterFromOwner(sessionuuid, walletuuid, currencyuuid, owneraddress) {
+		if (!sessionuuid)
+			return Promise.reject('session uuid is undefined');
+		
+/* 		if (!walletuuid)
+			return Promise.reject('wallet uuid is undefined');
+*/		
+ 		if (!currencyuuid)
+			return Promise.reject('currency uuid is undefined');
+		
+		
+		var global = this.global;
+		var _apicontrollers = this._getClientAPI();
+		var mvcpwa = this._getMvcPWAObject();
+
+		var session = await _apicontrollers.getSessionObject(sessionuuid);
+		
+		if (!session)
+			return Promise.reject('could not find session ' + sessionuuid);
+		
+		var wallet = await _apicontrollers.getWalletFromUUID(session, walletuuid).catch(err => {});
+		
+/* 		if (!wallet)
+			return Promise.reject('could not find wallet ' + walletuuid);
+*/
+		var currency = await mvcpwa.getCurrencyFromUUID(sessionuuid, currencyuuid);
+
+		if (!currency)
+			return Promise.reject('could not find currency ' + currencyuuid);
+	
+		var minteraddress = await this._getAddressLockerContent(session, wallet, currency, owneraddress);
+
+		// we read the contract elements
+		var minter = await this._fetchDeedMinterFromAddress(session, wallet, currency, minteraddress);
+
+		return minter;
+	}
+
+	async fetchDeedMinter(sessionuuid, walletuuid, currencyuuid, carduuid) {
+		if (!sessionuuid)
+			return Promise.reject('session uuid is undefined');
+		
+		if (!walletuuid)
+			return Promise.reject('wallet uuid is undefined');
+		
+		if (!currencyuuid)
+			return Promise.reject('currency uuid is undefined');
+		
+		if (!carduuid)
+			return Promise.reject('card uuid is undefined');
+		
+		
+		var global = this.global;
+		var _apicontrollers = this._getClientAPI();
+		var mvcpwa = this._getMvcPWAObject();
+
+		var session = await _apicontrollers.getSessionObject(sessionuuid);
+		
+		if (!session)
+			return Promise.reject('could not find session ' + sessionuuid);
+		
+		var wallet = await _apicontrollers.getWalletFromUUID(session, walletuuid);
+		
+		if (!wallet)
+			return Promise.reject('could not find wallet ' + walletuuid);
+
+		var currency = await mvcpwa.getCurrencyFromUUID(sessionuuid, currencyuuid);
+
+		if (!currency)
+			return Promise.reject('could not find currency ' + currencyuuid);
+	
+		var card = await wallet.getCardFromUUID(carduuid);
+
+		if (!card)
+			return Promise.reject('could not find card ' + carduuid);
+	
+		var card_address = card.getAddress();
+		var erc721tokenaddress = await this._getAddressLockerContent(session, wallet, currency, card_address);
+
+		if (!erc721tokenaddress)
+			return; // no minter
+
+		// we read the contract elements
+		var minter = await this._fetchDeedMinterFromAddress(session, wallet, currency, erc721tokenaddress);
+
+		// add currency uuid
+		minter.currencyuuid = currencyuuid;
+		
+		// add card info
+		minter.card_uuid = carduuid;
+		minter.card_address = card_address;
+
+		return minter;
+	}
+
 
 	async _getERC721TokenObject(session, currency, minter) {
 		// for contract objects already deployed
@@ -695,6 +1092,333 @@ var Module = class {
 
 		return deed;
 	}
+
+
+	// deeds
+	async readDeeds(sessionuuid, walletuuid) {
+		if (!sessionuuid)
+			return Promise.reject('session uuid is undefined');
+		
+		var global = this.global;
+		var _apicontrollers = this._getClientAPI();
+		var mvcpwa = this._getMvcPWAObject();
+
+		var session = await _apicontrollers.getSessionObject(sessionuuid);
+		
+		if (!session)
+			return Promise.reject('could not find session ' + sessionuuid);
+
+		if (!walletuuid) {
+			var keys = ['myquote', 'deeds']; 
+			// shared keys
+		}
+		else {
+			console.log('WARNING: walletuuid specific case not implemented!!!');
+			var keys = ['myquote', 'deeds']; 
+			// shared keys, also we could look in wallet
+			// with mvcmodule.getFromWallet
+		}
+	
+		let deed_list = await mvcpwa._readClientSideJson(session, keys);
+
+		if (!deed_list)
+		deed_list = [];
+
+		return deed_list;
+	}
+
+	async fetchDeeds(sessionuuid, walletuuid, currencyuuid, minter) {
+		if (!sessionuuid)
+			return Promise.reject('session uuid is undefined');
+		
+/* 		if (!walletuuid)
+			return Promise.reject('wallet uuid is undefined'); */
+		
+		if (!currencyuuid)
+			return Promise.reject('currency uuid is undefined');
+		
+		
+		var global = this.global;
+		var _apicontrollers = this._getClientAPI();
+		var mvcpwa = this._getMvcPWAObject();
+
+		var session = await _apicontrollers.getSessionObject(sessionuuid);
+		
+		if (!session)
+			return Promise.reject('could not find session ' + sessionuuid);
+		
+		var wallet = await _apicontrollers.getWalletFromUUID(session, walletuuid).catch(err => {});
+		
+/* 		if (!wallet)
+			return Promise.reject('could not find wallet ' + walletuuid); */
+	
+		var currency = await mvcpwa.getCurrencyFromUUID(sessionuuid, currencyuuid);
+
+		if (!currency)
+			return Promise.reject('could not find currency ' + currencyuuid);
+	
+		/*var card =  await this._getCurrencyCard(session, wallet, currency);
+
+		 if (!card)
+			return Promise.reject('could not find currency card for wallet ' + walletuuid); */
+
+		// get proper session to access erc21token for currency
+		var childsession = await this._getMonitoredERC721TokenSession(session, wallet, currency);
+	
+		// get contract
+		var erc721token = await this._getERC721TokenObject(childsession, currency, minter);
+
+		// list of deeds
+		var deeds = [];
+
+		// get totalsupply to get list of tokenids
+		const totalsupply = await erc721token.getTotalSupply();
+
+		for (var i = 0; i < totalsupply; i++) {
+			var deed =  await this._fetchDeedInfo(currency, erc721token, i);
+
+			deeds.push(deed);
+		}
+
+		return deeds;
+	}
+
+	async _getMinterCard(session, wallet, currency, minter) {
+		var carduuid = minter.card_uuid;
+		var card;
+
+		if (wallet && carduuid) {
+			// if minter created through getMinter()
+			card =  await wallet.getCardFromUUID(carduuid);
+	
+			if (!card)
+				return Promise.reject('could not find card with uuid ' + carduuid);
+		}
+		else {
+			// TODO: find better way to find back card from minter address
+			card = await this._getCurrencyCard(session, wallet, currency);
+		}
+
+		return card;
+	}
+
+
+
+	async saveDeed(sessionuuid, walletuuid, deed) {
+		var global = this.global;
+		var _apicontrollers = this._getClientAPI();
+		var mvcpwa = this._getMvcPWAObject();
+
+		var deed_list = await this.readDeeds(sessionuuid, walletuuid);
+
+		// look not in list
+		var bInList = false;
+
+		for (var i = 0; i < deed_list.length; i++) {
+			if (deed_list[i].txhash == deed.txhash) {
+				bInList = true;
+				break;
+			}
+		}
+
+		if (!bInList) {
+			var session = await _apicontrollers.getSessionObject(sessionuuid);
+		
+			if (!session)
+				return Promise.reject('could not find session ' + sessionuuid);
+
+			// deed parameters to be saved
+			var txhash = deed.txhash;
+			var currencyuuid = deed.currencyuuid;
+			var minter = deed.minter;
+			var tokenid = deed.tokenid;
+			var time = (deed.metadata ? deed.metadata.time : null);
+			var title = (deed.metadata ? deed.metadata.title : null);
+	
+			if (!walletuuid) {
+				var keys = ['myquote', 'deeds']; 
+				// shared keys
+			}
+			else {
+				console.log('WARNING: walletuuid specific case not implemented!!!');
+				var keys = ['myquote', 'deeds']; 
+				// shared keys, also we could put in wallet
+				// with mvcmodule.putInWallet			
+			}
+		
+			var localjson = {txhash, time, currencyuuid, minter, tokenid, title};
+
+			localjson.savetime = Date.now();
+
+			deed_list.push(localjson);
+	
+			return mvcpwa._saveClientSideJson(session, keys, deed_list);
+		}
+		else {
+			return deed_list;
+		}
+	}
+
+	async _fetchDeedInfo(currency, erc721token, tokenid) {
+		// fetch deed info
+		var deed = {type: 'deed', tokenid};
+
+		deed.currencyuuid = currency.uuid;
+
+		deed.minter = erc721token.getAddress();
+		deed.txhash = 'dd-' + deed.minter + '-' + tokenid;
+
+		deed.tokenuri = await erc721token.getChainTokenURI(tokenid);
+		deed.owner = await erc721token.ownerOf(tokenid);
+		deed.approved = await erc721token.getApproved(tokenid);
+
+		// fetch records and fill metadata and articles
+		deed.metadata = {};
+		deed.articles = [];
+		deed.clauses = [];
+
+		var stringrecords = await erc721token.fetchRecords(tokenid)
+		.catch(err => {
+			console.log('error in fetchRecords: ' + err);
+		});
+
+		for (var i = 0; i < stringrecords.length; i++) {
+			try {
+				var clause = JSON.parse(stringrecords[i]);
+
+				clause.type = 'clause';
+
+				clause.currencyuuid = deed.currencyuuid;
+				clause.txhash = deed.txhash + '-' + i;
+
+				clause.minter = deed.minter;
+				clause.tokenid = tokenid;
+				clause.index = i;
+
+
+				switch(clause.subtype) {
+					case 'metadata':
+						// overload
+						Object.assign(deed.metadata, clause);
+						break;
+					case 'article':
+						// addition
+						deed.articles.push(clause);
+						break;
+					default:
+						break;
+				}
+
+				deed.clauses.push(clause);
+			}
+			catch(e) {
+				console.log('string record is mal-formed: ' + stringrecords[i]);
+			}
+		}
+
+		return deed;
+	}
+
+	async fetchDeed(sessionuuid, walletuuid, currencyuuid, minter, tokenid) {
+		if (!sessionuuid)
+			return Promise.reject('session uuid is undefined');
+		
+/* 		if (!walletuuid)
+			return Promise.reject('wallet uuid is undefined'); */
+		
+		if (!currencyuuid)
+			return Promise.reject('currency uuid is undefined');
+		
+		
+		var global = this.global;
+		var _apicontrollers = this._getClientAPI();
+		var mvcpwa = this._getMvcPWAObject();
+
+		var session = await _apicontrollers.getSessionObject(sessionuuid);
+		
+		if (!session)
+			return Promise.reject('could not find session ' + sessionuuid);
+		
+		var wallet = await _apicontrollers.getWalletFromUUID(session, walletuuid).catch(err => {});
+		
+/* 		if (!wallet)
+			return Promise.reject('could not find wallet ' + walletuuid); */
+	
+		var currency = await mvcpwa.getCurrencyFromUUID(sessionuuid, currencyuuid);
+
+		if (!currency)
+			return Promise.reject('could not find currency ' + currencyuuid);
+	
+		// get proper session to access erc21token for currency
+		var childsession = await this._getMonitoredERC721TokenSession(session, wallet, currency);
+	
+		// get contract
+		var erc721token = await this._getERC721TokenObject(childsession, currency, minter);
+
+		// fetch deed info
+		var deed = await this._fetchDeedInfo(currency, erc721token, tokenid);
+
+		// save this deed in the local list
+		await this.saveDeed(sessionuuid, walletuuid, deed);
+
+		return deed;
+	}
+
+	async fetchLastDeed(sessionuuid, walletuuid, currencyuuid, minter) {
+		if (!sessionuuid)
+			return Promise.reject('session uuid is undefined');
+		
+/* 		if (!walletuuid)
+			return Promise.reject('wallet uuid is undefined'); */
+		
+		if (!currencyuuid)
+			return Promise.reject('currency uuid is undefined');
+		
+		
+		var global = this.global;
+		var _apicontrollers = this._getClientAPI();
+		var mvcpwa = this._getMvcPWAObject();
+
+		var session = await _apicontrollers.getSessionObject(sessionuuid);
+		
+		if (!session)
+			return Promise.reject('could not find session ' + sessionuuid);
+		
+		var wallet = await _apicontrollers.getWalletFromUUID(session, walletuuid).catch(err => {});
+		
+/* 		if (!wallet)
+			return Promise.reject('could not find wallet ' + walletuuid); */
+	
+		var currency = await mvcpwa.getCurrencyFromUUID(sessionuuid, currencyuuid);
+
+		if (!currency)
+			return Promise.reject('could not find currency ' + currencyuuid);
+	
+		// get proper session to access erc21token for currency
+		var childsession = await this._getMonitoredERC721TokenSession(session, wallet, currency);
+	
+		// get contract
+		var erc721token = await this._getERC721TokenObject(childsession, currency, minter);
+
+		// fetch totalsupply
+		const totalsupply = await erc721token.getTotalSupply();
+		const lasttokenid = totalsupply - 1;
+
+		return this.fetchDeed(sessionuuid, walletuuid, currencyuuid, minter, lasttokenid);
+	}
+
+	async isCardOwningDeed(sessionuuid, walletuuid, currencyuuid, carduuid, minter, deed) {
+		var owningcardinfo = await this.getDeedOwningCard(sessionuuid, walletuuid, currencyuuid, minter, deed).catch(err => {});
+
+		if (!owningcardinfo)
+			return false;
+
+		if (owningcardinfo.uuid == carduuid)
+		return true;
+		else
+		return false;
+	}
+
 
 	async transferDeed(sessionuuid, walletuuid, currencyuuid, minter, deed, toaddress, feelevel = null) {
 		if (!sessionuuid)
