@@ -3,6 +3,7 @@ import {useParams} from 'react-router-dom';
 import {state} from '../Helpers/ContractHelper.js';
 
 import BikeCard from './BikeCard.js';
+import './Profile.css';
 
 function Profile(props) {
 
@@ -20,7 +21,6 @@ function Profile(props) {
             setAccount(props.account)
             getOwnedNFTs(props.account)
         }else{
-            console.log(params.address);
             setAccount(params.address)
             getOwnedNFTs(params.address);
         }
@@ -32,9 +32,10 @@ function Profile(props) {
         let rawtokenBalance = await props.bikeBlock.methods.balanceOf(account).call();
         let ownerTokenAmount = props.web3.utils.BN(rawtokenBalance).toString();
         for(var t =0; t <ownerTokenAmount;t++){
-            console.log("Getting tokenId"+t);
-            let tokenId = await props.bikeBlock.methods.tokenOfOwnerByIndex(account,0).call();
+
+            let tokenId = await props.bikeBlock.methods.tokenOfOwnerByIndex(account,t).call();
             let view = <BikeCard
+                ipfs = {props.ipfs}
                 key = {tokenId}
                 bikeBlock = {props.bikeBlock}
                 account = {account}
@@ -50,7 +51,7 @@ function Profile(props) {
 
 
     return (
-        <div>
+        <div className="padding">
             {tokenId}
         </div>
     )

@@ -46,7 +46,7 @@ function NaviView(props) {
 
 
     return(
-    <nav className="navbar w-100 position-fixed navbar-expand-lg navbar-dark bg-dark">
+    <nav style={{zIndex: '1'}}  className="navbar w-100 position-fixed navbar-expand-lg navbar-dark bg-dark">
         <a className="navbar-brand" href="#">BikeBlock</a>
         <button className={buttonStyle} type="button" onClick={displayMenu} data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded={expand} aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
@@ -70,8 +70,7 @@ function NaviView(props) {
                             ):(
                                 <Link
                                     to={'/profile/'+props.account} 
-                                    className='nav-links'
-                                >
+                                    className='nav-links'>
                                     Profile
                                     
                                     <p>{props.account.slice(0,20)}</p>

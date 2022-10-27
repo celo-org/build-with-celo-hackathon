@@ -72,6 +72,7 @@ function Register(props) {
     const retrieveFile = (e) => {
         for(var f = 0; f < e.target.files.length;f++){
             const data = e.target.files[f];
+            console.log(data);
             const reader = new window.FileReader();
             reader.readAsArrayBuffer(data);
             reader.onloadend = () => {
@@ -88,7 +89,7 @@ function Register(props) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         event.stopPropagation();
-        console.log("SUBMIT MINT");
+
         const web3 = props.web3;
         const serialHash = Web3.utils.keccak256(bikeSerial);
         
@@ -104,7 +105,7 @@ function Register(props) {
             // one log line in the output
 
             const { cid } = await props.ipfs._ipfs.add(imageBuffers[b]);
-            imageUri.push(cid);
+            imageUri.push(cid.toString());
 
             //for await (const { cid } of results) {
             // CID (Content IDentifier) uniquely addresses the data
@@ -115,7 +116,7 @@ function Register(props) {
         const json = {
             'bikeId':serialHash,
             'bikeYear':bikeYear,
-            'bikeMokeModel':bikeMakeModel,
+            'bikeMakeModel':bikeMakeModel,
             'bikeColor':bikeColor,
             'unique':bikeUniqueCharacteristics,
             'images':imageUri
@@ -123,9 +124,8 @@ function Register(props) {
 
         let stringJson = JSON.stringify(json)
         const { cid } = await props.ipfs._ipfs.add(stringJson);
-        console.log(cid);
       
-        let proposalPromise = props.bikeBlock.methods.safeMint(serialHash,props.account,cid).send({from:props.account,gasPrice: '1000000000',gas: 5_000_000,gasLimit: 300_000});
+        let proposalPromise = props.bikeBlock.methods.safeMint(serialHash,props.account,cid.toString()).send({from:props.account,gasPrice: '1000000000',gas: 5_000_000,gasLimit: 300_000});
         proposalPromise.then(function(result) {
           // tell we should reload
           //  console.log("true");

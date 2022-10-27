@@ -57,7 +57,7 @@ function Main(props) {
             <div className='hero-container'>
                 <video src='/videos/bikeThieftTo.mp4' autoPlay loop muted />
                 <h1>BIKE SECURITY</h1>
-                <p>Digital asset</p>
+                <p>Powered by NFT's</p>
                 
                 {
                     error != null && showView.check && props.account == null ?

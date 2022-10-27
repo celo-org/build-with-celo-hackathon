@@ -1,15 +1,27 @@
 import React, {useState,useEffect} from "react";
 import {useParams} from 'react-router-dom';
-
 import {state} from '../Helpers/ContractHelper.js';
+import {Buffer} from 'buffer';
 
 function BikeCard(props) {
 
     let params = useParams();
 
     const [bikeState,setBikeState] = useState("");
+    const [bikeId,setBikeId] = useState("");
+    const [bikeYear,setBikeYear] = useState("");
+    const [bikeMake,setBikeMake] = useState("");
+    const [bikeColor,setBikeColor] = useState("");
+    const [bikeUnique,setBikeUnique] = useState("");
+
+
+    const [bikeImage,setBikeImages] = useState();
+
+
     const [tokenId,setTokenId] = useState(null);
     const [showOwnerTools,setShowOwnerTools] = useState(true);
+
+    const decoder = new TextDecoder()
 
     useEffect(() => {  
         if(props.tokenId != null){
@@ -22,8 +34,40 @@ function BikeCard(props) {
     const getNFTData = async (tokenId) => {
         let tokenUri = await props.bikeBlock.methods.tokenURI(tokenId).call();
         let bikeState = await props.bikeBlock.methods.getBikeState(tokenId).call();
-        setBikeState(state(bikeState));
+        console.log(props.ipfs);
+        const stream = props.ipfs._ipfs.cat(tokenUri);
         console.log(tokenUri);
+        let data = ""
+
+        for await (const chunk of stream) {
+            data += decoder.decode(chunk,{stream: true})
+        }
+
+        const bikeObj = JSON.parse(data);
+        setBikeYear(bikeObj.bikeYear);
+        setBikeColor(bikeObj.bikeColor);
+        setBikeId(bikeObj.bikeId);
+        setBikeMake(bikeObj.bikeMokeModel);
+        setBikeUnique(bikeObj.unique);
+        setBikeState(state(bikeState));
+
+        let imageBuffers = [];
+        for (let i = 0; i < bikeObj.images.length; i++) {
+            let buffer = [];
+            const stream = props.ipfs._ipfs.cat(bikeObj.images[i]);
+            for await(const chunk of stream){
+                buffer.push(chunk);
+                //buffer += decoder.decode(chunk,{stream:true})
+            }
+            //let value = Buffer.from(buffer).toString('base64');
+            console.log(buffer);
+            const b64 = Buffer.from(buffer[0]).toString('base64');
+            let image =  <img key={i} src={`data:image/png;base64,${b64}`}/>
+            imageBuffers.push(image);
+            //buffer = "";
+        }
+        setBikeImages(imageBuffers);
+       
     }
 
     const reportStolen = async (tokenId) => {
@@ -40,15 +84,16 @@ function BikeCard(props) {
     return (
         <div>
             <div className="card m-2">
-                <img className="card-img-top" src="#" alt="Card image cap"/>
+                {bikeImage}
                 <div className="card-body">
                     <h2 className="card-text">Bike Card</h2>
                     <p className="card-text">Images</p>
                     <p className="card-text">TokenId: {tokenId}</p>
                     <p className="card-text">Bike State: {bikeState}</p>
-                    <p className="card-text">Make model</p>
-                    <p className="card-text">Color</p>
-                    <p className="card-text">Unique Characteristics</p>
+                    <p className="card-text">Make model: {bikeMake}</p>
+                    <p className="card-text">Year: {bikeYear}</p>
+                    <p className="card-text">Color: {bikeColor}</p>
+                    <p className="card-text">Unique Characteristics : {bikeUnique}</p>
                     {showOwnerTools ? 
                     <div>
                     <h3>Owner Tools</h3>

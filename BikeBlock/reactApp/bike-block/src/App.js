@@ -80,12 +80,17 @@ class App extends Component {
   render() {
     return (
       <div>
+
+          <NaviView 
+                account = {this.state.account}
+                loadAccount = {this.loadAccount}
+          />
         
         <BrowserRouter>
-          <NaviView 
-            account = {this.state.account}
-            loadAccount = {this.loadAccount}
-          />
+
+
+
+
           <Routes>
             <Route path="/" element={
               <Main
@@ -132,6 +137,7 @@ class App extends Component {
             <Route path="/profile/:address" element={
               <Profile
                 bikeBlock = {this.state.bikeBlock}
+                ipfs = {this.props.ipfs}
                 web3 = {this.state.web3}
                 account = {this.state.account}
               />
