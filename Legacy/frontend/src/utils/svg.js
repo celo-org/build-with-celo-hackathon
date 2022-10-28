@@ -78,11 +78,73 @@ export const loading = (
   </svg>
 );
 
+export const loadingWhite = (
+  <svg
+  version="1.1"
+  id="L5"
+  xmlns="http://www.w3.org/2000/svg"
+  style={{
+    width: "200px",
+    height: "200px",
+    margin: "0 auto 10px",
+    paddingLeft: "60px",
+  }}
+  x="0px"
+  y="0px"
+  viewBox="0 0 100 100"
+  enable-background="new 0 0 0 0"
+>
+  <circle fill="#FFFFFF" stroke="none" cx="6" cy="50" r="6">
+    <animateTransform
+      attributeName="transform"
+      dur="1s"
+      type="translate"
+      values="0 15 ; 0 -15; 0 15"
+      repeatCount="indefinite"
+      begin="0.1"
+    />
+  </circle>
+  <circle fill="#FFFFFF" stroke="none" cx="30" cy="50" r="6">
+    <animateTransform
+      attributeName="transform"
+      dur="1s"
+      type="translate"
+      values="0 10 ; 0 -10; 0 10"
+      repeatCount="indefinite"
+      begin="0.2"
+    />
+  </circle>
+  <circle fill="#FFFFFF" stroke="none" cx="54" cy="50" r="6">
+    <animateTransform
+      attributeName="transform"
+      dur="1s"
+      type="translate"
+      values="0 5 ; 0 -5; 0 5"
+      repeatCount="indefinite"
+      begin="0.3"
+    />
+  </circle>
+</svg>
+);
+
 export const transfer = (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M4.16669 3.33331L1.66669 5.83331L4.16669 8.33331" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M15.8334 11.6666L18.3334 14.1666L15.8334 16.6666" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M1.66669 5.83331H18.3334" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M1.66669 14.1666H18.3334" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+);
+
+export const editIcon = (
+  <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_1_3)">
+<path d="M9.67751 12.7239C12.4392 12.7239 14.6775 10.4856 14.6775 7.72388C14.6775 4.96216 12.4392 2.72388 9.67751 2.72388C6.91579 2.72388 4.67751 4.96216 4.67751 7.72388C4.67751 10.4856 6.91579 12.7239 9.67751 12.7239ZM13.1775 13.9739H12.5252C11.658 14.3723 10.6931 14.5989 9.67751 14.5989C8.66188 14.5989 7.70094 14.3723 6.82985 13.9739H6.17751C3.27907 13.9739 0.927505 16.3254 0.927505 19.2239V20.8489C0.927505 21.884 1.76735 22.7239 2.80251 22.7239H13.5408C13.447 22.4583 13.408 22.177 13.4392 21.8918L13.7048 19.5129L13.7517 19.0793L14.0603 18.7708L17.0798 15.7512C16.1228 14.6692 14.7361 13.9739 13.1775 13.9739V13.9739ZM14.947 19.6497L14.6814 22.0325C14.6384 22.4309 14.9744 22.7668 15.3689 22.72L17.7478 22.4543L23.1345 17.0676L20.3338 14.2668L14.947 19.6497V19.6497ZM25.6541 13.2278L24.1736 11.7473C23.8103 11.384 23.2166 11.384 22.8533 11.7473L21.3767 13.2239L21.2166 13.384L24.0213 16.1848L25.6541 14.552C26.0173 14.1848 26.0173 13.595 25.6541 13.2278V13.2278Z" fill="white"/>
+</g>
+<defs>
+<clipPath id="clip0_1_3">
+<rect width="25" height="25" fill="white" transform="translate(0.927505 0.223881)"/>
+</clipPath>
+</defs>
 </svg>
 );

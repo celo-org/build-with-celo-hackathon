@@ -2,8 +2,7 @@ import { Box, Flex, Image, SimpleGrid, Text } from "@chakra-ui/react";
 import { mission, values, vision } from "../assets/svgs/svg";
 import CustomButton from "../common/CustomButton";
 import imageBg from "../images/bg.jpeg";
-// import howItWorks from "../images/how-it-works.png";
-import howItWorks from "../images/section-bg.png";
+import howItWorks from "../images/how-it-works.png";
 
 const AboutUs = () => {
   return (
@@ -15,7 +14,7 @@ const AboutUs = () => {
                 </Box>
                 <Box fontSize="14px" w={{ base: '100%', lg: "80%"}}>
                     <Text color="brand.white">
-                        <span style={{ color: "#A168DA"}}>Legacy</span> is a decentralised asset security organization focused on
+                        <span style={{ color: "#15F4CB"}}>Legacy</span> is a decentralised asset security organization focused on
                         building an alternative for retrieving lost or possibly lost
                         decentralised assets in cases of asset owner&#39;s death, misplacement of assets passwords, or key phrases potentially resulting in permanent loss of these decentralised assets.
                     </Text>
@@ -37,8 +36,8 @@ const AboutUs = () => {
             <Box fontSize={{ base: '20px', lg: '55px' }} fontWeight="700" color="brand.white" textAlign="center">
                 <h1>Mission, Vision and Values</h1>
             </Box>
-            <SimpleGrid columns={{ base: 1, lg: 3 }} spacing={14} mt="50px">
-                <Box bg="brand.teal" borderRadius="8px" p="15px 20px" color="brand.white">
+            <SimpleGrid columns={{ base: 1, lg: 3 }} spacing={14} mt="20px">
+                <Box bg="brand.teal" borderRadius="8px" p="15px 20px" color="brand.primary">
                     <Flex alignItems="center">
                         <Box mr="20px">{mission}</Box>
                         <Text fontWeight="600" fontSize="20px">Mission</Text>
@@ -48,7 +47,7 @@ const AboutUs = () => {
                     </Text>
                 </Box>
 
-                <Box bg="brand.teal" borderRadius="8px" p="15px 20px" color="brand.white">
+                <Box bg="brand.teal" borderRadius="8px" p="15px 20px" color="brand.primary">
                     <Flex alignItems="center">
                         <Box mr="20px">{vision}</Box>
                         <Text fontWeight="600" fontSize="20px">Vision</Text>
@@ -58,7 +57,7 @@ const AboutUs = () => {
                     </Text>
                 </Box>
 
-                <Box bg="brand.teal" borderRadius="8px" p="15px 20px" color="brand.white">
+                <Box bg="brand.teal" borderRadius="8px" p="15px 20px" color="brand.primary">
                     <Flex alignItems="center">
                         <Box mr="20px">{values}</Box>
                         <Text fontWeight="600" fontSize="20px">Values</Text>
@@ -79,8 +78,8 @@ const AboutUs = () => {
                     <Text color="brand.white">
                         With Legacy, decentralised finance (DeFi) adopters/users will be able to secure their assets in case of death/wallet misplacement by setting a duration of dormancy to when,if elapsed, Legacy will send all or a specific number of user-selected assets into another wallet; either a next of kin&#39;s if in case of death of asset owner or a secondary wallet in case of wallet misplacement.
                     </Text>
-                    <CustomButton mt={{ base: '15px', lg: "30px"}} bg="none" color="brand.white" hoverColor="brand.lightPurple"
-            border="1px solid #A168DA">Learn more</CustomButton>
+                    <CustomButton mt={{ base: '15px', lg: "30px"}} bg="none" color="brand.white" hoverColor="brand.teal"
+            border="1px solid #15F4CB">Learn more</CustomButton>
                 </Box>    
             </Box>
 

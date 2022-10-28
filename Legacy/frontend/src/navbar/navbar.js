@@ -1,55 +1,75 @@
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
-import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import logo from "../../src/assets/icons/logo.svg";
 import { close, hamburger } from "../assets/svgs/svg";
 import CustomButton from "../common/CustomButton";
 import { toaster } from "evergreen-ui";
+import { useNavigate } from "react-router-dom";
+import getUserInterval, {connect as connectWallet,
+  checkConnection,
+  disconnect as disconnectWallet,
+  isDisconnected} from "../utils/helpers.js"
 
 const Navbar = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   const [openNavBar, setOpenNavBar] = useState(false);
-  const [user, setUser] = useState("");
-  const [isConnnected, setIsConnected] = useState(false);
+  const [user, setUser] = useState(null);
+  const [isConnected, setIsConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-
-  useEffect(() => {
-    setUser(getUser);
-  }, [user]);
-
-  const getIsConnected = localStorage.getItem('isConnected');
-
-  const disConnect = () => {
-    localStorage.setItem('isConnected', false);
+  const disconnect = () => {
+    disconnectWallet();
     setIsConnected(false);
+    navigate('/');
   }
 
-  const getUser = localStorage.getItem('legacy_user');
-
-  const connect = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    try {
-        alert("Are you sure you want to connect wallet, This would let Legacy have view your wallet address and balance");
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        await provider.send("eth_requestAccounts", []);
-        const signer = await provider.getSigner();
-        const address = await signer.getAddress();
-        localStorage.setItem('legacy_user', address);
-        setUser(address);
-        setIsConnected(true);
-        localStorage.setItem('isConnected', true);
-        setIsLoading(false);
-    } catch(error) {
-        console.log(error);
-        toaster.danger("An error occured!");
-        setIsLoading(false);
+  const goToProfile = async() => {
+    if(!isDisconnected()) {
+      const legacy = await getUserInterval(await checkConnection());
+      console.log(legacy)
+      if(legacy.legatee == "0x0000000000000000000000000000000000000000" && legacy.interval == "Every 0 days") {
+        return
+      }
+      navigate('/profile')
     }
-}
+  }
+  
+  const connect = async() => {
+    try {
+      const account = await connectWallet();
+      if (account) {
+        setUser(account);
+        setIsConnected(true);
+      }
+    } catch (err) {
+      setIsConnected(false);
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+    try {
+      if(!isDisconnected()) {
+        checkConnection().then((account) => {
+          if (account) {
+            setIsConnected(true)
+            setUser(account);
+          }
+          else {
+            disconnect();
+            navigate('/');
+          }
+        })
+      } else {
+        navigate('/')
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }, [])
+
   return (
     <>
       <Flex
@@ -77,55 +97,44 @@ const Navbar = () => {
             cursor="pointer"
             ml={{ base: "0", lg: "100px" }}
             mt={{ base: "20px", lg: "0" }}
-            _hover={{ color: "brand.lightPurple" }}
-            color={location.pathname === '/' ? "brand.white" : location.pathname === '/demo' ? "brand.white" : "brand.primary"}
-            onClick={() => location.pathname !== '/' && navigate('/demo')}
+            _hover={{ color: "brand.teal" }}
+            color="brand.white"
+            onClick={() => {goToProfile()}}
           >
-            {location.pathname !== '/' ? 'Go Home' : 'About Us'}
+            Profile
+          </Text>
+          <Text
+            cursor="pointer"
+            ml={{ base: "0", lg: "100px" }}
+            mt={{ base: "20px", lg: "0" }}
+            _hover={{ color: "brand.teal" }}
+            color="brand.white"
+          >
+            About us
           </Text>
           <Text
             cursor="pointer"
             mt={{ base: "20px", lg: "0" }}
             ml={{ base: "0", lg: "100px" }}
-            _hover={{ color: "brand.lightPurple" }}
-            color={location.pathname !== '/' ? "brand.primary" : "brand.white"}
-            display={location.pathname !== '/' ? 'none' : 'block'}
+            _hover={{ color: "brand.teal" }}
+            color="brand.white"
           >
-            {location.pathname !== '/' ? '' : 'How it Works'}
+            How it works
           </Text>
-          {user !== null &&
-            <Text
-              cursor="pointer"
-              mt={{ base: "20px", lg: "0" }}
-              ml={{ base: "0", lg: "100px" }}
-              _hover={{ color: "brand.lightPurple" }}
-              color={location.pathname !== '/demo' ? "brand.primary" : "brand.white"}
-              onClick={() => navigate('/user-profile')}
-            >
-              {location.pathname !== '/' ? 'View Profile' : ''}
-            </Text>
-          }
         </Flex>
-        {location.pathname === '/' ?
-          <CustomButton bg="none" border="1px solid #A168DA" color="brand.white" hoverColor="brand.lightPurple" mt={{ base: "20px", lg: "0" }} d={{ base: "none", lg: "flex" }} onClick={() => navigate('/demo')}>View demo</CustomButton>
-          :
-          <Box>
-          { isConnnected ?
-              <CustomButton
-              bg="none"
-              border="1px solid #A168DA"
-              mt={{ base: "20px", lg: "0" }}
-              d={{ base: "none", lg: "flex" }}
-              color="brand.lightPurple"
-              hoverColor="brand.primary"
-              onClick={disConnect}
-              >
-              Disconnect
-              </CustomButton>
-              :
-              <CustomButton bg="none" border="1px solid #A168DA" color="brand.lightPurple" hoverColor="brand.primary" mt={{ base: "20px", lg: "0" }} isLoading={isLoading} d={{ base: "none", lg: "flex" }} onClick={connect}>Connect Wallet</CustomButton>
-          }
-        </Box>
+        { isConnected ?
+            <CustomButton
+            bg="brand.teal"
+            color="brand.white"
+            mt={{ base: "20px", lg: "0" }}
+            d={{ base: "none", lg: "flex" }}
+            hoverColor="brand.primary"
+            onClick={disconnect}
+            >
+            Disconnect
+            </CustomButton>
+            :
+            <CustomButton bg="none" border="1px solid #15F4CB" color="brand.white" hoverColor="brand.teal" mt={{ base: "20px", lg: "0" }} isLoading={isLoading} d={{ base: "none", lg: "flex" }} onClick={connect}>Connect</CustomButton>
         }
 
       </Flex>
@@ -165,59 +174,50 @@ const Navbar = () => {
               textAlign="center"
               ml={{ base: "0", lg: "100px" }}
               mt={{ base: "20px", lg: "0" }}
-              _hover={{ color: "brand.lightPurple" }}
-              color={location.pathname !== '/' ? "brand.primary" : "brand.white"}
-              onClick={() => location.pathname !== '/' && navigate('/demo')}
-
+              _hover={{ color: "brand.teal" }}
+              color="brand.white"
+              onClick={() => {goToProfile()}}
             >
-              {location.pathname !== '/' ? 'Go Home' : 'About Us'}
+              Profile
+            </Text>
+            <Text
+              cursor="pointer"
+              textAlign="center"
+              ml={{ base: "0", lg: "100px" }}
+              mt={{ base: "20px", lg: "0" }}
+              _hover={{ color: "brand.teal" }}
+              color="brand.white"
+            >
+              About us
             </Text>
             <Text
               cursor="pointer"
               textAlign="center"
               mt={{ base: "20px", lg: "0" }}
               ml={{ base: "0", lg: "100px" }}
-              _hover={{ color: "brand.lightPurple" }}
-              color={location.pathname !== '/' ? "brand.primary" : "brand.white"}
-              display={location.pathname !== '/' ? 'none' : 'block'}
+              _hover={{ color: "brand.teal" }}
+              color="brand.white"
             >
-              {location.pathname !== '/' ? '' : 'How it Works'}
+              How it works
             </Text>
-            {user !== null &&
-              <Text
-                cursor="pointer"
-                textAlign="center"
-                mt={{ base: "20px", lg: "0" }}
-                ml={{ base: "0", lg: "100px" }}
-                _hover={{ color: "brand.lightPurple" }}
-                color={location.pathname !== '/demo' ? "brand.primary" : "brand.white"}
-                onClick={() => navigate('/user-profile')}
-              >
-                {location.pathname !== '/' ? 'View Profile' : ''}
-              </Text>
-            }
           </Flex>
-          {location.pathname === '/' ? 
-            <CustomButton bg="none" border="1px solid #A168DA" color="brand.white" hoverColor="brand.lightPurple" mt={{ base: "20px", lg: "0" }} d={{ base: "flex", lg: "none" }} w="100%" onClick={() => navigate('/demo')}>View demo</CustomButton>
-            :
-          <Box>
-            {
-              getIsConnected ? 
-              <CustomButton
-                  bg="none"
-                  color="brand.primary"
-                  mt={{ base: "20px", lg: "0" }}
-                  w="100%"
-                  hoverColor="brand.teal"
-                  border="1px solid #A168DA"
-              >
-                  Disconect
-              </CustomButton>
-              : 
-              <CustomButton bg="none" color="brand.white" hoverColor="brand.teal" border="1px solid #A168DA" mt={{ base: "20px", lg: "0" }} isLoading={isLoading} w="100%" onClick={connect}>Connect Wallet</CustomButton>
-            }
-          </Box>
-        }
+          {
+            isConnected ? 
+            <CustomButton
+                bg="none"
+                color="brand.white"
+                mt={{ base: "20px", lg: "0" }}
+                w="100%"
+                hoverColor="brand.teal"
+                border="1px solid #15F4CB"
+                onClick={disconnect}
+            >
+                Disconnect
+            </CustomButton>
+            : 
+            <CustomButton bg="none" color="brand.white" hoverColor="brand.teal"
+            border="1px solid #15F4CB" mt={{ base: "20px", lg: "0" }} isLoading={isLoading} w="100%" onClick={connect}>Connect</CustomButton>
+          }
         </Flex>
       )}
     </>

@@ -15,9 +15,9 @@ const colors = {
       white: '#FFFFFF',
       yellow: '#F7E427',
       dark: '#040211',
-      grey: '#F9F7F7',
-      teal: "#7000FF",
-      lightPurple: '#A168DA'
+      teal: "#15F4CB",
+      grey: "#1A1B5A",
+      primaryGrey: "#F3F4F6"
     },
   }
 
