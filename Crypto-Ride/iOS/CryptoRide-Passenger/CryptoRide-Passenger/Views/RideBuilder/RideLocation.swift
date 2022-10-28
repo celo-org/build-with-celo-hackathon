@@ -11,7 +11,7 @@ import SwiftUI
 
 struct RideLocation:View {
     
-    @EnvironmentObject var ride:Ride
+    @EnvironmentObject var ride:RideService
     
 
     

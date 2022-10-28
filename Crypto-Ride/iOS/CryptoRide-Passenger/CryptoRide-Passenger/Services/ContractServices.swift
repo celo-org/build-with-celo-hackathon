@@ -21,12 +21,13 @@ class ContractServices {
     private var tokenContract:web3.web3contract
        
     init() {
-        let keystore = try! EthereumKeystoreV3(privateKey: Data(hex: "PRIVATEKEY"))!
+        let keystore = try! EthereumKeystoreV3(privateKey: Data(hex:"<PRIVATEKEY>"), password: "Password")!
 
+        
         let keyData = try! JSONEncoder().encode(keystore.keystoreParams);
         
         let address = keystore.addresses!.first!.address
-    
+
         wallet = Wallet(address: address, data: keyData, name: "Passenger", isHD: false)
         // add wallet data to keystoreManager
         let keystoreManager = KeystoreManager([keystore])
@@ -82,7 +83,7 @@ class ContractServices {
         }
     }
   
-    func write(contractId:Contracts,contractABI:String,method:String,parameters:[AnyObject],password:String,completion:@escaping(Result<TransactionSendingResult,Web3Error>) -> Void) {
+    func write(contractId:Contracts,method:String,parameters:[AnyObject],password:String,completion:@escaping(Result<TransactionSendingResult,Web3Error>) -> Void) {
         let contract = getContract(contract: contractId)
         DispatchQueue.global().async{ [unowned self] in
             do{
@@ -92,14 +93,14 @@ class ContractServices {
                 
                 var options = TransactionOptions.defaultOptions
                 options.from = senderAddress
-                options.gasPrice = .automatic
-                options.gasLimit = .automatic
+                options.gasPrice = .manual(20000000000)
+                options.gasLimit = .manual(878423)
                 
                 let tx = contract.write(
                     method,
                     parameters: parameters,
                     extraData: extraData,
-                    transactionOptions: options)!
+                     transactionOptions: options)!
                 
                 let result = try tx.send(password: password)
                 completion(.success(result))

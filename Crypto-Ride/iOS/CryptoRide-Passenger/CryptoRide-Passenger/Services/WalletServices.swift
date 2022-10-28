@@ -12,7 +12,7 @@ class WalletServices {
     static let shared = WalletServices()
     
     public func getWallet() -> Wallet {
-        let keystore = try! EthereumKeystoreV3(privateKey: Data(hex: "PRIVATEKEY"))!
+        let keystore = try! EthereumKeystoreV3(privateKey: Data(hex:"<PRIVATEKEY>"), password: "Password")!
 
         let keyData = try! JSONEncoder().encode(keystore.keystoreParams);
         

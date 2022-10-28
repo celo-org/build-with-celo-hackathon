@@ -15,7 +15,7 @@ struct MapView: UIViewRepresentable {
     let mapView = MKMapView()
     
     @EnvironmentObject var manager:LocationManager
-    @EnvironmentObject var ride:Ride
+    @EnvironmentObject var ride:RideService
     
     var startAnnotation:MKPointAnnotation = MKPointAnnotation()
     var endAnnotation:MKPointAnnotation = MKPointAnnotation()
@@ -85,12 +85,14 @@ struct MapView: UIViewRepresentable {
             endAnnotation.title = "End"
             endAnnotation.coordinate = coordinate
             uiView.addAnnotation(endAnnotation)
+            
         }
         
         if(manager.route != nil ) {
             return
         }
-   
+        
+        
         if(!manager.driverPoints.isEmpty){
             uiView.addAnnotations(manager.driverPoints)
             //for (address, pin) in manager.driverPoints {
@@ -108,7 +110,6 @@ struct MapView: UIViewRepresentable {
                 
             //}
             
-      
         }
         
         if(ride.startDropLocation == nil || ride.endDropLocation == nil) {return}
@@ -122,23 +123,32 @@ struct MapView: UIViewRepresentable {
         request.destination = MKMapItem(placemark: p2)
         request.transportType = .automobile
         
+        
         let directions = MKDirections(request: request)
         directions.calculate { response, error in
             print("Found route to location")
             guard let route = response?.routes.first else { return }
             manager.route = route
-            manager.getRideEstimates()
+            //manager.getRideEstimates()
             //uiView.addAnnotations([p1, p2])
             uiView.addOverlay(route.polyline)
             uiView.setVisibleMapRect(
                 route.polyline.boundingMapRect,
                 edgePadding: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20),
                 animated: true)
-            
+            self.ride.startLocation = startAnnotation.coordinate
+            self.ride.endLocation = endAnnotation.coordinate
+            return
         }
+        
     }
     
-    
+    // Used for testing driver locations
+    func addRadiusCircle(location: CLLocation){
+        let circle = MKCircle(center: location.coordinate, radius: 10)
+        self.mapView.addOverlay(circle)
+        
+    }
     
     class MapViewCoordinator: NSObject, MKMapViewDelegate {
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {

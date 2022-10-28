@@ -32,6 +32,7 @@ struct SelectDrivers:View {
                 
                 List {
                     ForEach(lm.drivers.indices, id: \.self) { index in
+                      
                         Button {
                             print(lm.drivers)
                             //lm.selectedDrivers = lm.drivers[index]
@@ -46,7 +47,7 @@ struct SelectDrivers:View {
                         }
                     }.onMove(perform: move)
                 }.frame(height: 200)
-                .environment(\.editMode, $editMode)
+                //.environment(\.editMode, $editMode)
                 
             
         }
