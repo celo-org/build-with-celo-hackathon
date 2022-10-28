@@ -1,11 +1,66 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import PieChart from "../components/PieChart";
+import TumainDaoAbi from "../components/contractjsonfiles/tumainiDao.json"
+import Web3 from "web3";
+import { useLocation } from "react-router-dom";
 
-const ProposalCard = () => {
+import { newKitFromWeb3 } from "@celo/contractkit";
+import BigNumber from "bignumber.js"
+let kit;
+let contract;
+
+const ProposalCard = (props) => {
+  const TumainiDaoContractAddress = "0xC9c5B8a5595c7fB8e7053c3AEcaB369854068650"
+  const [useraccount,setUserAccount] = useState(null);
+  const id = props.id;
+  const [approve,setApprove] = useState(true);
   const [toggleVote, setToggleVote] = useState(false);
+  const connectWallet  =  async function (){
+   
+    if (window.celo) {
+      
+      try {
+        await window.celo.enable()
+       
+  
+        const web3 = new Web3(window.celo);
+        kit = newKitFromWeb3(web3);
+  
+        const accounts = await kit.web3.eth.getAccounts();
+        kit.defaultAccount = accounts[0];
+        setUserAccount(kit.defaultAccount);
+        contract = new kit.web3.eth.Contract(TumainDaoAbi,TumainiDaoContractAddress);
+        
+  
+      } catch (error) {
+        notification(`⚠️ ${error}.`)
+      }
+    } else {
+      notification("⚠️ Please install the CeloExtensionWallet.")
+    }
+  }
+  const notification =(text) =>{
+    alert(text)
+  }
+  //vote on a proposal
+  const vote = async(id,boolean)=>{
+    
+    try{
+      await contract.methods.vote(id,boolean).send({from: kit.defaultAccount});
+    }
+   catch(error){
+    console.log("the error is",error);
+   }
+  }
+  useEffect(()=>{
+    connectWallet();
+    
+  },[]);
 
   const handleToggleVote = () => {
     setToggleVote(!toggleVote);
+    ///alert("item id",propid);
+    alert(id);
   };
   return (
     <div className="flex flex-col bg-white text-gray-900 rounded-lg shadow-lg mt-[100px] mx-2 w-[100%]">
@@ -48,10 +103,15 @@ const ProposalCard = () => {
                 style={toggleVote ? { display: "flex" } : { display: "none" }}
                 className="flex items-center justify-between"
               >
-                <button className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-bold leading-none text-white focus:outline-none bg-blue-500 border rounded hover:bg-blue-600 py-3 px-1 w-[100px] font-work ">
+                <button onClick={()=>{if(approve){
+                  vote(id,approve)}
+                }} className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-bold leading-none text-white focus:outline-none bg-blue-500 border rounded hover:bg-blue-600 py-3 px-1 w-[100px] font-work ">
                   Approve
                 </button>
-                <button className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-bold leading-none text-white focus:outline-none bg-blue-500 border rounded hover:bg-blue-600 py-3 px-1 w-[100px] font-work ">
+                <button  onClick={async()=>{if(approve){
+                 await  setApprove(false);
+                  vote(id,approve)}
+                }} className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-bold leading-none text-white focus:outline-none bg-blue-500 border rounded hover:bg-blue-600 py-3 px-1 w-[100px] font-work ">
                   Reject
                 </button>
               </div>
