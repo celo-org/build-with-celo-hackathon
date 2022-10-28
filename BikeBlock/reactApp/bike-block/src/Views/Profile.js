@@ -36,6 +36,7 @@ function Profile(props) {
             let tokenId = await props.bikeBlock.methods.tokenOfOwnerByIndex(account,t).call();
             let view = <BikeCard
                 ipfs = {props.ipfs}
+                link = {"/bikes/"+tokenId}
                 key = {tokenId}
                 bikeBlock = {props.bikeBlock}
                 account = {account}
@@ -43,17 +44,17 @@ function Profile(props) {
                 tokenId = {tokenId}
             />
             tokenIdList.push(view);
-            //setTokenId(tokenId);
         }
         setTokenId(tokenIdList);
     }
 
-
-
     return (
-        <div className="padding">
-            {tokenId}
+        <div className="container padding-top">
+            <div className=" row  align-items-center ">
+                {tokenId}
+            </div>
         </div>
+
     )
 }
 

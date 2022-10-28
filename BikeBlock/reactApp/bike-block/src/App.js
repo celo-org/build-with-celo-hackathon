@@ -79,16 +79,13 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div>        
+        <BrowserRouter>
 
-          <NaviView 
+        <NaviView 
                 account = {this.state.account}
                 loadAccount = {this.loadAccount}
           />
-        
-        <BrowserRouter>
-
-
 
 
           <Routes>
@@ -121,6 +118,7 @@ class App extends Component {
                 bikeBlock = {this.state.bikeBlock}
                 web3 = {this.state.web3}
                 account = {this.state.account}
+                ipfs = {this.props.ipfs}
               />
             }>
             </Route>

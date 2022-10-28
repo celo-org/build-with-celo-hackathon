@@ -2,25 +2,35 @@ import React, {useState,useEffect} from "react";
 import {useParams} from 'react-router-dom';
 import {state} from '../Helpers/ContractHelper.js';
 import {Buffer} from 'buffer';
+import {Link} from "react-router-dom";
+
+import './BikeCard.css';
 
 function BikeCard(props) {
 
     let params = useParams();
 
+    const [bikeObj,setBikeObj] = useState(null);
     const [bikeState,setBikeState] = useState("");
     const [bikeId,setBikeId] = useState("");
     const [bikeYear,setBikeYear] = useState("");
     const [bikeMake,setBikeMake] = useState("");
     const [bikeColor,setBikeColor] = useState("");
     const [bikeUnique,setBikeUnique] = useState("");
-
-
     const [bikeImage,setBikeImages] = useState();
+
+    // Stolen bike states 
+    const [stolenObj,setStolenObj] = useState(null);
+
+    const [stolenTime,setStolenTime] = useState(null);
+    const [stolenId,setStolenId] = useState(null);
+    const [stolenLocation,setStolenLocation] = useState(null);
+    const [bountyPayOut,setBountyPayOut] = useState(null);
 
 
     const [tokenId,setTokenId] = useState(null);
     const [showOwnerTools,setShowOwnerTools] = useState(true);
-
+    const [isStolen, setIsStolen] = useState(false);
     const decoder = new TextDecoder()
 
     useEffect(() => {  
@@ -34,9 +44,20 @@ function BikeCard(props) {
     const getNFTData = async (tokenId) => {
         let tokenUri = await props.bikeBlock.methods.tokenURI(tokenId).call();
         let bikeState = await props.bikeBlock.methods.getBikeState(tokenId).call();
-        console.log(props.ipfs);
+        let stolen = bikeState == 2
+
+        let bikeBounty;
+        if(stolen){
+            bikeBounty = await props.bikeBlock.methods.getStolenInfo(tokenId).call();
+            setStolenTime(bikeBounty.time);
+            setStolenId(bikeBounty.index);
+            setStolenLocation(bikeBounty.location);
+            setBountyPayOut(bikeBounty.bountyPayOut)
+        }
+
+
         const stream = props.ipfs._ipfs.cat(tokenUri);
-        console.log(tokenUri);
+
         let data = ""
 
         for await (const chunk of stream) {
@@ -44,69 +65,75 @@ function BikeCard(props) {
         }
 
         const bikeObj = JSON.parse(data);
+        
         setBikeYear(bikeObj.bikeYear);
         setBikeColor(bikeObj.bikeColor);
         setBikeId(bikeObj.bikeId);
-        setBikeMake(bikeObj.bikeMokeModel);
+        setBikeMake(bikeObj.bikeMakeModel);
         setBikeUnique(bikeObj.unique);
+    
+
+        setIsStolen(stolen)
         setBikeState(state(bikeState));
 
         let imageBuffers = [];
+        let rawImageBuffers = [];
         for (let i = 0; i < bikeObj.images.length; i++) {
             let buffer = [];
             const stream = props.ipfs._ipfs.cat(bikeObj.images[i]);
             for await(const chunk of stream){
                 buffer.push(chunk);
-                //buffer += decoder.decode(chunk,{stream:true})
             }
-            //let value = Buffer.from(buffer).toString('base64');
-            console.log(buffer);
+      
             const b64 = Buffer.from(buffer[0]).toString('base64');
-            let image =  <img key={i} src={`data:image/png;base64,${b64}`}/>
+
+            rawImageBuffers.push(b64);
+
+            let image =  <img className=" cover " key={i} src={`data:image/png;base64,${b64}`}/>
             imageBuffers.push(image);
-            //buffer = "";
         }
         setBikeImages(imageBuffers);
+
+        let obj = {
+            id:tokenId,
+            state:bikeState,
+            info:bikeObj,
+            stolen:bikeBounty,
+            image:rawImageBuffers,
+
+        }
+        setBikeObj(obj);
        
     }
 
-    const reportStolen = async (tokenId) => {
-        const stolenLocation = {"lat":30,"long":40};
-        const time = Date.now() / 1000;
 
-        let tx = await props.bikeBlock.methods.setStolenBike(tokenId,time,stolenLocation,0).send({from:props.account,gasPrice: '1000000000',gas: 5_000_000,gasLimit: 300_000});
-    
-        let bikeState = await props.bikeBlock.methods.getBikeState(tokenId).call();
-        let tokenState = props.web3.utils.BN(bikeState).toString();
-        setBikeState(state(tokenState));
-    }
-
+    // TODO MAKE DIFFERENT CARDS
     return (
-        <div>
-            <div className="card m-2">
-                {bikeImage}
-                <div className="card-body">
-                    <h2 className="card-text">Bike Card</h2>
-                    <p className="card-text">Images</p>
+            <Link 
+            to={props.link}
+            state = {{bike:bikeObj}}
+            >
+                <div className=" zero-pad card m-2 col-6 col-sm-3 card-size">
+                    <div className="position-absolute w-100 d-flex justify-content-between">
                     <p className="card-text">TokenId: {tokenId}</p>
-                    <p className="card-text">Bike State: {bikeState}</p>
-                    <p className="card-text">Make model: {bikeMake}</p>
-                    <p className="card-text">Year: {bikeYear}</p>
-                    <p className="card-text">Color: {bikeColor}</p>
-                    <p className="card-text">Unique Characteristics : {bikeUnique}</p>
-                    {showOwnerTools ? 
-                    <div>
-                    <h3>Owner Tools</h3>
-                    <button onClick={() => reportStolen(tokenId)}>Report Stolen</button>
-                    </div>
+                    {bountyPayOut ?
+                     <p className="card-text">Wanted: {bountyPayOut} cUSD</p>
                     :
-
-                        <div></div>
+                        <p></p>
                     }
-                    
+                    <p className="card-text">State: {bikeState}</p>
+                    </div>
+                    {bikeImage}
+                    <div className="card-body  ">
+                        
+                        <p className="card-text">Make model: {bikeMake}</p>
+                        <p className="card-text">Year: {bikeYear}</p>
+                        <p className="card-text">Color: {bikeColor}</p>
+                        <p className="card-text">Unique Characteristics : {bikeUnique}</p>
+                        
+                    </div>
                 </div>
-            </div>
-        </div>
+            </Link>
     )
 }
 

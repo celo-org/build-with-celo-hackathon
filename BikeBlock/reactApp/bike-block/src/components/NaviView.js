@@ -55,10 +55,20 @@ function NaviView(props) {
         <div className={navStyle} id="navbarColor01">
             <ul className="navbar-nav me-auto">
                 <li className="nav-item active">
-                    <a className="nav-link" href="/">Home</a>
+                    <Link 
+                    to={'/'}
+                    className="nav-link">
+                        <p>Home</p>
+                    </Link>
+                    
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" href="/bountys">Bountys</a>
+                    <Link 
+                    to={'/bountys'}
+                    className="nav-link" >
+                        <p>Bountys</p>
+                    </Link>
+           
                 </li>
                 <li className="nav-item">
                     <a className="nav-link" href="#">About</a>
