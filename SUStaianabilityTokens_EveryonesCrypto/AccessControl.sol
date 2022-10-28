@@ -11,7 +11,11 @@ contract Roles is AccessControl, Pausable {
     bytes32 public constant ADDITIONAL_ADMIN_ROLE = keccak256("ADDITIONAL_ADMIN_ROLE");
 
     bytes32 public constant MANAGER_ROLE = keccak256("MANAGER_ROLE");
+    bytes32 public constant ASST_MANAGER_ROLE = keccak256("ASST_MANAGER_ROLE");
+    bytes32 public constant UPDATES_MANAGER_ROLE = keccak256("UPDATES_MANAGER_ROLE");
+    bytes32 public constant ADDRESS_MANAGER_ROLE = keccak256("ADDRESS_MANAGER_ROLE");
     
+    bytes32 public constant ROLES_MANAGER = keccak256("ROLES_MANAGER");
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
 
@@ -21,13 +25,21 @@ contract Roles is AccessControl, Pausable {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
 
         _grantRole(MANAGER_ROLE, msg.sender);
+        _grantRole(ASST_MANAGER_ROLE, msg.sender);
+        _grantRole(UPDATES_MANAGER_ROLE, msg.sender);
+        _grantRole(ADDRESS_MANAGER_ROLE, msg.sender);
         
+        _grantRole(ROLES_MANAGER, msg.sender);
         _grantRole(MINTER_ROLE, msg.sender);
         _grantRole(PAUSER_ROLE, msg.sender);
 
         _setRoleAdmin(ADDITIONAL_ADMIN_ROLE, DEFAULT_ADMIN_ROLE);
         _setRoleAdmin(MANAGER_ROLE, DEFAULT_ADMIN_ROLE);
+        _setRoleAdmin(ASST_MANAGER_ROLE, MANAGER_ROLE);
+        _setRoleAdmin(UPDATES_MANAGER_ROLE, MANAGER_ROLE);
+        _setRoleAdmin(ADDRESS_MANAGER_ROLE, MANAGER_ROLE);
 
+        _setRoleAdmin(ROLES_MANAGER, DEFAULT_ADMIN_ROLE);
         _setRoleAdmin(MINTER_ROLE, ROLES_MANAGER);
         _setRoleAdmin(PAUSER_ROLE, ROLES_MANAGER);
     }
@@ -41,7 +53,11 @@ contract Roles is AccessControl, Pausable {
         grantRole(DEFAULT_ADMIN_ROLE, account);
 
         grantRole(MANAGER_ROLE, account);
-    
+        grantRole(ASST_MANAGER_ROLE, account);
+        grantRole(UPDATES_MANAGER_ROLE, account);
+        grantRole(ADDRESS_MANAGER_ROLE, account);
+
+        grantRole(ROLES_MANAGER, account);
         grantRole(MINTER_ROLE, account);
         grantRole(PAUSER_ROLE, account);
     }
@@ -52,7 +68,11 @@ contract Roles is AccessControl, Pausable {
         revokeRole(DEFAULT_ADMIN_ROLE, account);
 
         revokeRole(MANAGER_ROLE, account);
-        
+        revokeRole(ASST_MANAGER_ROLE, account);
+        revokeRole(UPDATES_MANAGER_ROLE, account);
+        revokeRole(ADDRESS_MANAGER_ROLE, account);
+
+        revokeRole(ROLES_MANAGER, account);
         revokeRole(MINTER_ROLE, account);
         revokeRole(PAUSER_ROLE, account);
     }
@@ -118,6 +138,75 @@ contract Roles is AccessControl, Pausable {
 
     function isManager(address account) public virtual view returns(bool) {
         return hasRole(MANAGER_ROLE, account);
+    }
+
+    /******* ASST_MANAGER_ROLE *******/
+    function grantAsstManagerRole(address account) public whenNotPaused {
+        require(hasRole(MANAGER_ROLE, msg.sender), "Access Denied: Caller is NOT MANAGER!");
+        require(account != address(0), "Account: Zero or Invalid address!");
+        grantRole(ASST_MANAGER_ROLE, account);
+    }
+
+    function revokeAsstManagerRole(address account) public {
+        require(hasRole(MANAGER_ROLE, msg.sender), "Access Denied: Caller is NOT MANAGER!");
+        require(account != address(0), "Account: Zero or Invalid address!");
+        revokeRole(ASST_MANAGER_ROLE, account);
+    }
+
+    function isAsstManager(address account) public virtual view returns(bool) {
+        return hasRole(ASST_MANAGER_ROLE, account);
+    }
+
+    /******* ADDRESS_MANAGER_ROLE *******/
+    function grantAddressManagerRole(address account) public whenNotPaused {
+        require(hasRole(MANAGER_ROLE, msg.sender), "Access Denied: Caller is NOT MANAGER!");
+        require(account != address(0), "Account: Zero or Invalid address!");
+        grantRole(ADDRESS_MANAGER_ROLE, account);
+    }
+
+    function revokeAddressManagerRole(address account) public {
+        require(hasRole(MANAGER_ROLE, msg.sender), "Access Denied: Caller is NOT MANAGER!");
+        require(account != address(0), "Account: Zero or Invalid address!");
+        revokeRole(ADDRESS_MANAGER_ROLE, account);
+    }
+
+    function isAddressManager(address account) public virtual view returns(bool) {
+        return hasRole(ADDRESS_MANAGER_ROLE, account);
+    }
+
+    /******* UPDATES_MANAGER_ROLE *******/
+    function grantUpdatesManagerRole(address account) public whenNotPaused {
+        require(hasRole(MANAGER_ROLE, msg.sender), "Access Denied: Caller is NOT MANAGER!");
+        require(account != address(0), "Account: Zero or Invalid address!");
+        grantRole(UPDATES_MANAGER_ROLE, account);
+    }
+
+    function revokeUpdatesManagerRole(address account) public {
+        require(hasRole(MANAGER_ROLE, msg.sender), "Access Denied: Caller is NOT MANAGER!");
+        require(account != address(0), "Account: Zero or Invalid address!");
+        revokeRole(UPDATES_MANAGER_ROLE, account);
+    }
+
+    function isUpdatesManager(address account) public virtual view returns(bool) {
+        return hasRole(UPDATES_MANAGER_ROLE, account);
+    }
+
+
+    /******* ROLES_MANAGER *******/
+    function grantRolesManagerRole(address account) public whenNotPaused { 
+        require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Access Denied: Caller is NOT SUPER ADMIN!");
+        require(account != address(0), "Account: Zero or Invalid address!");
+        grantRole(ROLES_MANAGER, account);
+    }
+
+    function revokeRolesManagerRole(address account) public { 
+        require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Access Denied: Caller is NOT SUPER ADMIN!");
+        require(account != address(0), "Account: Zero or Invalid address!");
+        revokeRole(ROLES_MANAGER, account);
+    }
+
+    function isRolesManager(address account) public virtual view returns(bool) {
+        return (hasRole(ROLES_MANAGER, account));
     }
 
     /******* MINTER_ROLE *******/

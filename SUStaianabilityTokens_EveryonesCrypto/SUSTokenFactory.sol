@@ -8,36 +8,26 @@ import "@openzeppelin/contracts@4.7.3/access/AccessControl.sol";
 
 interface IRoles {
     function isSuperAdmin(address account) external view returns(bool);
-
+    function isAddressManager(address account) external view returns(bool);
     function isMinter(address account) external view returns(bool);
     function isPauser(address account) external view returns(bool);
 }
 
 contract SUStaianablilityTokens is ERC20, ERC20Burnable, Pausable, AccessControl {
-    bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
-    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
     address private rolesSC;
 
-    constructor(address _rolesContractAddress) ERC20("SUStaianable Tokens", "SUST") {
-        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _grantRole(PAUSER_ROLE, msg.sender);
-        _grantRole(MINTER_ROLE, msg.sender);
+    event MintEvent(address, uint256);
 
+    constructor(address _rolesContractAddress) ERC20("SUStaianable Tokens", "SUST") {
         rolesSC = _rolesContractAddress;
     }
 
-    function pause() public onlyRole(PAUSER_ROLE) {
-        _pause();
-    }
-
-    function unpause() public onlyRole(PAUSER_ROLE) {
-        _unpause();
-    }
-
     function mintSUST(address to, uint256 amount) public { //onlyRole(MINTER_ROLE) {
-        require(IRoles(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT Super Admin!");
+        require(IRoles(rolesSC).isMinter(msg.sender), "Access Denied: Caller is NOT Minter!");
         _mint(to, amount);
+
+        emit MintEvent(to, amount);   
     }
 
     function _beforeTokenTransfer(address from, address to, uint256 amount)
@@ -48,8 +38,31 @@ contract SUStaianablilityTokens is ERC20, ERC20Burnable, Pausable, AccessControl
         super._beforeTokenTransfer(from, to, amount);
     }
 
-    function killContract() public {
-        require(IRoles(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT SUPER ADMIN!");
+    //----------------------- SET ADDRESS FUNCTIONS -----------------------//
+
+    function setRolesContractAddress(address _rolesSC) public whenNotPaused {
+        require(IRoles(rolesSC).isAddressManager(msg.sender), "Access Denied: Caller is NOT Address Manager!");
+        require(_rolesSC != address(0), "Account: Zero or Invalid address!");
+        rolesSC = _rolesSC;
+    }
+
+    //----------------- PAUSER FUNCTION ----------------//
+
+    function pauseContract() public whenNotPaused {
+        require(IRoles(rolesSC).isPauser(msg.sender), "Access Denied: Caller is NOT Pauser!");
+        _pause();
+    }
+
+    function unpauseContract() public whenPaused {
+        require(IRoles(rolesSC).isPauser(msg.sender), "Access Denied: Caller is NOT Pauser!");
+        _unpause();
+    }
+
+//----------------- KILL FUNCTION ----------------//
+
+    //KILL THE ERC20-SMART-CONTRACT
+    function killCarbonCreditsERC20() public {
+		require(IRoles(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT a SUPER ADMIN!");
 		selfdestruct(payable(msg.sender));
 	}
 }
