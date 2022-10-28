@@ -40,20 +40,24 @@ const SelectTokens = () => {
     try {
       const allTokens = [
         {
-          symbol: "USDC",
-          token_address: "0x6bb92A5E17e28E9D3f7Eb2B58E9DA4E5278Da0bC"
+          symbol: "CELO",
+          token_address: "0xF194afDf50B03e69Bd7D057c1Aa9e10c9954E4C9"
         },
         {
-          symbol: "ONES",
-          token_address: "0x6db1736656Ed09cAC5957d7B14e703e6268D1337"
+          symbol: "cUSD",
+          token_address: "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1"
         },
         {
-          symbol: "DAI",
-          token_address: "0xbf0A736F6107D10fCE53d056C95fD73d266283Bb"
+          symbol: "cEURO",
+          token_address: "0x10c892A6EC43a53E45D0B916B4b7D383B1b78C0F"
         },
         {
-          symbol: "USDT",
-          token_address: "0xFC4F6E92143621D1ff144C1ff5b7f14ec53535A1"
+          symbol: "sCELO",
+          token_address: "0x3207334DE412F22dfa38151B4878079b181aFAAD"
+        },
+        {
+          symbol: "scETH",
+          token_address: "0x6783EcBA5966517A597C648Ec5bbAc6c18eD7E92"
         }
       ]
 
@@ -257,6 +261,7 @@ const SelectTokens = () => {
         onClose={onClose}
         header="Confirm Selected Tokens"
         handleProceed={handleProceed}
+        tokens={selectedTokens}
       />
     </Box>
   );

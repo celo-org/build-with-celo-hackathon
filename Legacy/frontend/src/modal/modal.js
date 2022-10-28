@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import SelectedTokens from "../templates/selectedTokens";
 
-const TokenModal = ({ isOpen, onClose, header, handleProceed, children }) => {
+const TokenModal = ({ isOpen, onClose, header, handleProceed, children, tokens }) => {
 //   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
@@ -20,7 +20,7 @@ const TokenModal = ({ isOpen, onClose, header, handleProceed, children }) => {
           <ModalHeader>{header}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <SelectedTokens />
+            <SelectedTokens tokens={tokens} />
           </ModalBody>
 
           <ModalFooter>
