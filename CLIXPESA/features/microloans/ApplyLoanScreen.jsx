@@ -64,7 +64,7 @@ export default function ApplyLoanScreen({ navigation, route }) {
       borrowerName: thisUser,
       principal: utils.parseEther(amount).toString(),
       interest: loanParams.interest * 100,
-      estRepayment: utils.parseEther(((amount * 1 * (100 + 5)) / 100).toString()).toString(),
+      balance: utils.parseEther((amount * 0).toString()).toString(),
       minDuration: loanParams.minDuration,
       maxDuration: loanParams.maxDuration,
       deadline: Date.parse(deadline.toDateString() + ' 11:59 pm'),
@@ -124,7 +124,6 @@ export default function ApplyLoanScreen({ navigation, route }) {
       address: results.args[0],
       balance: utils.formatUnits(results.args[2][6], 'ether'),
       paid: 0,
-      repayment: utils.formatUnits(results.args[2][6], 'ether'),
       dueDate: dueDate.toDateString(),
       initiated: false,
     }

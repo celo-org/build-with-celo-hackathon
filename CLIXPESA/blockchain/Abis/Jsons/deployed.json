@@ -5,7 +5,7 @@
       "chainId": "44787",
       "contracts": {
         "Loans": {
-          "address": "0xD153C919944b412AB9383f97C47DdBC50D2C7225",
+          "address": "0xA3Fb3fa68fDb137D0Cc12e7F05fA6724722fD039",
           "abi": [
             {
               "inputs": [],
@@ -71,7 +71,7 @@
                     },
                     {
                       "internalType": "uint256",
-                      "name": "estRepayment",
+                      "name": "balance",
                       "type": "uint256"
                     },
                     {
@@ -145,7 +145,7 @@
                     },
                     {
                       "internalType": "uint256",
-                      "name": "estRepayment",
+                      "name": "balance",
                       "type": "uint256"
                     },
                     {
@@ -220,7 +220,7 @@
                     },
                     {
                       "internalType": "uint256",
-                      "name": "estRepayment",
+                      "name": "balance",
                       "type": "uint256"
                     },
                     {
