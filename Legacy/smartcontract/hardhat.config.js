@@ -7,8 +7,8 @@ module.exports = {
   defaultNetwork: "alfajores",
   networks: {
    alfajores: {
-     url: "https://alfajores-forno.celo-testnet.org",
-     accounts: ['0x' + process.env.PRIVATE_KEY],
+     url: "https://celo-hackathon.lavanet.xyz/celo-alfajores/http",
+     accounts: [process.env.P, process.env.PRIVATE_KEY],
      chainId: 44787
    }
   }
