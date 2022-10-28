@@ -9,12 +9,13 @@ import {
 import { rowsFromData } from '../../lib/array';
 import Link from 'next/link';
 import { getProjectUrlByRegistry } from '../../../backend/registry/registry.repo';
+import { Route } from '../../shared/routes';
 
-const Projects: PaginatedItemsComponent<TCO2Token> = ({ currentItems }) => (
+const Projects: PaginatedItemsComponent<Project> = ({ currentItems }) => (
   <>
     {rowsFromData(currentItems).map((eachRow, rowIndex) => (
       <Row key={rowIndex}>
-        {eachRow.map(({ projectVintage: { project } }, index) => {
+        {eachRow.map((project, index) => {
           if (!project.projectId || !project.standard) {
             return null;
           }
@@ -54,7 +55,9 @@ const Projects: PaginatedItemsComponent<TCO2Token> = ({ currentItems }) => (
                 </ListGroup>
               </Card>
               <Row className="m-2">
-                <Button variant="primary">Offset through project</Button>
+                <Link href={Route.offset({ projectId: project.projectId })}>
+                  <Button variant="primary">Offset through project</Button>
+                </Link>
               </Row>
             </Col>
           );
@@ -65,15 +68,15 @@ const Projects: PaginatedItemsComponent<TCO2Token> = ({ currentItems }) => (
 );
 
 type MarketProps = PropsWithChildren<{
-  tco2Tokens: TCO2Token[];
+  projects: Project[];
 }>;
 
-export const Market = ({ tco2Tokens }: MarketProps) => {
+export const Market = ({ projects }: MarketProps) => {
   return (
     <>
       <h3 className="mb-4">Toucan Carbon Credit Projects</h3>
       <PaginatedLayout
-        items={tco2Tokens}
+        items={projects}
         itemsPerPage={12}
         itemsComponent={Projects}
       />

@@ -5,30 +5,30 @@ export enum Registry {
 export type Project = {
   id: string;
   owner: User;
-  timestamp: number;
+  timestamp: string;
   tx: string;
   projectId: string;
-  vintages?: ProjectVintage[];
+  vintages?: ProjectVintage[] | null;
   standard: Registry;
-  methodology?: string;
-  region?: string;
-  storageMethod?: string;
-  method?: string;
-  emissionType?: string;
-  category?: string;
-  uri?: string;
+  methodology?: string | null;
+  region?: string | null;
+  storageMethod?: string | null;
+  method?: string | null;
+  emissionType?: string | null;
+  category?: string | null;
+  uri?: string | null;
 };
 
 export type ProjectVintage = {
   id: string;
   owner: User;
-  timestamp: number;
+  timestamp: string;
   tx: string;
   name: string;
-  startTime: number;
-  endTime: number;
+  startTime: string;
+  endTime: string;
   project: Project;
-  totalVintageQuantity: number;
+  totalVintageQuantity: string;
   isCorsiaCompliant: boolean;
   isCCPcompliant: boolean;
   coBenefits: string;
@@ -40,7 +40,7 @@ export type ProjectVintage = {
 export type TCO2Token = {
   id: string;
   creator: User;
-  createdAt: number;
+  createdAt: string;
   creationTx: string;
   projectVintage: ProjectVintage;
   name: string;
