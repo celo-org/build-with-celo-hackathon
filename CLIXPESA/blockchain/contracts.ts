@@ -16,6 +16,8 @@ let tokenContractCache: Partial<Record<string, Contract>> = {} // token address 
 
 export const spacesIface = new utils.Interface(SpacesAbi)
 export const roscaIface = new utils.Interface(RoscaAbi)
+export const ONRsIface = new utils.Interface(LoanONRsAbi)
+export const LoansIface = new utils.Interface(LoansAbi)
 
 export function getContract(c: CeloContract) {
   const cachedContract = contractCache[c]

@@ -32,6 +32,48 @@ export async function modifyUserDetails(storeName, updatedUserDetails) {
   await setItemAsync(storeName, serialised)
 }
 
+export async function storeUserLoan(storeName, userLoanDetails) {
+  if (!userLoanDetails) {
+    return
+  }
+  const storedLoans = await getUserLoans(storeName)
+  if (
+    Array.prototype.find.call(storedLoans, (loan) =>
+      areAddressesEqual(loan.address, userLoanDetails.address),
+    )
+  ) {
+    throw new Error('This loan already exists!')
+  }
+  Array.prototype.push.call(storedLoans, userLoanDetails)
+  const serialised = JSON.stringify(storedLoans)
+  await setItemAsync(storeName, serialised)
+}
+
+export async function getUserLoans(storeName) {
+  const storedDetails = await getItemAsync(storeName)
+  const parsedDetails = JSON.parse(storedDetails)
+  if (!parsedDetails) {
+    return {}
+  }
+  return parsedDetails
+}
+
+export async function modifyLoanDetails(storeName, updatedLoanDetails) {
+  if (!updatedLoanDetails) {
+    return
+  }
+  const storedLoans = await getUserLoans(storeName)
+  const index = Array.prototype.findIndex.call(storedLoans, (loan) =>
+    areAddressesEqual(loan.address, updatedLoanDetails.address),
+  )
+  if (index < 0) {
+    throw new Error('Address not found in loans list')
+  }
+  Array.prototype(storedLoans)[index] = updatedLoanDetails
+  const serialised = JSON.stringify(storedLoans)
+  await setItemAsync(storeName, serialised)
+}
+
 /**
  * Adds a new wallet to the users wallets list
  * @param {string} listName accounts list name

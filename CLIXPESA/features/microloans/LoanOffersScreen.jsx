@@ -1,54 +1,22 @@
 import { Box, Button, FlatList, Stack, VStack, Spacer } from 'native-base'
 import { LoanItem } from 'clixpesa/components'
 
+import { useSelector, useDispatch } from 'react-redux'
+import { useState, useEffect } from 'react'
+import { utils } from 'ethers'
+import celoHelper from '../../blockchain/helpers/celoHelper'
+import { fetchOffers } from './loansSlice'
+
 export default function LoanOffersScreen({ navigation }) {
-  const offers = [
-    {
-      id: 0x01,
-      lender: 'Akimbo Keya',
-      lenderType: 'individual',
-      principal: 300,
-      interest: 5,
-      duration: {
-        min: 14,
-        max: 21,
-      },
-      limit: {
-        min: 50,
-        max: 300,
-      },
-    },
-    {
-      id: 0x02,
-      lender: 'Wrong Rende',
-      lenderType: 'chamaa',
-      principal: 1000,
-      interest: 8,
-      duration: {
-        min: 14,
-        max: 36,
-      },
-      limit: {
-        min: 50,
-        max: 250,
-      },
-    },
-    {
-      id: 0x03,
-      lender: 'Wrong Rende',
-      lenderType: 'chamaa',
-      principal: 1000,
-      interest: 8,
-      duration: {
-        min: 14,
-        max: 36,
-      },
-      limit: {
-        min: 50,
-        max: 250,
-      },
-    },
-  ]
+  const dispatch = useDispatch()
+  const offers = useSelector((s) => s.loans.allOffers)
+  useEffect(() => {
+    if (offers.length < 1) {
+      console.log('fetching')
+      dispatch(fetchOffers())
+    }
+  }, [])
+
   return (
     <Box flex={1} bg="#F5F5F5" alignItems="center">
       <VStack width="95%" space={3}>
@@ -56,6 +24,7 @@ export default function LoanOffersScreen({ navigation }) {
           <FlatList
             mt={2}
             data={offers}
+            showsVerticalScrollIndicator={false}
             renderItem={({ item, index }) => (
               <Box
                 bg="white"
@@ -66,21 +35,29 @@ export default function LoanOffersScreen({ navigation }) {
               >
                 <LoanItem
                   isOffer={true}
-                  itemTitle={item.lender}
-                  type={item.lenderType}
+                  itemTitle={item.lenderName}
+                  type="individual"
                   principal={item.principal}
                   interest={item.interest}
-                  duration={item.duration}
-                  limit={item.limit}
+                  duration={{
+                    min: item.minDuration,
+                    max: item.maxDuration,
+                  }}
+                  limit={{
+                    min: item.minLimit,
+                    max: item.maxLimit,
+                  }}
                   screen="applyLoan"
+                  scrnParams={item}
                 />
               </Box>
             )}
             keyExtractor={(item) => item.id}
+            ListFooterComponent={<Box minHeight="100px"></Box>}
           />
         </Stack>
         <Spacer />
-        <Stack alignItems="center" space={3} mb={8}>
+        <Stack position="absolute" bottom={12} alignItems="center" space={3} width="95%">
           <Button
             rounded="3xl"
             w="60%"

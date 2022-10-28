@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 function SectionHeader(props) {
   const navigation = useNavigation()
   return (
-    <HStack mx="3" my="2">
+    <HStack mx="6" my="2">
       <Text fontWeight="medium" color="blueGray.600">
         {props.title}
       </Text>

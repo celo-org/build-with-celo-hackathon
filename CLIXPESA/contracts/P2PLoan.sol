@@ -23,6 +23,18 @@ struct LoanDetails {
 
 contract P2PLoan {
   IERC20 private token;
+  address payable[] loanParties;
+  LoanDetails LD;
 
-  constructor(address payable _creator, LoanDetails memory _LD) {}
+  modifier isParty(LoanDetails memory _LD) {
+    require(msg.sender == _LD.borrower || msg.sender == _LD.lender);
+    _;
+  }
+
+  constructor(address payable _creator, LoanDetails memory _LD) {
+    loanParties.push(_creator);
+    LD = _LD;
+  }
+
+  function getLoanDetails() external view returns (LoanDetails memory) {}
 }

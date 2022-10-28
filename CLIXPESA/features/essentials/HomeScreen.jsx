@@ -23,8 +23,6 @@ import { shortenAddress } from '../../blockchain/utils/addresses'
 import { spacesIface } from '../../blockchain/contracts'
 import { utils } from 'ethers'
 
-import { nanoid } from 'nanoid'
-
 export default function HomeScreen({ navigation }) {
   const dispatch = useDispatch()
   const tokenAddrs = Object.keys(NativeTokensByAddress)
@@ -75,9 +73,13 @@ export default function HomeScreen({ navigation }) {
     console.log(results.args.RD.imgLink)
   }
 
-  const getID = () => {
-    const id = nanoid()
-    console.log(id)
+  const getAddr = async () => {
+    const addr = await celoHelper.smartContractCall('Loans', {
+      contractAddress: '0xD153C919944b412AB9383f97C47DdBC50D2C7225',
+      method: 'getONRsAddr',
+      methodType: 'read',
+    })
+    console.log(addr)
   }
 
   return (
@@ -175,7 +177,7 @@ export default function HomeScreen({ navigation }) {
         {/*Test buttons*/}
         <Button onPress={() => handleGetRoscaData()}>Show Rosca Data</Button>
         <Button onPress={() => handleDecodeData()}>Show Data</Button>
-        <Button onPress={() => getID()}>Get ID</Button>
+        <Button onPress={() => getAddr()}>Get Addr</Button>
       </Box>
     </ScrollView>
   )
