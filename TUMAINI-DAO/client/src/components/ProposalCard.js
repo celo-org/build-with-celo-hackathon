@@ -12,8 +12,11 @@ let contract;
 const ProposalCard = (props) => {
   const TumainiDaoContractAddress ="0x325138614778520C4064b7DfD59ffbd4B923a65d"; //"0xC9c5B8a5595c7fB8e7053c3AEcaB369854068650"
   const [useraccount,setUserAccount] = useState(null);
+ 
   const id = props.id;
+  const [noVotes,setNoVotes] = useState(null);
   const [approve,setApprove] = useState(true);
+  const [yesVotes,setYesVotes] = useState(null);
   const [toggleVote, setToggleVote] = useState(false);
   const connectWallet  =  async function (){
    
@@ -31,7 +34,8 @@ const ProposalCard = (props) => {
         setUserAccount(kit.defaultAccount);
         contract = new kit.web3.eth.Contract(TumainDaoAbi,TumainiDaoContractAddress);
         
-  
+                  await votesFor();   
+                  await votesReject();          
       } catch (error) {
         notification(`⚠️ ${error}.`)
       }
@@ -42,6 +46,7 @@ const ProposalCard = (props) => {
   const notification =(text) =>{
     alert(text)
   }
+  
   //vote on a proposal
   const vote = async(id,boolean)=>{
     
@@ -52,15 +57,47 @@ const ProposalCard = (props) => {
     console.log("the error is",error);
    }
   }
+  //getAllVoteFor Proposals
+const votesFor =async()=>{
+  try{
+
+const votes = await contract.methods.getApproveVotes(id).call({from: kit.defaultAccount});
+
+setYesVotes(votes);
+
+console.log("votes re",votes);
+
+  }catch(error){
+    console.log("please check",error);
+  }
+}
+//getAllVoteFor Proposals
+const votesReject =async()=>{
+  try{
+
+const rejectvotes = await contract.methods.getAgainstVotes(id).call({from: kit.defaultAccount});
+
+setNoVotes(rejectvotes);
+
+
+
+  }catch(error){
+    console.log("please check",error);
+  }
+}
   useEffect(()=>{
-    connectWallet();
+     connectWallet();
+     
+     
     
   },[]);
+ 
 
   const handleToggleVote = () => {
     setToggleVote(!toggleVote);
-    ///alert("item id",propid);
-    alert(id);
+    
+    
+    
   };
   return (
     <div className="flex flex-col bg-white text-gray-900 rounded-lg shadow-lg mt-[100px] mx-2 w-[100%]">
@@ -80,7 +117,7 @@ const ProposalCard = (props) => {
               </h3>
               <h1 className="font-jost text-5xl">Donation to St Lisa School</h1>
               <h3 className="font-open text-gray-600 text-xl">
-                Accept Donation to St Lisa school for Girls
+                Accept Donation to St Lisa school for Girls 
               </h3>
               <div className="flex flex-col md:flex-row justify-between">
                 <div>
@@ -126,7 +163,7 @@ const ProposalCard = (props) => {
           <h2 className="font-open">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi delectus vel a odit harum in quam quos, nihil nam commodi! Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut veritatis, maxime deleniti assumenda nam laboriosam? Magni veritatis assumenda voluptatibus nostrum.</h2>
         </div>
         <div className="max-w-[350px] w-[100%]">
-          <PieChart />
+          <PieChart yes={yesVotes} no={noVotes}/>
         </div>
       </div>
     </div>
