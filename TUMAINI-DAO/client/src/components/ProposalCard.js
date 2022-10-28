@@ -10,7 +10,7 @@ let kit;
 let contract;
 
 const ProposalCard = (props) => {
-  const TumainiDaoContractAddress = "0xC9c5B8a5595c7fB8e7053c3AEcaB369854068650"
+  const TumainiDaoContractAddress ="0x325138614778520C4064b7DfD59ffbd4B923a65d"; //"0xC9c5B8a5595c7fB8e7053c3AEcaB369854068650"
   const [useraccount,setUserAccount] = useState(null);
   const id = props.id;
   const [approve,setApprove] = useState(true);

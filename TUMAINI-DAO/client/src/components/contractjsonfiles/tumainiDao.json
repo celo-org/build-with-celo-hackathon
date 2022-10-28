@@ -245,6 +245,11 @@
 				"internalType": "uint256",
 				"name": "proposalid",
 				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amountContribute",
+				"type": "uint256"
 			}
 		],
 		"name": "contributeToCharity",
@@ -273,6 +278,25 @@
 		"name": "createProposal",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "proposalid",
+				"type": "uint256"
+			}
+		],
+		"name": "getAgainstVotes",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -340,6 +364,25 @@
 				"internalType": "struct tumainiDao.TumainCharityProposal[]",
 				"name": "props",
 				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "proposalid",
+				"type": "uint256"
+			}
+		],
+		"name": "getApproveVotes",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",

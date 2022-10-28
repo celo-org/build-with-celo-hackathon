@@ -10,7 +10,7 @@ let kit;
 let contract;
 const NewProposal = () => {
   const cUSDContract = "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1"
-  const TumainiDaoContractAddress = "0xC9c5B8a5595c7fB8e7053c3AEcaB369854068650"//"0xe58f4213486fe3bA22F8d7D45ADF85C2107CAe1d";
+  const TumainiDaoContractAddress ="0x325138614778520C4064b7DfD59ffbd4B923a65d"; //"0xC9c5B8a5595c7fB8e7053c3AEcaB369854068650"
     const { showModal, setShowModal } = useContext(AppContext);
     const [useraccount,setUserAccount] = useState(null);
     //proposal details
