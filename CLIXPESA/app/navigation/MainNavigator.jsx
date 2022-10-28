@@ -31,6 +31,7 @@ import {
   WithdrawFundScreen,
   SetRoscaGoalScreen,
   FundRoundScreen,
+  CreateSpaceScreen,
 } from 'clixpesa/features/spaces'
 import { useSelector } from 'react-redux'
 
@@ -64,6 +65,7 @@ export default function MainNavigator() {
         <MainStack.Screen name="CustomizePersonal" component={CustomizePersonalScreen} />
         <MainStack.Screen name="addPersonalFund" component={AddPersonalFundScreen} />
         <MainStack.Screen name="withdrawFund" component={WithdrawFundScreen} />
+        <MainStack.Screen name="createSpace" component={CreateSpaceScreen} />
 
         <MainStack.Screen
           name="AllTokens"
