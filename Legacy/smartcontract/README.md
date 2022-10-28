@@ -1,13 +1,20 @@
-# Sample Hardhat Project
+# Legacy smart contract
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+This directory contains smart contract for legacy
 
-Try running some of the following tasks:
+[Verified contract on explorer](https://explorer.celo.org/alfajores/address/0xC85d80669400Ea6a6AED0fed4b5E69810398a7eA/contracts)
 
-```shell
-npx hardhat help
-npx hardhat test
-GAS_REPORT=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
+### Compile
+```bash
+npx hardhat compile
+```
+
+### Deploy
+```bash
+npx hardhat --network alfajores deploy
+```
+
+### Verify
+```bash
+npx hardhat --network alfajores sourcify
 ```
