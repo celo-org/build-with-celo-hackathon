@@ -1,14 +1,8 @@
-import React from 'react'
+import React from "react";
+import FundingPage from "../components/funding/Funding";
 
 function Funding() {
-    return (
-            
-    <div>
-      <h1>mail</h1>
-    </div>
-
-        
-    )
+  return <FundingPage />;
 }
 
 export default Funding;

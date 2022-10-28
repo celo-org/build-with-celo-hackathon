@@ -1,11 +1,13 @@
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import { NavListDefault, NavListFunding, NavListHome } from "./shared/NavList";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
+  const router = useRouter();
   const handleNav = () => {
     setNav(!nav);
   };
@@ -30,20 +32,10 @@ const Navbar = () => {
         <Link href="/">
           <h1 className="font-bold text-2xl">Crypto ventures</h1>
         </Link>
-        <ul className="hidden sm:flex">
-          <li className="p-4">
-            <Link href="/">Home</Link>
-          </li>
-          <li className="p-4">
-            <Link href="/startups">Startups</Link>
-          </li>
-          <li className="p-4">
-            <Link href="/funding">Funding</Link>
-          </li>
-          <li className="p-4">
-            <Link href="/login"> Login </Link>
-          </li>
-        </ul>
+        {router.pathname === "/" && <NavListHome />}
+        {router.pathname === "/startups" && <NavListDefault />}
+        {router.pathname === "/startups2" && <NavListDefault />}
+        {router.pathname === "/funding" && <NavListFunding />}
         <div onClick={handleNav} className="block sm:hidden z-10">
           {nav ? (
             <AiOutlineClose

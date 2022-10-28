@@ -1,5 +1,5 @@
 import React from "react";
-import { BtnGreen } from "./shared/Button";
+import { BtnGreen } from "../shared/Button";
 
 function Homepage() {
   return (
