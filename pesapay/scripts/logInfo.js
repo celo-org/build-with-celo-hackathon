@@ -1,6 +1,5 @@
 const { ethers } = require("hardhat")
-const { signMetaTxRequest } = require("../src/signer")
-const { readFileSync, writeFileSync, mkdirSync, existsSync } = require("fs")
+const { readFileSync } = require("fs")
 require("dotenv").config()
 
 function getInstance(name) {
@@ -10,26 +9,13 @@ function getInstance(name) {
 }
 
 async function main() {
-  const forwarder = await getInstance("MinimalForwarder")
   const mainContract = await getInstance("RegistryTest")
   //   const mainContract = await getInstance("Vault")
   const { PRIVATE_KEY: signer } = process.env
   const from = new ethers.Wallet(signer).address
-  const data = mainContract.interface.encodeFunctionData("register", [
-    "eliasStoner",
-  ])
-  const result = await signMetaTxRequest(signer, forwarder, {
-    to: mainContract.address,
-    from,
-    data,
-  })
-  const path = __dirname + "/tmp"
-  if (!existsSync(path)) {
-    mkdirSync(path)
-  }
-  writeFileSync("tmp/requestRegistry.json", JSON.stringify(result, null, 2))
-  console.log(`Signature: `, result.signature)
-  console.log(`Request: `, result.request)
+  const tx = await mainContract.owners("elias")
+  const tx1 = await mainContract.owners("eliasStoner")
+  console.log(tx, tx1)
 }
 
 if (require.main === module) {
