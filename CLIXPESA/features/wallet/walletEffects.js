@@ -13,6 +13,9 @@ import { WALLETS_STORE } from 'clixpesa/app/constants'
 import { getDefaultNewWalletName, walletsListCache } from './walletsManager'
 import { getPendingWallet } from './pendingWallet'
 import { setLoggedIn } from '../essentials/essentialSlice'
+import { setONRsAddress } from '../microloans/loansSlice'
+
+import { config } from 'clixpesa/blockchain/configs/celo.config'
 
 export const walletListeners = (startListening) => {
   startListening({
@@ -22,6 +25,12 @@ export const walletListeners = (startListening) => {
       const address = listenerApi.getState().wallet.walletInfo.address
       if (isSignerSet && address) {
         const tokenAddrToValue = await celoHelper.getBalances(address, NativeTokensByAddress)
+        const addr = await celoHelper.smartContractCall('Loans', {
+          contractAddress: config.contractAddresses['Loans'],
+          method: 'getONRsAddr',
+          methodType: 'read',
+        })
+        listenerApi.dispatch(setONRsAddress(addr))
         listenerApi.dispatch(updateBalances({ tokenAddrToValue, lastUpdated: Date.now() }))
       }
     },
@@ -45,7 +54,6 @@ export const walletListeners = (startListening) => {
       console.log('Importing wallet from Mnemonic')
       const passcode = action.payload
       const { importedWallet } = getPendingWallet()
-      console.log(importedWallet)
       await addWallet(passcode, importedWallet)
       const currentAddr = listenerApi.getState().wallet.walletInfo.address
       if (!currentAddr) {

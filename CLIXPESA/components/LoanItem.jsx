@@ -10,7 +10,7 @@ const LoanItem = (props) => {
       : title[0].slice(0, 2).toUpperCase()
   const fees = 0.0
   const apprxAmt = (props.principal * 120.75).toFixed(2)
-  const repayment = (props.principal * ((100 + props.interest) / 100)).toFixed(2)
+  const repayment = (props.principal * ((100 + props.interest * 1) / 100)).toFixed(2)
   const minDuration = (props.duration.min / 7).toFixed(0)
   const maxDuration = (props.duration.max / 7).toFixed(0)
   const minAmount = props.isOffer ? (props.limit.min * 120.75).toFixed(2) : 0.0
@@ -37,7 +37,7 @@ const LoanItem = (props) => {
         </HStack>
         <VStack>
           <HStack alignItems="flex-end" justifyContent="flex-end">
-            <Heading size="md">{props.principal}</Heading>
+            <Heading size="md">{(props.principal * 1).toFixed(0)}</Heading>
             <Text fontWeight="medium" mb={0.5} ml={1}>
               cUSD
             </Text>

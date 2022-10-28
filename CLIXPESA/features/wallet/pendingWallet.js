@@ -16,7 +16,6 @@ export async function setPendingWallet(mnemonic, isImported = true) {
   const formattedMnemonic = normalizeMnemonic(mnemonic)
   const importedWallet = await celoHelper.generateWalletFromMnemonic(formattedMnemonic)
   pendingWallet = { importedWallet, isImported }
-  console.log(pendingWallet)
 }
 
 export function setPendingWithWallet(isImported = false) {

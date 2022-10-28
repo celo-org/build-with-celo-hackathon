@@ -20,7 +20,9 @@ export enum CeloContract {
   Validators = 'Validators',
   //Clixpesa
   Spaces = 'Spaces',
+  Loans = 'Loans',
   Rosca = 'Rosca',
+  LoanONRs = 'ONRs',
 }
 
 export enum CeloChain {
@@ -70,7 +72,9 @@ const configMainnet: Config = {
     [CeloContract.Validators]: '0xaEb865bCa93DdC8F47b8e29F40C5399cE34d0C58',
     //Clixpesa
     [CeloContract.Spaces]: '0x03Ac440E2a71b7A425Fdb94E9e07B76e367cF11F',
+    [CeloContract.Loans]: '0xD153C919944b412AB9383f97C47DdBC50D2C7225',
     [CeloContract.Rosca]: '0x0000000000000000000000000000000000000000',
+    [CeloContract.LoanONRs]: '0x0000000000000000000000000000000000000000',
   },
   nomspaceRegistry: '0x3DE51c3960400A0F752d3492652Ae4A0b2A36FB3',
   ensCoinTypeValue: 2147525868, // https://github.com/ensdomains/address-encoder/issues/329
@@ -103,7 +107,9 @@ const configAlfajores: Config = {
     [CeloContract.Validators]: '0x9acF2A99914E083aD0d610672E93d14b0736BBCc',
     //Clixpesa
     [CeloContract.Spaces]: deployed[44787][0].contracts.Spaces.address,
+    [CeloContract.Loans]: deployed[44787][0].contracts.Loans.address,
     [CeloContract.Rosca]: '0x0000000000000000000000000000000000000000',
+    [CeloContract.LoanONRs]: '0x0000000000000000000000000000000000000000',
   },
   nomspaceRegistry: '0x40cd4db228e9c172dA64513D0e874d009486A9a9',
 }

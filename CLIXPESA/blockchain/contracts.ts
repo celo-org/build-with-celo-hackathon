@@ -5,6 +5,8 @@ import { ABI as CeloTokenAbi } from './Abis/celoToken'
 import { ABI as StableTokenAbi } from './Abis/stableToken'
 import { ABI as SpacesAbi } from './Abis/spaces'
 import { ABI as RoscaAbi } from './Abis/rosca'
+import { ABI as LoansAbi } from './Abis/loans'
+import { ABI as LoanONRsAbi } from './Abis/loanONRs'
 import { getSigner } from './signer'
 import { CeloContract, config } from './configs/celo.config'
 import { areAddressesEqual, normalizeAddress } from './utils/addresses'
@@ -14,6 +16,8 @@ let tokenContractCache: Partial<Record<string, Contract>> = {} // token address 
 
 export const spacesIface = new utils.Interface(SpacesAbi)
 export const roscaIface = new utils.Interface(RoscaAbi)
+export const ONRsIface = new utils.Interface(LoanONRsAbi)
+export const LoansIface = new utils.Interface(LoansAbi)
 
 export function getContract(c: CeloContract) {
   const cachedContract = contractCache[c]
@@ -68,6 +72,10 @@ function getContractAbi(c: CeloContract) {
       return SpacesAbi
     case CeloContract.Rosca:
       return RoscaAbi
+    case CeloContract.Loans:
+      return LoansAbi
+    case CeloContract.LoanONRs:
+      return LoanONRsAbi
     default:
       throw new Error(`No ABI for contract ${c}`)
   }

@@ -14,6 +14,7 @@ import {
   LoansTabNavigator,
   AllLoansScreen,
   LoanInfoScreen,
+  LoanDetailsScreen,
   ApplyLoanScreen,
   CreateOfferScreen,
   FilterByAmountScreen,
@@ -74,16 +75,10 @@ export default function MainNavigator() {
           })}
         />
         <MainStack.Screen name="LoanHome" component={LoanInfoScreen} />
+        <MainStack.Screen name="LoanDetails" component={LoanDetailsScreen} />
         <MainStack.Screen name="AllLoans" component={AllLoansScreen} />
         <MainStack.Screen name="fromOffers" component={FilterByAmountScreen} />
-        <MainStack.Screen
-          name="applyLoan"
-          component={ApplyLoanScreen}
-          options={({ route }) => ({
-            unmountOnBlur: true,
-            loanParams: route.params ? route.params.loanParams : {},
-          })}
-        />
+        <MainStack.Screen name="applyLoan" component={ApplyLoanScreen} />
         <MainStack.Screen name="createOffer" component={CreateOfferScreen} />
         <MainStack.Screen
           name="repayLoan"

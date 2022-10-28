@@ -7,58 +7,68 @@ import {
   Pressable,
   Stack,
   Button,
-  Actionsheet,
   Spacer,
   useDisclose,
   Icon,
   ScrollView,
+  Modal,
 } from 'native-base'
-import { Feather } from '@expo/vector-icons'
+import { Feather, Ionicons } from '@expo/vector-icons'
 import { useState, useEffect } from 'react'
-import { DateTimePickerAndroid } from '@react-native-community/datetimepicker'
 import { getDaysBetween } from 'clixpesa/utils/time'
+import { useSelector, useDispatch } from 'react-redux'
+import { nanoid } from 'nanoid'
+import { utils } from 'ethers'
+import celoHelper from '../../blockchain/helpers/celoHelper'
+import { ONRsIface } from '../../blockchain/contracts'
+import { fetchOffers } from './loansSlice'
 
-export default function CreateOfferScreen() {
+export default function CreateOfferScreen({ navigation }) {
+  const dispatch = useDispatch()
+  const loanONRsAddr = useSelector((s) => s.loans.ONRsAddr)
+  const thisUser = useSelector((s) => s.essential.userDetails.names)
+  const thisAddress = useSelector((s) => s.wallet.walletInfo.address)
+  const { isOpen, onOpen, onClose } = useDisclose()
   const [isLoading, setIsLoading] = useState(false)
   const [amount, setAmount] = useState('')
   const [interest, setInterest] = useState('')
   const [duration, setDuration] = useState({ min: '', max: '' })
   const [limit, setLimit] = useState({ min: '', max: '' })
+  const [offerID, setOfferID] = useState('')
   const [deadline, setDeadline] = useState(new Date(Date.now()))
   const [isOkDeadline, setOkDeadline] = useState(true)
   const [isOkValue, setOkValue] = useState(true)
   const date = deadline.toLocaleString('en-US').split(' ')
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate
-    setDeadline(currentDate)
-  }
+  useEffect(() => {
+    const id = nanoid()
+    setOfferID(id)
+  }, [])
 
-  const handleDatePicker = () => {
-    DateTimePickerAndroid.open({
-      value: deadline,
-      onChange,
-      mode: 'date',
-      is24Hour: true,
-    })
-  }
-
-  const handleOfferData = () => {
-    const loanData = {
-      lender: 'Akimbo Keya',
-      principal: amount,
-      interest: interest,
-      repayment: (amount * 1 * (100 + interest * 1)) / 100,
-      duration: {
-        min: duration.min * 7,
-        max: duration.max * 7,
-      },
-      limit,
+  const handleOfferData = async () => {
+    const offerData = {
+      id: offerID,
+      lender: thisAddress,
+      lenderName: thisUser,
+      principal: utils.parseEther(amount).toString(),
+      minLimit: utils.parseEther(limit.min).toString(),
+      maxLimit: utils.parseEther(limit.max).toString(),
+      interest: interest * 100,
+      minDuration: duration.min * 7,
+      maxDuration: duration.max * 7,
     }
-    if (validate(loanData)) {
-      console.log(loanData)
+    if (validate(offerData)) {
+      setIsLoading(true)
+      const txReceipt = await celoHelper.smartContractCall('ONRs', {
+        contractAddress: loanONRsAddr,
+        method: 'createOffer',
+        methodType: 'write',
+        params: [Object.values(offerData)],
+      })
+      handleTxResponce(txReceipt)
     } else {
-      console.log(loanData)
+      console.log(Object.values(offerData))
+      onOpen()
       console.log('There is problem')
     }
   }
@@ -78,7 +88,16 @@ export default function CreateOfferScreen() {
     } else {
       setOkValue(true)
     }
-    return days >= minDays && days <= maxDays && amount >= 50 && amount <= 300
+    return true
+  }
+
+  const handleTxResponce = (txReceipt) => {
+    setIsLoading(false)
+    const thisLog = txReceipt.logs.find((el) => el.address === loanONRsAddr)
+    const results = ONRsIface.parseLog({ data: thisLog.data, topics: thisLog.topics })
+    if (offerID === results.args[1][0]) {
+      onOpen()
+    }
   }
 
   return (
@@ -208,6 +227,28 @@ export default function CreateOfferScreen() {
               </HStack>
             </Stack>
           </Stack>
+          <Modal isOpen={isOpen} onClose={onClose} animationPreset="slide">
+            <Modal.Content width="65%" maxWidth="400px">
+              <Modal.Body alignItems="center">
+                <Icon as={Ionicons} name="md-checkmark-circle" size="6xl" color="success.600" />
+                <Text textAlign="center" mt={3}>
+                  Offer number {offerID.toUpperCase()} created successfully!
+                </Text>
+                <Button
+                  variant="subtle"
+                  rounded="3xl"
+                  w="60%"
+                  mt={3}
+                  _text={{ color: 'primary.600', fontWeight: 'semibold' }}
+                  onPress={() => {
+                    onClose(), dispatch(fetchOffers()), navigation.navigate('Offers')
+                  }}
+                >
+                  OK
+                </Button>
+              </Modal.Body>
+            </Modal.Content>
+          </Modal>
           <Spacer />
           <Stack alignItems="center" space={3} mb={8}>
             <Button

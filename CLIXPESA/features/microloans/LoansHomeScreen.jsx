@@ -1,40 +1,42 @@
 import { Box, Text, HStack, Icon, FlatList, Pressable } from 'native-base'
 import { Feather, Ionicons } from '@expo/vector-icons'
-import { useSelector } from 'react-redux'
-import { useState } from 'react'
-
+import { useSelector, useDispatch } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { getLoans } from './loansManager'
+import { fetchLoans } from './loansSlice'
 import { FeatureHomeCard, FeatureItem } from 'clixpesa/components'
 
 export default function LoansHomeScreen({ navigation }) {
-  const loanAddrs = useSelector((s) => s.wallet.walletBalances.tokenAddrToValue)
-  const balances = useSelector((s) => s.wallet.walletBalances.tokenAddrToValue)
+  const dispatch = useDispatch()
+  const loanONRsAddr = useSelector((s) => s.loans.ONRsAddr)
+  const [loans, setLoans] = useState([])
   const [tempBal, setTempBal] = useState(0.0)
+  let totalBalance = 0.0
 
-  const loans = [
-    {
-      addr: '0x001',
-      loanName: 'Majengo Nyumbani',
-      party: 'Akimbo Kenya',
-      initiated: false,
-      value: 300,
-      repaid: 10,
-      dueDate: '14 Sep 2022',
-    },
-    {
-      addr: '0x002',
-      loanName: 'Mboga Stock',
-      party: 'Dekan Kachi',
-      initiated: true,
-      value: 500,
-      repaid: 200,
-      dueDate: '24 Oct 2022',
-    },
-  ]
+  useEffect(() => {
+    const fetchMyLoans = async () => {
+      const results = await getLoans()
+      if (!results) {
+        dispatch(fetchLoans())
+      }
+      setLoans(results)
+    }
+    fetchMyLoans()
+  }, [])
+
+  if (loans.length > 0) {
+    loans.forEach((loan) => {
+      if (!loan.pending) {
+        totalBalance += loan.balance * 1
+      }
+    })
+  }
+
   return (
     <Box flex={1} bg="muted.100" alignItems="center">
       <FeatureHomeCard
-        balance="30.3780"
-        apprxBalance="3,037.80"
+        balance={totalBalance.toFixed(4).toString()}
+        apprxBalance={(totalBalance * 120.75).toFixed(2).toString()}
         expScreen="DummyModal"
         btn1={{
           icon: <Icon as={Feather} name="arrow-down-left" size="md" color="primary.600" mr="1" />,
@@ -69,19 +71,33 @@ export default function LoansHomeScreen({ navigation }) {
               </HStack>
             ) : null}
             <FeatureItem
-              initiated={item.initiated}
-              itemTitle={item.party}
+              initiated={false}
+              itemTitle={item.name}
               payProgress={
-                item.repaid.toFixed(2).toString() + '/' + item.value.toFixed(2).toString() + ' Paid'
+                item.pending
+                  ? 'Waiting for funds'
+                  : (item.paid * 1).toFixed(2).toString() +
+                    '/' +
+                    (item.balance * 1).toFixed(2).toString() +
+                    ' Paid'
               }
-              value={item.value.toFixed(2).toString() + ' cUSD'}
-              dueDate={'Due: ' + item.dueDate}
+              value={(item.balance * 1).toFixed(2).toString() + ' cUSD'}
+              dueDate={
+                'Due: ' +
+                item.dueDate.split(' ')[2] +
+                ' ' +
+                item.dueDate.split(' ')[1] +
+                ' ' +
+                item.dueDate.split(' ')[3]
+              }
               screen="LoanHome"
+              itemParams={item}
             />
           </Box>
         )}
-        keyExtractor={(item) => item.addr}
+        keyExtractor={(item) => item.address}
       />
+      <Text>{loanONRsAddr}</Text>
     </Box>
   )
 }
