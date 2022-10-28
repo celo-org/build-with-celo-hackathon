@@ -1,8 +1,7 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import SplashScreen from "./screens/SplashScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { StyleSheet, Text } from "react-native";
+import SplashScreen from "./screens/SplashScreen";
 import SplashScreen2 from "./screens/SplashScreen2";
 import SplashScreen3 from "./screens/SplashScreen3";
 import SplashScreen4 from "./screens/SplashScreen4";
@@ -14,7 +13,7 @@ import "firebase/compat/firestore";
 import "firebase/compat/storage";
 
 import { Camera } from "expo-camera";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 const firebaseConfig = {
   apiKey: "AIzaSyDFDPLXz0IzK1G3JVg5fRZSNtGKos-sOYk",
   authDomain: "smolley-9b48c.firebaseapp.com",
@@ -29,17 +28,16 @@ if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
 }
 
-import SignupParent from "./screens/SignupParent";
 import AccountSuccess from "./screens/AccountSuccess";
-import AddChild from "./screens/AddChild";
-import Login from "./screens/Login";
-import ChildAccountSuccess from "./screens/ChildAccountSuccess";
-import KidsHomePage from "./screens/KidsHomePage";
-import TimelineScreen from "./screens/TimelineScreen";
 import CameraScreen from "./screens/CameraScreen";
-import SaveScreen from "./screens/SaveScreen";
 import ClaimReward from "./screens/ClaimReward";
+import KidsHomePage from "./screens/KidsHomePage";
+import Login from "./screens/Login";
 import Rewards from "./screens/Rewards";
+import SaveScreen from "./screens/SaveScreen";
+import SignupParent from "./screens/SignupParent";
+import TimelineScreen from "./screens/TimelineScreen";
+import ResetPassword from "./screens/Reset Password";
 const Stack = createNativeStackNavigator();
 export default function App() {
   const [hasCameraPermission, setHasCameraPermission] = useState();
@@ -138,6 +136,11 @@ export default function App() {
         <Stack.Screen
           name="Rewards"
           component={Rewards}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ResetPassword"
+          component={ResetPassword}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

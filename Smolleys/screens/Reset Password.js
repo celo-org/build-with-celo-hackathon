@@ -18,7 +18,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
-const Login = ({ navigation }) => {
+const ResetPassword = ({ navigation }) => {
   const {
     register,
     handleSubmit,
@@ -28,19 +28,17 @@ const Login = ({ navigation }) => {
   } = useForm({ mode: "all" });
   const onSubmit = (formData) => {
     // Firebase Code
-    const { email, password } = formData;
+    const { email } = formData;
     firebase
       .auth()
-      .signInWithEmailAndPassword(email, password)
+      .sendPasswordResetEmail(email)
       .then((result) => {
-        console.log(result);
-        navigation.navigate("AccountSuccess");
+        navigation.navigate("Login");
       })
       .catch((err) => {
         console.log(err);
       });
     // End Firebase Code
-    console.log(formData);
   };
 
   let [fontsLoaded] = useFonts({
@@ -55,7 +53,7 @@ const Login = ({ navigation }) => {
         source={require("../assets/GreenLogin.png")}
         style={styles.note}
       >
-        <Text style={styles.title}>LOGIN</Text>
+        <Text style={styles.title}>Reset Password</Text>
         <Text style={styles.subtitle}>Email</Text>
         <ImageBackground
           source={require("../assets/textbox.png")}
@@ -94,41 +92,6 @@ const Login = ({ navigation }) => {
           <Text>{errors.email && errors.email.message}</Text>
         </ImageBackground>
         <Text style={styles.subtitle}>Password</Text>
-        <ImageBackground
-          source={require("../assets/textbox.png")}
-          style={styles.input}
-        >
-          <Controller
-            control={control}
-            name="password"
-            render={({ field: { onChange, onBlur, value } }) => {
-              return (
-                <TextInput
-                  value={value}
-                  onBlur={onBlur}
-                  onChangeText={(value) => onChange(value)}
-                  secureTextEntry
-                  autoCompleteType="password"
-                  placeholder="Password"
-                  style={{
-                    fontFamily: "BubblegumSans_400Regular",
-                    color: "white",
-                  }}
-                />
-              );
-            }}
-            rules={{
-              required: {
-                value: true,
-                message: "Password is required",
-              },
-            }}
-          />
-          <Text>{errors.password && errors.password.message}</Text>
-        </ImageBackground>
-        <TouchableOpacity onPress={() => navigation.navigate("ResetPassword")}>
-          <Text>Reset password</Text>
-        </TouchableOpacity>
 
         <View style={styles.display}>
           <View style={styles.display2}>
@@ -155,7 +118,7 @@ const Login = ({ navigation }) => {
   );
 };
 
-export default Login;
+export default ResetPassword;
 
 const styles = StyleSheet.create({
   field: {
