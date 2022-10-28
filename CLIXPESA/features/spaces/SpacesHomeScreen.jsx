@@ -30,11 +30,11 @@ export default function SpacesScreen({ navigation, route }) {
       <FeatureHomeCard
         balance="30.3780"
         apprxBalance="3,037.80"
-        expScreen="DummyModal"
+        // expScreen="DummyModal"
         btn1={{
           icon: <Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />,
           name: 'New Space',
-          screen: 'DummyModal',
+          screen: 'createSpace',
         }}
         btn2={{
           icon: <Icon as={Feather} name="arrow-up-right" size="md" color="primary.600" mr="1" />,
