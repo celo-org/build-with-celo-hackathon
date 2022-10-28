@@ -1,0 +1,18 @@
+{
+  "expo": {
+    "ios": {
+      "bundleIdentifier": "com.chatmany"
+    },
+    "android": {
+      "package": "com.chatmany"
+    },
+    "scheme": "chatmany",
+    "icon": "assets/image/celo-icon.jpg",
+    "splash": {
+      "image": "assets/image/celo-icon.jpg",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
+    },
+    "entryPoint": "./index.js"
+  }
+}
