@@ -1,7 +1,20 @@
 import React from "react";
 import Chart from "chart.js/auto";
+import { useState,useEffect } from "react";
 import {Doughnut } from "react-chartjs-2";
-const labels = ["Approvals", "Decline", "Undecided"];
+
+
+
+
+const PieChart = (props) => {
+  const yes = props.yes;
+  const no = props.no;
+  
+  const labels = ["Approvals", "Decline", "Undecided"];
+
+
+  
+
 const data = {
   labels: labels,
   datasets: [
@@ -18,14 +31,15 @@ const data = {
       'rgba(255, 159, 64, 1)',
     ],
 
-      data: [15, 7, 5],
+      data: [yes,0, no],
     },
   ],
 };
-const PieChart = () => {
+
   return (
     <div className="max-w-[350px] w-[100%]">
       <Doughnut data={data} className="max-w-[350px] w-[100%]" />
+      
     </div>
   );
 };

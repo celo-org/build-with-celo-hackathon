@@ -130,11 +130,28 @@ contract tumainiDao is Ownable, AccessControl, ReentrancyGuard {
 
     //the contract call
     //contribute function
-    function contributeToCharity(uint proposalid) public payable {
+    function contributeToCharity(uint proposalid, uint amountContribute)
+        public
+        payable
+    {
         TumainCharityProposal storage tumainproposal = tumainicharityproposal[
             proposalid
         ];
-        tumainproposal.charityAddress.transfer(msg.value);
+        cusd.transferFrom(
+            msg.sender,
+            payable(tumainproposal.charityAddress),
+            amountContribute
+        );
+    }
+
+    //get all votes for a specific proposal
+    function getApproveVotes(uint proposalid) public view returns (uint) {
+        return tumainicharityproposal[proposalid].votesFor;
+    }
+
+    //get votes Against
+    function getAgainstVotes(uint proposalid) public view returns (uint) {
+        return tumainicharityproposal[proposalid].voteAgainst;
     }
 
     function transferToCharity(uint256 proposalid)
