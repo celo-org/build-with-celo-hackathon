@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { PropsWithChildren } from 'react';
 import {
   Button,
@@ -9,6 +10,7 @@ import {
   ListGroup,
 } from 'react-bootstrap';
 import { Project } from '../../../backend/market/market.entity';
+import { getProjectUrlByRegistry } from '../../../backend/registry/registry.repo';
 import { Calculator } from './Calculator';
 
 type Props = PropsWithChildren<{
@@ -21,12 +23,19 @@ export const OffsetProject = ({ project }: Props) => {
       <h1>{project.projectId}</h1>
       <Row>
         <Col md="4">
-          <Image
-            alt=""
-            rounded
-            width={'100%'}
-            src={`https://via.placeholder.com/200?text="Project ID: ${project.projectId}"`}
-          />
+          <Link
+            passHref
+            href={getProjectUrlByRegistry(project.projectId, project.standard)}
+          >
+            <a>
+              <Image
+                alt=""
+                rounded
+                width={'100%'}
+                src={`https://via.placeholder.com/200?text="Project ID: ${project.projectId}"`}
+              />
+            </a>
+          </Link>
         </Col>
         <Col md="4">
           <Card className="mb-5">
@@ -69,7 +78,7 @@ export const OffsetProject = ({ project }: Props) => {
           </Card>
         </Col>
         <Col md="4">
-          <Calculator />
+          <Calculator projectId={project.projectId} />
         </Col>
       </Row>
     </>

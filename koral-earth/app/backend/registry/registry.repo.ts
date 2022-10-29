@@ -10,6 +10,10 @@ const registryUrls: RegistryUrls = {
 };
 
 export const getProjectUrlByRegistry = (
-  registryName: Registry,
-  projectId: string
-) => registryUrls[registryName](projectId);
+  projectId: string,
+  registryName: Registry
+) => {
+  const decomposedProjectId = projectId.split('-');
+
+  return registryUrls[registryName](decomposedProjectId[1]);
+};

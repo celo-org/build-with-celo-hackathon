@@ -20,8 +20,6 @@ const Projects: PaginatedItemsComponent<Project> = ({ currentItems }) => (
             return null;
           }
 
-          const decomposedProjectId = project.projectId.split('-');
-
           return (
             <Col
               md="3"
@@ -39,8 +37,8 @@ const Projects: PaginatedItemsComponent<Project> = ({ currentItems }) => (
                     <Link
                       passHref
                       href={getProjectUrlByRegistry(
-                        project.standard,
-                        decomposedProjectId[1]
+                        project.projectId,
+                        project.standard
                       )}
                     >
                       <a>{project.projectId}</a>

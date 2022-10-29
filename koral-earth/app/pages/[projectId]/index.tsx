@@ -1,5 +1,5 @@
-import { GetStaticPropsResult, NextPage, NextPageContext } from 'next';
-import { Project } from '../../backend/market/market.entity';
+import type { GetStaticPropsResult, NextPage, NextPageContext } from 'next';
+import type { Project } from '../../backend/market/market.entity';
 import { OffsetProject } from '../../frontend/views/offset/OffsetProject';
 import { getProjects, getProject } from '../../backend/market/market.repo';
 
