@@ -18,8 +18,8 @@ class MongoDBInstance extends Event {
       this.emit("entryCreated", newModel);
       return newModel;
     } catch (err) {
-      console.log("Error when creating an entry: ", err);
-      throw new Error(err);
+      console.log("Error when creating an entry: ", err.message);
+      throw new Error(err.message);
     }
   }
 

@@ -4,14 +4,14 @@ const { Schema } = mongoose;
 
 const startupSchema = new Schema({
   uid: { type: String, required: true },
-  name: { type: String, required: true },
+  username: { type: String, required: true },
   headquarters: { type: String, required: true },
   contact: {
     email: { type: String, required: true },
     phone_no: { type: String, required: true },
     address: { type: String, required: true },
   },
-  founders: { type: String, required: true },
+  founders: [{ type: String, required: false, default: [] }],
   documents: {
     certificate_of_incorporation: { type: String, required: false },
     business_plan: { type: String, required: false },
@@ -22,7 +22,7 @@ const startupSchema = new Schema({
       balance_sheet: { type: String, required: false },
     },
     team: {
-      resumes: { type: Array, required: false },
+      resumes: [{ type: String, required: false }],
     },
     product: { type: String, required: false },
   },
@@ -30,6 +30,10 @@ const startupSchema = new Schema({
     public_wallet_address: { type: String, required: true },
     private_key: { type: Object, required: true },
   },
+  password: { type: String, required: true },
+  roles: [{ type: String, required: true }],
+  created_at: { type: Date, default: new Date(Date.now()) },
+  refreshToken: { type: String, required: false, default: null },
 });
 
 module.exports = mongoose.model("Startup", startupSchema);

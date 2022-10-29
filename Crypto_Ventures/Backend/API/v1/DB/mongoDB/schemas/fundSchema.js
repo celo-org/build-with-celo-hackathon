@@ -21,7 +21,7 @@ const fundSchema = new Schema({
       share: { type: Number },
     },
   ],
-  closing_date: { type: String, required: true },
+  closing_date: { type: Date, required: true },
   amount_contributed: { type: Number, required: true, default: 0 },
   amount_remaining: { type: Number, required: false, default: size },
   status: { type: String, required: false, default: "active" },
