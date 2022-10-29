@@ -171,10 +171,16 @@ Simply the ride has four steps from start to finish, anywhere within the ride is
 
 Location services is still a work in progress. Using the firebase database for the geo query of local drivers. The query will also retrieve the general working location of the driver. Then listen for changes within the realtime database for the drivers current location. Drivers are referenced by there ethereum address. The address will allow the passenger to request driver rates and driver details (Profiles).
 
-Please wait for the GIF to load.
-
 
 ![DEMO](ReadMeAssets/locationDemo.gif)
+
+## iOS Ride Core
+
+Passenger phone (right) created a new ride by dropping pins on the map then selecting details like price and drivers they want to accept the ride. Pin coordinates and ride details are then emitted on to the network.
+
+Driver phone (left) received a new emitted event announcing a new ride. Ride details are checked validating the ride for the driver. Driver then has the option to accept or let the driver accept time to expire (currently 30 seconds). 
+
+![Driver Accepts Ride](ReadMeAssets/DriverAccepts.png)
 
 ## Completed
 
@@ -244,7 +250,12 @@ Please wait for the GIF to load.
 
 5. Testing and implentatation of location services in iOS apps.
 
+6. Core smart contract functionality in both driver and passenger iOS apps 
 
+    - Passenger can announce and cancel rides
+    - Driver can confirm and cancel rides
+    - Both can progress completely through all core ride states 
+    - Wallet & keyManager generation
 
 
 ## TODO
@@ -261,6 +272,12 @@ Please wait for the GIF to load.
 
     1. Static security audit
         - Slither Static Analysis Tool for audit
+    
+## Potential Shortcomings
+
+Currently the smart contract architecture dosen't support ride sharing features. This would occurs when a ride is in progress and a second rider can join splitting the cost. 
+
+Sub classes are need in each app keeping readable code. 
 
 
 ## Licence
