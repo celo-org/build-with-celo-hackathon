@@ -19,8 +19,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toaster } from "evergreen-ui";
 import axios from "axios";
-import Cloud from "../assets/icons/cloud.png";
-import CloudIcon from "../assets/icons/cloud-icon.png";
 import WeatherTemp from "../components/Tamplates/weatherTemp";
 
 const Home = () => {
@@ -193,15 +191,17 @@ const Home = () => {
                       {myTree.data.tree}
                     </Text>
                     <Box mt="20px">
-                      <CustomButton
-                        border="1px solid #18541A"
-                        bg="none"
-                        color="brand.dark"
-                        hoverColor="brand.white"
-                        hoverBg="brand.lightGreen"
-                      >
-                        <Text fontWeight="medium">View</Text>
-                      </CustomButton>
+                        <a href={`/view-plants/${myTree.id}`}>
+                            <CustomButton
+                                border="1px solid #18541A"
+                                bg="none"
+                                color="brand.dark"
+                                hoverColor="brand.white"
+                                hoverBg="brand.lightGreen"
+                            >
+                                <Text fontWeight="medium">View</Text>
+                            </CustomButton>
+                        </a>
                     </Box>
                   </Box>
                 </Box>

@@ -33,7 +33,7 @@ const AppRoute = () => {
         <Route path="/success" element={<SuccessUpload />} />
         <Route path="/experts" element={<AllExperts />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/view-plants" element={<ViewPlants />} />
+        <Route path="/view-plants/:id" element={<ViewPlants />} />
       </Routes>
      </ChakraProvider>
     </BrowserRouter>,

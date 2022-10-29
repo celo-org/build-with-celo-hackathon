@@ -31,9 +31,11 @@ const AuthNav = () => {
               <Text mr="50px" style={{ transition: "all 0.8s ease" }} cursor="pointer" _hover={{ color: "brand.yellow" }} onClick={() => toaster.success("Coming soon")}>
                 Market Place
               </Text>
-              {/* <Text style={{ transition: "all 0.8s ease" }} cursor="pointer" _hover={{ color: "brand.yellow" }}>
-                My Profile
-              </Text> */}
+              {/* <a href="/view-plants">
+                <Text style={{ transition: "all 0.8s ease" }} cursor="pointer" _hover={{ color: "brand.yellow" }}>
+                  My Profile
+                </Text>
+              </a> */}
             </Flex>
           </Flex>
           <Flex justifyContent="space-evenly" alignItems="center" onClick={logout}>

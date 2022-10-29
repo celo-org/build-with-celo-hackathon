@@ -14,7 +14,6 @@ import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { useEffect, useState } from "react";
 import { toaster } from "evergreen-ui";
 import { useNavigate } from "react-router-dom";
-// import { doc, updateDoc } from "firebase/firestore";
 import {
   query,
   collection,
