@@ -38,18 +38,29 @@ const AuthNav = () => {
               </a> */}
             </Flex>
           </Flex>
-          <Flex justifyContent="space-evenly" alignItems="center" onClick={logout}>
-              <Flex
-                alignItems="center"
-                style={{ transition: "all 0.8s ease" }}
-                cursor="pointer"
-                ml="80px"
-              >
-                {logoutIcon}
-                <Text ml="10px" color="white" _hover={{ color: "brand.yellow" }} style={{ transition: "all 0.8s ease" }}>
-                  Logout
+          <Flex>
+                <Text
+                  mr="50px"
+                  style={{ transition: "all 0.8s ease" }}
+                  cursor="pointer"
+                  _hover={{ color: "brand.yellow" }}
+                  color="brand.yellow"
+                >
+                  Your celo token: 0.00
                 </Text>
-              </Flex>
+            <Flex justifyContent="space-evenly" alignItems="center" onClick={logout}>
+                <Flex
+                  alignItems="center"
+                  style={{ transition: "all 0.8s ease" }}
+                  cursor="pointer"
+                  ml="80px"
+                >
+                  {logoutIcon}
+                  <Text ml="10px" color="white" _hover={{ color: "brand.yellow" }} style={{ transition: "all 0.8s ease" }}>
+                    Logout
+                  </Text>
+                </Flex>
+            </Flex>
           </Flex>
         </Flex>
       );

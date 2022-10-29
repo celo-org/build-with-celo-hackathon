@@ -189,7 +189,7 @@ const UploadVideo = () => {
 
         <Box>
           <FormLabel
-            htmlFor="upload-img"
+            htmlFor="upload-vid"
             p="30px"
             border="1px dashed #C4C4C4"
             textAlign="center"
