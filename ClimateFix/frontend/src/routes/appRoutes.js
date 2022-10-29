@@ -14,6 +14,7 @@ import UploadVideo from "../pages/UploadVideo";
 import SuccessUpload from "../pages/SuccessfulUpload";
 import AllExperts from "../pages/AllExperts";
 import ForgotPassword from "../pages/ForgotPassword";
+import ViewPlants from "../pages/ViewPlants";
 
 const AppRoute = () => {
 
@@ -32,6 +33,7 @@ const AppRoute = () => {
         <Route path="/success" element={<SuccessUpload />} />
         <Route path="/experts" element={<AllExperts />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/view-plants" element={<ViewPlants />} />
       </Routes>
      </ChakraProvider>
     </BrowserRouter>,

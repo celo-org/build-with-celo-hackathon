@@ -2,99 +2,265 @@ import { Box, Flex, Image, SimpleGrid, Text } from "@chakra-ui/react";
 import AuthNav from "../components/Navbar/AuthNav";
 import ImageBg from "../assets/images/trees-bg.jpeg";
 import CustomButton from "../components/CustomButton/customButton";
-import { myTrees, locations } from "../utils/data";
+import { locations } from "../utils/data";
 import { location } from "../assets/svgs/svg";
-import { auth, db, logout } from "../firebase";
-import { query, collection, getDocs, where } from "firebase/firestore";
+import { auth, db } from "../firebase";
+import {
+  query,
+  collection,
+  getDocs,
+  where,
+  orderBy,
+  onSnapshot,
+} from "firebase/firestore";
+import MyTree1 from "../assets/images/my-tree1.jpeg";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toaster } from "evergreen-ui";
+import axios from "axios";
+import Cloud from "../assets/icons/cloud.png";
+import CloudIcon from "../assets/icons/cloud-icon.png";
+import WeatherTemp from "../components/Tamplates/weatherTemp";
 
 const Home = () => {
-    const [user, loading, error] = useAuthState(auth);
-    const [name, setName] = useState("");
-    const navigate = useNavigate();
+  const [user, loading, error] = useAuthState(auth);
+  const [name, setName] = useState("");
+  const [myTrees, setMyTrees] = useState([]);
+  const [weatherData, setWeatherData] = useState({});
 
-    const fetchUserName = async () => {
-        try {
-            const q = query(collection(db, "users"), where("uid", "==", user?.uid));
-            const doc = await getDocs(q);
-            console.log(doc);
-            const data = doc.docs[0].data();
-            setName(data.name);
-        } catch (error) {
-            toaster.danger('An error occured while fetching user data');
-        }
-    };
+  console.log(myTrees);
 
-    useEffect(() => {
-        if (loading) return;
-        if (!user) return navigate("/");
-        fetchUserName();
-    }, [user, loading]);
+  const navigate = useNavigate();
 
-    return (
-        <Box>
-            <AuthNav />
-            <Box p="20px">
-                <Image src={ImageBg} borderRadius="8px" h="400px" w="100%" objectFit="cover" alt="bg" />
-                <Box mt="20px">
-                    <Text fontSize="20px" color="brand.orange">Welcome back {name}</Text>
+  const fetchUserName = async () => {
+    try {
+      const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+      const doc = await getDocs(q);
+      console.log(doc);
+      const data = doc.docs[0].data();
+      setName(data.name);
+    } catch (error) {
+      toaster.danger("An error occured while fetching user data");
+    }
+  };
+
+  useEffect(() => {
+    if (loading) return;
+    if (!user) return navigate("/");
+    fetchUserName();
+  }, [user, loading]);
+
+  useEffect(() => {
+    const q = query(collection(db, "plantTrees"), orderBy("created", "desc"));
+    onSnapshot(q, (querySnapshot) => {
+      setMyTrees(
+        querySnapshot.docs.map((myTree) => ({
+          id: myTree.id,
+          data: myTree.data(),
+        }))
+      );
+    });
+  }, []);
+
+  const config = {
+    headers: {
+      "Access-Control-Allow-Origin": "http://localhost:3000",
+      "Content-Type": "application/json",
+    },
+    withCredentials: false,
+  };
+
+  useEffect(() => {
+    axios
+      .get(
+        "https://api.weather.com/v3/wx/forecast/daily/3day?geocode=33.74,-84.39&format=json&units=m&language=en-US&apiKey=2b6ed19f3d474152aed19f3d4791527d",
+        config
+      )
+      .then((res) => {
+        setWeatherData(res?.data);
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  return (
+    <Box>
+      <AuthNav />
+      <Box p="20px" w="100%" display="flex" justifyContent="space-between">
+        <Box w="70%">
+          <Image
+            src={ImageBg}
+            borderRadius="8px"
+            h="400px"
+            w="100%"
+            objectFit="cover"
+            alt="bg"
+          />
+          <Box mt="20px">
+            <Text fontSize="20px" color="brand.orange">
+              Welcome back {name}
+            </Text>
+          </Box>
+
+          {/* Locations */}
+          <Box mt="40px" px="40px">
+            <Flex alignItems="center">
+              <Box mr="10px">{location}</Box>
+              <Text fontSize="25px" fontWeight="normal">
+                Locations
+              </Text>
+            </Flex>
+            <SimpleGrid columns={3} gap="38">
+              {locations.map((location) => (
+                <Box
+                  key={location.country}
+                  mt="10px"
+                  borderRadius="8px"
+                  style={{ boxShadow: "rgba(0, 0, 0, 0.04) 0px 3px 5px" }}
+                  minH="310px"
+                >
+                  <Image
+                    src={location.image}
+                    borderTopRightRadius="8px"
+                    borderTopLeftRadius="8px"
+                    w="100%"
+                    objectFit="cover"
+                    h="400px"
+                    maxH="200px"
+                    alt={location.country}
+                  />
+                  <Box p="20px">
+                    <Text color="brand.dark" fontWeight="bold">
+                      {location.country}
+                    </Text>
+                    <Text mt="8px" color="brand.lightGreen" fontSize="14px">
+                      {location.figure} trees planted
+                    </Text>
+                    <Box mt="20px">
+                      <a href={location.route}>
+                        <CustomButton
+                          border="1px solid #18541A"
+                          bg="none"
+                          color="brand.dark"
+                          hoverColor="brand.white"
+                          hoverBg="brand.lightGreen"
+                        >
+                          <Text fontWeight="medium">Plant here</Text>
+                        </CustomButton>
+                      </a>
+                    </Box>
+                  </Box>
                 </Box>
-
-                {/* Locations */}
-                <Box mt="40px" px="40px">
-                    <Flex alignItems="center">
-                        <Box mr="10px">{location}</Box>
-                        <Text fontSize="25px" fontWeight="normal">Locations</Text>
-                    </Flex>
-                    <SimpleGrid columns={4} gap="38">
-                        {locations.map((location) => (
-                            <Box key={location.country} mt="10px" borderRadius="8px" style={{ boxShadow: "rgba(0, 0, 0, 0.04) 0px 3px 5px" }} minH="310px">
-                                <Image src={location.image} borderTopRightRadius="8px" borderTopLeftRadius="8px" w="100%" objectFit="cover" h="400px" maxH="200px" alt={location.country} />
-                                <Box p="20px">
-                                    <Text color="brand.dark" fontWeight="bold">{location.country}</Text>
-                                    <Text mt="8px" color="brand.lightGreen" fontSize="14px">{location.figure} trees planted</Text>
-                                    <Box mt="20px">
-                                        <a href={location.route}>
-                                            <CustomButton border="1px solid #18541A" bg="none" color="brand.dark" hoverColor="brand.white" hoverBg="brand.lightGreen">
-                                                <Text fontWeight="medium">Plant here</Text>
-                                            </CustomButton>
-                                        </a>
-                                    </Box>
-                                </Box>
-                            </Box>
-                        ))}
-                    </SimpleGrid>
+              ))}
+            </SimpleGrid>
+          </Box>
+          {/* Plants */}
+          <Box mt="60px" px="40px">
+            <Flex alignItems="center">
+              <Box mr="10px">{location}</Box>
+              <Text fontSize="25px" fontWeight="normal">
+                My Trees
+              </Text>
+            </Flex>
+            <SimpleGrid columns={3} gap="38">
+              {myTrees.map((myTree) => (
+                <Box
+                  key={myTree.id}
+                  mt="10px"
+                  borderRadius="8px"
+                  style={{ boxShadow: "rgba(0, 0, 0, 0.04) 0px 3px 5px" }}
+                  minH="310px"
+                >
+                  <Image
+                    src={myTree.data.imageUrl || MyTree1}
+                    borderTopRightRadius="8px"
+                    borderTopLeftRadius="8px"
+                    w="100%"
+                    objectFit="cover"
+                    h="400px"
+                    maxH="200px"
+                    alt={myTree.country}
+                  />
+                  <Box p="20px">
+                    <Text color="brand.dark" fontWeight="bold">
+                      {myTree.data.region}, Nigeria
+                    </Text>
+                    <Text mt="8px" color="brand.lightGreen" fontSize="14px">
+                      1 tree planted
+                    </Text>
+                    <Text mt="8px" color="brand.lightGreen" fontSize="14px">
+                      {myTree.data.tree}
+                    </Text>
+                    <Box mt="20px">
+                      <CustomButton
+                        border="1px solid #18541A"
+                        bg="none"
+                        color="brand.dark"
+                        hoverColor="brand.white"
+                        hoverBg="brand.lightGreen"
+                      >
+                        <Text fontWeight="medium">View</Text>
+                      </CustomButton>
+                    </Box>
+                  </Box>
                 </Box>
-                {/* Plants */}
-                <Box mt="60px" px="40px">
-                    <Flex alignItems="center">
-                        <Box mr="10px">{location}</Box>
-                        <Text fontSize="25px" fontWeight="normal">My Trees</Text>
-                    </Flex>
-                    <SimpleGrid columns={4} gap="38">
-                        {myTrees.map((myTree) => (
-                            <Box key={myTree.type} mt="10px" borderRadius="8px" style={{ boxShadow: "rgba(0, 0, 0, 0.04) 0px 3px 5px" }} minH="310px">
-                                <Image src={myTree.image} borderTopRightRadius="8px" borderTopLeftRadius="8px" w="100%" objectFit="cover" h="400px" maxH="200px" alt={myTree.country} />
-                                <Box p="20px">
-                                    <Text color="brand.dark" fontWeight="bold">{myTree.country}</Text>
-                                    <Text mt="8px" color="brand.lightGreen" fontSize="14px">{myTree.figure}</Text>
-                                    <Text mt="8px" color="brand.lightGreen" fontSize="14px">{myTree.type}</Text>
-                                    <Box mt="20px">
-                                        <CustomButton border="1px solid #18541A" bg="none" color="brand.dark" hoverColor="brand.white" hoverBg="brand.lightGreen">
-                                                <Text fontWeight="medium">View</Text>
-                                        </CustomButton>
-                                    </Box>
-                                </Box>
-                            </Box>
-                        ))}
-                    </SimpleGrid>
-                </Box>
-            </Box>
+              ))}
+            </SimpleGrid>
+          </Box>
         </Box>
-    )
+        {/* Weather Condition */}
+        <WeatherTemp weatherData={weatherData} />
+        {/* <Box
+          w="27%"
+          bg="#F2F2F2"
+          style={{ boxShadow: "rgba(0, 0, 0, 0.04) 0px 3px 5px" }}
+          borderRadius="8px"
+          p="20px"
+        >
+          <Image
+            src={Cloud}
+            alt="cloud"
+            w={120}
+            h={120}
+            mt="-50px"
+            ml="-30px"
+          />
+          <Text mt="20px" ml="20px" fontSize="24px" color="brand.dark">
+            Partly Cloudy
+          </Text>
+          <Flex mt="30px" alignItems="center">
+            <Box w="100%" ml="14px">
+              <Text fontSize="12px" color="brand.orange">
+                {weatherData?.dayOfWeek[0]}
+              </Text>
+              <Flex fontSize="15px" alignItems="center" mt="15px">
+                <Image src={CloudIcon} alt="cloud" w={30} h={30} />
+                <Text fontWeight="light" fontSize="14px" ml="10px">
+                  {weatherData?.narrative[0]}
+                </Text>
+              </Flex>
+            </Box>
+          </Flex>
+
+          <Flex mt="20px" alignItems="center">
+            <Box w="100%" ml="14px">
+              <Text fontSize="12px" color="brand.orange">
+                {weatherData?.dayOfWeek[1]}
+              </Text>
+              <Flex fontSize="15px" alignItems="center" mt="15px">
+                <Image src={CloudIcon} alt="cloud" w={30} h={30} />
+                <Text fontWeight="light" fontSize="14px" ml="10px">
+                  {weatherData?.narrative[1]}
+                </Text>
+              </Flex>
+            </Box>
+          </Flex>
+
+        </Box> */}
+      </Box>
+    </Box>
+  );
 };
 
 export default Home;

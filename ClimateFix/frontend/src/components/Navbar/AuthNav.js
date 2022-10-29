@@ -1,4 +1,5 @@
 import { Flex, Image, Text } from "@chakra-ui/react";
+import { toaster } from "evergreen-ui";
 import brandLogo from "../../assets/icons/brand-logo.svg";
 import {logoutIcon} from "../../assets/svgs/svg";
 import { logout } from "../../firebase";
@@ -13,7 +14,7 @@ const AuthNav = () => {
           fontSize="14px"
         >
           <Flex alignItems="center" color="brand.white">
-            <a href="/">
+            <a href="/home">
               <Image cursor="pointer" src={brandLogo} alt="brand-logo" />
             </a>
             <Flex alignItems="center" ml="120px">
@@ -27,12 +28,12 @@ const AuthNav = () => {
                   View Experts
                 </Text>
               </a>
-              <Text mr="50px" style={{ transition: "all 0.8s ease" }} cursor="pointer" _hover={{ color: "brand.yellow" }}>
+              <Text mr="50px" style={{ transition: "all 0.8s ease" }} cursor="pointer" _hover={{ color: "brand.yellow" }} onClick={() => toaster.success("Coming soon")}>
                 Market Place
               </Text>
-              <Text style={{ transition: "all 0.8s ease" }} cursor="pointer" _hover={{ color: "brand.yellow" }}>
+              {/* <Text style={{ transition: "all 0.8s ease" }} cursor="pointer" _hover={{ color: "brand.yellow" }}>
                 My Profile
-              </Text>
+              </Text> */}
             </Flex>
           </Flex>
           <Flex justifyContent="space-evenly" alignItems="center" onClick={logout}>

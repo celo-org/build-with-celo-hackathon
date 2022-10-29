@@ -244,24 +244,24 @@ export const locations = [
     figure: "14, 719",
     route: "/plant-now"
   },
-  {
-    image: Ghana,
-    country: "Ghana",
-    figure: "2, 303",
-    route: "/plant-now"
-  },
-  {
-    image: usa,
-    country: "USA",
-    figure: "24, 843",
-    route: "/plant-now"
-  },
-  {
-    image: Turkey,
-    country: "Turkey",
-    figure: "4,923",
-    route: "/plant-now"
-  },
+  // {
+  //   image: Ghana,
+  //   country: "Ghana",
+  //   figure: "2, 303",
+  //   route: "/plant-now"
+  // },
+  // {
+  //   image: usa,
+  //   country: "USA",
+  //   figure: "24, 843",
+  //   route: "/plant-now"
+  // },
+  // {
+  //   image: Turkey,
+  //   country: "Turkey",
+  //   figure: "4,923",
+  //   route: "/plant-now"
+  // },
 ];
 
 export const myTrees = [

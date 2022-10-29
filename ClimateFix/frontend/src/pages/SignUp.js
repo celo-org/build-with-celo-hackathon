@@ -21,7 +21,7 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    registerWithEmailAndPassword(name, email, password);
+    registerWithEmailAndPassword(name, email, password, location, typeUser);
   };
 
   useEffect(() => {

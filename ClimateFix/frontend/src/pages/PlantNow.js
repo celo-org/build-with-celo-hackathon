@@ -8,11 +8,47 @@ import {
 } from "@chakra-ui/react";
 import AuthNav from "../components/Navbar/AuthNav";
 import NigMap from "../assets/images/nigeria-map.png";
-import { allTrees, states } from "../utils/data";
+import { allExperts, allTrees, states } from "../utils/data";
 import { TriangleDownIcon } from "@chakra-ui/icons";
 import CustomButton from "../components/CustomButton/customButton";
+import { useEffect, useState } from "react";
+import {collection, addDoc, Timestamp, query, orderBy, onSnapshot} from 'firebase/firestore'
+import { db } from "../firebase";
+import { toaster } from "evergreen-ui";
+import { useNavigate } from "react-router-dom";
 
 const PlantNow = () => {
+  const [region, setRegion] = useState('');
+  const [tree, setTree] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let index = getRandomNumber(0, allExperts.length - 1);
+    try {
+      await addDoc(collection(db, 'plantTrees'), {
+        region,
+        tree,
+        assignedExpertName: allExperts[index].name,
+        assignedExpertEmail: allExperts[index].email,
+        videoUrl: '',
+        imageUrl: '',
+        created: Timestamp.now()
+      })
+      navigate('/invite-pending')
+    } catch (error) {
+      toaster.danger(error)
+    }
+  };
+
+  const getRandomNumber = (min, max) => {
+    let step1 = max - min + 1;
+    let step2 = Math.random() * step1;
+    let result = Math.floor(step2) + min;
+
+    return result;
+  }
+
   return (
     <Box>
       <AuthNav />
@@ -54,6 +90,8 @@ const PlantNow = () => {
                 size="lg"
                 fontSize="16px"
                 height="48px"
+                value={region}
+                onChange={(e) => setRegion(e.target.value)}
               >
                 {states.map((state) => (
                   <option value={state} key={state}>
@@ -76,6 +114,8 @@ const PlantNow = () => {
                 size="lg"
                 fontSize="16px"
                 height="48px"
+                value={tree}
+                onChange={(e) => setTree(e.target.value)}
               >
                 {allTrees.map((tree) => (
                   <option value={tree} key={tree}>
@@ -86,17 +126,18 @@ const PlantNow = () => {
             </FormControl>
           </SimpleGrid>
             <Box w="100%" textAlign="center" mt="40px">
-                <a href="/invite-pending">
+                {/* <a href="/invite-pending"> */}
                     <CustomButton
                     bg="brand.orange"
                     color="brand.white"
                     hoverBg="brand.lightGreen"
                     mx="auto"
                     w="40%"
+                    onClick={handleSubmit}
                     >
                     <Text fontWeight="medium">Proceed</Text>
                     </CustomButton>
-                </a>
+                {/* </a> */}
             </Box>
         </Box>
       </Box>

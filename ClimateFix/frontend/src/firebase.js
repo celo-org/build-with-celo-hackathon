@@ -17,6 +17,7 @@ import {
   where,
   addDoc,
 } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCrHttMmwGWmzOc4Oumxgk7Je9FcCMAFvg",
@@ -31,6 +32,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -98,6 +100,7 @@ const logout = () => {
 export {
   auth,
   db,
+  storage,
   registerWithEmailAndPassword,
   signInWithGoogle,
   logInWithEmailAndPassword,
