@@ -108,12 +108,12 @@ export default function Pool() {
               </HideSmall>
               <ButtonRow>
                 <ResponsiveButtonPrimary as={Link} padding="6px 10px" to="/create/ETH">
-                  <Text fontWeight={500} fontSize={16} color={'#FF0066'}>
+                  <Text fontWeight={500} fontSize={16} color={'#1a1aff'}>
                     Create a Pair
                   </Text>
                 </ResponsiveButtonPrimary>
                 <ResponsiveButtonPrimary id="join-pool-button" as={Link} padding="6px 10px" to="/add/ETH">
-                  <Text fontWeight={500} fontSize={16} color={'#FF0066'}>
+                  <Text fontWeight={500} fontSize={16} color={'#1a1aff'}>
                     Add Liquidity
                   </Text>
                 </ResponsiveButtonPrimary>
@@ -154,7 +154,7 @@ export default function Pool() {
                 </HideSmall>
                 <ButtonRow>
                   <ResponsiveButtonPrimary id="import-pool-link" as={Link} padding="6px 10px" to="/find" background-color={'#d900ff'}>
-                    <Text fontWeight={500} fontSize={16} color={'#FF0066'}>
+                    <Text fontWeight={500} fontSize={16} color={'#1a1aff'}>
                       Import Custom Pool
                     </Text>
                   </ResponsiveButtonPrimary>
