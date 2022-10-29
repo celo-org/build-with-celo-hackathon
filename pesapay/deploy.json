@@ -1,6 +1,5 @@
 {
-  "MinimalForwarderUpgradeable": "0x0CdB799F566249B39901F7eb4e4df81591BCCE1F",
-  "Vault": "0x64672F0291d9959ed97DeF1a538B3EE1e37fb329",
-  "Registry": "0xcB43f8eaDa93AFa73402dF47013224246dca3599",
+  "MinimalForwarderUpgradeable": "0xD192c236283A33DCb0fd5AE69cCfD94e9a9130E2",
+  "Vault": "0x0C4B3fff74230b5Be89Ede080e2F907E4e9DB812",
   "Token": "0x53cb991435c6f6d8bb9d4d32c127384d999a1548"
 }

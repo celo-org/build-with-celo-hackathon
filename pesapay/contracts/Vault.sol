@@ -42,11 +42,10 @@ contract Vault is
         _disableInitializers();
     }
 
-    function initialize(address forwarder) public initializer {
+    function initialize() public initializer {
         __Pausable_init();
         __Ownable_init();
         __UUPSUpgradeable_init();
-        __ERC2771ContextUpgradeable_init(forwarder);
     }
 
     function pause() public onlyOwner {
@@ -70,9 +69,9 @@ contract Vault is
         emit UniqueTokenAdded(_token);
     }
 
-    function depositCoin() public payable {
-        require(msg.value > 0, "the amount should be greater than zero");
-        coinBalance += msg.value;
+    function depositCoin(uint256 amount) public payable {
+        require(amount >= msg.value, "the amount should be greater than zero");
+        coinBalance += amount;
     }
 
     function depositToken(address _token, uint256 _amount) public {

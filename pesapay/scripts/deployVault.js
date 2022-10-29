@@ -1,10 +1,15 @@
 const { ethers, upgrades } = require("hardhat")
-const { writeFileSync } = require("fs")
+const { writeFileSync, readFileSync } = require("fs")
 const {
   DefenderRelayProvider,
   DefenderRelaySigner,
 } = require("defender-relay-client/lib/ethers")
 require("dotenv").config()
+function getInstance(name) {
+  const address = JSON.parse(readFileSync("deploy.json"))[name]
+  if (!address) throw new Error(`Contract ${name} not found in deploy.json`)
+  return ethers.getContractFactory(name).then((f) => f.attach(address))
+}
 async function main() {
   const credentials = {
     apiKey: process.env.RELAYER_API_KEY,
@@ -14,10 +19,9 @@ async function main() {
   const relaySigner = new DefenderRelaySigner(credentials, provider, {
     speed: "fast",
   })
-  const Xy = await ethers.getContractFactory("MinimalForwarderUpgradeable")
-  const XY = await Xy.connect(relaySigner)
-    .deploy()
-    .then((f) => f.deployed())
+  const TX = await getInstance("Token")
+  const XY = await getInstance("MinimalForwarderUpgradeable")
+
   const Xz = await ethers.getContractFactory("Vault")
   const XZ = await upgrades.deployProxy(
     Xz.connect(relaySigner),
@@ -25,10 +29,7 @@ async function main() {
     { initializer: "initialize" },
     { kind: "uups" }
   )
-  const Xw = await ethers.getContractFactory("Registry")
-  const XW = await upgrades.deployProxy(Xw.connect(relaySigner), [XY.address], {
-    initializer: "initialize",
-  })
+  await XZ.connect(relaySigner).addAllowedToken(TX.address)
   console.log("address of Vault deployed at", XZ.address)
   writeFileSync(
     "deploy.json",
@@ -36,7 +37,7 @@ async function main() {
       {
         MinimalForwarderUpgradeable: XY.address,
         Vault: XZ.address,
-        Registry: XW.address,
+        Token: TX.address,
       },
       null,
       2
