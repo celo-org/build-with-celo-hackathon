@@ -34,18 +34,21 @@ function BikeCard(props) {
     const decoder = new TextDecoder()
 
     useEffect(() => {  
+
         if(props.tokenId != null){
             getNFTData(props.tokenId)   
-            setTokenId(props.tokenId)
-            
+            setTokenId(props.tokenId)   
         }
-    },[props.tokenId,props.account])
+    },[props.tokenId,props.account,props.ipfs])
 
     const getNFTData = async (tokenId) => {
+  
         let tokenUri = await props.bikeBlock.methods.tokenURI(tokenId).call();
+
+
         let bikeState = await props.bikeBlock.methods.getBikeState(tokenId).call();
         let stolen = bikeState == 2
-
+ 
         let bikeBounty;
         if(stolen){
             bikeBounty = await props.bikeBlock.methods.getStolenInfo(tokenId).call();
@@ -55,7 +58,7 @@ function BikeCard(props) {
             setBountyPayOut(bikeBounty.bountyPayOut)
         }
 
-
+  
         const stream = props.ipfs._ipfs.cat(tokenUri);
 
         let data = ""

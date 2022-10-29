@@ -18,6 +18,7 @@ import Report from './Views/Report.js';
 
 import { BikeBlockAbi, BikeBlockAddress} from './Contract.js'
 import Web3 from 'web3';
+import FullReport from './Views/FullReport.js';
 //import Navbar from './components/Navbar.js';
 //import * as IPFS from 'ipfs-core';
 
@@ -25,10 +26,9 @@ class App extends Component {
   
   constructor(props) {
     super(props)
-  
-    console.log(props.ipfs);
-    
 
+    console.log(props.ipfs._ipfs);
+    
     // inject web3 provider
     const web3 = new Web3(window.ethereum);
     //const web3 = new Web3("https://alfajores-forno.celo-testnet.org")
@@ -45,15 +45,20 @@ class App extends Component {
 
     this.loadAccount = this.loadAccount.bind(this);
 
+
   }
 
   componentWillMount() {
+
+    this.setState({ipfs:this.props.ipfs});
     // Load data
 
     //this.stateNode().then((ipfs) => {
     //  this.setState({ipfs:ipfs})
     //})
   }
+
+
 
   async loadAccount() {
     // load accounts from window
@@ -99,6 +104,17 @@ class App extends Component {
             }>
             </Route>
 
+
+            <Route path="/profile/:address" element={
+              <Profile
+                bikeBlock = {this.state.bikeBlock}
+                ipfs = {this.props.ipfs}
+                web3 = {this.state.web3}
+                account = {this.state.account}
+              />
+            }>
+            </Route>
+
             <Route path="/bikes" element={
               <Main/>
             }>
@@ -123,7 +139,7 @@ class App extends Component {
             }>
             </Route>
 
-            <Route path="/bountys/:id" element={
+            <Route path="/reports/:id" element={
               <Report
               bikeBlock = {this.state.bikeBlock}
               web3 = {this.state.web3}
@@ -132,12 +148,11 @@ class App extends Component {
             }>
             </Route>
 
-            <Route path="/profile/:address" element={
-              <Profile
-                bikeBlock = {this.state.bikeBlock}
-                ipfs = {this.props.ipfs}
-                web3 = {this.state.web3}
-                account = {this.state.account}
+            <Route path="/reports/:id/:reportId" element={
+              <FullReport
+              bikeBlock = {this.state.bikeBlock}
+              web3 = {this.state.web3}
+              account = {this.state.account}
               />
             }>
             </Route>

@@ -25,6 +25,7 @@ function Bountys(props) {
 
     const getStolenBikes = async () => {
         let bikeCount = await props.bikeBlock.methods.getStolenBikeCount().call();
+        console.log(bikeCount);
         setBountyCount(bikeCount);
         let bikes = await props.bikeBlock.methods.getStolenBikeAtIndex(0,bikeCount).call();
         var preLoad = []
@@ -32,8 +33,8 @@ function Bountys(props) {
 
             let view = <BikeCard
                 ipfs = {props.ipfs}
-                link = {"/bountys/"+bikes[c]}
-                key = {bikes[c]}
+                link = {"/bikes/"+bikes[c]}
+                key = {c}
                 bikeBlock = {props.bikeBlock}
                 account = {props.account}
                 web3 = {props.web3}

@@ -24,7 +24,6 @@ class IPFSInfo  {
   connectedCallback() {
     super.connectedCallback()
     console.log("CALLED");
-    
   }
 
   async initIPFS() {

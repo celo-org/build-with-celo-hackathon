@@ -1,4 +1,4 @@
-export const BikeBlockAddress = "0xF2c3D091dBeA5CcB7DC6e4Da1Cf459078b327F13";
+export const BikeBlockAddress = "0x0AbeAb82F720E3D7503AB36d3744bce7B9f28E8B";
 
 export const BikeBlockAbi = [
   {
@@ -618,7 +618,7 @@ export const BikeBlockAbi = [
       },
       {
         "internalType": "uint256",
-        "name": "_time",
+        "name": "_duration",
         "type": "uint256"
       },
       {
@@ -645,6 +645,19 @@ export const BikeBlockAbi = [
       }
     ],
     "name": "setStolenBike",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "setNormal",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -722,7 +735,12 @@ export const BikeBlockAbi = [
         "components": [
           {
             "internalType": "uint256",
-            "name": "time",
+            "name": "endTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "duration",
             "type": "uint256"
           },
           {
