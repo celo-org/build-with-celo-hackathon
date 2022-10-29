@@ -24,7 +24,10 @@ contract RideManager is ReputationManager, AdminControls, DriverRole {
 
     event DriversForRide(bytes32 rideId,address[] drivers);
     event DriverAcceptedRide(bytes32 rideId,address driver);
-    event StateChanged(bytes32 rideId);
+    event PassengerConfirmsPickUp(bytes32 rideId);
+    event DriverConfirmsDropOff(bytes32 rideId);
+    event Complete(bytes32 rideId);
+
     event RideCanceled(bytes32 rideId);
  
 
@@ -284,7 +287,7 @@ contract RideManager is ReputationManager, AdminControls, DriverRole {
         require(ride.passenger == msg.sender);
         ride.state = RideState.PassengerPickUp;
         rides[_rideId] = ride;
-        emit StateChanged(_rideId);
+        emit PassengerConfirmsPickUp(_rideId);
     }
 
 
@@ -311,7 +314,7 @@ contract RideManager is ReputationManager, AdminControls, DriverRole {
         rides[_rideId] = ride;
         updateReputation(ride.passenger,_passengerRating,10,false);
         // Emit state
-        emit StateChanged(_rideId);
+        emit DriverConfirmsDropOff(_rideId);
     }
 
 
@@ -351,7 +354,7 @@ contract RideManager is ReputationManager, AdminControls, DriverRole {
         activeRides[ride.passenger] = 0;
         activeRides[ride.acceptedDriver] = 0;
 
-        emit StateChanged(_rideId);
+        emit Complete(_rideId);
     }
 
 
