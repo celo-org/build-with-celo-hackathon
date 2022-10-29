@@ -33,9 +33,9 @@ export const COMP = new Token(ChainId.MAINNET, '0xc00e94Cb662C3520282E6f57172140
 export const MKR = new Token(ChainId.MAINNET, '0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2', 18, 'MKR', 'Maker');
 export const AMPL = new Token(ChainId.MAINNET, '0xD46bA6D942050d489DBd938a2C909A5d5039A161', 9, 'AMPL', 'Ampleforth');
 export const WBTC = new Token(ChainId.MAINNET, '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599', 8, 'WBTC', 'Wrapped BTC');
-export const cUSD = new Token(ChainId.ALFAJORES, '0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1', 18, 'cUSD', 'Celo Dollar');
-export const cEUR = new Token(ChainId.ALFAJORES, '0x10c892A6EC43a53E45D0B916B4b7D383B1b78C0F', 18, 'cEUR', 'Celo Euro');
-export const cREAL = new Token(ChainId.ALFAJORES, '0xE4D517785D091D3c54818832dB6094bcc2744545', 18, 'cREAL', 'Celo Brazilian Real');
+export const cUSD = new Token(ChainId.ALFAJORESxLAVA, '0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1', 18, 'cUSD', 'Celo Dollar');
+export const cEUR = new Token(ChainId.ALFAJORESxLAVA, '0x10c892A6EC43a53E45D0B916B4b7D383B1b78C0F', 18, 'cEUR', 'Celo Euro');
+export const cREAL = new Token(ChainId.ALFAJORESxLAVA, '0xE4D517785D091D3c54818832dB6094bcc2744545', 18, 'cREAL', 'Celo Brazilian Real');
 // Adding token here makes it availabe for other tasks
 
 
@@ -55,7 +55,7 @@ const WETH_ONLY: ChainTokenList = {
   [ChainId.RINKEBY]: [WETH[ChainId.RINKEBY]],
   [ChainId.GÖRLI]: [WETH[ChainId.GÖRLI]],
   [ChainId.KOVAN]: [WETH[ChainId.KOVAN]],
-  [ChainId.ALFAJORES]: [WETH[ChainId.ALFAJORES]],
+  [ChainId.ALFAJORESxLAVA]: [WETH[ChainId.ALFAJORESxLAVA]],
 };
 
 // used to construct intermediary pairs for trading
@@ -79,7 +79,7 @@ export const CUSTOM_BASES: { [chainId in ChainId]?: { [tokenAddress: string]: To
 export const SUGGESTED_BASES: ChainTokenList = {
   ...WETH_ONLY,
   [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET], DAI, USDC, USDT, WBTC],
-  [ChainId.ALFAJORES]: [WETH[ChainId.ALFAJORES], cUSD, cEUR, cREAL],
+  [ChainId.ALFAJORESxLAVA]: [WETH[ChainId.ALFAJORESxLAVA], cUSD, cEUR, cREAL],
 };
 
 // used to construct the list of all pairs we consider by default in the frontend
@@ -90,7 +90,7 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   [ChainId.RINKEBY]: [...WETH_ONLY[ChainId.RINKEBY]],
   [ChainId.GÖRLI]: [...WETH_ONLY[ChainId.GÖRLI]],
   [ChainId.KOVAN]: [...WETH_ONLY[ChainId.KOVAN]],
-  [ChainId.ALFAJORES]: [...WETH_ONLY[ChainId.ALFAJORES], cUSD, cEUR, cREAL],
+  [ChainId.ALFAJORESxLAVA]: [...WETH_ONLY[ChainId.ALFAJORESxLAVA], cUSD, cEUR, cREAL],
 };
 
 export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } = {
