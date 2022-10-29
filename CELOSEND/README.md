@@ -14,9 +14,9 @@ CeloSend
 
 #### APK
 
-Main App : Pending
+Main App : https://general-bucket-android.s3.amazonaws.com/celosendwallet.apk
 
-POS App : Pending
+POS App : https://general-bucket-android.s3.amazonaws.com/celosendpos.apk
 
 ### Team name
 
