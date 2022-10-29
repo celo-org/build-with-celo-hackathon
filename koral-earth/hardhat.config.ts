@@ -1,7 +1,7 @@
+import '@nomiclabs/hardhat-web3';
 import 'dotenv/config';
 import 'hardhat-celo';
 import 'hardhat-deploy';
-import 'hardhat-deploy-ethers';
 import 'hardhat-ethernal';
 import type { HardhatUserConfig } from 'hardhat/config';
 import type { NetworkUserConfig } from 'hardhat/types';
@@ -9,7 +9,9 @@ import type { NetworkUserConfig } from 'hardhat/types';
 function getEnvVar(key: EnvVarName): string {
   const val = process.env[key];
   if (!val) {
-    throw new Error(`Requested env var not defined. Please provide a ${key} in the process environment`)
+    throw new Error(
+      `Requested env var not defined. Please provide a ${key} in the process environment`
+    );
   }
   return val;
 }
@@ -34,8 +36,8 @@ function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
   return {
     accounts: {
       count: 10,
-      mnemonic: getEnvVar("MNEMONIC"),
-      path: getEnvVar("ACCOUNT_PATH"),
+      mnemonic: getEnvVar('MNEMONIC'),
+      path: getEnvVar('ACCOUNT_PATH'),
     },
     chainId: chainIds[chain],
     url: jsonRpcUrl,
@@ -49,16 +51,16 @@ const config: HardhatUserConfig = {
     password: getEnvVar('ETHERNAL_PASSWORD'),
     disableSync: false,
     disableTrace: false,
-    workspace: "colony", 
+    workspace: 'colony',
     uploadAst: true,
     disabled: false,
     resetOnStart: undefined,
-    serverSync: false
+    serverSync: false,
   },
   etherscan: {
     apiKey: {
-      mainnet: getEnvVar("CELOSCAN_API_KEY"),
-      alfajores: getEnvVar("CELOSCAN_API_KEY"),
+      mainnet: getEnvVar('CELOSCAN_API_KEY'),
+      alfajores: getEnvVar('CELOSCAN_API_KEY'),
     },
   },
   gasReporter: {
@@ -96,7 +98,7 @@ const config: HardhatUserConfig = {
   },
   typechain: {
     outDir: 'typechain',
-    target: 'ethers-v5',
+    target: 'web3-v1',
   },
 };
 
