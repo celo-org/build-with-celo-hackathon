@@ -10,13 +10,13 @@ CeloSend
 
 ## IMPORTANT!
 
-## Application
+## Applications
 
 #### APK
 
-Main App : https://github.com/altaga/CeloSend-Web3athon/blob/main/CeloSend%20-%20APK/app-release.apk
+Main App : Pending
 
-POS App : https://github.com/altaga/CeloSend-Web3athon/tree/main/CeloSendPOS%20-%20APK/app-release.apk
+POS App : Pending
 
 ### Team name
 
