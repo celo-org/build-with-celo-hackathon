@@ -1,0 +1,20 @@
+
+.padding-top {
+    padding-top: 100px;
+  }
+
+  .fill {
+    object-fit: fill;
+  }
+  
+  .contain {
+    object-fit: contain;
+  }
+  
+  .cover {
+    object-fit: cover;
+  }
+  
+  .scale-down {
+    object-fit: scale-down;
+  }

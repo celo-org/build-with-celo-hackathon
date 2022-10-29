@@ -1,0 +1,12 @@
+
+.pop-up{
+    width: 400px;
+    background-color: rgb(255, 255, 255);
+  }
+
+
+.border {
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+}

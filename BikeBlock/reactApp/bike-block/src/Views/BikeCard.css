@@ -1,0 +1,35 @@
+
+.card-size {
+    width:25rem !important;
+    height:inherit  !important;
+}
+
+.card-text-size {
+    width:30rem  !important;
+    height:10rem  !important;
+}
+
+img {
+    border: inherit;
+    border-radius: inherit;
+}
+
+.fill {
+  object-fit: fill;
+}
+
+.contain {
+  object-fit: contain;
+}
+
+.cover {
+  object-fit: cover;
+}
+
+.scale-down {
+  object-fit: scale-down;
+}
+
+.zero-pad {
+    padding:0px !important;
+}
