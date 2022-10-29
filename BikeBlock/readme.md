@@ -49,6 +49,13 @@ The dapp is still a work in progress. But currently allows users to connect ther
 
 ![DEMO](readmeAssets/dappDemo.gif)
 
+## IPFS Details BikeCard
+
+All NFT metadata is upload to ipfs. Important token data is stored in the smart contract (state, bounty price). 
+
+![BikeCard](readmeAssets/bikeCard.png)
+
+
 ## Finished 
 
 1. Working smart contracts concept 
@@ -106,6 +113,19 @@ The dapp is still a work in progress. But currently allows users to connect ther
 
     ```
 
+1. Dapp
+
+- Uploading multiple image and bike details to IPFS.
+- Minting of a bike.
+- Transfer of a bike.
+
+- Setting a bike in the stolen state.
+- Setting a bike in the normal state.
+- Reporting details of a stolen bike.
+- Bounty payout to a reporter.
+
+
+
 
 ## TODO
 
@@ -113,6 +133,12 @@ The dapp is still a work in progress. But currently allows users to connect ther
     - Time locking of bounty funds (makes funds recoverable)
 
 2. UI Design and functionality of react dapp 
+
+
+## Potential Shortcomings
+
+Currently the bike bounty architecture needs to redesigned. 
+
 
 
 
