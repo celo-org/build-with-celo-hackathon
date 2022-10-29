@@ -1,0 +1,5 @@
+{
+  "CoingeckoSettings": {
+    "ApiBaseUrl": "https://api.coingecko.com/"
+  }
+}
