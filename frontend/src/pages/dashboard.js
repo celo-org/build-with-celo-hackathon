@@ -78,8 +78,9 @@ const Dashboard = () => {
             signer
         )
         const data = await gacContract.getMyDonations()
+        console.log("datass", data)
         const items = await Promise.all(
-            data.map(async (i) => {
+            data.filter((i) => i.campaignID).map(async (i) => {
                 const campaignDetails = await gacContract.getCampaignDetails(i.campaignID)
                 const ngoDetails = await gacContract.getNGODetails(i.ngoAddress)
                 let item = {

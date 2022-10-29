@@ -5,7 +5,7 @@ import toast, { Toaster } from 'react-hot-toast'
 import { ethers } from 'ethers';
 import { getConfigByChain } from '../config'
 import GrowAChild from '../artifacts/contracts/Growachild.sol/Growachild.json'
-import RingLoader from "react-spinners/RingLoader";
+import SyncLoader from "react-spinners/SyncLoader";
 
 
 const Campaigns = () => {
@@ -61,14 +61,17 @@ const Campaigns = () => {
 
     return (
         <div>
-            <BreadCrumb imageURL="/asssets/images/bg_7.jpg" pagename="Live Campaigns" pageURL="campaigns" />
+
             {!loadingState ? (
-                campaign.map((camp, id) => (
-                    <Campaign key={id} campaign={camp} />
-                ))
+                <>
+                    <BreadCrumb imageURL="/asssets/images/bg_7.jpg" pagename="Live Campaigns" pageURL="campaigns" />
+                    {campaign.map((camp, id) => (
+                        <Campaign key={id} campaign={camp} />
+                    ))}
+                </>
             ) : (
                 <div className='flex'>
-                    <RingLoader color='#000000' loading={loadingState} size={350} /> Loading Campaigns...</div>
+                    <SyncLoader color='#000000' loading={loadingState} /> Loading Campaigns...</div>
             )}
 
 
