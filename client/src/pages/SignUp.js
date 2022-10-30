@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 function SignUp() {
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  })
+
+  const handleChange = e => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+  }
+  
   return (
     <div className="d-flex align-items-center bg-light-green">
       <main className="container-fluid">
@@ -33,7 +49,7 @@ function SignUp() {
                 minute
               </p>
               {/* Form */}
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="row">
                   <div className="col-lg-6">
                     <div className="mb-4">
@@ -44,6 +60,9 @@ function SignUp() {
                         type="text"
                         className="form-control"
                         placeholder="Your full name"
+                        name="fullName"
+                        value={formData.fullName}
+                        onChange={handleChange}
                       />
                     </div>
                   </div>
@@ -56,6 +75,9 @@ function SignUp() {
                         type="email"
                         className="form-control"
                         placeholder="Your email address"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
                       />
                     </div>
                   </div>
@@ -74,12 +96,15 @@ function SignUp() {
                           autoComplete="off"
                           data-toggle-password-input
                           placeholder="Your password"
+                          name="password"
+                          value={formData.password}
+                          onChange={handleChange}
                         />
-                        <button
+                        {/* <button
                           type="button"
                           className="input-group-text px-4 text-secondary link-primary"
                           data-toggle-password
-                        />
+                        /> */}
                       </div>
                     </div>
                   </div>
@@ -95,12 +120,15 @@ function SignUp() {
                           autoComplete="off"
                           data-toggle-password-input
                           placeholder="Your password again"
+                          name="confirmPassword"
+                          value={formData.confirmPassword}
+                          onChange={handleChange}
                         />
-                        <button
+                        {/* <button
                           type="button"
                           className="input-group-text px-4 text-secondary link-primary"
                           data-toggle-password
-                        />
+                        /> */}
                       </div>
                     </div>
                   </div>
@@ -122,13 +150,13 @@ function SignUp() {
                   </label>
                 </div>
                 {/* Button */}
-                <a
-                  href="email-verification.html"
-                  type="button"
+                <button
+                  // href="#"
+                  // type="button"
                   className="btn btn-primary mt-3"
                 >
-                  Get started
-                </a>
+                  Sign Up
+                </button>
               </form>
             </div>
             <div className="mt-auto">

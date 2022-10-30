@@ -2,8 +2,7 @@ const validator = require('../services/validation.service')
 
 function validateSignup(req, res, next) {
     const validationRule = {
-        firstName: "required|string",
-        lastName: "required|string",
+        fullName: "required|string",
         email: "required|string",
         password: "required|string",
         confirmPassword: "required|string"
