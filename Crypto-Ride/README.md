@@ -180,7 +180,7 @@ Passenger phone (right) created a new ride by dropping pins on the map then sele
 
 Driver phone (left) received a new emitted event announcing a new ride. Ride details are checked validating the ride for the driver. Driver then has the option to accept or let the driver accept time to expire (currently 30 seconds). 
 
-![Driver Accepts Ride](ReadMeAssets/DriverAccepts.png)
+![Driver Accepts Ride](ReadMeAssets/driverAccepts.png)
 
 ## Completed
 
