@@ -1,0 +1,18 @@
+{
+  "name": "celo-hackathon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:client": "cd ./client && npm start",
+    "start:server": "cd ./server && npm start",
+    "watch:server": "cd ./server && npm run dev",
+    "watch": "npm run start:client & npm run watch:server",
+    "build:client": "cd ./client && npm run build",
+    "start": "npm run build:client && npm run start:server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
