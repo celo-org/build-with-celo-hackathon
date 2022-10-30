@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Nomis.Celoscan.Interfaces\Nomis.Celoscan.Interfaces.csproj" />
+    <ProjectReference Include="..\Nomis.Coingecko.Interfaces\Nomis.Coingecko.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>
