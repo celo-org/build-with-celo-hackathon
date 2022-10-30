@@ -1,3 +1,4 @@
 node_modules/
 scaffold-eth/
 *.env
+*.env.local
