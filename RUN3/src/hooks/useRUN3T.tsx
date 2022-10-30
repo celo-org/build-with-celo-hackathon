@@ -1,16 +1,19 @@
 import { Contract, ethers } from 'ethers'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useEffect, useState } from 'react'
 import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import { FAKE_KEY, NET_PROVIDER } from 'react-native-dotenv'
+import { useWalletProvider } from '../contexts/WalletContext'
+import { useRoute } from './useRoute'
+import run3Data from '../../blockchain/artifacts/contracts/RUN3Token.sol/Run3Token.json'
 
 export const useRun3T = () => {
   const [run3Contract, setRun3Contract] = useState<Contract>()
+  const [run3TBalance, setRun3TBalance] = useState<string>('')
   const run3TAddress = '0x570b9f03D8Bfb024F0998eb9E8E1B42A97cA3128'
-  const abi = [
-    'function mintRun3T(address recipient, uint256 amount)',
-    'function balanceOf(address owner) view returns (uint256)',
-  ]
+  const abi = run3Data.abi
+
+  const { walletWithProvider, provider } = useWalletProvider()
+  const { routeAddress } = useRoute()
 
   useEffect(() => {
     const getRun3TContract = async () => {
@@ -21,13 +24,38 @@ export const useRun3T = () => {
 
       setRun3Contract(run3tContract)
     }
+
+    const getRun3TBalance = async () => {
+      try {
+        const run3tContract = new ethers.Contract(run3TAddress, abi, walletWithProvider)
+        const balance = await run3tContract?.balanceOf(walletWithProvider.address)
+        const formatBalance = ethers.utils.formatEther(balance)
+        setRun3TBalance(formatBalance)
+      } catch (e) {
+        console.log('Error', e)
+      }
+    }
+
     getRun3TContract()
+    getRun3TBalance()
   }, [])
 
   const getRun3TokenBalanceByOwner = async (address: string) => {
     const balance = await run3Contract?.balanceOf(address)
     const formatBalance = Number(ethers.utils.formatEther(balance)).toFixed(2)
     return formatBalance
+  }
+
+  const transferRun3TtoContract = async (quantity: number) => {
+    try {
+      const run3tContract = new ethers.Contract(run3TAddress, abi, walletWithProvider)
+      // Transfer to route Contract, in future versions this contract will know what to do with it
+      const parsedUnits = ethers.utils.parseUnits(quantity.toString(), 18)
+      const res = await run3tContract.connect(walletWithProvider).transfer(routeAddress, parsedUnits)
+      return res
+    } catch (e) {
+      console.log('Error', e)
+    }
   }
 
   const mintRun3Token = async (address: string) => {
@@ -52,5 +80,5 @@ export const useRun3T = () => {
     }
   }
 
-  return { mintRun3Token, getRun3TokenBalanceByOwner, abi, run3TAddress }
+  return { mintRun3Token, getRun3TokenBalanceByOwner, abi, run3TAddress, run3TBalance, transferRun3TtoContract }
 }

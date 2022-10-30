@@ -38,7 +38,6 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
     opacity: 0.8,
     borderRadius: 8,
-    maxWidth: '95%',
   },
   boxText: {
     color: '#fff',

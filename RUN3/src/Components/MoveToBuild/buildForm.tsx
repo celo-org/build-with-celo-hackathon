@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Button, Card, Input, Text } from '@ui-kitten/components'
 import { styles } from './style'
@@ -6,6 +6,9 @@ import { globalStyles } from '../../utils/globalStyles'
 import { createRoute } from '../../api/routes/routes'
 import { LocationObjectCoords } from 'expo-location'
 import { GeoPoint } from 'firebase/firestore'
+import { useRoute } from '../../hooks/useRoute'
+import { useRun3T } from '../../hooks/useRUN3T'
+import { useWalletProvider } from '../../contexts/WalletContext'
 
 const Header = (props: any) => (
   <View {...props}>
@@ -16,12 +19,16 @@ const Header = (props: any) => (
 export const BuildForm = ({
   closeForm,
   routeCoords,
+  cost,
 }: {
   closeForm: () => void
   routeCoords: (LocationObjectCoords & { id: number })[]
+  cost: number
 }) => {
   const [des, setDes] = useState<string>('')
   const [title, setTitle] = useState<string>('')
+  const { routeAddress, mintRoute, getRouteByUser } = useRoute()
+  const { transferRun3TtoContract } = useRun3T()
 
   const buildRoute = async () => {
     const payload = {
@@ -30,9 +37,22 @@ export const BuildForm = ({
       title,
       description: des,
     }
-    const res = await createRoute(payload)
-    console.log('logR', res)
+    try {
+      const payment = await transferRun3TtoContract(cost)
+      if (payment) {
+        const res: any = await createRoute(payload)
+        await mintRoute(res.id)
+      } else {
+        alert('There was an error, please try again')
+      }
+    } catch (e) {
+      console.log('error', e)
+    }
   }
+
+  useEffect(() => {
+    getRouteByUser()
+  }, [])
 
   return (
     <Card

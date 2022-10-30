@@ -6,6 +6,7 @@ import * as Location from 'expo-location'
 import { Spinner, Button } from '@ui-kitten/components'
 import { BuildForm } from './buildForm'
 import { styles } from './style'
+import { useRun3T } from '../../hooks/useRUN3T'
 
 export default function Builder() {
   const [routeCoords, setRouteCoords] = useState<(Location.LocationObjectCoords & { id: number })[]>([])
@@ -13,6 +14,9 @@ export default function Builder() {
   const [showBuildForm, setShowBuildForm] = useState(false)
   const [loadingCalc, setLoadingCalc] = useState(false)
   const [markerIndex, setMarkerIndex] = useState<number>(0)
+  const [currentDistance, setCurrentDistance] = useState<number>(0)
+
+  const { run3TBalance } = useRun3T()
   const addCoordToRoute = async () => {
     const currentCoord = await Location.getCurrentPositionAsync({ accuracy: Location.LocationAccuracy.Balanced })
     const index = routeCoords.findIndex(
@@ -24,6 +28,30 @@ export default function Builder() {
   const closeForm = () => {
     setShowBuildForm(false)
   }
+
+  useEffect(() => {
+    let totalDistance = 0
+
+    const distance = (
+      coords1: Location.LocationObjectCoords & { id: number },
+      coords2: Location.LocationObjectCoords & { id: number }
+    ) => {
+      const R = 6371e3 // metres
+      const φ1 = (coords1.latitude * Math.PI) / 180 // φ, λ in radians
+      const φ2 = (coords2.latitude * Math.PI) / 180
+      const Δφ = ((coords2.latitude - coords1.latitude) * Math.PI) / 180
+      const Δλ = ((coords2.longitude - coords1.longitude) * Math.PI) / 180
+
+      const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2)
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+
+      return R * c
+    }
+    for (let i = 1; i < routeCoords.length; i++) {
+      totalDistance += distance(routeCoords[i - 1], routeCoords[i])
+    }
+    setCurrentDistance(Number(totalDistance.toFixed(2)))
+  }, [routeCoords])
 
   useEffect(() => {
     ;(async () => {
@@ -51,13 +79,20 @@ export default function Builder() {
   return (
     <View style={globalStyles.container}>
       <View style={styles.floatingBox}>
-        <Text style={styles.boxText}>Current Distance 1000m = 100 RUN3T</Text>
-        <Text style={[styles.boxText, { marginTop: 8 }]}>RUN3T Balance: 80RUN3T</Text>
-        {/* <Text style={[styles.boxText, { marginTop: 8 }, globalStyles.yellowColor]}>
-          Warning: you don't have enough RUN3T to build this route
-        </Text> */}
+        <Text style={styles.boxText}>{`Current Distance ${currentDistance}m`}</Text>
+        <Text style={[styles.boxText, { marginTop: 8 }]}>{`RUN3T Cost: ${Number(
+          (currentDistance / 10).toFixed(3)
+        )} RUN3T`}</Text>
+        <Text style={[styles.boxText, { marginTop: 8 }]}>{`RUN3T Balance: ${run3TBalance} RUN3T`}</Text>
+        {currentDistance / 10 > Number(run3TBalance) && (
+          <Text style={[styles.boxText, { marginTop: 8 }, globalStyles.yellowColor]}>
+            Warning: you don't have enough RUN3T to build this route
+          </Text>
+        )}
       </View>
-      {showBuildForm && <BuildForm routeCoords={routeCoords} closeForm={closeForm} />}
+      {showBuildForm && (
+        <BuildForm cost={Number((currentDistance / 10).toFixed(3))} routeCoords={routeCoords} closeForm={closeForm} />
+      )}
       <View>
         <MapView
           initialRegion={
@@ -123,7 +158,7 @@ export default function Builder() {
               SAVE POINT
             </Button>
           )}
-          {routeCoords.length > 1 && (
+          {routeCoords.length > 1 && currentDistance / 10 <= Number(run3TBalance) && (
             <Button onPress={() => setShowBuildForm(true)} style={[styles.btntFloat, globalStyles.secondaryBg]}>
               BUILD ROUTE
             </Button>

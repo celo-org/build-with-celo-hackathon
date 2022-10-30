@@ -22,14 +22,13 @@ import { useWatch } from '../../hooks/useWatch'
 export default function Home() {
   const { walletWithProvider } = useWalletProvider()
   const { getWatchDataByUser, watchData } = useWatch()
-  const { mintRun3Token, abi, run3TAddress } = useRun3T()
+  const { mintRun3Token, run3TBalance } = useRun3T()
 
   const [tooltipVisible, setTooltipVisible] = useState({
     type: '',
     message: '',
   })
   const [celoBalance, setCeloBalance] = useState<string>('')
-  const [run3TBalance, setRun3TBalance] = useState<string>('')
   const [showWebView, setShowWebView] = useState<boolean>(false)
   const [shouldRefresh, setShouldRefresh] = useState<boolean>(true)
 
@@ -59,18 +58,7 @@ export default function Home() {
         setCeloBalance(balanceInEth)
       }
 
-      const getRun3TBalance = async () => {
-        try {
-          const run3tContract = new ethers.Contract(run3TAddress, abi, walletWithProvider)
-          const balance = await run3tContract?.balanceOf(walletWithProvider.address)
-          const formatBalance = ethers.utils.formatEther(balance)
-          setRun3TBalance(formatBalance)
-        } catch (e) {
-          console.log('Error', e)
-        }
-      }
       getBalance()
-      getRun3TBalance()
       setShouldRefresh(false)
     }
   }, [shouldRefresh])

@@ -30,7 +30,10 @@ export const getRouteById = async (id: string) => {
 
 export const createRoute = async (route: Route) => {
   try {
-    return await addDoc(routesCollectionRef, route)
+    const newRoute = await addDoc(routesCollectionRef, route)
+    const id = newRoute.id
+    const routeData = await getRouteById(id)
+    return routeData
   } catch (e) {
     return e
   }

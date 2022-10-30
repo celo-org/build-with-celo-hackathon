@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { View } from 'react-native'
 import { Button } from '@ui-kitten/components'
 import { colors } from '../../utils/globalStyles'
@@ -8,8 +8,6 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { styles } from './style'
 
 export default function MoveToBuild({ navigation }: { navigation: any }) {
-  const [isBuilding, setIsBuilding] = useState(false)
-
   return (
     <View>
       <RouteList />
