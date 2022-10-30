@@ -32,6 +32,7 @@ async function main() {
 
 
   storeContractData(deployedPayslice, "Payslice");
+  storeContractData(deployedLogger, "Logger");
 
   console.log(`
   logger contract at: ${deployedLogger.address} \r\n

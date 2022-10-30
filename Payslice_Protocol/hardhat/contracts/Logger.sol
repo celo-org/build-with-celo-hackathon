@@ -10,14 +10,15 @@ contract Logger {
         _;
     }
 
-    event PaymentMade( address proxy, bytes payeruid, uint amount, uint transactonNumber);
-    event StatusChange( address proxy, uint8 status);
-    event SliceCreated( address proxy, 
-        address owner,
-        address recipientAddress,
+    event PaymentMade( address indexed proxy, bytes indexed payeruid, uint amount, uint amountPaid, uint transactonNumber);
+    event StatusChange( address indexed proxy, uint8 indexed status);
+    event SliceCreated( 
+        address indexed proxy, 
+        address indexed owner,
+        address indexed recipientAddress,
         uint totalReceivable,
         address targetToken,
-        bytes userData
+        bytes userdata
     );
     event PayerAdded(address proxy, bytes payeruid);
 
@@ -34,9 +35,9 @@ contract Logger {
     }
 
 
-    function LogPaymentMade(address proxy, bytes memory payeruid, uint amount, uint transactonNumber) external notPaused returns (bool){
+    function LogPaymentMade(address proxy, bytes memory payeruid, uint amount, uint amountPaid, uint transactonNumber) external notPaused returns (bool){
 
-        emit PaymentMade(proxy,payeruid, amount, transactonNumber);
+        emit PaymentMade(proxy,payeruid, amount, amountPaid, transactonNumber);
 
         return true;
         
@@ -53,9 +54,9 @@ contract Logger {
         address _recipientAddress,
         uint _totalReceivable,
         address _targetToken,
-        bytes calldata userData
+        bytes calldata userdata
         ) external notPaused returns (bool){
-            emit SliceCreated(_proxy, _sender, _recipientAddress, _totalReceivable, _targetToken, userData);
+            emit SliceCreated(_proxy, _sender, _recipientAddress, _totalReceivable, _targetToken, userdata);
         return true;
     }
 

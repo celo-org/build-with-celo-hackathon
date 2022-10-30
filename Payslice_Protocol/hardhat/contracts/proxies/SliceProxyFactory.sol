@@ -20,28 +20,26 @@ contract SliceProxyFactory {
     function createNewSlice(
         address _token,
         address _recipientAddress,
-        uint _recipientAddresschainId, uint _totalReceivable,
-        string memory _title,
-        string memory _description,
+        uint _recipientAddresschainId, 
+        uint _totalReceivable,
         SPayer[] memory _payers,
-        bytes calldata userData) external returns (address) {
+        bytes calldata _userdata)
+        external returns (address) {
 
         Proxy proxy = new Proxy(mastercopy);
 
-        bool success = ISlice(address(proxy)).setupSlice(
+        bool _success = ISlice(address(proxy)).setupSlice(
             _token,
             _recipientAddress,
             _recipientAddresschainId,
             exchangeAddress,
             loggerAddress,
             _totalReceivable,
-            _title,
-            _description,
             _payers,
-            userData
+            _userdata
         );
 
-        require(success, "Failed to setup slice");
+        require(_success, "Failed to setup slice");
 
         emit ProxyCreated(address(proxy), msg.sender);
 

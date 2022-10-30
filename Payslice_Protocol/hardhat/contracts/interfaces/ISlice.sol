@@ -12,9 +12,7 @@ interface ISlice {
         address _exchangeAddress,
         address _loggerAddress,
         uint _totalReceivable,
-        string memory _title,
-        string memory _description,
         SPayer[] memory _payers,
-        bytes calldata userData
+        bytes calldata _userdata
     )  external returns (bool) ;
 }

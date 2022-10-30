@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MIT
 
-/// @author Nartey Kodjo-Sarso
-
-pragma solidity 0.8.15;
+/// @author Nartey Kodjo-Sarso <narteysarso@gmail.com>
+pragma solidity ^0.8.15;
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "../Logger.sol";
@@ -29,8 +28,6 @@ contract Slice is Ownable {
     uint recipientAddresschainId;
     uint totalReceivable;
     uint totalPaid;
-
-    bytes public userData;
 
     Counters.Counter public payersCount;
     Counters.Counter public transactionsCount;
@@ -71,13 +68,13 @@ contract Slice is Ownable {
         address _loggerAddress,
         uint _totalReceivable,
         SPayer[] memory _payers,
-        bytes calldata _userData
+        bytes calldata _userdata
     )  external returns (bool) {
         require(owner() == address(0), "Cannot Initialize");
         require(_exchangeAddress != address(0), "Exchange address required");
         require(_recipientAddress != address(0), "Recipient address required");
         require(_recipientAddresschainId != uint(0), "Recipient address chain required");
-        require(_payers.length > 0, "Vvoucher should have at least one payer");
+        require(_payers.length > 0, "Voucher should have at least one payer");
 
         targetToken = _token;
         recipientAddress = _recipientAddress;
@@ -85,7 +82,6 @@ contract Slice is Ownable {
         exchangeAddress = _exchangeAddress;
         logger = Logger(_loggerAddress);
         recipientAddresschainId = _recipientAddresschainId;
-        userData = _userData;
 
         for (uint i = 0; i < _payers.length; i++) {
             _addPayer(_payers[i].payeruid, _payers[i].amountDue);
@@ -93,7 +89,7 @@ contract Slice is Ownable {
 
         setupOwnable();
 
-        logger.LogSliceCreated(address(this), msg.sender, _recipientAddress, _totalReceivable, _token, _userData);
+        logger.LogSliceCreated(address(this), msg.sender, _recipientAddress, _totalReceivable, _token, _userdata);
 
         return true;
     }
@@ -122,7 +118,9 @@ contract Slice is Ownable {
 
         }else if(_inputToken == targetToken){
 
-            amountToSend = _outputAmount;          
+            amountToSend = _outputAmount; 
+
+            tokenUnspent = _amountInputMaximum - _outputAmount;         
 
         } else {
             // initialize DEX exchange
@@ -138,7 +136,7 @@ contract Slice is Ownable {
                 address(this)
             );
 
-            // //Remove exchange allowance
+            // Remove exchange allowance
             ERC20(_inputToken).approve(exchangeAddress, 0);
 
             // last index is the amount sent to the targetToken
@@ -179,6 +177,7 @@ contract Slice is Ownable {
             address(this),
             _payeruid,
             _outputAmount,
+            _payer.amountPaid,
             transactionsCount.current()
         );
 
@@ -193,8 +192,7 @@ contract Slice is Ownable {
             address,
             address,
             uint,
-            uint,
-            bytes memory
+            uint
         )
     {
         return (
@@ -202,8 +200,7 @@ contract Slice is Ownable {
             targetToken,
             recipientAddress,
             totalReceivable,
-            totalPaid,
-            userData
+            totalPaid
         );
     }
 

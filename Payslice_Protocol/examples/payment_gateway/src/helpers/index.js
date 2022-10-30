@@ -60,4 +60,12 @@ export const createTokenContract = (tokenContractAddress, signerOrProvider) => {
     );
     return tokenContract;
 };
+export const createContract = ( address, abi, signerOrProvider) => {
+    const contract = new ethers.Contract(
+        address,
+        abi,
+        signerOrProvider
+    );
+    return contract;
+};
 

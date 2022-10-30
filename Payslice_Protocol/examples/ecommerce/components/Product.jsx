@@ -15,7 +15,7 @@ const Product = ({ product: { image, name, slug, price } }) => {
             className="product-image"
           />
           <p className="product-name">{name}</p>
-          <p className="product-price">{price} KDAI</p>
+          <p className="product-price">{price} cEUR</p>
         </div>
       </Link>
     </div>

@@ -30,6 +30,7 @@ async function main() {
 
   storeContractData(deployedRouter, "ZuniswapV2Router");
   storeContractData(deployedfactory, "ZuniswapV2Factory");
+  storeContractData(deployedlibrary, "ZuniswapLibrary");
 }
 
 const storeContractData = (contract, contractName) => {

@@ -1,4 +1,5 @@
 require("@nomicfoundation/hardhat-toolbox");
+// require("hardhat-celo");
 require("dotenv").config();
 
 /** @type import('hardhat/config').HardhatUserConfig */

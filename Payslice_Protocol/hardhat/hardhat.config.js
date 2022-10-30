@@ -15,7 +15,7 @@ module.exports = {
     // },
     alfajores: {
       url: process.env.ALFAJORE_FERNO_RPC,
-      accounts: [process.env.ACCOUNT_PRIVATE_KEY]
+      accounts: [process.env.TEST_ACCOUNT_PRIVATE_KEY]
     }
   },
   etherscan: {
