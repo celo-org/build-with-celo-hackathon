@@ -6,12 +6,22 @@
 //
 
 import SwiftUI
+import FirebaseCore
 @main
 struct CryptoRide_PassengerApp: App {
+    @StateObject var authentication = Authentication()
+    init() {
+        FirebaseApp.configure()
+    }
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
-        }
+                    if authentication.isValidated {
+                        ContentView().environmentObject(authentication)
+                    }else {
+                        LoginView().environmentObject(authentication)
+                    }
+                }
     }
 }
 

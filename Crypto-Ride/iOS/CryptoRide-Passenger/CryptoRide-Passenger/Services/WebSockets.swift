@@ -5,11 +5,24 @@
 //  Created by mitchell tucker on 10/24/22.
 //
 
+// Currently this file is not in use
+
 import Foundation
 import SwiftUI
 import web3swift
 import UIKit
 import BigInt
+
+struct Ride {
+    var shared:Bool = false
+    var startCoordinates:[BigUInt] = []
+    var endCoordinates:[BigUInt] = []
+    var price:BigUInt = 0
+    var time:BigUInt = 0
+    var acceptedDriver:EthereumAddress? = nil
+    var passenger:EthereumAddress? = nil
+    var rideState:BigUInt = 0
+}
 
 
 // MARK: - SocketMessage
@@ -55,13 +68,16 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
         case unsubscribed
     }
     
+    let isDriver = false
+    
     @Published var subscriptionState = SubscriptionState.none
     @Published var newEvent = false
     @Published var newAnnounceRide:AnnouncedRide?
 
     @Published var progress = 0.0
     
-    @Published var rideId:String? = nil
+    @Published var rideId:String? = nil // rideId
+    @Published var ride:Ride? = nil // Ride obj
     
     private var socketProvider:WebsocketProvider? = nil
 
@@ -73,6 +89,7 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
         socketProvider = WebsocketProvider(webSocketURI, delegate: self)
         socketProvider!.connectSocket()
     }
+    
     
     // MARK: disconnectSocket
     ///  Unsubscribes the the socket using the subscription id as parameter
@@ -101,7 +118,6 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
     /// Receives messages from the socket provider
     func received(message: Any) {
         let stringMessage = message as! String
-        print(stringMessage)
         let data = Data(stringMessage.utf8)
         let decoder = JSONDecoder()
         do {
@@ -130,6 +146,7 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
         print("Got error \(error)")
     }
     
+    
     struct AnnouncedRide {
         let rideId: String
         let valueId: String
@@ -149,7 +166,7 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
         //let addressTwo: ClosedRange = 256...319
 
         let rideId = String(arrayValue[rideIdRange])
-        //rideId.count
+        //
         let valueId = String(arrayValue[valueRange])
         //idkValue.count
         let arrayCount = String(arrayValue[arrayCountRange])
@@ -181,9 +198,9 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
         return(announcedRide)
     }
     
-    /*
+    
     func setDriverAccpetTime() {
-        // Start time should be the ride object
+        // Start time should be in the ride object
         let driverPosition = newAnnounceRide!.driverAddress.firstIndex(of: WalletServices.shared.getKeyManager().addresses!.first!)!
         // currently the contract is set to 30 seconds for each driver to accept a ride
         let driverWaitTime = driverPosition * 30
@@ -207,24 +224,83 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
             }
         }
     }
-     */
+     
     
     // MARK: handleEvent
     func handleEvent(message:SocketMessage) {
         print("message")
-        print(message)
 
         switch(message.params.result.topics.first) {
             
         case Topics.announceRide.rawValue:
-            print("announceRide")
+            let data = message.params.result.data
+            let announcedRide = decodeLog(data: data)
+            rideId = announcedRide.rideId
+            if announcedRide.driverAddress.contains(WalletServices.shared.getKeyManager().addresses!.first!) {
+                newAnnounceRide = announcedRide
+                // Set driver accept time
+                setDriverAccpetTime()
+            }
+           
+
+            
         case Topics.driverAcceptsRide.rawValue:
+            // check if rideId is not nil
             if rideId != nil {
                 print("Driver accepts ride")
-                let rideId = message.params.result.data as String
-                // TODO DECODE THE DRIVER ACCEPTING RIDE
-                print(rideId)
+                let hexString = message.params.result.data as String
+                let arrayValue = Array(hexString)
                 
+                let rideIdRange: ClosedRange = 0...65
+                let driverAddressRange: ClosedRange = 66...129
+                print(driverAddressRange)
+                let rideId = String(arrayValue[rideIdRange])
+                print(rideId)
+                print(self.rideId)
+                // Check if recived rideId equals are rideId
+                if self.rideId! == rideId {
+                    ride!.rideState = 2 // update ridestate known by topic
+                    // set driver address in ride
+                    //let driverAddress = String(arrayValue[driverAddressRange])
+                    //ride!.acceptedDriver = EthereumAddress(driverAddress)!
+                    //print(driverAddress)
+                }
+            }
+            
+        case Topics.passengerConfirmsPickUp.rawValue:
+            print("Passenger Confirms PickUp")
+            if self.rideId != nil {
+                let hexString = message.params.result.data as String
+                let arrayValue = Array(hexString)
+                let rideIdRange: ClosedRange = 0...65
+                let rideId = String(arrayValue[rideIdRange])
+                if self.rideId == rideId{
+                    ride!.rideState = 3 // update ride state
+                }
+
+            }
+        case Topics.driverConfirmsDropOff.rawValue:
+            print("Driver Confirms drop off")
+            if self.rideId != nil {
+                let hexString = message.params.result.data as String
+                let arrayValue = Array(hexString)
+                let rideIdRange: ClosedRange = 0...65
+                let rideId = String(arrayValue[rideIdRange])
+                if self.rideId == rideId{
+                    ride!.rideState = 4 // update ride state
+                }
+            }
+            
+        case Topics.passengerConfirmsDropOff.rawValue:
+            print("Passenger Confirms drop off")
+            if self.rideId != nil {
+                let hexString = message.params.result.data as String
+                let arrayValue = Array(hexString)
+                let rideIdRange: ClosedRange = 0...65
+                let rideId = String(arrayValue[rideIdRange])
+                if self.rideId == rideId{
+                    ride!.rideState = 5 // update ride state
+                }
             }
             
         case Topics.cancelRide.rawValue:
@@ -234,11 +310,10 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
             }
             let data = message.params.result.data
             
-           
-            
         default:
             print("Unkown Topic")
             
         }
     }
+    
 }

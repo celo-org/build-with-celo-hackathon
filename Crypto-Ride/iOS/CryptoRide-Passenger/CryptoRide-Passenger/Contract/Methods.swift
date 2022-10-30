@@ -34,6 +34,7 @@ enum RideManagerMethods:String {
     case updateRate = "updateRate"
     
     case approve = "approve"
+    case allowance = "allowance"
     
 }
 

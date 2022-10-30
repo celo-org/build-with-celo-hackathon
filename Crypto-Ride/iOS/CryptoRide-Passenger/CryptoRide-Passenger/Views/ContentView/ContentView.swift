@@ -7,7 +7,7 @@
 
 import SwiftUI
 import MapKit
-
+import Combine
 
 
 struct ContentView: View {
@@ -16,21 +16,22 @@ struct ContentView: View {
         case buildingRide
         case selectDriver
         case rideOverView
-        case broadCastRide
- 
+        case none // Passenger is entered a ride
     }
+    
+    @EnvironmentObject var authentication:Authentication
+    
     @State private var viewState:States = .buildingRide
     
-    @StateObject var rideService = RideService()
-    @StateObject var manager = LocationManager()
-    
+    @ObservedObject var manager = LocationManager()
+    @ObservedObject var rideService = RideService()
+    @ObservedObject var webSocket = WebSockets()
     
     @StateObject var balanceVM = BalanceViewModel()
     
     let mapView:MapView = MapView()
     let contentVM = ContentViewModel()
     
-    //@State var driverHandle = ""
     
     func textForState() -> String {
         switch(rideService.ride!.rideState){
@@ -52,17 +53,18 @@ struct ContentView: View {
         
         NavigationView {
             ZStack{
-                
+            
                 mapView
                     .environmentObject(rideService)
                     .environmentObject(manager)
                     .edgesIgnoringSafeArea(.all)
-                
+                    
+                // Check if ride is empty
                 if rideService.ride != nil {
+                    // Views for progressing or canceling a ride
                     VStack(alignment: .center){
                         HStack{
                             Button {
-                                // TODO is the user certin they want to cancel
                                 rideService.cancelRide()
                             }label: {
                                 Text("Cancel Ride")
@@ -75,16 +77,20 @@ struct ContentView: View {
                         Button{
                             switch(rideService.ride!.rideState){
                             case 1:
+                                // Drivers accepts ride
                                 break
                             case 2:
-                            
+                                
                                 print("Confirm pickup")
+                                rideService.passengerConfirmsPickUp()
                                 
                             case 3:
+                                // Driver confirms dropoff
                                 break
                             case 4:
                                 
                                 print("Confirm drop Off")
+                                rideService.passengerConfirmsDropOff()
                                 
                             default:
                                 break
@@ -96,43 +102,38 @@ struct ContentView: View {
                     }
         
                          
-                }else{
+                }else if (viewState != .none){
+                    // Views for building a ride
                     VStack{
-                        Spacer()
-                        
+                                            
                         containedView()
-                        
-                        Button {
-                            switch(viewState){
-                                
-                            case .buildingRide:
-                                if rideService.startDropLocation == nil || rideService.endDropLocation == nil{
-                                    print("Cant have empty")
-                                    return
+                        HStack{
+                            Button {
+                                changeRideBuildState( back: true)
+                            } label: {
+                                if(viewState != .buildingRide){
+                                    Image(systemName:"arrow.backward.square.fill")
                                 }
                                 
-                                viewState = .selectDriver
-                                
-                            case .selectDriver:
-                                viewState = .rideOverView
-                            case .rideOverView:
-                                viewState = .broadCastRide
-                            case .broadCastRide:
-                                viewState = .buildingRide
-                                let onlyAddress = manager.drivers.map { $0.address }
-                                // TODO Change approval to profile view
-                                rideService.setApproval() { success in
-                                    
-                                    rideService.broadCastRide(startLocation: rideService.startLocation!, endLocation: rideService.endLocation!, driverlist: onlyAddress, ridePrice: manager.normalizedPrice)
+                            }.buttonStyle(.bordered)
+                            Spacer()
+                            Button {
+                                changeRideBuildState( back: false)
+                            } label: {
+                                if(viewState == .rideOverView){
+                                    Image(systemName:"paperplane.fill").disabled(rideService.currentApprovedAmount == nil)
+                                }else{
+                                    Image(systemName:"arrow.right.square.fill")
                                 }
-                               
+                                
+                            }.buttonStyle(.bordered)
+                        }.background(.bar)
                         
-                            }
-                        } label: {
-                            Text("Next")
-                        }.buttonStyle(.borderedProminent)
-                        
-                    } .padding(.bottom, 10)
+                    }
+                    
+                }else{
+                    // Loading view between in ride and creating a ride
+                    ProgressView()
                 }
                     
             }
@@ -143,6 +144,12 @@ struct ContentView: View {
                     .border(.black)
             })
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                        Button("Logout") {
+                            //webSocket.disconnectSocket()
+                            authentication.updateValidation(success: false)
+                        }
+                    }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink(destination: ProfileView().environmentObject(balanceVM)
                     ){
@@ -156,14 +163,56 @@ struct ContentView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
     }
+    
+    func changeRideBuildState(back:Bool) {
+    
+        switch(viewState){
+        case .buildingRide:
+            if back {return}
+            viewState = .selectDriver
+        case .selectDriver:
+
+            if back {
+                viewState = .buildingRide
+            }else{
+                // Snap map to the route
+                manager.snapToRoute = true
+                rideService.getAllowance(address: ContractServices.shared.getWallet().address)
+                viewState = .rideOverView
+            }
+        case .rideOverView:
+           
+            if back {
+                viewState = .selectDriver
+            }else {
+                viewState = .buildingRide
+                let onlyAddress = manager.drivers.map { $0.address }
+       
+                rideService.broadCastRide(startLocation: rideService.startLocation!, endLocation: rideService.endLocation!, driverlist: onlyAddress, ridePrice: manager.normalizedPrice) { success in
+                    rideService.getActiveRide(address: ContractServices.shared.getWallet().address)
+                }
+                viewState = .none
+            }
+            
+        case .none:
+            //if back
+            print("None")
+            
+            // TODO Change approval to profile view
+          
+        //case .waitForRide:
+        //    print("Waiting for ride")
+        }
+    }
         
     
     func containedView() -> AnyView {
             switch viewState {
             case .buildingRide: return AnyView(RideLocation().environmentObject(rideService))
             case .selectDriver: return AnyView(SelectDrivers().environmentObject(manager))
-            case .rideOverView: return AnyView(RideOverView().environmentObject(manager))
-            case .broadCastRide: return AnyView(BroadCastRide())
+            case .rideOverView: return AnyView(RideOverView().environmentObject(manager)
+                                                             .environmentObject(rideService))
+            case .none: return AnyView(ProgressView())
         
          }
     }

@@ -21,8 +21,33 @@ class ContractServices {
     private var tokenContract:web3.web3contract
        
     init() {
-        let keystore = try! EthereumKeystoreV3(privateKey: Data(hex:"<PRIVATEKEY>"), password: "Password")!
-
+        
+        let keystore = WalletServices.shared.keystoreManager!
+        
+        //print(keystore.addresses)
+        //let keystore = try! EthereumKeystoreV3(privateKey: Data(hex: "11ddbb8a140f4593a91070c4b179c802dc9bff5933e3d441ecc823b49939f417"))!
+    
+        let keyData = try! JSONEncoder().encode(keystore.keystoreParams);
+        let address = keystore.addresses!.first!.address
+    
+        wallet = Wallet(address: address, data: keyData, name: "Passenger", isHD: true)
+  
+        // add wallet data to keystoreManager
+        let keystoreManager = KeystoreManager([keystore])
+        
+        let provider = Web3HttpProvider(URL(string: alfajoresTestnet.rpcEndpoint)!, network: .Custom(networkID: alfajoresTestnet.chainId))
+        w3 = web3(provider: provider!)
+        w3.addKeystoreManager(keystoreManager)
+        
+        
+        // TODO change erc20 abi with celo's token abi
+        tokenContract = w3.contract(Web3.Utils.erc20ABI, at: cUSD , abiVersion: abiVerison)!
+        rideManagerContract = w3.contract(rideManagerAbi,at:rideManagerAddress,abiVersion:abiVerison )!
+       
+        
+        /*
+        let keystore = try! EthereumKeystoreV3(privateKey: Data(hex:"0e597c8484930edac03693a61d10b35c72db7418369244adea397d370f6a94b7"), password: "Password")!
+        //let keystore = try! EthereumKeystoreV3(privateKey: Data(hex: "0e597c8484930edac03693a61d10b35c72db7418369244adea397d370f6a94b7"))!
         
         let keyData = try! JSONEncoder().encode(keystore.keystoreParams);
         
@@ -38,7 +63,13 @@ class ContractServices {
         // TODO change erc20 abi with celo's token abi
         tokenContract = w3.contract(Web3.Utils.erc20ABI, at: cUSD , abiVersion: abiVerison)!
         rideManagerContract = w3.contract(rideManagerAbi,at:rideManagerAddress,abiVersion:abiVerison )!
-       
+       */
+    }
+    
+    // MARK: getWallet
+    /// Returns wallet struct
+    func getWallet() -> Wallet {
+        return self.wallet
     }
     
     public func getContract(contract:Contracts) -> web3.web3contract{

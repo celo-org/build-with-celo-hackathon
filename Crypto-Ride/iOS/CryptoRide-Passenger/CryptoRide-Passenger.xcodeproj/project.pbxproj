@@ -15,6 +15,13 @@
 		30A17ABE28F8E37800635D7D /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A17ABD28F8E37800635D7D /* Network.swift */; };
 		30A6EC212909D75D007830FB /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC202909D75D007830FB /* Events.swift */; };
 		30A6EC232909D80E007830FB /* WebSockets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC222909D80E007830FB /* WebSockets.swift */; };
+		30A6EC25290C9352007830FB /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC24290C9352007830FB /* Credentials.swift */; };
+		30A6EC28290C939D007830FB /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC27290C939D007830FB /* LoginView.swift */; };
+		30A6EC2A290C93A8007830FB /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC29290C93A8007830FB /* LoginViewModel.swift */; };
+		30A6EC2C290C93BD007830FB /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC2B290C93BD007830FB /* Authentication.swift */; };
+		30A6EC32290CA5A3007830FB /* ContractCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC31290CA5A3007830FB /* ContractCoordinates.swift */; };
+		30A6EC37290CB45A007830FB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC36290CB45A007830FB /* Constants.swift */; };
+		30A6EC3D290D91CD007830FB /* CarAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC3C290D91CC007830FB /* CarAnnotation.swift */; };
 		30AA5AAF28D2D8E400EEB7A4 /* CryptoRide_PassengerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AAE28D2D8E400EEB7A4 /* CryptoRide_PassengerApp.swift */; };
 		30AA5AB128D2D8E400EEB7A4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AB028D2D8E400EEB7A4 /* ContentView.swift */; };
 		30AA5AB328D2D8E600EEB7A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30AA5AB228D2D8E600EEB7A4 /* Assets.xcassets */; };
@@ -23,7 +30,6 @@
 		30AA5ACA28D2D8E600EEB7A4 /* CryptoRide_PassengerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AC928D2D8E600EEB7A4 /* CryptoRide_PassengerUITests.swift */; };
 		30AA5ACC28D2D8E600EEB7A4 /* CryptoRide_PassengerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5ACB28D2D8E600EEB7A4 /* CryptoRide_PassengerUITestsLaunchTests.swift */; };
 		30AA5AD928D2D9E700EEB7A4 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AD828D2D9E700EEB7A4 /* MapView.swift */; };
-		30AA5ADC28D2DA8C00EEB7A4 /* FireStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5ADB28D2DA8C00EEB7A4 /* FireStore.swift */; };
 		30AA5ADF28D2DB6D00EEB7A4 /* Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5ADE28D2DB6D00EEB7A4 /* Driver.swift */; };
 		30AA5AE128D2DE0300EEB7A4 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AE028D2DE0300EEB7A4 /* LocationManager.swift */; };
 		30AA5AE628D2E72000EEB7A4 /* RideService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AE528D2E72000EEB7A4 /* RideService.swift */; };
@@ -75,6 +81,13 @@
 		30A17ABD28F8E37800635D7D /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		30A6EC202909D75D007830FB /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
 		30A6EC222909D80E007830FB /* WebSockets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSockets.swift; sourceTree = "<group>"; };
+		30A6EC24290C9352007830FB /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
+		30A6EC27290C939D007830FB /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		30A6EC29290C93A8007830FB /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		30A6EC2B290C93BD007830FB /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
+		30A6EC31290CA5A3007830FB /* ContractCoordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractCoordinates.swift; sourceTree = "<group>"; };
+		30A6EC36290CB45A007830FB /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		30A6EC3C290D91CC007830FB /* CarAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarAnnotation.swift; sourceTree = "<group>"; };
 		30AA5AAB28D2D8E400EEB7A4 /* CryptoRide-Passenger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CryptoRide-Passenger.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		30AA5AAE28D2D8E400EEB7A4 /* CryptoRide_PassengerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoRide_PassengerApp.swift; sourceTree = "<group>"; };
 		30AA5AB028D2D8E400EEB7A4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -86,7 +99,6 @@
 		30AA5AC928D2D8E600EEB7A4 /* CryptoRide_PassengerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoRide_PassengerUITests.swift; sourceTree = "<group>"; };
 		30AA5ACB28D2D8E600EEB7A4 /* CryptoRide_PassengerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoRide_PassengerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		30AA5AD828D2D9E700EEB7A4 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		30AA5ADB28D2DA8C00EEB7A4 /* FireStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStore.swift; sourceTree = "<group>"; };
 		30AA5ADE28D2DB6D00EEB7A4 /* Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Driver.swift; sourceTree = "<group>"; };
 		30AA5AE028D2DE0300EEB7A4 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		30AA5AE528D2E72000EEB7A4 /* RideService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideService.swift; sourceTree = "<group>"; };
@@ -154,6 +166,32 @@
 			path = Contract;
 			sourceTree = "<group>";
 		};
+		30A6EC26290C9386007830FB /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				30A6EC27290C939D007830FB /* LoginView.swift */,
+				30A6EC29290C93A8007830FB /* LoginViewModel.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		30A6EC30290CA590007830FB /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				30A6EC31290CA5A3007830FB /* ContractCoordinates.swift */,
+				30A6EC36290CB45A007830FB /* Constants.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		30A6EC3B290D91AF007830FB /* Annotations */ = {
+			isa = PBXGroup;
+			children = (
+				30A6EC3C290D91CC007830FB /* CarAnnotation.swift */,
+			);
+			path = Annotations;
+			sourceTree = "<group>";
+		};
 		30AA5AA228D2D8E400EEB7A4 = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +217,7 @@
 		30AA5AAD28D2D8E400EEB7A4 /* CryptoRide-Passenger */ = {
 			isa = PBXGroup;
 			children = (
+				30A6EC30290CA590007830FB /* Utils */,
 				30A17AB628F8D1F700635D7D /* Contract */,
 				30AA5AE428D2E2C500EEB7A4 /* Views */,
 				30AA5ADD28D2DB4600EEB7A4 /* Modules */,
@@ -189,6 +228,7 @@
 				30AA5AB228D2D8E600EEB7A4 /* Assets.xcassets */,
 				30AA5AED28D2ECDE00EEB7A4 /* GoogleService-Info.plist */,
 				30AA5AB428D2D8E600EEB7A4 /* Preview Content */,
+				30A6EC2B290C93BD007830FB /* Authentication.swift */,
 			);
 			path = "CryptoRide-Passenger";
 			sourceTree = "<group>";
@@ -223,7 +263,6 @@
 			children = (
 				30AA5AE528D2E72000EEB7A4 /* RideService.swift */,
 				30A17AB728F8D23A00635D7D /* ContractServices.swift */,
-				30AA5ADB28D2DA8C00EEB7A4 /* FireStore.swift */,
 				30AA5AE028D2DE0300EEB7A4 /* LocationManager.swift */,
 				30D850BD28FDDBDD00E59D4B /* WalletServices.swift */,
 				30A6EC222909D80E007830FB /* WebSockets.swift */,
@@ -236,6 +275,7 @@
 			children = (
 				30AA5ADE28D2DB6D00EEB7A4 /* Driver.swift */,
 				30D850C828FDF09800E59D4B /* ContractError.swift */,
+				30A6EC24290C9352007830FB /* Credentials.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -243,6 +283,8 @@
 		30AA5AE428D2E2C500EEB7A4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				30A6EC3B290D91AF007830FB /* Annotations */,
+				30A6EC26290C9386007830FB /* Login */,
 				30D850D228FF262E00E59D4B /* RideBuilder */,
 				30D850C528FDEE5F00E59D4B /* ViewModels */,
 				30D850B628FDC28D00E59D4B /* ContentView */,
@@ -557,15 +599,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				30A6EC212909D75D007830FB /* Events.swift in Sources */,
+				30A6EC28290C939D007830FB /* LoginView.swift in Sources */,
 				30AA5ADF28D2DB6D00EEB7A4 /* Driver.swift in Sources */,
 				30AA5AF228D2F89E00EEB7A4 /* SelectDrivers.swift in Sources */,
 				30A17ABE28F8E37800635D7D /* Network.swift in Sources */,
+				30A6EC2C290C93BD007830FB /* Authentication.swift in Sources */,
 				30A6EC232909D80E007830FB /* WebSockets.swift in Sources */,
 				30AA5AEC28D2ECB700EEB7A4 /* RideLocation.swift in Sources */,
 				30A17ABC28F8DFEA00635D7D /* Abi.swift in Sources */,
+				30A6EC3D290D91CD007830FB /* CarAnnotation.swift in Sources */,
+				30A6EC2A290C93A8007830FB /* LoginViewModel.swift in Sources */,
 				30AA5AE628D2E72000EEB7A4 /* RideService.swift in Sources */,
 				30D850C928FDF09800E59D4B /* ContractError.swift in Sources */,
 				30A17AB828F8D23A00635D7D /* ContractServices.swift in Sources */,
+				30A6EC32290CA5A3007830FB /* ContractCoordinates.swift in Sources */,
+				30A6EC25290C9352007830FB /* Credentials.swift in Sources */,
 				30AA5AF028D2EE6A00EEB7A4 /* Drivers.swift in Sources */,
 				30A17ABA28F8D78F00635D7D /* Address.swift in Sources */,
 				30AA5AF628D2FBC500EEB7A4 /* BroadCastRide.swift in Sources */,
@@ -574,7 +622,7 @@
 				30AA5AB128D2D8E400EEB7A4 /* ContentView.swift in Sources */,
 				30D850BC28FDD76A00E59D4B /* BalanceViewModel.swift in Sources */,
 				30AA5AE128D2DE0300EEB7A4 /* LocationManager.swift in Sources */,
-				30AA5ADC28D2DA8C00EEB7A4 /* FireStore.swift in Sources */,
+				30A6EC37290CB45A007830FB /* Constants.swift in Sources */,
 				30D850B528FDBD9300E59D4B /* ProfileViewModel.swift in Sources */,
 				30AA5AD928D2D9E700EEB7A4 /* MapView.swift in Sources */,
 				30AA5AF428D2FB3100EEB7A4 /* RideOverView.swift in Sources */,

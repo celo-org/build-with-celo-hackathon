@@ -16,10 +16,18 @@ struct DriverInfo {
     var infoAssetLink:String?
 }
 
+struct Stats {
+    var rating:BigUInt?
+    var reputation:BigUInt?
+    var totalRating:BigUInt?
+    var count:BigUInt?
+}
+
 struct DriverDetails {
     let address:String
     var rateAppliedToRide:Double?
     var info:DriverInfo?
+    var stats:Stats?
 }
 
 

@@ -34,9 +34,9 @@ struct ProfileView:View {
             Text("Receive").font(.title3)
             
             Button(action: {
-                UIPasteboard.general.string = WalletServices.shared.getWallet().address
+                UIPasteboard.general.string = ContractServices.shared.getWallet().address
             }, label: {
-                Image(uiImage:profileVM.generateQRCode(from: WalletServices.shared.getWallet().address))
+                Image(uiImage:profileVM.generateQRCode(from: ContractServices.shared.getWallet().address))
                     .resizable()
                     .interpolation(.none)
                     .scaledToFit()

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 import MapKit
 import CoreLocation
 import web3swift
@@ -19,12 +20,23 @@ import FirebaseDatabase
 class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
     
     @Published var region = MKCoordinateRegion()
+    @Published var updateRegion = false
+    
+    @Published var snapToRoute = false
+    
+    // selected drivers for annoucing ride
+    //@Published var selectedDrivers:[DriverDetails] = []
+    @Published var rejectedDrivers:[DriverDetails] = []
     
     @Published var drivers:[DriverDetails] = []
     
-    @Published var driverPoints:[MKPointAnnotation] = []
+    @Published var driverPoints:[CarAnnotation] = []
 
-    @Published var selectedDrivers:DriverDetails?
+    // Selecting Annotations on mapView
+    @Published var selectedDriver:DriverDetails?
+    @Published var selectedAnnotation:CarAnnotation?
+    
+    // Avarge price of ride When building route
     @Published var normalizedPrice:Double = 0.00
     @Published var route:MKRoute?
     
@@ -33,17 +45,15 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
     
     private let manager = CLLocationManager()
     
-    private var currentLocation:CLLocation?
+    @Published var currentLocation:CLLocation?
     private var lastGeocodeTime:Date? = Date()
-
-    private var driverRate = 23.00
 
     private var db:Firestore!
     
     override init() {
         super.init()
 
-        FirebaseApp.configure()
+        //FirebaseApp.configure()
         db = Firestore.firestore()
         
         manager.delegate = self
@@ -51,6 +61,19 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
         manager.requestWhenInUseAuthorization()
         manager.startUpdatingLocation()
     }
+    
+    
+    
+    // MARK: changeRegion
+    /// Snaps map to a driver annotation
+    public func changeRegion(driver:String) {
+        let driverIndex = driverMap[driver]
+        selectedAnnotation = driverPoints[driverIndex!]
+        region = MKCoordinateRegion(center: driverPoints[driverIndex!].coordinate , span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
+        updateRegion = true
+    }
+    
+
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
@@ -78,26 +101,29 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
     
     // MARK: getRideEstimates
     // Uses driver rate and route to estimate ride cost
-    // 🔴 Add listner for changes to route then update
-    //
-    func getRideEstimates(index:Int,rate:Double) {
+ 
+    func getRideEstimates() {
+  
         //var ratesWithDriver:[DriverDetails] = []
         if(route == nil){return}
-        //for driver in drivers{
-            // TODO take the amount of drivers and avarage the rates to get a normalized price
-        let priceWithDriverRate = 60 / rate
-        let driverRateAppliedToRide = route!.expectedTravelTime *  (priceWithDriverRate / 60)
-        normalizedPrice = driverRateAppliedToRide
-        //driver.rateAppliedToRide = driverRateAppliedToRide
-        drivers[index].rateAppliedToRide = driverRateAppliedToRide
-            //ratesWithDriver.append(dr)
-        //}
-        //drivers = ratesWithDriver
+        var total = 0.0
+        for index in drivers.indices {
+            let rate = Double(drivers[index].info!.rate!)
+            if rate == 0.0{break}
+                // TODO take the amount of drivers and avarage the rates to get a normalized price
+            let priceWithDriverRate = 60 / rate
+            let driverRateAppliedToRide = route!.expectedTravelTime *  (priceWithDriverRate / 60)
+            total += driverRateAppliedToRide
+            drivers[index].rateAppliedToRide = driverRateAppliedToRide
+        }
+        normalizedPrice = total / Double(drivers.count)
+        print(normalizedPrice)
     }
     
     
     
     // MARK: listenForChanges
+    /// Updates driver locations and pin annotations
     func listenForChanges(driver:String) {
         
         let ref = Database.database().reference().child("driver").child(driver)
@@ -114,14 +140,15 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
             let index = self.driverMap[driverAddress]
             
             let newLocation = CLLocationCoordinate2D(latitude: lat, longitude: long)
+            
             self.driverPoints[index!].coordinate = newLocation
         
         })
     }
     
     
-    func getDriverDetails(driverAddress:String,index:Int){
-        let params = [driverAddress] as [AnyObject]
+    func getDriverDetails(details:DriverDetails,index:Int){
+        let params = [details.address] as [AnyObject]
         ContractServices.shared.read(contractId: .RideManager, method: RideManagerMethods.getDriverRate.rawValue, parameters: params)
         { result in
             DispatchQueue.main.async { [unowned self] in
@@ -132,17 +159,49 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
                     
                     let isDriver = rawRate[0] as! NSNumber
                     let rate = rawRate[1] as! BigUInt
+                    
                     let carAssetUrl = rawRate[2] as! String
                     let infoAssetUrl = rawRate[3] as! String
-                
+                    
                     let driverInfo = DriverInfo(
-                        address: driverAddress,
+                        address: details.address,
                         isDriver: Bool(exactly: isDriver)!,
                         rate: rate,
-                        carAssetLink: carAssetUrl,
-                        infoAssetLink: infoAssetUrl)
-                    getRideEstimates(index: index, rate: Double(rate))
+                        carAssetLink: details.info!.carAssetLink,
+                        infoAssetLink: details.info!.infoAssetLink)
+                    
+                    //getRideEstimates(index: index, rate: Double(rate))
+                    
                     self.drivers[index].info = driverInfo
+                   
+                case .failure(let error):
+                    print("Failed to get driver details")
+                    //self.error = ContractError(title: "Failed to get driver rate.", description: error.errorDescription)
+                }
+            }
+        }
+    }
+    
+    func getDriverRating(details:DriverDetails,index:Int){
+        let params = [details.address] as [AnyObject]
+        ContractServices.shared.read(contractId: .RideManager, method: RideManagerMethods.getReputation.rawValue, parameters: params)
+        { result in
+            DispatchQueue.main.async { [unowned self] in
+                //isLoading = false
+                switch(result){
+                case .success(let result):
+                    let rawStats = result["0"] as! [AnyObject]
+                    let rating  = rawStats[0] as! BigUInt
+                    let reputation = rawStats[1] as! BigUInt
+                    let totalRatings = rawStats[2] as! BigUInt
+                    let rideCount = rawStats[3] as! BigUInt
+                    
+                    let driverStats = Stats(rating: rating,
+                                      reputation: reputation,
+                                      totalRating: totalRatings,
+                                      count: rideCount)
+                    
+                    self.drivers[index].stats = driverStats
                    
                 case .failure(let error):
                     print("Failed to get driver details")
@@ -192,6 +251,9 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
                 let lat = document.data()["lat"] as? Double ?? 0
                 let lng = document.data()["lng"] as? Double ?? 0
                 
+                let name = document.data()["name"] as? String ?? ""
+                let car = document.data()["car"] as? String ?? ""
+                
                 let coordinates = CLLocation(latitude: lat, longitude: lng)
                 let centerPoint = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
                 
@@ -200,28 +262,41 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
                 let distance = GFUtils.distance(from: centerPoint, to: coordinates)
             
                 if distance <= radiusInM {
-                    let driver = DriverDetails(address: document.data()["driver"] as! String)
+                    var driver = DriverDetails(address: document.data()["driver"] as! String)
                     
                     if driverMap.contains(where: { $0.key.hasPrefix(driver.address) }){
                         // Driver already listed
                         print("Driver already listed")
                     }else{
-                        let driverPin = MKPointAnnotation()
-                        driverPin.title = driver.address
-                        driverPin.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lng)
+                      
+                        //let carView = CarAnnotationView
+                        let carAnnotationView = CarAnnotation()
+                        carAnnotationView.title = driver.address
+                        //carAnnotationView.coordinate =
+                        //carAnnotationView.image = UIImage(named: "car.circle")
+                        //carAnnotationView.colour = UIColor.blue
                         
+                        //carAnnotationView.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(lng))
+                        
+                        //let driverPoint = MKPointAnnotation()
+                        //driverPoint.title = driver.address
+          
+                    
                         // Add driver pointAnnotation to driverPoints
                         let index = driverPoints.count
-                        driverPoints.append(driverPin)
-                            
+                        driverPoints.append(carAnnotationView)
+                        
+                        let info = DriverInfo(address: driver.address, isDriver: nil, rate: nil, carAssetLink: car, infoAssetLink: name)
                         
                         // Maps driver address to MKPoint array index
                         driverMap[driver.address] = index
+                        driver.info = info
+                        
                         drivers.append(driver)
                         
                         // Get driver details from smart contract
-                        //getDriverDetails(driverAddress: driver.address, index: index)
-                        
+                        getDriverDetails(details:driver, index: index)
+                        getDriverRating(details:driver,index:index)
                         // List for location changes in realTime DB
                         listenForChanges(driver: driver.address)
                     }

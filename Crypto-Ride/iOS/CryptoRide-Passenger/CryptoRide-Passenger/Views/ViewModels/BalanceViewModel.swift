@@ -23,7 +23,7 @@ class BalanceViewModel:ObservableObject {
     public func getBalanceUpdate() {
         isLoading = true
         
-        let walletAddress = WalletServices.shared.getWallet()
+        let walletAddress = ContractServices.shared.getWallet()
         let params = [walletAddress.address] as [AnyObject]
         
         ContractServices.shared.read(contractId: Contracts.Token, method: "balanceOf", parameters    : params)

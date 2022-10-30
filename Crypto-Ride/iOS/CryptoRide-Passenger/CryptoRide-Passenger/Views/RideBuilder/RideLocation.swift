@@ -12,7 +12,7 @@ import SwiftUI
 struct RideLocation:View {
     
     @EnvironmentObject var ride:RideService
-    
+    //@EnvironmentObject var lm:LocationManager
 
     
     var body: some View {
@@ -39,9 +39,6 @@ struct RideLocation:View {
                                     ride.endDropLocation = CGPoint(x: geo.frame(in: .global).midX, y: geo.frame(in: .global).maxY)
                                 }
                                 
-                                //print("Global center: \(geo.frame(in: .global).midX) x \(geo.frame(in: .global).midY)")
-                                //print("Custom center: \(geo.frame(in: .named("Custom")).midX) x \(geo.frame(in: .named("Custom")).midY)")
-                                //print("Local center: \(geo.frame(in: .local).midX) x \(geo.frame(in: .local).midY)")
                             }
                     }.frame(width: 50, height: 50, alignment: .center)
                         //.background(.black)
@@ -52,20 +49,21 @@ struct RideLocation:View {
             Spacer()
             VStack{
                 if (ride.showDropOnStart || ride.showDropOnEnd){
-                    Button {
-                        ride.showDropOnEnd = false
-                        ride.showDropOnStart = false
-                    } label: {
-                        Text("Done")
-                    }
+                    //Button {
+                    //    ride.showDropOnEnd = false
+                    //    ride.showDropOnStart = false
+                    //} label: {
+                    //    Text("Done")
+                    //}
      
          
                 }else{
-                    Text("Where would you like to go?")
+                    Text("Where would you like to go?").font(.subheadline)
+                        .bold()
                     HStack{
-                        TextField("Start",text: $ride.humanStartLocation)
+                        TextField("Pickup",text: $ride.humanStartLocation)
                         Button {
-                            print("Current location")
+                            ride.userLocation = true
                         } label: {
                             Image(systemName: "location.square.fill")
                                 .foregroundColor(.white)
@@ -83,15 +81,12 @@ struct RideLocation:View {
                     
                     
                     HStack{
-                        TextField("End",text: $ride.humanStartLocation)
+                        TextField("Drop-off",text: $ride.humanEndLocation)
                         
                         Button {
                             ride.showDropOnEnd = true
                         } label: {
                             Image(systemName: "mappin")
-                
-
-                                
                                 .foregroundColor(.white)
                         }
                     }
@@ -102,7 +97,7 @@ struct RideLocation:View {
             .padding(EdgeInsets(top: 8, leading: 16,
                                 bottom: 8, trailing: 16))
             .buttonStyle(.borderedProminent)
-            
+            .background(.bar)
             }
         }
     }
