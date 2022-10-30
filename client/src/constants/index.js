@@ -1,0 +1,5 @@
+export const STATUS = { 
+  PENDING: 'PENDING',
+  FULFILLED: 'FULFILLED',
+  REJECTED: 'REJECTED'
+}

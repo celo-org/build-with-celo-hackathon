@@ -24,11 +24,11 @@ async function signup(req, res) {
         sendMail(
             email, 
             "Verify Email", 
-            { name: fullName, link: `http://localhost:3000/verify-email?user=${result._id}` }, 
+            { name: fullName, link: `https://culture-celo.herokuapp.com/verify-email?user=${result._id}` }, 
             "../utils/templates/verifyEmail.handlebars"
         );
 
-        res.status(201).json({ message: "Proceed to your email to verify your account" })
+        res.status(201).json({ message: "Signup successful, proceed to your email to verify your account" })
 
     } catch (error) {
         console.log(error)
@@ -101,7 +101,7 @@ async function forgotPassword(req, res) {
         const resetToken = crypto.randomBytes(32).toString("hex");
         const hashedToken = await bcrypt.hash(resetToken, 12)
         await Token.create({ token: hashedToken, user: user, createdAt: Date.now() })
-        const resetLink = `http://localhost:3000/reset-password?token=${resetToken}&userID=${user._id}`
+        const resetLink = `https://culture-celo.herokuapp.com/reset-password?token=${resetToken}&userID=${user._id}`
         sendMail(user.email, "Password Reset Request", { name: user.name, link: resetLink }, "../utils/templates/resetPasswordRequest.handlebars");
         res.status(200).json({ result: 'success' });
 

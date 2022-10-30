@@ -1,12 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { STATUS } from '../constants'
 import axios from '../services/axios'
-import { removeUserToken } from '../services/localStorage'
+import { removeUserToken, setUserToken } from '../services/localStorage'
 
 const namespace = 'auth'
 
+const base = '/api/user'
+
 export const signupUser = createAsyncThunk(`${namespace}/signupUser`, async (objData, { rejectWithValue }) => {
   try {
-    const { data } = await axios.post('/signup', objData)
+    const { data } = await axios.post(`${base}/signup`, objData)
     return data;
   } catch (err) {
     return rejectWithValue(err.response.data)
@@ -15,7 +18,7 @@ export const signupUser = createAsyncThunk(`${namespace}/signupUser`, async (obj
 
 export const verifyEmail = createAsyncThunk(`${namespace}/verifyEmail`, async (objData, { rejectWithValue }) => {
   try {
-    const { data } = await axios.post('/verify-email', objData)
+    const { data } = await axios.post(`${base}/verify-email`, objData)
     return data;
   } catch (err) {
     return rejectWithValue(err.response.data)
@@ -24,7 +27,7 @@ export const verifyEmail = createAsyncThunk(`${namespace}/verifyEmail`, async (o
 
 export const loginUser = createAsyncThunk(`${namespace}/loginUser`, async (objData, { rejectWithValue }) => {
   try {
-    const { data } = await axios.post('/login', objData)
+    const { data } = await axios.post(`${base}/login`, objData)
     return data;
   } catch (err) {
     return rejectWithValue(err.response.data)
@@ -33,12 +36,6 @@ export const loginUser = createAsyncThunk(`${namespace}/loginUser`, async (objDa
 
 
 const DEFAULT = { status: null, data: null, error: null }
-
-const STATUS = { 
-  PENDING: 'PENDING',
-  FULFILLED: 'FULFILLED',
-  REJECTED: 'REJECTED'
-}
 
 const authSlice = createSlice({
   name: 'auth',
@@ -87,7 +84,8 @@ const authSlice = createSlice({
     },
     [loginUser.fulfilled](state, { payload }) {
       state.login.status = STATUS.FULFILLED
-      state.user = payload
+      state.user = payload.result
+      setUserToken(payload.token)
     },
     [loginUser.rejected](state, { payload }) {
       state.login.status = STATUS.REJECTED
@@ -98,5 +96,10 @@ const authSlice = createSlice({
 })
 
 export const { logout } = authSlice.actions
+
+export const selectSignupState = state => state.auth.signup
+export const selectVerifyEmailState = state => state.auth.verifyEmail
+export const selectLoginState = state => state.auth.login
+
 
 export default authSlice.reducer
