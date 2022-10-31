@@ -15,6 +15,7 @@ export default function Builder() {
   const [loadingCalc, setLoadingCalc] = useState(false)
   const [markerIndex, setMarkerIndex] = useState<number>(0)
   const [currentDistance, setCurrentDistance] = useState<number>(0)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const { run3TBalance } = useRun3T()
   const addCoordToRoute = async () => {
@@ -56,23 +57,25 @@ export default function Builder() {
   useEffect(() => {
     ;(async () => {
       try {
-        let { status } = await Location.requestForegroundPermissionsAsync()
-        if (status !== 'granted') {
-          alert('Permission to access location was denied')
-          return
+        if (!routeCoords.length) {
+          let { status } = await Location.requestForegroundPermissionsAsync()
+          if (status !== 'granted') {
+            alert('Permission to access location was denied')
+            return
+          }
+          await addCoordToRoute()
         }
-        await addCoordToRoute()
       } catch (e) {
         console.log('error', e)
       }
     })()
-  }, [])
+  }, [routeCoords])
 
-  if (routeCoords.length === 0)
+  if (routeCoords.length === 0 || isLoading)
     return (
       <View style={globalStyles.container}>
         <Spinner style={{ borderColor: colors.primary }} size="large" />
-        <Text style={styles.loadingText}>Loading Map and Getting Location</Text>
+        <Text style={styles.loadingText}>Loading...</Text>
       </View>
     )
 
@@ -91,7 +94,13 @@ export default function Builder() {
         )}
       </View>
       {showBuildForm && (
-        <BuildForm cost={Number((currentDistance / 10).toFixed(3))} routeCoords={routeCoords} closeForm={closeForm} />
+        <BuildForm
+          cost={Number((currentDistance / 10).toFixed(3))}
+          setRouteCoords={setRouteCoords}
+          setIsLoading={setIsLoading}
+          routeCoords={routeCoords}
+          closeForm={closeForm}
+        />
       )}
       <View>
         <MapView

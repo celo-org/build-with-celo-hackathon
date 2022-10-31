@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
   btnItem: {
     width: 110,
   },
-  wrapper: { backgroundColor: '#fff', flex: 1, justifyContent: 'space-between' },
+  wrapper: { backgroundColor: '#fff', flex: 1, justifyContent: 'space-between', paddingTop: 20 },
   refreshBtn: {
     marginBottom: 40,
     width: '70%',

@@ -15,6 +15,7 @@ import MoveToEarn from './src/Components/MoveToEarn'
 import { colors, globalStyles } from './src/utils/globalStyles'
 import MoveToBuild from './src/Components/MoveToBuild'
 import Builder from './src/Components/MoveToBuild/builder'
+import RouteDetail from './src/Components/MoveToBuild/routeDetail'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -43,7 +44,11 @@ const BottomTabBar = ({ navigation, state }: { navigation: any; state: any }) =>
 
 const HomeApp = () => {
   return (
-    <Tab.Navigator initialRouteName="homeApp" tabBar={(props) => <BottomTabBar {...props} />}>
+    <Tab.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="homeApp"
+      tabBar={(props) => <BottomTabBar {...props} />}
+    >
       <Tab.Screen name="Profile" component={Home} />
       <Tab.Screen name="Move To Earn" component={MoveToEarn} />
       <Tab.Screen name="Move To Build" component={MoveToBuild} />
@@ -64,6 +69,7 @@ export default function App() {
             {/* Navigation Drawer as a landing page */}
             <Stack.Screen name="home" component={HomeApp} options={{ headerTitle: (props) => <Header /> }} />
             <Stack.Screen name="builder" component={Builder} options={{ headerTitle: (props) => <Header /> }} />
+            <Stack.Screen name="routeDetail" component={RouteDetail} options={{ headerTitle: (props) => <Header /> }} />
           </Stack.Navigator>
         </NavigationContainer>
       </WalletProvider>

@@ -3,6 +3,7 @@ import type { GeoPoint } from 'firebase/firestore'
 import type { User } from '../users/users.interface'
 
 export interface Route {
+  id?: string
   coordinates: GeoPoint[]
   date: string
   description: string

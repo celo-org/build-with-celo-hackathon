@@ -6,6 +6,12 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fff',
     height: '100%',
   },
+  wrapSpinner: {
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+  },
   map: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height - 80,
@@ -16,7 +22,7 @@ export const styles = StyleSheet.create({
     borderRadius: 30,
     backgroundColor: colors.lightGreen,
     position: 'absolute',
-    bottom: 10,
+    bottom: 80,
     right: 10,
     shadowColor: '#171717',
     shadowOffset: { width: -2, height: 4 },
@@ -38,6 +44,7 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
     opacity: 0.8,
     borderRadius: 8,
+    minWidth: Dimensions.get('window').width - 100,
   },
   boxText: {
     color: '#fff',
@@ -76,5 +83,28 @@ export const styles = StyleSheet.create({
   },
   footerControl: {
     marginHorizontal: 2,
+  },
+  routeIcon: {
+    backgroundColor: colors.secondary,
+    paddingLeft: 5,
+    paddingTop: 5,
+    marginRight: 15,
+    borderRadius: 10,
+    width: 50,
+    height: 50,
+  },
+  topButtons: {
+    backgroundColor: '#fff',
+    display: 'flex',
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 12,
+  },
+  mapTitle: {
+    fontSize: 22,
+    fontWeight: '600',
+    color: '#fff',
+    textAlign: 'center',
   },
 })

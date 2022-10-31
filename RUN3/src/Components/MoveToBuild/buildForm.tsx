@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Button, Card, Input, Text } from '@ui-kitten/components'
 import { styles } from './style'
@@ -8,7 +8,7 @@ import { LocationObjectCoords } from 'expo-location'
 import { GeoPoint } from 'firebase/firestore'
 import { useRoute } from '../../hooks/useRoute'
 import { useRun3T } from '../../hooks/useRUN3T'
-import { useWalletProvider } from '../../contexts/WalletContext'
+import { useNavigation } from '@react-navigation/native'
 
 const Header = (props: any) => (
   <View {...props}>
@@ -19,18 +19,25 @@ const Header = (props: any) => (
 export const BuildForm = ({
   closeForm,
   routeCoords,
+  setRouteCoords,
   cost,
+  setIsLoading,
 }: {
   closeForm: () => void
+  setRouteCoords: Dispatch<SetStateAction<(LocationObjectCoords & { id: number })[]>>
+  setIsLoading: Dispatch<SetStateAction<boolean>>
   routeCoords: (LocationObjectCoords & { id: number })[]
   cost: number
 }) => {
   const [des, setDes] = useState<string>('')
   const [title, setTitle] = useState<string>('')
-  const { routeAddress, mintRoute, getRouteByUser } = useRoute()
+  const { mintRoute } = useRoute()
   const { transferRun3TtoContract } = useRun3T()
+  const navigation = useNavigation()
 
   const buildRoute = async () => {
+    setIsLoading(true)
+    closeForm()
     const payload = {
       coordinates: routeCoords.map((route) => new GeoPoint(route.latitude, route.longitude)),
       date: new Date().toLocaleDateString(),
@@ -41,7 +48,11 @@ export const BuildForm = ({
       const payment = await transferRun3TtoContract(cost)
       if (payment) {
         const res: any = await createRoute(payload)
+
         await mintRoute(res.id)
+        setIsLoading(false)
+        navigation.navigate('routeDetail', res)
+        setRouteCoords([])
       } else {
         alert('There was an error, please try again')
       }
@@ -49,10 +60,6 @@ export const BuildForm = ({
       console.log('error', e)
     }
   }
-
-  useEffect(() => {
-    getRouteByUser()
-  }, [])
 
   return (
     <Card
@@ -66,7 +73,6 @@ export const BuildForm = ({
           <Button
             onPress={() => {
               buildRoute()
-              closeForm()
             }}
             style={[styles.footerControl, globalStyles.primaryBg]}
             size="small"

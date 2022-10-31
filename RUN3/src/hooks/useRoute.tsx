@@ -1,15 +1,16 @@
-import { Contract, ethers } from 'ethers'
+import { BigNumber, Contract, ethers } from 'ethers'
 import { useEffect, useState } from 'react'
 import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import { FAKE_KEY, NET_PROVIDER } from 'react-native-dotenv'
 import routeData from '../../blockchain/artifacts/contracts/Route.sol/Route.json'
 import { FormatTypes, Interface } from 'ethers/lib/utils'
 import { useWalletProvider } from '../contexts/WalletContext'
+import { getRouteById } from '../api/routes/routes'
 
 export const useRoute = () => {
   const [routeContract, setRouteContract] = useState<Contract>()
   const { walletWithProvider } = useWalletProvider()
-  const routeAddress = '0xBB189Dfe7cCE8B4aE48c0f881D2334B877d7A783'
+  const routeAddress = '0x9B839eA9e6bA9C15c48653395355F4b0Dc893bA3'
   const abi = routeData.abi
   const fireStoreBase = 'https://firestore.googleapis.com/v1/projects/run3-587b8/databases/(default)/documents/routes'
 
@@ -26,15 +27,27 @@ export const useRoute = () => {
     getWatchContract()
   }, [])
 
-  const getRouteByUser = async () => {
+  const getRoutesByUser = async () => {
     try {
       const routeContract = new ethers.Contract(routeAddress, abi, walletWithProvider)
-      const test = await routeContract.balanceOf(walletWithProvider.address)
-      const formatBalance = Number(ethers.utils.formatEther(test))
-      console.log('logRoute', formatBalance)
-      //       await mintWatch(walletWithProvider.address)
+      const routeIds = await routeContract.getUserRouteIds(walletWithProvider.address)
+      let routesData = []
+      if (routeIds.length) {
+        routesData = await Promise.all(
+          routeIds.map(async (element: BigNumber) => {
+            const routeId = ethers.utils.formatUnits(element, 0)
+            const tokenUri = await routeContract.tokenURI(routeId)
+            const routeUrlArr = tokenUri.split('/')
+            const routeFbId = routeUrlArr.length && routeUrlArr[routeUrlArr.length - 1]
+            const routeRes = await getRouteById(routeFbId)
+            if (!routeRes) return []
+            return routeRes
+          })
+        )
+      }
+      return routesData
     } catch (e) {
-      console.log('error on getWatchdata', e)
+      console.log('error on getRoutesByUser', e)
     }
   }
 
@@ -65,5 +78,5 @@ export const useRoute = () => {
     }
   }
 
-  return { mintRoute, abi, routeAddress, getRouteByUser }
+  return { mintRoute, abi, routeAddress, getRoutesByUser }
 }
