@@ -59,9 +59,11 @@ contract SimpleProxyContract is Ownable {
                 emit Distributed(walletAddresses[i], split);
             }
         }
+
+        return true;
     }
 
-    function balanceOf(address _account) external returns (uint256) {
+    function balanceOf(address _account) external view returns (uint256) {
         return cont.balanceOf(_account);
     }
 
@@ -72,11 +74,11 @@ contract SimpleProxyContract is Ownable {
         return true;
     }
 
-    function totalMembers() external returns (uint256) {
+    function totalMembers() external view returns (uint256) {
         return walletAddresses.length;
     }
 
-    function getTokenAddress() external returns (address) {
+    function getTokenAddress() external view returns (address) {
         return tokenAddress;
     }
 }

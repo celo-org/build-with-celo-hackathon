@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.8.9;
 import "../interfaces/ICommon.sol";
 // import "../libs/Context.sol";
 import "./Account.sol";
@@ -18,7 +18,7 @@ import "./Account.sol";
    * 2. Acount does not exist.
    * 3. Insufficient value.
  */
-abstract contract AccountManager is ICommon, Ownable {
+abstract contract AccountManager is ICommon, Context{
   event NewAccount(
     address indexed newAlc, 
     address indexed who,
@@ -45,7 +45,7 @@ abstract contract AccountManager is ICommon, Ownable {
   /**@dev If 'value' is true, 'who' must not already own an account
    * otherwise, 'who' must own an account before now.
    */
-  function _check(bool value, address who) private view {
+  function _check(bool value, address who) internal view {
     value? require(_account(who) == address(0), "1") : require(_account(who) != address(0), "2");
   }
 

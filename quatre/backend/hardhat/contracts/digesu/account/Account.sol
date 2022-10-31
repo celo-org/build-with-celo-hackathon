@@ -5,7 +5,7 @@ pragma solidity ^0.8.0;
 // import "../libs/Context.sol";
 // import "../interfaces/IERC20.sol";
 import "../interfaces/IAccount.sol";
-import "../interfaces/IMain.sol";
+import "../interfaces/IDigesu.sol";
 import "../libs/Utils.sol";
 import "../libs/Ownable.sol";
 import "../libs/ReentrancyGuard.sol";
@@ -31,7 +31,7 @@ contract Account is IAccount, Context, Ownable, ReentrancyGuard {
   uint private engaged;
 
   // All Subscriptions
-  mapping (uint=>Info) private subscriptionInfo;
+  mapping (uint=>Info) public subscriptionInfo;
 
   /**@dev Stores balances related to erc20 addresses at anytime
    * both withdrawable and engaged balances.
@@ -71,7 +71,7 @@ contract Account is IAccount, Context, Ownable, ReentrancyGuard {
   */
   modifier isSupportedToken(address erc20Address) {
     if(erc20Address == address(0)) revert ZeroAddress(erc20Address);
-    if(!IMain(_router()).supportedToken(erc20Address)) revert UnsupportedAsset(erc20Address);
+    if(!IDigesu(_router()).supportedToken(erc20Address)) revert UnsupportedAsset(erc20Address);
     _;
   }
 
@@ -81,7 +81,9 @@ contract Account is IAccount, Context, Ownable, ReentrancyGuard {
   }
 
   // Fallback
-  receive() external payable { }
+  receive() external payable { 
+    revert IDoNotAcceptEtherIFYouForceItLost();
+  }
 
   // /**@dev Returns subscrition detail for the pool at 'poolId'
   //  * Note: Read information from this Account based on 'poolId'.
@@ -101,8 +103,14 @@ contract Account is IAccount, Context, Ownable, ReentrancyGuard {
    * @notice Alternate function to deposit netork asset. 
    * Note Public function, no restriction.
   */
-  function depositNative() external payable { require(msg.value > 0, "2"); }
+  // function depositNative() external payable { require(msg.value > 0, "2"); }
 
+  /**@dev Synchronizes balances. We update both balances each time this 
+      function is called.
+      @param token : Address of the ERC20 supported asset.
+      @param optionalArg : is any value that should be deducted along with the actual
+                            value sent in call such as makerFee or Router commission.
+   */
   function _syncBalances(address token, uint optionalArg) private {
     uint _balInUse = balances[token][Balances(1)];
     balances[token][Balances.WITHDAWABLE] = token == address(this)? address(this).balance : IERC20(token).balanceOf(address(this));
@@ -123,29 +131,29 @@ contract Account is IAccount, Context, Ownable, ReentrancyGuard {
     return true;
   }
 
-    /**
-   * @notice Utility to withdraw network asset.
-   * Note Restricted
-  */
-  function withdrawNativeOnlyRouter(
-    uint amount, 
-    uint fee, 
-    address to, 
-    address feeTo
-    ) external onlyRouter nonReentrant syncBalances(address(this), amount, fee){
-    (bool j,) = feeTo.call{value: fee}("");
-    (bool i,) = to.call{value: amount}("");
+  // /**
+  //  * @notice Utility to withdraw network asset.
+  //  * Note Restricted
+  // */
+  // function withdrawNativeOnlyRouter(
+  //   uint amount, 
+  //   uint fee, 
+  //   address to, 
+  //   address feeTo
+  //   ) external onlyRouter nonReentrant syncBalances(address(this), amount, fee){
+  //   (bool j,) = feeTo.call{value: fee}("");
+  //   (bool i,) = to.call{value: amount}("");
 
-    require(i && j, "Transfered failed");
-  }
+  //   require(i && j, "Transfered failed");
+  // }
 
-  function withdrawNativeOnlyOwner(uint amount) 
-    public
-    onlyOwner
-    syncBalances(address(this), amount, 0)
-  {
-    payable(owner()).transfer(amount);
-  }
+  // function withdrawNativeOnlyOwner(uint amount) 
+  //   public
+  //   onlyOwner
+  //   syncBalances(address(this), amount, 0)
+  // {
+  //   payable(owner()).transfer(amount);
+  // }
 
   /**
    * @notice Get the balance ERC20 token 
@@ -209,11 +217,20 @@ contract Account is IAccount, Context, Ownable, ReentrancyGuard {
     bool isAdmin, 
     bool isMember
   ) external onlyRouter returns(bool) {
-    subscriptionInfo[poolId].isAdmin = isAdmin;
-    subscriptionInfo[poolId].isMember = isMember;
+   _setStatus(poolId, isAdmin, isMember);
    
     return true;
   }
+
+  function _setStatus(
+    uint poolId,
+    bool isAdmin, 
+    bool isMember
+  ) private {
+    subscriptionInfo[poolId].isAdmin = isAdmin;
+    subscriptionInfo[poolId].isMember = isMember;
+  }
+
 
   /**@dev Router updates balance in use. 
    * Note Callable only by the Mother branchup.
@@ -241,7 +258,7 @@ contract Account is IAccount, Context, Ownable, ReentrancyGuard {
     subscriptionInfo[poolId].turnTime = block.timestamp + 1 hours;
     return true;
   }
-
+  
   function initializeInfo(
     Info memory info, 
     bool lock,
@@ -261,14 +278,34 @@ contract Account is IAccount, Context, Ownable, ReentrancyGuard {
     return true;
   }
 
-  function clearSubscrition(uint poolId) external onlyRouter returns(bool) {
+  function clearSubscription(uint poolId) external onlyRouter returns(bool) {
     delete subscriptionInfo[poolId];
-    // _withdraw(asset, to, value, 0);
     return true;
   }
 
-  // function updateMember(uint poolId) external returns(bool) {
-  //   subscriptionInfo[poolId].isMember = true;
-  // }
+  function split(
+    uint poolId,
+    address asset,
+    address[] memory members,
+    address closeTo,
+    uint unitAmount, 
+    uint _balance) external onlyRouter returns(bool) 
+    {
+      _setStatus(poolId, false, false);
+      uint _bal = _balance;
+      for(uint i = 0; i < members.length; i++) {
+        _bal -= unitAmount;
+        _withdraw(
+          asset, 
+          members[i], 
+          unitAmount,
+          0
+        );
+      }
+      if(_bal > 0) _withdraw(  asset,   closeTo,   unitAmount,  0);
+
+      return true;
+  }
+
 
 }

@@ -1,29 +1,16 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.0;
+pragma solidity 0.8.9;
 
-abstract contract FuncHandler {
-  // error NonInContext();
-  enum FuncTag { 
-    ADD, 
-    GET, 
-    PAYBACK, 
-    COMPLETE, 
-    PUBLIC, 
-    PRIVATE,
-    UPDATE,
-    CANCEL
-  }
-  // enum InFuncTag {
-  //   CREATE
-  // }
-  enum Access { DENIED, ALLOWED }
+import "../interfaces/ICommon.sol";
+
+abstract contract FuncHandler is ICommon {
   
   /**
     @dev Maps functions to Access
       Note: Functions can either be in locked or open mode.
   */
-  mapping(uint96 => mapping(FuncTag => Access)) private fLock;
+  mapping(uint => mapping(FuncTag => Access)) private fLock;
 
   /**@dev Function contexts determines if certain internal function 
    * should run or not. Each internal callable function should run only
@@ -63,19 +50,19 @@ abstract contract FuncHandler {
     @dev Determine if function should be called at this time.
       @param tag - Function handle. See IStorage.FuncTag'
    */
-  modifier checkFunctionPass(uint96 poolId, FuncTag tag) {
+  modifier checkFunctionPass(uint poolId, FuncTag tag) {
     require(_fStatus(poolId, tag) == Access.ALLOWED, "Locked");
     _;
   }
 
   
   ///@dev locks function with @param tag : Function handle
-  function _lock(uint96 pid, FuncTag tag) internal {
+  function _lock(uint pid, FuncTag tag) internal {
     fLock[pid][tag] = Access.DENIED;
   }
 
   ///@dev Unlocks function with @param tag : Function handle
-  function _unlock(uint96 pid, FuncTag tag) internal {
+  function _unlock(uint pid, FuncTag tag) internal {
     fLock[pid][tag] = Access.ALLOWED;
   }
 
@@ -83,7 +70,7 @@ abstract contract FuncHandler {
    * @param pid : pool Id
    * @param tag : Function tag
    */
-  function _fStatus(uint96 pid, FuncTag tag) internal view returns (Access _status) {
+  function _fStatus(uint pid, FuncTag tag) internal view returns (Access _status) {
     _status = fLock[pid][tag];
   }
 

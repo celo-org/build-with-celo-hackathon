@@ -51,6 +51,13 @@ module.exports = {
   },
   solidity: {
     version: "0.8.9",
+    settings: {          // See the solidity docs for advice about optimization and evmVersion
+      optimizer: {
+        enabled: true,
+        runs: 200
+      },
+      evmVersion: "byzantium"
+     }
   },
   namedAccounts: {
     deployer: 0,

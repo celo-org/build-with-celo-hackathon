@@ -14,23 +14,24 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   const { deploy } = deployments;
   const { deployer } = await getNamedAccounts();
 
-  await deploy("Greeter", {
+  await deploy("Account", {
     from: deployer,
     args: ["hello world"],
     log: true,
   });
 
-  await deploy("Storage", {
+  await deploy("QuatreToken", {
     // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
     from: deployer,
-    //args: [ "Hello", ethers.utils.parseEther("1.5") ],
+    // args: [ "Hello", ethers.utils.parseEther("1.5") ],
+    args: [ deployer ],
     log: true,
   });
 
-  await deploy("SupportToken", {
+  await deploy("Main", {
     // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
     from: deployer,
-    //args: [ "Hello", ethers.utils.parseEther("1.5") ],
+    args: [ "Hello", ethers.utils.parseEther("1.5") ],
     log: true,
   });
 

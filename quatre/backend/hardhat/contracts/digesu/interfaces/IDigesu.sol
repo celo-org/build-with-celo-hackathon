@@ -1,31 +1,32 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.0;
+pragma solidity 0.8.9;
 
-import "./Params.sol";
 import "./ICommon.sol";
 
-interface IMain is Params, ICommon {
-  function joinABand(uint64 poolId) external payable returns(bool);
-  function getFinance(uint64 poolId) external payable returns(bool);
-  function payback(uint64 poolId) external payable returns(bool);
-  function liquidate(uint64 poolId) external payable;
-  function roundUp(uint64 poolId) external;
-  function enquireLiquidation(uint64 poolId) external view returns(Liquidation calldata);
-  function cancelBand(uint64 poolId) external returns(bool);
+interface IDigesu {
+  function joinABand(uint poolId) external returns(bool);
+  function getFinance(uint poolId) external returns(bool);
+  function payback(uint poolId) external returns(bool);
+  function liquidate(uint poolId) external returns(bool);
+  function roundUp(uint poolId) external returns(bool);
+  function enquireLiquidation(uint poolId) external view returns(ICommon.Liquidation calldata);
+  function cancelBand(uint poolId) external returns(bool);
   function supportedToken(address token) external view returns(bool);
   
   function createPublicPool(
     uint8 quorum, 
-    uint8 _durationIndays, 
+    uint8 durationInDays, 
     uint16 colCoverageRatio, 
-    uint tokenPriceInETH) external payable returns(bool);
+    uint amount,
+    address asset) external returns(bool);
 
   function createPrivatePool(
-    uint8 _durationIndays, 
+    uint8 durationIndays,
     uint16 colCoverateRatio, 
-    address[] memory members,
-     uint tokenPriceInETH) external payable returns(bool);
+    address[] memory members, 
+    address asset,
+    uint amount) external returns(bool);
   
   struct Statistics {
     uint totalValueInERC20;
