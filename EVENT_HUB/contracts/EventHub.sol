@@ -2,7 +2,6 @@
 pragma solidity ^0.8.0;
 
 contract EventHub {
-    uint256 public totalEvents;
     string[] eventIds;
 
     event NewEventCreated(
@@ -13,6 +12,8 @@ contract EventHub {
         uint256 deposit,
         string eventDataCID
     );
+
+    event Transfer(string Message);
 
     event NewRSVP(string eventID, address attendeeAddress);
 
@@ -40,22 +41,11 @@ contract EventHub {
         uint256 maxCapacity,
         string calldata eventDataCID,
         string calldata eventId
-    ) external returns(string memory) {
-        // generate an eventID based on other things passed in to generate a hash
-//        bytes32 eventId = keccak256(
-//            abi.encodePacked(
-//                msg.sender,
-//                address(this),
-//                eventTimestamp,
-//                deposit,
-//                maxCapacity
-//            )
-//        );
+    ) external {
 
         address[] memory confirmedRSVPs;
         address[] memory claimedRSVPs;
 
-        // this creates a new CreateEvent struct and adds it to the idToEvent mapping
         idToEvent[eventId] = CreateEvent(
             eventId,
             eventDataCID,
@@ -76,33 +66,29 @@ contract EventHub {
             deposit,
             eventDataCID
         );
-        totalEvents ++;
+
         eventIds.push(eventId);
-        return idToEvent[eventId].eventId;
     }
 
+//    function createNewRSVP(string calldata eventId) public returns(uint256) {
     function createNewRSVP(string calldata eventId) public payable {
         // look up event from our mapping
         CreateEvent storage myEvent = idToEvent[eventId];
-
         // transfer deposit to our contract / require that they send in enough ETH to cover the deposit requirement of this specific event
-//        require(msg.value == myEvent.deposit, "NOT ENOUGH"); TODO: why not working.
+//        require(msg.value == myEvent.deposit, "NOT ENOUGH");
 
         // require that the event hasn't already happened (<eventTimestamp)
-//        require(block.timestamp <= myEvent.eventTimestamp, "ALREADY HAPPENED"); TODO: why is saying happened.
+        require(block.timestamp <= myEvent.eventTimestamp, "ALREADY HAPPENED");
 
         // make sure event is under max capacity
-//        require(
-//            myEvent.confirmedRSVPs.length < myEvent.maxCapacity,
-//            "This event has reached capacity"
-//        );
+        require(
+            myEvent.confirmedRSVPs.length < myEvent.maxCapacity,
+            "This event has reached capacity"
+        );
 
         // require that msg.sender isn't already in myEvent.confirmedRSVPs AKA hasn't already RSVP'd
         for (uint8 i = 0; i < myEvent.confirmedRSVPs.length; i++) {
-            require(
-                myEvent.confirmedRSVPs[i] != msg.sender,
-                "ALREADY CONFIRMED"
-            );
+            require(myEvent.confirmedRSVPs[i] != msg.sender, "ALREADY CONFIRMED");
         }
 
         myEvent.confirmedRSVPs.push(payable(msg.sender));
@@ -122,10 +108,11 @@ contract EventHub {
         }
     }
 
-    function confirmAttendee(string calldata eventId, address attendee) public {
+    function confirmAttendee(string memory eventId, address attendee) public  {
         // look up event from our struct using the eventId
-        CreateEvent storage myEvent = idToEvent[eventId];
 
+
+        CreateEvent storage myEvent = idToEvent[eventId];
         // require that msg.sender is the owner of the event - only the host should be able to check people in
         require(msg.sender == myEvent.eventOwner, "NOT AUTHORIZED");
 
@@ -144,6 +131,7 @@ contract EventHub {
         for (uint8 i = 0; i < myEvent.claimedRSVPs.length; i++) {
             require(myEvent.claimedRSVPs[i] != attendee, "ALREADY CLAIMED");
         }
+//        return test;
 
         // require that deposits are not already claimed by the event owner
         require(myEvent.paidOut == false, "ALREADY PAID OUT");
@@ -229,6 +217,19 @@ contract EventHub {
     function getConfirmedRSVPs(string calldata eventId) public view returns (address [] memory) {
         CreateEvent storage myEvent = idToEvent[eventId];
         return myEvent.confirmedRSVPs;
+    }
+
+    function getBalance() public view returns (uint256) {
+        return address(this).balance;
+    }
+
+    function transfer(string calldata eventId) public {
+        CreateEvent memory myEvent = idToEvent[eventId];
+//        balances[msg.sender] -= amount;
+        for (uint8 i = 0; i < myEvent.claimedRSVPs.length; i++) {
+            myEvent.claimedRSVPs[i].transfer(address(this).balance);
+        }
+        emit Transfer('Transfered the payout');
     }
 }
 

@@ -7,13 +7,14 @@ import styles from './Event.module.css'
 import { contract, createNewEvent } from '../../utils'
 import { addToIPFS } from '../../utils/ipfs'
 import EventHub from "../../artifacts/contracts/EventHub.sol/EventHub.json";
-const eventHubContractAddress = '0x51d98518269ebA8A2ceD329e8552a72A2932a6F9'
+const eventHubContractAddress = '0xA679c7795823f130da97d41Cc00236BB5390a5Cb'
 
 function Event() {
   const { connect, address, kit } = useCelo()
 
   const [eventHubContract, setEventHubContract] = useState('')
   const [status, setStatus] = useState('')
+  const [loading, setLoading] = useState(false)
   const [eventName, setEventName] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [eventTime, setEventTime] = useState("");
@@ -28,20 +29,42 @@ function Event() {
     e.preventDefault()
 
     if (address) {
+      setLoading(true)
       const CID = await saveToIPFS()
+      // return console.log(CID)
+
 
       let deposit = ethers.utils.parseEther(refund);
       // let deposit = refund
       let eventDateAndTime = new Date(`${eventDate} ${eventTime}`);
       let eventTimestamp = eventDateAndTime.getTime();
 
-      const { status } = await createNewEvent(eventHubContract, address, {
-        eventTimestamp,
-        deposit,
-        maxCapacity,
-        CID,
-        ID: CID
-      })
+
+      try {
+        // const contractt = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
+        const stableToken = await kit.contracts.getStableToken()
+        const res = await eventHubContract.methods.createNewEvent(eventTimestamp, deposit, maxCapacity, CID, CID).send({
+          from: address,
+          feeCurrency: stableToken.address,
+          gasLimit: '910000',
+
+        })
+        if (res) {
+          setLoading(false)
+        }
+
+      } catch (error) {
+        setLoading(false)
+        setStatus("😥 " + error.message)
+      }
+
+      // const { status } = await createNewEvent(eventHubContract, address, kit, {
+      //   eventTimestamp,
+      //   deposit,
+      //   maxCapacity,
+      //   CID,
+      //   ID: CID
+      // })
       setStatus(status)
     }
 
@@ -61,28 +84,14 @@ function Event() {
     )
   }
 
-  async function addSmartContractListener() {
-
-    const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
-
-    eventHubContract.events.NewEventCreated({}, (error, data) => {
-      if (error) {
-        console.log("😥 " + error.message);
-      } else {
-        console.log(data.returnValues);
-        console.log("🎉 Your message has been updated!");
-      }
-    })
-  }
-
   useEffect(() => {
-    addSmartContractListener()
     setEventHubContract(contract(kit))
   }, [])
 
   return (
     <div className={styles.container}>
       <h4>{status}</h4>
+      <h4>{loading ? 'loading ...' :  ''}</h4>
       <form
         onSubmit={handleSubmit}
         className="space-y-8 divide-y divide-gray-200"

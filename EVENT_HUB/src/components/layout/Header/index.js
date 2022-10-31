@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import {useCelo} from "@celo/react-celo";
 import {ethers} from 'ethers'
 
 import styles from './Header.module.css'
 
 function AppHeader() {
 
-  const [address, setAddress] = useState()
+  const { address, connect, disconnect } = useCelo()
 
   // function connect(){
   //
@@ -36,7 +37,8 @@ function AppHeader() {
       </div>
       <div>
         <button>Create Event</button>
-        <button>Logout</button>
+        <button onClick={connect}>{address}</button>
+        <button onClick={disconnect}>Logout</button>
       </div>
     </header>
   )

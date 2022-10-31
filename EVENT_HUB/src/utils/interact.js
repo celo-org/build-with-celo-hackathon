@@ -1,25 +1,30 @@
 
 import EventHub from '../artifacts/contracts/EventHub.sol/EventHub.json'
-import React from "react";
-const eventHubContractAddress = '0xd9145CCE52D386f254917e481eB44e9943F39138'
+const eventHubContractAddress = '0x982A479D364802bdCf7bEd8718EcB889ba505e96'
 
-export const contract = async kit => {
+export const contract = (kit) => {
   // const kit = await getConnectedKit()
   return new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
 }
 
 
-export const createNewEvent = async (contract, address, { eventTimestamp, deposit, maxCapacity, CID, ID }) => {
+export const createNewEvent = async (contract, address, kit, { eventTimestamp, deposit, maxCapacity, CID, ID }) => {
 
   try {
-    const res = await contract.methods.createNewEvent(eventTimestamp, deposit, maxCapacity, CID, ID).call()
-return console.log(res)
+    const stableToken = await kit.contracts.getStableToken()
+    const res = await contract.methods.createNewEvent(eventTimestamp, deposit, maxCapacity, CID, ID).send({
+      from: address,
+      feeCurrency: stableToken.address,
+      gasLimit: '910000',
+
+    })
+    console.log('res ', res)
     return {
       status: (
         <span>
           ✅{" "}
-          <a target="_blank" href={`https://goerli.etherscan.io/tx/`}>
-            View the status of your transaction on Etherscan!
+          <a target="_blank" href={`https://explorer.celo.org/alfajores/tx/${res.transactionHash}/token-transfers/`}>
+            View the status of your transaction on Celo Explorer!
           </a>
           <br />
           ℹ️ Once the transaction is verified by the network, the message will
