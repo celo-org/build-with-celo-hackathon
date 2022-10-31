@@ -35,6 +35,13 @@
     ]
   },
   "devDependencies": {
-    "@netlify/plugin-nextjs": "^4.2.5"
+    "@netlify/plugin-nextjs": "^4.2.5",
+    "eslint": "^8.26.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-node": "^4.1.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.7.1"
   }
 }

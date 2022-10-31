@@ -111,7 +111,7 @@ const Home = () => {
                                                         </div>
                                                     </div>
                                                     <div className='text-center'>
-                                                        <h4>Get GS Credits</h4>
+                                                        <h4>Collect scrap & earn GS Credits</h4>
                                                         <p className='text-sm'>Earn the GS Credit NFT, which proves the amount of plastic waste recovered by your company, thus verifying your commitment to sustainability.</p>
                                                     </div>
                                                 </div>
@@ -515,7 +515,7 @@ const Home = () => {
                                     </h3>
                                     <p className='mb-3'>While the GidiScrap platform works in a decentralized manner, to resolve disputes, we have temporarily set up a 12-person governance committee to vote on disputes. This committe consists of environmental experts, as well as representatives of organizations and consumer bodies.</p>
                                     <p className='mb-3'>For every dispute being managed, the governance committee publicly publishes the rationale for decisions made on the outcomes of disputes.</p>
-                                    <p className='mb-3'>In the near future, GidiScrap will fully operate as a DAO. We will launch a governance token $GSC, whose owners will have voting and proposal rights on disputes as well as the future roadmap of the GidiScrap platform.</p>
+                                    <p className='mb-3'>In the near future, GidiScrap will fully operate as a DAO. We will launch a governance token $GSC, whose owners will have voting and proposal rights on disputes as well as the future roadmap of the GidiScrap platform, using the <a href='https://limechain.tech/blog/dao-voting-mechanisms-explained-2022-guide/#:~:text=the%20long%2Dterm.-,Multisig%20Voting,-Multisig%20voting%20is' target='_blank'>multi-sig voting mechanism</a>.</p>
                                     <p className=''>Coming Soon button</p>
                                 </div>
                                 
