@@ -13,7 +13,7 @@ import { AppToastComponent } from 'src/app/views/notifications/toasters/toast-si
 import { firstValueFrom, Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
-import {  ValidateDateIsNotInPast} from '../../../validators/create-launchpad-validators';
+import {  ValidateDateIsNotInPast} from '../../../validators/create-validators';
 
 const PoapFactoryAbi = require('../../../../assets/PoapFactory.json');
 const fee = "0.001";

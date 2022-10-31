@@ -14,7 +14,7 @@
 					<img [src]="poap.logo" alt="event logo"  class="img-fluid img-thumbnail img-rounded"/>
 				</div>
 				<div class="mx-2 px-2">
-					<h3>{{poap.eventName}}</h3>
+					<h3 class="text-pink">{{poap.eventName}}</h3>
 					<p>{{poap.desc}}</p>
 
 					<div class="text-left my-2" >
@@ -30,7 +30,7 @@
 							</a>
 					</div>
 				
-					<h5 class="mt-3" style="color: #d70bc1">POAPS Minted: {{poap.poapsMinted}} of {{poap.maxCapacity}}</h5>
+					<h5 class="mt-3 text-pink" >POAPS Minted: {{poap.poapsMinted}} of {{poap.maxCapacity}}</h5>
 				</div>
 				
 			</div>
@@ -98,6 +98,9 @@
 
 	<div *ngIf="poapOwners" class="my-3 card">
 		<div class="card-body">
+
+            <h3 class="my-3 text-pink" >Collection</h3>
+
 			<table class="table">
 			  <thead>
 				<tr>
