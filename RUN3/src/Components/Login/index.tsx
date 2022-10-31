@@ -53,14 +53,14 @@ export default function Login({ navigation }: { navigation: any }) {
         const walletWithProvider = new CeloWallet(state.privKey, provider)
         setProvider(provider)
         setWalletWithProvider(walletWithProvider)
-        // const user = await getUserByEmail(state.userInfo.email)
-        // if (user === 'User not found') {
-        //   await createUser({
-        //     email: state.userInfo.email,
-        //     name: state.userInfo.name,
-        //     publicaddress: walletWithProvider.address,
-        //   })
-        // }
+        const user = await getUserByEmail(state.userInfo.email)
+        if (user === 'User not found') {
+          await createUser({
+            email: state.userInfo.email,
+            name: state.userInfo.name,
+            publicaddress: walletWithProvider.address,
+          })
+        }
 
         await AsyncStorage.setItem('wallet', JSON.stringify(walletWithProvider))
         navigation.replace('home')

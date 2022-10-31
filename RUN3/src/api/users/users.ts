@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc } from 'firebase/firestore'
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore'
 
 import { db } from '../firebase-config'
 import type { Step, User } from './users.interface'
@@ -20,19 +20,6 @@ export const getUserById = async (id: string) => {
     const docSnap = await getDoc(docRef)
     if (docSnap.exists()) {
       return { id, ...docSnap.data() }
-    }
-  } catch (e) {
-    return e
-  }
-  return 'User not found'
-}
-
-export const getUserByEmail = async (email: string) => {
-  try {
-    const docRef = doc(db, 'users', email)
-    const docSnap = await getDoc(docRef)
-    if (docSnap.exists()) {
-      return { email, ...docSnap.data() }
     }
   } catch (e) {
     return e
@@ -76,6 +63,26 @@ export const deleteUserById = async (id: string) => {
   try {
     const userDoc = doc(db, 'users', id)
     return await deleteDoc(userDoc)
+  } catch (e) {
+    return e
+  }
+}
+
+export const getUserByEmail = async (email: string) => {
+  try {
+    let result = {}
+    const docRef = collection(db, 'users')
+    const q = query(docRef, where('email', '==', email))
+    const querySnapshot = await getDocs(q)
+    querySnapshot.forEach((doc1) => {
+      if (doc1.exists()) {
+        result = doc1.data()
+      }
+    })
+    if (Object.keys(result).length === 0 && result.constructor === Object) {
+      return 'User not found'
+    }
+    return result
   } catch (e) {
     return e
   }

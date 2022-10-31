@@ -15,7 +15,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "config": {
@@ -30,7 +32,18 @@
     },
     "web": {
       "favicon": "./assets/favicon.png",
-      "build": { "babel": { "include": ["@ui-kitten/components"] } }
+      "build": {
+        "babel": {
+          "include": [
+            "@ui-kitten/components"
+          ]
+        }
+      }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "30868dc3-7a22-491c-ae6c-955972ef189b"
+      }
     }
   }
 }
