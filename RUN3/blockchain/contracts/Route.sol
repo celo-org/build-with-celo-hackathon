@@ -11,16 +11,24 @@ contract Route is ERC721URIStorage, Ownable {
 
    constructor() ERC721("RouteNFT", "ROUTE") {}
 
+
+  mapping(address => uint256[]) private mintedAddress;
+
    function mintRoute(address recipient, string memory tokenURI)
        public onlyOwner
        returns (uint256)
    {
        _tokenIds.increment();
-
        uint256 newItemId = _tokenIds.current();
+       mintedAddress[recipient].push(newItemId);
        _mint(recipient, newItemId);
        _setTokenURI(newItemId, tokenURI);
 
        return newItemId;
    }
+
+
+    function getUserRouteIds(address recipient) external view returns (uint256[] memory) {
+        return mintedAddress[recipient];
+    }
 }
