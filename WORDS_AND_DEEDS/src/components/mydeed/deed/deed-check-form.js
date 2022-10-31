@@ -125,9 +125,9 @@ class DeedCheckForm extends React.Component {
 		
 		let card;
 
-		let {remotewallet, remotecreate} = this.state;
+		let {remotewallet} = this.state;
 
-		if ((remotewallet !== true) || (remotecreate !== true)){
+		if (remotewallet !== true){
 			card = await this.app.openCurrencyCard(currencyuuid);
 		}
 		else {

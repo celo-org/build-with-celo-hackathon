@@ -8,6 +8,7 @@ import { Button, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 import {Header} from '@primusmoney/react_pwa/react-js-ui';
 
 import { QrReader } from 'react-qr-reader';
+import QRCodeReadForm from '../../../components/common/qr-code-reader/qr-code-read-form.js';
 
 class QRCodeReaderHomeScreen extends React.Component {
 	
@@ -26,7 +27,7 @@ class QRCodeReaderHomeScreen extends React.Component {
 			facing: {variant: 'secondary'},
 			rear: {variant: 'primary'},
 
-			action: 'view-list',
+			action: 'scan',
 			loaded: false,
 			readerinfo: 'loading...'		
 		};		
@@ -54,7 +55,7 @@ class QRCodeReaderHomeScreen extends React.Component {
 				var params = app_nav_target.params;
 	
 				if (params) {
-					let action = (params.action ? params.action : 'view-list');
+					let action = (params.action ? params.action : 'scan');
 		
 					this.setState({action});
 				}
@@ -159,7 +160,7 @@ class QRCodeReaderHomeScreen extends React.Component {
 		}
 	}
 
-	async onSwitchCamera(e) {
+/* 	async onSwitchCamera(e) {
 		let {facingMode, facing, rear} = this.state;
 
 		switch(facingMode) {
@@ -196,7 +197,7 @@ class QRCodeReaderHomeScreen extends React.Component {
 			default:
 				break;
 		}
-	}
+	} */
 
 	render() {
 		let {facingMode, facing, rear, loaded, readerinfo} = this.state;
@@ -212,20 +213,21 @@ class QRCodeReaderHomeScreen extends React.Component {
 				</div>
 
 				<div className="QRCodeReader">
-				<QrReader
+				<QRCodeReadForm app={this.app} onRead={this.onRead.bind(this)} />
+				{/* <QrReader
 					key={(facingMode == 'user' ? 'user' : 'environment')}
 					onResult={this.onRead.bind(this)}
 					style={{ width: '100%' }}
 					constraints={constraints}
-				/>
+				/>*/}
 				</div> 
-				<ToggleButtonGroup
+				{/*<ToggleButtonGroup
 				type="checkbox"
 				onChange={this.onSwitchCamera.bind(this)}
 				>
 				<ToggleButton value={'user'} variant={facing.variant}>Facing</ToggleButton>
 				<ToggleButton value={'environment'} variant={rear.variant}>Rear</ToggleButton>
-				</ToggleButtonGroup>
+				</ToggleButtonGroup> */}
 
 
 				</div>

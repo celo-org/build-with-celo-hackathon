@@ -26,6 +26,14 @@ class AppsPane extends React.Component {
 	
 	}
 
+	async getInternalUrlParams(url) {
+		const URL = require("url");
+
+		let {query} = URL.parse(url, true);
+
+		return query;
+	}
+
 	// connection methods
 	_getRemoteConnectionFromRpc(rpc) {
 		return this.app.getDeedClientObject().getConnectionFromRpc(rpc);

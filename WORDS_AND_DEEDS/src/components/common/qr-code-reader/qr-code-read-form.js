@@ -32,7 +32,7 @@ const QRCodeReadForm = ({ app, onRead }) => {
 				setFacingMode(_facingMode);
 				setFacing(_facing);
 				setRear(_rear);
-		}
+			}
 			break;
 
 			case 'environment': {

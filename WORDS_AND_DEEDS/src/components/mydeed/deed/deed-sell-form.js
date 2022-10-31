@@ -115,8 +115,8 @@ class DeedSellForm extends React.Component {
 	}
 
 	async _canCompleteTransaction(carduuid, tx_fee, feelevel) {
-		if (this.state.remotewallet && this.state.remotecreate) {
-			let {card_creditunits} = this.state;
+		if (this.state.remotewallet) {
+			let {deedcard, deedcard_creditunits} = this.state;
 
 			tx_fee.required_units = tx_fee.estimated_cost_units;
 			tx_fee.estimated_fee = {};
@@ -125,8 +125,17 @@ class DeedSellForm extends React.Component {
 			tx_fee.estimated_fee.execution_credits = 0; // not computed, but must be present
 			tx_fee.estimated_fee.execution_units = tx_fee.estimated_cost_units;
 
-			if (card_creditunits > tx_fee.required_units)
-				return true;
+			if (deedcard_creditunits > tx_fee.required_units) {
+				let mvcmydeed = this.getMvcMyDeedObject();
+		
+				let rootsessionuuid = this.props.rootsessionuuid;
+				let walletuuid = this.props.currentwalletuuid;
+
+				// we connect the card, if it is not already done
+				let connected = await mvcmydeed.connectCard(rootsessionuuid, walletuuid, deedcard.uuid, this.state.connection);
+				
+				return (connected ? true : false);
+			}
 			else
 				return false;
 		}
@@ -143,6 +152,35 @@ class DeedSellForm extends React.Component {
 
 	
 	// post render commit phase
+	componentDidUpdate(prevProps, prevState) {
+		let mvcmypwa = this.getMvcMyPWAObject();
+
+		let rootsessionuuid = this.props.rootsessionuuid;
+		let walletuuid = this.props.currentwalletuuid;
+
+		//sale price modified
+		if (this.state.saleprice_string != prevState.saleprice_string) {
+			let currency = this.state.currency;
+			let currencyuuid = (currency ? currency.uuid : null);
+			let saleprice = 0;
+
+			if (currencyuuid) {
+				mvcmypwa.getCurrencyAmount(rootsessionuuid, currencyuuid, this.state.saleprice_string)
+				.then(tokenamount => {
+					return tokenamount.toInteger();
+				})
+				.then(amount => {
+					saleprice = amount;
+					this._setState({saleprice});
+				})
+				.catch(err => {
+					console.log('error in DeedSellForm.componentDidUpdate: ' + err);
+				})
+			}
+		}
+
+	}
+
 	componentDidMount() {
 		console.log('DeedSellForm.componentDidMount called');
 		
@@ -259,7 +297,7 @@ class DeedSellForm extends React.Component {
 						deedcard_balance_string = await mvcmypwa.formatCurrencyAmount(rootsessionuuid, currencyuuid, pos);
 					}
 	
-					let credits = deedcard_creditunits = await mvcmypwa.getCreditBalance(rootsessionuuid, walletuuid, deedcard.uuid);
+					let credits = await mvcmypwa.getCreditBalance(rootsessionuuid, walletuuid, deedcard.uuid);
 					deedcard_creditunits = credits.transactionunits;
 
 					// re-entry in qrcode mode
@@ -303,7 +341,7 @@ class DeedSellForm extends React.Component {
 					isOwner,
 					deedcard, deedcard_balance_int, deedcard_balance_string, deedcard_creditunits,
 					registration_text, sharelink,
-					saleprice, saleprice_string, payer_address, payment_txhash});
+					saleprice, saleprice_string, payer_address, payment_txhash, canbelisted});
 
 				dataobj.viewed = true;
 			}
@@ -574,7 +612,7 @@ class DeedSellForm extends React.Component {
 			}
 
 
-			// go to list deed view
+			// go to deed view
 			let params = {action: 'view', currencyuuid: this.dataobject.currencyuuid, txhash: this.dataobject.txhash, address: this.deed.minter, tokenid: this.deed.tokenid, dataobject: this.deed};
 
 			await this.app.gotoRoute('deed', params);		}
@@ -601,12 +639,12 @@ class DeedSellForm extends React.Component {
 		let carduuid;
 		let card;
 
-		let {currency, saleprice, deedcard, signingkey} =this.state;
+		let {currency, saleprice_string, deedcard, signingkey} =this.state;
 
 		this._setState({processing: true});
 
 		try {
-			if (!saleprice || (saleprice.length == 0)) {
+			if (!saleprice_string || (saleprice_string.length == 0)) {
 				this.app.alert('You need to enter a price you want for this deed');
 				this._setState({processing: false});
 				return;
@@ -671,7 +709,7 @@ class DeedSellForm extends React.Component {
 			}
 			
 
-			let tokenamount = await mvcmypwa.getCurrencyAmount(rootsessionuuid, currency.uuid, saleprice);
+			let tokenamount = await mvcmypwa.getCurrencyAmount(rootsessionuuid, currency.uuid, saleprice_string);
 			let tokenamount_int = await tokenamount.toInteger();
 
 			let txhash = await mvcmydeed.offerDeedOnSale(rootsessionuuid, walletuuid, currency.uuid, minter, deed, tokenamount_int, _feelevel);
@@ -682,6 +720,10 @@ class DeedSellForm extends React.Component {
 				return;
 			}
 
+			// go to deed view
+			let params = {action: 'view', currencyuuid: this.dataobject.currencyuuid, txhash: this.dataobject.txhash, address: this.deed.minter, tokenid: this.deed.tokenid, dataobject: this.deed};
+
+			await this.app.gotoRoute('deed', params);
 
 		}
 		catch(e) {

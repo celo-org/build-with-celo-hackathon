@@ -73,7 +73,6 @@ class DeedListView extends React.Component {
 	async _checkDeedCurrency(deed) {
 		try {
 			const URL = require("url");
-			return;
 
 			// we retrieve the basetokenuri we entered to check currency and minter match
 			let minter = deed.minterobject;

@@ -85,8 +85,28 @@ class ClauseCreateForm extends React.Component {
 
 	async _canCompleteTransaction(carduuid, tx_fee, feelevel) {
 		if (this.state.remotewallet) {
-			//TODO: could do a check based on a read-only card
-			return true;
+			let {deedcard, deedcard_creditunits} = this.state;
+
+			tx_fee.required_units = tx_fee.estimated_cost_units;
+			tx_fee.estimated_fee = {};
+
+			tx_fee.estimated_fee.max_credits = 0; // not computed, but must be present
+			tx_fee.estimated_fee.execution_credits = 0; // not computed, but must be present
+			tx_fee.estimated_fee.execution_units = tx_fee.estimated_cost_units;
+
+			if (deedcard_creditunits > tx_fee.required_units) {
+				let mvcmydeed = this.getMvcMyDeedObject();
+		
+				let rootsessionuuid = this.props.rootsessionuuid;
+				let walletuuid = this.props.currentwalletuuid;
+
+				// we connect the card, if it is not already done
+				let connected = await mvcmydeed.connectCard(rootsessionuuid, walletuuid, deedcard.uuid, this.state.connection);
+				
+				return (connected ? true : false);
+			}
+			else
+				return false;
 		}
 
 		let mvcmypwa = this.getMvcMyPWAObject();
@@ -303,7 +323,7 @@ class ClauseCreateForm extends React.Component {
 						deedcard_balance_string = await mvcmypwa.formatCurrencyAmount(rootsessionuuid, currencyuuid, pos);
 					}
 	
-					let credits = deedcard_creditunits = await mvcmypwa.getCreditBalance(rootsessionuuid, walletuuid, deedcard.uuid);
+					let credits = await mvcmypwa.getCreditBalance(rootsessionuuid, walletuuid, deedcard.uuid);
 					deedcard_creditunits = credits.transactionunits;
 				}
 				

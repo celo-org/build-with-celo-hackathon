@@ -542,22 +542,6 @@ class RemoteWalletView extends React.Component {
 		this._setState({rpc});
 	}
 
-	async onChangeCurrency(e) {
-		var cur = e.target.value;
-
-		var {currencies} = this.state;
-		var currency;
-
-		for (var i = 0; i < currencies.length; i++) {
-			if (cur === currencies[i].symbol) {
-				currency = currencies[i];
-				break;
-			}
-		}
-
-		this._changeCurrency(currency);
-	}
-
 	async onSelectCurrency(uuid) {
 		var {currencies} = this.state;
 		var currency;
@@ -890,10 +874,10 @@ class RemoteWalletView extends React.Component {
 			  <FormGroup className="DeedCurrencyPickLine" controlId="pickccy">
 				<InputGroup>
 					<FormControl  className="DeedCurrencyName"
+						disabled
 						autoFocus
 						type="text"
 						value={currency.symbol}
-						onChange={e => this.onChangeCurrency(e)}
 					/>
 					<DropdownButton
 						id="input-dropdown-addon"

@@ -373,62 +373,83 @@ var Module = class {
 		if (card_address != connection.account)
 			return Promise.reject('connection account does not match card: ' + card_address);
 
-		var curr_connection = cardsession.getSessionVariable('remote_connection');
+		var connection_context = cardsession.getSessionVariable('remote_connection');
 
-		if (curr_connection)
-			return cardsession;
+		if (!connection_context) {
+			// first time we go through here for this session
+			connection_context = {connection};
+			cardsession.setSessionVariable('remote_connection', connection_context);
 
-		cardsession.setSessionVariable('remote_connection', connection);
+			var cardscheme = card.getScheme();
 
-		var cardscheme = card.getScheme();
-
-		if (cardscheme.isRemote() === true) {
-			// remote (or at least for authkey)
-			cardsession.mydeed_isremote = true;
+			if (cardscheme.isRemote() === true) {
+				// remote (or at least for authkey)
+				cardsession.mydeed_isremote = true;
+			}
+			else {
+				// local
+				cardsession.mydeed_isremote = false;
+			}
+	
+			cardsession.MYDEED = this.current_version;
 		}
-		else {
-			// local
-			cardsession.mydeed_isremote = false;
-		}
 
-		cardsession.MYDEED = this.current_version;
 
+		// we check ethereum_node_access_instance is still connected
 		var ethereum_node_access_instance = await _apicontrollers.getEthereumNodeAccessInstance(cardsession);
-		var web3 = ethereum_node_access_instance._getWeb3Instance();
 
-		// replace standard sendTransaction
-		var contractkitwrapper = new this.ContractKitWrapper(cardsession);
-		web3.eth.sendTransaction = (txjson, callback) => {
-			//return web3.eth.sendTransaction(txjson, callback);
-			return contractkitwrapper.sendTransaction(connection, txjson)
-			.then(res => {
-				if (!res || (res.success === false)) {
-					let err = 'transaction did not succeed in ContractKitWrapper';
+		if (ethereum_node_access_instance.MYDEED)
+			return cardsession; // everything is ok
 
+		if (!connection_context.ethereum_node_access_instance) {
+			// we overload access
+			connection_context.ethereum_node_access_instance = ethereum_node_access_instance;
+
+			ethereum_node_access_instance.MYDEED = this.current_version;
+
+			var web3 = ethereum_node_access_instance._getWeb3Instance();
+	
+			// replace standard sendTransaction
+			var contractkitwrapper = new this.ContractKitWrapper(cardsession);
+			web3.eth.sendTransaction = (txjson, callback) => {
+				//return web3.eth.sendTransaction(txjson, callback);
+				return contractkitwrapper.sendTransaction(connection, txjson)
+				.then(res => {
+					if (!res || (res.success === false)) {
+						let err = 'transaction did not succeed in ContractKitWrapper';
+	
+						if (callback)
+							callback(err, null);
+	
+						throw err;
+					}
+	
+					if (callback)
+						callback(null, res);
+					
+					return res;
+				})
+				.catch(err => {
 					if (callback)
 						callback(err, null);
-
+	
 					throw err;
-				}
+				});
+			};
+		}
+		else {
+			// replace the new access instance with the overloaded one
+			cardsession.ethereum_node_access_instance = ethereum_node_access_instance;
+		}
 
-				if (callback)
-					callback(null, res);
-				
-				return res;
-			})
-			.catch(err => {
-				if (callback)
-					callback(err, null);
-
-				throw err;
-			});
-		};
 
 		// we overload CARD._getSessionAccountObject to allow direct use of mvccurrencies API
 		// (very bad but waiting for future versions of Wallet module)
 		const CardClass = global.getModuleClass('wallet', 'Card');
 
 		if (CardClass && !CardClass.prototype._org_getSessionAccountObject) {
+			// first time we go through here for this execution of the webapp
+
 			CardClass.prototype._org_getSessionAccountObject = CardClass.prototype._getSessionAccountObject;
 
 			CardClass.prototype._getSessionAccountObject = function () {
@@ -1734,18 +1755,6 @@ var Module = class {
 		if (!card)
 			return Promise.reject('could not find minter card');
 	
-		// instantiate NftMarketplace
-		var nftMarketplace = await this._getNftMarketplaceObject(session, wallet, currency).catch(err => {});
-
-		var listing_info = {canbelisted: false, onsale: false, tokenaddress, tokenid};
-
-		if (!nftMarketplace) {
-			return listing_info;
-		}
-		else {
-			listing_info.canbelisted = true;
-		}
-
 		var tokenaddress = deed.minter;
 		var tokenid = deed.tokenid;
 
@@ -1769,12 +1778,25 @@ var Module = class {
 			fromaccount = card._getAccountObject(); // read-only card
 		}
 
+		// instantiate NftMarketplace (with the childsession!!!)
+		var nftMarketplace = await this._getNftMarketplaceObject(childsession, wallet, currency);
+		const nftmarketplace_version = await nftMarketplace.getVersion();
+
+		var listing_info = {canbelisted: false, onsale: false, tokenaddress, tokenid};
+
+		if (!nftMarketplace) {
+			return listing_info;
+		}
+		else {
+			listing_info.canbelisted = true;
+		}
+	
 		var listed_nfts = await nftMarketplace.getListedNfts();
 
 		for (var i = 0; i < (listed_nfts ? listed_nfts.length: 0); i++) {
 			let _nft = listed_nfts[i];
-			let _nft_tokenaddress = _nft[0]
-			let _nft_tokenid = _nft[1];
+			let _nft_tokenaddress = _nft[1];
+			let _nft_tokenid = _nft[2];
 			let areequal = childsession.areAddressesEqual(_nft_tokenaddress, tokenaddress);
 
 			if ( _nft.listed && areequal && (_nft_tokenid == tokenid)) {
@@ -1832,12 +1854,6 @@ var Module = class {
 		if (!card)
 			return Promise.reject('could not find minter card');
 	
-		// instantiate NftMarketplace
-		var nftMarketplace = await this._getNftMarketplaceObject(session, wallet, currency);
-
-		if (!nftMarketplace)
-			return Promise.reject('could not find nft market place');
-
 		var tokenaddress = deed.minter;
 		var tokenid = deed.tokenid;
 
@@ -1861,6 +1877,13 @@ var Module = class {
 			fromaccount = card._getAccountObject(); // read-only card
 		}
 
+		// instantiate NftMarketplace (with the childsession!!!)
+		var nftMarketplace = await this._getNftMarketplaceObject(childsession, wallet, currency);
+		const nftmarketplace_version = await nftMarketplace.getVersion();
+
+		if (!nftMarketplace)
+			return Promise.reject('could not find nft market place');
+
 		// we first approve the marketplace contract to let marketplaceobj transfer ownership
 		var nftmarketplace_address = nftMarketplace.getAddress();
 
@@ -1880,6 +1903,10 @@ var Module = class {
 
 		var nft_approved_addr = await erc721token.getApproved(tokenid);
 		var areequal = childsession.areAddressesEqual(nftmarketplace_address, nft_approved_addr);
+
+		// transactions
+		var ethereumnodeaccessmodule = global.getModuleObject('ethereum-node-access');
+		var from_card_scheme = card.getScheme();
 
 		if (!areequal) {
 			let _ethtx = ethereumnodeaccessmodule.getEthereumTransactionObject(childsession, fromaccount);
@@ -1906,9 +1933,6 @@ var Module = class {
 		// then list the deed
 
 		// create ethereum transaction
-		var from_card_scheme = card.getScheme();
-
-		var ethereumnodeaccessmodule = global.getModuleObject('ethereum-node-access');
 
 		var ethereumtransaction = ethereumnodeaccessmodule.getEthereumTransactionObject(childsession, fromaccount);
 		
@@ -1931,7 +1955,7 @@ var Module = class {
 
 		ethereumtransaction.setValue(listing_fee_eth);
 		
-		var txhash = await nftMarketplace.listNft(tokenaddress, tokenid, tokenamount_string, ethereumtransaction);
+		var txhash = await nftMarketplace.listNft(tokenaddress, tokenid, tokenamount_string, currency.address, ethereumtransaction);
 
 		return txhash;
 	}
@@ -1986,12 +2010,6 @@ var Module = class {
 		if (!card)
 			return Promise.reject('could not find minter card');
 	
-		// instantiate NftMarketplace
-		var nftMarketplace = await this._getNftMarketplaceObject(session, wallet, currency);
-
-		if (!nftMarketplace)
-			return Promise.reject('could not find nft market place');
-
 		var tokenaddress = deed.minter;
 		var tokenid = deed.tokenid;
 
@@ -2015,24 +2033,30 @@ var Module = class {
 			fromaccount = card._getAccountObject(); // read-only card
 		}
 	
+		// instantiate NftMarketplace (with the childsession!!!)
+		var nftMarketplace = await this._getNftMarketplaceObject(childsession, wallet, currency);
+		const nftmarketplace_version = await nftMarketplace.getVersion();
 
-		// TODO:
-		// for payments in currency, before sendin buyNft transaction
+		if (!nftMarketplace)
+			return Promise.reject('could not find nft market place');
+
+
+		// for payments in currency, before sending buyNft transaction
 		// we must approve the mark for listing_info.price amount in tokens
 		var nftmarketplace_address = nftMarketplace.getAddress();
 
 		// get token object to access erc20 data
-		var erc20credittokenobject = await from_card_scheme.getTokenObject(card.address);
+		var erc20currencytokenobject = await from_card_scheme.getTokenObject(currency.address);
 
 		// initialize
-		erc20credittokenobject._getERC20TokenContract(childsession);
+		erc20currencytokenobject._getERC20TokenContract(childsession);
 
 		// synchronize
 		const Token = global.getModuleClass('wallet', 'Token');
-		await Token.synchronizeERC20TokenContract(childsession, erc20credittokenobject);
+		await Token.synchronizeERC20TokenContract(childsession, erc20currencytokenobject);
 
 		// erc20 contract
-		var erc20contract = erc20credittokenobject._getERC20TokenContract(childsession);
+		var erc20contract = erc20currencytokenobject._getERC20TokenContract(childsession);
 
 		var alloweeaccount = childsession.createBlankAccountObject();
 		alloweeaccount.setAddress(nftmarketplace_address);
@@ -2071,7 +2095,13 @@ var Module = class {
 		ethereumtransaction.setGas(fee.gaslimit);
 		ethereumtransaction.setGasPrice(fee.gasPrice);
 
-		var txhash = null;//await nftMarketplace.buyNft(tokenaddress, tokenid, ethereumtransaction);
+		var nft = await nftMarketplace.buyNft(tokenaddress, tokenid);
+
+		if (!nft)
+			return Promise.reject('could not find nft ' + tokenaddress + ' - ' + tokenid + ' on the marketplace');
+
+		var nftIndex = nft.nftIndex - 1;
+		var txhash = await nftMarketplace.buyNft(nftIndex, ethereumtransaction);
 
 		return txhash;
 	

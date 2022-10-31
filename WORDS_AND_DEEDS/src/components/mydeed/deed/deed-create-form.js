@@ -86,7 +86,7 @@ class DeedCreateForm extends React.Component {
 
 	async _canCompleteTransaction(carduuid, tx_fee, feelevel) {
 		if (this.state.remotewallet && this.state.remotecreate) {
-			let {card_creditunits} = this.state;
+			let {currentcard, card_creditunits} = this.state;
 
 			tx_fee.required_units = tx_fee.estimated_cost_units;
 			tx_fee.estimated_fee = {};
@@ -95,8 +95,17 @@ class DeedCreateForm extends React.Component {
 			tx_fee.estimated_fee.execution_credits = 0; // not computed, but must be present
 			tx_fee.estimated_fee.execution_units = tx_fee.estimated_cost_units;
 
-			if (card_creditunits > tx_fee.required_units)
-				return true;
+			if (card_creditunits > tx_fee.required_units) {
+				let mvcmydeed = this.getMvcMyDeedObject();
+		
+				let rootsessionuuid = this.props.rootsessionuuid;
+				let walletuuid = this.props.currentwalletuuid;
+
+				// we connect the card, if it is not already done
+				let connected = await mvcmydeed.connectCard(rootsessionuuid, walletuuid, currentcard.uuid, this.state.connection);
+				
+				return (connected ? true : false);
+			}
 			else
 				return false;
 		}
@@ -298,7 +307,6 @@ class DeedCreateForm extends React.Component {
 			.then((pos) => {
 				return mvcmypwa.formatCurrencyAmount(rootsessionuuid, currencyuuid, pos);
 			})
-
 			.then((balance) => {
 				card_balance_string = balance;
 
@@ -374,7 +382,7 @@ class DeedCreateForm extends React.Component {
 		// list of currencies
 		var currencies = await this._readVisibleCurrencies()
 		.catch(err => {
-			console.log('error in DeedCreateForm.componentDidMount ' + err);
+			console.log('error in DeedCreateForm.checkNavigationState ' + err);
 		});
 
 		// filter currencies that can register deeds
@@ -778,22 +786,6 @@ class DeedCreateForm extends React.Component {
 		this._setState({currency, remotewallet, rpc, connection, remotecreate});
 	}
 
-	async onChangeCurrency(e) {
-		var cur = e.target.value;
-
-		var {currencies} = this.state;
-		var currency;
-
-		for (var i = 0; i < currencies.length; i++) {
-			if (cur === currencies[i].symbol) {
-				currency = currencies[i];
-				break;
-			}
-		}
-
-		this._changeCurrency(currency);
-	}
-
 	async onSelectCurrency(uuid) {
 		var {currencies} = this.state;
 		var currency;
@@ -899,10 +891,10 @@ class DeedCreateForm extends React.Component {
 			  <FormGroup className="DeedCurrencyPickLine" controlId="pickccy">
 				<InputGroup>
 					<FormControl  className="DeedCurrencyName"
+						disabled
 						autoFocus
 						type="text"
 						value={currency.symbol}
-						onChange={e => this.onChangeCurrency(e)}
 					/>
 					<DropdownButton
 						id="input-dropdown-addon"

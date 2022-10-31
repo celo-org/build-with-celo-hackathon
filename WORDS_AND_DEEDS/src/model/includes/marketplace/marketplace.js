@@ -44,6 +44,16 @@ class NftMarketplace {
 	// contract methods
 
 	// read
+	async getVersion() {
+		var contractinstance = this.getContractInstance();
+
+		var params = [];
+	
+		const valstr = await contractinstance.method_call('getVersion', params);
+		
+		return valstr;
+	}
+
 	async getListingFee() {
 		var contractinstance = this.getContractInstance();
 
@@ -52,6 +62,19 @@ class NftMarketplace {
 		const valstr = await contractinstance.method_call('getListingFee', params);
 		
 		return valstr;
+	}
+
+	async getNft(address, tokenId) {
+		var contractinstance = this.getContractInstance();
+
+		var params = [];
+
+		params.push(address);
+		params.push(tokenId);
+	
+		const val = await contractinstance.method_call('getNft', params);
+
+		return val;
 	}
 
 	async getListedNfts() {
@@ -153,7 +176,7 @@ class NftMarketplace {
 	}
 
 	// transactions
-	async listNft(tokenaddress, nftid, price, ethtx) {
+	async listNft(tokenaddress, nftid, price, currencyaddress, ethtx) {
 		var contractinstance = this.getContractInstance();
 
 		var fromaccount = ethtx.getFromAccount();
@@ -183,13 +206,14 @@ class NftMarketplace {
 		args.push(tokenaddress);
 		args.push(nftid);
 		args.push(price);
+		args.push(currencyaddress);
 		
 		contracttransaction.setArguments(args);
 
 		return contractinstance.method_send(contracttransaction);
 	}
 
-	async buyNft(tokenaddress, nftid, ethtx) {
+	async buyNft(nftindex, ethtx) {
 		var contractinstance = this.getContractInstance();
 
 		var fromaccount = ethtx.getFromAccount();
@@ -216,15 +240,14 @@ class NftMarketplace {
 		
 		var args = [];
 	
-		args.push(tokenaddress);
-		args.push(nftid);
+		args.push(nftindex);
 		
 		contracttransaction.setArguments(args);
 
 		return contractinstance.method_send(contracttransaction);
 	}
 
-	async resellNft(tokenaddress, nftid, price, ethtx) {
+	async resellNft(nftindex, price, ethtx) {
 		var contractinstance = this.getContractInstance();
 
 		var fromaccount = ethtx.getFromAccount();
@@ -251,8 +274,7 @@ class NftMarketplace {
 		
 		var args = [];
 	
-		args.push(tokenaddress);
-		args.push(nftid);
+		args.push(nftindex);
 		args.push(price);
 		
 		contracttransaction.setArguments(args);

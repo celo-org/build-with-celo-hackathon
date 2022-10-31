@@ -91,6 +91,42 @@ class DeedBuyForm extends React.Component {
 		this.setState(state);
 	}
 
+	async _canCompleteTransaction(carduuid, tx_fee, feelevel) {
+		if (this.state.remotewallet) {
+			let {currentcard, card_creditunits} = this.state;
+
+			tx_fee.required_units = tx_fee.estimated_cost_units;
+			tx_fee.estimated_fee = {};
+
+			tx_fee.estimated_fee.max_credits = 0; // not computed, but must be present
+			tx_fee.estimated_fee.execution_credits = 0; // not computed, but must be present
+			tx_fee.estimated_fee.execution_units = tx_fee.estimated_cost_units;
+
+			if (card_creditunits > tx_fee.required_units) {
+				let mvcmydeed = this.getMvcMyDeedObject();
+		
+				let rootsessionuuid = this.props.rootsessionuuid;
+				let walletuuid = this.props.currentwalletuuid;
+
+				// we connect the card, if it is not already done
+				let connected = await mvcmydeed.connectCard(rootsessionuuid, walletuuid, currentcard.uuid, this.state.connection);
+				
+				return (connected ? true : false);
+			}
+			else
+				return false;
+		}
+
+		let mvcmypwa = this.getMvcMyPWAObject();
+
+		let rootsessionuuid = this.props.rootsessionuuid;
+		let walletuuid = this.props.currentwalletuuid;
+
+		var canspend = await mvcmypwa.canCompleteTransaction(rootsessionuuid, walletuuid, carduuid, tx_fee, feelevel).catch(err => {});
+
+		return canspend;
+	}
+
 	// deed and connection methods
 	_getRemoteConnectionFromRpc(rpc) {
 		return this.app.getDeedClientObject().getConnectionFromRpc(rpc);
@@ -113,9 +149,9 @@ class DeedBuyForm extends React.Component {
 		
 		let card;
 
-		let {remotewallet, remotecreate} = this.state;
+		let {remotewallet} = this.state;
 
-		if ((remotewallet !== true) || (remotecreate !== true)){
+		if (remotewallet !== true){
 			card = await this.app.openCurrencyCard(currencyuuid);
 		}
 		else {
@@ -298,7 +334,7 @@ class DeedBuyForm extends React.Component {
 
 				if (listing_info && (listing_info.onsale === true)) {
 					isOnSale = true;
-					saleprice = listing_info.saleprice;
+					saleprice = parseInt(listing_info.saleprice);
 					buy_mode = 'market';
 				}
 				else {
@@ -321,13 +357,22 @@ class DeedBuyForm extends React.Component {
 
 				// check if is owner (should not be)
 				let isOwner = false;
-				
+
+				let deedcard = await this._getDeedOwningCard(currencyuuid, minter, deed).catch(err => {});
+
+				if (deedcard) {
+					isOwner = true;
+				}
+								
+				// card to buy deed
 				let currentcard = await this._openCurrencyCard(currencyuuid).catch(err => {});
 				let card_balance_int = 0;
 				let card_balance_string = '';
+				let card_creditunits;
 
 				if (currentcard) {
-					isOwner = true;
+					let credits = await mvcmypwa.getCreditBalance(rootsessionuuid, walletuuid, currentcard.uuid);
+					card_creditunits = credits.transactionunits;
 					let pos = await mvcmypwa.getCurrencyPosition(rootsessionuuid, walletuuid, currencyuuid, currentcard.uuid);
 			
 					if (pos !== undefined) {
@@ -338,7 +383,7 @@ class DeedBuyForm extends React.Component {
 
 				this._setState({currency, mintername, 
 					isOwner,
-					currentcard, card_balance_int, card_balance_string,
+					currentcard, card_balance_int, card_balance_string, card_creditunits,
 					isOnSale, buy_mode, saleprice, saleprice_string,
 					registration_text, sharelink});
 
@@ -456,7 +501,7 @@ class DeedBuyForm extends React.Component {
 			let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, currentcard.uuid, tx_fee);
 
 
-			var canspend = await mvcmypwa.canCompleteTransaction(rootsessionuuid, walletuuid, currentcard.uuid, tx_fee, _feelevel).catch(err => {});
+			var canspend = await this._canCompleteTransaction(currentcard.uuid, tx_fee, _feelevel).catch(err => {});
 
 			if (!canspend) {
 				if (tx_fee.estimated_fee.execution_credits > tx_fee.estimated_fee.max_credits) {
@@ -484,13 +529,20 @@ class DeedBuyForm extends React.Component {
 			}
 
 			// display the txhash to the seller
-			let payment_url = this.deed.tokenuri;
 
-			payment_url += '&route=deedview&action=sell&mode=qrcode';
+			if (buy_mode != 'market') {
+				this._setState({ payment_txhash});
+			}
+			else {
+				let payment_url = this.deed.tokenuri;
 
-			payment_url += '&tx=' + payment_txhash;
+				payment_url += '&route=deedview&action=sell&mode=qrcode';
+	
+				payment_url += '&tx=' + payment_txhash;
+	
+				this._setState({buy_mode: 'qrcode', payment_txhash, payment_url});
+			}
 
-			this._setState({buy_mode: 'qrcode', payment_txhash, payment_url});
 
 		}
 		catch(e) {

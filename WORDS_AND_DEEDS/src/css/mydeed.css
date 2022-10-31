@@ -47,6 +47,32 @@
 	   width: 20vw;
    }
 
+   .OwnershipTrue {
+	color: green;
+	height: 360px;
+	padding-top: 50pt;
+    padding-left: 10pt;
+    padding-right: 10pt;
+	font-size: xx-large;
+  }
+
+  .OwnershipUnsure {
+	color: orangered;
+	height: 360px;
+	padding-top: 50pt;
+    padding-left: 10pt;
+    padding-right: 10pt;
+	font-size: xx-large;
+  }
+  .OwnershipFalse {
+	color: red;
+	height: 360px;
+	padding-top: 50pt;
+    padding-left: 10pt;
+    padding-right: 10pt;
+	font-size: xx-large;
+  }
+
   /* Deed Articles */
   .ClauseArticleHeader {
 	font-weight: bold;
@@ -106,34 +132,15 @@
 
 /*QR Code*/
 
+.QRCodeBuilder {
+	width: 100%;
+	margin-top: 30pt;
+	margin-bottom: 10pt;
+  }
+
 .QRCodeReader {
 	width: 100%;
 	margin-top: 30pt;
 	margin-bottom: 10pt;
   }
 
-.OwnershipTrue {
-	color: green;
-	height: 360px;
-	padding-top: 50pt;
-    padding-left: 10pt;
-    padding-right: 10pt;
-	font-size: xx-large;
-  }
-
-.OwnershipUnsure {
-	color: orangered;
-	height: 360px;
-	padding-top: 50pt;
-    padding-left: 10pt;
-    padding-right: 10pt;
-	font-size: xx-large;
-}
-.OwnershipFalse {
-	color: red;
-	height: 360px;
-	padding-top: 50pt;
-    padding-left: 10pt;
-    padding-right: 10pt;
-	font-size: xx-large;
-}

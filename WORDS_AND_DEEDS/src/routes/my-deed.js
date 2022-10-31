@@ -8,6 +8,7 @@ import CeloHomeScreen from '../screens/remote-wallet/celo/celo-home.js';
 import RemoteWalletHomeScreen from '../screens/remote-wallet/remote-wallet-home.js';
 
 import QRCodeReaderHomeScreen from '../screens/common/qr-code-reader/qr-code-reader-home.js';
+import QRCodeBuilderHomeScreen from '../screens/common/qr-code-reader/qr-code-builder-home.js';
 
 
 import '../css/mydeed.css';
@@ -56,6 +57,11 @@ class Routes {
 				name: 'qrcodereader',
 				path: '/qrcodereader',
 				screen: QRCodeReaderHomeScreen
+			},
+			{
+				name: 'qrcodebuilder',
+				path: '/qrcodebuilder',
+				screen: QRCodeBuilderHomeScreen
 			}
 		];
 	}

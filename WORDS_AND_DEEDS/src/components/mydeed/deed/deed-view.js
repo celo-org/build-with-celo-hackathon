@@ -83,6 +83,30 @@ class DeedView extends React.Component {
 		return context.deedcard;
 	}
 
+	async _getMinterOwner(minter) {
+		try {
+			const URL = require("url");
+
+			// we retrieve the basetokenuri we entered to check currency and minter match
+			let basetokenuri = minter.basetokenuri;
+
+			if (basetokenuri) {
+				let {query} = URL.parse(basetokenuri, true);
+				let minter_owner= query.card;
+
+				return minter_owner;
+			}
+			else {
+				return; // can not extract
+			}
+		}
+		catch(e) {
+		}
+
+		return;
+	}
+
+
 
 	// post render commit phase
 	componentDidMount() {
@@ -141,6 +165,8 @@ class DeedView extends React.Component {
 				if (!minter)
 					throw 'could not find minter with address ' + minter_address;
 
+				let deedcreator = await this._getMinterOwner(minter);
+
 				let mintername = minter.name;
 
 				let deed = await mvcmydeed.fetchDeed(rootsessionuuid, walletuuid, currencyuuid, minter, tokenid);
@@ -181,7 +207,7 @@ class DeedView extends React.Component {
 					isOwner = true;
 				}
 
-				this._setState({currency, mintername, isOwner, isOnSale, deedcard, 
+				this._setState({currency, mintername, deedcreator, isOwner, isOnSale, deedcard, 
 					registration_text, registration_signature, sharelink});
 
 				dataobj.viewed = true;
@@ -392,7 +418,7 @@ class DeedView extends React.Component {
 	}
 
 	renderDeedView() {
-		let { isOwner, deedowner, mintername, title, description, currency, registration_text, registration_signature, message_text, sharelinkmessage, sharelink, tokenuri, external_url } = this.state;
+		let { isOwner, deedowner, deedcreator, mintername, title, description, currency, registration_text, registration_signature, message_text, sharelinkmessage, sharelink, tokenuri, external_url } = this.state;
 		
 		return (
 			<div className="Form">
@@ -458,7 +484,8 @@ class DeedView extends React.Component {
 
 				<div className="TextBox">
 				  <div>{registration_text}</div>
-				  <div>With card:&nbsp;<span>{deedowner}</span></div>
+				  <div>Owner:&nbsp;<span>{deedowner}</span></div>
+				  <div>Creator:&nbsp;<span>{deedcreator}</span></div>
 				  <div>Signature:&nbsp;<span className="DeedSignature">{registration_signature}</span></div>
 			  	</div>
 
