@@ -35,8 +35,8 @@ contract Colony is Administrable, EmitsEvent, Initializable, Modifiable, Stoppab
   mapping(address => bool) zooxIsActive;
   mapping(address => bool) planktonIsActive;
 
-  mapping(address => uint) public claimed;
-  mapping(address => uint) public assigned;
+  mapping(address => uint[]) public _claimed;
+  mapping(address => uint[]) public _assigned;
 
   modifier isPolyp {
     require(isAdmin(), "Colony: Only the polyp can perform this action."); _;
@@ -86,13 +86,13 @@ contract Colony is Administrable, EmitsEvent, Initializable, Modifiable, Stoppab
   }
 
   function claimReward(uint rewardId) public isActivePlankton isValidReward(rewardId) {
-    // NB: Rewards are currently deemed to be claimed and assigned perpetually,
-    // Also, a Plankton can only claim one reward in this Colony
-    // In reality, the rules could be different and explicit, thus some filter and 
-    // double spending prevention mechanisms should be implemented
+    // NB: For simplicity reasons, rewards are currently deemed to be 
+    // claimable and assignable perpetually and simultaneously,
+    // In reality, the rules could be different and more explicit. 
+    // In such cases, filtering and double spending prevention mechanisms should be implemented.
 
-    claimed[msg.sender] = rewardId;
-    assigned[msg.sender] = rewardId;
+    _claimed[msg.sender].push(rewardId);
+    _assigned[msg.sender].push(rewardId);
 
     emitActionSuccess("Reward claimed successfully.");
   }
@@ -177,5 +177,13 @@ contract Colony is Administrable, EmitsEvent, Initializable, Modifiable, Stoppab
 
   function planktons() view public returns (Koral.Plankton[] memory) {
     return _planktons;
+  }
+
+  function claimed() view public isActivePlankton returns (uint[] memory) {
+    return _claimed[msg.sender];
+  }
+
+  function assigned() view public isActivePlankton returns (uint[] memory) {
+    return _assigned[msg.sender];
   }
 }
