@@ -96,8 +96,8 @@ const FormStepper = ({ steps, currentStep }) => {
           </div>
         </div>
         <div
-          className={`flex-auto border-t-2 border-dotted transition duration-500 ease-in-out  ${
-            step.completed ? "border-[#DD7D37]" : "border-gray-300 "
+          className={`flex-auto border-t-2 border-dotted transition duration-500 ease-in-out  relative ${
+            step.completed ? "border-[#DD7D37]" : "border-gray-300 test"
           }  `}
         ></div>
       </div>

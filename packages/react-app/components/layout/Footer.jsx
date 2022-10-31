@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Footer = () => {
+    const currentYear = new Date().getFullYear();
   return (
     <>
         <footer className='bg-[#2A1A0F] py-5'>
@@ -10,7 +11,7 @@ const Footer = () => {
                         <img src='/images/logo-white.svg'/>
                     </div>
                     <div>
-                        <p className='text-[#C9C4B5]'>&copy; 2022 gidiscrap. All rights reserved</p>
+                        <p className='text-[#C9C4B5]'>&copy; {currentYear} gidiscrap. All rights reserved</p>
                     </div>
 
                 </div>
