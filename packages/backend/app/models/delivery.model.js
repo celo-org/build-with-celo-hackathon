@@ -13,7 +13,7 @@ module.exports = mongoose => {
         },
         delivery_proof: {
           // IPFS URL - uploaded file that indicates 
-          type: Mixed,
+          type: mongoose.Schema.Types.Mixed,
           required: true
         },
         delivery_time: {

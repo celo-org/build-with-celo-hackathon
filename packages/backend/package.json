@@ -21,6 +21,16 @@
     "express": "^4.18.1",
     "magic-sdk": "^10.0.0",
     "mongoose": "^6.4.2",
-    "mongoose-paginate-v2": "^1.7.1"
+    "mongoose-paginate-v2": "^1.7.1",
+    "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.26.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-node": "^4.1.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.7.1"
   }
 }
