@@ -1,33 +1,53 @@
-import { PropsWithChildren } from 'react';
+import { useCelo } from '@celo/react-celo';
+import type { AbiItem } from 'web3-utils';
+import { PropsWithChildren, useState } from 'react';
+import { Alert, Button, Col, ListGroup, Row, Spinner } from 'react-bootstrap';
 import { Reward } from '../../../backend/reward/reward.entity';
 import { rowsFromData } from '../../lib/array';
 import {
   PaginatedItemsComponent,
   PaginatedLayout,
 } from '../../core/paginator/PaginatedLayout';
-import { Alert, Col, ListGroup, Row, Spinner } from 'react-bootstrap';
-import { useCelo } from '@celo/react-celo';
-import type { AbiItem } from 'web3-utils';
 import Colony from '../../../contracts/Colony.json';
 import { Colony as IColony } from '../../../../typechain/contracts/colony/Colony';
 import { useQuery } from '@tanstack/react-query';
+import { ClaimReward } from './ClaimReward';
 
-const Rewards: PaginatedItemsComponent<Reward> = ({ currentItems }) => (
-  <>
-    {rowsFromData(currentItems).map((rewards, index) => (
-      <Row key={index}>
-        {rewards.map((reward, index) => (
-          <Col className="md-3" key={index}>
-            <ListGroup className="list-group-flush" key={index}>
-              <ListGroup.Item>Name: {reward.name}</ListGroup.Item>
-              <ListGroup.Item>Location: {reward.location}</ListGroup.Item>
-            </ListGroup>
-          </Col>
-        ))}
-      </Row>
-    ))}
-  </>
-);
+const Rewards: PaginatedItemsComponent<Reward> = ({ currentItems }) => {
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [rewardToBeClaimed, setRewardToBeClaimed] = useState<number>(-1);
+
+  const onClaimReward = (rewardId: number) => {
+    setRewardToBeClaimed(rewardId);
+    setShowModal(true);
+  };
+
+  return (
+    <>
+      {rowsFromData(currentItems).map((rewards, index) => (
+        <Row key={index}>
+          {rewards.map((reward, index) => (
+            <Col className="md-3" key={index}>
+              <ListGroup key={index}>
+                <ListGroup.Item>Name: {reward.name}</ListGroup.Item>
+                <ListGroup.Item>Location: {reward.location}</ListGroup.Item>
+                <Button className="mt-3" onClick={() => onClaimReward(index)}>
+                  Claim Reward
+                </Button>
+              </ListGroup>
+            </Col>
+          ))}
+        </Row>
+      ))}
+      {showModal && (
+        <ClaimReward
+          rewardId={rewardToBeClaimed}
+          onCloseModal={() => setShowModal(false)}
+        />
+      )}
+    </>
+  );
+};
 
 type RewardsProps = PropsWithChildren & {
   projectId: string;

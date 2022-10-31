@@ -24,7 +24,7 @@ const Projects: PaginatedItemsComponent<Project> = ({ currentItems }) => (
             <Col
               md="3"
               key={index}
-              className={classNames('mb-3', { 'pr-3': rowIndex + 1 !== index })}
+              className={classNames('mb-5', { 'pr-3': rowIndex + 1 !== index })}
             >
               <Card>
                 <Card.Img
