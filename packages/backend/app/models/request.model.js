@@ -23,15 +23,24 @@ module.exports = mongoose => {
           type: Date,
           required: true
         },
+        company: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Company',
+          required: true
+        },
         collection_center: {
           type: mongoose.Schema.Types.ObjectId,
           ref: 'CollectionCenter',
           required: true
         },
+        location: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Location',
+          required: true
+        },
         escrow_payment: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: 'EscrowPayment',
-          required: true
+          ref: 'EscrowPayment'
         },
         deliveries: [{
           type: mongoose.Schema.Types.ObjectId,
