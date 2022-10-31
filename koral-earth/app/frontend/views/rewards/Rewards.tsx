@@ -22,6 +22,10 @@ const Rewards: PaginatedItemsComponent<Reward> = ({ currentItems }) => {
     setShowModal(true);
   };
 
+  if (!currentItems.length) {
+    return <h4>No rewards found.</h4>;
+  }
+
   return (
     <>
       {rowsFromData(currentItems).map((rewards, index) => (
@@ -55,11 +59,9 @@ type RewardsProps = PropsWithChildren & {
 
 export const ProjectRewards = ({ projectId }: RewardsProps) => {
   const { kit, account, connect } = useCelo();
-  const {
-    isLoading,
-    error: rewardsFetchingError,
-    data: rewards,
-  } = useQuery<Reward[] | null>(['colony-rewards'], async () => {
+  const { error: rewardsFetchingError, data: rewards } = useQuery<
+    Reward[] | null
+  >(['colony-rewards'], async () => {
     if (!account) {
       return null;
     }
@@ -78,23 +80,31 @@ export const ProjectRewards = ({ projectId }: RewardsProps) => {
     }));
   });
 
+  if (!account) {
+    return (
+      <Alert variant="danger">
+        Celo provider not initialized.{' '}
+        <Alert.Link onClick={() => connect().catch(console.log)}>
+          Connect
+        </Alert.Link>
+      </Alert>
+    );
+  }
+
+  if (rewardsFetchingError) {
+    return (
+      <Alert variant="danger">{(rewardsFetchingError as Error).message}</Alert>
+    );
+  }
+
+  if (rewards === null && !rewardsFetchingError) {
+    return <Spinner animation="grow" />;
+  }
+
   return (
     <>
       <h3 className="mb-4">Rewards for project: {projectId} </h3>
-      {isLoading && account && <Spinner animation="grow" />}
-      {!account && (
-        <Alert variant="danger">
-          Celo provider not initialized.{' '}
-          <Alert.Link onClick={() => connect().catch(console.log)}>
-            Connect
-          </Alert.Link>
-        </Alert>
-      )}
-      {rewardsFetchingError && (
-        <Alert variant="danger">
-          {(rewardsFetchingError as Error).message}
-        </Alert>
-      )}
+      <hr />
       {rewards && (
         <PaginatedLayout
           items={rewards.map((reward, index) => ({
