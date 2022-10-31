@@ -36,12 +36,9 @@ const Rewards: PaginatedItemsComponent<Reward> = ({ currentItems }) => {
 
 export const UserRewards = () => {
   const { kit, account, connect } = useCelo();
-
-  const {
-    isLoading,
-    error: userRewardsFetchingError,
-    data: userRewards,
-  } = useQuery<Reward[] | null>(['user-rewards'], async () => {
+  const { error: userRewardsFetchingError, data: userRewards } = useQuery<
+    Reward[] | null
+  >(['user-rewards'], async () => {
     if (!account) {
       return null;
     }
@@ -68,7 +65,7 @@ export const UserRewards = () => {
 
       return rewards;
     } catch (error) {
-      return null;
+      return [];
     }
   });
 
