@@ -1,7 +1,13 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import { Toolbar, Typography } from "@mui/material";
-import { NavBar, LandingPage, Footer, Explore } from "./components";
+import {
+  NavBar,
+  LandingPage,
+  Footer,
+  Explore,
+  EventDetail,
+} from "./components";
 
 import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
@@ -37,6 +43,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/explore" element={<Explore />} />
+              <Route path="/detail" element={<EventDetail />} />
             </Routes>
             <Footer />
           </Box>
