@@ -31,15 +31,27 @@ contract Colony is Administrable, EmitsEvent, Initializable, Modifiable, Stoppab
   Koral.Reward[] public _rewards;
   Koral.Zoox[] public _zooxes;
 
-  mapping(uint => bool) zooxIsActive;
-  mapping(uint => bool) planktonIsActive;
   mapping(uint => bool) rewardIsActive;
+  mapping(address => bool) zooxIsActive;
+  mapping(address => bool) planktonIsActive;
 
-  mapping(uint => Koral.Reward) public claimed;
-  mapping(uint => Koral.Reward) public assigned;
+  mapping(address => uint) public claimed;
+  mapping(address => uint) public assigned;
 
   modifier isPolyp {
     require(isAdmin(), "Colony: Only the polyp can perform this action."); _;
+  }
+
+  modifier isActivePlankton {
+    require(planktonIsActive[msg.sender], "Colony: Only active planktons can perform this action."); _;
+  }
+
+  modifier isActiveZoox {
+    require(zooxIsActive[msg.sender], "Colony: Only active zooxes can perform this action."); _;
+  }
+
+  modifier isValidReward(uint rewardId) {
+    require(rewardIsActive[rewardId], "Colony: This action can only be performed on an active reward."); _;
   }
 
   function initialize(string memory _name, uint _maxPlanktons, uint _maxZooxes) public initializer {
@@ -73,6 +85,18 @@ contract Colony is Administrable, EmitsEvent, Initializable, Modifiable, Stoppab
     emitActionSuccess("Reward deactivated successfully.");
   }
 
+  function claimReward(uint rewardId) public isActivePlankton isValidReward(rewardId) {
+    // NB: Rewards are currently deemed to be claimed and assigned perpetually,
+    // Also, a Plankton can only claim one reward in this Colony
+    // In reality, the rules could be different and explicit, thus some filter and 
+    // double spending prevention mechanisms should be implemented
+
+    claimed[msg.sender] = rewardId;
+    assigned[msg.sender] = rewardId;
+
+    emitActionSuccess("Reward claimed successfully.");
+  }
+
   function addZoox(address zoox) public isModifiable isPolyp {
     require(_zooxes.canAcceptMoreZooxes(totalInactiveZooxes, maxZooxes), "Colony: can't add any more zooxes");
 
@@ -80,15 +104,15 @@ contract Colony is Administrable, EmitsEvent, Initializable, Modifiable, Stoppab
       Koral.Zoox(zoox)
     );
 
-    zooxIsActive[_zooxes.length - 1] = true;
+    zooxIsActive[zoox] = true;
     
     emitActionSuccess("Zoox added successfully.");
   }
 
-  function deactivateZoox(uint zooxId) public isModifiable isPolyp {
-    require(zooxIsActive[zooxId], "Colony: reward deactivation failed since zoox is inactive.");
+  function deactivateZoox(address zoox) public isModifiable isPolyp {
+    require(zooxIsActive[zoox], "Colony: reward deactivation failed since zoox is inactive.");
 
-    zooxIsActive[zooxId] = false;
+    zooxIsActive[zoox] = false;
     totalInactiveZooxes++;
 
     emitActionSuccess("Zoox deactivated successfully.");
@@ -101,15 +125,15 @@ contract Colony is Administrable, EmitsEvent, Initializable, Modifiable, Stoppab
       Koral.Plankton(plankton)
     );
 
-    planktonIsActive[_planktons.length - 1] = true;
+    planktonIsActive[plankton] = true;
 
     emitActionSuccess("Plankton added successfully.");
   }
 
-  function deactivatePlankton(uint planktonId) public isModifiable isPolyp {
-    require(planktonIsActive[planktonId], "Colony: reward deactivation failed since plankton is inactive.");
+  function deactivatePlankton(address plankton) public isModifiable isPolyp {
+    require(planktonIsActive[plankton], "Colony: reward deactivation failed since plankton is inactive.");
 
-    planktonIsActive[planktonId] = false;
+    planktonIsActive[plankton] = false;
     totalInactivePlanktons++;
 
     emitActionSuccess("Plankton deactivated successfully.");
