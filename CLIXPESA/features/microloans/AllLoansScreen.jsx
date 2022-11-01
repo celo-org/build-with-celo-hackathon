@@ -41,10 +41,11 @@ export default function AllLoansScreen({ navigation, route }) {
               repaid={loan.repaid}
               dueDate={loan.dueDate}
               screenOptions={{
-                screen: 'repayLoan',
+                screen: 'fundLoan',
                 params: {
                   address: loan.addr,
                   balance: loan.balance,
+                  initiated: loan.initiated,
                 },
               }}
             />

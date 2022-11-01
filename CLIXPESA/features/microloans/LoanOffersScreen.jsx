@@ -11,11 +11,11 @@ export default function LoanOffersScreen({ navigation }) {
   const dispatch = useDispatch()
   const offers = useSelector((s) => s.loans.allOffers)
   useEffect(() => {
-    if (offers.length < 1) {
-      console.log('fetching')
-      dispatch(fetchOffers())
-    }
-  }, [])
+    //if (offers.length < 1) {
+    console.log('fetching')
+    dispatch(fetchOffers())
+    //}
+  }, [navigation])
 
   return (
     <Box flex={1} bg="#F5F5F5" alignItems="center">

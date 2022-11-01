@@ -20,11 +20,14 @@ import { useSelector, useDispatch } from 'react-redux'
 import { nanoid } from 'nanoid'
 import { utils } from 'ethers'
 import celoHelper from '../../blockchain/helpers/celoHelper'
+import { NativeTokensByAddress } from '../wallet/tokens'
 import { ONRsIface } from '../../blockchain/contracts'
 import { fetchOffers } from './loansSlice'
 
 export default function CreateOfferScreen({ navigation }) {
   const dispatch = useDispatch()
+  const balances = useSelector((s) => s.wallet.walletBalances.tokenAddrToValue)
+  const tokenAddrs = Object.keys(NativeTokensByAddress)
   const loanONRsAddr = useSelector((s) => s.loans.ONRsAddr)
   const thisUser = useSelector((s) => s.essential.userDetails.names)
   const thisAddress = useSelector((s) => s.wallet.walletInfo.address)
@@ -130,7 +133,7 @@ export default function CreateOfferScreen({ navigation }) {
                 />
               </HStack>
               <Text px={5} mb={3}>
-                Max Borrowable: 300 cUSD
+                Max Lendable: {(balances[tokenAddrs[1]] * 1.0).toFixed(2)} cUSD
               </Text>
             </Box>
             <Stack bg="white" py={3} px={4} rounded="md">

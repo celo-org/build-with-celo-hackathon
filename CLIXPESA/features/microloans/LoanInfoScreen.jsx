@@ -1,17 +1,20 @@
-import { Box, Text, Icon, VStack, HStack, Spacer, Progress, FlatList, Alert } from 'native-base'
+import { Box, Text, Icon, VStack, HStack, Spacer, Progress, FlatList } from 'native-base'
+import { RefreshControl } from 'react-native'
 import { FeatureHomeCard } from 'clixpesa/components'
 import { Feather } from '@expo/vector-icons'
 import { SectionHeader, TransactionItem } from 'clixpesa/components'
 import { getDaysBetween } from 'clixpesa/utils/time'
 import { HeaderBackButton } from '@react-navigation/elements'
-import { useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useState, useCallback } from 'react'
 
 export default function LoanInfoScreen({ navigation, route }) {
   const routes = navigation.getState().routes
   const prevRoute = routes[routes.length - 2].name
+  const [refreshing, setRefreshing] = useState(false)
   const [loan, setLoan] = useState({})
   const transactions = [
     {
+      tx: '89wqy',
       credited: true,
       title: 'Loan credited to Account',
       date: 'Mon, 26 Jul, 11:26',
@@ -19,6 +22,7 @@ export default function LoanInfoScreen({ navigation, route }) {
       token: 'cUSD',
     },
     {
+      tx: '78wq6',
       credited: false,
       title: 'Bought BTC with cKES',
       date: 'Mon, 26 Jul, 11:26',
@@ -26,6 +30,7 @@ export default function LoanInfoScreen({ navigation, route }) {
       token: 'cUSD',
     },
     {
+      tx: '6732s',
       credited: false,
       title: 'Bought BTC with cKES',
       date: 'Mon, 26 Jul, 11:26',
@@ -34,13 +39,9 @@ export default function LoanInfoScreen({ navigation, route }) {
     },
   ]
   useLayoutEffect(() => {
-    if (prevRoute === 'Main') {
-      const thisLoan = { ...route.params, name: 'Loan Ingine' }
-      setLoan(thisLoan)
-    } else {
-      const thisLoan = route.params
-      setLoan(thisLoan)
-    }
+    const thisLoan = route.params
+    setLoan(thisLoan)
+
     if (prevRoute === 'applyLoan') {
       navigation.setOptions({
         headerLeft: (props) => {
@@ -56,6 +57,16 @@ export default function LoanInfoScreen({ navigation, route }) {
       })
     }
   }, [navigation])
+
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout))
+  }
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true)
+    wait(2000).then(() => setRefreshing(false))
+  }, [])
+
   const prog = (loan.paid / loan.balance) * 100
   const daysTo = getDaysBetween(Date.now(), Date.parse(loan.dueDate))
 
@@ -67,13 +78,15 @@ export default function LoanInfoScreen({ navigation, route }) {
         expScreen="DummyModal"
         btn1={{
           icon: <Icon as={Feather} name="arrow-up-right" size="md" color="primary.600" mr="1" />,
-          name: 'Repay',
-          screen: 'fromOffers',
+          name: loan.initiated ? 'Fund' : 'Repay',
+          screen: loan.initiated ? 'fundLoan' : 'fromOffers',
+          screenParams: loan,
         }}
         btn2={{
           icon: <Icon as={Feather} name="list" size="md" color="primary.600" mr="1" />,
           name: 'Details',
           screen: 'LoanDetails',
+          screenParams: loan,
         }}
       />
       <Box bg="white" roundedTop="md" roundedBottom="2xl" width="95%" mt={1}>
@@ -109,7 +122,9 @@ export default function LoanInfoScreen({ navigation, route }) {
               </Text>
             </HStack>
             <Text color="primary.800">
-              Keep calm. Loan will be credited once your lender releases the funds!
+              {loan.initiated
+                ? 'Please fund the Loan. Loanee is eagerly waiting for the chums!'
+                : 'Your Keep calm. Loan will be credited once your lender releases the funds!'}
             </Text>
           </Box>
         ) : (
@@ -117,6 +132,7 @@ export default function LoanInfoScreen({ navigation, route }) {
             <SectionHeader title="Transactions" />
             <FlatList
               data={transactions}
+              refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
               renderItem={({ item, index }) => (
                 <Box
                   bg="white"
@@ -137,7 +153,7 @@ export default function LoanInfoScreen({ navigation, route }) {
                   />
                 </Box>
               )}
-              keyExtractor={(item) => item.addr}
+              keyExtractor={(item) => item.tx}
             />
           </>
         )}

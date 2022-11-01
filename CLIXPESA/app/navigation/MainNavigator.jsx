@@ -18,7 +18,7 @@ import {
   ApplyLoanScreen,
   CreateOfferScreen,
   FilterByAmountScreen,
-  RepayLoanScreen,
+  FundLoanScreen,
 } from 'clixpesa/features/microloans'
 import {
   SpacesHomeScreen,
@@ -82,14 +82,7 @@ export default function MainNavigator() {
         <MainStack.Screen name="fromOffers" component={FilterByAmountScreen} />
         <MainStack.Screen name="applyLoan" component={ApplyLoanScreen} />
         <MainStack.Screen name="createOffer" component={CreateOfferScreen} />
-        <MainStack.Screen
-          name="repayLoan"
-          component={RepayLoanScreen}
-          options={({ route }) => ({
-            unmountOnBlur: true,
-            loanParams: route.params ? route.params.loanParams : {},
-          })}
-        />
+        <MainStack.Screen name="fundLoan" component={FundLoanScreen} />
       </MainStack.Group>
     </MainStack.Navigator>
   )

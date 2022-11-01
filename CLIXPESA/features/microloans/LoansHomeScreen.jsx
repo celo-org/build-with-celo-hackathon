@@ -1,27 +1,54 @@
 import { Box, Text, HStack, Icon, FlatList, Pressable } from 'native-base'
+import { RefreshControl } from 'react-native'
 import { Feather, Ionicons } from '@expo/vector-icons'
 import { useSelector, useDispatch } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { getLoans } from './loansManager'
-import { fetchLoans } from './loansSlice'
+import { fetchLoans, updateLoans } from './loansSlice'
 import { FeatureHomeCard, FeatureItem } from 'clixpesa/components'
+import celoHelper from '../../blockchain/helpers/celoHelper'
 
 export default function LoansHomeScreen({ navigation }) {
   const dispatch = useDispatch()
   const loanONRsAddr = useSelector((s) => s.loans.ONRsAddr)
+  const [refreshing, setRefreshing] = useState(false)
   const [loans, setLoans] = useState([])
   const [tempBal, setTempBal] = useState(0.0)
   let totalBalance = 0.0
 
   useEffect(() => {
     const fetchMyLoans = async () => {
+      const myLoans = await celoHelper.smartContractCall('Loans', {
+        method: 'getMyLoans',
+        methodType: 'read',
+      })
       const results = await getLoans()
-      if (!results) {
-        dispatch(fetchLoans())
-      }
       setLoans(results)
+      for (const idx in myLoans) {
+        if (!results.find((ln) => ln.address === myLoans[idx][0])) {
+          dispatch(fetchLoans())
+          return
+        }
+      }
     }
-    fetchMyLoans()
+
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchMyLoans()
+    })
+
+    return unsubscribe
+  }, [navigation])
+
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout))
+  }
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true)
+    dispatch(updateLoans())
+    const results = await getLoans()
+    setLoans(results)
+    wait(2000).then(() => setRefreshing(false))
   }, [])
 
   if (loans.length > 0) {
@@ -52,6 +79,7 @@ export default function LoansHomeScreen({ navigation }) {
       <FlatList
         width="95%"
         data={loans}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         renderItem={({ item, index }) => (
           <Box
             bg="white"
@@ -71,11 +99,13 @@ export default function LoansHomeScreen({ navigation }) {
               </HStack>
             ) : null}
             <FeatureItem
-              initiated={false}
+              initiated={item.initiated}
               itemTitle={item.name}
               payProgress={
                 item.pending
-                  ? 'Waiting for funds'
+                  ? item.initiated
+                    ? 'Please fund loan'
+                    : 'Waiting for funds'
                   : (item.paid * 1).toFixed(2).toString() +
                     '/' +
                     (item.balance * 1).toFixed(2).toString() +

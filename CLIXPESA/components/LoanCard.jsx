@@ -15,11 +15,7 @@ const LoanCard = (props) => {
       p={4}
       borderRadius="2xl"
       m={1}
-      onPress={() =>
-        navigation.navigate(props.screenOptions.screen, {
-          loanParams: props.screenOptions.params,
-        })
-      }
+      onPress={() => navigation.navigate(props.screenOptions.screen, props.screenOptions.params)}
     >
       <VStack space="12">
         <HStack alignItems="center" space={2}>

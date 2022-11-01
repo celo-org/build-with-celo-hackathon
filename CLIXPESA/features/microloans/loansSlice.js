@@ -23,6 +23,7 @@ const loansSlice = createSlice({
 export const fetchOffers = createAction('loans/fetchOffers')
 export const fetchRequests = createAction('loans/fetchRequests')
 export const fetchLoans = createAction('loans/fetchLoans')
+export const updateLoans = createAction('loans/updateLoans')
 
 export const { setONRsAddress, setOffers } = loansSlice.actions
 

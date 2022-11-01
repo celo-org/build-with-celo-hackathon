@@ -68,6 +68,11 @@
           },
           {
             "internalType": "uint256",
+            "name": "paid",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "minDuration",
             "type": "uint256"
           },
@@ -138,6 +143,11 @@
           {
             "internalType": "uint256",
             "name": "balance",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "paid",
             "type": "uint256"
           },
           {
@@ -213,6 +223,11 @@
           {
             "internalType": "uint256",
             "name": "balance",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "paid",
             "type": "uint256"
           },
           {

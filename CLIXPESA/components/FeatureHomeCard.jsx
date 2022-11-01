@@ -43,7 +43,7 @@ const FeatureHomeCard = (props) => {
           rounded="3xl"
           pr="4"
           _text={{ color: 'primary.600', fontWeight: 'semibold', mb: '0.5' }}
-          onPress={() => navigation.navigate(props.btn1.screen)}
+          onPress={() => navigation.navigate(props.btn1.screen, props.btn1.screenParams)}
         >
           {props.btn1.name}
         </Button>

@@ -2,17 +2,17 @@
   {
     "inputs": [
       {
-        "internalType": "contract IERC20",
-        "name": "token",
-        "type": "address"
-      },
-      {
         "internalType": "address payable",
         "name": "_creator",
         "type": "address"
       },
       {
         "components": [
+          {
+            "internalType": "contract IERC20",
+            "name": "token",
+            "type": "address"
+          },
           {
             "internalType": "string",
             "name": "roscaName",
@@ -275,7 +275,13 @@
       }
     ],
     "name": "joinRosca",
-    "outputs": [],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "success",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
