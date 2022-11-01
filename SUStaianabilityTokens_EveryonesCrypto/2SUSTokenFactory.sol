@@ -6,7 +6,7 @@ import "@openzeppelin/contracts@4.7.3/token/ERC20/extensions/ERC20Burnable.sol";
 import "@openzeppelin/contracts@4.7.3/security/Pausable.sol";
 import "@openzeppelin/contracts@4.7.3/access/AccessControl.sol";
 
-interface IRoles {
+interface RolesI {
     function isSuperAdmin(address account) external view returns(bool);
     function isAddressManager(address account) external view returns(bool);
     function isMinter(address account) external view returns(bool);
@@ -24,7 +24,7 @@ contract SUStaianablilityTokens is ERC20, ERC20Burnable, Pausable, AccessControl
     }
 
     function mintSUST(address to, uint256 amount) public { //onlyRole(MINTER_ROLE) {
-        require(IRoles(rolesSC).isMinter(msg.sender), "Access Denied: Caller is NOT Minter!");
+        require(RolesI(rolesSC).isMinter(msg.sender), "Access Denied: Caller is NOT Minter!");
         _mint(to, amount);
 
         emit MintEvent(to, amount);   
@@ -41,7 +41,7 @@ contract SUStaianablilityTokens is ERC20, ERC20Burnable, Pausable, AccessControl
     //----------------------- SET ADDRESS FUNCTIONS -----------------------//
 
     function setRolesContractAddress(address _rolesSC) public whenNotPaused {
-        require(IRoles(rolesSC).isAddressManager(msg.sender), "Access Denied: Caller is NOT Address Manager!");
+        require(RolesI(rolesSC).isAddressManager(msg.sender), "Access Denied: Caller is NOT Address Manager!");
         require(_rolesSC != address(0), "Account: Zero or Invalid address!");
         rolesSC = _rolesSC;
     }
@@ -49,20 +49,19 @@ contract SUStaianablilityTokens is ERC20, ERC20Burnable, Pausable, AccessControl
     //----------------- PAUSER FUNCTION ----------------//
 
     function pauseContract() public whenNotPaused {
-        require(IRoles(rolesSC).isPauser(msg.sender), "Access Denied: Caller is NOT Pauser!");
+        require(RolesI(rolesSC).isPauser(msg.sender), "Access Denied: Caller is NOT Pauser!");
         _pause();
     }
 
     function unpauseContract() public whenPaused {
-        require(IRoles(rolesSC).isPauser(msg.sender), "Access Denied: Caller is NOT Pauser!");
+        require(RolesI(rolesSC).isPauser(msg.sender), "Access Denied: Caller is NOT Pauser!");
         _unpause();
     }
 
 //----------------- KILL FUNCTION ----------------//
 
-    //KILL THE ERC20-SMART-CONTRACT
-    function killCarbonCreditsERC20() public {
-		require(IRoles(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT a SUPER ADMIN!");
+    function killCarbonCreditsERC20() public whenNotPaused {
+		require(RolesI(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT a SUPER ADMIN!");
 		selfdestruct(payable(msg.sender));
 	}
 }

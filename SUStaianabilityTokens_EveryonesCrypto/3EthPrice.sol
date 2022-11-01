@@ -11,16 +11,14 @@ contract EthPrice is usingProvable {
     event LogNewEthPrice(string price);
     event LogNewProvableQuery(string description);
 
-    constructor() public {
+    constructor() {
         emit LogConstructorInitiated("Constructor is initiated and 'updateEthPrice()' is called to send the Provable Query.");
-        updateEthPrice(); // First check at contract creation...
     }
 
     function __callback(bytes32 _myid, string memory _result) public {
         require(msg.sender == provable_cbAddress());
         emit LogNewEthPrice(_result);
         ethPriceUSD = parseInt(_result); 
-        // Now do something with the USD Diesel price...
     }
 
     function updateEthPrice() public payable {
