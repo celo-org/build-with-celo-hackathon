@@ -94,7 +94,7 @@ export const UserRewards = () => {
 
   return (
     <>
-      <h3 className="mb-4">User Rewards </h3>
+      <h3 className="mb-4">My Rewards</h3>
       <hr />
       {userRewards && (
         <PaginatedLayout
