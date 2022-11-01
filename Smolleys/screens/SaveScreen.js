@@ -1,14 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import { Video } from "expo-av";
-import React, { useLayoutEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import React, { useState } from "react";
+import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native";
 import { Snackbar } from "react-native-paper";
 // import { connect } from "react-redux";
 // import { bindActionCreators } from "redux";

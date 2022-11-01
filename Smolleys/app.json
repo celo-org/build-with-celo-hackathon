@@ -15,9 +15,7 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/0b8a9eb6-7161-497b-9542-ff6b5f889be4"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -30,9 +28,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "extra": {
-      
-    },
+    "extra": {},
     "runtimeVersion": {
       "policy": "sdkVersion"
     }

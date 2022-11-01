@@ -1,17 +1,17 @@
 import {
-  ImageBackground,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-} from "react-native";
+  BubblegumSans_400Regular,
+  useFonts,
+} from "@expo-google-fonts/bubblegum-sans";
 import React from "react";
 import {
-  useFonts,
-  BubblegumSans_400Regular,
-} from "@expo-google-fonts/bubblegum-sans";
+  Dimensions,
+  Image,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 const win = Dimensions.get("window");
 const SplashScreen5 = ({ navigation }) => {
   let [fontsLoaded] = useFonts({

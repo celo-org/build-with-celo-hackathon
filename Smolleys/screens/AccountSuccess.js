@@ -1,18 +1,18 @@
 import {
-  StyleSheet,
-  Text,
-  View,
+  BubblegumSans_400Regular,
+  useFonts,
+} from "@expo-google-fonts/bubblegum-sans";
+import React from "react";
+import {
+  Dimensions,
   Image,
   ImageBackground,
+  StyleSheet,
+  Text,
   TouchableOpacity,
-  Dimensions,
+  View,
 } from "react-native";
-import React from "react";
 const win = Dimensions.get("window");
-import {
-  useFonts,
-  BubblegumSans_400Regular,
-} from "@expo-google-fonts/bubblegum-sans";
 
 const AccountSuccess = ({ navigation }) => {
   let [fontsLoaded] = useFonts({

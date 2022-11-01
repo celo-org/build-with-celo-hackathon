@@ -22,11 +22,9 @@ import { Controller, useForm } from "react-hook-form";
 
 const SignupParent = ({ navigation }) => {
   const {
-    register,
     control,
     handleSubmit,
-    setValue,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm({
     mode: "all",
   });
@@ -69,7 +67,7 @@ const SignupParent = ({ navigation }) => {
               navigation.navigate("AccountSuccess");
               return;
             })
-            .catch((e) => {
+            .catch(() => {
               navigation.navigate("AccountSuccess");
             });
         } else {
@@ -209,7 +207,7 @@ const SignupParent = ({ navigation }) => {
           <Controller
             control={control}
             name="country"
-            render={({ field: { value, onChange, onBlur } }) => (
+            render={({ field: { value, onChange } }) => (
               <TextInput
                 textContentType="country"
                 placeholder="Country"

@@ -45,7 +45,7 @@ const KidsHomePage = ({ navigation }) => {
         }
         setTasks(items);
         setSnnap(snp);
-        console.log("snap",snp);
+        console.log("snap", snp);
       })
       .catch((error) => {
         console.log(error);

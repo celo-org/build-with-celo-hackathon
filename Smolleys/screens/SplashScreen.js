@@ -1,22 +1,18 @@
 import {
-  StyleSheet,
+  BubblegumSans_400Regular,
+  useFonts,
+} from "@expo-google-fonts/bubblegum-sans";
+import {
   Dimensions,
-  Text,
-  View,
   Image,
   ImageBackground,
+  StyleSheet,
+  Text,
   TouchableOpacity,
-  Button,
-  TouchableHighlight,
+  View,
 } from "react-native";
-import {
-  useFonts,
-  BubblegumSans_400Regular,
-} from "@expo-google-fonts/bubblegum-sans";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 const win = Dimensions.get("window");
 const SplashScreen = ({ navigation }) => {
   function nextPage() {

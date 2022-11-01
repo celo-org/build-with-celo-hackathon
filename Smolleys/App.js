@@ -33,11 +33,11 @@ import CameraScreen from "./screens/CameraScreen";
 import ClaimReward from "./screens/ClaimReward";
 import KidsHomePage from "./screens/KidsHomePage";
 import Login from "./screens/Login";
+import ResetPassword from "./screens/Reset Password";
 import Rewards from "./screens/Rewards";
 import SaveScreen from "./screens/SaveScreen";
 import SignupParent from "./screens/SignupParent";
 import TimelineScreen from "./screens/TimelineScreen";
-import ResetPassword from "./screens/Reset Password";
 const Stack = createNativeStackNavigator();
 export default function App() {
   const [hasCameraPermission, setHasCameraPermission] = useState();
