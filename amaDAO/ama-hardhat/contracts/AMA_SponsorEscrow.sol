@@ -47,6 +47,8 @@ contract AMA_SponsorEscrow {
     //track when a user can request again
     mapping(address => uint256) public lockTime;
 
+    mapping(uint256 => address) public escrowSponsor; // List of escrows to traverse to match sponsor
+
     constructor() {
         //address ama_callerAddr = 0xca8B0f4885DBef091b090395170AFE85cd1D011E;
         ama_addr = msg.sender; //ama_callerAddr;//
@@ -87,6 +89,7 @@ contract AMA_SponsorEscrow {
         newEscrow.escrowState = State.ACTIVE;
         //-- Later phase: make initially State.PENDING; team should approve before becoming available in the app
         escrows[nEscrow] = newEscrow;
+        escrowSponsor[nEscrow-1] = sponsor;
     }
 
     function setTitle(uint256 id, string memory title) public onlySponsor(id) returns (bool) {
