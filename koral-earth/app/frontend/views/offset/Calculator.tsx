@@ -43,6 +43,12 @@ export const Calculator = ({ projectId }: Props) => {
     );
   }
 
+  const handleSubmit = () => {
+    if (userBudget) {
+      setShowModal(true);
+    }
+  };
+
   if (minContributionFetchingError) {
     return (
       <Alert variant="danger">
@@ -55,11 +61,13 @@ export const Calculator = ({ projectId }: Props) => {
     return <Spinner animation="grow" />;
   }
 
-  const handleSubmit = () => {
-    if (userBudget) {
-      setShowModal(true);
-    }
-  };
+  if (minContribution === 0) {
+    return (
+      <Alert variant="info">
+        This project does not support claiming rewards yet
+      </Alert>
+    );
+  }
 
   return (
     <>
