@@ -4,7 +4,7 @@
 pragma solidity ^0.8.0;
 
 struct Contribution {
-  // amount in CELO
+  // amount in CELO wei
   uint amount;
 
   // carbon offsetting project ID

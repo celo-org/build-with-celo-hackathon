@@ -77,14 +77,18 @@ contract Colony is Administrable, EmitsEvent, Initializable, Modifiable, Stoppab
     emitActionSuccess("Colony launched successfully.");
   }
 
-  function addReward(uint minContributionAmount, string memory projectId, string memory name, string memory location) public isModifiable isPolyp {
+  function setProjectMinContributionAmount(uint minContributionAmount, string memory projectId)public isModifiable isPolyp {
+    minContributionPerProject[projectId] = minContributionAmount;
+
+    emitActionSuccess("Project minimum contribution defined successfully.");
+  }
+
+  function addReward(string memory projectId, string memory name, string memory location) public isModifiable isPolyp {
     _rewards.push(
       Reward(name, location)
     );
 
     uint rewardId = _rewards.length - 1;
-
-    minContributionPerProject[projectId] = minContributionAmount;
 
     _projectRewards[projectId].push(rewardId);
     _activeProjectRewards[projectId][rewardId] = true;

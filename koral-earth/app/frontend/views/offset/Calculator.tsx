@@ -9,6 +9,8 @@ import { Colony as IColony } from '../../../../typechain/contracts/colony/Colony
 
 type Props = PropsWithChildren<{ projectId: string }>;
 
+const WEI_UNIT = Math.pow(10, 18);
+
 export const Calculator = ({ projectId }: Props) => {
   const { kit, account, connect } = useCelo();
   const [userBudget, setUserBudget] = useState(0);
@@ -61,7 +63,7 @@ export const Calculator = ({ projectId }: Props) => {
     return <Spinner animation="grow" />;
   }
 
-  if (minContribution === 0) {
+  if (minContribution === 0 || !minContribution) {
     return (
       <Alert variant="info">
         This project does not support claiming rewards yet
@@ -85,7 +87,7 @@ export const Calculator = ({ projectId }: Props) => {
             placeholder="Enter amount"
             min={'1'}
             onInput={(e) =>
-              setUserBudget(parseInt(e.currentTarget.value) * Math.pow(10, 18))
+              setUserBudget(parseInt(e.currentTarget.value) * WEI_UNIT)
             }
           />
           <Form.Text className="text-muted">
@@ -94,7 +96,8 @@ export const Calculator = ({ projectId }: Props) => {
         </Form.Group>
         <Alert variant="dark">
           <i>
-            You can only earn rewards after spending {minContribution}
+            You can only earn rewards after spending{' '}
+            {minContribution / WEI_UNIT}
             {' CELO '}
             offsetting with this project.
             <br />
