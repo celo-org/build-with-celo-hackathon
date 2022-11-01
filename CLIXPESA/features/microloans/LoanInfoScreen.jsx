@@ -79,7 +79,7 @@ export default function LoanInfoScreen({ navigation, route }) {
         btn1={{
           icon: <Icon as={Feather} name="arrow-up-right" size="md" color="primary.600" mr="1" />,
           name: loan.initiated ? 'Fund' : 'Repay',
-          screen: loan.initiated ? 'fundLoan' : 'fromOffers',
+          screen: 'fundLoan',
           screenParams: loan,
         }}
         btn2={{

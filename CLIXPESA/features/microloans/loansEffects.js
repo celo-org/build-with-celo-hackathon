@@ -3,7 +3,7 @@ import celoHelper from '../../blockchain/helpers/celoHelper'
 import { utils } from 'ethers'
 import { getDefaultNewLoanName, getLoans, loansListCache } from './loansManager'
 import { LOANS_STORE } from 'clixpesa/app/constants'
-import { storeUserLoan } from 'clixpesa/app/storage'
+import { storeUserLoan, modifyLoanDetails } from 'clixpesa/app/storage'
 import { areAddressesEqual } from '../../blockchain/utils/addresses'
 
 export const loansListeners = (startListening) => {
@@ -48,22 +48,19 @@ export const loansListeners = (startListening) => {
           methodType: 'read',
         })
         const thisLoan = loans.find((loan) => areAddressesEqual(loan.address, result[0]))
-        console.log(thisLoan)
-        const dueDate = new Date(results[11].toString() * 1)
+        const dueDate = new Date(results[12].toString() * 1)
         const balance = utils.formatUnits(results[8], 'ether')
-        console.log(balance)
         const loanDetails = {
           pending: balance > 0.0 ? false : true,
           name: thisLoan.name,
           address: result[0],
           balance: balance > 0.0 ? balance : utils.formatUnits(results[6], 'ether'),
-          paid: 0,
+          paid: utils.formatUnits(results[9], 'ether'),
           dueDate: dueDate.toDateString(),
           initiated: result[1],
         }
-        console.log(loanDetails)
-        //await storeUserLoan(LOANS_STORE, loanDetails)
-        //Object.assign(loansListCache, { [loanDetails.address]: loanDetails })
+        await modifyLoanDetails(LOANS_STORE, loanDetails)
+        Object.assign(loansListCache, { [loanDetails.address]: loanDetails })
       })
     },
   })
@@ -81,14 +78,14 @@ export const loansListeners = (startListening) => {
           methodType: 'read',
         })
         const loanName = await getDefaultNewLoanName()
-        const dueDate = new Date(results[11].toString() * 1)
+        const dueDate = new Date(results[12].toString() * 1)
         const balance = utils.formatUnits(results[8], 'ether')
         const loanDetails = {
           pending: balance > 0 ? false : true,
           name: loanName,
           address: result[0],
           balance: balance > 0 ? balance : utils.formatUnits(results[6], 'ether'),
-          paid: 0,
+          paid: utils.formatUnits(results[9], 'ether'),
           dueDate: dueDate.toDateString(),
           initiated: result[1],
         }

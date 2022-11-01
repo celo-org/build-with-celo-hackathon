@@ -57,6 +57,7 @@ export default function LoansHomeScreen({ navigation }) {
         totalBalance += loan.balance * 1
       }
     })
+    wait(1000).then(() => dispatch(updateLoans()))
   }
 
   return (
