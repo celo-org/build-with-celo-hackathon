@@ -1791,9 +1791,19 @@ var Module = class {
 			listing_info.canbelisted = true;
 		}
 	
+		var nft = await nftMarketplace.getNft(tokenaddress, tokenid);
+
+		if (nft) {
+			listing_info.onsale = (nft.listed ? true : false);
+			listing_info.saleprice = nft.price;
+			listing_info.owner = nft.owner;
+			listing_info.seller = nft.seller;
+		}
+
+		// TEST
 		var listed_nfts = await nftMarketplace.getListedNfts();
 
-		for (var i = 0; i < (listed_nfts ? listed_nfts.length: 0); i++) {
+		/* for (var i = 0; i < (listed_nfts ? listed_nfts.length: 0); i++) {
 			let _nft = listed_nfts[i];
 			let _nft_tokenaddress = _nft[1];
 			let _nft_tokenid = _nft[2];
@@ -1805,7 +1815,8 @@ var Module = class {
 				listing_info.owner = _nft.owner;
 				listing_info.seller = _nft.seller;
 			}
-		}
+		} */
+		// TEST
 
 		return listing_info;
 	}
@@ -1960,13 +1971,16 @@ var Module = class {
 		return txhash;
 	}
 	
-	async buyDeed(sessionuuid, walletuuid, currencyuuid, minter, deed, feelevel) {
+	async buyDeed(sessionuuid, walletuuid, carduuid, minter, deed, currencyuuid, amount, feelevel) {
 		if (!sessionuuid)
 		return Promise.reject('session uuid is undefined');
 	
 		if (!walletuuid)
 			return Promise.reject('wallet uuid is undefined');
 		
+		if (!carduuid)
+			return Promise.reject('card uuid is undefined');
+
 		if (!currencyuuid)
 			return Promise.reject('currency uuid is undefined');
 		
@@ -1997,19 +2011,12 @@ var Module = class {
 			return Promise.reject('deed is not on sale');
 		
 		
-		var card;
-		if (deed.owner) {
-			// clause can be added by a subsequent owner different from the creator
-			card = await this._getDeedOwningCard(session, wallet, currency, minter, deed);
-		}
-		else {
-			// we are creating the deed and probably listing the deed on the fly
-			card = await this._getMinterCard(session, wallet, currency, minter);
-		}
-	
+		var card = await wallet.getCardFromUUID(carduuid);
+
 		if (!card)
-			return Promise.reject('could not find minter card');
-	
+			return Promise.reject('could not find a card for currency ' + currencyuuid);
+		
+		
 		var tokenaddress = deed.minter;
 		var tokenid = deed.tokenid;
 
@@ -2041,6 +2048,9 @@ var Module = class {
 			return Promise.reject('could not find nft market place');
 
 
+		var from_card_scheme = card.getScheme();
+
+
 		// for payments in currency, before sending buyNft transaction
 		// we must approve the mark for listing_info.price amount in tokens
 		var nftmarketplace_address = nftMarketplace.getAddress();
@@ -2061,20 +2071,31 @@ var Module = class {
 		var alloweeaccount = childsession.createBlankAccountObject();
 		alloweeaccount.setAddress(nftmarketplace_address);
 		var payingaccount = card._getAccountObject();
-		var gas = fee.gaslimit;
-		var gasPrice = fee.gasPrice;
 
 		// pass string to avoid BigNumber error
-		var saleprice = listing_info.price
+		var saleprice = listing_info.saleprice;
+		var saleprice_int = parseInt(saleprice);
 		var balance = await erc20contract.balanceOf(payingaccount);
+		var balance_int = parseInt(balance);
 
-		if (balance < saleprice)
+		if (amount < saleprice_int)
+			return Promise.reject('no authorization on ' + card.address + ' to spend more than ' + amount + ' while sale price is ' + saleprice);
+
+		if (balance_int < saleprice_int)
 			return Promise.reject('not enough funds on ' + card.address + ' to spend ' + saleprice);
 
 
 		var allowance = await erc20contract.allowance(payingaccount, alloweeaccount);
+		var allowance_int = parseInt(allowance);
 
-		if (saleprice > allowance) {
+		if (saleprice_int > allowance_int) {
+			// go through approve call
+			// TODO: use specific feelevel
+			let fee = await _apicontrollers.createSchemeFee(from_card_scheme, feelevel);
+
+			let gas = fee.gaslimit;
+			let gasPrice = fee.gasPrice;
+
 			let _allowance = saleprice.toString();
 			let _txhash = await erc20contract.approve(alloweeaccount, _allowance, payingaccount, gas, gasPrice);
 
@@ -2083,8 +2104,6 @@ var Module = class {
 		}		
 	
 		// create ethereum transaction
-		var from_card_scheme = card.getScheme();
-
 		var ethereumnodeaccessmodule = global.getModuleObject('ethereum-node-access');
 
 		var ethereumtransaction = ethereumnodeaccessmodule.getEthereumTransactionObject(childsession, fromaccount);
@@ -2095,12 +2114,12 @@ var Module = class {
 		ethereumtransaction.setGas(fee.gaslimit);
 		ethereumtransaction.setGasPrice(fee.gasPrice);
 
-		var nft = await nftMarketplace.buyNft(tokenaddress, tokenid);
+		var nft = await nftMarketplace.getNft(tokenaddress, tokenid);
 
 		if (!nft)
 			return Promise.reject('could not find nft ' + tokenaddress + ' - ' + tokenid + ' on the marketplace');
 
-		var nftIndex = nft.nftIndex - 1;
+		var nftIndex = nft.nftIndex;
 		var txhash = await nftMarketplace.buyNft(nftIndex, ethereumtransaction);
 
 		return txhash;

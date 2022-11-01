@@ -117,10 +117,6 @@ class QRCodeReaderHomeScreen extends React.Component {
 		}
 	}
 
-	async _confirm(message) {
-		return window.confirm(message);
-	}
-
 	async onRead(result, error) {
 		try {
 			if (!!result) {
@@ -137,11 +133,11 @@ class QRCodeReaderHomeScreen extends React.Component {
 					if (isinternal) {
 						// we could directly jump if it is an internal url
 						message = 'Jump to internal url? ' + _cr + _cr + url;
-						choice = await this._confirm(message);
+						choice = await this.app.confirm(message);
 					}
 					else {
 						message = 'Go to? ' + _cr + _cr + url;
-						choice = await this._confirm(message);
+						choice = await this.app.confirm(message);
 					}
 
 					if (choice) {

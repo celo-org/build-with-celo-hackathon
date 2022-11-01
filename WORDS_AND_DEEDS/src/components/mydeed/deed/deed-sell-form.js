@@ -401,7 +401,7 @@ class DeedSellForm extends React.Component {
 				return;
 			}
 	
-			let pay_url = this.deed.tokenuri;
+			let pay_url = await this.app.getVariable('AppsPane').turnToLocalUri(this.deed.tokenuri);
 
 			pay_url += '&route=deedview&action=buy&mode=qrcode';
 
@@ -449,10 +449,6 @@ class DeedSellForm extends React.Component {
 
 	}
 
-	async _confirm(message) {
-		return window.confirm(message);
-	}
-
 	async onRead(result, error) {
 		try {
 			if (!!result) {
@@ -468,12 +464,24 @@ class DeedSellForm extends React.Component {
 					
 					if (isinternal) {
 						// we could directly jump if it is an internal url
-						message = 'Jump to internal url? ' + _cr + _cr + url;
-						choice = await this._confirm(message);
+						let internal_params = await this.app.getVariable('AppsPane').getInternalUrlParams(url);
+
+						if (internal_params && internal_params.tx) {
+							// TODO: display amount paid in the transaction
+							message = 'Payment transaction is ' + _cr + _cr + internal_params.tx + _cr + _cr;
+							message += 'You can now press the Deliver button to transfer the deed to the buyer.';
+
+							await this.app.alert(message);
+							choice = true;
+						}
+						else {
+							message = 'Jump to internal url? ' + _cr + _cr + url;
+							choice = await this.app.confirm(message);
+						}
 					}
 					else {
 						message = 'Go to? ' + _cr + _cr + url;
-						choice = await this._confirm(message);
+						choice = await this.app.confirm(message);
 					}
 	
 					if (choice) {

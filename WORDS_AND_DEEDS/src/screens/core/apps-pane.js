@@ -129,6 +129,25 @@ class AppsPane extends React.Component {
 		return context;
 	}
 
+	async turnToLocalUri(uri) {
+		if (!uri)
+			return uri;
+
+		let _uri;
+		const cleanUrl = await this.app.getCleanUrl();
+
+		if (!uri.startsWith(cleanUrl)) {
+			let parts = uri.split('?');
+
+			_uri = cleanUrl + (parts.length > 1 ? '?' + parts[1] : '');
+		}
+		else {
+			_uri = uri;
+		}
+
+		return _uri;
+	}
+
 	// post render commit phase
 	componentDidMount() {
 		// register to app

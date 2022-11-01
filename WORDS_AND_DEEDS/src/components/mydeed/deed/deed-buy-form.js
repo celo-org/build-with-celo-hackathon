@@ -492,55 +492,84 @@ class DeedBuyForm extends React.Component {
 			// perform payment
 			let to_address = deed.owner;
 
-			// check we have enough transaction credits
-			let tx_fee = {};
-			tx_fee.transferred_credit_units = 0;
-			let transfer_cost_units = 3;
-			tx_fee.estimated_cost_units = transfer_cost_units;
-
-			let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, currentcard.uuid, tx_fee);
-
-
-			var canspend = await this._canCompleteTransaction(currentcard.uuid, tx_fee, _feelevel).catch(err => {});
-
-			if (!canspend) {
-				if (tx_fee.estimated_fee.execution_credits > tx_fee.estimated_fee.max_credits) {
-					this.app.alert('The execution of this transaction is too large: ' + tx_fee.estimated_fee.execution_units + ' credit units.');
-					this._setState({processing: false});
-					return;
-				}
-				else {
-					this.app.alert('You must add transaction units to the source card. You need at least ' + tx_fee.required_units + ' credit units.');
-					this._setState({processing: false});
-					return;
-				}
-			}
-						
-
-			let payment_txhash = await mvcmypwa.payAmount(rootsessionuuid, walletuuid, currentcard.uuid, to_address, currency.uuid, saleprice, _feelevel)
-			.catch(err => {
-				console.log('error in DeedBuyForm.onBuy: ' + err);
-			});
+			let payment_txhash;
 	
-			if (!payment_txhash) {
-				this.app.alert('Could not transfer amount');
-				this.setState({processing: false});
-				return;
-			}
 
-			// display the txhash to the seller
+			if (buy_mode == 'market') {
+				// check we have enough transaction credits
+				let tx_fee = {};
+				tx_fee.transferred_credit_units = 0;
+				let buying_deed_cost_units = (currency.deeds_v1.buying_deed_cost_units ? parseInt(currency.deeds_v1.buying_deed_cost_units) : 16);
+				tx_fee.estimated_cost_units = buying_deed_cost_units;
 
-			if (buy_mode != 'market') {
+				let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, currentcard.uuid, tx_fee);
+
+
+				var canspend = await this._canCompleteTransaction(currentcard.uuid, tx_fee, _feelevel).catch(err => {});
+
+				if (!canspend) {
+					if (tx_fee.estimated_fee.execution_credits > tx_fee.estimated_fee.max_credits) {
+						this.app.alert('The execution of this transaction is too large: ' + tx_fee.estimated_fee.execution_units + ' credit units.');
+						this._setState({processing: false});
+						return;
+					}
+					else {
+						this.app.alert('You must add transaction units to the source card. You need at least ' + tx_fee.required_units + ' credit units.');
+						this._setState({processing: false});
+						return;
+					}
+				}
+				payment_txhash = await mvcmydeed.buyDeed(rootsessionuuid, walletuuid, currentcard.uuid, minter, deed, currency.uuid, saleprice, _feelevel)
+				.catch(err => {
+					console.log('error in DeedBuyForm.onBuy: ' + err);
+				});
+
 				this._setState({ payment_txhash});
 			}
 			else {
-				let payment_url = this.deed.tokenuri;
+				// check we have enough transaction credits
+				let tx_fee = {};
+				tx_fee.transferred_credit_units = 0;
+				let transfer_cost_units = 3;
+				tx_fee.estimated_cost_units = transfer_cost_units;
+
+				let _feelevel = await mvcmypwa.getRecommendedFeeLevel(rootsessionuuid, walletuuid, currentcard.uuid, tx_fee);
+
+
+				var canspend = await this._canCompleteTransaction(currentcard.uuid, tx_fee, _feelevel).catch(err => {});
+
+				if (!canspend) {
+					if (tx_fee.estimated_fee.execution_credits > tx_fee.estimated_fee.max_credits) {
+						this.app.alert('The execution of this transaction is too large: ' + tx_fee.estimated_fee.execution_units + ' credit units.');
+						this._setState({processing: false});
+						return;
+					}
+					else {
+						this.app.alert('You must add transaction units to the source card. You need at least ' + tx_fee.required_units + ' credit units.');
+						this._setState({processing: false});
+						return;
+					}
+				}
+
+				payment_txhash = await mvcmypwa.payAmount(rootsessionuuid, walletuuid, currentcard.uuid, to_address, currency.uuid, saleprice, _feelevel)
+				.catch(err => {
+					console.log('error in DeedBuyForm.onBuy: ' + err);
+				});
+
+				// display the txhash to the seller through a qr code
+				let payment_url = await this.app.getVariable('AppsPane').turnToLocalUri(this.deed.tokenuri);
 
 				payment_url += '&route=deedview&action=sell&mode=qrcode';
 	
 				payment_url += '&tx=' + payment_txhash;
 	
 				this._setState({buy_mode: 'qrcode', payment_txhash, payment_url});
+			}
+
+			if (!payment_txhash) {
+				this.app.alert('Could not transfer amount');
+				this.setState({processing: false});
+				return;
 			}
 
 
