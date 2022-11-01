@@ -5,6 +5,12 @@ pragma solidity 0.8.9;
 import "./ICommon.sol";
 
 interface IDigesu {
+  error InsufficientQuorum();
+  error InvalidInput();
+  error Failed();
+
+  event Cancellation(uint poolId, uint unit, address alc);
+
   function joinABand(uint poolId) external returns(bool);
   function getFinance(uint poolId) external returns(bool);
   function payback(uint poolId) external returns(bool);

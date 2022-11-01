@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.0;
+pragma solidity 0.8.9;
 
 // import "../libs/Context.sol";
 // import "../interfaces/IERC20.sol";
@@ -9,9 +9,19 @@ import "../interfaces/IDigesu.sol";
 import "../libs/Utils.sol";
 import "../libs/Ownable.sol";
 import "../libs/ReentrancyGuard.sol";
+import "../libs/Address.sol";
 
 /**
   @title Account: 
+    Interactive account is a separate entity distinct fron the owner. 
+    They are able to interact with most Digesu's products. Routers interact directly with
+    accounts, not the owner. They own power to approve or disapprove transactions.
+    Routers read and push information to accounts only on trigger by the owner.
+      - An exceptional case is where funds need to be moved to the next person.
+      - In such case, the owner must have pay back and approve Router to spend 
+         from their account. Usually, Router locks the amount in user's account
+         until the need for it arise.
+    Note: Routers don't take actions unless triggered by the owner.
 
   Error Code:
     1. Token not supported.
@@ -24,11 +34,23 @@ contract Account is IAccount, Context, Ownable, ReentrancyGuard {
   // Address of Router
   address payable private router;
 
+  //Manager contract
+  address public manager;
+
   // Address of the Mother branchup
   address private branchUp;
 
   //Total amount engaged at any time
   uint private engaged;
+
+  // Control contract execution
+  bool private _pause;
+
+  // Supported assets
+  address[] private supportedAssets;
+
+  // Mapping of added supported assets
+  mapping (address=>bool) public added;
 
   // All Subscriptions
   mapping (uint=>Info) public subscriptionInfo;
@@ -43,8 +65,10 @@ contract Account is IAccount, Context, Ownable, ReentrancyGuard {
    *      sensitive functions.
    *  o @param newOwner : i.e the calling EOA is set as the sole owner.
    */
-  constructor (address newOwner) payable {
-    router = payable(_msgSender());
+  constructor (address newOwner, address router_) payable {
+    router = payable(router_);
+    _pause = false;
+    manager = payable(_msgSender());
     transferOwnership(newOwner);
   }
 
@@ -64,6 +88,11 @@ contract Account is IAccount, Context, Ownable, ReentrancyGuard {
     _;
   }
 
+  modifier whenNotPaused() {
+    if(_pause) revert ExecutionStopped();
+    _;
+  }
+
   /**@dev
    *  Only supported assets are allowed i.e NATIVE or ERC20
    * @param erc20Address Incoming token address
@@ -72,6 +101,10 @@ contract Account is IAccount, Context, Ownable, ReentrancyGuard {
   modifier isSupportedToken(address erc20Address) {
     if(erc20Address == address(0)) revert ZeroAddress(erc20Address);
     if(!IDigesu(_router()).supportedToken(erc20Address)) revert UnsupportedAsset(erc20Address);
+    if(!added[erc20Address]) {
+      added[erc20Address] = true;
+      supportedAssets.push(erc20Address);
+    }
     _;
   }
 
@@ -96,6 +129,39 @@ contract Account is IAccount, Context, Ownable, ReentrancyGuard {
   //  */
   // function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
   
+  /**@dev Utility to upgrage to a new account.
+   * Note : New account must be approved from the accout manager
+   *        before they can be upgraded.
+   */
+  function rekey(address newAccount) external returns(bool) {
+    require(_msgSender() == manager, "NA");
+    address[] memory _assets = supportedAssets;
+    for (uint i = 0; i < _assets.length; i++) {
+      address asset = supportedAssets[i];
+      uint bal = IERC20(asset).balanceOf(address(this));
+      if(bal > 0) {
+        require(IERC20(asset).transfer(newAccount, bal), "Error");
+      }
+    }
+    Address.functionCallWithValue(
+      newAccount,
+      abi.encodeWithSelector(
+        bytes4(keccak256(bytes("accept(address[] memory)"))), 
+        _assets
+      ),
+      address(this).balance
+    );
+    transferOwnership(manager);
+    haltExecution();
+
+    return true;
+    // SafeCallAccount.safeTransferData(newAccount, _assets);
+  }
+
+  function haltExecution() private  {
+    _pause = true;
+  }
+
   // Returns router - Gas saving.
   function _router() internal view returns(address _fetched) { _fetched = router; }
 
@@ -124,7 +190,12 @@ contract Account is IAccount, Context, Ownable, ReentrancyGuard {
    * @param amount Deposit amount.
    * @return null
   */
-  function depositERC20Token(address erc20Address, uint256 amount) external isSupportedToken(erc20Address) returns(bool) {
+  function depositERC20Token(address erc20Address, uint256 amount) 
+    external
+    whenNotPaused
+    isSupportedToken(erc20Address) 
+    returns(bool) 
+  {
     IERC20(erc20Address).transferFrom(_msgSender(), address(this), amount).assertUnchained('Transfer Failed');
     _syncBalances(erc20Address, 0);
 
@@ -161,7 +232,8 @@ contract Account is IAccount, Context, Ownable, ReentrancyGuard {
    * @param erc20Address Address of the depositing token.
    * @return _balances 
   */
-  function erc20Balances(address erc20Address) external view isSupportedToken(erc20Address) returns(uint256 _balances) {
+  function erc20Balances(address erc20Address) external view returns(uint256 _balances) {
+    require(added[erc20Address], "NotSupported");
     return _balances = IERC20(erc20Address).balanceOf(address(this));
   }
 
@@ -173,8 +245,9 @@ contract Account is IAccount, Context, Ownable, ReentrancyGuard {
     address erc20Address, 
     uint amount
   ) 
-    public 
-    onlyOwner 
+    public
+    onlyOwner
+    whenNotPaused
     isSupportedToken(erc20Address) 
   {
     _withdraw(erc20Address, owner(), amount, 0);
@@ -195,7 +268,7 @@ contract Account is IAccount, Context, Ownable, ReentrancyGuard {
     address to,
     address feeTo,
     uint amount, 
-    uint fee) external onlyRouter  returns(bool) {
+    uint fee) external whenNotPaused onlyRouter  returns(bool) {
       _withdraw(token, to, amount, fee);
       _withdraw(token, feeTo, fee, 0);
 
@@ -216,7 +289,7 @@ contract Account is IAccount, Context, Ownable, ReentrancyGuard {
     uint poolId,
     bool isAdmin, 
     bool isMember
-  ) external onlyRouter returns(bool) {
+  ) external whenNotPaused onlyRouter returns(bool) {
    _setStatus(poolId, isAdmin, isMember);
    
     return true;
@@ -235,7 +308,11 @@ contract Account is IAccount, Context, Ownable, ReentrancyGuard {
   /**@dev Router updates balance in use. 
    * Note Callable only by the Mother branchup.
   */
-  function updateBalancesInUse(address asset, uint value, bool reduce) external onlyRouter returns(bool) {
+  function updateBalancesInUse(address asset, uint value, bool reduce) 
+    external 
+    whenNotPaused 
+    onlyRouter returns(bool) 
+  {
     _updateBalancesInUse(asset, value, reduce);
     return true;
   }
@@ -250,11 +327,15 @@ contract Account is IAccount, Context, Ownable, ReentrancyGuard {
     _mostRecent = token == address(0) ? IERC20(token).balanceOf(address(this)) : address(this).balance;
   }
 
-  function approve(address erc20Address, uint amount) public onlyOwner isSupportedToken(erc20Address) {
-    IERC20(erc20Address).approve(_router(), amount);
+  function approve(address erc20Address, uint amount)
+    public
+    whenNotPaused
+    onlyOwner 
+    isSupportedToken(erc20Address) {
+      IERC20(erc20Address).approve(_router(), amount);
   }
 
-  function updateTurnTime(uint poolId) external returns(bool) {
+  function updateTurnTime(uint poolId) external whenNotPaused returns(bool) {
     subscriptionInfo[poolId].turnTime = block.timestamp + 1 hours;
     return true;
   }
@@ -267,7 +348,7 @@ contract Account is IAccount, Context, Ownable, ReentrancyGuard {
     uint value,
     address asset,
     address to
-  ) external returns(bool) {
+  ) external whenNotPaused returns(bool) {
     subscriptionInfo[poolId] = info;
     if(lock) {
       _updateBalancesInUse(asset, value, reduceBalance);
@@ -278,9 +359,12 @@ contract Account is IAccount, Context, Ownable, ReentrancyGuard {
     return true;
   }
 
-  function clearSubscription(uint poolId) external onlyRouter returns(bool) {
-    delete subscriptionInfo[poolId];
-    return true;
+  function clearSubscription(uint poolId) 
+    external 
+    whenNotPaused 
+    onlyRouter returns(bool) {
+      delete subscriptionInfo[poolId];
+      return true;
   }
 
   function split(
@@ -289,7 +373,7 @@ contract Account is IAccount, Context, Ownable, ReentrancyGuard {
     address[] memory members,
     address closeTo,
     uint unitAmount, 
-    uint _balance) external onlyRouter returns(bool) 
+    uint _balance) external whenNotPaused onlyRouter returns(bool) 
     {
       _setStatus(poolId, false, false);
       uint _bal = _balance;

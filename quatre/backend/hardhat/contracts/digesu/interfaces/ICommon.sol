@@ -2,28 +2,36 @@
 pragma solidity 0.8.9;
 
 interface ICommon {
-  event GetFinanced(uint poolId, uint position, address valueTo);
-  event AccountLaunched(address newAlc, address indexed sender);
-  event Payback(uint poolId, uint amount, address indexed from);
-  event Cancellation(uint poolId, uint unit, address alc);
-  event Joined(uint poolId, address who, uint amount);
-  event BandCreated (uint poolId, Pool pool);
-  event RoundUp(uint poolId, Pool pool);
+  event GetFinanced(uint, uint, address);
+  event AccountLaunched(address indexed, address indexed);
+  event Payback(uint, uint, address indexed);
+  event NewAccount( address indexed,  address indexed, uint);
+
+  event Joined(uint, address, uint);
+  event BandCreated (uint, Pool);
+  event RoundUp(uint, Pool);
+  event Rekeyed(address indexed, address indexed);
 
   error AllMemberIsPaid();
   error InvalidParameter();
   error SystemNotRunning();
+  error ExecutionStopped();
   error UnsupportedToken();
   error InSufficientValue();
   error NoAccountDetected();
   error UnAuthorizedCaller();
+  error AccountNotApproved();
+  error SomethingWentWrong();
+  error ZeroAddress(address);
+  error TargetHasNoAccount();
   error WithdrawalRestricted();
   error SystemAlreadyRunning();
+  error StatusAlreadyUpdated();
   error InconsistentArrayValue();
-  error ZeroAddress(address token);
-  error UnsupportedAsset(address asset);
+  error UnsupportedAsset(address);
+  error AccountAlreadyDeactivated();
+  error InsufficientFund(uint, uint);
   error IDoNotAcceptEtherIFYouForceItLost();
-  error InsufficientFund(uint actual, uint expected);
 
   // #Enums
   enum Mode { NONSTRICT, STRICT }
@@ -169,10 +177,6 @@ interface ICommon {
     uint16 makerRate;
   }
 
-  // struct TrusteeParams {
-  //   address selectedToken;
-  // }
-  
   struct Param1 {
     address to;
     address from;
@@ -198,6 +202,18 @@ interface ICommon {
     uint makerFee;
     uint colBals;
     Pool pool;
+  }
+
+  struct CreateParam {
+    uint poolId;
+    function (uint, FuncTag) internal _lock;
+    function (address) internal view returns(address) _account;
+    function () internal returns(uint) _getQFTPriceInETH;
+  }
+
+  struct Accounts {
+    address active;
+    address deactivated;
   }
 
 }

@@ -1,74 +1,141 @@
 // SPDX-License-Identifier: MIT
+
 pragma solidity 0.8.9;
+
 import "../interfaces/ICommon.sol";
-// import "../libs/Context.sol";
 import "./Account.sol";
-// import "../libs/Ownable.sol";
+import "../interfaces/IAccount.sol";
+import "../interfaces/IAccountManager.sol";
 
-/**@title AccountManager
- * * Interactive account is a separate entity distinct fron the owner. 
-   * They are able to interact with most Digesu's products. Routers interact directly with
-   * accounts, not the owner. They own power to approve or disapprove transactions.
-   * Routers read and push information to accounts.
-   * Note: Routers don't take actions unless triggered by the owner.
-   * 
-   * ERROR CODE
-   * ..........
-   * 1. Acount exists.
-   * 2. Acount does not exist.
-   * 3. Insufficient value.
+/**@title AccountManager: standalone contract that manages account creation, 
+   deletion, including read and write data.
+
+   Author: Bobeu
+   Github: https://github.com/bobeu
  */
-abstract contract AccountManager is ICommon, Context{
-  event NewAccount(
-    address indexed newAlc, 
-    address indexed who,
-    uint _accountsCounter
-  );
-
+contract AccountManager is IAccountManager, ICommon, Ownable {
   uint public accountsCounter;
 
   // Acount creation fee
   uint private accountCreationFee;
 
+  //Address to receive fee
+  address private feeTo;
+
+  // Digesu factory contract address
+  address public factory;
+
+  //Approvals to upgrade to a new account
+  mapping(address=>bool) public approvals;
+
   ///@dev Users mapped to records
-  mapping (address=>address) private accounts;
-  
-  /**@dev Scrutinize account from _msgSender if it exist
-   * or not. 
-   * Note: Execution depends on the 'value'
-   */
-  modifier checkIfAccountExist(address who, bool value) {
-    _check(value, who);
-    _;
+  mapping (address=>Accounts) private accounts;
+
+  constructor (address _feeTo) {
+    feeTo = _feeTo;
   }
 
-  /**@dev If 'value' is true, 'who' must not already own an account
-   * otherwise, 'who' must own an account before now.
+  modifier scrutinizeAccount(address who, bool value, string memory errorMessage) {
+    require(hasAccount(who) ==  value, errorMessage);
+    _;
+  }
+  
+  /**@dev Return true if "who's" account status is not empty
+       otherwise false.
    */
-  function _check(bool value, address who) internal view {
-    value? require(_account(who) == address(0), "1") : require(_account(who) != address(0), "2");
+  function hasAccount(address who) public view override returns (bool) {
+    return accounts[who].active != address(0);
   }
 
   // Set account creation fee : Should be called only by the multisig account
-  function setAccountCreationFee(uint newFee) public virtual {
+  function setAccountCreationFee(uint newFee) public onlyOwner {
     accountCreationFee = newFee;
   }
   
   // Returns account for 'who'
-  function _account(address who) internal view returns (address _alc) { _alc = accounts[who]; }
+  function getAccount(address who) external view returns (address) { 
+    return accounts[who].active; 
+  }
   
-  /**@dev Launches new INTERACTIVE account.
+  /**@dev Launches new INTERACTIVE account for 'who'.
    * If fee is applied, msg.value must meet minimum creationFee otherwise, creation fail.
    * Owner can prefund account at construction if they wish do so. They only have to increase the msgValue
    * above minimum accountCreationFee.
   */
-  function createAccount(uint value) external payable checkIfAccountExist(_msgSender(), true) returns(address newAlc) {
+  function createAccount(uint initialAccountBalance, address who)
+    external 
+    payable
+    scrutinizeAccount(who, false, "User exist")
+    returns(address newAlc) 
+  {
+    require(msg.value >= accountCreationFee, "3");
     accountsCounter ++;
-    uint _cFee = accountCreationFee;
-    require(msg.value >= _cFee, "3");
-    newAlc = address(new Account{value: value}(_msgSender()));
-    accounts[_msgSender()] = newAlc;
+    newAlc = address(new Account{value: initialAccountBalance}(who, _getFactory()));
+    accounts[_msgSender()].active = newAlc;
 
-    emit AccountLaunched(newAlc, msg.sender);
+    emit AccountLaunched(newAlc, _msgSender());
+  }
+
+  // Reset address to receive fee : only by owner account.
+  function changeFeeTo(address newFeeTo) public onlyOwner {
+    if(newFeeTo == address(0)) revert ZeroAddress(newFeeTo);
+    feeTo = newFeeTo;
+  }
+
+  //Reset factory address : onlyOwner
+  function setFactory(address newFactory) public onlyOwner {
+    if(newFactory == address(0)) revert ZeroAddress(newFactory);
+    factory = newFactory;
+  }
+
+  /**@dev Upgrade to a new account.
+   * @param newAccount : New account to upgrade to.
+   * Note : newAccount must be approved prior to this call
+   */
+  function rekeyAccount(address newAccount) 
+    external
+    scrutinizeAccount(_msgSender(), true, "User not exist")
+    returns(bool) 
+  {
+    if(!approvals[newAccount]) revert AccountNotApproved();
+    address oldAlc = accounts[_msgSender()].active;
+    require(factory != address(0) && _msgSender() == factory, "Denied");
+    if(!IAccount(oldAlc).rekey(newAccount)) revert SomethingWentWrong();
+
+    emit Rekeyed(oldAlc, newAccount);
+    return true;
+  }
+
+  /**@dev Approves new account for upgrade
+   * Note : Same utility can also disapprove
+  */
+  function setApproval(address newAccount, bool _approval) public onlyOwner {
+    if(approvals[newAccount] == _approval) revert StatusAlreadyUpdated();
+    approvals[newAccount] = _approval;
+  }
+
+  ///@dev Deactivate account for 'target'
+  function deactivateAccount(address target) 
+    public
+    onlyOwner
+    scrutinizeAccount(target, true, "User is deactivated")
+  {
+    Accounts memory alcs = accounts[target];
+    accounts[target] = Accounts(alcs.deactivated, alcs.active);
+  }
+
+  ///@dev Aactivate account for 'target'
+  function activateAccount(address target) 
+    public
+    onlyOwner
+    scrutinizeAccount(target, false, "User is deactivated")
+  {
+    Accounts memory alcs = accounts[target];
+    if(alcs.deactivated == address(0)) revert TargetHasNoAccount();
+    accounts[target] = Accounts(alcs.deactivated, alcs.active);
+  }
+
+  function _getFactory() internal returns(address _fact) {
+    factory = _fact;
   }
 }
