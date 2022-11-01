@@ -343,7 +343,7 @@ export default function WalletModal({
           {walletView !== WALLET_VIEWS.PENDING && (
             <Blurb>
               <span>New to Celo? &nbsp;</span>{' '}
-              <ExternalLink href="https://celo.org/">Learn more about wallets</ExternalLink>
+              <ExternalLink href="https://celo.org/">Learn more about Celo</ExternalLink>
             </Blurb>
           )}
         </ContentWrapper>

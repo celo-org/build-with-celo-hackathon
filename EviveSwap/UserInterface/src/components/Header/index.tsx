@@ -6,8 +6,8 @@ import { darken } from 'polished';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import Logo from '../../assets/svg/logo.png';
-import LogoDark from '../../assets/svg/logo.png';
+//import Logo from '../../assets/svg/logo.png';
+//import LogoDark from '../../assets/svg/logo.png';
 import { useActiveWeb3React } from '../../hooks';
 import { useDarkModeManager } from '../../state/user/hooks';
 import { useETHBalances } from '../../state/wallet/hooks';
@@ -159,12 +159,12 @@ const Title = styled.a`
   }
 `;
 
-const Icon = styled.div`
+/*const Icon = styled.div`
   transition: transform 0.3s ease;
   :hover {
     transform: scale(1.1);
   }
-`;
+`;*/
 
 const activeClassName = 'ACTIVE';
 
@@ -258,9 +258,7 @@ export default function Header() {
     <HeaderFrame>
       <HeaderRow>
         <Title href=".">
-          <Icon>
-            <img width={'48px'} src={darkMode ? LogoDark : Logo} alt="logo" />
-          </Icon>
+          
         </Title>
       </HeaderRow>
 
