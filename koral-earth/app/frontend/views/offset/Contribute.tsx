@@ -7,21 +7,24 @@ import { Colony as IColony } from '../../../../typechain/contracts/colony/Colony
 import { Modal, Spinner, Button, Badge, Alert } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import { Route } from '../../shared/routes';
-import { Reward } from '../../../backend/reward/reward.entity';
 
 type Props = {
   projectId: string;
-  reward: Reward;
+  amountToContribute: number;
   onCloseModal: () => void;
 };
 
-export const ClaimReward: FC<Props> = ({ projectId, reward, onCloseModal }) => {
+export const Contribute: FC<Props> = ({
+  projectId,
+  amountToContribute,
+  onCloseModal,
+}) => {
   const router = useRouter();
   const { kit, account, connect } = useCelo();
 
   const {
     isLoading,
-    error: rewardClaimingError,
+    error: contributionError,
     data: claimed,
     mutate,
   } = useMutation<boolean | null>(async () => {
@@ -35,11 +38,12 @@ export const ClaimReward: FC<Props> = ({ projectId, reward, onCloseModal }) => {
       Colony.address
     ) as unknown as IColony;
 
-    const claim = await colony.methods.claimReward(reward.id, projectId).send({
+    const contribute = await colony.methods.contributeToOffset(projectId).send({
       from: account,
+      value: amountToContribute,
     });
 
-    return claim.status;
+    return contribute.status;
   });
 
   const closeModal = () => {
@@ -51,7 +55,7 @@ export const ClaimReward: FC<Props> = ({ projectId, reward, onCloseModal }) => {
   return (
     <Modal show={true} onHide={closeModal} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Claim Reward: {reward.name}</Modal.Title>
+        <Modal.Title>Pay to offset</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <>
@@ -62,7 +66,7 @@ export const ClaimReward: FC<Props> = ({ projectId, reward, onCloseModal }) => {
             </Badge>
             <br />
             <small>
-              <i>We will assign this reward to this account.</i>
+              <i>We will affiliate this contribution to this account.</i>
             </small>
           </p>
           {isLoading && (
@@ -70,23 +74,23 @@ export const ClaimReward: FC<Props> = ({ projectId, reward, onCloseModal }) => {
               <Alert variant="info" className="text-center">
                 <Spinner animation="border" color="info" />
                 <h6>
-                  Hang tight! We&apos;re claiming the reward for you using your
+                  Hang tight! We&apos;re contributing this amount using your
                   connected account...
                 </h6>
               </Alert>
             </>
           )}
-          {rewardClaimingError && (
+          {contributionError && (
             <>
               <Alert variant="danger">
-                <h6>We failed to claim the reward for you.</h6>
-                <span>&#10060; {(rewardClaimingError as Error).message}</span>
+                <h6>We failed to contribute the amount for you.</h6>
+                <span>&#10060; {(contributionError as Error).message}</span>
               </Alert>
             </>
           )}
           {claimed && (
             <Alert variant="success">
-              &#10003; Reward claimed successfully!
+              &#10003; Contribution completed successfully!
             </Alert>
           )}
         </>
@@ -97,15 +101,15 @@ export const ClaimReward: FC<Props> = ({ projectId, reward, onCloseModal }) => {
         </Button>
         {!claimed && !isLoading && (
           <Button variant="primary" onClick={() => mutate()}>
-            Claim Reward
+            Pay to offset
           </Button>
         )}
         {claimed && (
           <Button
             variant="primary"
-            onClick={() => router.push(Route.userRewards)}
+            onClick={() => router.push(Route.claimReward({ projectId }))}
           >
-            See claimed rewards
+            Claim your reward
           </Button>
         )}
       </Modal.Footer>

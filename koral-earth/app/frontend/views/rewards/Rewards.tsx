@@ -13,13 +13,15 @@ import { Colony as IColony } from '../../../../typechain/contracts/colony/Colony
 import { useQuery } from '@tanstack/react-query';
 import { ClaimReward } from './ClaimReward';
 
-const Rewards: PaginatedItemsComponent<Reward> = ({ currentItems }) => {
+type ProjectReward = Reward & { projectId: string };
+
+const Rewards: PaginatedItemsComponent<ProjectReward> = ({ currentItems }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [rewardToBeClaimed, setRewardToBeClaimed] = useState<
-    Reward | undefined
+    ProjectReward | undefined
   >(undefined);
 
-  const onClaimReward = (reward: Reward) => {
+  const onClaimReward = (reward: ProjectReward) => {
     setRewardToBeClaimed(reward);
     setShowModal(true);
   };
@@ -48,6 +50,7 @@ const Rewards: PaginatedItemsComponent<Reward> = ({ currentItems }) => {
       {showModal && rewardToBeClaimed && (
         <ClaimReward
           reward={rewardToBeClaimed}
+          projectId={rewardToBeClaimed.projectId}
           onCloseModal={() => setShowModal(false)}
         />
       )}
@@ -112,6 +115,7 @@ export const ProjectRewards = ({ projectId }: RewardsProps) => {
           items={rewards.map((reward, index) => ({
             ...reward,
             id: `${index}`,
+            projectId,
           }))}
           itemsPerPage={12}
           itemsComponent={Rewards}
