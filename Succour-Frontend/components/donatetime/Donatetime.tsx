@@ -4,15 +4,8 @@ import DonateModal from '../../components/donateModal/DonateModal'
 
 const Donatetime = () => {
 
-      const [showDonateModal, setShowDonateModal] = useState(false);
-
-     const openModal = () => {
-       setShowDonateModal(prev => !prev);
-     }
-
   return (
      <>
-    <DonateModal showDonateModal={showDonateModal} setShowDonateModal={setShowDonateModal} />
     <div className={styles.donatetime}>
       <div className={styles.wrapper}>
         <div className={styles.container}>

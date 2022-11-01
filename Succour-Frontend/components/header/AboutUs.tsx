@@ -16,7 +16,7 @@ const Header = () => {
      return (
           <>
            <JoinDao showModal={showModal} setShowModal={setShowModal} />
-          <section className={styles.about}>
+          <section className={styles.about} id="aboutus">
                <div className={styles.wrapper}>
                  <div className={styles.container}>
                     <div className={styles.about_content}>

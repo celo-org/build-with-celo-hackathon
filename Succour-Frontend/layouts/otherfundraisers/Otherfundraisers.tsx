@@ -1,10 +1,16 @@
-// import {useState} from 'react'
+import {useState} from 'react'
 import styles from './otherfundraiser.module.scss'
 import Link from 'next/link'
 import Image from 'next/image'
-import { data } from './data'
+import { data } from '../../layouts/data'
 
 const otherfundraisers = () => {
+
+   const [visible, setVisible] = useState(3);
+
+     const handleMoreProjectItem = () => {
+       setVisible((prevValue) => prevValue + 3);
+     }
 
      return (
            <section className={styles.fundraiser}>
@@ -15,11 +21,12 @@ const otherfundraisers = () => {
                               <span className={styles.title}>See other fundraisers</span>
                             </div>
                        
-                       <Link href="">
+                      
                        <div className={styles.fundraiser_grid}>
                                {
-                    data?.map(({ id, problemTitle, desc, number, donation }) => {
+                    data?.slice(0, visible)?.map(({ id, problemTitle, desc, number, donation }) => {
                        return (
+                         <Link href={`/FundraiserProject/${id}`}>
                          <div className={styles.fundraiser_item} key={id}>
                             <div className={styles.fundraiser_img}>
                               <Image src="" className={styles.img} />
@@ -40,11 +47,18 @@ const otherfundraisers = () => {
                               </div>
                            </div> 
                          </div>
+                           </Link>
                               )
                            })
                          }
                      </div>
-                     </Link>
+                      <div className={styles.viewmore_center}>
+                       <button onClick={handleMoreProjectItem}
+                        className={styles.viewmore_btn}
+                        >
+                        View more
+                       </button>
+                      </div>
                     </div>
                     </div>
                </div>

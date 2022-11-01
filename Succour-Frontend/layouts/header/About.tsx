@@ -25,7 +25,7 @@ const About = () => {
           <button className={styles.create_btn}>Create funding request</button>
           </Link>
 
-            <Link href="">
+            <Link href="#fundraiser">
                <button className={styles.see_btn}>
                 See all funding
               </button>

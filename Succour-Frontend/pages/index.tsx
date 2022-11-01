@@ -49,22 +49,22 @@ const Home: NextPage = () => {
          </p>
 
         <div className={styles.banner_links}>
-          <Link href="/DAO/dao">
+          <Link href="/dao">
           <button className={styles.dao_btn}>DAO</button>
           </Link>
 
-            <Link href="/Crowdfunding/Crowdfunding">
-               <button className={styles.crowdfunding_btn}>Crowd funding</button>
-            </Link> 
+            <Link href="/Crowdfunding">
+                <button className={styles.crowdfunding_btn}>Crowd funding</button>
+            </Link>
         </div>
-                 
+
         </div>
 
       </div>
 
-       <div className={styles.netvector_right}></div>      
-       <div className={styles.circle_right}></div>
-       </div>
+        <div className={styles.netvector_right}></div>
+        <div className={styles.circle_right}></div>
+      </div>
 
     </section>
     </>

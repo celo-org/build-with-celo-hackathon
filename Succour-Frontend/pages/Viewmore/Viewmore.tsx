@@ -2,7 +2,7 @@ import {useState} from 'react'
 import styles from './viewmore.module.scss'
 import Link from 'next/link'
 import Image from 'next/image'
-import { data } from './data'
+import { data } from '../../layouts/data'
 import Navbar from '../../layouts/navbar/Navbar'
 import Footer from '../../layouts/footer/Footer'
 
@@ -24,11 +24,12 @@ const Projects = () => {
                              <div className={styles.fundraiser_header}>
                               <span className={styles.title}>Some fundraisers</span>
                             </div>
-                       <Link href="/FundraiserProject/FundraiserProject">
+                      
                        <div className={styles.fundraiser_grid}>
                                {
                     data?.slice(0, visible)?.map(({ id, problemTitle, desc, number, donation }) => {
                        return (
+                         <Link href={`/FundraiserProject/${id}`}>
                          <div className={styles.fundraiser_item} key={id}>
                             <div className={styles.fundraiser_img}>
                               <Image src="" className={styles.img} />
@@ -49,16 +50,18 @@ const Projects = () => {
                               </div>
                            </div> 
                          </div>
+                            </Link>
                               )
                            })
                          }
                      </div>
-                     </Link>
-                      <button onClick={handleMoreProjectItem}
-                      className={styles.viewmore_btn}
-                      >
-                      View more
-                    </button>
+                      <div className={styles.viewmore_center}>
+                       <button onClick={handleMoreProjectItem}
+                        className={styles.viewmore_btn}
+                        >
+                        View more
+                       </button>
+                      </div>
                     </div>
                     </div>
                </div>

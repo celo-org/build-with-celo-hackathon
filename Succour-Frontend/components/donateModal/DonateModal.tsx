@@ -56,10 +56,7 @@ const DonateModal = ({ showDonateModal, setShowDonateModal } : IProps) => {
                               </div>
                               <input type="number"></input>
                                <select name="choice">
-                              <option value="BTC">BTC</option>
-                              <option value="ETH">ETH</option>
-                              <option value="USDC">USDC</option>
-                              <option value="cUSD" selected>cUSD</option>
+                              <option value="cUSD">cUSD</option>
                             </select> 
                          </div>
                         

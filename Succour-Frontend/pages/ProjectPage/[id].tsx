@@ -9,6 +9,13 @@ import Donatetime from '../../components/donatetime/Donatetime'
 
 const ProjectPage = () => {
 
+  
+      const [showDonateModal, setShowDonateModal] = useState(false);
+
+     const openModal = () => {
+       setShowDonateModal(prev => !prev);
+     }
+
   return (
      <>
      <Navbar />
@@ -53,7 +60,7 @@ const ProjectPage = () => {
         </div>
       </div>
      </div>
-    <Donatetime />
+    <Donatetime showDonateModal={showDonateModal} setShowDonateModal={setShowDonateModal} />
     <Footer />
     </>
   )

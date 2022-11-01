@@ -13,7 +13,7 @@ const Giving = () => {
                           <div className={styles.campaign_content}>
                             <div className={styles.content}>
                                <div className={styles.title}>Giving to social causes just became much easier!</div>      
-                                <Link href=""><button className={styles.button}>Find fundraisers</button></Link>
+                                <Link href="/Viewmore/Viewmore"><button className={styles.button}>Find fundraisers</button></Link>
                               </div>
 
                               <div className={styles.content_img}></div>

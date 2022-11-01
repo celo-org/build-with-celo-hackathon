@@ -19,6 +19,7 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.4.0",
     "react-spring": "^9.5.5",
+    "react-toastify": "^9.0.8",
     "sass": "^1.55.0",
     "styled-components": "^5.3.6",
     "wagmi": "^0.6.8"

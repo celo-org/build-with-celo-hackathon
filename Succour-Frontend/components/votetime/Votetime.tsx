@@ -1,7 +1,45 @@
 import React from 'react'
 import styles from './votetime.module.scss'
+import { useContractRead, useContractWrite } from 'wagmi'
+import { useRouter } from 'next/router'
+import Succour_abi from "../../abi/abi.json"
 
 const Votetime = () => {
+  const SuccourAddress = "0x12F57C67FDd16109B549F0B40579694fE12bf9Fd"
+
+
+  const {query} = useRouter()
+
+  const pageId = query.id
+
+
+  const {data: proposalId} = useContractRead({
+    addressOrName: SuccourAddress,
+    contractInterface: Succour_abi,
+    functionName: 'viewAllProposals'
+  })
+
+
+  const hexToDecimal = (hex:any) => parseInt(hex, 16);
+
+
+// vote preparation
+  const {
+    data: voteData,
+    write: voteDataWrite,
+    isLoading: voteLoading
+  } = useContractWrite({
+    mode: 'recklesslyUnprepared',
+    addressOrName: SuccourAddress,
+    contractInterface: Succour_abi,
+    functionName: 'memberVote',
+    args:[
+      proposalId? hexToDecimal(proposalId[Number(pageId)][5]._hex) : ""
+    ]
+  })
+
+
+
   return (
     <div className={styles.votetime}>
       <div className={styles.wrapper}>
@@ -9,11 +47,18 @@ const Votetime = () => {
       <div className={styles.votetime_container}>
       <button className={styles.btn}>Vote</button>
       <div className={styles.votetime_content}>
-        <ul className={styles.votetime_info}>
-          <li>13 Voted <span className={styles.box}></span> Yes</li>
-          <li>5 Voted <span className={styles.box}></span> No</li>
-          <li>40 Not Voted</li>
-        </ul>
+        {
+          proposalId?.map((item, index)=>
+          index == Number(pageId)?
+          <>
+          <ul className={styles.votetime_info}>
+            <li>Number of Votes:</li>
+            <li>{hexToDecimal(item[5]._hex)}</li>
+          </ul>
+          </>: ""
+        )
+      }
+
       </div>
       <div className={styles.user_btn}>
         <div className={styles.arrow_down}></div>

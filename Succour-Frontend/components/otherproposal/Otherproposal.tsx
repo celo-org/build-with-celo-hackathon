@@ -1,10 +1,16 @@
-import React from 'react'
+import Reacr, {useState} from 'react'
 import styles from './otherproposal.module.scss'
 import { data } from './data'
 import Link from 'next/link'
 
-
 const Otherproposal = () => {
+
+     const [visible, setVisible] = useState(3);
+
+     const handleMoreProjectItem = () => {
+       setVisible((prevValue) => prevValue + 3);
+     }
+
   return (
     <div className={styles.otherproposal}>
       <div className={styles.wrapper}>
@@ -13,10 +19,10 @@ const Otherproposal = () => {
                 <h1 className={styles.title}>Other proposals</h1>
                </div>
 
-               <Link href="/ProjectPage/ProjectPage">
+               <Link href="/ProjectPage/634737">
                <div className={styles.otherproposal_content}>
                             {
-                    data?.map(({ id, time, title, address, type, problem }) => {
+                    data?.slice(0, visible)?.map(({ id, time, title, address, type, problem }) => {
                        return (
                     <div className={styles.otherproposal_item} key={id}>
                     <div className={styles.otherproposal_text}>
@@ -35,6 +41,13 @@ const Otherproposal = () => {
                          }
                </div>
                </Link>
+                <div className={styles.viewmore_center}>
+                <button onClick={handleMoreProjectItem}
+                className={styles.viewmore_btn}
+                >
+                View more
+                </button>
+              </div>
           </div>
       </div>
     </div>

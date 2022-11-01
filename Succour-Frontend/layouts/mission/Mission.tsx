@@ -1,7 +1,8 @@
 import React from 'react'
 import styles from './mission.module.scss'
 import imgUrl from '../../assets/Netvector.svg'
-
+import Loader from '../../layouts/mission/loader'
+import Loader2 from '../../layouts/mission/loader2'
 const Mission = () => {
      return (
           <section className={styles.mission}>
@@ -9,7 +10,8 @@ const Mission = () => {
                <div className={styles.container}>
                 <div className={styles.mission_img}>
                     <div className={styles.image_content}>
-                      
+                       <Loader />
+                       <Loader2 />
                     </div>
                 </div>
 
