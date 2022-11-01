@@ -1,4 +1,4 @@
-import { isEmail } from 'validator';
+const { isEmail } = require('validator');
 
 module.exports = mongoose => {
     var schema = mongoose.Schema(

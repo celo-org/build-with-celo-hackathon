@@ -5,7 +5,8 @@ const Company = db.companies;
 
 module.exports = {
     create: async (req, res) => {
-        const { scrap_category, scrap_subcategory, description, quantity_required, amount_per_unit, collection_center } = req.body;
+        const { scrap_category, scrap_subcategory, description, quantity_required, amount_per_unit, collection_center, company,
+            location } = req.body;
         try {
             /**
              * TODO: generate title 

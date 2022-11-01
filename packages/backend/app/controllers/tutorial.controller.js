@@ -9,12 +9,15 @@ exports.create = (req, res) => {
     return;
   }
 
+  
   // Create a Tutorial
   const tutorial = new Tutorial({
     title: req.body.title,
     description: req.body.description,
     published: req.body.published ? req.body.published : false
   });
+
+  console.log(tutorial, "tutorial");
 
   // Save Tutorial in the database
   tutorial

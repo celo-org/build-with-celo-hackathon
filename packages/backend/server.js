@@ -11,9 +11,18 @@ app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
 app.use(express.json());
+const companyRoutes = require("./app/routes/company.routes");
+const requestRoutes = require("./app/routes/request.routes");
+
+
+app.use("/api/company", companyRoutes);
+app.use("/api/request", requestRoutes);
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
+
+
+
 
 const db = require("./app/models");
 db.mongoose
@@ -30,11 +39,11 @@ db.mongoose
   });
 
 // simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to Gidiscrap." });
-});
+// app.get("/", (req, res) => {
+//   res.json({ message: "Welcome to Gidiscrap." });
+// });
 
-require("./app/routes/index")(app);
+// require("./app/routes/index")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
