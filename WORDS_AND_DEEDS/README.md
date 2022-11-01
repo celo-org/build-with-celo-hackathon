@@ -6,14 +6,22 @@ My Deed by Primus Money is a progressive wallet app allowing you to easily creat
 
 ## Table of Contents
 
-- [SystemRequirements](#SystemRequirements
+- [SystemRequirements](#SystemRequirements)
+- [CloneRepository](#CloneRepository)
 - [Installation](#install)
 - [Development](#development)
 - [Build](#build)
 
 
 ## SystemRequirements
-To build for release or run My Deed in development mode, you need to have nodejs installed on your machine (v14.16.x recommended)
+To build for release or run My Deed in development mode, you need to have nodejs installed on your machine (v14.16.x recommended).
+
+## CloneRepository
+Clone the repository with the following command
+
+```
+git clone https://github.com/fbaud/build-with-celo-hackathon
+```
 ## Install
 
 Run within the root directory containing package.json
@@ -21,8 +29,6 @@ Run within the root directory containing package.json
 ```
 npm install
 ```
-
-
 
 ## Development
 

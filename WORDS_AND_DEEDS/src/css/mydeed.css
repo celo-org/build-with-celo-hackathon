@@ -102,6 +102,10 @@
 	margin-right: 10px;
   }
 
+  span.WalletDisconnectIconCol {
+	margin-top: 20px;
+  }
+
   .TargetCardInput {
 	font-size: xx-small;
   }

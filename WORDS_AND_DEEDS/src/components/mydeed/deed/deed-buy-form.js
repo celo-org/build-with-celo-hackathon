@@ -140,6 +140,16 @@ class DeedBuyForm extends React.Component {
 		return context.deedcard;
 	}
 
+	async _getCurrencyCard(currencyuuid) {
+		// check remote wallet context
+		let context = await this.app.getVariable('AppsPane').getCurrencyContext(currencyuuid);
+
+		this._setState({remotewallet: context.remotewallet, rpc: context.rpc, connection: context.connection});
+
+		// then open currency card
+		return this._openCurrencyCard(currencyuuid)
+	}
+
 	async _openCurrencyCard(currencyuuid) {
 		let mvcmypwa = this.getMvcMyPWAObject();
 		let mvcmydeed = this.getMvcMyDeedObject();
@@ -365,7 +375,7 @@ class DeedBuyForm extends React.Component {
 				}
 								
 				// card to buy deed
-				let currentcard = await this._openCurrencyCard(currencyuuid).catch(err => {});
+				let currentcard = await this._getCurrencyCard(currencyuuid).catch(err => {});
 				let card_balance_int = 0;
 				let card_balance_string = '';
 				let card_creditunits;

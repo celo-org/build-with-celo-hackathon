@@ -330,6 +330,94 @@ var Module = class {
 		return _apicontrollers.getEthereumTransactionReceipt(childsession, txhash);
 	}
 
+	async getSchemeERC20TokenInfo(sessionuuid, walletuuid, schemeuuid, tokenaddress) {
+		if (!sessionuuid)
+			return Promise.reject('session uuid is undefined');
+		
+		if (!walletuuid)
+			return Promise.reject('wallet uuid is undefined');
+
+		if (!schemeuuid)
+			return Promise.reject('scheme uuid is undefined');
+		
+		var global = this.global;
+		var _apicontrollers = this._getClientAPI();
+
+		var session = await _apicontrollers.getSessionObject(sessionuuid);
+		
+		if (!session)
+			return Promise.reject('could not find session ' + sessionuuid);
+		
+		var wallet = await _apicontrollers.getWalletFromUUID(session, walletuuid);
+		
+		if (!wallet)
+			return Promise.reject('could not find wallet ' + walletuuid);
+	
+		var	scheme = await _apicontrollers.getSchemeFromUUID(session, schemeuuid)
+		.catch(err => {});
+
+		if (!scheme)
+			return Promise.reject('could not find scheme ' + schemeuuid);
+
+		var childsession = await this._getMonitoredSchemeSession(session, wallet, scheme);
+
+		// get erc20 token contract
+		var erc20token_contract = await _apicontrollers.importERC20Token(childsession, tokenaddress);
+
+		var token = {address: tokenaddress};
+
+		token.name = await erc20token_contract.getChainName();
+		token.symbol = await erc20token_contract.getChainSymbol();
+		token.decimals = await erc20token_contract.getChainDecimals();
+
+		return token;
+	}
+
+	//
+	// Currencies functions
+	//
+	async _createDecimalAmountFromTokenAmount(session, amount, decimals) {
+		// we are using an enriched version of DecimalAmount (2022.10.30)
+		// because several operations (e.g. substraction) are missing in the DecimalAmmount of currencies moudle
+		// TODO: redirect to currencies when DecimalAmount has been upgrade
+		var global = this.global;
+		var DecimalAmountClass = global.getModuleClass('mvc-myquote', 'DecimalAmount');
+		var amount_str = '';
+
+		if (typeof amount === 'string' || amount instanceof String) {
+			// whole part
+			if (amount.length > decimals)
+				amount_str += amount.substring(0, amount.length  - decimals);
+			else 
+				amount_str = '0';
+
+			amount_str += '.';
+
+			// decimal part
+			amount_str += amount.substring(amount.length - decimals, amount.length);
+
+		}
+		else {
+			amount_str = await DecimalAmountClass._stringifyAmount(session, amount, decimals);
+		}
+
+		return DecimalAmountClass.create(session, amount_str, decimals);
+		
+		/*var mvcpwa = this._getMvcPWAObject();
+
+		return mvcpwa._createDecimalAmount(session, amount, decimals);*/
+	}
+
+	async _getCurrencyAmount(session, currency, amount) {
+		// we are using an enriched version of DecimalAmount & CurrencyAmount (2022.10.30)
+		var global = this.global;
+
+		var CurrencyAmountClass = global.getModuleClass('mvc-myquote', 'CurrencyAmount');
+
+		var currency_amount = await CurrencyAmountClass.create(session, currency, amount);
+
+		return currency_amount;
+	}
 
 	//
 	// Wallet functions
@@ -1794,10 +1882,22 @@ var Module = class {
 		var nft = await nftMarketplace.getNft(tokenaddress, tokenid);
 
 		if (nft) {
+
+			listing_info.nftIndex = nft.nftIndex;
 			listing_info.onsale = (nft.listed ? true : false);
-			listing_info.saleprice = nft.price;
 			listing_info.owner = nft.owner;
 			listing_info.seller = nft.seller;
+
+			let saleprice = nft.price;
+			let saleprice_dec = await this._createDecimalAmountFromTokenAmount(session, saleprice, currency.decimals);
+			let saleprice_curr = await this._getCurrencyAmount(session, currency, saleprice_dec);
+	
+			listing_info.saleprice = saleprice;
+			listing_info.saleprice_int = await saleprice_dec.toInteger();
+			listing_info.saleprice_string = await saleprice_dec.toString();
+
+			let _options = {showdecimals: true, decimalsshown: 2};
+			listing_info.saleprice_decorated_string = await this._formatMonetaryAmountString(session, listing_info.saleprice_string, currency.symbol, currency.decimals, _options);
 		}
 
 		// TEST
@@ -1895,6 +1995,11 @@ var Module = class {
 		if (!nftMarketplace)
 			return Promise.reject('could not find nft market place');
 
+
+		// get listing info, if it has alreadt been listed
+		var listing_info = await this.getDeedSaleInfo(sessionuuid, walletuuid, currencyuuid, minter, deed);
+
+
 		// we first approve the marketplace contract to let marketplaceobj transfer ownership
 		var nftmarketplace_address = nftMarketplace.getAddress();
 
@@ -1966,14 +2071,22 @@ var Module = class {
 
 		ethereumtransaction.setValue(listing_fee_eth);
 		
-		var txhash = await nftMarketplace.listNft(tokenaddress, tokenid, tokenamount_string, currency.address, ethereumtransaction);
+		var txhash;
+		
+		if (!listing_info.owner) {
+			// first time listed on the marketplace
+			txhash = await nftMarketplace.listNft(tokenaddress, tokenid, tokenamount_string, currency.address, ethereumtransaction);
+		}
+		else {
+			txhash = await nftMarketplace.resellNft(listing_info.nftIndex, tokenamount_string, ethereumtransaction);
+		}
 
 		return txhash;
 	}
 	
 	async buyDeed(sessionuuid, walletuuid, carduuid, minter, deed, currencyuuid, amount, feelevel) {
 		if (!sessionuuid)
-		return Promise.reject('session uuid is undefined');
+			return Promise.reject('session uuid is undefined');
 	
 		if (!walletuuid)
 			return Promise.reject('wallet uuid is undefined');
@@ -2074,9 +2187,12 @@ var Module = class {
 
 		// pass string to avoid BigNumber error
 		var saleprice = listing_info.saleprice;
-		var saleprice_int = parseInt(saleprice);
+		var saleprice_dec = await this._createDecimalAmountFromTokenAmount(session, saleprice, currency.decimals);
+		var saleprice_int = await saleprice_dec.toInteger();
+
 		var balance = await erc20contract.balanceOf(payingaccount);
-		var balance_int = parseInt(balance);
+		var balance_dec = await this._createDecimalAmountFromTokenAmount(session, balance, currency.decimals);
+		var balance_int = await saleprice_dec.toInteger();
 
 		if (amount < saleprice_int)
 			return Promise.reject('no authorization on ' + card.address + ' to spend more than ' + amount + ' while sale price is ' + saleprice);
@@ -2086,7 +2202,8 @@ var Module = class {
 
 
 		var allowance = await erc20contract.allowance(payingaccount, alloweeaccount);
-		var allowance_int = parseInt(allowance);
+		var allowance_dec = await this._createDecimalAmountFromTokenAmount(session, allowance, currency.decimals);
+		var allowance_int = await allowance_dec.toInteger();
 
 		if (saleprice_int > allowance_int) {
 			// go through approve call
@@ -2131,6 +2248,36 @@ var Module = class {
 	//
 	// utils
 	//
+
+	async formatTokenAmountAsync(sessionuuid, amount, token, options) {
+/* 		var global = this.global;
+		var mvcclientwalletmodule = global.getModuleObject('mvc-client-wallet');
+		return mvcclientwalletmodule.formatTokenAmount(amount, token, options); */
+
+		if (!amount)
+		return;
+
+		if (!sessionuuid)
+			return Promise.reject('session uuid is undefined');
+	
+		var global = this.global;
+		var _apicontrollers = this._getClientAPI();
+
+		var session = await _apicontrollers.getSessionObject(sessionuuid);
+	
+		if (!session)
+			return Promise.reject('could not find session ' + sessionuuid);
+		
+		var decimals = token.decimals;
+		var symbol = token.symbol;
+		
+		var tokenamountdec = await this._createDecimalAmountFromTokenAmount(session, amount, decimals);
+		var tokenamountstring = await tokenamountdec.toString();
+
+		var currencyamountstring = await this._formatMonetaryAmountString(session, tokenamountstring, symbol, decimals, options);
+
+		return currencyamountstring;
+	}
 
 
 	async _fitAmountString(session, amount_string, decimals, options) {
@@ -2223,7 +2370,7 @@ var Module = class {
 		if (!currency)
 			return Promise.reject('could not find currency ' + currencyuuid);
 
-		var currency_amount = await mvcpwa.getCurrencyAmount(sessionuuid, currency.uuid, amount_int);
+		var currency_amount = await this._getCurrencyAmount(session, currency, amount_int);
 		var tokenamountstring = await currency_amount.toString();
 
 		//var currency_amount_string = await mvcpwa.formatCurrencyAmount(sessionuuid, currency.uuid, currency_amount, options);

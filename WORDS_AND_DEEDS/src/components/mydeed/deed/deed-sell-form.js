@@ -464,11 +464,20 @@ class DeedSellForm extends React.Component {
 					
 					if (isinternal) {
 						// we could directly jump if it is an internal url
-						let internal_params = await this.app.getVariable('AppsPane').getInternalUrlParams(url);
+						let appspane = this.app.getVariable('AppsPane');
+						let internal_params = await appspane.getInternalUrlParams(url);
 
 						if (internal_params && internal_params.tx) {
-							// TODO: display amount paid in the transaction
+							let currency = this.state.currency;
+							let schemeuuid = ( currency ? currency.scheme_uuid : null)
+							let tx_info = await appspane.getTransactionInfo(schemeuuid, internal_params.tx).catch(err => {});
+
 							message = 'Payment transaction is ' + _cr + _cr + internal_params.tx + _cr + _cr;
+
+							if (tx_info && tx_info.amount_string) {
+								message += tx_info.amount_string + ' have been paid.' + _cr + _cr;
+							}
+
 							message += 'You can now press the Deliver button to transfer the deed to the buyer.';
 
 							await this.app.alert(message);
@@ -918,8 +927,11 @@ class DeedSellForm extends React.Component {
 				</span>
 				<span>
 				{(canbelisted ? 
-				<Button className="DeedButton" onClick={this.onOfferOnSale.bind(this)} disabled={(isOwner ? false : true)} type="submit">
+				(payment_txhash ?
+				<Button disabled type="submit">
 				Offer on sale</Button> :
+				<Button className="DeedButton" onClick={this.onOfferOnSale.bind(this)} disabled={(isOwner ? false : true)} type="submit">
+				Offer on sale</Button>) :
 				<Button disabled type="submit">
 				Offer on sale</Button>)}
 				</span>

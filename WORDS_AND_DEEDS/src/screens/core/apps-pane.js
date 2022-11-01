@@ -39,6 +39,48 @@ class AppsPane extends React.Component {
 		return this.app.getDeedClientObject().getConnectionFromRpc(rpc);
 	}
 
+	// card methods
+	async getCurrencyContext(currencyuuid) {
+		let context = {remotewallet: false};
+		try {
+			let mvcmypwa = this.getMvcMyPWAObject();
+			let mvcmydeed = this.getMvcMyDeedObject();
+	
+			let rootsessionuuid = this.props.rootsessionuuid;
+			let walletuuid = this.props.currentwalletuuid;
+
+			if (!walletuuid)
+				return context; // no wallet open, we have no cards
+	
+			let currency = await mvcmypwa.getCurrencyFromUUID(rootsessionuuid, currencyuuid);
+
+			// check if corresponding currency is set for remote
+			let config = this.app.getConfig('remotewallet');	
+
+			if (config && config.rpc && config.rpc[currency.uuid]) {
+				let curr_rpc_config = config.rpc[currency.uuid];
+
+				if (curr_rpc_config.enabled === true) {
+					context.rpc = curr_rpc_config.rpc;
+
+					// check if a remote wallet is connected
+					context.connection = await this._getRemoteConnectionFromRpc(context.rpc);
+
+					if (context.connection && context.connection.account) {
+						context.remotewallet = true;
+					}
+				}
+			}
+
+		}
+		catch(e) {
+			console.log('exception in AppsPane.getCardContext: ' + e);
+		}
+
+		return context;
+	}
+
+
 	// erc721 methods
 	async getBaseTokenURI(currencyuuid, cardaddress) {
 		var basetokenuri = await this.app.getCleanUrl();
@@ -48,6 +90,71 @@ class AppsPane extends React.Component {
 		basetokenuri += '&tokenid=';
 
 		return basetokenuri;
+	}
+
+	// ethereum methods
+	async getTransactionInfo(schemeuuid, txhash) {
+
+		var tx_info = {hash: txhash};
+
+		let mvcmypwa = this.getMvcMyPWAObject();
+		let mvcmydeed = this.getMvcMyDeedObject();
+	
+		let rootsessionuuid = this.props.rootsessionuuid;
+		let walletuuid = this.props.currentwalletuuid;
+
+		if (!walletuuid)
+			return tx_info;
+
+		if (!schemeuuid)
+			return tx_info;
+
+
+		try {
+			// get transaction for more specific info
+			let transaction = await mvcmydeed.getSchemeEthereumTransaction(rootsessionuuid, walletuuid, schemeuuid, txhash)
+			.catch(err => {
+				console.log('could not retrieve transaction in AppsPane.getTransactionInfo: ' + err);
+			});
+			let tx = (transaction ? transaction._ethtx : null);
+
+			if (tx) {
+				tx_info.time = tx.time;
+				tx_info.status_int = 5; // pending
+
+				// get transaction receipt
+				let tx_receipt = await mvcmydeed.getSchemeEthereumTransactionReceipt(rootsessionuuid, walletuuid, schemeuuid, txhash).catch(err => {});
+
+				if (tx_receipt) {
+					tx_info.blockNumber = tx_receipt.blockNumber;
+					tx_info.from_address = tx_receipt.from;
+					tx_info.status = tx_receipt.status;
+					tx_info.status_int = (tx_receipt.status ? 10 : -10); // 1 success, -1 fail
+		
+					// erc20 format
+					tx_info.tokenaddress = tx_receipt.to
+					tx_info.amount = (tx_receipt.logs && tx_receipt.logs[0] ? parseInt(tx_receipt.logs[0].data) : null);
+					tx_info.to_address = (tx_receipt.logs && tx_receipt.logs[0] && tx_receipt.logs[0].topics && tx_receipt.logs[0].topics[2] ? '0x' + tx_receipt.logs[0].topics[2].substring(26) : null);
+		
+					if (tx_info.to_address) {
+						let token = await mvcmydeed.getSchemeERC20TokenInfo(rootsessionuuid, walletuuid, schemeuuid, tx_info.tokenaddress);
+						if (token) {
+							let options = {showdecimals: true, decimalsshown: 2};
+							tx_info.amount_string = (tx_info.amount != null ? await mvcmydeed.formatTokenAmountAsync(rootsessionuuid, tx_info.amount, token, options) : '');
+						}
+	
+					}
+				}
+			}
+			else {
+				tx_info.status_int = -5; // not found
+			}
+		}
+		catch(e) {
+			console.log('exception in AppsPane.getTransactionInfo: ' + e);
+		}
+
+		return tx_info;
 	}
 
 

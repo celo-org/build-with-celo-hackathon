@@ -7,6 +7,10 @@ import RemoteWalletConnectForm from './remote-wallet-connect-form.js'
 
 import { Button, Dropdown, DropdownButton, FormGroup, FormControl, FormLabel, InputGroup } from 'react-bootstrap';
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUnlink} from "@fortawesome/free-solid-svg-icons";
+
+
 import {TextCopyIcon} from '@primusmoney/react_pwa';
 
 
@@ -136,6 +140,75 @@ class RemoteWalletView extends React.Component {
 
 		this.checkNavigationState().catch(err => {console.log('error in checkNavigationState: ' + err);});
 	}
+
+	// calling a wallet connect client
+	async _connectToWallet() {
+		let mvcmypwa = this.getMvcMyPWAObject();
+
+		let res = await new Promise((resolve, reject) => {
+			mvcmypwa.signalEvent('on_walletconnect_connect', {
+				emitter: this.uuid,
+				rpc: this.rpc,
+				callback: (err,res) => {if (res) resolve(res); else reject(err);}
+			});
+		});
+
+		return res;
+	}
+
+	async _disconnectFromWallet() {
+		let mvcmypwa = this.getMvcMyPWAObject();
+
+		let res = await new Promise((resolve, reject) => {
+			mvcmypwa.signalEvent('on_walletconnect_disconnect', {
+				emitter: this.uuid,
+				connectionuuid: this.connectionuuid,
+				callback: (err,res) => {if (res) resolve(res); else reject(err);}
+			});
+		});
+
+		return res;
+	}
+	
+	async _isWalletConnectWallet(walletuuid) {
+		let mvcmypwa = this.getMvcMyPWAObject();
+
+		let rootsessionuuid = this.props.rootsessionuuid;
+
+		let res = await new Promise((resolve, reject) => {
+			mvcmypwa.signalEvent('on_walletconnect_is_connected_wallet', {
+				emitter: this.uuid,
+				sessionuuid: rootsessionuuid,
+				connectionuuid: this.connectionuuid,
+				rpc: this.rpc,
+				walletuuid,
+				callback: (err,res) => {if (res) resolve(res); else reject(err);}
+			});
+		});
+
+		return (res && res.isconnectedwallet ? true : false);
+	}
+
+	async _closeConnectionWallet() {
+		let mvcmypwa = this.getMvcMyPWAObject();
+
+		let rootsessionuuid = this.props.rootsessionuuid;
+		let walletuuid = this.props.currentwalletuuid;
+
+		let res = await new Promise((resolve, reject) => {
+			mvcmypwa.signalEvent('on_walletconnect_close_requested', {
+				emitter: this.uuid,
+				sessionuuid: rootsessionuuid,
+				walletuuid,
+				connectionuuid: this.connectionuuid,
+				rpc: this.rpc,
+				callback: (err,res) => {if (res) resolve(res); else reject(err);}
+			});
+		});
+
+		return res;
+	}
+
 
 	async _getRemoteConnection() {
 		let deedclient = this.app.getDeedClientObject();
@@ -504,8 +577,25 @@ class RemoteWalletView extends React.Component {
 		console.log('RemoteWalletView.onWalletDisconnected called');
 
 		try {
-			if (params.connectionuuid == this.connectionuuid)
-			this.setState({connected: false});
+			if (params.connectionuuid && (params.connectionuuid == this.connectionuuid)) {
+				let mvcmypwa = this.getMvcMyPWAObject();
+
+				let rootsessionuuid = this.props.rootsessionuuid;
+				let walletuuid = this.props.currentwalletuuid;
+	
+				let iswalletconnect = await this._isWalletConnectWallet(walletuuid);
+
+				if (iswalletconnect) {
+					let islocked = await mvcmypwa.isWalletLocked(rootsessionuuid, walletuuid);
+	
+					if (!islocked) {
+						await this.app.resetWallet();
+					}
+				}
+
+				this.connectionuuid = null;
+				this.setState({currency: {symbol: ''}, connected: false, rpc: null});
+			}
 		}
 		catch(e) {
 			console.log('exception in RemoteWalletView.onWalletConnected: '+ e);
@@ -554,6 +644,23 @@ class RemoteWalletView extends React.Component {
 		}
 
 		this._changeCurrency(currency);
+	}
+
+	async onDisconnect() {
+		try {
+			let disconnected = disconnected = await this._disconnectFromWallet();
+
+			if (disconnected) {
+				console.log('Remote Wallet disconnected');
+
+				this._setState({currency: {symbol: ''}, connected: false, rpc: null});
+			}
+		}
+		catch(e) {
+			console.log('exception in RemoteWalletView.onDisconnect: '+ e);
+		}
+
+		return {disconnected: true};
 	}
 
 	// loading to
@@ -786,7 +893,7 @@ class RemoteWalletView extends React.Component {
 						disabled
 						autoFocus
 						type="text"
-						value={creditbalance}
+						value={(creditbalance ? creditbalance : '')}
 					/>
 				</span>
 				<span>
@@ -796,9 +903,13 @@ class RemoteWalletView extends React.Component {
 						disabled
 						autoFocus
 						type="text"
-						value={position_string}
+						value={(position_string ? position_string : '')}
 					/>
 				</span>
+				<span className="WalletDisconnectIconCol">
+				<FontAwesomeIcon icon={faUnlink} size="2x" onClick={this.onDisconnect.bind(this)} />
+				</span>
+
 				</FormGroup>
 
 				<FormGroup controlId="address">
