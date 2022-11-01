@@ -6,7 +6,7 @@ import Navbar from '../components/Navbar'
 import { Transition } from "@headlessui/react";
 import { Toaster, ToastIcon, toast, resolveValue } from "react-hot-toast";
 
-const contractaddress = '0x602FF6a74510B14Ceb3A4888E916b9616C7d4442'
+const contractaddress = '0x74e56E037822f59768cEA807D1f2FC5De7d1c47b'
 
 
 const style = {
@@ -58,7 +58,7 @@ export const challenge = () => {
     try {
       const kit = await getConnectedKit();
       const nftContract = new kit.connection.web3.eth.Contract(ArrowCatch.abi, contractaddress)
-      let tx = await nftContract.methods.challenge(tokenId).send({from: address, value: 25000000000000000})
+      let tx = await nftContract.methods.challenge(tokenId).send({from: address, value: 250000000000000000})
       console.log(tx, tx.events.Challenge.returnValues)
       toast.success("You "+ tx.events.Challenge.returnValues.state + " "+ tx.events.Challenge.returnValues.reward / 10**18 + " Celo" )  
     } catch {

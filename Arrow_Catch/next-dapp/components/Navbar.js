@@ -9,7 +9,7 @@ const style = {
 }
 
 const Navbar = () => {
-  const { connect, network, updateNetwork , address, destroy } = useCelo();
+  const { connect, address, destroy } = useCelo();
 
   console.log()
   return (

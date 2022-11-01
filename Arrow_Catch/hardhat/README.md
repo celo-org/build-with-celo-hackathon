@@ -1,10 +1,10 @@
 # Sample Hardhat Project
 contract deploy 
+last deployed contract
+trigonometry deployed to: 0x99f738D778Aa6d14a7291F9f3E39D706aB633742
+ArrowCatch deployed to: 0x74e56E037822f59768cEA807D1f2FC5De7d1c47b
 
-Compiled 1 Solidity file successfully
-trigonometry deployed to: 0x10F1B449898C1f6C5A8B4edE0CDFd5de1e8FD66C
-ArrowCatch deployed to: 0xD745c2F6791329B29978EdB04C48c9346a961DcB
-
+old version:
 trigonometry deployed to: 0x9be23e3428d7D6F335C2f03C32cb3E6417d57ACf
 ArrowCatch deployed to: 0x602FF6a74510B14Ceb3A4888E916b9616C7d4442
 

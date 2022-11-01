@@ -12,7 +12,7 @@ import { Toaster, ToastIcon, toast, resolveValue } from "react-hot-toast";
 
 
 
-const contractaddress = '0x602FF6a74510B14Ceb3A4888E916b9616C7d4442'
+const contractaddress = '0x74e56E037822f59768cEA807D1f2FC5De7d1c47b'
 
 const style = {
   walletConnectWrapper: `flex flex-col justify-center items-center h-screen w-screen bg-[#3b3d42] `,
@@ -52,22 +52,30 @@ const TailwindToaster = () => {
   );
 };
 const Arrow = () => {
-  const { address, network, updateNetwork , getConnectedKit } = useCelo();
+  const { address, network, updateNetwork, getConnectedKit } = useCelo();
   const [loading, setLoading] = useState(false)
   const [networkname, setnetwork] = useState(network)
   const [svg, setSVG] = useState()
+
+ useEffect(() => {
+  if(updateNetwork) {
+    setnetwork(network.name)
+    console.log(network.chainId)
+  }
+ })
+
   async function RandomMint(){
     setLoading(true)
     try {
       const kit = await getConnectedKit();
       let stabletoken = await kit.contracts.getStableToken()
       const nftContract = new kit.connection.web3.eth.Contract(ArrowCatch.abi, contractaddress)
-      let tx = await nftContract.methods.createNFT().send({from: address,feeCurrency: stabletoken.address, value: 25000000000000000})
+      let tx = await nftContract.methods.createNFT().send({from: address,feeCurrency: stabletoken.address, value: 250000000000000000})
       console.log(tx.events.CreateNFT.returnValues.tokenid)
       loadNFT(tx.events.CreateNFT.returnValues.tokenid)
       toast.success("Very Luck you mint arrow hit a nice position on the Board!")
-    } catch{
-      toast.success("Error")
+    } catch(e) {
+      toast.success("Error : " + e.message)
     }
     setLoading(false)
   }
@@ -82,7 +90,7 @@ async function loadNFT(tokenId){
     const svgmeta = uri.image
     setSVG(svgmeta)
   } catch{
-    toast.success("Error")
+    toast.success("Error : " + e.message)
   }
 }
   return (
@@ -92,7 +100,8 @@ async function loadNFT(tokenId){
                     <svg className="animate-spin bg-black h-53 w-53 mr-3 ..." viewBox="0 0 25 25"></svg>
                 </div>
               ): (
-      <div className={style.wrapper}>
+                <div>
+                <div className={style.wrapper}>
           <Image src={home} height='160' width='220' ></Image>
           <div className="flex flex-col p-4 leading-normal">
             <p className="mb-3 text-center font-normal text-gray-700 dark:text-gray-400">Mint BDNFT <br/> The contract will generate a random position on board. <br/>
@@ -108,8 +117,9 @@ async function loadNFT(tokenId){
             
             
           </div>
+    </div>
+                </div>)
 
-    </div>)
       ):(
         <div className={style.walletConnectWrapper}>
             <div className='mx-auto justify justify-center '>

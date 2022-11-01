@@ -1,6 +1,6 @@
 import React from "react";
 import '@celo/react-celo/lib/styles.css';
-import {useCelo, Alfajores, CeloProvider } from "@celo/react-celo";
+import {Mainnet, Alfajores, CeloProvider } from "@celo/react-celo";
 import { SnackbarProvider } from "notistack"
 import { ApolloProvider } from "@apollo/client";
 import client from "apollo-client";
@@ -8,7 +8,7 @@ import '../styles/globals.css'
 
 
 function MyApp({ Component, pageProps }) {
-  
+
   return  < CeloProvider
             dapp={{
               name: "ArrowCatch",
@@ -16,8 +16,7 @@ function MyApp({ Component, pageProps }) {
               url: "https://celo-composer.netlify.app/",
               icon: "https://celo-composer.netlify.app/favicon.ico",
             }}
-            network={Alfajores}
-            // networks={[Mainnet, Alfajores]}
+            networks={[Alfajores, Mainnet]}
           >
           <ApolloProvider client={client}>
               <div suppressHydrationWarning>
