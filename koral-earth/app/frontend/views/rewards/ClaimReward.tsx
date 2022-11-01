@@ -7,13 +7,14 @@ import { Colony as IColony } from '../../../../typechain/contracts/colony/Colony
 import { Modal, Spinner, Button, Badge, Alert } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import { Route } from '../../shared/routes';
+import { Reward } from '../../../backend/reward/reward.entity';
 
 type Props = {
-  rewardId: number;
+  reward: Reward;
   onCloseModal: () => void;
 };
 
-export const ClaimReward: FC<Props> = ({ rewardId, onCloseModal }) => {
+export const ClaimReward: FC<Props> = ({ reward, onCloseModal }) => {
   const router = useRouter();
   const { kit, account, connect } = useCelo();
 
@@ -33,30 +34,23 @@ export const ClaimReward: FC<Props> = ({ rewardId, onCloseModal }) => {
       Colony.address
     ) as unknown as IColony;
 
-    const claim = await colony.methods.claimReward(rewardId).send({
+    const claim = await colony.methods.claimReward(reward.id).send({
       from: account,
     });
 
     return claim.status;
   });
 
-  useEffect(() => {
-    mutate();
-  }, [mutate]);
-
   const closeModal = () => {
     if (!isLoading) {
       onCloseModal();
-    }
-    if (claimed) {
-      router.push(Route.userRewards);
     }
   };
 
   return (
     <Modal show={true} onHide={closeModal} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Claiming Reward...</Modal.Title>
+        <Modal.Title>Claim Reward: {reward.name}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <>
@@ -65,28 +59,35 @@ export const ClaimReward: FC<Props> = ({ rewardId, onCloseModal }) => {
             <Badge bg="dark" text="light">
               {account}
             </Badge>
+            <p>
+              <small>
+                <i>This will be the account the reward will be assigned to.</i>
+              </small>
+            </p>
           </p>
           {isLoading && (
             <>
-              <h6>
-                Hang tight! We&apos;re claiming the reward for you using your
-                connected account...
-              </h6>
-              <Spinner animation="border" color="info" />
+              <Alert variant="info" className="text-center">
+                <Spinner animation="border" color="info" />
+                <h6>
+                  Hang tight! We&apos;re claiming the reward for you using your
+                  connected account...
+                </h6>
+              </Alert>
             </>
           )}
           {rewardClaimingError && (
             <>
-              <h6>We failed to claim the reward for you.</h6>
               <Alert variant="danger">
-                {(rewardClaimingError as Error).message}
+                <h6>We failed to claim the reward for you.</h6>
+                <span>&#10060; {(rewardClaimingError as Error).message}</span>
               </Alert>
             </>
           )}
           {claimed && (
-            <>
-              <h6>Reward claimed successfully using the connected account!</h6>
-            </>
+            <Alert variant="success">
+              &#10003; Reward claimed successfully!
+            </Alert>
           )}
         </>
       </Modal.Body>
@@ -94,6 +95,19 @@ export const ClaimReward: FC<Props> = ({ rewardId, onCloseModal }) => {
         <Button variant="secondary" onClick={closeModal}>
           Close
         </Button>
+        {!claimed && !isLoading && (
+          <Button variant="primary" onClick={() => mutate()}>
+            Claim Reward
+          </Button>
+        )}
+        {claimed && (
+          <Button
+            variant="primary"
+            onClick={() => router.push(Route.userRewards)}
+          >
+            See claimed rewards
+          </Button>
+        )}
       </Modal.Footer>
     </Modal>
   );

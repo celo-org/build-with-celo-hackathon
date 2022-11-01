@@ -15,10 +15,12 @@ import { ClaimReward } from './ClaimReward';
 
 const Rewards: PaginatedItemsComponent<Reward> = ({ currentItems }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [rewardToBeClaimed, setRewardToBeClaimed] = useState<number>(-1);
+  const [rewardToBeClaimed, setRewardToBeClaimed] = useState<
+    Reward | undefined
+  >(undefined);
 
-  const onClaimReward = (rewardId: number) => {
-    setRewardToBeClaimed(rewardId);
+  const onClaimReward = (reward: Reward) => {
+    setRewardToBeClaimed(reward);
     setShowModal(true);
   };
 
@@ -35,7 +37,7 @@ const Rewards: PaginatedItemsComponent<Reward> = ({ currentItems }) => {
               <ListGroup key={index}>
                 <ListGroup.Item>Name: {reward.name}</ListGroup.Item>
                 <ListGroup.Item>Location: {reward.location}</ListGroup.Item>
-                <Button className="mt-3" onClick={() => onClaimReward(index)}>
+                <Button className="mt-3" onClick={() => onClaimReward(reward)}>
                   Claim Reward
                 </Button>
               </ListGroup>
@@ -43,9 +45,9 @@ const Rewards: PaginatedItemsComponent<Reward> = ({ currentItems }) => {
           ))}
         </Row>
       ))}
-      {showModal && (
+      {showModal && rewardToBeClaimed && (
         <ClaimReward
-          rewardId={rewardToBeClaimed}
+          reward={rewardToBeClaimed}
           onCloseModal={() => setShowModal(false)}
         />
       )}

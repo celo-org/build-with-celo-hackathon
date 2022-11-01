@@ -21,7 +21,7 @@ const Rewards: PaginatedItemsComponent<Reward> = ({ currentItems }) => {
       {rowsFromData(currentItems).map((rewards, index) => (
         <Row key={index}>
           {rewards.map((reward, index) => (
-            <Col className="md-3" key={index}>
+            <Col className="md-3 mb-5" key={index}>
               <ListGroup key={index}>
                 <ListGroup.Item>Name: {reward.name}</ListGroup.Item>
                 <ListGroup.Item>Location: {reward.location}</ListGroup.Item>
