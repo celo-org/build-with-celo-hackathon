@@ -33,6 +33,14 @@ Moreover, Nomis is designed to be a multi/cross-chain solution and offer the mos
 - **From the developers’ perspective**, Nomis will help them to build better DeFi products by enabling to customize their initial lending/borrowing terms on a case-by-case basis. DeFi developers will have more power over their business models and differentiation points.
 - **From the protocols’ perspective**, Nomis will help them to grow their TVL, MAU (acquisition of mainstream borrowers), MAD (monthly active developers), and # of on-chain use cases (new DeFi solutions built on-top of the Nomis open-source protocol).
 
+##### How we built it
+
+1. We hired CeloScan API to get wallet, transaction and NFT-movement data.
+2. We constructed variables, based on the data extracted, which can be received via Nomis API.
+3. Finally, we hired our mathematical model to develop Nomis (credit) Score based on the constructed variabled.
+
+Our solution is based on the .NET 6 platform and the ASP Net Core framework. We used the Docker toolset to build and deploy the solution. To build, run the command below: `docker build -f src/Nomis.Web.Server.Common/Dockerfile -t nomis-celo . docker -dp 80:80 nomis-celo`
+
 ---
 
 #### Summary
