@@ -3,8 +3,6 @@
 
 // This smart contract is for demo purposes only
 // The protocol is still a WIP and this was made to show basic ideas using a smart contract
-// Specifically, this contract intentionally omits the implementation of the 
-// rules definition & plankton accomplishment tracker - an essential part of the protocol
 
 pragma solidity ^0.8.0;
 
@@ -14,29 +12,41 @@ import "../shared/access/Modifiable.sol";
 import "../shared/access/Stoppable.sol";
 import "../shared/events/EmitsEvent.sol";
 import "../shared/libs/Koral.sol";
+import "./Plankton.sol";
+import "./Reward.sol";
+import "./Zoox.sol";
+import "./Contribution.sol";
 
 contract Colony is Administrable, EmitsEvent, Initializable, Modifiable, Stoppable {
-  using Koral for Koral.Plankton[];
-  using Koral for Koral.Reward[];
-  using Koral for Koral.Zoox[];
+  using Koral for Plankton[];
+  using Koral for Zoox[];
+  using Koral for Contribution[];
 
   uint public maxPlanktons;
   uint public maxZooxes;
   uint public totalInactivePlanktons;
   uint public totalInactiveZooxes;
   uint public totalInactiveRewards;
-  string public name;
+  uint public maxInstalmentsPerPlankton;
+  string public colonyName;
   
-  Koral.Plankton[] public _planktons;
-  Koral.Reward[] public _rewards;
-  Koral.Zoox[] public _zooxes;
+  Plankton[] public _planktons;
+  Reward[] public _rewards;
+  Zoox[] public _zooxes;
 
-  mapping(uint => bool) rewardIsActive;
-  mapping(address => bool) zooxIsActive;
-  mapping(address => bool) planktonIsActive;
+  mapping(uint => bool) public rewardIsActive;
+  mapping(address => bool) public zooxIsActive;
+  mapping(address => bool) public planktonIsActive;
+
+  mapping(string => uint) public minContributionPerProject;
 
   mapping(address => uint[]) public _claimed;
   mapping(address => uint[]) public _assigned;
+
+  mapping(string => uint[]) public _projectRewards;
+  mapping(string => mapping(uint => bool)) public _activeProjectRewards;
+  mapping(address => mapping(string => Contribution[])) public _planktonContributions;
+
 
   modifier isPolyp {
     require(isAdmin(), "Colony: Only the polyp can perform this action."); _;
@@ -54,11 +64,12 @@ contract Colony is Administrable, EmitsEvent, Initializable, Modifiable, Stoppab
     require(rewardIsActive[rewardId], "Colony: This action can only be performed on an active reward."); _;
   }
 
-  function initialize(string memory _name, uint _maxPlanktons, uint _maxZooxes) public initializer {
+  function initialize(string memory _colonyName, uint _maxPlanktons, uint _maxZooxes) public initializer {
     assignNewAdmin(msg.sender);
-    name = _name;
+    colonyName = _colonyName;
     maxPlanktons = _maxPlanktons;
     maxZooxes = _maxZooxes;
+    maxInstalmentsPerPlankton = 4; // carefully chosen to avoid DoS attacks
   }
 
   function launch() public isPolyp {
@@ -66,12 +77,19 @@ contract Colony is Administrable, EmitsEvent, Initializable, Modifiable, Stoppab
     emitActionSuccess("Colony launched successfully.");
   }
 
-  function addReward(string memory _name, string memory _location) public isModifiable isPolyp {
+  function addReward(uint minContributionAmount, string memory projectId, string memory name, string memory location) public isModifiable isPolyp {
     _rewards.push(
-      Koral.Reward(_name, _location)
+      Reward(name, location)
     );
 
-    rewardIsActive[_rewards.length - 1] = true;
+    uint rewardId = _rewards.length - 1;
+
+    minContributionPerProject[projectId] = minContributionAmount;
+
+    _projectRewards[projectId].push(rewardId);
+    _activeProjectRewards[projectId][rewardId] = true;
+
+    rewardIsActive[rewardId] = true;
 
     emitActionSuccess("Reward added successfully.");
   }
@@ -80,12 +98,33 @@ contract Colony is Administrable, EmitsEvent, Initializable, Modifiable, Stoppab
     require(rewardIsActive[rewardId], "Colony: reward deactivation failed since reward is inactive.");
 
     rewardIsActive[rewardId] = false;
+    
     totalInactiveRewards++;
 
     emitActionSuccess("Reward deactivated successfully.");
   }
 
-  function claimReward(uint rewardId) public isActivePlankton isValidReward(rewardId) {
+  function contributeToOffset(string memory projectId) public payable stopInEmergency {
+    require(
+      _planktonContributions[msg.sender][projectId].length < maxInstalmentsPerPlankton, 
+      "Colony: Max contributions exceeded for this project."
+    );
+
+    _planktonContributions[msg.sender][projectId].push(
+      Contribution(msg.value, projectId)
+    );
+
+    emitActionSuccess("Offset contribution accepted.");
+  }
+
+  function claimReward(uint rewardId, string memory projectId) public isActivePlankton isValidReward(rewardId) {
+    require(rewardIsActive[rewardId], "Colony: Reward is no longer claimable.");
+    require(_activeProjectRewards[projectId][rewardId], "Colony: Reward not associated with project."); 
+    require(
+      minContributionPerProject[projectId] <= _planktonContributions[msg.sender][projectId].totalContributions(), 
+      "Colony: insufficient contribution."
+    );
+
     // NB: For simplicity reasons, rewards are currently deemed to be 
     // claimable and assignable perpetually and simultaneously,
     // In reality, the rules could be different and more explicit. 
@@ -101,7 +140,7 @@ contract Colony is Administrable, EmitsEvent, Initializable, Modifiable, Stoppab
     require(_zooxes.canAcceptMoreZooxes(totalInactiveZooxes, maxZooxes), "Colony: can't add any more zooxes");
 
     _zooxes.push(
-      Koral.Zoox(zoox)
+      Zoox(zoox)
     );
 
     zooxIsActive[zoox] = true;
@@ -122,7 +161,7 @@ contract Colony is Administrable, EmitsEvent, Initializable, Modifiable, Stoppab
     require(_planktons.canAcceptMorePlanktons(totalInactivePlanktons, maxPlanktons), "Colony: can't add any more planktons");
 
     _planktons.push(
-      Koral.Plankton(plankton)
+      Plankton(plankton)
     );
 
     planktonIsActive[plankton] = true;
@@ -143,8 +182,8 @@ contract Colony is Administrable, EmitsEvent, Initializable, Modifiable, Stoppab
     assignNewAdmin(_polyp);
   }
 
-  function setName(string memory _name) public isModifiable isPolyp {
-    name = _name;
+  function setColonyName(string memory _colonyName) public isModifiable isPolyp {
+    colonyName = _colonyName;
   }
 
   function setMaxPlanktons(uint _maxPlanktons) public isModifiable isPolyp {
@@ -167,15 +206,19 @@ contract Colony is Administrable, EmitsEvent, Initializable, Modifiable, Stoppab
     return admin;
   }
 
-  function rewards() view public returns (Koral.Reward[] memory) {
+  function rewards() view public returns (Reward[] memory) {
     return _rewards;
   }
 
-  function zooxes() view public returns (Koral.Zoox[] memory) {
+  function projectRewards(string memory projectId) view public returns (uint[] memory) {
+    return _projectRewards[projectId];
+  }
+
+  function zooxes() view public returns (Zoox[] memory) {
     return _zooxes;
   }
 
-  function planktons() view public returns (Koral.Plankton[] memory) {
+  function planktons() view public returns (Plankton[] memory) {
     return _planktons;
   }
 
