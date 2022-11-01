@@ -8,6 +8,8 @@ import {
   Popover,
 } from 'react-bootstrap';
 import { useCelo } from '@celo/react-celo';
+import Link from 'next/link';
+import { Route } from '../../../shared/routes';
 
 export const TopBar = () => {
   const { account, connect } = useCelo();
@@ -15,9 +17,19 @@ export const TopBar = () => {
   return (
     <Navbar collapseOnSelect bg="dark" variant="dark" sticky="top">
       <Container>
-        <Navbar.Brand href="/">Koral Earth</Navbar.Brand>
+        <Navbar.Brand>
+          <Link href={Route.home}>
+            <a style={{ textDecoration: 'none', color: 'white' }}>
+              Koral Earth
+            </a>
+          </Link>
+        </Navbar.Brand>
         <Nav className="justify-content-end">
-          <Nav.Link href="/user-rewards">My Rewards</Nav.Link>
+          <Navbar.Text className="me-3">
+            <Link href={Route.userRewards}>
+              <a style={{ textDecoration: 'none' }}>My Rewards</a>
+            </Link>
+          </Navbar.Text>
 
           {!account && (
             <Button onClick={() => connect().catch(console.log)}>
@@ -29,7 +41,7 @@ export const TopBar = () => {
               <OverlayTrigger
                 placement="bottom"
                 overlay={
-                  <Popover color="dark" id="overlay-account" className="p-3">
+                  <Popover id="overlay-account" className="p-3">
                     {account}
                   </Popover>
                 }

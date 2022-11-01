@@ -5,6 +5,8 @@ import { FC, useEffect } from 'react';
 import Colony from '../../../contracts/Colony.json';
 import { Colony as IColony } from '../../../../typechain/contracts/colony/Colony';
 import { Modal, Spinner, Button, Badge, Alert } from 'react-bootstrap';
+import { useRouter } from 'next/router';
+import { Route } from '../../shared/routes';
 
 type Props = {
   rewardId: number;
@@ -12,6 +14,7 @@ type Props = {
 };
 
 export const ClaimReward: FC<Props> = ({ rewardId, onCloseModal }) => {
+  const router = useRouter();
   const { kit, account, connect } = useCelo();
 
   const {
@@ -44,6 +47,9 @@ export const ClaimReward: FC<Props> = ({ rewardId, onCloseModal }) => {
   const closeModal = () => {
     if (!isLoading) {
       onCloseModal();
+    }
+    if (claimed) {
+      router.push(Route.userRewards);
     }
   };
 
