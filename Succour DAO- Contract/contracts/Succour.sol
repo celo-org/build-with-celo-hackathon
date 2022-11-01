@@ -264,7 +264,6 @@ contract Succour is Proxiable{
        uint proposedAmountGotten = propose.amountGotten;
        require(proposedAmountGotten >= proposedAmount, "Proposed amount not gotten");
        uint approvalPower = projectRequiredPercentage();
-       //uint gottenVote = (propose.approveWithdraw / totalVotingPower) * 100;
        require(propose.approveWithdraw  >= approvalPower, "You can't withdraw yet");
        propose.amountGotten = 0;
        approvedProposals[IdofProposal -1].amountGotten = 0;
