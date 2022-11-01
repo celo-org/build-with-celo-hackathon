@@ -1,0 +1,357 @@
+{
+	"gooddollar": {
+		"name": "gooddollar scheme",
+		"uuid": "d32c5dad-1da1-bc28-58e0-b49a84698a48",
+		"restserver": {
+			"activate": false
+		},
+		"authserver": {
+			"activate": false
+		},
+		"keyserver": {
+			"activate": false
+		},
+		"ethnodeserver": {
+			"name": "gooddollar",
+			"activate": false,
+			"web3_provider_url": "https://gooddollar-rpc.fuse.io/",
+			"chainid": 122,
+			"networkid": 122,
+			"default_gas_limit": "91346",
+			"default_gas_price": "1000000000",
+			"avg_transaction_fee": "0.000091346",
+			"transaction_units_min": "5"
+		}
+	},
+	"fuse": {
+		"name": "fuse scheme",
+		"uuid": "7af9a2e8-ef9f-3504-882d-53838dbba480",
+		"restserver": {
+			"activate": false
+		},
+		"authserver": {
+			"activate": false
+		},
+		"keyserver": {
+			"activate": false
+		},
+		"ethnodeserver": {
+			"name": "fuse",
+			"activate": false,
+			"web3_provider_url": "https://rpc.fuse.io/",
+			"chainid": 122,
+			"networkid": 122,
+			"default_gas_limit": "21000",
+			"default_gas_price": "1000000000",
+			"avg_transaction_fee": "0.000021000",
+			"transaction_units_min": "2"
+		}
+	},
+	"rinkeby": {
+		"name": "rinkeby scheme",
+		"uuid": "760aa35f-dc1e-2aff-e24c-a2551ab6a3db",
+		"restserver": {
+			"activate": false
+		},
+		"authserver": {
+			"activate": false
+		},
+		"keyserver": {
+			"activate": false
+		},
+		"ethnodeserver": {
+			"name": "rinkeby",
+			"activate": false,
+			"rest_server_url": "https://rinkeby-dapps-preprod3.primusfinance.fr/", 
+			"rest_server_api_path": "/erc20-dapp/api",
+			"web3_provider_url": "https://ethnode.primusmoney.com/rinkeby",
+			"chainid": 4,
+			"networkid": 4,
+			"default_gas_limit": "1150000",
+			"default_gas_price": "1000000000",
+			"avg_transaction_fee": "0.00021",
+			"gas_unit": "21000",
+			"transaction_units_min": "55",
+			"erc20": {
+				"tokens": ["0x1CE9fA5d2e0f0E987859565BB2DD6b09fb88f247", "0xADBC257f082b7eBc0e3F34cf317a47DFdA73a20a", "0x3A9b0C4747ed0a5748dCeE33818a342625a00d40"]
+			}
+		}
+
+	},
+	"xdai": {
+		"name": "xDAI chain",
+		"uuid": "82ec85d7-2859-ce1a-6527-4a639bae77ca",
+		"restserver": {
+			"activate": false
+		},
+		"authserver": {
+			"activate": false
+		},
+		"keyserver": {
+			"activate": false
+		},
+		"ethnodeserver": {
+			"name": "xdaichain",
+			"activate": false,
+			"web3_provider_url": "https://dai.poa.network",
+			"chainid": 100,
+			"networkid": 100,
+			"default_gas_limit": "105000",
+			"default_gas_price": "1000000000",
+			"avg_transaction_fee": "0.000084",
+			"transaction_units_min": "5"
+		}
+
+	},
+	"binance": {
+		"name": "binance smart chain",
+		"uuid": "97b653fb-23e7-bb44-55e3-e8add129b13f",
+		"restserver": {
+			"activate": false
+		},
+		"authserver": {
+			"activate": false
+		},
+		"keyserver": {
+			"activate": false
+		},
+		"ethnodeserver": {
+			"name": "binancesmartchain",
+			"activate": false,
+			"web3_provider_url": "https://bsc-dataseed.binance.org/",
+			"chainid": 56,
+			"networkid": 56,
+			"default_gas_limit": "21000",
+			"default_gas_price": "10000000000",
+			"avg_transaction_fee": "0.00021",
+			"transaction_units_min": "2"
+		}
+
+	},
+	"primusfinance_citadel": {
+		"name": "primusfinance florin citadel scheme",
+		"uuid": "62ef4792-4ba6-0c27-c992-572684e9f9f5",
+		"restserver": {
+			"activate": true,
+			"rest_server_url": "https://mytokens-rest.primusfinance.fr",
+			"rest_server_api_path": "/mytokens-dapp/api"
+		},
+		"authserver": {
+			"activate": true,
+			"rest_server_url": "https://authkey-rest.primusfinance.fr",
+			"rest_server_api_path": "/authkey"
+		},
+		"keyserver": {
+			"activate": true,
+			"rest_server_url": "https://authkey-rest.primusfinance.fr",
+			"rest_server_api_path": "/authkey"
+		},
+		"ethnodeserver": {
+			"name": "florin",
+			"activate": true,
+			"rest_server_url": "https://mytokens-rest.primusfinance.fr", 
+			"rest_server_api_path": "/mytokens-dapp/api",
+			"web3_provider_url": "http://192.168.2.10:8545",
+			"explorerurl": "https://mytokens-rest.primusfinance.fr/mytokens-dapp/api/mytokens",
+			"chainid": 78110,
+			"networkid": 78110,
+			"default_gas_limit": "4850000",
+			"default_gas_price": "0",
+			"avg_transaction_fee": "0.00021",
+			"transaction_units_min": "240"
+		}
+	},
+	"primus_facebook_citadel": {
+		"name": "primus facebook oauth2 citadel scheme",
+		"uuid": "19d97186-a8c9-378a-6897-cdab74b654aa",
+		"restserver": {
+			"activate": true,
+			"rest_server_url": "https://mytokens-oauth2-rest.primusfinance.fr",
+			"rest_server_api_path": "/mytokens-dapp/api"
+		},
+		"authserver": {
+			"activate": true,
+			"mode": "oauth2",
+			"oauth2": {"provider": "facebook"},
+			"rest_server_url": "https://oauth2.primusmoney.com",
+			"rest_server_api_path": "/erc20-dapp/api/oauth2"
+		},
+		"keyserver": {
+			"activate": true,
+			"rest_server_url": "https://oauth2.primusmoney.com",
+			"rest_server_api_path": "/erc20-dapp/api/oauth2"
+		},
+		"ethnodeserver": {
+			"name": "florin",
+			"activate": true,
+			"rest_server_url": "https://mytokens-oauth2-rest.primusfinance.fr", 
+			"rest_server_api_path": "/mytokens-dapp/api",
+			"web3_provider_url": "http://192.168.2.10:8545",
+			"explorerurl": "https://mytokens-rest.primusfinance.fr/mytokens-dapp/api/mytokens",
+			"chainid": 78110,
+			"networkid": 78110,
+			"default_gas_limit": "4850000",
+			"default_gas_price": "10000000000",
+			"avg_transaction_fee": "0.00021",
+			"transaction_units_min": "240"
+		}
+	},	
+	"primusfinance": {
+		"name": "primusfinance florin remote scheme",
+		"uuid": "4bf223aa-f5d9-db3e-cf25-2954462756a9",
+		"restserver": {
+			"activate": true,
+			"rest_server_url": "https://mytokens-rest.primusmoney.com/",
+			"rest_server_api_path": "/mytokens-dapp/api"
+		},
+		"authserver": {
+			"activate": true,
+			"rest_server_url": "https://authkey-rest.primusmoney.com",
+			"rest_server_api_path": "/authkey"
+		},
+		"keyserver": {
+			"activate": true,
+			"rest_server_url": "https://authkey-rest.primusmoney.com",
+			"rest_server_api_path": "/authkey"
+		},
+		"ethnodeserver": {
+			"name": "florin",
+			"activate": false,
+			"rest_server_url": "https://firenze-dapps.primusfinance.fr", 
+			"rest_server_api_path": "/erc20-dapp/api",
+			"web3_provider_url": "https://ethnode.primusfinance.fr/firenze",
+			"explorerurl": "https://mytokens-rest.primusmoney.com/mytokens-dapp/api/mytokens",
+			"chainid": 78110,
+			"networkid": 78110,
+			"default_gas_limit": "4850000",
+			"default_gas_price": "10000000000",
+			"avg_transaction_fee": "0.00021",
+			"transaction_units_min": "240"
+		}
+	},
+	"polygon": {
+		"name": "polygon matic",
+		"uuid": "d8d0d9e1-3147-a194-ff5a-0855b99f6007",
+		"restserver": {
+			"activate": false
+		},
+		"authserver": {
+			"activate": false
+		},
+		"keyserver": {
+			"activate": false
+		},
+		"ethnodeserver": {
+			"name": "polygon",
+			"activate": false,
+			"web3_provider_url": "https://rpc-mainnet.maticvigil.com/",
+			"chainid": 137,
+			"networkid": 137,
+			"default_gas_limit": "84000",
+			"default_gas_price": "50000000000",
+			"avg_transaction_fee": "0.00021",
+			"transaction_units_min": "10"
+		}
+
+	},
+	"thunderscore": {
+		"name": "thunderscore",
+		"uuid": "d715e29f-4179-0a1b-f916-5f41465fa552",
+		"restserver": {
+			"activate": false
+		},
+		"authserver": {
+			"activate": false
+		},
+		"keyserver": {
+			"activate": false
+		},
+		"ethnodeserver": {
+			"name": "thunderscore",
+			"activate": false,
+			"web3_provider_url": "https://mainnet-rpc.thundercore.com/",
+			"chainid": 108,
+			"networkid": 108,
+			"default_gas_limit": "84000",
+			"default_gas_price": "1000000000",
+			"avg_transaction_fee": "0.00021",
+			"transaction_units_min": "10"
+		}
+
+	},
+	"avax": {
+		"name": "avalanche",
+		"uuid": "b18f3678-85f8-de4a-7f22-cbb24fc65413",
+		"restserver": {
+			"activate": false
+		},
+		"authserver": {
+			"activate": false
+		},
+		"keyserver": {
+			"activate": false
+		},
+		"ethnodeserver": {
+			"name": "avalanche",
+			"activate": false,
+			"web3_provider_url": "https://api.avax.network/ext/bc/C/rpc",
+			"chainid": 43114,
+			"networkid": 1,
+			"default_gas_limit": "84000",
+			"default_gas_price": "30000000000",
+			"avg_transaction_fee": "0.00021",
+			"transaction_units_min": "10"
+		}
+
+	},
+	"poanetwork": {
+		"name": "POA network",
+		"uuid": "608c6df7-5f18-1989-67bd-d4ff01cb5276",
+		"restserver": {
+			"activate": false
+		},
+		"authserver": {
+			"activate": false
+		},
+		"keyserver": {
+			"activate": false
+		},
+		"ethnodeserver": {
+			"name": "poanetwork",
+			"activate": false,
+			"web3_provider_url": "https://core.poa.network",
+			"chainid": 99,
+			"networkid": 99,
+			"default_gas_limit": "105000",
+			"default_gas_price": "10000000000",
+			"avg_transaction_fee": "0.00084",
+			"transaction_units_min": "5"
+		}
+
+	},
+	"celo": {
+		"name": "celo scheme",
+		"uuid": "41053643-0139-655c-691d-213009a58e87",
+		"restserver": {
+			"activate": false
+		},
+		"authserver": {
+			"activate": false
+		},
+		"keyserver": {
+			"activate": false
+		},
+		"ethnodeserver": {
+			"name": "celo",
+			"activate": false,
+			"web3_provider_url": "https://forno.celo.org",
+			"chainid": 42220,
+			"networkid": 42220,
+			"default_gas_limit": "84000",
+			"default_gas_price": "1000000000",
+			"avg_transaction_fee": "0.000021000",
+			"transaction_units_min": "2"
+		}
+	}
+	
+}
