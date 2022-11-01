@@ -5,15 +5,17 @@ pragma solidity >=0.8.0;
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+
+import "./EthPrice.sol";
 /************************************** INTERFACES **************************************/
-interface IRoles {
+interface RolesI {
     function isSuperAdmin(address account) external view returns(bool);
 
     function isMinter(address account) external view returns(bool);
     function isPauser(address account) external view returns(bool);
 }
 
-interface SUSTokenFactory {
+interface SUSTokenFactoryI {
     function mintSUST(address, uint256) external;
 }
 
@@ -43,13 +45,14 @@ contract FrontFace {
 
 //----------------------- SET ADDRESS FUNCTIONS -----------------------//
     function setTokenFactoryAddress(address _tokenFactoryAddress) public {
+        require(RolesI(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT Super Admin!");
         require(_tokenFactoryAddress != address(0), "Account: Zero or Invalid address!");
-        require(IRoles(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT Super Admin!");
+        
         tokenFactoryAddress = _tokenFactoryAddress;
     }
 
     function setRolesContractAddress(address _rolesSC) public whenNotPaused {
-        require(IRoles(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT Super Admin!");
+        require(RolesI(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT Super Admin!");
         require(_rolesSC != address(0), "Account: Zero or Invalid address!");
         rolesSC = _rolesSC;
     }
@@ -58,11 +61,12 @@ contract FrontFace {
         //require(receiptNum != 0, "Input Error: Receipt number is zero or invalid!");
         require(walletAddress != address(0), "Input Error: Recepient address is zero or invalid!");
         require(amount != 0, "Input Error: Amount entered is zero or invalid!");
-        SUSTokenFactory(tokenFactoryAddress).mintSUST((walletAddress), amount);
+        require(ethPriceUSD > 0, "ETH price is ZERO!");
+        SUSTokenFactoryI(tokenFactoryAddress).mintSUST((walletAddress), amount);
     }
 
     function killContract() public {
-        require(IRoles(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT SUPER ADMIN!");
+        require(RolesI(rolesSC).isSuperAdmin(msg.sender), "Access Denied: Caller is NOT SUPER ADMIN!");
 		selfdestruct(payable(msg.sender));
 	}
 }

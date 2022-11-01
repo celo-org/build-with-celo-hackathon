@@ -1,37 +1,30 @@
 // SPDX-License-Identifier: GPL-3.0
+pragma solidity >= 0.8.0;
 
-pragma solidity >=0.7.0 <0.9.0;
+import "github.com/provable-things/ethereum-api/provableAPI.sol";
 
-import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+contract EthPrice is usingProvable {
 
-contract EthPrice {
+    uint public ethPriceUSD;
 
-     AggregatorV3Interface internal ethFeed;
+    event LogConstructorInitiated(string nextStep);
+    event LogNewEthPrice(string price);
+    event LogNewProvableQuery(string description);
 
-     // Precomputing hash of strings
-       bytes32 ethHash = keccak256(abi.encodePacked("ETH"));
-
-    /**
-     * Network: Kovan
-        0x9326BFA02ADD2366b30bacB125260Af641031331
-     * Address: 0x169e633a2d1e6c10dd91238ba11c4a708dfef37c
-     */
-    constructor() {
-        ethFeed = AggregatorV3Interface(0x9326BFA02ADD2366b30bacB125260Af641031331);
+    constructor() public {
+        emit LogConstructorInitiated("Constructor is initiated and 'updateEthPrice()' is called to send the Provable Query.");
+        updateEthPrice(); // First check at contract creation...
     }
 
-    /**
-     * Returns the latest price
-     */
-    function getEthPrice() public view returns (int) {
-        (
-            uint80 roundID,
-            int price,
-            uint startedAt,
-            uint timeStamp,
-            uint80 answeredInRound
-        ) = ethFeed.latestRoundData();
-        return price;
+    function __callback(bytes32 _myid, string memory _result) public {
+        require(msg.sender == provable_cbAddress());
+        emit LogNewEthPrice(_result);
+        ethPriceUSD = parseInt(_result); 
+        // Now do something with the USD Diesel price...
     }
 
+    function updateEthPrice() public payable {
+        emit LogNewProvableQuery("Provable query was sent, standing by for the answer...");
+        provable_query("URL", "json(https://api.pro.coinbase.com/products/ETH-USD/ticker).price");
+    }
 }
