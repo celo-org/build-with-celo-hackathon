@@ -1,0 +1,186 @@
+{
+	"compiler": {
+		"version": "0.8.15+commit.e14f2714"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "target",
+								"type": "address"
+							},
+							{
+								"internalType": "bytes",
+								"name": "callData",
+								"type": "bytes"
+							}
+						],
+						"internalType": "struct Multicall.Call[]",
+						"name": "calls",
+						"type": "tuple[]"
+					}
+				],
+				"name": "aggregate",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "blockNumber",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes[]",
+						"name": "returnData",
+						"type": "bytes[]"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "blockNumber",
+						"type": "uint256"
+					}
+				],
+				"name": "getBlockHash",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "blockHash",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getCurrentBlockCoinbase",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "coinbase",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getCurrentBlockDifficulty",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "difficulty",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getCurrentBlockGasLimit",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "gaslimit",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getCurrentBlockTimestamp",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "addr",
+						"type": "address"
+					}
+				],
+				"name": "getEthBalance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "balance",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getLastBlockHash",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "blockHash",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"author": "Michael Elliot <mike@makerdao.com>Joshua Levine <joshua@makerdao.com>Nick Johnson <arachnid@notdot.net>",
+			"kind": "dev",
+			"methods": {},
+			"title": "Multicall - Aggregate results from multiple read-only function calls",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"CONTRACT/v2-periphery-master/contracts/multicall.sol": "Multicall"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"CONTRACT/v2-periphery-master/contracts/multicall.sol": {
+			"keccak256": "0x79a419999a5c859c202a8fb6286e81a97b6d70079e3a08508f6d2cfecda8f1c1",
+			"urls": [
+				"bzz-raw://235f6911cd8333ba1af7d7f6d1898659d1858b2001dcdb5dd04089a2b7f4ce4f",
+				"dweb:/ipfs/QmZmhwDFd58EhuEhPQ7y4pMTiwPPR7c2EVaEDDJvw5W3hG"
+			]
+		}
+	},
+	"version": 1
+}

@@ -1,0 +1,39 @@
+{
+    "name": "EviveSwap Default List",
+    "timestamp": "2022-10-13T09:56:23Z",
+    "version": {
+      "major": 2,
+      "minor": 10,
+      "patch": 0
+    },
+    "tags": {},
+    "logoURI": "",
+    "keywords": ["evive", "default"],
+    "tokens": [
+      {
+        "name": "Celo Dollar",
+        "symbol": "cUSD",
+        "address": "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+        "chainId": 44787,
+        "decimals": 18,
+        "logoURI": ""
+      },
+      {
+        "name": "Celo Euro",
+        "symbol": "cEUR",
+        "address": "0x10c892A6EC43a53E45D0B916B4b7D383B1b78C0F",
+        "chainId": 44787,
+        "decimals": 18,
+        "logoURI": ""
+      },
+      {
+        "name": "Celo Brazilian Real",
+        "symbol": "cREAL",
+        "address": "0xE4D517785D091D3c54818832dB6094bcc2744545",
+        "chainId": 44787,
+        "decimals": 18,
+        "logoURI": ""
+      }
+    ]
+  }
+  

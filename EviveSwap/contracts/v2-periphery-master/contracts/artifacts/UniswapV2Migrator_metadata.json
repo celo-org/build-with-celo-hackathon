@@ -1,0 +1,136 @@
+{
+	"compiler": {
+		"version": "0.6.6+commit.6c089d02"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_factoryV1",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_router",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amountTokenMin",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amountETHMin",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "deadline",
+						"type": "uint256"
+					}
+				],
+				"name": "migrate",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"EviveSwap/contracts/v2-periphery-master/contracts/UniswapV2Migrator.sol": "UniswapV2Migrator"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@uniswap/lib/contracts/libraries/TransferHelper.sol": {
+			"keccak256": "0xaff99b54915f57e2a4e71b8d15afd4ee425410e5a6f45c07517ae1beb806f8bd",
+			"urls": [
+				"bzz-raw://15432ec031f4cfa6709921289e198b030a0c5eac75b5a3e0eb64827a2b3b5595",
+				"dweb:/ipfs/QmZvR1KuuDvuzXFiADCngTKyMCTy31uhq9U6CazP59B55j"
+			]
+		},
+		"EviveSwap/contracts/v2-periphery-master/contracts/UniswapV2Migrator.sol": {
+			"keccak256": "0xe16d7f6510f142bfb3dfd3b5431446070bbb074de170751790d0ee39b99be68e",
+			"urls": [
+				"bzz-raw://aec06254770a7a07ffcf695e7314ad4dcdb5ad7bbe57ae27f1af8a2c3f0eb9fc",
+				"dweb:/ipfs/QmPNPF3X1RnuqPoamvDmdKaNRRKdULXbsLH1vRBfD3jbWA"
+			]
+		},
+		"EviveSwap/contracts/v2-periphery-master/contracts/interfaces/IERC20.sol": {
+			"keccak256": "0xa791b279660ee5eb66ebd4f23b539055d178ae24677f3a164567441ecfdcf73a",
+			"urls": [
+				"bzz-raw://06f36f585a8b82eb388ccccc4e8c483718a99a07f5f12d3217afc254ab139a68",
+				"dweb:/ipfs/Qmedr3aAH6F3ZTgZJ3enoP92ZD8yNwiCStwtGknNXhiK8v"
+			]
+		},
+		"EviveSwap/contracts/v2-periphery-master/contracts/interfaces/IUniswapV2Migrator.sol": {
+			"keccak256": "0x3775c62217dd61fc45acdc18db90a31ff6d61802d13eb6e8a203cf706cb37746",
+			"urls": [
+				"bzz-raw://d2408b73aea9e21864a83266871d7e60f4a7dac1647cac371d0daa8571485c0a",
+				"dweb:/ipfs/QmYGowYpWnqx2m7nF3B8GgFG1Xa3Euxssbakwzrd9LeFTC"
+			]
+		},
+		"EviveSwap/contracts/v2-periphery-master/contracts/interfaces/IUniswapV2Router01.sol": {
+			"keccak256": "0x608b42c9eb8629e4b4b2fba437c62be48cee8ab920bf1cecb0b212aa00342403",
+			"urls": [
+				"bzz-raw://c9a7613abdbf51b774b4c90a043c55d5c9145121d54d2e6bd32cdc38491e9249",
+				"dweb:/ipfs/QmUudeJSPyuqm6bJWmfqtvo7jMYfa8yqPKF1p8eP8QE5cX"
+			]
+		},
+		"EviveSwap/contracts/v2-periphery-master/contracts/interfaces/V1/IUniswapV1Exchange.sol": {
+			"keccak256": "0x3a81f718712ccbff379fdce706178020ff94e3a9e59ded76e9cb9a0ae6ce6ed0",
+			"urls": [
+				"bzz-raw://b96bf3d042320b79aabe441a9f759ebdd7610cd05e7d1c119514c1b3d15777d6",
+				"dweb:/ipfs/QmQ625VndohNkKMaQsqbYYL88KyVnnmrKHdtxhkEYyN7G8"
+			]
+		},
+		"EviveSwap/contracts/v2-periphery-master/contracts/interfaces/V1/IUniswapV1Factory.sol": {
+			"keccak256": "0xd080dfffb732df63f67e27c61766ca0c721df16ab5536bc69aa23d10e48c7770",
+			"urls": [
+				"bzz-raw://fb8114210bdd417e5cc82269377fe3cf41bc55ca3fe86f309fb6f0aef49f6750",
+				"dweb:/ipfs/QmZjH7kS4YMiogfbzW9MqdQrcdiZCFUQWRuJ8CJK9NTSJ5"
+			]
+		}
+	},
+	"version": 1
+}
