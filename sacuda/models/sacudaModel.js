@@ -6,6 +6,11 @@ const sacudaSchema = new Schema({
       required: false,
       unique: false
     },
+  email: {
+      type: String,
+      required: true,
+      unique: false
+    },
   wallet: {
     type: String,
     required: true,

@@ -37,23 +37,32 @@ const walletConnect = () => {
     console.log(data);
   };
 
-  function mainRedirect() {
+  const mainRedirect = () => {
     router.push('/selection') }
 
   if (status === "loading") {
     return "Loading..."
   }
 
-    if (isConnected && Sacuda.email===[]) {
-        writeProfileBasics()
-//        readProfileBasics();
-//        console.log(sacudas.props)
-//        sacudas.props === null ? writeProfileBasics : mainRedirect();
+    if (isConnected) {    
+    if (Sacuda.email===session.user.email) {
+      console.log(session.user.email)
+      console.log(Sacuda.email)
+      mainRedirect();
     }
     else
-    if (isConnected && Sacuda.email===session.user.email) {
-        mainRedirect();
-    }
+    //if (Sacuda.email===null) {
+      console.log(session.user.email)
+      console.log(Sacuda.email)
+      writeProfileBasics()  
+    return(<><Heading>Hola</Heading></>)
+      
+      console.log('llegamos al write');
+      //        readProfileBasics();
+      //        console.log(sacudas.props)
+      //        sacudas.props === null ? writeProfileBasics : mainRedirect();
+    //}
+  }
     else
 
   return(
