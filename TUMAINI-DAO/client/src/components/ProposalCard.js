@@ -146,8 +146,8 @@ setNoVotes(rejectvotes);
                   Approve
                 </button>
                 <button  onClick={async()=>{if(approve){
-                 await  setApprove(false);
-                  vote(id,approve)}
+                 
+                  vote(id,!approve)}
                 }} className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-bold leading-none text-white focus:outline-none bg-blue-500 border rounded hover:bg-blue-600 py-3 px-1 w-[100px] font-work ">
                   Reject
                 </button>
