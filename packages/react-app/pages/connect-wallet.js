@@ -10,6 +10,9 @@ const ConnectWallet = () => {
     const toggleFormDropdown = () =>{
         setShowFormDropdown(!showFormDropdown);
     }
+
+    const currentYear = new Date().getFullYear();
+
   return (
     <>
         <section className="h-screen">
@@ -114,7 +117,7 @@ const ConnectWallet = () => {
                             <div className='container mx-auto w-full px-6 mt-4'>
                                 <div className='flex items-center justify-between flex-wrap gap-3'>
                                     <div>
-                                        <p>&copy; gidiscrap 2022</p>
+                                        <p>&copy; gidiscrap {currentYear}</p>
                                     </div>
 
                                     <div>

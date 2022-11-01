@@ -1,7 +1,23 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Link from 'next/link'
+import {useDispatch, useSelector} from 'react-redux';
+import Loader from '../components/Icons/Loader';
+
 
 const Login = () => {
+    const currentYear = new Date().getFullYear();
+    const state = {
+        email: '',
+        username: '',
+        password: '',
+  
+        errors: {},
+      };
+    const [email, setEmail] = useState("")
+    const dispatch = useDispatch();
+    // const {isFetching, error } = useSelector((state) => state.user);
+    const isFetching = false;
+
   return (
     <>
 
@@ -26,13 +42,19 @@ const Login = () => {
                             </div>
                             <form>
                                 <div className="mb-6">
-                                    <label className="text-gray-700 font-medium mb-3" for="email">Email<span>*</span></label>
-                                    <input id="email" type="email" placeholder="Enter your email" className="block w-full h-12 px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 focus:border-gray-300 rounded-md focus:outline-none" name="email" min="3" autocomplete="off"/>
+                                    <label className="text-gray-700 font-medium mb-3" htmlFor="email">Email<span>*</span></label>
+                                    <input id="email" type="email" placeholder="Enter your email" className="block w-full h-12 px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 focus:border-gray-300 rounded-md focus:outline-none" name="email" min="3" autoComplete="off" onChange={(e) => setEmail(e.target.value)}/>
                                     
                                 </div>
 
-                                <button type="submit" className="inline-block px-7 py-3 text-white font-medium text-sm leading-snug uppercase rounded-full shadow-md bg-[#DD7D37] hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out w-full">
-                                Log In
+                                <button type="submit" className="inline-block px-7 py-3 text-white font-medium text-sm leading-snug uppercase rounded-full shadow-md bg-[#DD7D37] hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out w-full h-12">
+                                {isFetching === true ? (
+                                        <Loader/>
+                                    )
+                                    :
+                                    
+                                    'Log In'
+                                }
                                 </button>
                         
                                 
@@ -52,7 +74,7 @@ const Login = () => {
                     <div className='container mx-auto w-full px-6 mt-4'>
                         <div className='flex items-center justify-between flex-wrap gap-3'>
                             <div>
-                                <p>&copy; gidiscrap 2022</p>
+                                <p>&copy; gidiscrap {currentYear}</p>
                             </div>
 
                             <div>
