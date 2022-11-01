@@ -49,7 +49,8 @@
     "react-native-svg": "12.3.0",
     "react-native-web": "0.17.7",
     "react-native-webview": "11.18.1",
-    "expo-location": "~14.2.2"
+    "expo-location": "~14.2.2",
+    "expo-updates": "~0.13.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

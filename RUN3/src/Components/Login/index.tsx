@@ -24,7 +24,7 @@ import { createUser, getUserByEmail } from '../../api/users/users'
 
 global.Buffer = global.Buffer || Buffer
 
-const resolvedRedirectUrl = Linking.createURL('web3auth', {})
+const resolvedRedirectUrl = Linking.createURL('', {})
 
 export default function Login({ navigation }: { navigation: any }) {
   const { setWalletWithProvider, setProvider, walletWithProvider } = useWalletProvider()
