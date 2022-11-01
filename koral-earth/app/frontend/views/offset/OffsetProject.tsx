@@ -49,8 +49,10 @@ export const OffsetProject = ({ project }: Props) => {
                 Methodology: {project.methodology}
               </ListGroup.Item>
               <ListGroup.Item>
-                Timestamp:{' '}
-                {new Date(parseInt(project.timestamp)).toDateString()}
+                Created:
+                {` ${new Date(
+                  parseInt(project.timestamp) * 1000
+                ).toUTCString()}`}
               </ListGroup.Item>
             </ListGroup>
 

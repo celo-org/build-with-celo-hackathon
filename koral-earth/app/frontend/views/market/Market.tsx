@@ -33,7 +33,6 @@ const Projects: PaginatedItemsComponent<Project> = ({ currentItems }) => (
                 />
                 <Card.Body>
                   <Card.Title>
-                    Project ID:
                     <Link
                       passHref
                       href={getProjectUrlByRegistry(
@@ -41,7 +40,7 @@ const Projects: PaginatedItemsComponent<Project> = ({ currentItems }) => (
                         project.standard
                       )}
                     >
-                      <a>{project.projectId}</a>
+                      <a>Full info here</a>
                     </Link>
                   </Card.Title>
                 </Card.Body>
