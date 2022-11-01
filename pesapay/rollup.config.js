@@ -4,9 +4,9 @@ const json = require("@rollup/plugin-json")
 const builtins = require("builtin-modules")
 
 module.exports = {
-  input: "autotasks/relay/index.js",
+  input: "autotasks/relay/cashoutAuto.js",
   output: {
-    file: "build/relay/index.js",
+    file: "build/relay/cashoutAuto.js",
     format: "cjs",
     exports: "auto",
   },

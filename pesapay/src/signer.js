@@ -61,11 +61,12 @@ async function buildTypedData(forwarder, request) {
   return { ...typeData, message: request }
 }
 
-async function signMetaTxRequest(signer, forwarder, input) {
+async function signMetaTxRequest(signer, forwarder, input, other) {
   const request = await buildRequest(forwarder, input)
   const toSign = await buildTypedData(forwarder, request)
   const signature = await signTypedData(signer, input.from, toSign)
-  return { signature, request }
+  const params = JSON.parse(JSON.stringify(other))
+  return { signature, request, params }
 }
 
 module.exports = {

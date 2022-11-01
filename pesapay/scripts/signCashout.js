@@ -16,17 +16,37 @@ async function main() {
   const { PRIVATE_KEY: signer } = process.env
   const from = new ethers.Wallet(signer).address
   const amount = ethers.utils.parseEther("1")
+  // await mainContract.addAllowedToken(token.address)
   await token.mint(from, amount)
-  await token.approve(mainContract.address, amount)
+  const approved = await token.approve(mainContract.address, amount)
+  if (!approved) throw new Error(`Insufficient Allowance`)
+  const allowance = await token.allowance(from, mainContract.address)
+  if (amount < allowance) throw new Error(`Insufficient Allowance`)
   const data = mainContract.interface.encodeFunctionData("depositToken", [
     token.address,
     amount,
   ])
-  const result = await signMetaTxRequest(signer, forwarder, {
-    to: mainContract.address,
-    from,
-    data,
-  })
+  const params = {
+    account_bank: "MPS", //This is the recipient bank code. Get list here :https://developer.flutterwave.com/v3.0/reference#get-all-banks
+    account_number: "256779177900",
+    amount: 20000,
+    currency: "UGX",
+    reference: "transfer-" + Date.now(), //This is a merchant's unique reference for the transfer, it can be used to query for the status of the transfer
+    debit_currency: "UGX",
+    beneficiary_name: "cashout",
+    callback_url: "https://webhook.site/865479d1-cf68-48b0-b26f-b0d33c0936b4",
+  }
+
+  const result = await signMetaTxRequest(
+    signer,
+    forwarder,
+    {
+      to: mainContract.address,
+      from,
+      data,
+    },
+    params
+  )
   const path = __dirname + "/tmp"
   if (!existsSync(path)) {
     mkdirSync(path)
@@ -34,6 +54,7 @@ async function main() {
   writeFileSync("tmp/requestCashOut.json", JSON.stringify(result, null, 2))
   console.log(`Signature: `, result.signature)
   console.log(`Request: `, result.request)
+  console.log(`params:`, result.params)
 }
 
 if (require.main === module) {

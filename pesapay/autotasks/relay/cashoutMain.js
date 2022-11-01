@@ -1,5 +1,4 @@
 const ethers = require("ethers")
-const Flutterwave = require("flutterwave-node-v3")
 const {
   DefenderRelaySigner,
   DefenderRelayProvider,
@@ -7,12 +6,9 @@ const {
 
 const { ForwarderAbix } = require("../../src/forwarderx")
 const ForwarderAddress = require("../../deployCashOut.json").MinimalForwarder
-const { FLW_PUBLIC_KEY: publicKey, FLW_SECRET_KEY: secretKey } = process.env
-const flw = new Flutterwave(publicKey, secretKey)
-
 // const Vault = require("../../deploy.json").Vault
 
-async function relay(forwarder, request, signature, params, whitelist) {
+async function relay(forwarder, request, signature, whitelist) {
   // Decide if we want to relay this request based on a whitelist
   const accepts = !whitelist || whitelist.includes(request.to)
   if (!accepts) throw new Error(`Rejected request to ${request.to}`)
@@ -24,20 +20,14 @@ async function relay(forwarder, request, signature, params, whitelist) {
   // Send meta-tx through relayer to the forwarder contract
   const gasLimit = (parseInt(request.gas) + 50000).toString()
   const tx = await forwarder.execute(request, signature, { gasLimit })
-  const reciept = await tx.wait(10)
-  try {
-    const { data } = await flw.Transfer.initiate(params)
-    console.log(data)
-  } catch (error) {
-    console.log(error)
-  }
-  return reciept
+  console.log(tx)
+  return tx
 }
 
 async function handler(event) {
   // Parse webhook payload
   if (!event.request || !event.request.body) throw new Error(`Missing payload`)
-  const { request, signature, params } = event.request.body
+  const { request, signature } = event.request.body
   console.log(`Relaying`, request, signature)
 
   // Initialize Relayer provider and signer, and forwarder contract
@@ -49,9 +39,9 @@ async function handler(event) {
   const forwarder = new ethers.Contract(ForwarderAddress, ForwarderAbix, signer)
 
   // Relay transaction!
-  const tx = await relay(forwarder, request, signature, params)
-  console.log(`Sent meta-tx: ${tx.confirmations}`)
-  return { txHash: tx.confirmations }
+  const tx = await relay(forwarder, request, signature)
+  console.log(`Sent meta-tx: ${tx.hash}`)
+  return { txHash: tx.hash }
 }
 
 module.exports = {

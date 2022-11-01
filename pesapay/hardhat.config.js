@@ -27,6 +27,7 @@ module.exports = {
     apiKey: {
       alfajores: process.env.CELOSCAN_API_KEY,
       celo: process.env.CELOSCAN_API_KEY,
+      polygonMumbai: process.env.POLYGONSCAN_API_KEY,
     },
   },
   networks: {
@@ -70,7 +71,7 @@ module.exports = {
       url: "https://polygon-rpc.com",
       accounts: [process.env.PRIVATE_KEY],
     },
-    mumbai: {
+    polygonMumbai: {
       url: `https://polygon-mumbai.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY_MUMBAI}`,
       accounts: [process.env.PRIVATE_KEY],
     },
