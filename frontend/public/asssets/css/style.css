@@ -57,6 +57,12 @@ html {
 @-ms-viewport {
   width: device-width;
 }
+.desc-p{
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}
 
 article,
 aside,
