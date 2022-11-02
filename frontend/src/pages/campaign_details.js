@@ -11,24 +11,7 @@ import { Carousel } from 'react-responsive-carousel';
 import { LoaderIcon } from 'react-hot-toast';
 import Donate from '../components/donate';
 import { client, urlFor } from "../lib/sanityClient";
-import OwlCarousel from 'react-owl-carousel';
-import 'owl.carousel/dist/assets/owl.carousel.css';
-import 'owl.carousel/dist/assets/owl.theme.default.css';
-
-const options = {
-    responsiveClass: true,
-    responsive: {
-        0: {
-            items: 1
-        },
-        600: {
-            items: 2
-        },
-        1000: {
-            items: 3
-        }
-    }
-};
+import { Dna } from 'react-loader-spinner'
 
 const CampaignDetails = () => {
     const { search } = useLocation()
@@ -42,7 +25,7 @@ const CampaignDetails = () => {
         loadPhotos()
         load()
 
-    }, [campId])
+    }, [])
 
     async function loadPhotos() {
         const query = '*[_type == "task" && campaignid == $id] {dailytask}'
@@ -60,12 +43,9 @@ const CampaignDetails = () => {
                             .slice(6,).slice(0, -4) + '.'}png`
 
                 };
-
                 return item;
-
             })
         )
-
         setPhotos(items)
         setcontentLoaded(true)
 
@@ -98,7 +78,7 @@ const CampaignDetails = () => {
                     ngoName: ngoDetails[0].name,
                     ngoregistrationNo: ngoDetails[0].registrationNo,
                     ngoregisteredByGovt: ngoDetails[0].registeredByGovt,
-                    ngoserviceSince: (Number(ethers.utils.formatUnits(ngoDetails[0].serviceSince.toString(), 'ether')) * 10 ** 18).toFixed(0),
+                    ngoserviceSince: Number(ethers.utils.formatUnits(ngoDetails[0].serviceSince.toString(), 'ether')) * 10 ** 18,
                     ngoAddress: ngoDetails[0].ngoAddress,
                     ngocountry: ngoDetails[0].country,
                     ngocampaignCount: Number(ethers.utils.formatUnits(ngoDetails[0].campaignCount.toString(), 'ether')) * 10 ** 18,
@@ -106,16 +86,29 @@ const CampaignDetails = () => {
                 return item;
             })
         );
+        console.log("it", items)
         setCampaign(items[0])
     }
 
     return (
         <div>
-            {contentLoaded && (<>
-                <BreadCrumb imageURL="/asssets/images/bg_7.jpg" pagename={`${campaign.name}`} pageURL="details" />
-                <section class="ftco-section contact-section ftco-degree-bg">
+            <BreadCrumb imageURL="/asssets/images/bg_7.jpg" pagename={`${campaign.name}`} pageURL="details" />
+            <section class="ftco-section contact-section ftco-degree-bg">
 
-                    <div class="container">
+                <div class="container">
+                    {!contentLoaded &&
+                        <div class='loader'>
+                            <Dna
+                                visible={true}
+                                height="150"
+                                width="150"
+                                ariaLabel="dna-loading"
+                                wrapperStyle={{}}
+                                wrapperClass="dna-wrapper"
+                            />
+                        </div>
+                    }
+                    {contentLoaded &&
                         <div class="row d-flex mb-5 contact-info">
                             <div class="col-md-12 mb-4">
                                 <h2 class="h4">All you need to know</h2>
@@ -123,25 +116,14 @@ const CampaignDetails = () => {
                             <div class="col-md-12 mb-4">
                                 <div class="row">
                                     <div class="col-md-6 pr-md-5">
-                                        <OwlCarousel center margin={20} nav loop rewind autoplay  {...options}>
-                                            {photos.map((el, id) => {
+                                        <Carousel autoPlay="true" >
+                                            {photos.map((photo, i) =>
+                                                <div>
+                                                    <img src={photo.url} alt="" />
+                                                </div>
+                                            )}
+                                        </Carousel>
 
-                                                <img src={el.url} key={id} />
-
-                                            })}
-
-
-                                        </OwlCarousel>
-                                        {/* <Carousel autoPlay="true" >
-                                            {photos.map((el, id) => {
-
-
-                                                <img src={el.url} key={id} />
-                                                { console.log("phooo", el.url) }
-
-
-                                            })}
-                                        </Carousel> */}
                                     </div>
                                     <div class="col-md-6 pr-md-5">
                                         <div class="row">
@@ -196,9 +178,9 @@ const CampaignDetails = () => {
                                 </p>
                             </div>
                         </div>
-                    </div >
-                </section >
-            </>)}
+                    }
+                </div >
+            </section >
         </div >
     )
 
