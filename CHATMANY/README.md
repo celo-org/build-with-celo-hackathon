@@ -52,7 +52,7 @@ List any URLs relevant to demonstrating your prototype
 
 
 #### Presentation
-https://youtu.be/gC6Q-FNEIFg
+
 
 #### Next Steps
 What do you need to do next to turn this prototype into a working solution?
