@@ -8,5 +8,8 @@
     "hardhat": "^2.12.1",
     "install": "^0.13.0",
     "npm": "^8.19.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3"
   }
 }
