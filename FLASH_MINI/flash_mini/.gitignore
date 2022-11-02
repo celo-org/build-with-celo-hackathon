@@ -3,3 +3,5 @@
 /build
 /tsconfig.tsbuildinfo
 .env
+env
+
