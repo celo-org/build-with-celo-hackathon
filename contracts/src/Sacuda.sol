@@ -28,7 +28,7 @@ contract Sacuda is ERC721, AccessControl {
     uint8 public paymentHistoryWeight;
     uint8 public amountOwedWeight;
     uint8 public creditLengthWeight;
-    uint8 public creditMixWeigth;
+    uint8 public creditMixWeight;
     uint8 public newCreditWeight;
 
     /** @dev Credit Score Storage */
@@ -59,14 +59,15 @@ contract Sacuda is ERC721, AccessControl {
         uint8 creditMix,
         uint8 newCredit
     );
+    event NameUpdated(uint256 indexed tokenId, string newName);
 
-    /** @notice  */
+    /** @notice constructor for contract */
     constructor() ERC721("Sacuda Credit Score", "SACS") {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         paymentHistoryWeight = 35;
         amountOwedWeight = 30;
         creditLengthWeight = 15;
-        creditMixWeigth = 10;
+        creditMixWeight = 10;
         newCreditWeight = 10;
     }
 
@@ -103,13 +104,21 @@ contract Sacuda is ERC721, AccessControl {
         require(balanceOf(_user) == 0, "Already Registered");
         uint256 tokenId = ++totalSupply;
         _mint(_user, tokenId);
-        name[tokenId] = _name;
         // isEnhancer[tokenId] = _isEnhancer;
         if (_isEnhancer) {
             _grantRole(ENHANCER_ROLE, _user);
+            report[tokenId].amountOwed = 100; // Trying to set score to 0
         } else {
             _grantRole(WOB_ROLE, _user);
+            report[tokenId].paymentHistory = 100;
+            // report[tokenId].amountOwed = 0; // Already in 0
+            report[tokenId].creditLength = 100;
+            report[tokenId].creditMix = 100;
+            report[tokenId].newCredit = 100;
+            emit UserReportUpdated(tokenId, 100, 0, 100, 100, 100);
         }
+        name[tokenId] = _name;
+        emit NameUpdated(tokenId, _name);
     }
 
     /** @dev Override to have on-chain SVG NFTs */
@@ -140,15 +149,24 @@ contract Sacuda is ERC721, AccessControl {
         CreditReportPercentages storage r = report[_tokenId];
         uint256 userScore = (uint256(r.paymentHistory) *
             uint256(paymentHistoryWeight) +
-            uint256(r.amountOwed) *
+            (100 - uint256(r.amountOwed)) *
             uint256(amountOwedWeight) +
             uint256(r.creditLength) *
             uint256(creditLengthWeight) +
             uint256(r.creditMix) *
-            uint256(creditLengthWeight) +
+            uint256(creditMixWeight) +
             uint256(r.newCredit) *
             uint256(newCreditWeight)) / 100;
         return userScore;
+    }
+
+    /** @notice Update username function */
+    function updateName(uint256 tokenId, string memory _name)
+        external
+        onlyRole(MINTER_ROLE)
+    {
+        _requireMinted(tokenId);
+        name[tokenId] = _name;
     }
 
     /** @notice Update User's Credit Report */
@@ -183,6 +201,7 @@ contract Sacuda is ERC721, AccessControl {
         );
     }
 
+    /** @notice Update System's Weights for Credit Score */
     function updateWeights(bytes memory data) external onlyRole(ADMIN_ROLE) {
         (
             uint8 paymentHistory,
@@ -202,7 +221,7 @@ contract Sacuda is ERC721, AccessControl {
         paymentHistoryWeight = paymentHistory;
         amountOwedWeight = amountOwed;
         creditLengthWeight = creditLength;
-        creditMixWeigth = creditMix;
+        creditMixWeight = creditMix;
         newCreditWeight = newCredit;
         emit WeightsUpdated(
             paymentHistory,

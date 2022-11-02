@@ -35,6 +35,7 @@ contract SacudaTest is Test {
         sacuda.mint(caro, true, "Caro");
         assertEq(sacuda.ownerOf(1), caro);
         assertEq(sacuda.name(1), "Caro");
+        console.log("User Score: ", sacuda.score(1));
         console.log(sacuda.tokenURI(1));
     }
 
