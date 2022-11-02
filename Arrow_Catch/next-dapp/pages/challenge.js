@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image';
 import { useCelo } from "@celo/react-celo";
-import ArrowCatch from '../../hardhat/artifacts/contracts/ArrowCatch.sol/ArrowCatch.json'
+import ArrowCatch from '../artifacts/contracts/ArrowCatch.sol/ArrowCatch.json'
 import Navbar from '../components/Navbar'
 import { Transition } from "@headlessui/react";
 import { Toaster, ToastIcon, toast, resolveValue } from "react-hot-toast";
 
-const contractaddress = '0x74e56E037822f59768cEA807D1f2FC5De7d1c47b'
+const contractaddress = '0x28Adc41078A876709832D3B87eAec7138F1017F7'
 
 
 const style = {
@@ -36,10 +36,9 @@ export const challenge = () => {
             enter="transition-all duration-150"
             enterFrom="opacity-0 scale-50"
             enterTo="opacity-100 scale-100"
-            leave="transition-all duration-2000"
+            leave="transition-all duration-180"
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-75"
-            duration= "8000"
           >
             <ToastIcon toast={t} />
             <p className="px-2">{resolveValue(t.message)}</p>
@@ -53,19 +52,19 @@ export const challenge = () => {
     fetchMarket()
 
   }, [address])
-  async function challenge(tokenId){
+  async function challenge(tokenId) {
     setLoading(true)
     try {
       const kit = await getConnectedKit();
       const nftContract = new kit.connection.web3.eth.Contract(ArrowCatch.abi, contractaddress)
-      let tx = await nftContract.methods.challenge(tokenId).send({from: address, value: 250000000000000000})
+      let tx = await nftContract.methods.challenge(tokenId).send({ from: address, value: 50000000000000000 })
       console.log(tx, tx.events.Challenge.returnValues)
-      toast.success("You "+ tx.events.Challenge.returnValues.state + " "+ tx.events.Challenge.returnValues.reward / 10**18 + " Celo" )  
+      toast.success("You " + tx.events.Challenge.returnValues.state + " " + tx.events.Challenge.returnValues.reward / 10 ** 18 + " Celo")
     } catch {
       toast.success("Error")
     }
-fetchMarket()
-setLoading(false)
+    fetchMarket()
+    setLoading(false)
   }
   async function fetchMarket() {
     try {
@@ -96,52 +95,52 @@ setLoading(false)
         })
       )
       setItems(items)
-    } catch{
+    } catch {
       toast.success("Error")
-    } 
+    }
 
   }
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center " >
-    <Navbar/>
-    <div className={style.wrapper} >
-    {address ? ( 
-                      loading ? (
-                        <div role="status" class="animate-pulse px-2 py-2 h-20 w-20">
-                        <svg className="animate-spin bg-black h-53 w-53 mr-3 ..." viewBox="0 0 25 25"></svg>
-                        
-                    </div>
-                    ): (
-      <div className={style.grid}>
-        {items.map((item, id) => (
-          <div className="relative p-3" key={id}>
-            <div className={style.card}>
-              <label className={style.title} >Challenge NFT Id: {item.itemId}</label>
-              <ul class="space-y-1 max-w-md list-disc list-inside text-gray-500 dark:text-gray-400">
-                <li>Prize: {item.prize / 10 ** 18} Celo </li>
-                <li>Owner: {item.owner.slice(0, 10)} ...</li>
-                <li>Points: {item.points} </li>
-              </ul>
+      <Navbar />
+      <div className={style.wrapper} >
+        {address ? (
+          loading ? (
+            <div role="status" className="animate-pulse px-2 py-2 h-20 w-20">
+              <svg className="animate-spin bg-black h-53 w-53 mr-3 ..." viewBox="0 0 25 25"></svg>
+
             </div>
-            <div className={style.image} >
-              <Image alt='SVG' src={item.svg} width={'400px'} height={'400px'} />
-              <div className='mx-auto p-4 '>
-                <button onClick={() => challenge(item.itemId)} className={style.button} > Challenge</button>
-              </div>
-              <TailwindToaster />
+          ) : (
+            <div className={style.grid}>
+              {items.map((item, id) => (
+                <div className="relative p-3" key={id}>
+                  <div className={style.card}>
+                    <label className={style.title} >Challenge NFT Id: {item.itemId}</label>
+                    <ul className="space-y-1 max-w-md list-disc list-inside text-gray-500 dark:text-gray-400">
+                      <li>Prize: {item.prize / 10 ** 18} Celo </li>
+                      <li>Owner: {item.owner.slice(0, 10)} ...</li>
+                      <li>Points: {item.points} </li>
+                    </ul>
+                  </div>
+                  <div className={style.image} >
+                    <Image alt='SVG' src={item.svg} width={'400px'} height={'400px'} />
+                    <div className='mx-auto p-4 '>
+                      <button onClick={() => challenge(item.itemId)} className={style.button} > Challenge</button>
+                    </div>
+                    <TailwindToaster />
+                  </div>
+                </div>
+              ))}
+            </div>)) : (
+          <div className={style.walletConnectWrapper}>
+            <div className='mx-auto justify justify-center '>
+              <p className='mx-10 px-10 py-10 text-xl'>Connect your wallet to use this App</p>
             </div>
           </div>
-        ))}
-      </div>)):(
-        <div className={style.walletConnectWrapper}>
-            <div className='mx-auto justify justify-center '>
-            <p className='mx-10 px-10 py-10 text-xl'>Connect your wallet to use this App</p>
-            </div>
-        </div>
-        
-      )}
-    </div>
+
+        )}
+      </div>
     </div>
   )
 }

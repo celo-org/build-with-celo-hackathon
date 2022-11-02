@@ -6,13 +6,13 @@ import boardimg from '../assets/board.png'
 import Board from '../assets/board.svg'
 import home from '../assets/home2.png'
 import { Alfajores, useCelo } from "@celo/react-celo";
-import ArrowCatch from '../../hardhat/artifacts/contracts/ArrowCatch.sol/ArrowCatch.json'
+import ArrowCatch from '../artifacts/contracts/ArrowCatch.sol/ArrowCatch.json'
 import { Transition } from "@headlessui/react";
 import { Toaster, ToastIcon, toast, resolveValue } from "react-hot-toast";
 
 
 
-const contractaddress = '0x74e56E037822f59768cEA807D1f2FC5De7d1c47b'
+const contractaddress = '0x28Adc41078A876709832D3B87eAec7138F1017F7'
 
 const style = {
   walletConnectWrapper: `flex flex-col justify-center items-center h-screen w-screen bg-[#3b3d42] `,
@@ -38,14 +38,14 @@ const TailwindToaster = () => {
           leave="transition-all duration-180"
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-75"
-          
+
         >
           <ToastIcon toast={t} />
           <div className='flex '>
-          <p className="px-2">{resolveValue(t.message)}</p>
-         
+            <p className="px-2">{resolveValue(t.message)}</p>
+
           </div>
-          
+
         </Transition>
       )}
     </Toaster>
@@ -57,77 +57,77 @@ const Arrow = () => {
   const [networkname, setnetwork] = useState(network)
   const [svg, setSVG] = useState()
 
- useEffect(() => {
-  if(updateNetwork) {
-    setnetwork(network.name)
-    console.log(network.chainId)
-  }
- })
+  useEffect(() => {
+    if (updateNetwork) {
+      setnetwork(network.name)
+      console.log(network.chainId)
+    }
+  })
 
-  async function RandomMint(){
+  async function RandomMint() {
     setLoading(true)
     try {
       const kit = await getConnectedKit();
       let stabletoken = await kit.contracts.getStableToken()
       const nftContract = new kit.connection.web3.eth.Contract(ArrowCatch.abi, contractaddress)
-      let tx = await nftContract.methods.createNFT().send({from: address,feeCurrency: stabletoken.address, value: 250000000000000000})
+      let tx = await nftContract.methods.createNFT().send({ from: address, feeCurrency: stabletoken.address, value: 25000000000000000 })
       console.log(tx.events.CreateNFT.returnValues.tokenid)
       loadNFT(tx.events.CreateNFT.returnValues.tokenid)
       toast.success("Very Luck you mint arrow hit a nice position on the Board!")
-    } catch(e) {
+    } catch (e) {
       toast.success("Error : " + e.message)
     }
     setLoading(false)
   }
-async function loadNFT(tokenId){
-  try {
-    const kit = await getConnectedKit();
-    const nftContract = new kit.connection.web3.eth.Contract(ArrowCatch.abi, contractaddress)
-    const uri = await nftContract.methods.tokenURI(tokenId).call()
-    uri = uri.replace('data:application/json;base64,', '')
-    uri = Buffer.from(uri, 'base64')
-    uri = JSON.parse(uri);
-    const svgmeta = uri.image
-    setSVG(svgmeta)
-  } catch{
-    toast.success("Error : " + e.message)
+  async function loadNFT(tokenId) {
+    try {
+      const kit = await getConnectedKit();
+      const nftContract = new kit.connection.web3.eth.Contract(ArrowCatch.abi, contractaddress)
+      const uri = await nftContract.methods.tokenURI(tokenId).call()
+      uri = uri.replace('data:application/json;base64,', '')
+      uri = Buffer.from(uri, 'base64')
+      uri = JSON.parse(uri);
+      const svgmeta = uri.image
+      setSVG(svgmeta)
+    } catch {
+      toast.success("Error : " + e.message)
+    }
   }
-}
   return (
     <div className={style.wrapper}>
-              {address ? (loading ? (
-                <div role="status" class="animate-pulse px-2 py-2 h-20 w-20">
-                    <svg className="animate-spin bg-black h-53 w-53 mr-3 ..." viewBox="0 0 25 25"></svg>
-                </div>
-              ): (
-                <div>
-                <div className={style.wrapper}>
-          <Image src={home} height='160' width='220' ></Image>
-          <div className="flex flex-col p-4 leading-normal">
-            <p className="mb-3 text-center font-normal text-gray-700 dark:text-gray-400">Mint BDNFT <br/> The contract will generate a random position on board. <br/>
-             Good luck !</p>
-            <div className="mb-3 flex relative justify-center flex-wrap items-center ">
-              <button className={style.button} onClick={() => RandomMint()} >Random Hit</button>
-              <TailwindToaster />
-            </div>{svg ? (
-              <Image alt='SVG' src={svg} className={style.image} width={'637px'} height={'637px'} />
-            ): (
-              <Board className={style.image} />
-            )}
-            
-            
-          </div>
-    </div>
-                </div>)
-
-      ):(
-        <div className={style.walletConnectWrapper}>
-            <div className='mx-auto justify justify-center '>
-            <p className='mx-10 px-10 py-10 text-xl'>Connect your wallet to use this App</p>
-           
-            </div>
+      {address ? (loading ? (
+        <div role="status" className="animate-pulse px-2 py-2 h-20 w-20">
+          <svg className="animate-spin bg-black h-53 w-53 mr-3 ..." viewBox="0 0 25 25"></svg>
         </div>
-        
+      ) : (
+        <div>
+          <div className={style.wrapper}>
+            <Image src={home} height='160' width='220' ></Image>
+            <div className="flex flex-col p-4 leading-normal">
+              <p className="mb-3 text-center font-normal text-gray-700 dark:text-gray-400">Mint BDNFT <br /> The contract will generate a random position on board. <br />
+                Good luck !</p>
+              <div className="mb-3 flex relative justify-center flex-wrap items-center ">
+                <button className={style.button} onClick={() => RandomMint()} >Random Hit</button>
+                <TailwindToaster />
+              </div>{svg ? (
+                <Image alt='SVG' src={svg} className={style.image} width={'637px'} height={'637px'} />
+              ) : (
+                <Board className={style.image} />
+              )}
+
+
+            </div>
+          </div>
+        </div>)
+
+      ) : (
+        <div className={style.walletConnectWrapper}>
+          <div className='mx-auto justify justify-center '>
+            <p className='mx-10 px-10 py-10 text-xl'>Connect your wallet to use this App</p>
+
+          </div>
+        </div>
+
       )}
     </div>
   )

@@ -1,12 +1,9 @@
 # Sample Hardhat Project
 contract deploy 
 last deployed contract
-trigonometry deployed to: 0x99f738D778Aa6d14a7291F9f3E39D706aB633742
-ArrowCatch deployed to: 0x74e56E037822f59768cEA807D1f2FC5De7d1c47b
-
-old version:
-trigonometry deployed to: 0x9be23e3428d7D6F335C2f03C32cb3E6417d57ACf
-ArrowCatch deployed to: 0x602FF6a74510B14Ceb3A4888E916b9616C7d4442
+Compiled 1 Solidity file successfully
+trigonometry deployed to: 0xB43c9d001EFE0917483810Bd0d2Cd9dF6e13e7E8
+ArrowCatch deployed to: 0x28Adc41078A876709832D3B87eAec7138F1017F7
 
 This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
 

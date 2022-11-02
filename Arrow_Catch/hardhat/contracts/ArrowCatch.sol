@@ -20,7 +20,7 @@ contract ArrowCatch is ERC721URIStorage {
     uint256 private   angleId = 0;
     uint256 private  points = 0;
     string public svg1;
-    uint256 mintPrice = 0.25 ether;
+    uint256 mintPrice = 0.025 ether;
     uint256[] public anglId = [6, 13, 4, 18, 1, 20, 5, 12, 9, 14, 11, 8, 16, 7, 19, 3, 17, 2, 15, 10];
     mapping(uint256 => ArrwoItem) private idToArrwoItem;
 
@@ -99,11 +99,13 @@ contract ArrowCatch is ERC721URIStorage {
         uint256 newtokenId = createNFT();
         if (idToArrwoItem[newtokenId].points > idToArrwoItem[tokenId].points ){
             idToArrwoItem[tokenId].state = false;
-            uint256 value = idToArrwoItem[tokenId].prize - mintPrice;
-            payable(msg.sender).call{value: value };
-            emit Challenge("Win", value);
+            uint256 amount = idToArrwoItem[tokenId].prize + mintPrice;
+            (bool sent, ) = payable (msg.sender).call{value: amount}("");
+            require(sent, "Failed to send Ether");
+            emit Challenge("Win", amount);
         } else {
-            payable(idToArrwoItem[tokenId].tokenowner).call{value: mintPrice};
+            (bool sent, ) = payable (idToArrwoItem[tokenId].tokenowner).call{value: mintPrice}("");
+            require(sent, "Failed to send Ether");
             emit Challenge("Lose", mintPrice);
         }
     }

@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import Image from 'next/image';
 import { useCelo } from "@celo/react-celo";
-import ArrowCatch from '../../hardhat/artifacts/contracts/ArrowCatch.sol/ArrowCatch.json'
+import ArrowCatch from '../artifacts/contracts/ArrowCatch.sol/ArrowCatch.json'
 import { Transition } from "@headlessui/react";
 import { Toaster, ToastIcon, toast, resolveValue } from "react-hot-toast";
 
-const contractaddress = '0x74e56E037822f59768cEA807D1f2FC5De7d1c47b'
+const contractaddress = '0x28Adc41078A876709832D3B87eAec7138F1017F7'
 
 
 const style = {
@@ -39,10 +39,9 @@ const profile = () => {
             enter="transition-all duration-150"
             enterFrom="opacity-0 scale-50"
             enterTo="opacity-100 scale-100"
-            leave="transition-all duration-2000"
+            leave="transition-all duration-180"
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-75"
-            duration="8000"
           >
             <ToastIcon toast={t} />
             <p className="px-2">{resolveValue(t.message)}</p>
@@ -91,15 +90,18 @@ const profile = () => {
       toast.success("Error")
     }
   }
-  async function closeContest(tokenId){
+  async function closeContest(tokenId) {
     try {
       const kit = await getConnectedKit();
+      const gasPriceMinimumContract = await kit.contracts.connection.gasPrice();
       const nftContract = new kit.connection.web3.eth.Contract(ArrowCatch.abi, contractaddress)
-      let tx = await nftContract.methods.closeContest(tokenId).send()
+      let tx = await nftContract.methods.closeContest(tokenId).send({ from: address, gasPrice: gasPriceMinimumContract })
       console.log(tx)
-      toast.success("Great you list this NFT for challenge, the winner will get :" + Amount / 10 ** 18 + " Celo")
-    } catch {
-      toast.success("Error")
+      toast.success("You Close this contest :" + tx.events.CloseContest.returnValues.prize / 10 ** 18 + " Celo was sent to your account")
+      fetchMarket()
+    } catch (e) {
+      console.log(e.message)
+      toast.success("Error : ", e.message)
     }
   }
 
@@ -113,6 +115,7 @@ const profile = () => {
       let tx = await nftContract.methods.openContest(tokenId, Amount).send({ from: address, value: Amount })
       console.log(tx)
       toast.success("Great you list this NFT for challenge, the winner will get :" + Amount / 10 ** 18 + " Celo")
+      fetchMarket()
     } catch {
       toast.success("Error")
     }
@@ -129,7 +132,7 @@ const profile = () => {
       <div className={style.wrapper} >
         {address ? (
           loading ? (
-            <div role="status" class="animate-pulse px-2 py-2 h-20 w-20">
+            <div role="status" className="animate-pulse px-2 py-2 h-20 w-20">
               <svg className="animate-spin bg-black h-53 w-53 mr-3 ..." viewBox="0 0 25 25"></svg>
             </div>
           ) : (
@@ -138,7 +141,7 @@ const profile = () => {
                 <div className="relative p-3" key={id}>
                   <div className={style.card}>
                     <label className={style.title} >NFT Id: {item.itemId}</label>
-                    <ul class="space-y-1 max-w-md list-disc list-inside text-gray-500 dark:text-gray-400">
+                    <ul className="space-y-1 max-w-md list-disc list-inside text-gray-500 dark:text-gray-400">
                       <li>last Prize: {item.prize / 10 ** 18} Celo </li>
                       <li>Owner: {item.owner.slice(0, 10)} ...</li>
                       <li>Points: {item.points} </li>
@@ -150,7 +153,7 @@ const profile = () => {
                       <div className="inline-flex rounded-md shadow-sm">
                         <label className="py-4 px-4 text-sm font-medium text-gray-900  border-t border-b border-gray-900  focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white" >
                           NFT {item.itemId} Have a prize wait for new challenge</label>
-                          <button className={style.button} onClick={() => closeContest(item.itemId)} > Close Challenge</button>
+                        <button className={style.button} onClick={() => closeContest(item.itemId)} > Close Challenge</button>
                       </div>
                     ) : (
 
