@@ -1,6 +1,6 @@
 import '@celo/react-celo/lib/styles.css';
 
-import { CeloProvider, NetworkNames } from '@celo/react-celo';
+import { CeloProvider } from '@celo/react-celo';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Head from 'next/head';
 import { PropsWithChildren, useState } from 'react';
@@ -8,7 +8,7 @@ import { Container } from 'react-bootstrap';
 import classNames from 'classnames';
 import { TopBar } from './ui/TopBar';
 import type { Network } from '../../../common/blockchain';
-import { celoNetworkConfig } from '../../../common/celo';
+import { celoNetworkConfig, CeloNetworkNames } from '../../../common/celo';
 
 const network = process.env.NEXT_PUBLIC_BLOCKCHAIN_NETWORK as Network;
 const celoNetworks = celoNetworkConfig(network);
@@ -43,7 +43,7 @@ export const Frame = ({ children, title = 'Koral Earth' }: Props) => {
           }}
           networks={celoNetworks}
           manualNetworkMode={true}
-          defaultNetwork={NetworkNames.Localhost}
+          defaultNetwork={CeloNetworkNames[network]}
         >
           <TopBar />
           <Container className={classNames('pt-5')}>{children}</Container>

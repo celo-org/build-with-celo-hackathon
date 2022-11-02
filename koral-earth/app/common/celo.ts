@@ -5,7 +5,7 @@ export type SupportedNeworkNames = {
   [k in Network]: keyof typeof NetworkNames;
 };
 
-const CeloNetworkNames: SupportedNeworkNames = {
+export const CeloNetworkNames: SupportedNeworkNames = {
   ganache: NetworkNames.Localhost,
   alfajores: NetworkNames.Alfajores,
   mainnet: NetworkNames.Mainnet,
