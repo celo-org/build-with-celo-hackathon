@@ -1,11 +1,17 @@
+import '@celo/react-celo/lib/styles.css';
+
+import { CeloProvider, NetworkNames } from '@celo/react-celo';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Head from 'next/head';
 import { PropsWithChildren, useState } from 'react';
 import { Container } from 'react-bootstrap';
-import { TopBar } from './ui/TopBar';
 import classNames from 'classnames';
-import { CeloProvider, NetworkNames } from '@celo/react-celo';
-import '@celo/react-celo/lib/styles.css';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { TopBar } from './ui/TopBar';
+import type { Network } from '../../../common/blockchain';
+import { celoNetworkConfig } from '../../../common/celo';
+
+const network = process.env.NEXT_PUBLIC_BLOCKCHAIN_NETWORK as Network;
+const celoNetworks = celoNetworkConfig(network);
 
 type Props = PropsWithChildren<{
   title?: string;
@@ -35,14 +41,7 @@ export const Frame = ({ children, title = 'Koral Earth' }: Props) => {
             url: 'http://celo-demo.koral.earth',
             icon: '',
           }}
-          networks={[
-            {
-              name: NetworkNames.Localhost,
-              rpcUrl: 'http://127.0.0.1:7545',
-              explorer: 'http://127.0.0.1:7545',
-              chainId: 1337,
-            },
-          ]}
+          networks={celoNetworks}
           manualNetworkMode={true}
           defaultNetwork={NetworkNames.Localhost}
         >

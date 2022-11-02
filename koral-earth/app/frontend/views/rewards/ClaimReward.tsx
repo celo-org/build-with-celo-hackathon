@@ -2,12 +2,16 @@ import { useCelo } from '@celo/react-celo';
 import { useMutation } from '@tanstack/react-query';
 import type { AbiItem } from 'web3-utils';
 import { FC } from 'react';
-import Colony from '../../../contracts/Colony.json';
-import { Colony as IColony } from '../../../../typechain/contracts/colony/Colony';
+import type { Colony } from '../../../../typechain/contracts/colony/Colony';
 import { Modal, Spinner, Button, Badge, Alert } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import { Route } from '../../shared/routes';
 import { Reward } from '../../../backend/reward/reward.entity';
+import { Network } from '../../../common/blockchain';
+import { ColonyContract } from '../../../contracts/colony';
+
+const network = process.env.NEXT_PUBLIC_BLOCKCHAIN_NETWORK as Network;
+const colonyContract = ColonyContract[network];
 
 type Props = {
   projectId: string;
@@ -31,9 +35,9 @@ export const ClaimReward: FC<Props> = ({ projectId, reward, onCloseModal }) => {
     }
 
     const colony = new kit.connection.web3.eth.Contract(
-      Colony.abi as AbiItem[],
-      Colony.address
-    ) as unknown as IColony;
+      colonyContract.abi as AbiItem[],
+      colonyContract.address
+    ) as unknown as Colony;
 
     const claim = await colony.methods.claimReward(reward.id, projectId).send({
       from: account,

@@ -10,9 +10,15 @@ import {
 import { useCelo } from '@celo/react-celo';
 import Link from 'next/link';
 import { Route } from '../../../shared/routes';
+import { useEffect, useState } from 'react';
 
 export const TopBar = () => {
   const { account, connect } = useCelo();
+  const [address, setAddress] = useState<string | null | undefined>(null);
+
+  useEffect(() => {
+    setAddress(account);
+  }, [account]);
 
   return (
     <Navbar collapseOnSelect bg="dark" variant="dark" sticky="top">
@@ -31,12 +37,12 @@ export const TopBar = () => {
             </Link>
           </Navbar.Text>
 
-          {!account && (
+          {!address && (
             <Button onClick={() => connect().catch(console.log)}>
               Connect
             </Button>
           )}
-          {account && (
+          {address && (
             <Navbar.Text>
               <OverlayTrigger
                 placement="bottom"

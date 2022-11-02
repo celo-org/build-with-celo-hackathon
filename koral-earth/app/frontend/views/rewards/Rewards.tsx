@@ -8,10 +8,14 @@ import {
   PaginatedItemsComponent,
   PaginatedLayout,
 } from '../../core/paginator/PaginatedLayout';
-import Colony from '../../../contracts/Colony.json';
-import { Colony as IColony } from '../../../../typechain/contracts/colony/Colony';
+import type { Colony } from '../../../../typechain/contracts/colony/Colony';
 import { useQuery } from '@tanstack/react-query';
 import { ClaimReward } from './ClaimReward';
+import { Network } from '../../../common/blockchain';
+import { ColonyContract } from '../../../contracts/colony';
+
+const network = process.env.NEXT_PUBLIC_BLOCKCHAIN_NETWORK as Network;
+const colonyContract = ColonyContract[network];
 
 type ProjectReward = Reward & { projectId: string };
 
@@ -72,9 +76,9 @@ export const ProjectRewards = ({ projectId }: RewardsProps) => {
     }
 
     const colony = new kit.connection.web3.eth.Contract(
-      Colony.abi as AbiItem[],
-      Colony.address
-    ) as unknown as IColony;
+      colonyContract.abi as AbiItem[],
+      colonyContract.address
+    ) as unknown as Colony;
 
     const rewards = await colony.methods.rewards().call();
 

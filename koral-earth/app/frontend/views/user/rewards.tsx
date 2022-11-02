@@ -1,15 +1,19 @@
 import { useCelo } from '@celo/react-celo';
 import { Alert, Col, ListGroup, Row, Spinner } from 'react-bootstrap';
 import type { AbiItem } from 'web3-utils';
-import Colony from '../../../contracts/Colony.json';
-import { Colony as IColony } from '../../../../typechain/contracts/colony/Colony';
+import type { Colony } from '../../../../typechain/contracts/colony/Colony';
 import { useQuery } from '@tanstack/react-query';
 import { Reward } from '../../../backend/reward/reward.entity';
 import { rowsFromData } from '../../lib/array';
+import { ColonyContract } from '../../../contracts/colony';
+import { Network } from '../../../common/blockchain';
 import {
   PaginatedItemsComponent,
   PaginatedLayout,
 } from '../../core/paginator/PaginatedLayout';
+
+const network = process.env.NEXT_PUBLIC_BLOCKCHAIN_NETWORK as Network;
+const colonyContract = ColonyContract[network];
 
 const Rewards: PaginatedItemsComponent<Reward> = ({ currentItems }) => {
   if (!currentItems.length) {
@@ -45,9 +49,9 @@ export const UserRewards = () => {
 
     try {
       const colony = new kit.connection.web3.eth.Contract(
-        Colony.abi as AbiItem[],
-        Colony.address
-      ) as unknown as IColony;
+        colonyContract.abi as AbiItem[],
+        colonyContract.address
+      ) as unknown as Colony;
 
       const claimed = await colony.methods.claimed().call();
 

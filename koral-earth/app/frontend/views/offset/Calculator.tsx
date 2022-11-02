@@ -4,8 +4,12 @@ import { Alert, Button, Form, Spinner } from 'react-bootstrap';
 import { PropsWithChildren, useState } from 'react';
 import type { AbiItem } from 'web3-utils';
 import { Contribute } from './Contribute';
-import Colony from '../../../contracts/Colony.json';
-import { Colony as IColony } from '../../../../typechain/contracts/colony/Colony';
+import type { Colony } from '../../../../typechain/contracts/colony/Colony';
+import { ColonyContract } from '../../../contracts/colony';
+import { Network } from '../../../common/blockchain';
+
+const network = process.env.NEXT_PUBLIC_BLOCKCHAIN_NETWORK as Network;
+const colonyContract = ColonyContract[network];
 
 type Props = PropsWithChildren<{ projectId: string }>;
 
@@ -23,9 +27,9 @@ export const Calculator = ({ projectId }: Props) => {
       }
 
       const colony = new kit.connection.web3.eth.Contract(
-        Colony.abi as AbiItem[],
-        Colony.address
-      ) as unknown as IColony;
+        colonyContract.abi as AbiItem[],
+        colonyContract.address
+      ) as unknown as Colony;
 
       const minContribution = await colony.methods
         .minContributionPerProject(projectId)

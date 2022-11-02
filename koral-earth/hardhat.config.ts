@@ -4,48 +4,13 @@ import 'hardhat-celo';
 import 'hardhat-deploy';
 import 'hardhat-ethernal';
 import type { HardhatUserConfig } from 'hardhat/config';
-import type { NetworkUserConfig } from 'hardhat/types';
+import { getEnvVar } from './app/common/env';
+import { getNetworkConfig, Network } from './app/common/blockchain';
 
-function getEnvVar(key: EnvVarName): string {
-  const val = process.env[key];
-  if (!val) {
-    throw new Error(
-      `Requested env var not defined. Please provide a ${key} in the process environment`
-    );
-  }
-  return val;
-}
-
-const chainIds = {
-  ganache: 1337,
-  mainnet: 42220,
-  alfajores: 44787,
-};
-
-function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
-  let jsonRpcUrl = 'http://127.0.0.1:7545';
-
-  if (chain === 'alfajores') {
-    jsonRpcUrl = 'https://alfajores-forno.celo-testnet.org';
-  }
-
-  if (chain === 'mainnet') {
-    jsonRpcUrl = 'https://forno.celo.org';
-  }
-
-  return {
-    accounts: {
-      count: 10,
-      mnemonic: getEnvVar('MNEMONIC'),
-      path: getEnvVar('ACCOUNT_PATH'),
-    },
-    chainId: chainIds[chain],
-    url: jsonRpcUrl,
-  };
-}
+const defaultNetwork = getEnvVar<Network>('DEPLOYMENT_NETWORK');
 
 const config: HardhatUserConfig = {
-  defaultNetwork: 'ganache',
+  defaultNetwork: defaultNetwork,
   ethernal: {
     email: getEnvVar('ETHERNAL_USERNAME'),
     password: getEnvVar('ETHERNAL_PASSWORD'),
@@ -70,9 +35,9 @@ const config: HardhatUserConfig = {
     src: './contracts',
   },
   networks: {
-    ganache: getChainConfig('ganache'),
-    mainnet: getChainConfig('mainnet'),
-    alfajores: getChainConfig('alfajores'),
+    ganache: getNetworkConfig('ganache'),
+    mainnet: getNetworkConfig('mainnet'),
+    alfajores: getNetworkConfig('alfajores'),
   },
   paths: {
     artifacts: './artifacts',
