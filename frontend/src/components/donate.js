@@ -64,6 +64,7 @@ const Donate = ({ campaignId }) => {
         ).then(() => {
             toast.success(`Approval Granted.`)
             toast.success(`Start Donating Now.`)
+            setAllowPay(true)
             setLoading(false)
         })
 

@@ -8,6 +8,7 @@ import { getConfigByChain } from '../config'
 import GrowAChild from '../artifacts/contracts/Growachild.sol/Growachild.json'
 import RingLoader from "react-spinners/RingLoader";
 import Alert from 'react-bootstrap/Alert';
+import { useNavigate } from 'react-router-dom'
 
 const projectId = '2DkWK5numOIP1H7GyUZ3aEPhLXK'
 const projectSecret = '9c669d03ed7813aae7dc0a32c5cfd386'
@@ -25,7 +26,7 @@ const client = ipfsHttpClient({
 })
 
 const CreateCampaign = () => {
-
+    const navigate = useNavigate();
     const [fileUrl, setFileUrl] = useState(null);
     const [loadingState, setLoadingState] = useState(false)
     const [formInput, updateFormInput] = useState({
@@ -59,6 +60,7 @@ const CreateCampaign = () => {
             .then(() => {
                 toast.success(`Campaign Created Successfully !!`)
                 setLoadingState(false)
+                navigate('/');
             })
     }
 

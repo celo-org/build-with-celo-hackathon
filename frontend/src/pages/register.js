@@ -5,9 +5,10 @@ import { ethers } from 'ethers';
 import { getConfigByChain } from '../config'
 import GrowAChild from '../artifacts/contracts/Growachild.sol/Growachild.json'
 import RingLoader from "react-spinners/RingLoader";
+import { useNavigate } from 'react-router-dom'
 
 const Register = () => {
-
+    const navigate = useNavigate();
     const [loadingState, setLoadingState] = useState(false)
     const [formInput, updateFormInput] = useState({
         name: '',
@@ -41,6 +42,7 @@ const Register = () => {
             .then(() => {
                 toast.success(`NGO Registered Successfully !!`)
                 setLoadingState(false)
+                navigate('/');
             })
     }
 

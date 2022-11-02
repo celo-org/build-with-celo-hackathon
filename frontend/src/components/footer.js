@@ -35,7 +35,7 @@ const Footer = () => {
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <p>
-                            Copyright &copy;2022 All rights reserved | This website is made <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">GrowGlobal</a>
+                            Copyright &copy;2022 All rights reserved | This website is made <i class="icon-heart" aria-hidden="true"></i> by <a href="https://growglobal.io" target="_blank">GrowGlobal</a>
                         </p>
                     </div>
                 </div>

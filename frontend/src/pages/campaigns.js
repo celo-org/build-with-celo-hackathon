@@ -46,7 +46,7 @@ const Campaigns = () => {
                     ngoName: ngoDetails[0].name,
                     ngoregistrationNo: ngoDetails[0].registrationNo,
                     ngoregisteredByGovt: ngoDetails[0].registeredByGovt,
-                    ngoserviceSince: Number(ethers.utils.formatUnits(ngoDetails[0].serviceSince.toString(), 'ether')) * 10 ** 18,
+                    ngoserviceSince: (Number(ethers.utils.formatUnits(ngoDetails[0].serviceSince.toString(), 'ether')) * 10 ** 18).toFixed(0),
                     ngoAddress: ngoDetails[0].ngoAddress,
                     ngocountry: ngoDetails[0].country,
                     ngocampaignCount: Number(ethers.utils.formatUnits(ngoDetails[0].campaignCount.toString(), 'ether')) * 10 ** 18,

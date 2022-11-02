@@ -20,7 +20,6 @@ const NavBar = () => {
                         <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
                         <li class="nav-item"><a href="campaigns" class="nav-link">Campaigns</a></li>
                         <li class="nav-item"><a href="gallery" class="nav-link">Gallery</a></li>
-                        <li class="nav-item"><a href="contactUs" class="nav-link">Contact</a></li>
                         {address && (
                             <li class="nav-item"><a href="dashboard" class="nav-link">Dashboard</a></li>
                         )}

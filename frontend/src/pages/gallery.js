@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import BreadCrumb from '../components/breadcrumb';
 import Fancybox from '../components/Fancybox';
-import { client, urlFor } from "../lib/sanityClient"; 
+import { client, urlFor } from "../lib/sanityClient";
 import { Dna } from 'react-loader-spinner'
 
 const Gallery = () => {
@@ -40,19 +40,18 @@ const Gallery = () => {
             <BreadCrumb imageURL="/asssets/images/bg_2.jpg" pagename="Galleries" pageURL="GALLERY" />
             <section class="ftco-section ftco-gallery">
                 <div class="container" >
-                    {!contentLoaded &&
-                    <div class='loader'>
-                        <Dna
-                            visible={true}
-                            height="150"
-                            width="150"
-                            ariaLabel="dna-loading"
-                            wrapperStyle={{}}
-                            wrapperClass="dna-wrapper"
-                        />
+                    {!contentLoaded ? (
+                        <div class='loader'>
+                            <Dna
+                                visible={true}
+                                height="150"
+                                width="150"
+                                ariaLabel="dna-loading"
+                                wrapperStyle={{}}
+                                wrapperClass="dna-wrapper"
+                            />
                         </div>
-                    }
-                    {contentLoaded &&
+                    ) : (
                         <div class="d-md-flex">
                             {photos.map((photo, i) =>
                                 <Fancybox options={{ infinite: false }}>
@@ -66,7 +65,7 @@ const Gallery = () => {
                                 </Fancybox>
                             )}
                         </div>
-                    }
+                    )}
                 </div>
             </section>
         </div>

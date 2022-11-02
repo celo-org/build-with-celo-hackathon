@@ -64,7 +64,7 @@ const ActiveCampaign = ({ classOne, classTwo, index, campaign }) => {
                     toast.error("409:Something is not Right !!")
                 })
         } catch (e) {
-            toast.error('Transaction Cancelled !!')
+            toast.error('409:Something is not Right !!')
             console.log(`error is: ${e}`)
             setLoadingState(false)
         }
