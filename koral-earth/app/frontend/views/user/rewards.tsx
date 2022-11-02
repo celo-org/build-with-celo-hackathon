@@ -1,7 +1,7 @@
 import { useCelo } from '@celo/react-celo';
 import { Alert, Col, ListGroup, Row, Spinner } from 'react-bootstrap';
 import type { AbiItem } from 'web3-utils';
-import type { Colony } from '../../../../typechain/contracts/colony/Colony';
+import type { Colony } from '../../../typechain/contracts/colony/Colony';
 import { useQuery } from '@tanstack/react-query';
 import { Reward } from '../../../backend/reward/reward.entity';
 import { rowsFromData } from '../../lib/array';

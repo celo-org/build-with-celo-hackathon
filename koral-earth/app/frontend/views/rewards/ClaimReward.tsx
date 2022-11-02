@@ -2,7 +2,7 @@ import { useCelo } from '@celo/react-celo';
 import { useMutation } from '@tanstack/react-query';
 import type { AbiItem } from 'web3-utils';
 import { FC } from 'react';
-import type { Colony } from '../../../../typechain/contracts/colony/Colony';
+import type { Colony } from '../../../typechain/contracts/colony/Colony';
 import { Modal, Spinner, Button, Badge, Alert } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import { Route } from '../../shared/routes';

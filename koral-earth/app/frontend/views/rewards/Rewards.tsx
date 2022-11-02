@@ -8,7 +8,7 @@ import {
   PaginatedItemsComponent,
   PaginatedLayout,
 } from '../../core/paginator/PaginatedLayout';
-import type { Colony } from '../../../../typechain/contracts/colony/Colony';
+import type { Colony } from '../../../typechain/contracts/colony/Colony';
 import { useQuery } from '@tanstack/react-query';
 import { ClaimReward } from './ClaimReward';
 import { Network } from '../../../common/blockchain';

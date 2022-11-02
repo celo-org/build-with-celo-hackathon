@@ -4,7 +4,7 @@ import { Alert, Button, Form, Spinner } from 'react-bootstrap';
 import { PropsWithChildren, useState } from 'react';
 import type { AbiItem } from 'web3-utils';
 import { Contribute } from './Contribute';
-import type { Colony } from '../../../../typechain/contracts/colony/Colony';
+import type { Colony } from '../../../typechain/contracts/colony/Colony';
 import { ColonyContract } from '../../../contracts/colony';
 import { Network } from '../../../common/blockchain';
 

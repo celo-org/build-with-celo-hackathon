@@ -62,7 +62,7 @@ const config: HardhatUserConfig = {
     },
   },
   typechain: {
-    outDir: 'typechain',
+    outDir: 'app/typechain',
     target: 'web3-v1',
   },
 };
