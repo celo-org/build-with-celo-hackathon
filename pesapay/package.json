@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rollup -c",
+    "build": "webpack",
+    "build-rollup": "rollup -c",
     "create-autotask": "npm run build && node scripts/createAutotask.js",
-    "upload": "npm run build && node scripts/upload.js"
+    "upload": "npm run build-rollup && node scripts/upload.js"
   },
   "repository": {
     "type": "git",
