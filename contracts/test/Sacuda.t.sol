@@ -5,6 +5,8 @@ import "forge-std/console.sol";
 import "forge-std/Test.sol";
 import "../src/Sacuda.sol";
 
+// Alfajores Deployment (v1): 0xe49E6147B6327522ECAc51cc31C95940945AEc08
+
 contract SacudaTest is Test {
     address amy = vm.addr(1);
     address betty = vm.addr(2);
