@@ -10,7 +10,7 @@ import { getNetworkConfig, Network } from './app/common/blockchain';
 const defaultNetwork = getEnvVar<Network>('DEPLOYMENT_NETWORK');
 
 const config: HardhatUserConfig = {
-  defaultNetwork: defaultNetwork,
+  defaultNetwork,
   ethernal: {
     email: getEnvVar('ETHERNAL_USERNAME'),
     password: getEnvVar('ETHERNAL_PASSWORD'),
