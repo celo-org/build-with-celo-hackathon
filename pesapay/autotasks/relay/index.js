@@ -1,5 +1,5 @@
 const ethers = require("ethers")
-const Flutterwave = require("flutterwave-node-v3")
+// const Flutterwave = require("flutterwave-node-v3")
 const {
   DefenderRelaySigner,
   DefenderRelayProvider,

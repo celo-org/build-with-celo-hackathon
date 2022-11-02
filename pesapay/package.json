@@ -29,12 +29,15 @@
   "homepage": "https://github.com/eliashezron/pesapay#readme",
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.4",
-    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "@nomicfoundation/hardhat-toolbox": "^1.0.2",
     "@nomiclabs/hardhat-ethers": "^2.1.1",
     "@nomiclabs/hardhat-etherscan": "^3.1.0",
     "ethers": "^5.7.1",
     "hardhat": "^2.11.2",
-    "hardhat-celo": "^0.0.3"
+    "hardhat-celo": "^1.0.1",
+    "rollup": "^3.2.5",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
   },
   "peerDependencies": {
     "ethers": "^4.0.47 || ^5.7.1"
@@ -52,7 +55,7 @@
     "defender-relay-client": "^1.31.1",
     "dotenv": "^16.0.3",
     "eth-sig-util": "^3.0.1",
-    "flutterwave-node-v3": "^1.0.11",
-    "rollup": "^3.2.3"
+    "flutterwave-node": "^1.2.2",
+    "flutterwave-node-v3": "^1.0.11"
   }
 }

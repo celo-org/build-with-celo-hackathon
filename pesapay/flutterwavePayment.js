@@ -11,7 +11,12 @@ const initTrans = async () => {
     const payload = {
       account_bank: "MPS", //This is the recipient bank code. Get list here :https://developer.flutterwave.com/v3.0/reference#get-all-banks
       account_number: "256779177900",
-      amount: 20000,
+      meta: [
+        {
+          phone_number: "256779177900",
+        },
+      ],
+      amount: 50000,
       currency: "UGX",
       reference: "transfer-" + Date.now(), //This is a merchant's unique reference for the transfer, it can be used to query for the status of the transfer
       debit_currency: "UGX",
