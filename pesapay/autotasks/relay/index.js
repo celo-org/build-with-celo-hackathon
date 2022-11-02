@@ -10,8 +10,6 @@ const ForwarderAddress = require("../../deployCashout.json").MinimalForwarder
 const { FLW_PUBLIC_KEY: publicKey, FLW_SECRET_KEY: secretKey } = process.env
 const flw = new Flutterwave(publicKey, secretKey)
 
-// const Vault = require("../../deploy.json").Vault
-
 async function relay(forwarder, request, signature, params, whitelist) {
   // Decide if we want to relay this request based on a whitelist
   const accepts = !whitelist || whitelist.includes(request.to)
