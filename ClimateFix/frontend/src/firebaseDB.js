@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCrHttMmwGWmzOc4Oumxgk7Je9FcCMAFvg",
-  authDomain: "climatefix-1a082.firebaseapp.com",
-  projectId: "climatefix-1a082",
-  storageBucket: "climatefix-1a082.appspot.com",
-  messagingSenderId: "506093732620",
-  appId: "1:506093732620:web:e083261e997545d870ff29",
-  measurementId: "G-6DSXK5RY4Y",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
 
 const firebaseApp = initializeApp(firebaseConfig);

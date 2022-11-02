@@ -20,16 +20,21 @@ import { useNavigate } from "react-router-dom";
 import { toaster } from "evergreen-ui";
 import axios from "axios";
 import WeatherTemp from "../components/Tamplates/weatherTemp";
+import Cookies from "js-cookie";
 
 const Home = () => {
   const [user, loading, error] = useAuthState(auth);
   const [name, setName] = useState("");
   const [myTrees, setMyTrees] = useState([]);
   const [weatherData, setWeatherData] = useState({});
-
-  console.log(myTrees);
+  const userId = Cookies.get("userId");
 
   const navigate = useNavigate();
+
+  const q = query(collection(db, "plantTrees"), 
+  where("userId", "==", userId), 
+  orderBy("created", "desc")
+);
 
   const fetchUserName = async () => {
     try {
@@ -50,7 +55,10 @@ const Home = () => {
   }, [user, loading]);
 
   useEffect(() => {
-    const q = query(collection(db, "plantTrees"), orderBy("created", "desc"));
+    const q = query(collection(db, "plantTrees"), 
+    where("userId", "==", userId), 
+    orderBy("created", "desc")
+  );
     onSnapshot(q, (querySnapshot) => {
       setMyTrees(
         querySnapshot.docs.map((myTree) => ({
@@ -61,19 +69,11 @@ const Home = () => {
     });
   }, []);
 
-  const config = {
-    headers: {
-      "Access-Control-Allow-Origin": "http://localhost:3000",
-      "Content-Type": "application/json",
-    },
-    withCredentials: false,
-  };
+  const api = process.env.REACT_APP_IBM_API;
 
   useEffect(() => {
     axios
-      .get(
-        "https://api.weather.com/v3/wx/forecast/daily/3day?geocode=33.74,-84.39&format=json&units=m&language=en-US&apiKey=2b6ed19f3d474152aed19f3d4791527d",
-        config
+      .get(api,
       )
       .then((res) => {
         setWeatherData(res?.data);

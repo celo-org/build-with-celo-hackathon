@@ -16,11 +16,13 @@ import {collection, addDoc, Timestamp, query, orderBy, onSnapshot} from 'firebas
 import { db } from "../firebase";
 import { toaster } from "evergreen-ui";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const PlantNow = () => {
   const [region, setRegion] = useState('');
   const [tree, setTree] = useState('');
   const navigate = useNavigate();
+  const userId = Cookies.get("userId");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,6 +35,7 @@ const PlantNow = () => {
         assignedExpertEmail: allExperts[index].email,
         videoUrl: '',
         imageUrl: '',
+        userId: userId,
         created: Timestamp.now()
       })
       navigate('/invite-pending')
