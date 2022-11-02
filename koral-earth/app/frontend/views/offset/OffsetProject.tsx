@@ -1,14 +1,6 @@
 import Link from 'next/link';
 import { PropsWithChildren } from 'react';
-import {
-  Button,
-  Col,
-  Form,
-  Image,
-  Row,
-  Card,
-  ListGroup,
-} from 'react-bootstrap';
+import { Col, Image, Row, Card, ListGroup } from 'react-bootstrap';
 import { Project } from '../../../backend/market/market.entity';
 import { getProjectUrlByRegistry } from '../../../backend/registry/registry.repo';
 import { Calculator } from './Calculator';

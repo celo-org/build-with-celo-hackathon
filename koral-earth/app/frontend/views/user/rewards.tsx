@@ -38,7 +38,7 @@ export const UserRewards = () => {
   const { kit, account, connect } = useCelo();
   const { error: userRewardsFetchingError, data: userRewards } = useQuery<
     Reward[] | null
-  >(['user-rewards'], async () => {
+  >(['userRewards'], async () => {
     if (!account) {
       return null;
     }

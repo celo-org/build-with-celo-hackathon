@@ -66,7 +66,7 @@ export const ProjectRewards = ({ projectId }: RewardsProps) => {
   const { kit, account, connect } = useCelo();
   const { error: rewardsFetchingError, data: rewards } = useQuery<
     Reward[] | null
-  >(['colony-rewards'], async () => {
+  >(['colonyRewards'], async () => {
     if (!account) {
       return null;
     }

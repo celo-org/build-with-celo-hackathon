@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 import { Button, Card, Row, Col, ListGroup } from 'react-bootstrap';
-import { Project, TCO2Token } from '../../../backend/market/market.entity';
+import { Project } from '../../../backend/market/market.entity';
 import classNames from 'classnames';
 import {
   PaginatedItemsComponent,
@@ -40,7 +40,7 @@ const Projects: PaginatedItemsComponent<Project> = ({ currentItems }) => (
                         project.standard
                       )}
                     >
-                      <a>Full info here</a>
+                      <a target="_blank">Full info here</a>
                     </Link>
                   </Card.Title>
                 </Card.Body>
