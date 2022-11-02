@@ -3,6 +3,7 @@ pragma solidity 0.8.11;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import {TokenURIDescriptor} from "./TokenURIDescriptor.sol";
 
 /** @dev Report with percentages of health in each catgegory */
 struct CreditReportPercentages {
@@ -35,6 +36,9 @@ contract Sacuda is ERC721, AccessControl {
 
     /** @dev Name Storage */
     mapping(uint256 => string) public name;
+
+    // /** @dev Is Enhancer Storage */
+    // mapping(uint256 => bool) public isEnhancer;
 
     /** Errors */
     error NotAPercentage();
@@ -91,18 +95,48 @@ contract Sacuda is ERC721, AccessControl {
     }
 
     /** @notice Only one non-transferable token per address */
-    function mint(address _user, string memory _name)
-        external
-        onlyRole(MINTER_ROLE)
-    {
+    function mint(
+        address _user,
+        bool _isEnhancer,
+        string memory _name
+    ) external onlyRole(MINTER_ROLE) {
         require(balanceOf(_user) == 0, "Already Registered");
         uint256 tokenId = ++totalSupply;
         _mint(_user, tokenId);
         name[tokenId] = _name;
+        // isEnhancer[tokenId] = _isEnhancer;
+        if (_isEnhancer) {
+            _grantRole(ENHANCER_ROLE, _user);
+        } else {
+            _grantRole(WOB_ROLE, _user);
+        }
+    }
+
+    /** @dev Override to have on-chain SVG NFTs */
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        override
+        returns (string memory)
+    {
+        // _requireMinted(tokenId); // This gets checked when calling score()
+        uint256 scoring = score(tokenId);
+
+        bool isEnhancer = hasRole(ENHANCER_ROLE, ownerOf(tokenId));
+        return
+            TokenURIDescriptor.tokenURI(
+                isEnhancer,
+                scoring,
+                tokenId,
+                name[tokenId],
+                super.name(),
+                super.symbol()
+            );
     }
 
     /** @notice Credit Score of the user */
     function score(uint256 _tokenId) public view returns (uint256) {
+        _requireMinted(_tokenId);
         CreditReportPercentages storage r = report[_tokenId];
         uint256 userScore = (uint256(r.paymentHistory) *
             uint256(paymentHistoryWeight) +
@@ -122,6 +156,7 @@ contract Sacuda is ERC721, AccessControl {
         external
         onlyRole(ADMIN_ROLE)
     {
+        _requireMinted(_tokenId);
         CreditReportPercentages memory r;
         (
             r.paymentHistory,
