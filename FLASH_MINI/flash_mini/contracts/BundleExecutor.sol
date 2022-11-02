@@ -26,7 +26,7 @@ interface IWETH is IERC20 {
 
 // This contract simply calls multiple targets sequentially, ensuring WETH balance before and after
 
-contract flashminibotMultiCall {
+contract flashbotsMultiCall {
     address private immutable owner;
     address private immutable executor;
     IWETH private constant WETH = IWETH(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);

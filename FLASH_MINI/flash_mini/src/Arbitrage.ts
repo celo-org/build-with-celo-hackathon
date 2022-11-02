@@ -1,6 +1,6 @@
 import * as _ from "lodash";
 import { BigNumber, Contract, Wallet } from "ethers";
-import { flashminibotBundleProvider } from "@flashminibot/ethers-provider-bundle";
+import { FlashbotsBundleProvider } from "@flashbots/ethers-provider-bundle";
 import { WETH_ADDRESS } from "./addresses";
 import { EthMarket } from "./EthMarket";
 import { ETHER, bigNumberToDecimal } from "./utils";
@@ -67,13 +67,13 @@ export function getBestCrossedMarket(crossedMarkets: Array<EthMarket>[], tokenAd
 }
 
 export class Arbitrage {
-  private flashminibotProvider: flashminibotBundleProvider;
+  private flashbotsProvider: FlashbotsBundleProvider;
   private bundleExecutorContract: Contract;
   private executorWallet: Wallet;
 
-  constructor(executorWallet: Wallet, flashminibotProvider: flashminibotBundleProvider, bundleExecutorContract: Contract) {
+  constructor(executorWallet: Wallet, flashbotsProvider: FlashbotsBundleProvider, bundleExecutorContract: Contract) {
     this.executorWallet = executorWallet;
-    this.flashminibotProvider = flashminibotProvider;
+    this.flashbotsProvider = flashbotsProvider;
     this.bundleExecutorContract = bundleExecutorContract;
   }
 
@@ -162,16 +162,16 @@ export class Arbitrage {
         }
       ];
       console.log(bundledTransactions)
-      const signedBundle = await this.flashminibotProvider.signBundle(bundledTransactions)
+      const signedBundle = await this.flashbotsProvider.signBundle(bundledTransactions)
       //
-      const simulation = await this.flashminibotProvider.simulate(signedBundle, blockNumber + 1 )
+      const simulation = await this.flashbotsProvider.simulate(signedBundle, blockNumber + 1 )
       if ("error" in simulation || simulation.firstRevert !== undefined) {
         console.log(`Simulation Error on token ${bestCrossedMarket.tokenAddress}, skipping`)
         continue
       }
       console.log(`Submitting bundle, profit sent to miner: ${bigNumberToDecimal(simulation.coinbaseDiff)}, effective gas price: ${bigNumberToDecimal(simulation.coinbaseDiff.div(simulation.totalGasUsed), 9)} GWEI`)
       const bundlePromises =  _.map([blockNumber + 1, blockNumber + 2], targetBlockNumber =>
-        this.flashminibotProvider.sendRawBundle(
+        this.flashbotsProvider.sendRawBundle(
           signedBundle,
           targetBlockNumber
         ))

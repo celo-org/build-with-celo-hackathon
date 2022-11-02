@@ -1,4 +1,4 @@
-import { flashminibotBundleProvider } from "@flashminibot/ethers-provider-bundle";
+import { FlashbotsBundleProvider } from "@flashbots/ethers-provider-bundle";
 import { Contract, providers, Wallet } from "ethers";
 import { BUNDLE_EXECUTOR_ABI } from "./abi";
 import { UniswappyV2EthPair } from "./UniswappyV2EthPair";
@@ -11,7 +11,7 @@ const ETHEREUM_RPC_URL = process.env.ETHEREUM_RPC_URL || "http://127.0.0.1:8545"
 const PRIVATE_KEY = process.env.PRIVATE_KEY || ""
 const BUNDLE_EXECUTOR_ADDRESS = process.env.BUNDLE_EXECUTOR_ADDRESS || ""
 
-const flashminibot_RELAY_SIGNING_KEY = process.env.flashminibot_RELAY_SIGNING_KEY || getDefaultRelaySigningKey();
+const flashbots_RELAY_SIGNING_KEY = process.env.flashbots_RELAY_SIGNING_KEY || getDefaultRelaySigningKey();
 
 const MINER_REWARD_PERCENTAGE = parseInt(process.env.MINER_REWARD_PERCENTAGE || "80")
 
@@ -24,8 +24,8 @@ if (BUNDLE_EXECUTOR_ADDRESS === "") {
   process.exit(1)
 }
 
-if (flashminibot_RELAY_SIGNING_KEY === "") {
-  console.warn("Must provide flashminibot_RELAY_SIGNING_KEY. Please see https://github.com/flashminibot/pm/blob/main/guides/searcher-onboarding.md")
+if (flashbots_RELAY_SIGNING_KEY === "") {
+  console.warn("Must provide flashbots_RELAY_SIGNING_KEY. Please see https://github.com/flashbots/pm/blob/main/guides/searcher-onboarding.md")
   process.exit(1)
 }
 
@@ -34,7 +34,7 @@ const HEALTHCHECK_URL = process.env.HEALTHCHECK_URL || ""
 const provider = new providers.StaticJsonRpcProvider(ETHEREUM_RPC_URL);
 
 const arbitrageSigningWallet = new Wallet(PRIVATE_KEY);
-const flashminibotRelaySigningWallet = new Wallet(flashminibot_RELAY_SIGNING_KEY);
+const flashbotsRelaySigningWallet = new Wallet(flashbots_RELAY_SIGNING_KEY);
 
 function healthcheck() {
   if (HEALTHCHECK_URL === "") {
@@ -45,11 +45,11 @@ function healthcheck() {
 
 async function main() {
   console.log("Searcher Wallet Address: " + await arbitrageSigningWallet.getAddress())
-  console.log("flashminibot Relay Signing Wallet Address: " + await flashminibotRelaySigningWallet.getAddress())
-  const flashminibotProvider = await flashminibotBundleProvider.create(provider, flashminibotRelaySigningWallet);
+  console.log("flashbots Relay Signing Wallet Address: " + await flashbotsRelaySigningWallet.getAddress())
+  const flashbotsProvider = await FlashbotsBundleProvider.create(provider, flashbotsRelaySigningWallet);
   const arbitrage = new Arbitrage(
     arbitrageSigningWallet,
-    flashminibotProvider,
+    flashbotsProvider,
     new Contract(BUNDLE_EXECUTOR_ADDRESS, BUNDLE_EXECUTOR_ABI, provider) )
 
   const markets = await UniswappyV2EthPair.getUniswapMarketsByToken(provider, FACTORY_ADDRESSES);

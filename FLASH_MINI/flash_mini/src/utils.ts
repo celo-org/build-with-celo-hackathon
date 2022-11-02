@@ -8,6 +8,6 @@ export function bigNumberToDecimal(value: BigNumber, base = 18): number {
 }
 
 export function getDefaultRelaySigningKey(): string {
-  console.warn("You have not specified an explicity flashminibot_RELAY_SIGNING_KEY environment variable. Creating random signing key, this searcher will not be building a reputation for next run")
+  console.warn("You have not specified an explicity flashbots_RELAY_SIGNING_KEY environment variable. Creating random signing key, this searcher will not be building a reputation for next run")
   return Wallet.createRandom().privateKey;
 }
