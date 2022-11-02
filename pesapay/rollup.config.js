@@ -4,9 +4,12 @@ const json = require("@rollup/plugin-json")
 const builtins = require("builtin-modules")
 
 module.exports = {
-  input: "autotasks/relay/cashoutAuto.js",
+  acorn: {
+    allowReserved: true,
+  },
+  input: "autotasks/relay/index.js",
   output: {
-    file: "build/relay/cashoutAuto.js",
+    file: "build/relay/index.js",
     format: "cjs",
     exports: "auto",
   },
@@ -15,6 +18,9 @@ module.exports = {
     commonjs(),
     json({ compact: true }),
   ],
+  acorn: {
+    allowReserved: true,
+  },
   external: [
     ...builtins,
     "ethers",

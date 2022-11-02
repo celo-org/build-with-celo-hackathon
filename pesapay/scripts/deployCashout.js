@@ -1,7 +1,14 @@
 const { ethers } = require("hardhat")
-const { writeFileSync } = require("fs")
+const { writeFileSync, readFileSync } = require("fs")
+
+function getInstance(name) {
+  const address = JSON.parse(readFileSync("deployCashout.json"))[name]
+  if (!address) throw new Error(`Contract ${name} not found in deploy.json`)
+  return ethers.getContractFactory(name).then((f) => f.attach(address))
+}
 
 async function main() {
+  const token = await getInstance("Token")
   const Forwarder = await ethers.getContractFactory("MinimalForwarder")
   const forwarder = await Forwarder.deploy().then((f) => f.deployed())
 
@@ -9,9 +16,9 @@ async function main() {
   const cashOut = await CashOut.deploy(forwarder.address).then((f) =>
     f.deployed()
   )
-
+  await cashOut.addAllowedToken(token.address)
   writeFileSync(
-    "deployCashOut.json",
+    "deployCashout.json",
     JSON.stringify(
       {
         MinimalForwarder: forwarder.address,
