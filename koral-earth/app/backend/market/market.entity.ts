@@ -1,5 +1,6 @@
 export enum Registry {
   VCS = 'VCS',
+  VCU = 'VCU',
 }
 
 export type Project = {
