@@ -11,14 +11,17 @@ import { Carousel } from 'react-responsive-carousel';
 import { LoaderIcon } from 'react-hot-toast';
 import Donate from '../components/donate';
 import { client, urlFor } from "../lib/sanityClient";
+import { Dna } from 'react-loader-spinner'
 
 const CampaignDetails = () => {
     const { search } = useLocation()
     const { campId } = queryString.parse(search)
     const [campaign, setCampaign] = useState([])
     const [photos, setPhotos] = useState([])
+    const [contentLoaded, setcontentLoaded] = useState([])
 
     useEffect(() => {
+        setcontentLoaded(false)
         loadPhotos()
         load()
 
@@ -43,8 +46,8 @@ const CampaignDetails = () => {
                 return item;
             })
         )
-
         setPhotos(items)
+        setcontentLoaded(true)
 
     }
     async function load() {
@@ -93,76 +96,89 @@ const CampaignDetails = () => {
             <section class="ftco-section contact-section ftco-degree-bg">
 
                 <div class="container">
-                    <div class="row d-flex mb-5 contact-info">
-                        <div class="col-md-12 mb-4">
-                            <h2 class="h4">All you need to know</h2>
+                    {!contentLoaded &&
+                        <div class='loader'>
+                            <Dna
+                                visible={true}
+                                height="150"
+                                width="150"
+                                ariaLabel="dna-loading"
+                                wrapperStyle={{}}
+                                wrapperClass="dna-wrapper"
+                            />
                         </div>
-                        <div class="col-md-12 mb-4">
-                            <div class="row">
-                                <div class="col-md-6 pr-md-5">
-                                    <Carousel autoPlay="true" >
+                    }
+                    {contentLoaded &&
+                        <div class="row d-flex mb-5 contact-info">
+                            <div class="col-md-12 mb-4">
+                                <h2 class="h4">All you need to know</h2>
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <div class="row">
+                                    <div class="col-md-6 pr-md-5">
+                                        <Carousel autoPlay="true" >
+                                            {photos.map((photo, i) =>
+                                                <div>
+                                                    <img src={photo.url} alt="" />
+                                                </div>
+                                            )}
+                                        </Carousel>
 
-                                        {photos.map((el, i) => {
-                                            <div>
-                                                <img src={el.url} alt="" />
-                                            </div>
-                                        })}
-                                    </Carousel>
-
-                                </div>
-                                <div class="col-md-6 pr-md-5">
-                                    <div class="row">
-                                        <div class="col-md-12 pl-md-5">
-                                            <p class="mb-1"><h5 class="mb-0">Minimum Daily requirement:<span class="value"> ${campaign.dailyFundNeed} </span></h5></p>
-                                            <p class="mb-1"><h5 class="mb-0">Funds Received till date:<span class="value">  ${campaign.totalReceived} </span></h5></p>
-                                            <p class="mb-1"><h5 class="mb-0">Funds Utilised till date:<span class="value">  ${campaign.totalUsed}</span></h5></p>
-                                            <p class="mb-3"><h5 class="mb-0">Total children benifited:<span class="value">  {campaign.noOfBeneficiaries}</span></h5></p>
-                                            <p class="mb-1"><h5 class="mb-0">NGO Profile:</h5></p>
-                                            <div class="col-md-12 pl-0 pr-0">
-                                                <div class="row mr-0 ml-0">
-                                                    <div class="col-4 pl-0 pr-0"> Name: </div>
-                                                    <div class="col-8 pl-0 pr-0"> {campaign.ngoName} </div>
+                                    </div>
+                                    <div class="col-md-6 pr-md-5">
+                                        <div class="row">
+                                            <div class="col-md-12 pl-md-5">
+                                                <p class="mb-1"><h5 class="mb-0">Minimum Daily requirement:<span class="value"> ${campaign.dailyFundNeed} </span></h5></p>
+                                                <p class="mb-1"><h5 class="mb-0">Funds Received till date:<span class="value">  ${campaign.totalReceived} </span></h5></p>
+                                                <p class="mb-1"><h5 class="mb-0">Funds Utilised till date:<span class="value">  ${campaign.totalUsed}</span></h5></p>
+                                                <p class="mb-3"><h5 class="mb-0">Total children benifited:<span class="value">  {campaign.noOfBeneficiaries}</span></h5></p>
+                                                <p class="mb-1"><h5 class="mb-0">NGO Profile:</h5></p>
+                                                <div class="col-md-12 pl-0 pr-0">
+                                                    <div class="row mr-0 ml-0">
+                                                        <div class="col-4 pl-0 pr-0"> Name: </div>
+                                                        <div class="col-8 pl-0 pr-0"> {campaign.ngoName} </div>
+                                                    </div>
+                                                    <div class="row mr-0 ml-0">
+                                                        <div class="col-4 pl-0 pr-0"> Address: </div>
+                                                        <div class="col-8 pl-0 pr-0"> {campaign.ngoAddress}</div>
+                                                    </div>
+                                                    <div class="row mr-0 ml-0">
+                                                        <div class="col-4 pl-0 pr-0"> Reg No: </div>
+                                                        <div class="col-8 pl-0 pr-0"> {campaign.ngoregistrationNo} </div>
+                                                    </div>
+                                                    <div class="row mr-0 ml-0">
+                                                        <div class="col-4 pl-0 pr-0"> Reg With: </div>
+                                                        <div class="col-8 pl-0 pr-0"> {campaign.ngoregisteredByGovt} </div>
+                                                    </div>
+                                                    <div class="row mr-0 ml-0">
+                                                        <div class="col-4 pl-0 pr-0"> Country: </div>
+                                                        <div class="col-8 pl-0 pr-0"> {campaign.ngocountry} </div>
+                                                    </div>
+                                                    <div class="row mr-0 ml-0">
+                                                        <div class="col-4 pl-0 pr-0"> Live Campaigns: </div>
+                                                        <div class="col-8 pl-0 pr-0">{campaign.ngocampaignCount} campaigns </div>
+                                                    </div>
+                                                    <div class="row mr-0 ml-0">
+                                                        <div class="col-4 pl-0 pr-0"> Serving since: </div>
+                                                        <div class="col-8 pl-0 pr-0"> {campaign.ngoserviceSince} </div>
+                                                    </div>
                                                 </div>
-                                                <div class="row mr-0 ml-0">
-                                                    <div class="col-4 pl-0 pr-0"> Address: </div>
-                                                    <div class="col-8 pl-0 pr-0"> {campaign.ngoAddress}</div>
+                                                <div class="col-md-12 pl-0 pr-0 mt-3 d-flex flex-row-reverse">
+                                                    <Donate campaignId={campaign.campaignID} />
                                                 </div>
-                                                <div class="row mr-0 ml-0">
-                                                    <div class="col-4 pl-0 pr-0"> Reg No: </div>
-                                                    <div class="col-8 pl-0 pr-0"> {campaign.ngoregistrationNo} </div>
-                                                </div>
-                                                <div class="row mr-0 ml-0">
-                                                    <div class="col-4 pl-0 pr-0"> Reg With: </div>
-                                                    <div class="col-8 pl-0 pr-0"> {campaign.ngoregisteredByGovt} </div>
-                                                </div>
-                                                <div class="row mr-0 ml-0">
-                                                    <div class="col-4 pl-0 pr-0"> Country: </div>
-                                                    <div class="col-8 pl-0 pr-0"> {campaign.ngocountry} </div>
-                                                </div>
-                                                <div class="row mr-0 ml-0">
-                                                    <div class="col-4 pl-0 pr-0"> Live Campaigns: </div>
-                                                    <div class="col-8 pl-0 pr-0">{campaign.ngocampaignCount} campaigns </div>
-                                                </div>
-                                                <div class="row mr-0 ml-0">
-                                                    <div class="col-4 pl-0 pr-0"> Serving since: </div>
-                                                    <div class="col-8 pl-0 pr-0"> {campaign.ngoserviceSince} </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12 pl-0 pr-0 mt-3 d-flex flex-row-reverse">
-                                                <Donate campaignId={campaign.campaignID} />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-12 mb-4">
+                                <p class="mb-1"><h5 class="mb-0">Desciption:</h5></p>
+                                <p>
+                                    {campaign.description}
+                                </p>
+                            </div>
                         </div>
-                        <div class="col-md-12 mb-4">
-                            <p class="mb-1"><h5 class="mb-0">Desciption:</h5></p>
-                            <p>
-                                {campaign.description}
-                            </p>
-                        </div>
-                    </div>
+                    }
                 </div >
             </section >
         </div >
