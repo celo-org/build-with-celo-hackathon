@@ -1,6 +1,3 @@
-import type { NetworkUserConfig } from 'hardhat/types';
-import { getEnvVar } from './env';
-
 export const chainIds = {
   ganache: 1337,
   mainnet: 42220,
@@ -24,15 +21,3 @@ export const explorerUrls: RpcUrls = {
   mainnet: 'http://explorer.celo.org/',
   alfajores: 'https://alfajores-blockscout.celo-testnet.org',
 };
-
-export function getNetworkConfig(network: Network): NetworkUserConfig {
-  return {
-    accounts: {
-      count: 10,
-      mnemonic: getEnvVar('MNEMONIC'),
-      path: getEnvVar('ACCOUNT_PATH'),
-    },
-    chainId: chainIds[network],
-    url: rpcUrls[network],
-  };
-}

@@ -4,10 +4,23 @@ import 'hardhat-celo';
 import 'hardhat-deploy';
 import 'hardhat-ethernal';
 import type { HardhatUserConfig } from 'hardhat/config';
+import type { NetworkUserConfig } from 'hardhat/types';
 import { getEnvVar } from './app/common/env';
-import { getNetworkConfig, Network } from './app/common/blockchain';
+import { chainIds, Network, rpcUrls } from './app/common/blockchain';
 
 const defaultNetwork = getEnvVar<Network>('DEPLOYMENT_NETWORK');
+
+export function getNetworkConfig(network: Network): NetworkUserConfig {
+  return {
+    accounts: {
+      count: 10,
+      mnemonic: getEnvVar('MNEMONIC'),
+      path: getEnvVar('ACCOUNT_PATH'),
+    },
+    chainId: chainIds[network],
+    url: rpcUrls[network],
+  };
+}
 
 const config: HardhatUserConfig = {
   defaultNetwork,
