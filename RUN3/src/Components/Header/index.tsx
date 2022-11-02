@@ -1,7 +1,17 @@
+import { faDoorOpen } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import React from 'react'
-import { View, StyleSheet, Image } from 'react-native'
+import { View, Image } from 'react-native'
+import { Button } from '@ui-kitten/components'
+import { useNavigation } from '@react-navigation/native'
+import { useWalletProvider } from '../../contexts/WalletContext'
+import { styles } from './styles'
+import { colors } from '../../utils/globalStyles'
 
 export default function Header() {
+  const { setWalletWithProvider, setProvider } = useWalletProvider()
+  const navigation = useNavigation() as any
+
   return (
     <View style={styles.viewContainer}>
       <Image
@@ -12,15 +22,16 @@ export default function Header() {
           resizeMode: 'contain',
         }}
       />
+      <Button
+        onPress={() => {
+          setWalletWithProvider({} as any)
+          setProvider({} as any)
+          navigation.replace('login')
+        }}
+        appearance="ghost"
+        style={styles.logOut}
+        accessoryLeft={<FontAwesomeIcon color={colors.secondary} icon={faDoorOpen} size={25} />}
+      />
     </View>
   )
 }
-const styles = StyleSheet.create({
-  viewContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    right: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-})
