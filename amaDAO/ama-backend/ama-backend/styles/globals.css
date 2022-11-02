@@ -1,0 +1,117 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Fira Sans Condensed', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  background-color: #1a181f;
+  background-color: #000;
+  color: #fff;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: #739CFB;
+}
+
+.container {
+  justify-content: center;
+  text-align: center;
+  height: 95vh;
+}
+
+.d-flex {
+  display: flex;
+  align-items: center;
+}
+
+.fren-nav {
+  padding: 20px 30px;
+  background: url('/stars.png');
+
+}
+
+.btn {
+  border: none;
+  outline: none;
+  background-color: #ccc;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn:hover {
+  box-shadow: 0 0 3px inset #ffffff7c;
+  outline: 1px solid #fff;
+}
+
+.connect-btn {
+  color: #000;
+  font-size: 14px;
+  background: #FEDA5E;
+  border-radius: 15px;
+  padding: 15px 20px;
+}
+
+.tw-btn {
+  color: #fff;
+  font-size: 14px;
+  background: #739CFB;
+  border-radius: 15px;
+  padding: 15px 20px;
+  margin-left: 1.5vw;
+
+}
+
+.main-title {
+  font-size: 90px;
+  font-weight: 900;
+  font-style: italic;
+  font-family: 'Montserrat', serif;
+}
+
+.main-desc {
+  font-size: 20px;
+  text-align: center;
+  color: #F2F2F2;
+  padding: 10px;
+  line-height: 30px;
+}
+
+.sign-btn {
+  margin-top: 20px;
+  font-size: 18px;
+  border-radius: 15px;
+  padding: 15px 20px;
+  background: #745EDA;
+  color: #F2F2F2;
+  border: 1px solid #FFFFFF;
+}
+
+/* media query for mobile devices */
+@media only screen and (max-width: 600px) {
+  .fren-nav {
+    padding: 20px;
+  }
+
+  .main-title {
+    font-size: 35px;
+  }
+
+  .main-desc,
+  p {
+    font-size: 17px;
+    line-height: 20px;
+  }
+
+  .sign-btn {
+    font-size: 15px;
+    width: 200px;
+  }
+}
