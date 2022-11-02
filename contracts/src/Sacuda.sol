@@ -3,6 +3,7 @@ pragma solidity 0.8.11;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import {TokenURIDescriptor} from "./TokenURIDescriptor.sol";
 
 /** @dev Report with percentages of health in each catgegory */
 struct CreditReportPercentages {
@@ -27,7 +28,7 @@ contract Sacuda is ERC721, AccessControl {
     uint8 public paymentHistoryWeight;
     uint8 public amountOwedWeight;
     uint8 public creditLengthWeight;
-    uint8 public creditMixWeigth;
+    uint8 public creditMixWeight;
     uint8 public newCreditWeight;
 
     /** @dev Credit Score Storage */
@@ -35,6 +36,9 @@ contract Sacuda is ERC721, AccessControl {
 
     /** @dev Name Storage */
     mapping(uint256 => string) public name;
+
+    // /** @dev Is Enhancer Storage */
+    // mapping(uint256 => bool) public isEnhancer;
 
     /** Errors */
     error NotAPercentage();
@@ -55,14 +59,15 @@ contract Sacuda is ERC721, AccessControl {
         uint8 creditMix,
         uint8 newCredit
     );
+    event NameUpdated(uint256 indexed tokenId, string newName);
 
-    /** @notice  */
+    /** @notice constructor for contract */
     constructor() ERC721("Sacuda Credit Score", "SACS") {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         paymentHistoryWeight = 35;
         amountOwedWeight = 30;
         creditLengthWeight = 15;
-        creditMixWeigth = 10;
+        creditMixWeight = 10;
         newCreditWeight = 10;
     }
 
@@ -91,30 +96,77 @@ contract Sacuda is ERC721, AccessControl {
     }
 
     /** @notice Only one non-transferable token per address */
-    function mint(address _user, string memory _name)
-        external
-        onlyRole(MINTER_ROLE)
-    {
+    function mint(
+        address _user,
+        bool _isEnhancer,
+        string memory _name
+    ) external onlyRole(MINTER_ROLE) {
         require(balanceOf(_user) == 0, "Already Registered");
         uint256 tokenId = ++totalSupply;
         _mint(_user, tokenId);
+        // isEnhancer[tokenId] = _isEnhancer;
+        if (_isEnhancer) {
+            _grantRole(ENHANCER_ROLE, _user);
+            report[tokenId].amountOwed = 100; // Trying to set score to 0
+        } else {
+            _grantRole(WOB_ROLE, _user);
+            report[tokenId].paymentHistory = 100;
+            // report[tokenId].amountOwed = 0; // Already in 0
+            report[tokenId].creditLength = 100;
+            report[tokenId].creditMix = 100;
+            report[tokenId].newCredit = 100;
+            emit UserReportUpdated(tokenId, 100, 0, 100, 100, 100);
+        }
         name[tokenId] = _name;
+        emit NameUpdated(tokenId, _name);
+    }
+
+    /** @dev Override to have on-chain SVG NFTs */
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        override
+        returns (string memory)
+    {
+        // _requireMinted(tokenId); // This gets checked when calling score()
+        uint256 scoring = score(tokenId);
+
+        bool isEnhancer = hasRole(ENHANCER_ROLE, ownerOf(tokenId));
+        return
+            TokenURIDescriptor.tokenURI(
+                isEnhancer,
+                scoring,
+                tokenId,
+                name[tokenId],
+                super.name(),
+                super.symbol()
+            );
     }
 
     /** @notice Credit Score of the user */
     function score(uint256 _tokenId) public view returns (uint256) {
+        _requireMinted(_tokenId);
         CreditReportPercentages storage r = report[_tokenId];
         uint256 userScore = (uint256(r.paymentHistory) *
             uint256(paymentHistoryWeight) +
-            uint256(r.amountOwed) *
+            (100 - uint256(r.amountOwed)) *
             uint256(amountOwedWeight) +
             uint256(r.creditLength) *
             uint256(creditLengthWeight) +
             uint256(r.creditMix) *
-            uint256(creditLengthWeight) +
+            uint256(creditMixWeight) +
             uint256(r.newCredit) *
             uint256(newCreditWeight)) / 100;
         return userScore;
+    }
+
+    /** @notice Update username function */
+    function updateName(uint256 tokenId, string memory _name)
+        external
+        onlyRole(MINTER_ROLE)
+    {
+        _requireMinted(tokenId);
+        name[tokenId] = _name;
     }
 
     /** @notice Update User's Credit Report */
@@ -122,6 +174,7 @@ contract Sacuda is ERC721, AccessControl {
         external
         onlyRole(ADMIN_ROLE)
     {
+        _requireMinted(_tokenId);
         CreditReportPercentages memory r;
         (
             r.paymentHistory,
@@ -148,6 +201,7 @@ contract Sacuda is ERC721, AccessControl {
         );
     }
 
+    /** @notice Update System's Weights for Credit Score */
     function updateWeights(bytes memory data) external onlyRole(ADMIN_ROLE) {
         (
             uint8 paymentHistory,
@@ -167,7 +221,7 @@ contract Sacuda is ERC721, AccessControl {
         paymentHistoryWeight = paymentHistory;
         amountOwedWeight = amountOwed;
         creditLengthWeight = creditLength;
-        creditMixWeigth = creditMix;
+        creditMixWeight = creditMix;
         newCreditWeight = newCredit;
         emit WeightsUpdated(
             paymentHistory,

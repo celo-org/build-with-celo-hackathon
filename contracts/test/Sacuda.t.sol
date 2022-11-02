@@ -23,9 +23,31 @@ contract SacudaTest is Test {
     function testMint() public {
         sacuda.grantRole(minter, caro);
         vm.startPrank(caro);
-        sacuda.mint(amy, "Amy");
+        sacuda.mint(amy, false, "Amy");
         assertEq(sacuda.ownerOf(1), amy);
         assertEq(sacuda.name(1), "Amy");
+        console.log(sacuda.tokenURI(1));
+    }
+
+    function testMintEnhancer() public {
+        sacuda.grantRole(minter, caro);
+        vm.startPrank(caro);
+        sacuda.mint(caro, true, "Caro");
+        assertEq(sacuda.ownerOf(1), caro);
+        assertEq(sacuda.name(1), "Caro");
+        console.log("User Score: ", sacuda.score(1));
+        console.log(sacuda.tokenURI(1));
+    }
+
+    function testMintAndUpdateName() public {
+        sacuda.grantRole(minter, caro);
+        vm.startPrank(caro);
+        sacuda.mint(amy, false, "Amy");
+        assertEq(sacuda.name(1), "Amy");
+        console.log(sacuda.tokenURI(1));
+        sacuda.updateName(1, "Amelia");
+        assertEq(sacuda.name(1), "Amelia");
+        console.log(sacuda.tokenURI(1));
     }
 
     function testUpdateReport() public {
@@ -35,13 +57,14 @@ contract SacudaTest is Test {
         vm.startPrank(caro);
         (uint8 paymentHistory, , , , ) = sacuda.report(2);
         assertEq(paymentHistory, 0);
-        sacuda.mint(betty, "Betty");
+        sacuda.mint(betty, false, "Betty");
         sacuda.updateReport(
-            2,
+            1,
             abi.encode(num, num - 50, num + 10, num - 30, num + 20)
         );
-        (paymentHistory, , , , ) = sacuda.report(2);
-        console.log("User Score: ", sacuda.score(2));
+        (paymentHistory, , , , ) = sacuda.report(1);
+        console.log("User Score: ", sacuda.score(1));
         assertEq(paymentHistory, num);
+        console.log(sacuda.tokenURI(1));
     }
 }
