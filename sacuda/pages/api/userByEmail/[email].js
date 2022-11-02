@@ -3,31 +3,24 @@ import Sacuda from '../../../models/sacudaModel';
 
 export default async function emailHandler (req, res) {
   const {
-    query: { email },
+    query: { reqemail },
     method,
   } = req
+  console.log('inicio'+reqemail)
+
 
   console.log('CONNECTING TO MONGO');
   await connectMongo()
   console.log('CONNECTED TO MONGO');
   switch (method) {
-    case 'GET':
-      try {
-        console.log('READING DOCUMENT');
-        const sacudas = await Sacuda.find({ email: email })
-        console.log('READ DOCUMENT');
-        res.status(200).json({ success: true, data: sacudas })
-      } catch (error) {
-        res.status(400).json({ success: false })
-        console.log(error);
-      }
-      break
     case 'POST':
       try {
-        console.log('CREATING DOCUMENT');
-        const sacuda = await Sacuda.create(req.body)
-        console.log('CREATED OK');
-        res.status(201).json({ success: true, data: sacuda })
+        console.log('READING DOCUMENT');
+        const sacudas = await Sacuda.findOne({ email: reqemail })
+        console.log('READo DOCUMENT'+reqemail);
+        res.status(200).json({ success: true, data: sacudas })
+        res.json(sacudas)
+        console.log('hay'+reqemail)
       } catch (error) {
         res.status(400).json({ success: false })
         console.log(error);

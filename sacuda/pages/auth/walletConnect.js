@@ -1,4 +1,5 @@
 import { FaMagic } from 'react-icons/fa';
+import React, { useState } from 'react';
 import { Text, Heading, Button } from '@chakra-ui/react';
 import { useSession, signIn, getSession } from "next-auth/react";
 import { useRouter } from 'next/router';
@@ -10,6 +11,8 @@ import '@rainbow-me/rainbowkit/styles.css';
 
 import connectMongo from '../../utils/connectMongo';
 import Sacuda from '../../models/sacudaModel';
+
+const [userMail, setUserMail] = '';
 
 const walletConnect = () => {
   const router = useRouter();
@@ -37,6 +40,21 @@ const walletConnect = () => {
     console.log(data);
   };
 
+  const getUserEmail = async () => {
+    console.log('mail:'+session.user.email)
+    const res = await fetch('/api/userByEmail/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(session.user.email),
+    });
+    const data = await res.json();
+    console.log('checho'+data.email);
+    setUserMail(data.email)
+    console.log('checho'+data.email);
+  };  
+
   const mainRedirect = () => {
     router.push('/selection') }
 
@@ -44,8 +62,9 @@ const walletConnect = () => {
     return "Loading..."
   }
 
-    if (isConnected) {    
-    if (Sacuda.email===session.user.email) {
+    if (isConnected) {
+      getUserEmail()
+      if (userMail===session.user.email) {
       console.log(session.user.email)
       console.log(Sacuda.email)
       mainRedirect();
@@ -53,7 +72,6 @@ const walletConnect = () => {
     else
     //if (Sacuda.email===null) {
       console.log(session.user.email)
-      console.log(Sacuda.email)
       writeProfileBasics()  
     return(<><Heading>Hola</Heading></>)
       
