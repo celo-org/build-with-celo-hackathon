@@ -1,7 +1,6 @@
 export function getEnvVar<ReturnType = string, KeyType extends string = string>(
   key: KeyType
 ): ReturnType {
-  console.log('process.env', process.env);
   const val = process.env[key];
   if (!val) {
     throw new Error(
