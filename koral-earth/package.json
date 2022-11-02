@@ -4,7 +4,6 @@
   "description": "A demo that uses a basic PoC of Koral's Reward Protocol",
   "author": "koral.earth",
   "scripts": {
-    "prepare": "npx hardhat typechain",
     "test": "jest"
   },
   "devDependencies": {
