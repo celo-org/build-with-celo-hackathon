@@ -7,6 +7,23 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import DoneIcon from '@mui/icons-material/Done';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { GetStaticProps } from 'next';
+
+
+export const getStaticProps: GetStaticProps = async(contex) => {
+
+  return {
+    revalidate: 5,
+    props: {
+      value: {
+        rescueClosed: false,
+        rescueRecieved: false,
+        rescuePickup: false
+      }
+    }
+  }
+
+}
 
 function RescueInfo(props: any) {
 

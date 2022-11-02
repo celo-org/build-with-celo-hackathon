@@ -14,7 +14,35 @@ import HowToRegIcon from '@mui/icons-material/HowToReg';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import { ethers } from 'ethers';
 import CELO from '../../../../../utils/CELO_HACK.json';
+import { GetStaticProps } from 'next';
 
+
+
+export const getStaticProps: GetStaticProps = async(contex) => {
+
+  return {
+    revalidate: 5,
+    props: {
+      data: {
+        language: '',
+        name: '',
+        numberOfPeople: '',
+        ageGroup: '',
+        reason: '',
+        location: '',
+        phoneNo: '',
+        moreInfo: ''
+      },
+      value: {
+        rescueId: 0,
+        rescuePickup: false,
+        rescueClosed: false,
+        rescueRecieved: false
+      }
+    }
+  }
+
+}
 
 function RescueInfo(props: any) {
 

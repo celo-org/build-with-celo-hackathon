@@ -1,6 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import DonationInfo from './DonationInfo';
+import { GetStaticProps } from 'next';
+
+export const getStaticProps: GetStaticProps = async(contex) => {
+
+  return {
+    revalidate: 5,
+    props: {
+      data: {
+        donationInfo: null,
+        donationClosed: false,
+      }
+    }
+  }
+
+}
 
 function DonationCard(props: any) {
 

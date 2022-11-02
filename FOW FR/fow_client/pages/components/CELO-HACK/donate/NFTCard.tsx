@@ -1,4 +1,19 @@
-import React from 'react'
+import { GetStaticProps } from 'next';
+import React from 'react';
+
+export const getStaticProps: GetStaticProps = async(contex) => {
+
+  return {
+    revalidate: 5,
+    props: {
+      data: {
+        NFTinfo: null,
+        NFTId: 0,
+      }
+    }
+  }
+
+}
 
 function NFTCard(props: any) {
 

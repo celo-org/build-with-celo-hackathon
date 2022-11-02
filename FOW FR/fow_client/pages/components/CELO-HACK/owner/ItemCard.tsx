@@ -1,4 +1,18 @@
-import React from 'react'
+import { GetStaticProps } from 'next';
+import React from 'react';
+
+export const getStaticProps: GetStaticProps = async(contex) => {
+
+  return {
+    revalidate: 5,
+    props: {
+      data: {
+        donationInfo: null,
+      }
+    }
+  }
+
+}
 
 function ItemCard(props: any) {
 

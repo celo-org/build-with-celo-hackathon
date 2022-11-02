@@ -2,7 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DonationInfo from './DonarInfo';
+import { GetStaticProps } from 'next';
 
+export const getStaticProps: GetStaticProps = async(contex) => {
+
+  return {
+    revalidate: 5,
+    props: {
+      data: {
+        donationInfo: null,
+        rescueClosed: false,
+      }
+    }
+  }
+
+}
 
 function DonarCard(props: any) {
 

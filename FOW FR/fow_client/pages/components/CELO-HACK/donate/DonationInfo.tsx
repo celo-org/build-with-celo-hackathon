@@ -9,6 +9,23 @@ import DoneIcon from '@mui/icons-material/Done';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
+import { GetStaticProps } from 'next';
+
+export const getStaticProps: GetStaticProps = async(contex) => {
+
+  return {
+    revalidate: 5,
+    props: {
+      value: {
+        donationPickup: false,
+        NFTreceived: false,
+        donationReceived: false,
+        donationClosed: false
+      }
+    }
+  }
+
+}
 
 function DonationInfo(props: any) {
 

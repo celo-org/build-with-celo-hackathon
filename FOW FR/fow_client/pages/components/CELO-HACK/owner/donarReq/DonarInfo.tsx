@@ -19,7 +19,36 @@ import SendIcon from '@mui/icons-material/Send';
 import IconButton from '@mui/material/IconButton';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import { uploadDonateJSONtoIPFS, uploadFileToIPFS } from '../../../../api/pinata';
+import { GetStaticProps } from 'next';
 
+
+export const getStaticProps: GetStaticProps = async(contex) => {
+
+  return {
+    revalidate: 5,
+    props: {
+      value: {
+        donationId: 0,
+        NFTreceived: false,
+        donationClosed: false,
+        donationReceived: false,
+        donationPickup: false
+      },
+      data: {
+        language: '',
+        name: '',
+        location: '',
+        phoneNo: '',
+        time: '',
+        date: '',
+        items: '',
+        quentity: 0,
+        img: ''
+      }
+    }
+  }
+
+}
 
 
 function DonationInfo(props: any) {

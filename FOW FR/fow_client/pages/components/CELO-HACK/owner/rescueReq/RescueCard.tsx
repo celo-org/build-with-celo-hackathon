@@ -2,7 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import RescueInfo from './RescueInfo';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { GetStaticProps } from 'next';
 
+
+export const getStaticProps: GetStaticProps = async(contex) => {
+
+  return {
+    revalidate: 5,
+    props: {
+      data: {
+        rescueInfo: null,
+        rescueClosed: false,
+        rescueId: 0
+      }
+    }
+  }
+
+}
 
 function RescueCard(props: any) {
 
