@@ -39,6 +39,17 @@ contract SacudaTest is Test {
         console.log(sacuda.tokenURI(1));
     }
 
+    function testMintAndUpdateName() public {
+        sacuda.grantRole(minter, caro);
+        vm.startPrank(caro);
+        sacuda.mint(amy, false, "Amy");
+        assertEq(sacuda.name(1), "Amy");
+        console.log(sacuda.tokenURI(1));
+        sacuda.updateName(1, "Amelia");
+        assertEq(sacuda.name(1), "Amelia");
+        console.log(sacuda.tokenURI(1));
+    }
+
     function testUpdateReport() public {
         uint8 num = 75;
         sacuda.grantRole(admin, caro);
