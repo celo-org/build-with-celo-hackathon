@@ -57,7 +57,7 @@ html {
 @-ms-viewport {
   width: device-width;
 }
-.desc-p{
+.description{
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
