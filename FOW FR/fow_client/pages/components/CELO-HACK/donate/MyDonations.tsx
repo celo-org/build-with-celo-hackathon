@@ -74,7 +74,7 @@ function MyDonations() {
       <div className={styles.page}>
         <Link href="/components/CELO-HACK/donate/MyNFTs">
           <Button variant='contained' size='small' className='bg-sky-700'>
-            <span className='text-sm capitalize'>Show My NFT's</span>
+            <span className='text-sm capitalize'>Show My NFTs</span>
           </Button>
         </Link>
         {data.map((value, index) => {

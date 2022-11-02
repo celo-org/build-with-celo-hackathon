@@ -102,7 +102,7 @@ function RescueDetail() {
         <div className={styles.head}>
           <span className='text-xl max-text-2xl font-bold text-sky-600'>Rescue Food Details</span>
           <Link href="/components/CELO-HACK/rescue/MyRescues">
-            <Button variant='contained' className='bg-sky-700'><span className="capitalize text-sm">Rescue's</span></Button>
+            <Button variant='contained' className='bg-sky-700'><span className="capitalize text-sm">Rescues</span></Button>
           </Link>
         </div>
 
