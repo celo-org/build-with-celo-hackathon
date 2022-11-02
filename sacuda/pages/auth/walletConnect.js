@@ -1,6 +1,7 @@
 import { FaMagic } from 'react-icons/fa';
+import React, { useState } from 'react';
 import { Text, Heading, Button } from '@chakra-ui/react';
-import { useSession, signIn, getSession } from "next-auth/react";
+import { useSession, signIn, getSession, signOut } from "next-auth/react";
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { ConnectButton} from "@rainbow-me/rainbowkit";
@@ -20,7 +21,7 @@ const walletConnect = () => {
      signIn(); //What to show to unathenticated users
     }
   })
-
+  const [userMail, setUserMail] = useState('');
 
   const writeProfileBasics = async () => {
     const res = await fetch('/api/handler', {
@@ -34,26 +35,41 @@ const walletConnect = () => {
       }),
     });
     const data = await res.json();
-    console.log(data);
   };
 
-  function mainRedirect() {
+  const getUserEmail = async () => {
+    const res = await fetch('/api/userByEmail/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(session.user.email),
+    });
+    const data = await res.json();
+    setUserMail(data.email)
+  };  
+
+  const mainRedirect = () => {
     router.push('/selection') }
 
   if (status === "loading") {
     return "Loading..."
   }
 
-    if (isConnected && Sacuda.email===[]) {
-        writeProfileBasics()
-//        readProfileBasics();
-//        console.log(sacudas.props)
-//        sacudas.props === null ? writeProfileBasics : mainRedirect();
-    }
-    else
-    if (isConnected && Sacuda.email===session.user.email) {
+    if (isConnected) {
+      getUserEmail()
+        if (userMail===session.user.email) {
         mainRedirect();
-    }
+      }
+          else
+            if (userMail===null) {
+            console.log('Writing profile for:'+session.user.email)
+            writeProfileBasics()
+            }
+              else {
+                signOut()
+              }
+  }
     else
 
   return(
@@ -79,31 +95,3 @@ const walletConnect = () => {
 }
 
 export default walletConnect;
-
-export const getServerSideProps = async (ctx) => {
-
-    const session = await getSession(ctx)
-    try {        
-        console.log('CONNECTING TO MONGO');
-        console.log(process.env.NODE_ENV)
-        await connectMongo();
-        console.log('CONNECTED TO MONGO');
-    
-        console.log('FETCHING DOCUMENTS');
-        const sacudas = await Sacuda.find({ email: session.user.email});
-        console.log('FETCHED DOCUMENTS');
-        console.log(sacudas)
-        console.log(Sacuda.email)
-        return {
-          props: {
-            sacudas: JSON.parse(JSON.stringify(sacudas)),
-          },
-        };
-        
-      } catch (error) {
-        console.log(error);
-        return {
-          notFound: true,
-        };
-      }
-  }

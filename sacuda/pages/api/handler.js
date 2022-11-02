@@ -2,7 +2,7 @@ import connectMongo from '../../utils/connectMongo';
 import Sacuda from '../../models/sacudaModel';
 
 export default async function handler (req, res) {
-  const { method } = req
+  const { method,body } = req
   console.log('CONNECTING TO MONGO');
   await connectMongo()
   console.log('CONNECTED TO MONGO');
