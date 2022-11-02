@@ -1,6 +1,9 @@
 import type { HardhatRuntimeEnvironment } from 'hardhat/types';
+import { getEnvVar } from '../app/common/env';
+import { Network } from '../app/common/blockchain';
 
 const contractName = 'Colony';
+const defaultNetwork = getEnvVar<Network>('DEPLOYMENT_NETWORK');
 
 async function deployer(hre: HardhatRuntimeEnvironment) {
   const [ownerAddress] = await hre.getUnnamedAccounts();
@@ -20,10 +23,12 @@ async function deployer(hre: HardhatRuntimeEnvironment) {
     },
   });
 
-  await hre.ethernal.push({
-    name: contractName,
-    address: colony.address,
-  });
+  if (defaultNetwork === 'ganache') {
+    await hre.ethernal.push({
+      name: contractName,
+      address: colony.address,
+    });
+  }
 
   console.log(`Deployed colony successfully`, colony.address);
 }

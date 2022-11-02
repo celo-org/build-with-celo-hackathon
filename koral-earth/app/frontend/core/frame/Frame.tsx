@@ -1,6 +1,6 @@
 import '@celo/react-celo/lib/styles.css';
 
-import { CeloProvider } from '@celo/react-celo';
+import { CeloProvider, SupportedProviders } from '@celo/react-celo';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Head from 'next/head';
 import { PropsWithChildren, useState } from 'react';
@@ -40,6 +40,21 @@ export const Frame = ({ children, title = 'Koral Earth' }: Props) => {
             description: 'Win rewards for offsetting your carbon footprint',
             url: 'http://celo-demo.koral.earth',
             icon: '',
+          }}
+          connectModal={{
+            providersOptions: {
+              hideFromDefaults: [
+                SupportedProviders.CoinbaseWallet,
+                SupportedProviders.Injected,
+                SupportedProviders.Ledger,
+                SupportedProviders.MetaMask,
+                SupportedProviders.Omni,
+                SupportedProviders.PrivateKey,
+                SupportedProviders.Valora,
+                SupportedProviders.WalletConnect,
+              ],
+              searchable: true,
+            },
           }}
           networks={celoNetworks}
           manualNetworkMode={true}

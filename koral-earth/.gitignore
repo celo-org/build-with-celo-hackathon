@@ -9,5 +9,7 @@ typechain-types
 cache
 artifacts
 
-#temporarily ignore contract deployments
-deployments
+#ignore local contract deployments
+deployments/ganache
+
+.DS_Store
