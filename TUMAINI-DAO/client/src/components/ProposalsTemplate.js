@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+
 import moment from "moment-timezone"
 let times
 const ProposalTemplate =(props)=>{
@@ -51,3 +52,5 @@ const ProposalTemplate =(props)=>{
 </div>
 }
 export default ProposalTemplate
+
+
