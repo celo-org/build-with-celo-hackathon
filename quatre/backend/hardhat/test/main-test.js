@@ -2,7 +2,7 @@
 /*
 Testing for Quatre Token
 */
-const catchRevert = require("./helpers.js").catchRevert;
+// const catchRevert = require("./helpers.js").catchRevert;
 const { BigNumber } = require("bignumber.js");
 const { expect, assert } = require("chai");
 // const Web3 = require("web3");
@@ -51,12 +51,12 @@ const data = {
     publicId: null,
     privateId: null,
     trusteeBal : 0,
-    unit : Web3.utils.toBN('1000000000000000000').toString(),
-    price : Web3.utils.toBN('10000000000000000').toString(),
-    minimumPoolAmount : Web3.utils.toBN('10000000000000000').toString(),
-    value1 : Web3.utils.toBN('200000000000000000000000').toString(),
-    value2: Web3.utils.toBN('1000000000000000000000').toString(),
-    value3 : Web3.utils.toBN('2000000000000000000000').toString(),
+    unit : Web3.utils.toBN(1e+18).toString(),
+    price : Web3.utils.toBN(1e+16).toString(),
+    minimumPoolAmount : Web3.utils.toBN(1e+16).toString(),
+    value1 : Web3.utils.toBN(2e+23).toString(),
+    value2: Web3.utils.toBN(1e+21).toString(),
+    value3 : Web3.utils.toBN(2e+21).toString(),
 }
 
 

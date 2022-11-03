@@ -12,15 +12,21 @@
 
 module.exports = async ({ getNamedAccounts, deployments }) => {
   const { deploy } = deployments;
-  const { deployer } = await getNamedAccounts();
+  const { deployer, feeTo } = await getNamedAccounts();
 
-  await deploy("Account", {
+  const alcManager = await deploy("AccountManager", {
     from: deployer,
-    args: ["hello world"],
+    args: [feeTo],
     log: true,
   });
 
-  await deploy("QuatreToken", {
+  const digesuLib = await deploy("DigesuLib", {
+    from: deployer,
+    args: [],
+    log: true,
+  });
+
+  const token = await deploy("QuatreToken", {
     // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
     from: deployer,
     // args: [ "Hello", ethers.utils.parseEther("1.5") ],
@@ -28,11 +34,19 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     log: true,
   });
 
-  await deploy("Main", {
+  await deploy("Digesu", [], {
     // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
     from: deployer,
-    args: [ "Hello", ethers.utils.parseEther("1.5") ],
+    args: [
+      token.address, 
+      ethers.utils.parseEther("0.1"),
+      feeTo,
+      alcManager.address
+    ],
     log: true,
+  }, 
+  {
+    LibraryName: digesuLib.address
   });
 
   // Getting a previously deployed contract
@@ -66,4 +80,4 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   */
 };
 
-module.exports.tags = ["Greeter", "Storage", "SupportToken"];
+module.exports.tags = ["AccountManager", "QuatreToken", "Digesu"];
