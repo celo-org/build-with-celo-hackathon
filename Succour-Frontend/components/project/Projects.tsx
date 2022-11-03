@@ -12,7 +12,10 @@ const Projects = () => {
 
   const SuccourAddress = "0x12F57C67FDd16109B549F0B40579694fE12bf9Fd"
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> d32647a491f8e9a2b7f3ba4c8a15252d7da31dcf
   // read proposed project from the contract
 
   const {data: DAOProposals} = useContractRead({

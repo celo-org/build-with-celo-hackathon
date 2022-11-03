@@ -16,7 +16,7 @@ const Footer = () => {
                               <div className={styles.footer_title}>
                                    Stay connected on future releases and events
                               </div>
-                              <button className={styles.button}>Join DAO</button>
+                              <button className={styles.button}>Coming Soon</button>
                          </div>
                      <div className={styles.footer_social}>
 

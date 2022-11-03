@@ -3,8 +3,8 @@ import Link from 'next/link'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.scss'
-import styleLeft from '../assets/left-style.svg'
-import styleRight from '../assets/right-style.svg'
+// import styleLeft from '../assets/left-style.svg'
+// import styleRight from '../assets/right-style.svg'
 import Logo from '../assets/Succour.svg'
 import Preloader from '../components/Preloader'
 import {motion} from 'framer-motion'
@@ -54,17 +54,17 @@ const Home: NextPage = () => {
           </Link>
 
             <Link href="/Crowdfunding">
-                <button className={styles.crowdfunding_btn}>Crowd funding</button>
-            </Link>
+               <button className={styles.crowdfunding_btn}>Crowd funding</button>
+            </Link> 
         </div>
-
+                 
         </div>
 
       </div>
 
-        <div className={styles.netvector_right}></div>
-        <div className={styles.circle_right}></div>
-      </div>
+       <div className={styles.netvector_right}></div>      
+       <div className={styles.circle_right}></div>
+       </div>
 
     </section>
     </>

@@ -1,12 +1,17 @@
 import React from 'react'
 import Navbar from '../../components/navbar/Navbar'
 import styles from './feeds.module.scss'
+import Link from 'next/link'
 import Footer from '../../components/footer/Footer'
 import SearchIcon from '../../assets/search-normal.svg'
 import Image from 'next/image'
-import {data} from './feed'
+import { useRouter } from 'next/router'
 
 const Feeds = () => {
+
+    const router = useRouter()
+    const { id } = router.query
+
   return (
      <>
      <Navbar />
@@ -26,6 +31,7 @@ const Feeds = () => {
           </div>
           
           <div className={styles.feeds_container}>
+            <Link href={`/ProjectPage/${id}`}>
              <div className={styles.feeds_content}>
                 <div className={styles.user_info}>
                     <h1 className={styles.name}>John Doe</h1>
@@ -40,6 +46,7 @@ const Feeds = () => {
                 <h1 className={styles.problem_title}>Women Violation in Iran</h1>
                <p className={styles.desc}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vulputate egestas tincidunt pharetra ac ornare est cursus. Varius adipiscing lectus consectetur pharetra. Non congue lacus, lacus tellus et leo vulputate adipiscing. Rhoncus magna adipiscing varius mi lacus eu ipsum. Faucibus eu sit integer est. Nisi molestie commodo egestas faucibus orci commodo integer congue. Commodo eu magna enim pulvinar vitae amet quis faucibus id. </p>
                </div>
+               </Link>
             </div>
       </div>
     </div>

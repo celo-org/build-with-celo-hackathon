@@ -104,7 +104,7 @@
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center center;
-            background: #5E5E5E;
+            background: linear-gradient(92.97deg, rgba(47, 228, 191, 0.71) 32.76%, #6D837E 95.79%);
           }
 
           .fundraiser_text {
@@ -207,7 +207,7 @@
           transition: all 0.5s ease-out;
 
           &:hover {
-            background: #331F33;
+            background: #1C3933;
           }
         }
 

@@ -4,7 +4,6 @@
   position: relative;
   background: #0E0D0D;
 
-
   .wrapper {
     margin: 0 auto;
     max-width: calc(100% - 2.875rem);
@@ -135,7 +134,7 @@
               background-size: cover;
               background-repeat: no-repeat;
               background-position: center center;
-              background: #5E5E5E;
+              background: linear-gradient(92.59deg, #F164F1 6.24%, rgba(128, 16, 128, 0.8) 100%);
             }
 
             .project_text {

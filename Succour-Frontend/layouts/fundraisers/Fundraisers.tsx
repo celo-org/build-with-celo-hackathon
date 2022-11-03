@@ -15,9 +15,6 @@ const Projects = () => {
     const handleMoreProjectItem = () => {
       setVisible((prevValue) => prevValue + 6);
     }
-
-
-
     const {data: fundraiser } = useContractRead({
       addressOrName: SuccourAddress,
       contractInterface: Succour_abi,
@@ -27,7 +24,12 @@ const Projects = () => {
     const hexToDecimal = (hex:any) => parseInt(hex, 16);
 
     const headerStyle = {
-      color: "white"
+      color: "white",
+      height: "60px",
+      textAlign: "center",
+      background: "#1C3933",
+      borderRadius: "10px",
+      fontSize: "16px"
     }
 
 
@@ -91,6 +93,7 @@ const Projects = () => {
                                     )
                                   })
                           ):(
+                            //@ts-ignore
                             <h1 style={headerStyle}>There is no available fundraiser, you can create one if you have any</h1>
                           )
                         }

@@ -9,8 +9,8 @@ async function main() {
   await succour.deployed();
   console.log(`Succour contract deployed to ${succour.address}`);
 
-  const minimumRequirement = await ethers.utils.parseEther("10");
-  const maximumRequirement = await ethers.utils.parseEther("200");
+  const minimumRequirement = await ethers.utils.parseEther("5000");
+  const maximumRequirement = await ethers.utils.parseEther("100000");
   const tokenAddress = "0x07b8b15Afd654e9334A3D63396B5f9092bfb0D9E";
 
   const constructData = await succour.encode(minimumRequirement, maximumRequirement,tokenAddress )

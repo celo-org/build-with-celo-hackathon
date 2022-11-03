@@ -18,12 +18,7 @@ const Campaign = () => {
 
                               <div className={styles.content_img}></div>
                           </div>
-                          
-                          {/* <div className={styles.illustration}>
-                          <div className={styles.background}>
-                              <Image src={CircleIllustration} className={styles.img} alt="" />
-                          </div>
-                          </div> */}
+
                          </div>
                     </div>
                </div>

@@ -6,16 +6,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import arrowLeftSvg from '../../assets/arrow-left.svg'
 import Donatetime from '../../components/donatetime/Donatetime'
+import RelatedProjects from '../../components/relatedProjects/RelatedProjects'
 
 const ProjectPage = () => {
-
   
-      const [showDonateModal, setShowDonateModal] = useState(false);
-
-     const openModal = () => {
-       setShowDonateModal(prev => !prev);
-     }
-
   return (
      <>
      <Navbar />
@@ -60,7 +54,8 @@ const ProjectPage = () => {
         </div>
       </div>
      </div>
-    <Donatetime showDonateModal={showDonateModal} setShowDonateModal={setShowDonateModal} />
+    <Donatetime  />
+    {/* <RelatedProjects /> */}
     <Footer />
     </>
   )

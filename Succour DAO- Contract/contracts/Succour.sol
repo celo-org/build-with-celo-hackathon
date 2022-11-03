@@ -7,8 +7,6 @@ import "./ISuccour.sol";
 
 contract Succour is Proxiable{
 
-
-//0x9b7Fb05121f7AAC62a324e109c10F138eCd5C342
     
     address public owner;
 

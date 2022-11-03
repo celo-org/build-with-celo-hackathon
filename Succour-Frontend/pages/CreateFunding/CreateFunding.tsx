@@ -18,7 +18,7 @@ const CreateFunding = () => {
      const SuccourAddress = "0x12F57C67FDd16109B549F0B40579694fE12bf9Fd"
 
      const [fundname, setFundname] = useState("");
-     const [fundreason, setFundreason] = useState("");
+     const [funddesc, setFunddesc] = useState("");
      const [amountneeded, setAmountneeded] = useState("")
 
 
@@ -36,7 +36,7 @@ const CreateFunding = () => {
           functionName: 'createGofund',
           args: [
                fundname,
-               fundreason,
+               funddesc,
                ethers.utils.parseEther(amountneeded ? amountneeded.toString(): "0")
           ]
      })
@@ -83,16 +83,16 @@ const CreateFunding = () => {
                      <input id="input" name="input" type="text" /> */}
 
                       <label>Funding title</label>
-                     <input id="input" name="input" type="text" value={fundname} onChange={(e)=> e.target.value} />
+                     <input id="input" name="input" type="text" value={fundname} onChange={(e)=> setFundname(e.target.value)} />
 
                      {/* <label>Project links</label>
                      <input id="input" name="input" type="text" onChange={(e)=> e.target.value}/> */}
 
                       <label>Amount to be funded</label>
-                      <input id="input" name="input" type="text" value={amountneeded} onChange={(e)=> e.target.value}/>
+                      <input id="input" name="input" type="text" value={amountneeded} onChange={(e)=> setAmountneeded(e.target.value)}/>
 
                       <label>Funding description</label>
-                     <textarea cols={30} rows={5} value={fundreason} onChange={(e)=> e.target.value}></textarea>
+                     <textarea cols={30} rows={5} value={funddesc} onChange={(e)=> setFunddesc(e.target.value)}></textarea>
                      {/* <label>Project media</label>
                      <div className={styles.upload_btn_wrapper}>
                          <div className={styles.cloudsvg}>
@@ -116,7 +116,7 @@ const CreateFunding = () => {
                          >
                               {(fundingIsLoading || fundingLoader) ? "Loading..." : "Create Funding"}
                          </button> :
-        <div className={styles.creatfunding_btn}>
+                 <div className={styles.createfunding_btn}>
               <ConnectButton.Custom>
       {({
         account,

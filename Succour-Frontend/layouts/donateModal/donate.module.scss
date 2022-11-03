@@ -127,6 +127,39 @@
                     }
 
                    }
+
+                   
+                   .connection {
+                     margin-top: 40px;
+
+                     .connect_btn {
+                          cursor: pointer;
+                          border: none;
+                          background: linear-gradient(92.97deg, rgba(47, 228, 191, 0.71) 32.76%, #6D837E 95.79%);
+                          border-radius: 30px;
+                          width: 250px;
+                          height: 55px;
+                          font-weight: 400;
+                          font-size: 16px;
+                          line-height: 165%;
+                          color: #FFFEFE;
+                          transition: all 100ms ease-out;
+                     }
+
+                     .wrong_btn {
+                          cursor: pointer;
+                          border: none;
+                          background: linear-gradient(92.97deg, rgba(47, 228, 191, 0.71) 32.76%, #6D837E 95.79%);
+                          border-radius: 30px;
+                          width: 250px;
+                          height: 55px;
+                          font-weight: 400;
+                          font-size: 16px;
+                          line-height: 165%;
+                          color: #FFFEFE;
+                          transition: all 100ms ease-out;
+                     }
+                   }
                }
            }    
            

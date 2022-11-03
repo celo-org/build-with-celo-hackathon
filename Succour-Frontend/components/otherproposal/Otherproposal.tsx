@@ -19,7 +19,7 @@ const Otherproposal = () => {
                 <h1 className={styles.title}>Other proposals</h1>
                </div>
 
-               <Link href="/ProjectPage/634737">
+                <Link href={`/ProposePage/${id}`}>
                <div className={styles.otherproposal_content}>
                             {
                     data?.slice(0, visible)?.map(({ id, time, title, address, type, problem }) => {

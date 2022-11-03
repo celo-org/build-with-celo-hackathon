@@ -9,6 +9,7 @@ import { ethers } from 'ethers'
 import { useAccount } from 'wagmi'
 import { Hash } from 'crypto'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { ToastContainer, toast } from 'react-toastify'
 
 interface IProps {
      showDepositModal: any;
@@ -42,20 +43,23 @@ const DepositModal = ({ showDepositModal, setShowDepositModal } : IProps) => {
     hash: depositData?.hash,
     onSuccess(){
       // add toastify; input: Deposit Successful
+        toast.success('Deposit Successful', {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 8000
+              })
     },
     onError(data){
       console.log(data)
       // add toastify; input: Unable to deposit
+       toast.error('Unable to deposit', 
+        { position: toast.POSITION.TOP_CENTER })
     }
   })
 
   const handleSubmit = (e:any) => {
     e.preventDefault();
-
     depositWrite();
   }
-
-
 
        const modalRef = useRef<any | any>();
       

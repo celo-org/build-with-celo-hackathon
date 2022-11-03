@@ -7,7 +7,10 @@ import Succour_abi from "../../abi/abi.json"
 const Votetime = () => {
   const SuccourAddress = "0x12F57C67FDd16109B549F0B40579694fE12bf9Fd"
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> d32647a491f8e9a2b7f3ba4c8a15252d7da31dcf
   const {query} = useRouter()
 
   const pageId = query.id
@@ -38,8 +41,11 @@ const Votetime = () => {
     ]
   })
 
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> d32647a491f8e9a2b7f3ba4c8a15252d7da31dcf
   return (
     <div className={styles.votetime}>
       <div className={styles.wrapper}>

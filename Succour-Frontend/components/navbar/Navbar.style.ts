@@ -43,15 +43,42 @@ export const NavbarLink = styled.a`
   transition: all 400ms ease-in-out;
   /* margin: 19px; */
   margin-right: 40px;
-
   &:hover {
      color: #FFFFFF;
   }
-
    @media (max-width: 800px) {
      display: none;
   }
 `
+
+export const Connection = styled.div`
+  margin-left: -5px;
+  margin-right: 15px;
+`
+
+export const ConnectionButton = styled.button`
+ cursor: pointer;
+ border: none;
+ background: linear-gradient(92.59deg, #AF4AAF 6.24%, rgba(49, 7, 49, 0.8) 100%);
+ border-radius: 20px;
+ width: 120px;
+ height: 45px;
+ font-weight: 500;
+ font-size: 15px;
+ line-height: 165%;
+ color: #FFFEFE;
+ transition: all 100ms ease-out;
+`
+
+export const Button = styled.button`
+ background: #331F33;
+ border: 1px solid #804D80;
+ font-weight: 500;
+ font-size: 12px;
+ line-height: 165%;
+ color: #FFFEFE;
+`
+
 export const Logo = styled.div`
   cursor: pointer;
   margin: 10px;
@@ -74,7 +101,6 @@ export const NavbarButton = styled.button`
   border-width: 2px;
   border-radius: 30px;
   margin-right: 40px;
-
   @media (max-width: 700px) {
      display: none;
   }
@@ -98,7 +124,6 @@ export const NavbarButtonExtended = styled.button`
   background: transparent;
   text-align: center;
   color: #FFFFFF;
-
    &:hover {
     background: #331F33;
   }
@@ -112,7 +137,6 @@ export const NavbarUser = styled.div`
      height: 64px;
      background: linear-gradient(120.83deg, #131313 0%, rgba(54, 53, 53, 0) 100%, rgba(54, 53, 53, 0) 100%);
      border-radius: 30px;
-
      @media(max-width: 700px) {
           display: none;
      }
@@ -138,7 +162,6 @@ export const NavbarLinkExtended = styled.a`
   transition: all 400ms ease-in-out;
   text-decoration: none;
   margin: 19px;
-
   &:hover {
      color: #FFFFFF;
   }
@@ -156,7 +179,6 @@ export const OpenLinksButton = styled.button`
   color: white;
   font-size: 45px;
   cursor: pointer;
-
   @media (min-width: 700px) {
      display: none;
   }
@@ -166,9 +188,7 @@ export const NavbarExtendedContainer = styled.div`
  display: flex;
  flex-direction: column;
  align-items: center;
-
  @media (min-width: 700px) {
      display: none;
  }
-
 `

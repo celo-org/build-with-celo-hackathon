@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import { useRouter } from 'next/router'
 import Navbar from '../../components/navbar/Navbar'
 import styles from './profilepage.module.scss'
 import Link from 'next/link'
@@ -15,7 +16,7 @@ const ProfilePage = () => {
 
   const SuccourAddress = "0x12F57C67FDd16109B549F0B40579694fE12bf9Fd"
   const { address } = useAccount();
-
+  const router = useRouter();
 
     const [showModal, setShowModal] = useState(false);
     const [showDepositModal, setShowDepositModal] = useState(false);
@@ -27,7 +28,6 @@ const ProfilePage = () => {
     const openDepositModal = () => {
       setShowDepositModal(prev => !prev);
     }
-
 
     // read function for users details
 
@@ -41,7 +41,6 @@ const ProfilePage = () => {
     })
 
     console.log(userProfile, "userProfile")
-
 
     const {
         data: requestToWithdrawData,
@@ -62,6 +61,7 @@ const ProfilePage = () => {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 8000
               })
+              router.push('/dao')
         },
         onError(data){
               console.log(data)
@@ -146,6 +146,7 @@ return (
                             Request to Withdraw
                         </button>
                         </>:
+                        // Custom Button begins here
                         <div>
               <ConnectButton.Custom>
       {({

@@ -107,15 +107,17 @@ const JoinModal = ({ showJoinModal, setShowJoinModal } : IProps) => {
       // add toastify; input: Transaction sent successfully
       toast.success('Transaction sent successfully!', {
       position: toast.POSITION.TOP_RIGHT,
-      autoClose: 8000
+      autoClose: 8000,
      })
-      router.push("/profilepage/ProfilePage")
+     router.push("/dao")
+      
     },
     onError(data){
       console.log(data)
       // add toastify; input: Error encountered in joining SuccourDAO
-      toast.error('Error encountered in joining SuccourDAO!', 
-      { position: toast.POSITION.TOP_CENTER })
+      toast.error('Error encountered in joining SuccourDAO!', {  
+        position: toast.POSITION.TOP_CENTER
+    })
     }
   })
 
@@ -128,8 +130,6 @@ const JoinModal = ({ showJoinModal, setShowJoinModal } : IProps) => {
 
   return (
       <>
-      <ToastContainer />
-
       {showJoinModal ? (
       <div className={styles.join} ref={modalRef} onClick={closeModal}>
             {/* animating the whole container properties*/}
