@@ -4,7 +4,7 @@
 
 ## Project Name :- EXPLORE THE WORLD VENTURE OUTSIDE TO CAPTURE GEO-TAGGED NFTs
 ### Team name :- SHA256
-#### Hackathon Track :- GameFi
+#### Hackathon Track :- GameFi and ReFi
 
 ##### Region location
 
@@ -43,13 +43,23 @@ a) These NFTs can be in the form of vouchers from retail businesses such as rest
 b) This serves as a marketing tool for businesses to drive foot traffic while promoting health and wellness.
 
 #### URLs
-List any URLs relevant to demonstrating your prototype
+https://youtu.be/pfh-T42jTPk
 
 #### Presentation
-List any links to your presentation or any related visuals you want to share.
+https://www.canva.com/design/DAFQfRUJFgI/4Y2ycmdeAWue5qRgc9daQQ/view?utm_content=DAFQfRUJFgI&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink
 
 #### Next Steps
-What do you need to do next to turn this prototype into a working solution?
+We Need support and contacts with vendors ,businesses and restaurants for testing and release of  our application 
+
+#### Source Code
+https://github.com/abhijeet0401/MapX_Celo
+
+
+
+## How to Install 
+1) Download the apk file [MAPX](https://drive.google.com/file/d/1oZIDC3V8pG8D8A7y5_JGBiM-BtyT7iOl/view?usp=sharing) https://drive.google.com/file/d/1oZIDC3V8pG8D8A7y5_JGBiM-BtyT7iOl/view?usp=sharing and install in your android phone 
+
+2) Catch all the NFTs
 
 #### License
 This repository includes an [unlicensed](http://unlicense.org/) statement though you may want to [choose a different license](https://choosealicense.com/).
