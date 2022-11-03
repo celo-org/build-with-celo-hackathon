@@ -1,5 +1,7 @@
 const path = require("path")
 const webpack = require("webpack")
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin
 
 module.exports = {
   entry: "./autotasks/relay/index.js",
@@ -25,6 +27,7 @@ module.exports = {
   ],
   externalsType: "commonjs2",
   plugins: [
+    new BundleAnalyzerPlugin(),
     // List here all dependencies that are not run in the Autotask environment
     new webpack.IgnorePlugin({ resourceRegExp: /dotenv/ }),
   ],
