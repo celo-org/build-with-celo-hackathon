@@ -17,7 +17,7 @@ export default function Builder() {
   const [currentDistance, setCurrentDistance] = useState<number>(0)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const { run3TBalance } = useRun3T()
+  const { run3TBalance, getRun3TBalance } = useRun3T()
   const addCoordToRoute = async () => {
     const currentCoord = await Location.getCurrentPositionAsync({ accuracy: Location.LocationAccuracy.Balanced })
     const index = routeCoords.findIndex(
@@ -29,6 +29,12 @@ export default function Builder() {
   const closeForm = () => {
     setShowBuildForm(false)
   }
+
+  useEffect(() => {
+    if (!run3TBalance) {
+      getRun3TBalance()
+    }
+  }, [run3TBalance])
 
   useEffect(() => {
     let totalDistance = 0

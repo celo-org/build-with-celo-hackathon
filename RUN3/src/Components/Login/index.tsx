@@ -50,7 +50,6 @@ export default function Login({ navigation }: { navigation: any }) {
       if (state.privKey) {
         const provider = new CeloProvider(NET_PROVIDER)
         await provider.ready
-
         const walletWithProvider = new CeloWallet(state.privKey, provider)
         setProvider(provider)
         setWalletWithProvider(walletWithProvider)

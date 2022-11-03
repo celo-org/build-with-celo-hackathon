@@ -22,7 +22,7 @@ import { useWatch } from '../../hooks/useWatch'
 export default function Home() {
   const { walletWithProvider } = useWalletProvider()
   const { getWatchDataByUser, watchData } = useWatch()
-  const { mintRun3Token, run3TBalance } = useRun3T()
+  const { mintRun3Token, run3TBalance, getRun3TBalance } = useRun3T()
 
   const [tooltipVisible, setTooltipVisible] = useState({
     type: '',
@@ -59,6 +59,7 @@ export default function Home() {
       }
 
       getBalance()
+      getRun3TBalance()
       setShouldRefresh(false)
     }
   }, [shouldRefresh])
