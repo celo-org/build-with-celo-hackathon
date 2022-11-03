@@ -31,10 +31,10 @@ A next-gen geo-tagged playground where players meet opportunities offered with a
   • The next generation of web building blocks are here — foster relationships between you and your customer .Tokenize your business offerings into a format that is hard to resist for your target group.
 
 
-  • Pokemon Go has proven that it can flock people into places to "catch them all". Team Encrypt is aiming to offer businesses the exact same effect. Build communities by gathering people together.
+  • Pokemon Go has proven that it can flock people into places to "catch them all". Team MapX is aiming to offer businesses the exact same effect. Build communities by gathering people together.
 
 
-  • Encrpyt mission is to be an NFT platform with real-life utilities. It seeks to encourage exploration and adventure
+  • MapX mission is to be an NFT platform with real-life utilities. It seeks to encourage exploration and adventure
 
   • Collectable geo-tagged NFTs will be available around the neighbourhood, which players can redeem.
 
