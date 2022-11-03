@@ -20,13 +20,14 @@ async function relay(forwarder, request, signature, whitelist) {
   const gasLimit = (parseInt(request.gas) + 50000).toString()
   const tx = await forwarder.execute(request, signature, { gasLimit })
   const reciept = await tx.wait(10)
+  console.log(reciept)
   return reciept
 }
 
 async function handler(event) {
   // Parse webhook payload
   if (!event.request || !event.request.body) throw new Error(`Missing payload`)
-  const { request, signature, params } = event.request.body
+  const { request, signature } = event.request.body
   console.log(`Relaying`, request, signature)
 
   // Initialize Relayer provider and signer, and forwarder contract

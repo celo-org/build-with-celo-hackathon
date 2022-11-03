@@ -48,6 +48,7 @@
     "@openzeppelin/contracts-upgradeable": "^4.8.0-rc.1",
     "@openzeppelin/hardhat-upgrades": "^1.21.0",
     "@rari-capital/solmate": "^6.4.0",
+    "@redstone-finance/evm-connector": "^0.0.8",
     "@rollup/plugin-commonjs": "^23.0.2",
     "@rollup/plugin-json": "^5.0.1",
     "@rollup/plugin-node-resolve": "^15.0.1",
@@ -59,6 +60,8 @@
     "eth-sig-util": "^3.0.1",
     "flutterwave-node": "^1.2.2",
     "flutterwave-node-v3": "^1.0.11",
+    "redstone-protocol": "^1.0.2",
+    "redstone-sdk": "^1.0.4",
     "webpack-bundle-analyzer": "^4.7.0"
   }
 }
