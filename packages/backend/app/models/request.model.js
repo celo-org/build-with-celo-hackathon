@@ -4,39 +4,39 @@ module.exports = mongoose => {
         // create hook that auto-generates title
         title: {
           type: String,
-          required: [true, 'Request title is required.']
+          // required: [true, 'Request title is required.']
         },
         scrap_category: {},
         scrap_subcategory: {},
         description: {
           type: String,
-          required: true
+          // required: true
         },
         quantity_required: {
           type: Number,
-          required: [true]
+          // required: [true]
         },
         amount_per_unit: {
           type: Number
         },
         request_expires_at: {
           type: Date,
-          required: true
+          // required: true
         },
         company: {
           type: mongoose.Schema.Types.ObjectId,
           ref: 'Company',
-          required: true
+          // required: true
         },
         collection_center: {
           type: mongoose.Schema.Types.ObjectId,
           ref: 'CollectionCenter',
-          required: true
+          // required: true
         },
         location: {
           type: mongoose.Schema.Types.ObjectId,
           ref: 'Location',
-          required: true
+          // required: true
         },
         escrow_payment: {
           type: mongoose.Schema.Types.ObjectId,
