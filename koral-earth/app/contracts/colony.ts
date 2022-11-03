@@ -1,4 +1,3 @@
-import { getEnvVar } from '../common/env';
 import ColonyAlfajores from './alfajores/Colony.json';
 import ColonyGanache from './ganache/Colony.json';
 import ColonyMainnet from './mainnet/Colony.json';

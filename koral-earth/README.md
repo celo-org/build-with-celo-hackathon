@@ -1,46 +1,70 @@
-## Project Name: koral.earth
+## Project Name
+
+Koral Protocol
 
 ### Team
 
-Koraliers
+- Koral Earth
 
-#### Hackathon Track
+### Hackathon Track
 
 - ReFi (SocialFi)
 
-##### Region location
+### Region location
 
 - Europe
 
-##### Team Members
+### Team Members
 
 - Caleb Lucas, Engineering
 - Nadia Sergejuk, Product
 
-#### Project Description
-We are helping businesses and individuals to offset their carbon footprint by providing them with fundable, verifiable (blockchain-traceable), carbon-reducing projects thus ultimately contributing to the neutralization of greenhouse gas emissions in a transparent yet privacy-respected way.
+### Project Description
 
-Our project also helps with the distribution of funds via Celo to the Global South where the carbon-offsetting projects and environmental technologies are winning ground. In this, we will help onboard the next billion people to the crypto ecosystem and Celo in particular.
+As of today, there is a lot of desire among businesses and individuals to calculate their carbon footprints. However, the conversion rate for offsetting these footprints is still relatively low. We can see this in airlines that try to compel their users to offset their footprints - users calculate their footprints but don't offset them. The same can be said about other carbon footprint offsetting apps (e.g. Wren, Climony, etc.).
 
-#### Summary
-**Basic Functionality for the hackathon:**
+Studies about human psychology show that incentives can be used to drive action. We also believe that, if leveraged correctly, incentives can be used to usher in a new phase in carbon offsetting. Many carbon-offsetting-enabled apps and products already provide some form of reward. However, the array of options is very limited. Providing more array of options is important. Building the infrastructure required to provide those array of options is even more important.
 
-- carbon footprint calculation tooling that sends privacy-enabled identifiable data on-chain
-- ability to pay for offsetting using a celo-enabled payment channel
-- ability to claim rewards using the Koral Protocol deployed on Celo
+At Koral Earth, we're building a sustainable rewards protocol that is designed to foster an ecosystem where carbon offsetting is transparently rewardable.
 
-**Plan for the future** 
+The protocol:
 
-We intend to create an efficient, reliable, trustworthy and transparent sets of toolings to help corporate clients and individuals to reach their voluntary and regulatory commitments related to net-zero through the Koral Protocol.
+- enables businesses and their users to engage with and invest in carbon-offsetting projects
 
-#### URLs
-List any URLs relevant to demonstrating your prototype
+- enables businesses to create a web3 native ecosystem of perks and rewards for their users
 
-#### Presentation
-List any links to your presentation or any related visuals you want to share.
+- helps with the distribution of funds to the Global South where carbon-offsetting projects and environmental technologies are winning ground
 
-#### Next Steps
-What do you need to do next to turn this prototype into a working solution?
+### Summary
 
-#### License
+At the protocol's core, businesses should be enabled to create their own unique ecosystem of carbon-offsetting projects and define reward definition, acquisition, redemption, ownership and reputation control for users/partners interacting with these ecosystems.
+
+Partners and users should also be able to integrate seamlessly with this ecosystem using the toolings we will build.
+
+For the hackathon, we've implemented a PoC for one of the components of this ecosystem: a basic liquidity pool + reward definition & redemption smart contract. The ecosystem comprises of a list of carbon-offsetting projects from the Toucan Protocol and allows users to financially contribute to and get rewards from the ecosystem. We've also implemented a frontend application to demonstrate how end-users may interact with the ecosystem.
+
+Since this is a PoC, it is only deployed on the Alfajores testnet. However, we'd like to improve the ecosystem implementation and move to mainnet.
+
+### URLs
+
+- [Frontend App](https://build-with-celo-hackathon.koral.earth/)
+
+- [Liquidity Pool + Reward Definition & Redemption Smart Contract](https://alfajores.celoscan.io/address/0xf8637613926ccb0a59af7df0fe295b1e8677ea3b)
+
+### Presentation
+
+TBD
+
+### Next Steps
+
+Build tools to enable:
+
+- creation and deployment of reward ecosystems
+
+- routing of funds in the liquidity pool directly to projects
+
+- partner integration with the reward ecosystems
+
+### License
+
 This software is licensed under the [GPL v3 License](./LICENSE)
