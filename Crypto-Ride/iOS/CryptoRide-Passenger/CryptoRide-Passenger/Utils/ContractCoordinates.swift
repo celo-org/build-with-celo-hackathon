@@ -15,9 +15,16 @@ class ContractCoordinates {
     /// Custom coordinate formate for soldity contracts
     ///
     /// First number represents how many positions the decimals sites
-    /// Second number presents is point is negative
+    /// Second number represents is point is negative
     ///             - 2 is negative
     ///             - 1 is positive
+    ///
+    /// [37.35022091004023,  -122.00158516290249]
+    /// [37.306514947930125, -122.02955449841939]
+    ///
+    /// [313735022091004023,  4212200158516290249]
+    /// [3137306514947930125,4212202955449841939]
+    ///
     /// - Parameters:
     ///         - `coordinates` CLLocationCoordinate2D location
     ///

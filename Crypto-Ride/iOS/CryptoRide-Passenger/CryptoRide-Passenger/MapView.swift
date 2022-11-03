@@ -16,10 +16,10 @@ struct MapView: UIViewRepresentable {
     let mapView = MKMapView()
     
     @EnvironmentObject var manager:LocationManager
-    @EnvironmentObject var ride:RideService
+    @EnvironmentObject var rideService:RideService
     
-    var startAnnotation:MKPointAnnotation = MKPointAnnotation()
-    var endAnnotation:MKPointAnnotation = MKPointAnnotation()
+    //var startAnnotation:MKPointAnnotation = MKPointAnnotation()
+    //var endAnnotation:MKPointAnnotation = MKPointAnnotation()
 
     
     func makeCoordinator() -> MapViewCoordinator {
@@ -33,8 +33,10 @@ struct MapView: UIViewRepresentable {
         mapView.setUserTrackingMode(.follow, animated: true)
         mapView.showsCompass = true
         mapView.region = manager.region
-        //mapView.register(CarAnnotationView.self, forAnnotationViewWithReuseIdentifier: "pin")
-        
+        mapView.addAnnotation(rideService.startAnnotation)
+        rideService.startAnnotation.title = "PickUp"
+        mapView.addAnnotation(rideService.endAnnotation)
+        rideService.endAnnotation.title = "DropOff"
         
         return mapView
     }
@@ -47,9 +49,9 @@ struct MapView: UIViewRepresentable {
                     if let place = places{
                             if(isStart){
 
-                                ride.humanStartLocation = place.first?.name ?? "Unkown Address"
+                                rideService.humanStartLocation = place.first?.name ?? "Unkown Address"
                             }else{
-                                ride.humanEndLocation = place.first?.name ?? "Unkown Address"
+                                rideService.humanEndLocation = place.first?.name ?? "Unkown Address"
                             }
                         
                         //here you can get all the info by combining that you can make address
@@ -59,55 +61,90 @@ struct MapView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: MKMapView, context: Context) {
-
-        if(manager.updateRegion) {
-            print("Update region")
         
+        
+        
+        
+        if(manager.removeAnnotation != nil) {
+            uiView.removeAnnotation(manager.removeAnnotation!)
+            manager.removeAnnotation = nil
+        }
+        
+        if(manager.updateRegion) {
+            if manager.selectedAnnotation == nil {
+                manager.updateRegion = false
+                return
+            }
             mapView.selectAnnotation(manager.selectedAnnotation!, animated: true)
-            
             mapView.region = manager.region
             manager.updateRegion = false
         }
         
-        if(ride.userLocation) {
-            startAnnotation.title = "Start"
-            startAnnotation.coordinate = CLLocationCoordinate2D(latitude: manager.currentLocation!.coordinate.latitude, longitude: manager.currentLocation!.coordinate.longitude )
-            
-            getHumanAddress(coordinates: startAnnotation.coordinate, isStart: true)
-            
-            
-            uiView.addAnnotation(startAnnotation)
-            ride.userLocation = false
+        //if(manager.isTracking) {
+        //    manager.trackAnnotation
+        //}
+        
+        if(!manager.driverPoints.isEmpty){
+            //uiView.addAnnotations()
+            uiView.addAnnotations(manager.driverPoints)
+            //print("Adding driver pins")
         }
         
-        if(ride.showDropOnStart && ride.startDropLocation != nil) {
+ 
+        
+        if(manager.clean){
+            mapView.removeOverlays(mapView.overlays)
+            manager.route = nil
+            manager.clean = false
+            mapView.removeAnnotation(rideService.startAnnotation)
+            rideService.startLocation = nil
+            rideService.endLocation = nil
+            rideService.startAnnotation.title = nil
+            rideService.endAnnotation.title = nil
+            mapView.removeAnnotation(rideService.endAnnotation)
+            return
+        }
+    
+        
+        
+        if(rideService.userLocation) {
   
-            let coordinate = self.mapView.convert(ride.startDropLocation!, toCoordinateFrom: self.mapView)
-            //ride.startLocation = coordinate
-            startAnnotation.title = "Start"
-            startAnnotation.coordinate = coordinate
-            uiView.addAnnotation(startAnnotation)
+            rideService.startAnnotation.coordinate = CLLocationCoordinate2D(latitude: manager.currentLocation!.coordinate.latitude, longitude: manager.currentLocation!.coordinate.longitude )
             
-            getHumanAddress(coordinates: startAnnotation.coordinate, isStart: true)
+            rideService.startLocation = rideService.startAnnotation.coordinate
             
-            ride.showDropOnStart = false
-            ride.startDropLocation = nil
+            getHumanAddress(coordinates: rideService.startAnnotation.coordinate, isStart: true)
+            
+            uiView.addAnnotation(rideService.startAnnotation)
+            rideService.userLocation = false
+        }
+        
+        if(rideService.showDropOnStart && rideService.startDropLocation != nil) {
+            
+            let coordinate = self.mapView.convert(rideService.startDropLocation!, toCoordinateFrom: self.mapView)
+            rideService.startAnnotation.coordinate = coordinate
+            
+            rideService.startLocation = coordinate
+            
+            uiView.addAnnotation(rideService.startAnnotation)
+  
+            getHumanAddress(coordinates: rideService.startAnnotation.coordinate, isStart: true)
+            
+            rideService.showDropOnStart = false
+            rideService.startDropLocation = nil
             
         }
         
-        if(ride.showDropOnEnd && ride.endDropLocation != nil){
+        if(rideService.showDropOnEnd && rideService.endDropLocation != nil){
             
-            let coordinate = self.mapView.convert(ride.endDropLocation!, toCoordinateFrom: self.mapView)
-            
-            //ride.endLocation = coordinate
-            endAnnotation.title = "End"
-            endAnnotation.coordinate = coordinate
-            
-            getHumanAddress(coordinates: endAnnotation.coordinate, isStart: false)
-            
-            uiView.addAnnotation(endAnnotation)
-            ride.showDropOnEnd = false
-            ride.endDropLocation = nil
+            let coordinate = self.mapView.convert(rideService.endDropLocation!, toCoordinateFrom: self.mapView)
+            rideService.endLocation = coordinate
+            rideService.endAnnotation.coordinate = coordinate
+   
+            getHumanAddress(coordinates: rideService.endAnnotation.coordinate, isStart: false)
+            uiView.addAnnotation(rideService.endAnnotation)
+            rideService.showDropOnEnd = false
+            rideService.endDropLocation = nil
         }
         
         if(manager.route != nil ) {
@@ -116,50 +153,123 @@ struct MapView: UIViewRepresentable {
                 print("Snap to map")
                 uiView.setVisibleMapRect(
                     manager.route!.polyline.boundingMapRect,
-                    edgePadding: UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50),
+                    edgePadding: UIEdgeInsets(top: 10, left: 50, bottom: 100, right: 50),
                     animated: true)
                 manager.snapToRoute = false
             }
-            return
-        }
-        
-        
-        if(!manager.driverPoints.isEmpty){
-            //uiView.addAnnotations()
-            uiView.addAnnotations(manager.driverPoints)
-            //print("Adding driver pins")
-                
         }
 
-        
-        if(startAnnotation.title == nil || endAnnotation.title  == nil) {return}
-        
-        let p1 = MKPlacemark(coordinate: startAnnotation.coordinate)
-        
-        let p2 = MKPlacemark(coordinate: endAnnotation.coordinate)
-        
-        let request = MKDirections.Request()
-        request.source = MKMapItem(placemark: p1)
-        request.destination = MKMapItem(placemark: p2)
-        request.transportType = .automobile
-        
-        
-        let directions = MKDirections(request: request)
-        directions.calculate { response, error in
-            print("Found route to location")
-            guard let route = response?.routes.first else { return }
-            manager.route = route
-            manager.getRideEstimates()
-            uiView.addOverlay(route.polyline)
-            uiView.setVisibleMapRect(
-                route.polyline.boundingMapRect,
-                edgePadding: UIEdgeInsets(top: 20, left: 20, bottom: 60, right: 20),
-                animated: true)
-            self.ride.startLocation = startAnnotation.coordinate
-            self.ride.endLocation = endAnnotation.coordinate
-            return
+        // Update route for announced rides
+        if rideService.updateRoute {
+            var p1:MKPlacemark?
+            var p2:MKPlacemark?
+            if(rideService.ride.startCoordinates != nil || rideService.ride.endCoordinates  != nil) {
+                p1 = MKPlacemark(coordinate: rideService.ride.startCoordinates!)
+                p2 = MKPlacemark(coordinate: rideService.ride.endCoordinates!)
+            }
+            if(rideService.startLocation != nil && rideService.endLocation != nil){
+                p1 = MKPlacemark(coordinate: rideService.startLocation!)
+                p2 = MKPlacemark(coordinate: rideService.endLocation!)
+            }
+
+            if(p1 == nil && p2 == nil){
+                return
+            }
+            if manager.route != nil {
+                mapView.removeOverlays(mapView.overlays)
+            }
+
+            let request = MKDirections.Request()
+            request.source = MKMapItem(placemark: p1!)
+            request.destination = MKMapItem(placemark: p2!)
+            request.transportType = .automobile
+            
+            let directions = MKDirections(request: request)
+            directions.calculate { response, error in
+                print("Found route to location")
+                guard let route = response?.routes.first else { return }
+                manager.route = route
+                manager.getRideEstimates()
+                uiView.addOverlay(route.polyline)
+                uiView.setVisibleMapRect(
+                    route.polyline.boundingMapRect,
+                    edgePadding: UIEdgeInsets(top: 20, left: 20, bottom: 60, right: 20),
+                    animated: true)
+                rideService.updateRoute = false
+                return
+            }
+    
         }
         
+        
+            /*
+            if rideService.startAnnotation.coordinate.latitude == 0.0 ||
+                rideService.startAnnotation.coordinate.longitude == 0.0 ||
+                rideService.endAnnotation.coordinate.longitude == 0.0 ||
+                rideService.endAnnotation.coordinate.latitude == 0.0{return}
+            
+            if manager.route != nil {
+                mapView.removeOverlays(mapView.overlays)
+                manager.route = nil
+            }
+            
+            let p1 = MKPlacemark(coordinate: rideService.startAnnotation.coordinate)
+            let p2 = MKPlacemark(coordinate: rideService.endAnnotation.coordinate)
+            
+            let request = MKDirections.Request()
+            request.source = MKMapItem(placemark: p1)
+            request.destination = MKMapItem(placemark: p2)
+            request.transportType = .automobile
+            
+            
+            let directions = MKDirections(request: request)
+            directions.calculate { response, error in
+                print("Found route to location")
+                guard let route = response?.routes.first else { return }
+                manager.route = route
+                manager.getRideEstimates()
+                uiView.addOverlay(route.polyline)
+                uiView.setVisibleMapRect(
+                    route.polyline.boundingMapRect,
+                    edgePadding: UIEdgeInsets(top: 20, left: 20, bottom: 60, right: 20),
+                    animated: true)
+                rideService.updateRoute = false
+            }
+        
+        
+        */
+
+                
+/*
+ 
+ 
+        if(rideService.startLocation == nil || rideService.endLocation == nil) {return}
+             
+
+                    let p1 = MKPlacemark(coordinate: rideService.startLocation!)
+                    let p2 = MKPlacemark(coordinate: rideService.startLocation!)
+                    
+                    let request = MKDirections.Request()
+                    request.source = MKMapItem(placemark: p1)
+                    request.destination = MKMapItem(placemark: p2)
+                    request.transportType = .automobile
+                    print("Update")
+                    
+                    let directions = MKDirections(request: request)
+                    directions.calculate { response, error in
+                        print("Found route to location")
+                        guard let route = response?.routes.first else { return }
+                        manager.route = route
+                        //manager.getRideEstimates()
+                        uiView.addOverlay(route.polyline)
+                        uiView.setVisibleMapRect(
+                            route.polyline.boundingMapRect,
+                            edgePadding: UIEdgeInsets(top: 20, left: 20, bottom: 60, right: 20),
+                            animated: true)
+                        //rideService.updateRoute = false
+                        return
+                    }
+                */
     }
     
     // Used for testing driver locations
@@ -178,7 +288,7 @@ struct MapView: UIViewRepresentable {
         }
         
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-            print(annotation)
+        
             if annotation is MKUserLocation {
                     return nil
                 }

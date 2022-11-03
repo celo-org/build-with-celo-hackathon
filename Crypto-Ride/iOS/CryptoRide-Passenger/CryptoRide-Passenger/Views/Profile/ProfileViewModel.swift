@@ -17,6 +17,9 @@ class ProfileViewModel:ObservableObject {
     @Published var error:ContractError?
     @Published var showProgress = false
     
+    @Published var toAddress = ""
+    @Published var amount = ""
+    
     private let context = CIContext()
     private let filter = CIFilter.qrCodeGenerator()
     

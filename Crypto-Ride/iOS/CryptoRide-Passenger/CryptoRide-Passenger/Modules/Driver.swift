@@ -17,7 +17,7 @@ struct DriverInfo {
 }
 
 struct Stats {
-    var rating:BigUInt?
+    var rating:Int?
     var reputation:BigUInt?
     var totalRating:BigUInt?
     var count:BigUInt?
@@ -25,7 +25,7 @@ struct Stats {
 
 struct DriverDetails {
     let address:String
-    var rateAppliedToRide:Double?
+    var rateAppliedToRide:Double = 0.0
     var info:DriverInfo?
     var stats:Stats?
 }

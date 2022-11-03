@@ -10,6 +10,7 @@ import FirebaseCore
 @main
 struct CryptoRide_PassengerApp: App {
     @StateObject var authentication = Authentication()
+    
     init() {
         FirebaseApp.configure()
     }

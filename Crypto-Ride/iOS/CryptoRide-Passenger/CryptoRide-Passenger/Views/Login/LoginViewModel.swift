@@ -51,7 +51,6 @@ class LoginViewModel:ObservableObject {
                     case .success:
                         completion(true)
                     case .failure(let authError):
-                        print(authError)
                         credentials = Credentials()
                         error = authError
                         completion(false)

@@ -18,8 +18,10 @@ struct TxParams {
 
 struct ProfileView:View {
     
-    @EnvironmentObject var balanceVM:BalanceViewModel
+    //@EnvironmentObject var balanceVM:BalanceViewModel
     @StateObject var profileVM = ProfileViewModel()
+    @EnvironmentObject var balance:Balance
+    @EnvironmentObject var reputation:Reputation
     
     @State private var isShowingScanner = false
     
@@ -27,9 +29,56 @@ struct ProfileView:View {
     var body: some View {
         
         VStack(alignment: .center) {
-            Text("Profile")
-            Image(systemName: "person.crop.circle")
-            Text(balanceVM.balance)
+            VStack{
+
+                    Text("Rating ")
+                    RatingView(rating:reputation.rating)
+               
+                    Text("Reputation")
+                    Text(reputation.reputation)
+                
+                    Text("Total Rides")
+                    Text(reputation.rideCount)
+                
+                }
+                HStack{
+                    Text("Balance")
+                    Text("\(balance.CELO) CELO")
+                    Text("$\(balance.cUSD) cUSD")
+                }.padding()
+                
+                //Text(balanceVM.balance)
+        
+            //}
+            VStack{
+                Text("To Address").font(.title3)
+                HStack{
+                    TextField("0x00", text: $profileVM.toAddress)
+                    Button(action:{
+                        print("past")
+                    }, label: {
+                        Image(systemName: "doc.on.clipboard")
+                    })
+                }
+                Text("Send cUSD").font(.title3)
+                HStack{
+                    
+                    TextField("0", text:  $profileVM.amount)
+                    Button(action:{
+                        print("MAX")
+                    }, label: {
+                        Text("MAX")
+                    })
+                }
+                Button(action:{
+                    print("SEND")
+                }, label: {
+                    Text("Send")
+                })
+                
+            }
+            
+            
             Divider()
             Text("Receive").font(.title3)
             
@@ -43,12 +92,10 @@ struct ProfileView:View {
                     .padding()
                     .frame(width: 230, height: 230)
             })
-                .buttonStyle(.bordered)
-            Divider()
-            Text("Send").font(.title3)
-  
-            Text("Previous rides prices")
-            
+                
+            //Divider()
+
+
         }.sheet(isPresented: $isShowingScanner) {
             CodeScannerView(codeTypes: [.qr] ) { response in
                 isShowingScanner = false
@@ -66,7 +113,20 @@ struct ProfileView:View {
                     print(error.localizedDescription)
                 }
             }
-        }
-    }
+        }.textFieldStyle(.roundedBorder)
+            .padding(EdgeInsets(top: 8, leading: 16,
+                                   bottom: 8, trailing: 16))
+            .buttonStyle(.borderedProminent)
+            .toolbar {
+ 
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink(destination: Settings()
+                    ){
+                        Image(systemName: "gear")
+                    }
+                }
     
+            }
+    }
 }
+

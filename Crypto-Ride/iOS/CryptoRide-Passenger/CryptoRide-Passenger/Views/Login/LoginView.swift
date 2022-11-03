@@ -15,11 +15,14 @@ struct LoginView: View {
         ZStack(alignment: .top) {
             
             VStack(alignment: .center) {
+                Text("CryptoRide").font(.title).bold().padding()
+                Text("Passenger").font(.title3).bold().padding()
+                
                 Spacer()
                 
                 VStack(alignment: .leading,spacing: 10){
                     Text(loginVM.hasKeyStore ? "Login":"Create New Wallet").font(.title)
-                    Text(loginVM.hasKeyStore ? "Password":"New Password")
+                    Text(loginVM.hasKeyStore ? "Password":"New Password").font(.title2)
                         .font(.subheadline)
                         .bold()
                     TextField("",text: $loginVM.credentials.password)
@@ -35,17 +38,16 @@ struct LoginView: View {
                     }
                 }.padding([.leading, .trailing], 20)
                 Spacer()
-                
                 HStack{
-                    Button("New Wallet"){
-                        print("off")
-                    }
                     Spacer()
+                    //Button("New Wallet"){
+                    //    print("off")
+                    //}
                     Button("Import Wallet"){
-                        print("off")
+                        print("import wallet")
                     }
-                }
-                Spacer()
+                }.padding()
+          
             }
 
         }.textFieldStyle(.roundedBorder)

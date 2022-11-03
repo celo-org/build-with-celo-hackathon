@@ -25,7 +25,7 @@ class BalanceViewModel:ObservableObject {
         
         let walletAddress = ContractServices.shared.getWallet()
         let params = [walletAddress.address] as [AnyObject]
-        
+        /*
         ContractServices.shared.read(contractId: Contracts.Token, method: "balanceOf", parameters    : params)
         { result in
             DispatchQueue.main.async { [self] in
@@ -41,6 +41,7 @@ class BalanceViewModel:ObservableObject {
                 }
             }
         }
+        */
         
     }
     
