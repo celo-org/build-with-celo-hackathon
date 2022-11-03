@@ -14,6 +14,7 @@ const ProposalCard = (props) => {
   const [useraccount,setUserAccount] = useState(null);
  
   const id = props.id;
+  const param = props.param;
   const [noVotes,setNoVotes] = useState(null);
   const [approve,setApprove] = useState(true);
   const [yesVotes,setYesVotes] = useState(null);
@@ -113,11 +114,12 @@ setNoVotes(rejectvotes);
           <div className="md:max-w-[450px] md:w-[100%] flex justify-around py-3">
             <div className="h-[400px] px-2 md:max-w-[400px] md:w-[100%] flex flex-col justify-around">
               <h3 className="font-open font-bold text-gray-700 text-xl">
-                Elgeyo marakwet
+                {/* Elgeyo marakwet */}
               </h3>
-              <h1 className="font-jost text-5xl">Donation to St Lisa School</h1>
+              <h1 className="font-jost text-5xl">Donation </h1>
               <h3 className="font-open text-gray-600 text-xl">
-                Accept Donation to St Lisa school for Girls 
+                {/* Accept Donation to St Lisa school for Girls  */}
+                {param}
               </h3>
               <div className="flex flex-col md:flex-row justify-between">
                 <div>

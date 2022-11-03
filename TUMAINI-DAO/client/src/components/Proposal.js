@@ -75,12 +75,6 @@ const Proposal = () => {
     },[useraccount]);
   return (
    <ProposalsTemplate  proposal={proposal}/>
-   
-      
-
-      
-   
-   
   );
 };
 

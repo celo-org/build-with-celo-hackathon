@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+
 import moment from "moment-timezone"
 let times
 const ProposalTemplate =(props)=>{
@@ -40,7 +41,7 @@ const ProposalTemplate =(props)=>{
        </h4>
      </div>
      <div className="">
-       <button onClick={() => navigate1('/proposal_page', { state: { id: index } })} className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-bold leading-none text-white focus:outline-none bg-blue-500 border rounded hover:bg-blue-600 py-3 px-5 w-full font-open ">
+       <button onClick={() => navigate1('/proposal_page', { state: { id: index ,param:proposals[5]} })} className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-bold leading-none text-white focus:outline-none bg-blue-500 border rounded hover:bg-blue-600 py-3 px-5 w-full font-open ">
          View Proposal
        </button>
      </div>
@@ -51,3 +52,5 @@ const ProposalTemplate =(props)=>{
 </div>
 }
 export default ProposalTemplate
+
+

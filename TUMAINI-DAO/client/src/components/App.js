@@ -8,6 +8,7 @@ import ProposalPage from "../pages/ProposalPage";
 import CreateProposal from "../pages/CreateProposal";
 import { AppContext } from "../contexts/AppContext";
 import MintTokenPage from "../pages/MintTokenPage";
+import Community from "../pages/Community";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Route path="/proposal_page" element={<ProposalPage />} />
             <Route path="/create_proposal" element={<CreateProposal />} />
             <Route path="/mint_token" element={<MintTokenPage />} />
+            <Route path="/community" element={<Community />} />
           </Routes>
         </Router>
       </AppContext.Provider>

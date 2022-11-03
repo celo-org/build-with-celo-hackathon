@@ -13,7 +13,7 @@ const Proposals = () => {
       <Navbar />
         <CreateProposal />
         {showModal?<NewProposal />:null}
-      <div className="mt-[50px] mx-2 max-w-[1100px] w-[100%] flex items-center flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+      <div className="mt-[50px] mx-2 max-w-[1100px] w-[100%] flex items-center flex-col ">
         <Proposal />
        
       </div>
