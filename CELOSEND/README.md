@@ -79,7 +79,7 @@ System's Architecture:
 
 - Crypto
 
- <img src="https://i.ibb.co/DQn9fwq/vlcsnap-2022-10-29-10h34m09s518.png" width="32%"> <img src="https://i.ibb.co/K24b9GR/vlcsnap-2022-10-29-10h34m13s837.png" width="32%"> <img src="https://i.ibb.co/Jmbgygv/vlcsnap-2022-10-29-10h34m39s759.png" width="32%">
+ <img src="https://i.ibb.co/DQn9fwq/vlcsnap-2022-10-29-10h34m09s518.png" width="32%"> <img src="https://i.ibb.co/K24b9GR/vlcsnap-2022-10-29-10h34m13s837.png" width="32%"> <img src="https://i.ibb.co/xqhBKd0/vlcsnap-2022-11-03-10h10m18s017.png" width="32%">
 
 - Fiat
 
@@ -156,7 +156,7 @@ List any links to your presentation or any related visuals you want to share.
 
 Here is our main demo video: 
 
-[![Demo](https://i.ibb.co/g4W3ypx/image.png)](https://youtu.be/eVYtd48PTJo)
+[![Demo](https://i.ibb.co/g4W3ypx/image.png)](Pending)
 
 #### Next Steps
 
