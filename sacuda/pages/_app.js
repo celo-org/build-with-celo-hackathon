@@ -1,21 +1,11 @@
+import { useState } from "react"
 import { SessionProvider } from 'next-auth/react';
 import { ChakraProvider } from '@chakra-ui/react';
-
+import AppContext from '../components/AppContext';
 import Header from '../template/Header';
-
 import theme from '../utils/chakra-theme';
-
-import {
-  connectorsForWallets,
-  RainbowKitProvider,
-  ConnectButton
-} from "@rainbow-me/rainbowkit";
-
-import { 
-  metaMaskWallet, 
-  omniWallet, 
-  walletConnectWallet 
-} from '@rainbow-me/rainbowkit/wallets';
+import { connectorsForWallets, RainbowKitProvider, ConnectButton } from "@rainbow-me/rainbowkit";
+import { metaMaskWallet, omniWallet, walletConnectWallet } from '@rainbow-me/rainbowkit/wallets';
 import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 
@@ -53,13 +43,16 @@ const wagmiClient = createClient({
 });
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+  const [uMail, setUMail] = useState()
   return (
     <ChakraProvider theme={theme}>
       <SessionProvider session={session}>
         <WagmiConfig client={wagmiClient}>
           <RainbowKitProvider chains={chains}>
-            <Header />
-              <Component {...pageProps} />
+            <AppContext.Provider value={{uMail,setUMail}}>
+              <Header />
+                <Component {...pageProps} />
+             </AppContext.Provider>
           </RainbowKitProvider>
         </WagmiConfig>
       </SessionProvider>

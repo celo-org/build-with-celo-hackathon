@@ -12,7 +12,7 @@ const sacudaSchema = new Schema({
     unique: true,
   },
   profile: {
-    type: String,
+    type: Number,
     required: false,
     unique: false
   },
