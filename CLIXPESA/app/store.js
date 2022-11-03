@@ -10,17 +10,20 @@ import { walletListeners } from '../features/wallet/walletEffects'
 import { spacesListeners } from '../features/spaces/spacesEffects'
 import { loansListeners } from '../features/microloans/loansEffects'
 
+import { blockscoutApi } from './services/blockscout'
+
 const listenerMiddleware = createListenerMiddleware()
 
 export default configureStore({
   reducer: {
+    [blockscoutApi.reducerPath]: blockscoutApi.reducer,
     essential: essentialReducer,
     wallet: walletReducer,
     spaces: spacesReducer,
     loans: loansReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().prepend(listenerMiddleware.middleware),
+    getDefaultMiddleware().prepend(listenerMiddleware.middleware, blockscoutApi.middleware),
 })
 
 //Listeners

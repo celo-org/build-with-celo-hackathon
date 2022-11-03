@@ -1,46 +1,27 @@
-import { Box, Text, Icon, VStack, HStack, Spacer, Progress, FlatList, Alert } from 'native-base'
+import { Box, Text, Icon, VStack, HStack, Spacer, Progress, FlatList, Button } from 'native-base'
+import { RefreshControl } from 'react-native'
 import { FeatureHomeCard } from 'clixpesa/components'
 import { Feather } from '@expo/vector-icons'
 import { SectionHeader, TransactionItem } from 'clixpesa/components'
 import { getDaysBetween } from 'clixpesa/utils/time'
 import { HeaderBackButton } from '@react-navigation/elements'
-import { useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useState, useCallback, useEffect } from 'react'
+import { getProvider } from '../../blockchain/provider'
+import { P2PLoanIface } from '../../blockchain/contracts'
+import { utils } from 'ethers'
+import { useGetTxsByAddrQuery } from '../../app/services/blockscout'
 
 export default function LoanInfoScreen({ navigation, route }) {
   const routes = navigation.getState().routes
   const prevRoute = routes[routes.length - 2].name
+  const [refreshing, setRefreshing] = useState(false)
   const [loan, setLoan] = useState({})
-  const transactions = [
-    {
-      credited: true,
-      title: 'Loan credited to Account',
-      date: 'Mon, 26 Jul, 11:26',
-      amount: '500',
-      token: 'cUSD',
-    },
-    {
-      credited: false,
-      title: 'Bought BTC with cKES',
-      date: 'Mon, 26 Jul, 11:26',
-      amount: '500',
-      token: 'cUSD',
-    },
-    {
-      credited: false,
-      title: 'Bought BTC with cKES',
-      date: 'Mon, 26 Jul, 11:26',
-      amount: '500',
-      token: 'cUSD',
-    },
-  ]
+  const [transactions, setTransactions] = useState([])
+
   useLayoutEffect(() => {
-    if (prevRoute === 'Main') {
-      const thisLoan = { ...route.params, name: 'Loan Ingine' }
-      setLoan(thisLoan)
-    } else {
-      const thisLoan = route.params
-      setLoan(thisLoan)
-    }
+    const thisLoan = route.params
+    setLoan(thisLoan)
+
     if (prevRoute === 'applyLoan') {
       navigation.setOptions({
         headerLeft: (props) => {
@@ -56,7 +37,44 @@ export default function LoanInfoScreen({ navigation, route }) {
       })
     }
   }, [navigation])
-  const prog = (loan.paid / loan.balance) * 100
+  const { data, error, isLoading } = useGetTxsByAddrQuery(route.params.address)
+  const handleGetTransaction = () => {
+    const thisTxs = []
+    Array.prototype.forEach.call(data.result, (tx) => {
+      const thisTx = P2PLoanIface.parseTransaction({
+        data: tx.input,
+        value: tx.value,
+      })
+      const txDate = new Date(tx.timeStamp * 1000)
+      const date = txDate.toDateString().split(' ')
+
+      const txItem = {
+        tx: tx.blockNumber,
+        credited: thisTx.name === 'FundLoan' ? true : false,
+        title: thisTx.name === 'FundLoan' ? 'Loan credited to Account' : 'Loan repayment',
+        date: date[0] + ', ' + date[2] + ' ' + date[1] + ', ' + txDate.toTimeString().slice(0, 5),
+        amount: utils.formatUnits(thisTx.args[0], 'ether'),
+        token: 'cUSD',
+      }
+      thisTxs.push(txItem)
+    })
+    setTransactions(thisTxs)
+  }
+
+  useEffect(() => {
+    if (data) handleGetTransaction()
+  }, [data])
+
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout))
+  }
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true)
+    wait(2000).then(() => setRefreshing(false))
+  }, [])
+
+  const prog = (loan.paid / loan.principal) * 100
   const daysTo = getDaysBetween(Date.now(), Date.parse(loan.dueDate))
 
   return (
@@ -67,13 +85,15 @@ export default function LoanInfoScreen({ navigation, route }) {
         expScreen="DummyModal"
         btn1={{
           icon: <Icon as={Feather} name="arrow-up-right" size="md" color="primary.600" mr="1" />,
-          name: 'Repay',
-          screen: 'fromOffers',
+          name: loan.initiated ? 'Fund' : 'Repay',
+          screen: 'fundLoan',
+          screenParams: loan,
         }}
         btn2={{
           icon: <Icon as={Feather} name="list" size="md" color="primary.600" mr="1" />,
           name: 'Details',
           screen: 'LoanDetails',
+          screenParams: loan,
         }}
       />
       <Box bg="white" roundedTop="md" roundedBottom="2xl" width="95%" mt={1}>
@@ -84,7 +104,7 @@ export default function LoanInfoScreen({ navigation, route }) {
             </Text>
             <Spacer />
             <Text _light={{ color: 'muted.500' }} fontWeight="medium" pt={1}>
-              {loan.paid} / {loan.balance}
+              {loan.paid} / {loan.principal}
             </Text>
           </HStack>
           <Progress colorScheme="primary" value={prog} mx="4" bg="primary.100" />
@@ -109,7 +129,9 @@ export default function LoanInfoScreen({ navigation, route }) {
               </Text>
             </HStack>
             <Text color="primary.800">
-              Keep calm. Loan will be credited once your lender releases the funds!
+              {loan.initiated
+                ? 'Please fund the Loan. Loanee is eagerly waiting for the chums!'
+                : 'Your Keep calm. Loan will be credited once your lender releases the funds!'}
             </Text>
           </Box>
         ) : (
@@ -117,6 +139,9 @@ export default function LoanInfoScreen({ navigation, route }) {
             <SectionHeader title="Transactions" />
             <FlatList
               data={transactions}
+              refreshControl={
+                <RefreshControl refreshing={refreshing || isLoading} onRefresh={onRefresh} />
+              }
               renderItem={({ item, index }) => (
                 <Box
                   bg="white"
@@ -137,7 +162,7 @@ export default function LoanInfoScreen({ navigation, route }) {
                   />
                 </Box>
               )}
-              keyExtractor={(item) => item.addr}
+              keyExtractor={(item) => item.tx}
             />
           </>
         )}

@@ -5,7 +5,7 @@
       "chainId": "44787",
       "contracts": {
         "Loans": {
-          "address": "0xA3Fb3fa68fDb137D0Cc12e7F05fA6724722fD039",
+          "address": "0xA6Cf98ee0aBE14E376bf3B2c2e6Ce2D1E05bB8fE",
           "abi": [
             {
               "inputs": [],
@@ -72,6 +72,11 @@
                     {
                       "internalType": "uint256",
                       "name": "balance",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "paid",
                       "type": "uint256"
                     },
                     {
@@ -150,6 +155,11 @@
                     },
                     {
                       "internalType": "uint256",
+                      "name": "paid",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
                       "name": "minDuration",
                       "type": "uint256"
                     },
@@ -221,6 +231,11 @@
                     {
                       "internalType": "uint256",
                       "name": "balance",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "paid",
                       "type": "uint256"
                     },
                     {
@@ -303,7 +318,7 @@
           ]
         },
         "Spaces": {
-          "address": "0x5Ec8DA63BA33b0945B2C04Fe779e551F5E0E9521",
+          "address": "0xE5AFb22225b09F3e07f1137FEB91728da0BBfDC4",
           "abi": [
             {
               "anonymous": false,
@@ -322,6 +337,11 @@
                 },
                 {
                   "components": [
+                    {
+                      "internalType": "contract IERC20",
+                      "name": "token",
+                      "type": "address"
+                    },
                     {
                       "internalType": "string",
                       "name": "roscaName",
@@ -380,12 +400,12 @@
             {
               "inputs": [
                 {
-                  "internalType": "contract IERC20",
-                  "name": "cUSDToken",
-                  "type": "address"
-                },
-                {
                   "components": [
+                    {
+                      "internalType": "contract IERC20",
+                      "name": "token",
+                      "type": "address"
+                    },
                     {
                       "internalType": "string",
                       "name": "roscaName",

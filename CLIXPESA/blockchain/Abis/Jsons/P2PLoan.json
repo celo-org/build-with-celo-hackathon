@@ -55,6 +55,11 @@
           },
           {
             "internalType": "uint256",
+            "name": "paid",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "minDuration",
             "type": "uint256"
           },
@@ -135,6 +140,19 @@
         "type": "uint256"
       }
     ],
+    "name": "FundLoan",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
     "name": "RepayLoan",
     "outputs": [],
     "stateMutability": "payable",
@@ -151,19 +169,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "fundLoan",
-    "outputs": [],
-    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -219,6 +224,11 @@
           },
           {
             "internalType": "uint256",
+            "name": "paid",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "minDuration",
             "type": "uint256"
           },
@@ -236,6 +246,24 @@
         "internalType": "struct LoanDetails",
         "name": "",
         "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getLoanPayDetails",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "balance",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "paid",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",

@@ -14,7 +14,8 @@
     "web": "expo start --web",
     "test": "jest",
     "compile": "hardhat compile",
-    "test-contract": "hardhat test",
+    "test-celo": "hardhat test",
+    "test-local": "hardhat test --network hardhat",
     "deploy": "hardhat deploy --export-all ./blockchain/Abis/Jsons/deployed.json"
   },
   "jest": {

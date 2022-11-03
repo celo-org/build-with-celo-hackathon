@@ -5,7 +5,8 @@ require('@nomiclabs/hardhat-ethers')
 
 const defaultNetwork = 'alfajores'
 const mnemonicPath = "m/44'/52752'/0'/0" // derivation path used by Celo
-const privateKey = '0x20a67adf6750c75ead6e91a6df269a250d301123723d743a8d65c3a57a7b1fa7'
+const acc1 = '0x20a67adf6750c75ead6e91a6df269a250d301123723d743a8d65c3a57a7b1fa7'
+const acc2 = '0xecd2280b69bb1e25b783afab597bc2d31eb177516da8a15b29b3209131d4220d'
 
 // This is the mnemonic used by celo-devchain
 const DEVCHAIN_MNEMONIC =
@@ -15,11 +16,13 @@ const DEVCHAIN_MNEMONIC =
 module.exports = {
   solidity: '0.8.7',
   defaultNetwork,
+
   paths: {
     artifacts: './contracts/artifacts',
     cache: './contracts/cache',
     deploy: './contracts/deploy',
     deployments: './contracts/deployments',
+    tests: './contracts/tests',
   },
   abiExporter: {
     path: './blockchain/Abis/Jsons',
@@ -37,12 +40,15 @@ module.exports = {
     },
     alfajores: {
       url: 'https://alfajores-forno.celo-testnet.org',
-      accounts: [privateKey],
+      accounts: [acc1, acc2],
+      gasPrice: 100000000,
+      gas: 35000000,
       chainId: 44787,
+      loggingEnabled: true,
     },
     alfajoresDatahub: {
       url: 'https://celo-alfajores--rpc.datahub.figment.io/apikey/<API KEY>',
-      accounts: [privateKey],
+      accounts: [acc1, acc2],
       chainId: 44787,
     },
   },

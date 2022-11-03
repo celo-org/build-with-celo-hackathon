@@ -69,7 +69,7 @@ export async function modifyLoanDetails(storeName, updatedLoanDetails) {
   if (index < 0) {
     throw new Error('Address not found in loans list')
   }
-  Array.prototype(storedLoans)[index] = updatedLoanDetails
+  storedLoans[index] = updatedLoanDetails
   const serialised = JSON.stringify(storedLoans)
   await setItemAsync(storeName, serialised)
 }
