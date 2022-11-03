@@ -9,6 +9,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, registerWithEmailAndPassword } from "../firebase";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -27,7 +28,8 @@ const SignUp = () => {
   useEffect(() => {
     if (loading) {
       <Spinner />;
-    }
+    };
+    Cookies.set("userId", user?.uid)
     if (user) navigate("/login");
   }, [user, loading]);
   
