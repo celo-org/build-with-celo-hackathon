@@ -1,6 +1,7 @@
 import { FaMagic } from 'react-icons/fa';
-import React, { useState } from 'react';
-import { Text, Heading, Button } from '@chakra-ui/react';
+import AppContext from '../../components/appContext';
+import React, { useContext, useState } from 'react';
+import { Text, Heading, Button, propNames } from '@chakra-ui/react';
 import { useSession, signIn, getSession, signOut } from "next-auth/react";
 import { useRouter } from 'next/router';
 import Head from 'next/head';
@@ -8,9 +9,6 @@ import { ConnectButton} from "@rainbow-me/rainbowkit";
 import { useAccount } from 'wagmi';
 import styles from '../../styles/home.module.scss';
 import '@rainbow-me/rainbowkit/styles.css';
-
-import connectMongo from '../../utils/connectMongo';
-import Sacuda from '../../models/sacudaModel';
 
 const walletConnect = () => {
   const router = useRouter();
@@ -21,7 +19,7 @@ const walletConnect = () => {
      signIn(); //What to show to unathenticated users
     }
   })
-  const [userMail, setUserMail] = useState('');
+  const context = useContext(AppContext)
 
   const writeProfileBasics = async () => {
     const res = await fetch('/api/handler', {
@@ -46,7 +44,7 @@ const walletConnect = () => {
       body: JSON.stringify(session.user.email),
     });
     const data = await res.json();
-    setUserMail(data.email)
+    context.setUMail(data.email)
   };  
 
   const mainRedirect = () => {
@@ -58,11 +56,11 @@ const walletConnect = () => {
 
     if (isConnected) {
       getUserEmail()
-        if (userMail===session.user.email) {
+        if (context.UMail===session.user.email) {
         mainRedirect();
       }
           else
-            if (userMail===null) {
+            if (context.UMail===null) {
             console.log('Writing profile for:'+session.user.email)
             writeProfileBasics()
             }
