@@ -1,43 +1,23 @@
-import { Box, Text, Icon, VStack, HStack, Spacer, Progress, FlatList } from 'native-base'
+import { Box, Text, Icon, VStack, HStack, Spacer, Progress, FlatList, Button } from 'native-base'
 import { RefreshControl } from 'react-native'
 import { FeatureHomeCard } from 'clixpesa/components'
 import { Feather } from '@expo/vector-icons'
 import { SectionHeader, TransactionItem } from 'clixpesa/components'
 import { getDaysBetween } from 'clixpesa/utils/time'
 import { HeaderBackButton } from '@react-navigation/elements'
-import { useLayoutEffect, useState, useCallback } from 'react'
+import { useLayoutEffect, useState, useCallback, useEffect } from 'react'
+import { getProvider } from '../../blockchain/provider'
+import { P2PLoanIface } from '../../blockchain/contracts'
+import { utils } from 'ethers'
+import { useGetTxsByAddrQuery } from '../../app/services/blockscout'
 
 export default function LoanInfoScreen({ navigation, route }) {
   const routes = navigation.getState().routes
   const prevRoute = routes[routes.length - 2].name
   const [refreshing, setRefreshing] = useState(false)
   const [loan, setLoan] = useState({})
-  const transactions = [
-    {
-      tx: '89wqy',
-      credited: true,
-      title: 'Loan credited to Account',
-      date: 'Mon, 26 Jul, 11:26',
-      amount: '500',
-      token: 'cUSD',
-    },
-    {
-      tx: '78wq6',
-      credited: false,
-      title: 'Bought BTC with cKES',
-      date: 'Mon, 26 Jul, 11:26',
-      amount: '500',
-      token: 'cUSD',
-    },
-    {
-      tx: '6732s',
-      credited: false,
-      title: 'Bought BTC with cKES',
-      date: 'Mon, 26 Jul, 11:26',
-      amount: '500',
-      token: 'cUSD',
-    },
-  ]
+  const [transactions, setTransactions] = useState([])
+
   useLayoutEffect(() => {
     const thisLoan = route.params
     setLoan(thisLoan)
@@ -57,6 +37,33 @@ export default function LoanInfoScreen({ navigation, route }) {
       })
     }
   }, [navigation])
+  const { data, error, isLoading } = useGetTxsByAddrQuery(route.params.address)
+  const handleGetTransaction = () => {
+    const thisTxs = []
+    Array.prototype.forEach.call(data.result, (tx) => {
+      const thisTx = P2PLoanIface.parseTransaction({
+        data: tx.input,
+        value: tx.value,
+      })
+      const txDate = new Date(tx.timeStamp * 1000)
+      const date = txDate.toDateString().split(' ')
+
+      const txItem = {
+        tx: tx.blockNumber,
+        credited: thisTx.name === 'FundLoan' ? true : false,
+        title: thisTx.name === 'FundLoan' ? 'Loan credited to Account' : 'Loan repayment',
+        date: date[0] + ', ' + date[2] + ' ' + date[1] + ', ' + txDate.toTimeString().slice(0, 5),
+        amount: utils.formatUnits(thisTx.args[0], 'ether'),
+        token: 'cUSD',
+      }
+      thisTxs.push(txItem)
+    })
+    setTransactions(thisTxs)
+  }
+
+  useEffect(() => {
+    if (data) handleGetTransaction()
+  }, [data])
 
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout))
@@ -67,7 +74,7 @@ export default function LoanInfoScreen({ navigation, route }) {
     wait(2000).then(() => setRefreshing(false))
   }, [])
 
-  const prog = (loan.paid / loan.balance) * 100
+  const prog = (loan.paid / loan.principal) * 100
   const daysTo = getDaysBetween(Date.now(), Date.parse(loan.dueDate))
 
   return (
@@ -97,7 +104,7 @@ export default function LoanInfoScreen({ navigation, route }) {
             </Text>
             <Spacer />
             <Text _light={{ color: 'muted.500' }} fontWeight="medium" pt={1}>
-              {loan.paid} / {loan.balance}
+              {loan.paid} / {loan.principal}
             </Text>
           </HStack>
           <Progress colorScheme="primary" value={prog} mx="4" bg="primary.100" />
@@ -132,7 +139,9 @@ export default function LoanInfoScreen({ navigation, route }) {
             <SectionHeader title="Transactions" />
             <FlatList
               data={transactions}
-              refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+              refreshControl={
+                <RefreshControl refreshing={refreshing || isLoading} onRefresh={onRefresh} />
+              }
               renderItem={({ item, index }) => (
                 <Box
                   bg="white"

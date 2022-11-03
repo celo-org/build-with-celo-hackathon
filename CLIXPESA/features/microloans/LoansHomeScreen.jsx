@@ -1,4 +1,4 @@
-import { Box, Text, HStack, Icon, FlatList, Pressable } from 'native-base'
+import { Box, Text, HStack, Icon, FlatList, Pressable, Button } from 'native-base'
 import { RefreshControl } from 'react-native'
 import { Feather, Ionicons } from '@expo/vector-icons'
 import { useSelector, useDispatch } from 'react-redux'
@@ -13,9 +13,9 @@ export default function LoansHomeScreen({ navigation }) {
   const loanONRsAddr = useSelector((s) => s.loans.ONRsAddr)
   const [refreshing, setRefreshing] = useState(false)
   const [loans, setLoans] = useState([])
+
   const [tempBal, setTempBal] = useState(0.0)
   let totalBalance = 0.0
-
   useEffect(() => {
     const fetchMyLoans = async () => {
       const myLoans = await celoHelper.smartContractCall('Loans', {
@@ -109,7 +109,7 @@ export default function LoansHomeScreen({ navigation }) {
                     : 'Waiting for funds'
                   : (item.paid * 1).toFixed(2).toString() +
                     '/' +
-                    (item.balance * 1).toFixed(2).toString() +
+                    (item.principal * 1).toFixed(2).toString() +
                     ' Paid'
               }
               value={(item.balance * 1).toFixed(2).toString() + ' cUSD'}
@@ -128,7 +128,8 @@ export default function LoansHomeScreen({ navigation }) {
         )}
         keyExtractor={(item) => item.address}
       />
-      <Text>{loanONRsAddr}</Text>
+
+      {/*<Text>{loanONRsAddr}</Text>*/}
     </Box>
   )
 }

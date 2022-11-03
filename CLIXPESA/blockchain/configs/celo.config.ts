@@ -85,7 +85,7 @@ const configMainnet: Config = {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const configAlfajores: Config = {
   jsonRpcUrlPrimary: 'https://alfajores-forno.celo-testnet.org',
-  blockscoutUrl: 'https://alfajores-blockscout.celo-testnet.org',
+  blockscoutUrl: 'https://explorer.celo.org/alfajores',
   discordUrl: 'https://discord.gg/ht885KmG5A',
   name: 'alfajores',
   chainId: 44787,

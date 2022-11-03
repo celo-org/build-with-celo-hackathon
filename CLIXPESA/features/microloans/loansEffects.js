@@ -50,11 +50,13 @@ export const loansListeners = (startListening) => {
         const thisLoan = loans.find((loan) => areAddressesEqual(loan.address, result[0]))
         const dueDate = new Date(results[12].toString() * 1)
         const balance = utils.formatUnits(results[8], 'ether')
+        const paid = utils.formatUnits(results[9], 'ether')
         const loanDetails = {
-          pending: balance > 0.0 ? false : true,
+          pending: balance == 0.0 && paid == 0.0 ? true : false,
           name: thisLoan.name,
           address: result[0],
-          balance: balance > 0.0 ? balance : utils.formatUnits(results[6], 'ether'),
+          principal: utils.formatUnits(results[6], 'ether'),
+          balance: balance == 0.0 && paid == 0.0 ? utils.formatUnits(results[6], 'ether') : balance,
           paid: utils.formatUnits(results[9], 'ether'),
           dueDate: dueDate.toDateString(),
           initiated: result[1],
@@ -84,6 +86,7 @@ export const loansListeners = (startListening) => {
           pending: balance > 0 ? false : true,
           name: loanName,
           address: result[0],
+          principal: utils.formatUnits(results[6], 'ether'),
           balance: balance > 0 ? balance : utils.formatUnits(results[6], 'ether'),
           paid: utils.formatUnits(results[9], 'ether'),
           dueDate: dueDate.toDateString(),
