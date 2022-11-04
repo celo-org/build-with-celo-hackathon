@@ -28,8 +28,8 @@ contract EventHub {
         uint256 eventTimestamp;
         uint256 deposit;
         uint256 maxCapacity;
-        address[] confirmedRSVPs;
-        address[] claimedRSVPs;
+        address payable[] confirmedRSVPs;
+        address payable[] claimedRSVPs;
         bool paidOut;
     }
 
@@ -43,8 +43,8 @@ contract EventHub {
         string calldata eventId
     ) external {
 
-        address[] memory confirmedRSVPs;
-        address[] memory claimedRSVPs;
+        address payable[] memory confirmedRSVPs;
+        address payable[] memory claimedRSVPs;
 
         idToEvent[eventId] = CreateEvent(
             eventId,
@@ -76,7 +76,6 @@ contract EventHub {
         CreateEvent storage myEvent = idToEvent[eventId];
         // transfer deposit to our contract / require that they send in enough ETH to cover the deposit requirement of this specific event
 //        require(msg.value == myEvent.deposit, "NOT ENOUGH");
-
         // require that the event hasn't already happened (<eventTimestamp)
         require(block.timestamp <= myEvent.eventTimestamp, "ALREADY HAPPENED");
 
@@ -137,7 +136,7 @@ contract EventHub {
         require(myEvent.paidOut == false, "ALREADY PAID OUT");
 
         // add the attendee to the claimedRSVPs list
-        myEvent.claimedRSVPs.push(attendee);
+        myEvent.claimedRSVPs.push(payable(attendee));
 
         // sending eth back to the staker `https://solidity-by-example.org/sending-ether`
         (bool sent, ) = attendee.call{value: myEvent.deposit}("");
@@ -159,10 +158,8 @@ contract EventHub {
         require(!myEvent.paidOut, "ALREADY PAID");
 
         // check if it's been 7 days past myEvent.eventTimestamp
-        require(
-            block.timestamp >= (myEvent.eventTimestamp + 7 days),
-            "TOO EARLY"
-        );
+//        require(block.timestamp >= (myEvent.eventTimestamp + 7 days), "TOO EARLY");
+//        require(block.timestamp >= (myEvent.eventTimestamp + 2 minutes), "TOO EARLY");
 
         // only the event owner can withdraw
         require(msg.sender == myEvent.eventOwner, "MUST BE EVENT OWNER");
@@ -214,7 +211,7 @@ contract EventHub {
         return eventIds.length;
     }
 
-    function getConfirmedRSVPs(string calldata eventId) public view returns (address [] memory) {
+    function getConfirmedRSVPs(string calldata eventId) public view returns (address payable[] memory) {
         CreateEvent storage myEvent = idToEvent[eventId];
         return myEvent.confirmedRSVPs;
     }

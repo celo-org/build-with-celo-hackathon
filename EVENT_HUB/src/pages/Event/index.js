@@ -4,15 +4,14 @@ import { useCelo } from '@celo/react-celo'
 import { Link } from 'react-router-dom'
 import { ethers } from 'ethers'
 import styles from './Event.module.css'
-import { contract, createNewEvent } from '../../utils'
+import { contract, createNewEvent, eventHubContractAddress } from '../../utils'
 import { addToIPFS } from '../../utils/ipfs'
 import EventHub from "../../artifacts/contracts/EventHub.sol/EventHub.json";
-const eventHubContractAddress = '0xA679c7795823f130da97d41Cc00236BB5390a5Cb'
 
 function Event() {
   const { connect, address, kit } = useCelo()
 
-  const [eventHubContract, setEventHubContract] = useState('')
+  // const [eventHubContract, setEventHubContract] = useState('')
   const [status, setStatus] = useState('')
   const [loading, setLoading] = useState(false)
   const [eventName, setEventName] = useState("");
@@ -41,11 +40,12 @@ function Event() {
 
 
       try {
-        // const contractt = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
         const stableToken = await kit.contracts.getStableToken()
+        const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
+
         const res = await eventHubContract.methods.createNewEvent(eventTimestamp, deposit, maxCapacity, CID, CID).send({
           from: address,
-          feeCurrency: stableToken.address,
+          // feeCurrency: stableToken.address,
           gasLimit: '910000',
 
         })
@@ -55,6 +55,7 @@ function Event() {
 
       } catch (error) {
         setLoading(false)
+        console.log("😥 " + error)
         setStatus("😥 " + error.message)
       }
 
@@ -85,7 +86,7 @@ function Event() {
   }
 
   useEffect(() => {
-    setEventHubContract(contract(kit))
+    // setEventHubContract(contract(kit))
   }, [])
 
   return (
