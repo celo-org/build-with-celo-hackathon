@@ -80,13 +80,6 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "buyRehemaTokenForETH",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -94,6 +87,13 @@
 				"type": "uint256"
 			}
 		],
+		"name": "buyRehemaTokenForETH",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "buyRehemaTokensForcUSD",
 		"outputs": [],
 		"stateMutability": "payable",
@@ -102,6 +102,19 @@
 	{
 		"inputs": [],
 		"name": "getBalanceofMember",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getRehamaToCusd",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -146,6 +159,19 @@
 				"internalType": "address",
 				"name": "",
 				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "rehematocusd",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",

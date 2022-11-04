@@ -8,7 +8,7 @@ let kit;
 let contract;
 const Background = () => {
   const [userbalance,setUserBalance] = useState(null);
-  const JointContractAddress = "0x75769b9E326D5E40650c9C1446d0920789f4e5Fe"//"0xe58f4213486fe3bA22F8d7D45ADF85C2107CAe1d";
+  const JointContractAddress = "0x1Fa1910059baC5CB065F71fAE4C383E1488dd4f2"//"0x75769b9E326D5E40650c9C1446d0920789f4e5Fe"//"0xe58f4213486fe3bA22F8d7D45ADF85C2107CAe1d";
   const connectWallet  =  async function (){
    
     if (window.celo) {
