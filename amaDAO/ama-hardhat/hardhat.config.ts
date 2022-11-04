@@ -31,11 +31,27 @@ const chainIds = {
   "optimism-mainnet": 10,
   "polygon-mainnet": 137,
   "polygon-mumbai": 80001,
+  "celo-alfajores": 44787,
 };
+
+// alfajores: {
+//   url: "https://alfajores-forno.celo-testnet.org",
+//   accounts: {
+//     mnemonic: process.env.MNEMONIC,
+//     path: "m/44'/52752'/0'/0"
+//   },
+//   chainId: 44787
+// }
+
 
 function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
   let jsonRpcUrl: string;
+  let pathFormat = "m/44'/60'/0'/0";
   switch (chain) {
+    case "celo-alfajores":
+      jsonRpcUrl = "https://alfajores-forno.celo-testnet.org";
+      //pathFormat = "m/44'/52752'/0'/0";
+      break;
     case "avalanche":
       jsonRpcUrl = "https://api.avax.network/ext/bc/C/rpc";
       break;
@@ -49,7 +65,7 @@ function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
     accounts: {
       count: 10,
       mnemonic,
-      path: "m/44'/60'/0'/0",
+      path: pathFormat, //"m/44'/60'/0'/0",
     },
     chainId: chainIds[chain],
     url: jsonRpcUrl,
@@ -91,6 +107,7 @@ const config: HardhatUserConfig = {
     optimism: getChainConfig("optimism-mainnet"),
     "polygon-mainnet": getChainConfig("polygon-mainnet"),
     "polygon-mumbai": getChainConfig("polygon-mumbai"),
+    "celo-alfajores": getChainConfig("celo-alfajores"),
   },
   paths: {
     artifacts: "./artifacts",
