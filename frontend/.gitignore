@@ -7,7 +7,7 @@ typechain-types
 .secret
 #Hardhat files
 cache
-
+build
 .DS_Store
 
 .vercel
