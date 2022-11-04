@@ -101,6 +101,17 @@ Links to our presentation will be added at a later date.
 - [x] Added flows to Timer app - https://github.com/celo-org/build-with-celo-hackathon/commit/f24d80d6d56a2352e0630c425d4fc509b3895b07
 - [x] Add wallet connect to Timer app - https://github.com/celo-org/build-with-celo-hackathon/commit/8f654816e894f7045d72dd8a4e8d170c6ec8842d
 
+### Week Ending: 23 Oct 22
+
+- [x] Sum sponsor escrows - https://github.com/celo-org/build-with-celo-hackathon/commit/d4695fb5a7796907b157741fea97e99ed1ed0344
+- [x] Sum sponsor testcase - https://github.com/celo-org/build-with-celo-hackathon/commit/f24d80d6d56a2352e0630c425d4fc509b3895b07
+
+### Week Ending: 01 Nov 22
+
+- [x] Setup Smart contract read for Widget - https://github.com/celo-org/build-with-celo-hackathon/commit/d4695fb5a7796907b157741fea97e99ed1ed0344
+- [x] SVG generator backend for Widget - https://github.com/celo-org/build-with-celo-hackathon/commit/f24d80d6d56a2352e0630c425d4fc509b3895b07
+- [x] Deploy to Alfajores from hardhat - https://github.com/celo-org/build-with-celo-hackathon/commit/93a4f5b3e6cb676d67ccffc7d3e72ae3ae819bd4
+
 
 This week we plan to complete the following:
 - [ ] Improve Test cases coverage for Token 
