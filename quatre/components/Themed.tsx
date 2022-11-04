@@ -3,7 +3,11 @@
  * https://docs.expo.io/guides/color-schemes/
  */
 
-import { Text as DefaultText, View as DefaultView } from 'react-native';
+ import {
+	Text as DefaultText,
+	View as DefaultView,
+	TouchableOpacity as DefaultTouchableOpacity,
+} from "react-native";
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -29,6 +33,10 @@ type ThemeProps = {
 
 export type TextProps = ThemeProps & DefaultText['props'];
 export type ViewProps = ThemeProps & DefaultView['props'];
+export type TouchableOpacityProps = ThemeProps &
+	DefaultTouchableOpacity["props"];
+
+// Addition starts here
 
 export function Text(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
@@ -42,4 +50,28 @@ export function View(props: ViewProps) {
   const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
 
   return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
+}
+
+export function TouchableOpacity(props: TouchableOpacityProps) {
+	const { style, lightColor, darkColor, children, ...otherProps } = props;
+	const backgroundColor = useThemeColor(
+		{ light: Colors.dark.tint, dark: Colors.light.tint },
+		"background"
+	);
+	return (
+		<DefaultTouchableOpacity
+			style={[
+				{ backgroundColor },
+				style,
+				{
+					paddingHorizontal: 15,
+					paddingVertical: 7,
+					marginTop: 10,
+					borderRadius: 50,
+				},
+			]}
+			{...otherProps}>
+			{children}
+		</DefaultTouchableOpacity>
+	);
 }

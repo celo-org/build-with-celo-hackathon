@@ -61,6 +61,7 @@ module.exports = {
   },
   namedAccounts: {
     deployer: 0,
+    feeTo: 1,
   },
   typechain: {
     outDir: "types",

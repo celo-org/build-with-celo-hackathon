@@ -4,12 +4,13 @@ import { Entypo } from "@expo/vector-icons";
 
 interface ButtonProps {
   title: string;
-  icon?: undefined;
+  icon?: any;
+  handlePress?: any;
 }
-const CustomButton: React.FC<ButtonProps> = ({ title, icon }) => {
+const CustomButton: React.FC<ButtonProps> = ({ title, icon, handlePress }) => {
   return (
     <TouchableOpacity style={[styles.customButton]}>
-      <Text style={{ color: "white", fontWeight: "800", fontSize: 12 }}>
+      <Text style={{ color: "white", fontWeight: "800", fontSize: 12 }} onPress={handlePress}>
         {title}
       </Text>
       <Entypo name={icon} size={24} color="white" />

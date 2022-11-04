@@ -8,7 +8,7 @@ import {
   Dimensions,
   Image,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Header from "../components/Header";
 import CustomSwitch from "../components/CustomSwitch";
 import CustomButton from "../components/CustomButton";
@@ -19,6 +19,22 @@ import { AntDesign } from "@expo/vector-icons";
 import PrivateBand from "../components/PrivateBand";
 import PublicBand from "../components/PublicBand";
 import { useNavigation } from "@react-navigation/native";
+import Account from "./Account";
+import {  } from "react";
+import { ActivityIndicator, TextInput } from "react-native";
+import { useWalletConnect } from "@walletconnect/react-native-dapp";
+// import { Text, View, TouchableOpacity } from "../components/Themed";
+import * as WebBrowser from "expo-web-browser";
+import Web3 from "web3";
+import Colors from "../constants/Colors";
+import { ThemeContext } from "../context/ThemeProvider";
+
+import { digesuAbi, digesuAddress } from "../fetchDeploymentData/digesu";
+import { tokenAbi, tokenAddress } from "../fetchDeploymentData/token";
+import { accountManagerAddress, accounManagerAbi } from "../fetchDeploymentData/accounManager";
+import { apis } from "./apis";
+
+const web3 = new Web3("https://alfajores-forno.celo-testnet.org");
 
 const { width: PAGE_WIDTH, height: PAGE_HEIGHT } = Dimensions.get("window");
 const cardWidth: number = PAGE_WIDTH * 0.9;
@@ -79,12 +95,47 @@ const cardData = [
 const FinanceScreen = () => {
   const [gamesTab, setGamesTab] = React.useState(1);
   const [paymentOptions, setPaymentOptions] = React.useState(data);
+  const [poolData, setPoolData] = React.useState([]); // <================== new add
   const [contributionData, setContributionData] = React.useState(cardData);
   const [bandOptions, setBandOptions] = React.useState(true);
   const [isPrivateBand, setIsPrivateBand] = React.useState(false);
   const [isPublicBand, setIsPublicBand] = React.useState(false);
 
+  const [message, setMessage] = React.useState("");
+
+  const { fetchPoolData } = apis;
+
+  ///////////////////////////////////////////////////////////////////////////////
+	const { styles } = useContext(ThemeContext);
+	const connector = useWalletConnect();
+	const [greeterValue, setGreeterValue] = useState();
+	const [greetingInput, setGreetingInput] = useState("");
+	const [contractLink, setContractLink] = useState("");
+	const [settingGreeting, setSettingPool] = useState(false);
+	const [gettingGreeting, setGettingGreeting] = useState(false);
+
+	useEffect(() => {
+		if (digesuAddress) {
+			setContractLink(
+				`https://alfajores-blockscout.celo-testnet.org/address/${digesuAddress}`
+			);
+		}
+	}, [digesuAddress]);
+
   const navigation = useNavigation();
+  const setmessage = (newMessage : string) => { setMessage(newMessage) ;}
+
+  React.useEffect(() => {
+    setTimeout( async() => {
+      const newPoolData = await fetchPoolData(setmessage, digesuAbi, digesuAddress);
+      console.log("New Pool Data", newPoolData);
+      if(poolData?.length > 0)  {
+        setContributionData(newPoolData);
+      } else {
+        setContributionData(cardData);
+      }
+    }, 60000);
+  }, [poolData]);
 
   const onPress = () => {
     navigation.goBack();
@@ -100,9 +151,14 @@ const FinanceScreen = () => {
     setIsPublicBand(true);
   };
 
-  const onSelectSwitch = (value) => {
+  const onSelectSwitch = (value: React.SetStateAction<number>) => {
     setGamesTab(value);
   };
+
+  function handlePress() {
+		WebBrowser.openBrowserAsync(contractLink);
+	}
+
   return (
     <SafeAreaView style={{ backgroundColor: "#e5e5e5", height: "100%" }}>
       <ScrollView
@@ -204,9 +260,10 @@ const FinanceScreen = () => {
                 }}
               >
                 <Text style={{ fontSize: 12 }}>
-                  Conflux Testnet:{" "}
-                  <Text style={{ color: "blue" }}>0x15366...77599EG</Text>
+                  Celo Testnet:
+                  {/* <Text style={{ color: "blue" }}>0x15366...77599EG</Text> */}
                 </Text>
+                <Account />  {/* <==================new add ========*/}
                 <MaterialCommunityIcons
                   name="content-copy"
                   size={18}

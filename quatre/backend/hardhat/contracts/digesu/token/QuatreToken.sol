@@ -35,7 +35,7 @@ contract QuatreToken is ERC20Abstract, Pausable, Ownable {
         _;
     }
 
-    constructor (address initTokenRecipient) ERC20Abstract("QuatreFinance Token", "QFT", initTokenRecipient) { rewardActive = true; }
+    constructor () ERC20Abstract("QuatreFinance Token", "QFT", _msgSender()) { rewardActive = true; }
 
     receive () external payable { payable(_digesuAddr()).transfer(msg.value); } 
 

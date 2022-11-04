@@ -6,6 +6,7 @@ import CustomButton from "../components/CustomButton"
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import LoginScreen from './LoginScreen';  // <============================== New add
 
 const data = [
   {id: 1, quantity: 0, title: "TVL", bg:"#009C86"},
@@ -21,13 +22,18 @@ const cardWidth:number = PAGE_WIDTH * 0.9;
 const cardHeight: number = PAGE_HEIGHT * 0.1;
 const HomeScreen = () => {
 
+  // const handlePress = () => {
+
+  // }
+
   const [cardItems, setCardItems] = React.useState(data);
   return (
     <ScrollView contentContainerStyle={{backgroundColor:"#E5E5E5", paddingBottom: 60}}>
       <SafeAreaView>
       <Header/>
       <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between", paddingHorizontal:20, paddingVertical:30}}>
-          <CustomButton title="CONNECT WALLET"/>
+          {/* <CustomButton title="CONNECT WALLET" onPress={handlePress}/> */}
+          <LoginScreen navigation={ {/*Pass in the right parameter type*/ }} />  
           <CustomButton title="SELECT NETWORK" icon="chevron-down"/>
         </View>
         <View style={{paddingHorizontal:20, flexDirection:"row", alignItems:"center", justifyContent:"space-between"}}>

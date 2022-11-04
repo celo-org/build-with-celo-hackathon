@@ -31,9 +31,7 @@ contract AccountManager is IAccountManager, ICommon, Ownable {
   ///@dev Users mapped to records
   mapping (address=>Accounts) private accounts;
 
-  constructor (address _feeTo) {
-    feeTo = _feeTo;
-  }
+  // constructor () {}
 
   modifier scrutinizeAccount(address who, bool value, string memory errorMessage) {
     require(hasAccount(who) ==  value, errorMessage);
@@ -68,7 +66,7 @@ contract AccountManager is IAccountManager, ICommon, Ownable {
     scrutinizeAccount(who, false, "User exist")
     returns(address newAlc) 
   {
-    require(msg.value >= accountCreationFee, "3");
+    require(msg.value >= accountCreationFee && feeTo != address(0), "3");
     accountsCounter ++;
     newAlc = address(new Account{value: initialAccountBalance}(who, _getFactory()));
     accounts[_msgSender()].active = newAlc;

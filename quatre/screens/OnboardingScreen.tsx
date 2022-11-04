@@ -47,7 +47,7 @@ const OnboardingScreen = () => {
   }, []);
 
   const skip = () => {
-    console.log("I got clicked");
+    // console.log("I got clicked");
     navigation.navigate("MainPage");
     console.log("I got clicked");
   };

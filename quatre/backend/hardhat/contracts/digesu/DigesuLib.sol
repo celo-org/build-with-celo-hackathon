@@ -248,6 +248,105 @@ library DigesuLib {
     pos = IAccount(alc).getSubscriptionInfo(poolId).position;
   } 
 
+  ///@dev Modifies member's information 
+  function _updateMemberData(
+    Data storage self, 
+    ICommon.UpdateParam memory upr,
+    function (address) internal view returns(address) _account
+  ) 
+    private 
+    returns (address valueTo, uint position) 
+  {
+    self.pools[upr.poolId].uint256s.currentPool = 0;
+    // address _actual = _account(_msgSender());
+    valueTo = upr.expected;
+    
+    ICommon.Info memory exp = IAccount(valueTo).getSubscriptionInfo(upr.poolId);
+    position = exp.position;
+    if (_account(_msgSender()) != upr.expected) {
+      if (_now() > exp.turnTime + 1 hours) {
+        assertIsMember(self.pools, upr.poolId, _account(_msgSender()), true);
+        valueTo = _account(_msgSender());
+        exp = _swapPosition(valueTo, upr.pool.addrs.asset, upr.poolId, exp, valueTo);
+        position = exp.position;
+      }
+    }
+    bool reduce;
+    uint val = upr.pool.uint256s.currentPool;
+
+    if(valueTo == upr.pool.mems[0]) {
+      reduce = true;
+    } else {
+      val = upr.owings + upr.makerFee;
+      upr.pool.addrs.asset.safeWithdrawRouterOnly(
+        IAccount(upr.pool.addrs.lastPaid),
+        valueTo, 
+        self.pcd.feeTo, 
+        upr.pool.uint256s.currentPool, 
+        upr.makerFee
+      );
+    }
+
+    upr.poolId.safeInitializeInfo(
+        ICommon.Info(exp.position, _now() + upr.pool.uints.duration, 0, upr.owings, 0, upr.colBals, exp.isAdmin, true, true),
+        true,
+        reduce,
+        IAccount(valueTo),
+        val,
+        upr.pool.addrs.asset,
+        address(0)
+      );
+    
+    self.pools[upr.poolId].uints.selector ++;
+  }
+
+  function _swapPosition(
+    address actual,
+    address asset,
+    uint poolId,
+    ICommon.Info memory expected,
+    address valueTo
+  ) private 
+    returns(ICommon.Info memory _expected) 
+  {
+    ICommon.Info memory act = IAccount(actual).getSubscriptionInfo(poolId);
+    uint posActual = act.position;
+    act.position = expected.position;
+    expected.position = posActual;
+    _expected = act;
+    
+    require(
+      IAccount(valueTo).initializeInfo(
+        expected, 
+        true,
+        false,
+        poolId, 
+        0, 
+        asset,
+        address(0)
+      ), 
+    "20"
+    );
+  }
+
+  /**
+    @dev Penalizes an user for late repayment
+          @notice Defaulter is surcharged.
+                  Penalty is credited to the account of next member to GH.
+  */
+  function _computePenalty(IDigesu.PublicData storage self, uint poolId, address user) internal view returns (uint256) {
+    if (self.penFee == 0) return 0;
+
+    return Utils.mulDivOp(IAccount(user).getSubscriptionInfo(poolId).colBals, self.penFee);
+  }
+
+  /**@dev Can update the penalty rate. Should be restricted to the owner or authorized admin. */
+  function updatePenFee(IDigesu.PublicData storage self, uint8 newRate) internal {
+    require(newRate <= type(uint8).max, "Invalid rate");
+    self.penFee = newRate;
+  }
+
+
   // function setSupportedTokens(
   //   address newToken,
   //   function (address) internal _setSupportedToken 

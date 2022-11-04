@@ -142,3 +142,38 @@ export default function App() {
     </PaperProvider>
   );
 }
+
+
+
+/////////////////////////////////////////////////////////////////////
+
+// please wrap the whole App with registerRootComponent(withWalletConnect(App)) as described baseGestureHandlerWithMonitorProps.
+// This will handle web3 connection automatically instead of having to use conditions for checking if user has web3 withWalletConnect
+
+import "./global";
+import App from "./App";
+import { baseGestureHandlerWithMonitorProps } from "react-native-gesture-handler/lib/typescript/handlers/gestureHandlerCommon";
+import { registerRootComponent, scheme } from "expo";
+const {
+	default: AsyncStorage,
+} = require("@react-native-async-storage/async-storage");
+const { withWalletConnect } = require("@walletconnect/react-native-dapp");
+
+// registerRootComponent calls AppRegistry.registerComponent('main', () => App);
+// It also ensures that whether you load the app in Expo Go or in a native build,
+// the environment is set up appropriately
+registerRootComponent(
+	withWalletConnect(App, {
+		clientMeta: {
+			name: "Quatrefinance digesu",
+			description: "Tools for lifestyle finances",
+		},
+		redirectUrl:
+			Platform.OS === "web" ? window.location.origin : `${scheme}://`,
+		storageOptions: {
+			asyncStorage: AsyncStorage,
+		},
+	})
+);
+
+//////////////////////////////////////////////////////////////////////

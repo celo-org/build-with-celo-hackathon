@@ -14,8 +14,15 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const Greeter = await hre.ethers.getContractFactory("Greeter");
-  const greeter = await Greeter.deploy("Hello, Hardhat!");
+  const SimpleToken = await hre.ethers.getContractFactory("SimpleToken");
+  const DigesuLib = await hre.ethers.getContractFactory("DigesuLib");
+  const AccountManager = await hre.ethers.getContractFactory("AccountManager");
+  const Digesu = await hre.ethers.getContractFactory("Digesu");
+
+  // const digesus = await SimpleToken.deploy();
+  // const simpleToken = await SimpleToken.deploy();
+  // const simpleToken = await SimpleToken.deploy();
+  // const simpleToken = await SimpleToken.deploy();
 
   await greeter.deployed();
 
@@ -30,3 +37,5 @@ main()
     console.error(error);
     process.exit(1);
   });
+
+  // ./backend/hardhat/artifacts/contracts/digesu/Digesu.sol/Digesu.json
