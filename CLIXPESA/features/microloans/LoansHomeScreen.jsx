@@ -3,10 +3,11 @@ import { RefreshControl } from 'react-native'
 import { Feather, Ionicons } from '@expo/vector-icons'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState, useCallback } from 'react'
-import { getLoans } from './loansManager'
+import { getLoans, getDefaultNewLoanName } from './loansManager'
 import { fetchLoans, updateLoans } from './loansSlice'
 import { FeatureHomeCard, FeatureItem } from 'clixpesa/components'
 import celoHelper from '../../blockchain/helpers/celoHelper'
+import { utils } from 'ethers'
 
 export default function LoansHomeScreen({ navigation }) {
   const dispatch = useDispatch()
@@ -46,9 +47,11 @@ export default function LoansHomeScreen({ navigation }) {
   const onRefresh = useCallback(async () => {
     setRefreshing(true)
     dispatch(updateLoans())
-    const results = await getLoans()
-    setLoans(results)
-    wait(2000).then(() => setRefreshing(false))
+    wait(2000).then(async () => {
+      const results = await getLoans()
+      setLoans(results)
+      setRefreshing(false)
+    })
   }, [])
 
   if (loans.length > 0) {
@@ -62,35 +65,34 @@ export default function LoansHomeScreen({ navigation }) {
 
   return (
     <Box flex={1} bg="muted.100" alignItems="center">
-      <FeatureHomeCard
-        balance={totalBalance.toFixed(4).toString()}
-        apprxBalance={(totalBalance * 120.75).toFixed(2).toString()}
-        expScreen="DummyModal"
-        btn1={{
-          icon: <Icon as={Feather} name="arrow-down-left" size="md" color="primary.600" mr="1" />,
-          name: 'Borrow',
-          screen: 'fromOffers',
-        }}
-        btn2={{
-          icon: <Icon as={Feather} name="arrow-up-right" size="md" color="primary.600" mr="1" />,
-          name: 'Repay',
-          screen: 'AllLoans',
-        }}
-      />
       <FlatList
         width="95%"
         data={loans}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-        renderItem={({ item, index }) => (
-          <Box
-            bg="white"
-            opacity={85}
-            roundedTop="md"
-            roundedBottom={index == loans.length - 1 ? '2xl' : 'md'}
-            mt={1}
-          >
-            {index == 0 ? (
-              <HStack justifyContent="space-between" mx={4} mt={2} mb={1}>
+        ListHeaderComponent={
+          <>
+            <FeatureHomeCard
+              balance={totalBalance.toFixed(4).toString()}
+              apprxBalance={(totalBalance * 120.75).toFixed(2).toString()}
+              expScreen="DummyModal"
+              btn1={{
+                icon: (
+                  <Icon as={Feather} name="arrow-down-left" size="md" color="primary.600" mr="1" />
+                ),
+                name: 'Borrow',
+                screen: 'fromOffers',
+              }}
+              btn2={{
+                icon: (
+                  <Icon as={Feather} name="arrow-up-right" size="md" color="primary.600" mr="1" />
+                ),
+                name: 'Repay',
+                screen: 'AllLoans',
+              }}
+              itemBottom={false}
+            />
+            {loans.length > 0 ? (
+              <HStack justifyContent="space-between" mx={4} mt={3} mb={1}>
                 <Text fontWeight="medium" color="blueGray.600">
                   Loans
                 </Text>
@@ -99,6 +101,16 @@ export default function LoansHomeScreen({ navigation }) {
                 </Pressable>
               </HStack>
             ) : null}
+          </>
+        }
+        renderItem={({ item, index }) => (
+          <Box
+            bg="white"
+            opacity={85}
+            roundedTop={index == 0 ? '2xl' : 'md'}
+            roundedBottom={index == loans.length - 1 ? '2xl' : 'md'}
+            mt={1}
+          >
             <FeatureItem
               initiated={item.initiated}
               itemTitle={item.name}

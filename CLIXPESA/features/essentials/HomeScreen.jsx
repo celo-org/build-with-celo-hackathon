@@ -74,7 +74,7 @@ export default function HomeScreen({ navigation }) {
           : shortenAddress(tx.to, true),
         date: date[0] + ', ' + date[2] + ' ' + date[1] + ', ' + txDate.toTimeString().slice(0, 5),
         amount: utils.formatUnits(tx.value, 'ether'),
-        token: 'cUSD',
+        token: tx.tokenSymbol,
       }
       thisTxs.push(txItem)
     })
