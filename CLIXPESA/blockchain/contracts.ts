@@ -33,13 +33,13 @@ export function getContract(c: CeloContract) {
 }
 
 export function getCustomContract(cc: CeloContract, addr: string) {
-  const cachedContract = contractCache[cc]
+  const cachedContract = contractCache[addr]
   if (cachedContract) return cachedContract
   const signer = getSigner()
   const address = addr
   const abi = getContractAbi(cc)
   const contract = new Contract(address, abi, signer)
-  contractCache[cc] = contract
+  contractCache[addr] = contract
   return contract
 }
 

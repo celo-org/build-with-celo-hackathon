@@ -27,40 +27,47 @@ export default function SpacesScreen({ navigation, route }) {
   ]
   return (
     <Box flex={1} bg="muted.100" alignItems="center">
-      <FeatureHomeCard
-        balance="30.3780"
-        apprxBalance="3,037.80"
-        // expScreen="DummyModal"
-        btn1={{
-          icon: <Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />,
-          name: 'New Space',
-          screen: 'createSpace',
-        }}
-        btn2={{
-          icon: <Icon as={Feather} name="arrow-up-right" size="md" color="primary.600" mr="1" />,
-          name: 'Fund',
-          screen: 'DummyModal',
-        }}
-      />
       <FlatList
         width="95%"
         data={spaces}
-        renderItem={({ item, index }) => (
-          <Box
-            bg="white"
-            opacity={85}
-            roundedTop="md"
-            roundedBottom={index == spaces.length - 1 ? '2xl' : 'md'}
-            mt={1}
-          >
-            {index == 0 ? (
-              <HStack justifyContent="space-between" mx={4} mt={2} mb={1}>
+        ListHeaderComponent={
+          <>
+            <FeatureHomeCard
+              balance="30.3780"
+              apprxBalance="3,037.80"
+              // expScreen="DummyModal"
+              btn1={{
+                icon: <Icon as={Feather} name="plus" size="md" color="primary.600" mr="1" />,
+                name: 'New Space',
+                screen: 'createSpace',
+              }}
+              btn2={{
+                icon: (
+                  <Icon as={Feather} name="arrow-up-right" size="md" color="primary.600" mr="1" />
+                ),
+                name: 'Fund',
+                screen: 'DummyModal',
+              }}
+              itemBottom={false}
+            />
+            {spaces.length > 0 ? (
+              <HStack justifyContent="space-between" mx={4} mt={3} mb={1}>
                 <Text fontWeight="medium" color="blueGray.600">
                   Spaces
                 </Text>
                 <Text color="primary.600">See all</Text>
               </HStack>
             ) : null}
+          </>
+        }
+        renderItem={({ item, index }) => (
+          <Box
+            bg="white"
+            opacity={85}
+            roundedTop={index == 0 ? '2xl' : 'md'}
+            roundedBottom={index == spaces.length - 1 ? '2xl' : 'md'}
+            mt={1}
+          >
             <FeatureItem
               initiated={item.initiated}
               itemTitle={item.name}

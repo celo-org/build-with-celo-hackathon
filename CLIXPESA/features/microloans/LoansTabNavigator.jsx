@@ -9,13 +9,7 @@ function LoansTabNavigator() {
   return (
     <Tab.Navigator>
       <Tab.Screen name="YourLoans" component={LoansHomeScreen} />
-      <Tab.Screen
-        name="Offers"
-        component={LoanOffersScreen}
-        options={({ route }) => ({
-          unmountOnBlur: true,
-        })}
-      />
+      <Tab.Screen name="Offers" component={LoanOffersScreen} />
       <Tab.Screen name="Requests" component={LoanRequestsScreen} />
     </Tab.Navigator>
   )
