@@ -23,9 +23,8 @@ export default function testHandler(
   //   ensAddress: customEnsAddress
   // };
 
-  const provider = ethers.providers.getDefaultProvider('1313161555'); //network
-  //new ethers.providers.JsonRpcProvider("https://speedy-nodes-nyc.moralis.io/***/polygon/mainnet");
-
+  const provider = ethers.providers.getDefaultProvider(chainId); //network
+  
   // signer for your transactions 
   const signer = new ethers.Wallet(privateKey, provider);
 
