@@ -156,7 +156,7 @@ List any links to your presentation or any related visuals you want to share.
 
 Here is our main demo video: 
 
-[![Demo](https://i.ibb.co/g4W3ypx/image.png)](Pending)
+[![Demo](https://i.ibb.co/g4W3ypx/image.png)](https://youtu.be/x9WD2Im2URE)
 
 #### Next Steps
 
