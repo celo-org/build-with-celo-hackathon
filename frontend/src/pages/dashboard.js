@@ -10,11 +10,13 @@ import GrowAChild from '../artifacts/contracts/Growachild.sol/Growachild.json'
 import RingLoader from "react-spinners/RingLoader";
 import Summery from '../components/summery'
 import { useAccount, useNetwork } from 'wagmi';
+import GacBalance from '../components/gacBalance';
 
 
 const Dashboard = () => {
     const [campaign, setCampaign] = useState([])
     const [donations, setDonations] = useState([])
+    const [gacBalance, setGacBalance] = useState(0)
     const [loadingState, setLoadingState] = useState(false)
     const { address } = useAccount()
     const { chain } = useNetwork()
@@ -77,6 +79,10 @@ const Dashboard = () => {
             GrowAChild.abi,
             signer
         )
+        const refiTokenContract = new ethers.Contract(getConfigByChain(network.chainId)[0].gacToken, GrowAChild.abi, signer)
+        const myBal = await refiTokenContract.balanceOf(address)
+        const formattedBalance = (Number(ethers.utils.formatUnits(myBal.toString(), 'ether'))).toFixed(2)
+        setGacBalance(formattedBalance)
         const data = await gacContract.getMyDonations()
         console.log("datass", data)
         const items = await Promise.all(
@@ -141,6 +147,7 @@ const Dashboard = () => {
 
                         </div>
                         <div class="tab-pane fade" id="donations" role="tabpanel" aria-labelledby="donations-tab">
+                            <GacBalance gacBalance={gacBalance} />
                             {donations.length > 0 ? (
                                 !loadingState ? (
                                     donations.map((camp, id) => (

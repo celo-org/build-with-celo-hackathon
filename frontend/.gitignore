@@ -9,5 +9,6 @@ typechain-types
 cache
 build
 .DS_Store
+web_backup
 
 .vercel
