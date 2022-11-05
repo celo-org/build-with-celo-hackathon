@@ -12,15 +12,17 @@ import { allExperts, allTrees, states } from "../utils/data";
 import { TriangleDownIcon } from "@chakra-ui/icons";
 import CustomButton from "../components/CustomButton/customButton";
 import { useEffect, useState } from "react";
-import {collection, addDoc, Timestamp, query, orderBy, onSnapshot} from 'firebase/firestore'
+import {collection, addDoc, Timestamp} from 'firebase/firestore'
 import { db } from "../firebase";
 import { toaster } from "evergreen-ui";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import TextInput from "../components/TextInputs/TextInput";
 
 const PlantNow = () => {
   const [region, setRegion] = useState('');
   const [tree, setTree] = useState('');
+  const [walletAddr, setWalletAddr] = useState('');
   const navigate = useNavigate();
   const userId = Cookies.get("userId");
 
@@ -31,6 +33,7 @@ const PlantNow = () => {
       await addDoc(collection(db, 'plantTrees'), {
         region,
         tree,
+        wallet_addr: walletAddr,
         assignedExpertName: allExperts[index].name,
         assignedExpertEmail: allExperts[index].email,
         videoUrl: '',
@@ -75,7 +78,7 @@ const PlantNow = () => {
             planted.
           </Text>
 
-          <SimpleGrid columns={2} gap="48px">
+          <SimpleGrid columns={2} gap="30px">
             <FormControl mt="20px">
               {/* <FormLabel color="brand.dark" fontSize="14px" fontWeight="500">
                     Region
@@ -127,6 +130,14 @@ const PlantNow = () => {
                 ))}
               </Select>
             </FormControl>
+            <TextInput
+              placeholder="Input your wallet address"
+              label="Wallet Address"
+              value={walletAddr}
+              onChange={(e) => setWalletAddr(e.target.value)}
+              maxLength={35}
+              minLength={26}
+            />
           </SimpleGrid>
             <Box w="100%" textAlign="center" mt="40px">
                 {/* <a href="/invite-pending"> */}
@@ -137,6 +148,7 @@ const PlantNow = () => {
                     mx="auto"
                     w="40%"
                     onClick={handleSubmit}
+                    disabled={!region || !tree || !walletAddr}
                     >
                     <Text fontWeight="medium">Proceed</Text>
                     </CustomButton>

@@ -1,6 +1,6 @@
-import { Box, FormLabel, Input } from "@chakra-ui/react";
+import { Box, FormLabel, Input, Text } from "@chakra-ui/react";
 
-const TextInput = ({ placeholder, type, label, defaultValue, border, borderColor, color, isReadOnly, onChange, value }) => {
+const TextInput = ({ placeholder, type, label, defaultValue, border, borderColor, color, isReadOnly, onChange, value, minLength, maxLength, error }) => {
   return (
     <Box>
       <FormLabel color="brand.dark" fontSize="14px" fontWeight="300" mt="20px">
@@ -20,7 +20,12 @@ const TextInput = ({ placeholder, type, label, defaultValue, border, borderColor
         fontSize="14px"
         onChange={onChange}
         value={value}
+        minLength={minLength}
+        maxLength={maxLength}
       />
+      {error &&
+        <Text color="red">{error}</Text>
+      }
     </Box>
   );
 };
