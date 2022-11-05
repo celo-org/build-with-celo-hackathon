@@ -2,7 +2,7 @@
 
 
 
-const db = require("./app/models");
+const db = require("../app/models");
 const Locations = db.locations
 db.mongoose
   .connect(db.url, {

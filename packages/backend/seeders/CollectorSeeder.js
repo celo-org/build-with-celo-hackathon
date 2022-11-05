@@ -2,7 +2,7 @@
 
 
 
-const db = require("./app/models");
+const db = require("../app/models");
 const Collector = db.collectors
 db.mongoose
   .connect(db.url, {
@@ -17,36 +17,25 @@ db.mongoose
     process.exit();
   });
 
+
+
+
 const seedCollectors = [
     {
-      name: 'Alimosho',
-      state: 'Lagos',
-      // country: '123123',
+      name: 'Collector Praise',
+      email: 'praise@collector.com',
+      phone: '09028950691',
+      verified_at: '2022-10-12',
+      wallet_address: '1234567890abc',
+      location: '63665371e6e5809af0a8e434',
     },
     {
-      name: 'Ajeromi-Ifelodun',
-      state: 'Lagos',
-      // country: '123123',
-    },
-    {
-      name: 'Mushin',
-      state: 'Lagos',
-      // country: '123123',
-    },
-    {
-      name: 'Ajeromi-Ifelodun',
-      state: 'Lagos',
-      // country: '123123',
-    },
-    {
-      name: 'Oshodi-Isolo',
-      state: 'Lagos',
-      // country: '123123',
-    },
-    {
-      name: 'Ojo',
-      state: 'Lagos',
-      // country: '123123',
+      name: 'Collector Paul',
+      email: 'paul@collector.com',
+      phone: '08177002133',
+      verified_at: '2022-10-12',
+      wallet_address: 'abc0987654321',
+      location: '63665371e6e5809af0a8e436',
     }
   
   ];

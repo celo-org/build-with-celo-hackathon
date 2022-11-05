@@ -1,15 +1,16 @@
-const company = require("../controllers/company.controller.js");
+const router = require('express').Router();
 
-var router = require("express").Router();
+const company = require('../controllers/company.controller');
 
-// Create a new Tutorial
-// router.post("/:id", company.create);
+// Create a new Company
+router.get("/", company.getCompanies);
+router.get("/:id/requests", company.companyRequests);
 
 // Retrieve all Tutorials
 // router.get("/", company.findAll);
 
 // Retrieve all published Tutorials
-router.get("/requests", company.companyRequests);
+// router.get('/requests', company.companyRequests);
 
 // Retrieve a single Tutorial with id
 // router.get("/:id", company.findOne);

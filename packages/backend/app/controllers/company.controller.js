@@ -1,30 +1,43 @@
 const db = require("../models");
-const companies = db.companies;
-const requests = db.requests;
+const Requests = db.requests;
 
-// Signup as a new Company
-exports.signup = (req, res) => {
+const Company = db.companies;
 
-
-}
-
-
-// Requests from a new Company
-
-exports.companyRequests = (req, res) =>{
-    const id = req.params.id;
-    requests.find({ company: id })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving tutorials."
-      });
-    });
-}
-
-exports.companyProfile = (req, res) =>{
+module.exports = {
+  getCompanies: async (req, res) => {
+    try {
+        const companies = await Company.find({});
+        return res.json({status: true, companies});            
+    } catch (error) {
+        res.status(500).send({
+            message: error.message || "Some error occurred while retrieving Companies."
+        });
+    }
+  },
+  companyRequests: async (req, res) => {
     
-}
+    const { requestId } = req.params;
+    try {
+      const request = await Request.find({ company: requestId });
+      res.send(request);
+    } catch (error) {
+      res
+        .status(500)
+        .send({ message: `Error retrieving company requests with id=${requestId}` });
+    }
+  },
+  // companyRequests: (req, res) =>{
+  //   const id = req.params.id;
+  //   Requests.find({ company: id })
+  //   .then(data => {
+  //     res.send(data);
+  //   })
+  //   .catch(err => {
+  //     res.status(500).send({
+  //       message:
+  //         err.message || "Some error occurred while retrieving tutorials."
+  //     });
+  //   });
+  // }
+};
+

@@ -4,6 +4,25 @@ import React from 'react'
 import Layout from '../components/layout/Layout';
 import DropdownIcon from '../components/Icons/DropdownIcon'
 
+export const getStaticProps = async () => {
+    try{
+      const res = await fetch('http://127.0.0.1:8080/api/request')
+      if(res){
+        const data = await res.json();
+  
+        return {
+          props: {requests: data}
+        }
+      }
+    }catch(err){
+  
+    }
+    
+    // console.log(res, "resuslt")
+  
+    // console.log(data, "dattaaaa")
+    
+  }
 
 const MarketPlace = () => {
   return (
