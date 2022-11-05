@@ -28,7 +28,7 @@ const options = {
 const Causes = () => {
 
     const [campaign, setCampaign] = useState([])
-    const [loadingState, setLoadingState] = useState(false)
+    const [loadingState, setLoadingState] = useState(true)
 
     useEffect(() => {
         viewCampaigns()
