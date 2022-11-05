@@ -10,7 +10,7 @@ async function main() {
     process.env
   const client = new AutotaskClient({ apiKey, apiSecret })
   const { autotaskId } = await client.create({
-    name: "Relay MetaTX",
+    name: "cashout MetaTX",
     encodedZippedCode: await client.getEncodedZippedCodeFromFolder(
       "./build/relay"
     ),
@@ -21,7 +21,7 @@ async function main() {
     paused: false,
   })
   console.log("Autotask created with ID ", autotaskId)
-  appendFileSync(".env", `\nAUTOTASK_ID="${autotaskId}"`, function (err) {
+  appendFileSync(".env", `\nCELO_AUTOTASK_ID="${autotaskId}"`, function (err) {
     if (err) throw err
   })
 }

@@ -69,7 +69,7 @@ var forwarder = {
   ForwarderAbi: ForwarderAbi$1,
 };
 
-var MinimalForwarder="0x4895bF998e0eF4DED03860175eA7de09F54Ed289";var CashOut="0x2Cff4be5Ac16AccbFe00d806A51270E5Fe556400";var Token="0x53cb991435c6f6d8bb9d4d32c127384d999a1548";var require$$3 = {MinimalForwarder:MinimalForwarder,CashOut:CashOut,Token:Token};
+var MinimalForwarder="0xfC888c887ea2FF3c70DFF5B709E2d18D519b9f4b";var CashOut="0xdD01c2DcAf4f1899d36987A8bc7E856d48efe1D2";var Token="0x91A794303F6A1D18Ae03ec689983568D76121E00";var require$$3 = {MinimalForwarder:MinimalForwarder,CashOut:CashOut,Token:Token};
 
 const ethers = require$$0;
 const {
@@ -93,13 +93,14 @@ async function relay(forwarder, request, signature, whitelist) {
   const gasLimit = (parseInt(request.gas) + 50000).toString();
   const tx = await forwarder.execute(request, signature, { gasLimit });
   const reciept = await tx.wait(10);
+  console.log(reciept);
   return reciept
 }
 
 async function handler(event) {
   // Parse webhook payload
   if (!event.request || !event.request.body) throw new Error(`Missing payload`)
-  const { request, signature, params } = event.request.body;
+  const { request, signature } = event.request.body;
   console.log(`Relaying`, request, signature);
 
   // Initialize Relayer provider and signer, and forwarder contract

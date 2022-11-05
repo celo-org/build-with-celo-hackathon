@@ -1,10 +1,10 @@
 {
   "relayer": {
-    "relayerId": "dd9d8ae8-fd74-448e-b6f8-7a9a716f5729",
-    "name": "MetaTxRelayer",
-    "address": "0x8a2da6ad06673742ef161ecee94e49b30786d492",
-    "network": "mumbai",
-    "createdAt": "2022-10-24T04:36:07.907Z",
+    "relayerId": "d0393713-a05d-47e5-9aba-2253b82663d1",
+    "name": "cashoutTxRelayer",
+    "address": "0x79572a46c95b1ae2ce6ccd521253db4ce441d9d0",
+    "network": "alfajores",
+    "createdAt": "2022-11-04T12:12:06.800Z",
     "paused": false,
     "policies": {},
     "minBalance": "100000000000000000",

@@ -5,7 +5,7 @@ const { FLW_PUBLIC_KEY: publicKey, FLW_SECRET_KEY: secretKey } = process.env
 
 const flw = new Flutterwave(publicKey, secretKey)
 async function testWebHook(request) {
-  const { CASHOUT_WEBHOOK_URL: url } = process.env
+  const { CELO_CASHOUT_WEBHOOK_URL: url } = process.env
   return await fetch(url, {
     method: "POST",
     body: JSON.stringify(request),

@@ -10,7 +10,7 @@ async function main() {
   const {
     DEFENDER_TEAM_API: apiKey,
     DEFENDER_TEAM_SECRET: apiSecret,
-    AUTOTASK_ID: autotaskId,
+    CELO_AUTOTASK_ID: autotaskId,
   } = process.env
   if (!autotaskId) throw new Error(`Missing autotask id`)
   await uploadCode(autotaskId, apiKey, apiSecret)

@@ -9,8 +9,8 @@ async function run() {
 
   // create relay using defender client
   const requestParams = {
-    name: "MetaTxRelayer",
-    network: "mumbai",
+    name: "cashoutTxRelayer",
+    network: "alfajores",
     minBalance: BigInt(1e17).toString(),
   }
   const relayer = await relayClient.create(requestParams)
@@ -33,7 +33,7 @@ async function run() {
     await relayClient.createKey(relayer.relayerId)
   appendFileSync(
     ".env",
-    `\nRELAYER_API_KEY=${relayerKey}\nRELAYER_API_SECRET=${relayerSecret}`
+    `\nCELO_RELAYER_API_KEY=${relayerKey}\nCELO_RELAYER_API_SECRET=${relayerSecret}`
   )
 }
 

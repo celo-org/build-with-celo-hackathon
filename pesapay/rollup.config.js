@@ -4,9 +4,6 @@ const json = require("@rollup/plugin-json")
 const builtins = require("builtin-modules")
 
 module.exports = {
-  acorn: {
-    allowReserved: true,
-  },
   input: "autotasks/relay/index.js",
   output: {
     file: "build/relay/index.js",

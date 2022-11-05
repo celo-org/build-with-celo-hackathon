@@ -1,29 +1,41 @@
 const { ethers } = require("hardhat")
-const { writeFileSync, readFileSync } = require("fs")
-
-function getInstance(name) {
-  const address = JSON.parse(readFileSync("deployCashout.json"))[name]
-  if (!address) throw new Error(`Contract ${name} not found in deploy.json`)
-  return ethers.getContractFactory(name).then((f) => f.attach(address))
+const { writeFileSync } = require("fs")
+const {
+  DefenderRelayProvider,
+  DefenderRelaySigner,
+} = require("defender-relay-client/lib/ethers")
+require("dotenv").config()
+const credentials = {
+  apiKey: process.env.RELAYER_API_KEY,
+  apiSecret: process.env.RELAYER_API_SECRET,
 }
+const provider = new DefenderRelayProvider(credentials)
+const relaySigner = new DefenderRelaySigner(credentials, provider, {
+  speed: "fast",
+})
 
 async function main() {
-  const token = await getInstance("Token")
-  const Forwarder = await ethers.getContractFactory("MinimalForwarder")
-  const forwarder = await Forwarder.deploy().then((f) => f.deployed())
-
-  const CashOut = await ethers.getContractFactory("CashOut")
-  const cashOut = await CashOut.deploy(forwarder.address).then((f) =>
+  const Token = await ethers.getContractFactory("Token")
+  const token = await Token.deploy("celo Dollar", "cUSD").then((f) =>
     f.deployed()
   )
-  await cashOut.addAllowedToken(token.address)
+  const Forwarder = await ethers.getContractFactory("MinimalForwarder")
+  const forwarder = await Forwarder.connect(relaySigner)
+    .deploy()
+    .then((f) => f.deployed())
+
+  const CashOut = await ethers.getContractFactory("CashOut")
+  const cashout = await CashOut.connect(relaySigner)
+    .deploy(forwarder.address)
+    .then((f) => f.deployed())
+  await cashout.addAllowedToken(token.address)
   writeFileSync(
-    "deployCashout.json",
+    "deployCashoutx.json",
     JSON.stringify(
       {
         MinimalForwarder: forwarder.address,
-        CashOut: cashOut.address,
-        Token: "0x53cb991435c6f6d8bb9d4d32c127384d999a1548",
+        CashOut: cashout.address,
+        Token: token.address,
       },
       null,
       2
@@ -31,7 +43,7 @@ async function main() {
   )
 
   console.log(
-    `MinimalForwarder: ${forwarder.address}\nCashOut: ${cashOut.address}`
+    `MinimalForwarder: ${forwarder.address}\nCashout: ${cashout.address}\nToken:${token.address} `
   )
 }
 
