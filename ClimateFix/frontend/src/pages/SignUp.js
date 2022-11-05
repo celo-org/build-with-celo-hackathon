@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Flex, FormLabel, Image, Spinner, Text } from "@chakra-ui/react";
 import CustomButton from "../components/CustomButton/customButton";
 import TextInput from "../components/TextInputs/TextInput";
@@ -29,7 +30,7 @@ const SignUp = () => {
     if (loading) {
       <Spinner />;
     };
-    Cookies.set("userId", user?.uid)
+    Cookies.set("userId", user?.uid);
     if (user) navigate("/login");
   }, [user, loading]);
   

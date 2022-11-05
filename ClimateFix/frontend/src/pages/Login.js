@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import CustomButton from "../components/CustomButton/customButton";
 import TextInput from "../components/TextInputs/TextInput";
@@ -8,7 +9,6 @@ import { useEffect, useState } from "react";
 import {
   auth,
   logInWithEmailAndPassword,
-  signInWithGoogle,
 } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "evergreen-ui";
@@ -17,7 +17,7 @@ import Cookies from "js-cookie";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
 
   
