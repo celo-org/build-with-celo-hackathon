@@ -4,9 +4,12 @@
   "description": "A demo that uses a basic PoC of Koral's Reward Protocol",
   "author": "koral.earth",
   "scripts": {
-    "test": "jest"
+    "deploy:contracts": "npx hardhat deploy",
+    "start:dapp": "cd app && npm run dev",
+    "test": "npx hardhat test --network hardhat"
   },
   "devDependencies": {
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.6",
     "@nomiclabs/hardhat-web3": "^2.0.0",
     "@openzeppelin/contracts": "^4.7.3",
     "@openzeppelin/contracts-upgradeable": "^4.8.0-rc.1",

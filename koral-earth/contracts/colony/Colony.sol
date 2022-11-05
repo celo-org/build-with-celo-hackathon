@@ -153,7 +153,7 @@ contract Colony is Administrable, EmitsEvent, Initializable, Modifiable, Stoppab
   }
 
   function deactivateZoox(address zoox) public isModifiable isPolyp {
-    require(zooxIsActive[zoox], "Colony: reward deactivation failed since zoox is inactive.");
+    require(zooxIsActive[zoox], "Colony: deactivation failed since zoox is inactive.");
 
     zooxIsActive[zoox] = false;
     totalInactiveZooxes++;
@@ -174,7 +174,7 @@ contract Colony is Administrable, EmitsEvent, Initializable, Modifiable, Stoppab
   }
 
   function deactivatePlankton(address plankton) public isModifiable isPolyp {
-    require(planktonIsActive[plankton], "Colony: reward deactivation failed since plankton is inactive.");
+    require(planktonIsActive[plankton], "Colony: deactivation failed since plankton is inactive.");
 
     planktonIsActive[plankton] = false;
     totalInactivePlanktons++;
