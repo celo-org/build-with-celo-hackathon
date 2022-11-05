@@ -5,7 +5,7 @@ const Company = db.companies;
 
 module.exports = {
     create: async (req, res) => {
-        const { scrap_category, scrap_subcategory, description, quantity_required, amount_per_unit, collection_center,
+        const { title, scrap_category, scrap_subcategory, description, quantity_required, amount_per_unit, collection_center,
             company, location } = req.body;
             // const companyid = req.params.id
         try {
@@ -18,7 +18,7 @@ module.exports = {
              * todo: get company
             */
             const EXPIRY_PERIOD = 30;
-            let title = ``;
+            // let title = ``;
             // let company_find = Company.findById(companyid)
             /** 
              * todo: verify - collection center, scrap category and subcategory

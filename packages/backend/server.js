@@ -13,10 +13,12 @@ app.use(cors(corsOptions));
 app.use(express.json());
 const companyRoutes = require("./app/routes/company.routes");
 const requestRoutes = require("./app/routes/request.routes");
+const locationRoutes = require("./app/routes/location.routes");
 
 
 app.use("/api/company", companyRoutes);
 app.use("/api/request", requestRoutes);
+app.use("/api/location", locationRoutes);
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
