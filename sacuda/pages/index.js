@@ -1,4 +1,4 @@
-import { signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { Heading, Text, Button } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
@@ -14,7 +14,7 @@ export default function Home() {
     router.prefetch('/auth/signin');
   });
 
-  function walletRedirect() {
+  const walletRedirect = () => {
     router.push('/auth/walletConnect') }
 
   return (

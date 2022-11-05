@@ -1,8 +1,8 @@
 import { FaMagic } from 'react-icons/fa';
 import { sacudaContext } from '../../components/sacudaContext';
-import React, { useContext } from 'react';
-import { Text, Heading, Button, propNames } from '@chakra-ui/react';
-import { useSession, signIn, getSession, signOut } from "next-auth/react";
+import React from 'react';
+import { Text, Heading } from '@chakra-ui/react';
+import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { ConnectButton} from "@rainbow-me/rainbowkit";
@@ -38,10 +38,7 @@ const walletConnect = () => {
     const data = await res.json();
   };
 
-
-
   const getUserEmail = async () => {
-    //context.setUMail('')
     const res = await fetch('/api/userByEmail/', {
       method: 'POST',
       headers: {
@@ -82,9 +79,9 @@ const walletConnect = () => {
             
             writeProfileBasics()
             }
-              // else {
-              //   signOut()
-              // }
+               else {
+                 signOut()
+               }
   }
     else
 
