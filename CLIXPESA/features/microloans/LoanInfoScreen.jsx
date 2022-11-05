@@ -84,7 +84,7 @@ export default function LoanInfoScreen({ navigation, route }) {
 
   useEffect(() => {
     if (data) handleGetTransaction()
-  }, [])
+  }, [data])
 
   const prog = (loan.paid / loan.principal) * 100
   const daysTo = getDaysBetween(Date.now(), Date.parse(loan.dueDate))

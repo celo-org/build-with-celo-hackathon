@@ -1,6 +1,7 @@
 import { Box, Button, FlatList, Stack, VStack, Spacer } from 'native-base'
 import { useState, useEffect, useCallback } from 'react'
 import { LoanItem } from 'clixpesa/components'
+
 import { useSelector, useDispatch } from 'react-redux'
 
 import { RefreshControl } from 'react-native'
@@ -13,19 +14,25 @@ export default function LoanOffersScreen({ navigation }) {
   const [refreshing, setRefreshing] = useState(false)
   const dispatch = useDispatch()
   const offers = useSelector((s) => s.loans.allOffers)
-
+  const [refreshing, setRefreshing] = useState()
   useEffect(() => {
-    dispatch(fetchOffers())
+    const willFocusSubscription = navigation.addListener('focus', () => {
+      dispatch(fetchOffers())
+    })
+
+    return willFocusSubscription
   }, [navigation])
 
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout))
   }
 
-  const onRefresh = useCallback(async () => {
+  const onRefresh = useCallback(() => {
     setRefreshing(true)
     dispatch(fetchOffers())
-    wait(1000).then(() => setRefreshing(false))
+    wait(2000).then(() => {
+      setRefreshing(false)
+    })
   }, [])
 
   return (
@@ -37,6 +44,7 @@ export default function LoanOffersScreen({ navigation }) {
             data={offers}
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
             showsVerticalScrollIndicator={false}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
             renderItem={({ item, index }) => (
               <Box
                 bg="white"
