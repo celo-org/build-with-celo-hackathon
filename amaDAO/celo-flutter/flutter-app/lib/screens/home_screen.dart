@@ -83,6 +83,8 @@ class _HomescreenState extends State<Homescreen> with WidgetsBindingObserver {
               icon: const Icon(Icons.home), label: 'home'.tr()),
           BottomNavigationBarItem(
               icon: const Icon(Icons.settings), label: 'setting'.tr()),
+          BottomNavigationBarItem(
+              icon: const Icon(Icons.home), label: 'contract'.tr()),
         ],
       ),
     );

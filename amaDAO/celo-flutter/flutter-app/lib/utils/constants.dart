@@ -13,16 +13,25 @@ enum BlockchainFlavor {
 
 class GlobalConstants {
   static const String apiUrl = "https://forno.celo.org";
-  static const String mainnetApiUrl = "https://forno.celo.org";
+  static const String mainnetApiUrl = "https://forno.celo.org"; 
   static const String testnetApiUrl =
       "https://alfajores-forno.celo-testnet.org";
   static const String bridge = "https://bridge.walletconnect.org";
   static const String name = "Celo Composer - Flutter";
   static const String url = "https://celo.org";
   static const int chainId = 5;
-  static const int testnetChainId = 44787;
-  static const int mainnetChainId = 42220;
+  static const int testnetChainId =  44787;
+  static const int mainnetChainId = 44787;
 }
+
+  //  CELO alfajores: {
+  //    url: "https://alfajores-forno.celo-testnet.org",
+  //    accounts: {
+  //      mnemonic: process.env.MNEMONIC,
+  //      path: "m/44'/52752'/0'/0"
+  //    },
+  //    chainId: 44787
+  //  }
 
 extension BlockchainFlavorExtention on BlockchainFlavor {
   static BlockchainFlavor fromChainId(int chainId) {
