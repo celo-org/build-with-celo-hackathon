@@ -4,7 +4,7 @@ import 'package:eip55/eip55.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:web3dart/web3dart.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../model/app_info.dart';
 import '../utils/constants.dart';
 import '../utils/wallet_connect_helper.dart';
@@ -24,11 +24,24 @@ class WalletController extends ChangeNotifier {
     ),
   );
 
+  bool isConnectWallet = false;
+  String? publicWalletAddress;
+  init() {
+
+    SharedPreferences.getInstance().then((value)  {
+      publicWalletAddress = value.getString('address');
+      isConnectWallet = value.getBool('connected')==true;
+      if(isConnectWallet){
+        walletConnectHelper.getWalletConnect();
+      }
+    });
+
+  }
+
   late Web3Client web3client;
   //late StreamChicken2Contract contract;
 
-  bool isConnectWallet = false;
-  String? publicWalletAddress;
+
 
   void connectWallet(context) async {
     print("connect to Wallet");
@@ -41,6 +54,13 @@ class WalletController extends ChangeNotifier {
           .getEthereumCredentials()
           .getEthereumAddress()
           .toString();
+
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('address', publicWalletAddress!);
+      await prefs.setBool('connected', true);
+      walletConnectHelper.getEthereumCredentials().provider;
+
+
       // publicWalletAddress = toEIP55Address(publicWalletAddress!);
 
       // Init web3client
@@ -102,4 +122,18 @@ class WalletController extends ChangeNotifier {
     final txBytes = await web3client.sendTransaction(cred, transaction);
     return txBytes;
   }
+  void makeContract() async {
+    var val = BigInt.parse("200");
+
+    var contractAddress = publicWalletAddress;
+
+    var cred = walletConnectHelper.getEthereumCredentials();  //Fails here (need to cast?)
+    // var contractAbi = Storage(address: EthereumAddress.fromHex(contractAddress), client: web3client);
+    // await contractAbi.store(val, credentials: cred );
+    //
+    // var valRet = await contractAbi.retrieve();
+    // print(valRet);
+  }
+
+
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 // import 'dart:ffi';
+import 'package:ama_timer/pages/PlantingPage.dart';
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'class/pomodoro_cycle.dart';
@@ -49,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
         .setFocusMinutes(2) //25
         .setBreakMinutes(1) //1
         .setLongerBreakMinutes(1) //15
-        .setCountUntilLongerBreak(4));
+        .setCountUntilLongerBreak(3));
 
   //final Timer _polling;// = Timer();
 
@@ -75,7 +76,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
   void _checkPomodoro() {
-      nextState = _pomodoro.nextState(); 
+    setState(() {
+      nextState = _pomodoro.nextState();
+    });
       // _pomodoro.state;
 
       debugPrint('Next State: $nextState');
@@ -193,10 +196,15 @@ class _MyHomePageState extends State<MyHomePage> {
             else Image.asset('images/seed_active.png',width: 30,height: 30,),
         ],
         ),
-        if(_pomodoro.state==PomodoroState.FINISHED)
+        if(_pomodoro.state==PomodoroState.LONG_BREAK )
           Container(
             alignment: Alignment.centerRight,
-            child: PrimaryButton("Plant Now",(){},radius: 4,textColor: Color(0xffffffff),))
+              child: PrimaryButton("Plant Now",(){
+                _controller.pause();
+
+                Navigator.push(context, MaterialPageRoute(builder: (context) => PlantingPage(_tasks)));
+              },radius: 4,textColor: Color(0xffffffff),)),
+        Text("state:${_pomodoro.state}")
       ],
     );
   }
@@ -239,7 +247,8 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
   WalletController walletController = WalletController();
-
+  PomodoroState _state = PomodoroState.INIT;
+  int n=1;
   @override
   Widget build(BuildContext context) {
 
@@ -350,7 +359,11 @@ class _MyHomePageState extends State<MyHomePage> {
               // This Callback will execute when the Countdown Changes.
               onChange: (String timeStamp) {
                 PomodoroState state = _pomodoro.state;
-
+                if(_state!= state) {
+                  print("state changed to :$n:$state");
+                  n++;
+                  _state = state;
+                }
                 // Here, do whatever you want
                 //debugPrint('Countdown Changed $timeStamp, state: $state.');
                 //**_checkPomodoroStatus();
