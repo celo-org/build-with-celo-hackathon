@@ -1,5 +1,28 @@
+![alt text](# "HeaderImage")
+
 
 # Crypto Ride
+
+Decentralized ride sharing
+
+---
+  * [Team](#the-motley-crüe)
+  * [Project Description](#project-description)
+  * [Challenges](#challenges)
+  * [Celo Network](#why-on-the-celo-network)
+  * [Requirements](#requirements)
+  * [Quick Start](#quick-start)
+    + [Contract Deployment](#1-download-and-install)
+        * [Compiling](#1-compiling)
+        * [Migrating](#2-migrating)
+    + [iOS Dapp](#ios-dapp)
+        * [Download & Install](#1-download-and-install)
+        * [Building & Launch Simulator](#2-building-and-launch-simulator)
+  * [Contract Overview](#contract-overview)
+  * [iOS Overview](#ios-overview)
+  * [Licence](#licence)
+
+---
 
 ## The Motley Crüe
 
@@ -74,8 +97,6 @@ Adding [identities](https://docs.celo.org/protocol/identity) could mitigate the 
         Celo's three stable tokens.
         
             - cUSD
-            - cEUR
-            - cREAL
 
 
 
@@ -97,7 +118,6 @@ Adding [identities](https://docs.celo.org/protocol/identity) could mitigate the 
     Some aspects of the Crypta Ride would need to be centralized as they are too costly to be implmented in a smart contract. 
 
     - Driver location-tracking
-    - Direct messaging
   
 
 ### Who would use this?
@@ -167,118 +187,41 @@ Simply the ride has four steps from start to finish, anywhere within the ride is
 
 ![Important State Diagram](ReadMeAssets/RideStates.png)
 
-## iOS Location Demo
 
-Location services is still a work in progress. Using the firebase database for the geo query of local drivers. The query will also retrieve the general working location of the driver. Then listen for changes within the realtime database for the drivers current location. Drivers are referenced by there ethereum address. The address will allow the passenger to request driver rates and driver details (Profiles).
+## Requirements
 
+- Contract (Optional)
 
-![DEMO](ReadMeAssets/locationDemo.gif)
+     - Truffle v5.5.29 (core: 5.5.29)
+     - Ganache v7.4.0
+     - Solidity 0.8.9 (solc-js)
+     - Node v16.17.0
+     - Web3.js v1.7.4
 
-## iOS Ride Core
+- iOS Dapps
 
-Passenger phone (right) created a new ride by dropping pins on the map then selecting details like price and drivers they want to accept the ride. Pin coordinates and ride details are then emitted on to the network.
+     - Xcode Version 13.4.1
+     - Target iOS 15.5
 
-Driver phone (left) received a new emitted event announcing a new ride. Ride details are checked validating the ride for the driver. Driver then has the option to accept or let the driver accept time to expire (currently 30 seconds). 
+## Quick Start
 
-![Driver Accepts Ride](ReadMeAssets/driverAccepts.png)
+### Contract Deployment (Optional)
 
-## Completed
+#### 1. Compiling 
 
-**As this project is in prototype phase changes might occure**
+#### 2. Migrating 
 
-1. General smart contract structure 
+### iOS Dapp
 
-2. Full contract testing
+#### 1. Download and Install 
 
-3. Built in contract escrow 
+#### 2. Building and Launch Simulator 
 
-    -  `rideManager` contract is use as the escrow contract. 
+Continue to the [dapp walk through](#).
 
-    1. **Ride funds are transferred from passenger to contract when the ride is created**
-    ```js
-    //  RideManager.sol 
-    //  line 167-172
-    require(_price != 0,"Price cant be zero");
-    require(_drivers.length != 0,"No drivers selected");
-    // Tranfer allowed tokens from passenger to contract
-    require(_token.allowance(msg.sender, address(this)) >= _price,"Insuficient Allowance");
-    require(_token.transferFrom(msg.sender,address(this),_price),"transfer Failed");
+## Contract Overview
 
-    ```
-    2. **Ride funds are transferred from contract to driver when passenger confirms dropoff**
-    ```js
-    // RideManager.sol
-    // line 358-383
-    // transfer tokens from contract to driver 
-    require(_token.transfer(ride.acceptedDriver ,ride.price),"transfer Failed");
-
-    ```
-    3. **When a ride is canceled ride funds are split according based on ride state**
-    
-
-    ```js
-        // Check what state the ride is in and refund 
-    if(prevState == RideState.Announced){
-        // refund all tokens back to passenger
-        require(_token.transfer(ride.passenger,ride.price),"transfer Failed");
-        
-    }else if(prevState == RideState.DriverAccepted){
-        // Passenger 80%
-        require(_token.transfer(ride.passenger ,(ride.price / 5) * 4),"transfer Failed");
-        // Driver 20%
-        require(_token.transfer(ride.acceptedDriver ,ride.price / 5),"transfer Failed");
-
-    }else if(prevState == RideState.PassengerPickUp){
-        uint256 half = ride.price / 2;
-        // Passenger 50%
-        require(_token.transfer(ride.passenger ,half),"transfer Failed");
-        // Driver 50%
-        require(_token.transfer(ride.acceptedDriver ,half),"transfer Failed");
-
-    }else if(prevState == RideState.DriverDropOff){  // Driver confirms drop off but passenger hasn't
-        // Passenger 20%
-        require(_token.transfer(ride.passenger ,ride.price / 5),"transfer Failed");
-        // Driver 80%
-        require(_token.transfer(ride.acceptedDriver ,(ride.price / 5) * 4),"transfer Failed");
-
-    }   
-    ```
-
-
-
-4. Firebase server configuration for location services.
-
-5. Testing and implentatation of location services in iOS apps.
-
-6. Core smart contract functionality in both driver and passenger iOS apps 
-
-    - Passenger can announce and cancel rides
-    - Driver can confirm and cancel rides
-    - Both can progress completely through all core ride states 
-    - Wallet & keyManager generation
-
-
-## TODO
-
-- iOS apps 
-
-    1. UI design 
-
-    2. Both driver and passenger iOS apps have been started but are a still work in progress. Both apps currently allow passengers to find drivers through Firebase. This was one of the first steps to complete, making sure it was possible. Both apps implement `web3swift` library to carry out wallet creation and contract calls.
-
-    3. iOS smart contract integration
-
-- Contract 
-
-    1. Static security audit
-        - Slither Static Analysis Tool for audit
-    
-## Potential Shortcomings
-
-Currently the smart contract architecture dosen't support ride sharing features. This would occurs when a ride is in progress and a second rider can join splitting the cost. 
-
-Sub classes are need in each app keeping readable code. 
-
+## iOS Overview
 
 ## Licence
 
