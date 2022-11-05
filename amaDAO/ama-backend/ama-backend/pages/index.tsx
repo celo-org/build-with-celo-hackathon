@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { signMessage } from "../utils/sign";
+import { createSponsorship } from "../utils/createSponsorship";
 
 import Link from "next/link";
 import Metamask from "../components/Metamask";
@@ -132,6 +133,13 @@ export default function Index() {
                   className="btn sign-btn"
                 >
                   Sign Message
+                </button>
+                <button
+                  onClick={createSponsorship}
+                  type="button"
+                  className="btn sign-btn"
+                >
+                  Create Sponsorship
                 </button>
               </>
             ) : (

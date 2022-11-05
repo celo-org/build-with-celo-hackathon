@@ -11,12 +11,17 @@ export default async (
   req: NextApiRequest,
   res: NextApiResponse<String | ResponseError>
 ) => {
+  const rpcUrl = "https://testnet.aurora.dev";
+  //Celo:  "https://alfajores-forno.celo-testnet.org";
+  const contractAddr = "0x53d6B777A68e2994243678B90A09936495d0D19C"; //aurora
+  // Celo: "0x15084Af99493C80E537C24647957CBC4b2b566f7"
+
   const privateKey = "0x1c1a49fea9a4ede1dc8e582639f498d41fa3c4a9e2ab2b9d740a4a3ec14e1cbf"; //test wallet
   //const chainId = 1313161555; //Celo Alfajores 
 
   // setup provider
   //ethers.providers.getDefaultProvider(chainId); //network not found, so let's use RPC approach:
-  const provider = new ethers.providers.JsonRpcProvider("https://alfajores-forno.celo-testnet.org");
+  const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
 
   console.log(provider);
   // signer for your transactions 
@@ -24,7 +29,8 @@ export default async (
   //const signer = provider.getSigner(); 
   console.log(signer);
 
-  const contract = new ethers.Contract("0x15084Af99493C80E537C24647957CBC4b2b566f7", storageAbi, signer)
+
+  const contract = new ethers.Contract(contractAddr, storageAbi, signer)
 
   console.log(contract);
   //await contract.store("200", signer ); <--- need to resolve signer correctly if we want to write.  But read is fine.
