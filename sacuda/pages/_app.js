@@ -45,7 +45,6 @@ const wagmiClient = createClient({
 
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
-  //const [uMail, setUMail] = useState()
   return (
 
     <ChakraProvider theme={theme}>
