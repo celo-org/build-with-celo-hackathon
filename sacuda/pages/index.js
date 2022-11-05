@@ -22,13 +22,14 @@ export default function Home() {
       <Head>
         <title>Bienvenidos a Sacuda</title>
       </Head>
-      <Heading as={'h0'}>
+      <Heading as={'h1'}>
         Welcome to Sacuda!
       </Heading>
 
       {status === 'authenticated' ? (
         walletRedirect()
-      ) : typeof window !== 'undefined' ? (
+      ) : 
+      //typeof window !== 'undefined' ? (
         <>
           <Text 
             as={'h1'}
@@ -44,16 +45,17 @@ export default function Home() {
           </Text>
             <Button isLoading={status === 'loading'}>
               <Link
-                href={'/auth/signin?callbackUrl=' + window?.location.origin || ''}
-                prefetch
+         //       href={'/auth/signin?callbackUrl=' + window?.location.origin || ''}
+                href={'/auth/signin?callbackUrl='  || ''}
               >
                 Login
               </Link>
           </Button>
         </>
-      ) : (
-        ''
-      )}
+   //   ) : (
+   //     ''
+   //   )
+   }
     </main>
   );
 }

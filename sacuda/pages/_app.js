@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { SessionProvider } from 'next-auth/react';
 import { ChakraProvider } from '@chakra-ui/react';
-import AppContext from '../components/AppContext';
+import { SacudaProvider } from "../components/sacudaContext";
 import Header from '../template/Header';
 import theme from '../utils/chakra-theme';
 import { connectorsForWallets, RainbowKitProvider, ConnectButton } from "@rainbow-me/rainbowkit";
@@ -42,21 +42,27 @@ const wagmiClient = createClient({
   provider,
 });
 
+
+
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
-  const [uMail, setUMail] = useState()
+  //const [uMail, setUMail] = useState()
   return (
+
     <ChakraProvider theme={theme}>
       <SessionProvider session={session}>
         <WagmiConfig client={wagmiClient}>
           <RainbowKitProvider chains={chains}>
-            <AppContext.Provider value={{uMail,setUMail}}>
+            <SacudaProvider>
               <Header />
-                <Component {...pageProps} />
-             </AppContext.Provider>
+                <Component 
+                 {...pageProps}
+                 />
+            </SacudaProvider>
           </RainbowKitProvider>
         </WagmiConfig>
       </SessionProvider>
     </ChakraProvider>
+
   );
 }
 

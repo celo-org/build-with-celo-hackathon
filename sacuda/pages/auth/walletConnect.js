@@ -1,6 +1,6 @@
 import { FaMagic } from 'react-icons/fa';
-import AppContext from '../../components/appContext';
-import React, { useContext, useState } from 'react';
+import { sacudaContext } from '../../components/sacudaContext';
+import React, { useContext } from 'react';
 import { Text, Heading, Button, propNames } from '@chakra-ui/react';
 import { useSession, signIn, getSession, signOut } from "next-auth/react";
 import { useRouter } from 'next/router';
@@ -11,6 +11,7 @@ import styles from '../../styles/home.module.scss';
 import '@rainbow-me/rainbowkit/styles.css';
 
 const walletConnect = () => {
+  
   const router = useRouter();
   const { isConnected, address } = useAccount()
   const { data: session, status } = useSession({
@@ -19,7 +20,9 @@ const walletConnect = () => {
      signIn(); //What to show to unathenticated users
     }
   })
-  const context = useContext(AppContext)
+
+  const {uMail,setUMail} = sacudaContext ()
+
 
   const writeProfileBasics = async () => {
     const res = await fetch('/api/handler', {
@@ -35,7 +38,10 @@ const walletConnect = () => {
     const data = await res.json();
   };
 
+
+
   const getUserEmail = async () => {
+    //context.setUMail('')
     const res = await fetch('/api/userByEmail/', {
       method: 'POST',
       headers: {
@@ -43,52 +49,66 @@ const walletConnect = () => {
       },
       body: JSON.stringify(session.user.email),
     });
-    const data = await res.json();
-    context.setUMail(data.email)
+    const resdata = await res.json();
+    setUMail(resdata.data.email)
   };  
 
   const mainRedirect = () => {
     router.push('/selection') }
 
   if (status === "loading") {
-    return "Loading..."
-  }
-
-    if (isConnected) {
-      getUserEmail()
-        if (context.UMail===session.user.email) {
-        mainRedirect();
-      }
-          else
-            if (context.UMail===null) {
-            console.log('Writing profile for:'+session.user.email)
-            writeProfileBasics()
-            }
-              else {
-                signOut()
-              }
-  }
-    else
-
-  return(
-    <>
-    <main className={styles.container}>
+    return (
+      <main className={styles.container}>
+        <>
         <Head>
         <title>Sacuda | Connect your wallet</title>
         </Head>
         <Heading as={'h1'}>
-            Just one more step!
+            Loading...
         </Heading>
-        <Text 
-            as={'h2'}
-            marginTop='1%'
-            marginBottom='1%'
-        >
-            Now you must connect your favourite Celo compatible web3 wallet in order to fully enjoy the Sacuda experience!
-        </Text>
-            <ConnectButton />
-        </main>
-    </>
+        </>
+    </main>
+    )
+  }
+
+    if (isConnected) {
+      getUserEmail()
+        if (uMail===session.user.email) {
+        window.localStorage.setItem('uMail', uMail)  
+        mainRedirect();
+      }
+          else
+            if (uMail===null) {
+            
+            writeProfileBasics()
+            }
+              // else {
+              //   signOut()
+              // }
+  }
+    else
+
+  return(
+
+          <>
+          <Head>
+          <title>Sacuda | Connect your wallet</title>
+          </Head>
+          <main className={styles.container}>
+          <Heading as={'h1'}>
+              Just one more step!
+          </Heading>
+          <Text 
+              as={'h2'}
+              marginTop='1%'
+              marginBottom='1%'
+          >
+              Now you must connect your favourite Celo compatible web3 wallet in order to fully enjoy the Sacuda experience!
+          </Text>
+              <ConnectButton />
+          </main>
+          </>
+
   )
 }
 
