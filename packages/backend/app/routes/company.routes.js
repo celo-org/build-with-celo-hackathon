@@ -1,26 +1,26 @@
-const tutorials = require("../controllers/tutorial.controller.js");
+const router = require('express').Router();
 
-var router = require("express").Router();
+const company = require('../controllers/company.controller');
 
 // Create a new Tutorial
-router.post("/", tutorials.create);
+// router.post("/:id", company.create);
 
 // Retrieve all Tutorials
-router.get("/", tutorials.findAll);
+// router.get("/", company.findAll);
 
 // Retrieve all published Tutorials
-router.get("/published", tutorials.findAllPublished);
+router.get('/requests', company.companyRequests);
 
 // Retrieve a single Tutorial with id
-router.get("/:id", tutorials.findOne);
+// router.get("/:id", company.findOne);
 
 // Update a Tutorial with id
-router.put("/:id", tutorials.update);
+// router.put("/:id", company.update);
 
 // Delete a Tutorial with id
-router.delete("/:id", tutorials.delete);
+// router.delete("/:id", company.delete);
 
 // Create a new Tutorial
-router.delete("/", tutorials.deleteAll);
+// router.delete("/", company.deleteAll);
 
 module.exports = router;
