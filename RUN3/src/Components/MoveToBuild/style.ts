@@ -46,6 +46,11 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     minWidth: Dimensions.get('window').width - 100,
   },
+  floatingBoxEcostory: {
+    position: 'absolute',
+    top: 0,
+    marginTop: 16,
+  },
   boxText: {
     color: '#fff',
     fontSize: 16,
