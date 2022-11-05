@@ -11,20 +11,19 @@ app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
 app.use(express.json());
-const locationRoutes = require("./app/routes/location.routes");
-const categoryRoutes = require("./app/routes/category.routes");
-const collectorRoutes = require("./app/routes/collector.routes");
-const collectionCenterRoutes = require("./app/routes/collectioncenter.routes");
-const companyRoutes = require("./app/routes/company.routes");
-const requestRoutes = require("./app/routes/request.routes");
+const locationRoutes = require('./app/routes/location.routes');
+const categoryRoutes = require('./app/routes/category.routes');
+const collectorRoutes = require('./app/routes/collector.routes');
+const collectionCenterRoutes = require('./app/routes/collectioncenter.routes');
+const companyRoutes = require('./app/routes/company.routes');
+const requestRoutes = require('./app/routes/request.routes');
 
-
-app.use("/api/collectors", collectorRoutes);
-app.use("/api/category", categoryRoutes);
-app.use("/api/collectioncenters", collectionCenterRoutes);
-app.use("/api/company", companyRoutes);
-app.use("/api/request", requestRoutes);
-app.use("/api/location", locationRoutes);
+app.use('/api/collectors', collectorRoutes);
+app.use('/api/category', categoryRoutes);
+app.use('/api/collectioncenters', collectionCenterRoutes);
+app.use('/api/company', companyRoutes);
+app.use('/api/request', requestRoutes);
+app.use('/api/location', locationRoutes);
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));

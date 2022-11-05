@@ -25,5 +25,6 @@ module.exports = {
     'class-methods-use-this': 'off',
     'no-underscore-dangle': 'off',
     'node/no-unsupported-features/es-syntax': 'off',
+    camelcase: 'off',
   },
 };

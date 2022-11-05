@@ -3,8 +3,8 @@ const router = require('express').Router();
 const company = require('../controllers/company.controller');
 
 // Create a new Company
-router.get("/", company.getCompanies);
-router.get("/:id/requests", company.companyRequests);
+router.get('/', company.getCompanies);
+router.get('/:id/requests', company.companyRequests);
 
 // Retrieve all Tutorials
 // router.get("/", company.findAll);

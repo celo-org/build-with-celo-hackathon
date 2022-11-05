@@ -32,6 +32,7 @@ module.exports = {
     try {
       const categories = await Category.find({ parent: undefined }).populate({
         // populate the depth as much as you want
+        // https://stackoverflow.com/a/47038544
         path: 'children',
         model: Category,
         populate: { path: 'children', model: Category },
