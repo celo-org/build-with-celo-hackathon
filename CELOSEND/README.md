@@ -20,11 +20,11 @@ POS App : https://general-bucket-android.s3.amazonaws.com/celosendpos.apk
 
 ### Team name
 
-Blank [ ]
+CeloSend
 
 #### Hackathon Track
 
-PENDING
+ReFi
 
 ##### Region location
 
