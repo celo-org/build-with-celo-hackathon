@@ -121,6 +121,18 @@ const ViewPlants = () => {
                       </Text>
                       <Text color="brand.gray">{data.assignedExpertEmail}</Text>
                     </Flex>
+                    <Flex
+                      alignItems="center"
+                      justifyContent="space-between"
+                      px="20px"
+                      fontSize="14px"
+                      mt="20px"
+                    >
+                      <Text color="brand.lightGray">
+                        Wallet address:
+                      </Text>
+                      <Text color="brand.gray">{data.wallet_addr}</Text>
+                    </Flex>
 
                     <Flex mt="40px" ml="20px" justifyContent="space-between">
                       <a
