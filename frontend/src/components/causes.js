@@ -31,7 +31,7 @@ const Causes = () => {
     const [loadingState, setLoadingState] = useState(true)
 
     useEffect(() => {
-        viewCampaigns()
+        viewCampaigns() 
     }, [])
 
     async function viewCampaigns() {
