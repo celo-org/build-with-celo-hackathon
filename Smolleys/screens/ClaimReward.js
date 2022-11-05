@@ -1,15 +1,18 @@
+import { useRef, useEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
-import { useEffect, useRef, useState } from "react";
 import {
   Dimensions,
   Image,
   ImageBackground,
   ScrollView,
+  ScrollViewBase,
   StyleSheet,
   Text,
   View,
 } from "react-native";
 import BottomNav from "../components/bottomNav";
+import IslandComponent from "../components/island";
+import TopBar from "../components/topBar";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";

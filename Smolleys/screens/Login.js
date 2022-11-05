@@ -126,10 +126,6 @@ const Login = ({ navigation }) => {
           />
           <Text>{errors.password && errors.password.message}</Text>
         </ImageBackground>
-        <TouchableOpacity onPress={() => navigation.navigate("ResetPassword")}>
-          <Text>Reset password</Text>
-        </TouchableOpacity>
-
         <View style={styles.display}>
           <View style={styles.display2}>
             <TouchableOpacity onPress={handleSubmit(onSubmit)}>

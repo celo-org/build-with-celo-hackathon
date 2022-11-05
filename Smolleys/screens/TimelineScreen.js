@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
 import {
-  Dimensions,
-  Image,
-  ScrollView,
-  StyleSheet,
   Text,
+  StyleSheet,
   View,
+  Dimensions,
+  ScrollView,
+  Image,
 } from "react-native";
+import React, { Component, useState, useEffect } from "react";
 import BottomNav from "../components/bottomNav";
 import Timeline from "../components/timeline";
 const win = Dimensions.get("window");

@@ -1,17 +1,20 @@
 import {
-  BubblegumSans_400Regular,
-  useFonts,
-} from "@expo-google-fonts/bubblegum-sans";
-import React from "react";
-import {
+  StyleSheet,
   Dimensions,
+  Text,
+  View,
   Image,
   ImageBackground,
-  StyleSheet,
-  Text,
+  Button,
   TouchableOpacity,
-  View,
 } from "react-native";
+import React from "react";
+import {
+  useFonts,
+  BubblegumSans_400Regular,
+} from "@expo-google-fonts/bubblegum-sans";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 const win = Dimensions.get("window");
 
 const SplashScreen3 = ({ navigation }) => {
