@@ -9,20 +9,20 @@ import SwiftUI
 
 struct RateRegistration: View {
     
-    //@State var driverRate = ""
-    //@State var isRegisted = false
-    
     @EnvironmentObject var profileVM:ProfileViewModel
     
     var body: some View {
         VStack{
             Spacer()
-            Text("Set your rate").font(.title3)
-            TextField("Rate",text: $profileVM.registerNewDriver.rate.rate).keyboardType(.decimalPad)
-            Text("Set working radius")
+            Text("Set your fare price.").font(.title3).bold()
+            HStack{
+                Text("$ \(profileVM.registerNewDriver.rate.fare)").font(.title2).bold()
+                Stepper("per hour", value:  $profileVM.registerNewDriver.rate.fare, in: 18...100)
+            }
             Spacer()
         }.textFieldStyle(.roundedBorder)
             .disableAutocorrection(true)
+            .padding()
 
     }
 }

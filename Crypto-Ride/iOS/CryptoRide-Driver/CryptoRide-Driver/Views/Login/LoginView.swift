@@ -53,14 +53,14 @@ struct LoginView: View {
         
         
         
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(destination: ProfileView(isRegistered: false)
-                ){
-                    Text("Import Wallet")
-                }
-            }
-        }
+        //.toolbar {
+        //    ToolbarItem(placement: .navigationBarTrailing) {
+                //NavigationLink(destination: ProfileView(isRegistered: false)
+        //        ){
+        //            Text("Import Wallet")
+        //        }
+        //    }
+        //}
         .navigationTitle("Crypto Driver")
         .navigationViewStyle(StackNavigationViewStyle())
         .navigationBarTitleDisplayMode(.inline)

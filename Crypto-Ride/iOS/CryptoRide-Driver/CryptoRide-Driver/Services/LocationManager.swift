@@ -17,7 +17,19 @@ import FirebaseDatabase
 class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
     
     @Published var region = MKCoordinateRegion()
+    @Published var route:MKRoute?
+    @Published var pickUpRoute:MKRoute?
+
+    
+    // Location broadcast
     @Published var isActive = false
+    
+    @Published var addCircle = false
+    @Published var circleLocation:CLLocationCoordinate2D? = nil
+    
+    
+    // Remove route from map view
+    var tempRoute:MKRoute?
     
     private var db:Firestore!
     private let manager = CLLocationManager()
@@ -44,18 +56,13 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
         manager.requestWhenInUseAuthorization()
         manager.startUpdatingLocation()
         
+        
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        //do {
-        wallet = ContractServices.shared.getWallet()
-        //}catch {
-            
-        //}
-        //if ContractServices.shared == nil {return}
-        //print(ContractServices.shared.getWallet())
 
-        
+        wallet = ContractServices.shared.getWallet()
+
         if isActive {
             locations.last.map {
                 
@@ -73,12 +80,22 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
                         return
                     }
                     lastGeocodeTime = currentTime
+
                     // Update location in DB
                     if(!wasInit) {
-                        print("Updating firebase")
-                        startDB(location: $0.coordinate, wallet:wallet!)
+                        //print("Updating firebase")
+                        let address = CLGeocoder.init()
+                        let coords = $0.coordinate
+                        address.reverseGeocodeLocation(CLLocation.init(latitude: $0.coordinate.latitude, longitude:$0.coordinate.longitude)) { [unowned self] (places, error) in
+                            if error == nil{
+                                if let place = places{
+                                    let city =  place.first?.locality ?? ""
+
+                                    startDB(coordinates: coords, city: city, wallet: wallet!)
+                                }
+                            }
+                        }
                     }
-                
                     updateDB(location: $0.coordinate, wallet: wallet!)
                 }
         }else{
@@ -88,7 +105,6 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
     
     // Updates realtime db
     func updateDB(location:CLLocationCoordinate2D, wallet:Wallet) {
- 
             // Keep adding data to the
             let databasePath: DatabaseReference? = {
               let ref = Database.database()
@@ -111,32 +127,37 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
               let json = try JSONSerialization.jsonObject(with: data)
 
               databasePath.setValue(json)
-            print("Updating realtime db")
+    
             } catch {
               print("an error occurred", error)
             }
             
     }
     
-    /// MARK : startDB
-    ///   init driver location and address within firebase
+    // MARK: startDB
+    ///  Use profile settings to set a entry in firebase DB
     ///
-    func startDB(location:CLLocationCoordinate2D, wallet:Wallet) {
+    func startDB(coordinates:CLLocationCoordinate2D,city:String, wallet:Wallet) {
+
         wasInit = true
-        let hash = GFUtils.geoHash(forLocation: location)
+        let hash = GFUtils.geoHash(forLocation: coordinates)
         
+        let defaults = UserDefaults.standard
+        let twitter = defaults.string(forKey: "twitter") ?? ""
+        let instagram = defaults.string(forKey: "instagram") ?? ""
         
         // Check if driver has a document
-        db.collection("cities").document("SF").collection("Drivers").document(wallet.address).getDocument()
+        db.collection("cities").document(city).collection("Drivers").document(wallet.address).getDocument()
         { [self]
             result,error  in
-    
-            if !result!.exists {
+            if result!.exists == false {
                 // Add driver document to firebase
-                db.collection("cities").document("SF").collection("Drivers").addDocument(data:[
+                db.collection("cities").document(city).collection("Drivers").document(wallet.address).setData([
                     "geoHash":hash,
                     "lat": currentLocation!.coordinate.latitude,
                     "lng": currentLocation!.coordinate.longitude,
+                    "twitter":twitter,
+                    "facebook":instagram,
                     "time": lastGeocodeTime!,
                     "driver":wallet.address
                 ])
@@ -144,23 +165,39 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
                    if let err = err {
                        print("Error writing document: \(err)")
                    } else {
-                       print("Document successfully written!")
+                       print("Document successfully Added!")
                    }
                }
-            }else{
+            }
+            else{
                 // Update driver init location
-                db.collection("cities").document("SF").collection("Drivers").document(wallet.address).updateData([
+                db.collection("cities").document(city).collection("Drivers").document(wallet.address).updateData([
                     "geoHash":hash,
                     "lat": currentLocation!.coordinate.latitude,
                     "lng": currentLocation!.coordinate.longitude,
+                    "twitter":twitter,
+                    "facebook":instagram,
                     "time": lastGeocodeTime!,
                     "driver":wallet.address
                 ]) { err in
                     if let err = err {
                         print("Error writing document: \(err)")
                     } else {
-                        print("Document successfully written!")
+                        print("Document successfully Updated!")
                     }
+                }
+            }
+        }
+        
+        
+        // MARK: deleteDB
+        // Remove entry from firebase when driver is finished
+        func deleteDB() {
+            db.collection("cities").document(city).collection("Drivers").document(wallet.address).delete() { err in
+                if let err = err {
+                    print("Error removing document: \(err)")
+                } else {
+                    print("Document successfully removed!")
                 }
             }
         }

@@ -7,118 +7,140 @@
 
 import SwiftUI
 
+enum DriverStates {
+    case none
+    case notRegistered
+    case noRide
+    case inRide
+    case rideComplete // Passenger is entered a ride
+}
+
 struct ContentView: View {
     
     @EnvironmentObject var authentication:Authentication
     @StateObject var manager = LocationManager()
     
-    @ObservedObject var webSocket = WebSockets()
+    @StateObject var registered = Registered()
+    @StateObject var balance = Balance()
+    @StateObject var driver = Driver()
     
-    @State var isRegistered = false
     @State var isLoading = false
     
+    @ObservedObject var rideService:RideService
+    @ObservedObject var webSocket:WebSockets
+
+    
     let mapView:MapView = MapView()
+    
+    init() {
+        rideService = RideService()
+        webSocket = WebSockets()
+        // setup rideState observer from webSocket to rideService
+        rideService.observeRideState(propertyToObserve: webSocket.$rideState)
+    }
+    
+    
+    // MARK: containedView
+    /// Switch views based on `driverState`
+    /// Views will be presented ontop of mapView
+    func containedView() -> AnyView {
+        switch rideService.driverState {
+        case .none:
+            return AnyView(ProgressState())
+        case .notRegistered:
+            return AnyView(Registration().environmentObject(registered)
+                                         .environmentObject(balance)
+                                        .environmentObject(driver))
+        case .noRide:
+            return AnyView(ListingState().environmentObject(webSocket)
+                                         .environmentObject(rideService)
+                                         .environmentObject(manager))
+        case .inRide:
+            return AnyView(inRideState().environmentObject(rideService)
+                                        .environmentObject(manager)
+                                        .environmentObject(webSocket))
+                            
+        case .rideComplete:
+            return AnyView(Text("ride complete"))
+        }
+    }
+    
     var body: some View {
         NavigationView {
             ZStack {
                     mapView
                         .environmentObject(manager)
+                        .environmentObject(rideService)
+                        //.environmentObject(webSocket)
                         .edgesIgnoringSafeArea(.all)
                 
-                VStack{
-                    Spacer()
-                    if isRegistered{
-                        Button{
-                            manager.isActive.toggle()
-                        }label:{
-                            
-                            if manager.isActive{
-                                Text("Stop")
+                    containedView()
+            }.task {
+                // Start progress view
+                // isLoading = true
+                // Get driver address
+                let driverAddress = ContractServices.shared.getWallet().address
+                // check if driver is registered
+                rideService.isDriver(address:driverAddress ) {
+                    isDriver in
+                    registered.isRegistered = isDriver
+        
+                    if isDriver {
+                        // If registered check if driver is in active ride
+                        rideService.getActiveRide(address: driverAddress) {
+                            rideId in
+                            // Check if rideId is empty
+                            if rideId == ZERO_BYTES {
+                                rideService.driverState = .noRide
                             }else{
-                                Text("Start")
+                                // set observables rideId's
+                                webSocket.rideId = rideId
+                                rideService.rideId = rideId
+                                // get ride details 
+                                rideService.getRide(rideId: rideId) {
+                                    ride in
+                                    rideService.ride = ride
+                                    rideService.updateRoute = true
+                                    rideService.showPickUpRoute = true
+                                
+                                }
+                                // set view state to inRide
+                                rideService.driverState = .inRide
                             }
-                            
                         }
                     }else{
-                        VStack{
-                            Text("Looks like you havn't registered this wallet yet").font(.title3)
-                            NavigationLink(destination: ProfileView(isRegistered: isRegistered)
-                            ){
-                                Image(systemName: "person.crop.circle")
-                                Text("Register Wallet")
+                        // set view state to not registered
+                        rideService.driverState = .notRegistered
+                    }
+                }
+                
+            }.buttonStyle(.borderedProminent)
+                .safeAreaInset(edge: .top, content: {
+                    Color.clear
+                        .frame(height: 0)
+                        .background(.bar)
+                        .border(.black)
+                })
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                            Button("Logout") {
+                                //webSocket.disconnectSocket()
+                                // TODO DELETE FIREBASE ENTRY
+                                authentication.updateValidation(success: false)
                             }
-                        }.background(.ultraThinMaterial)
-                        Spacer()
-                    }
-                    // Must need to reqgister before accepting rides
-                }.disabled(isLoading)
-                //ProgressView().disabled(isLoading)
-                
-                if webSocket.newAnnounceRide != nil {
-                    VStack{
-                        Text("New Ride").font(.title3)
-                        Button{
-                            
-                        }label: {
-                            Text("Show Ride")
                         }
-                        Button{
-                            webSocket.newAnnounceRide = nil
-                        }label: {
-                            Text("Dismiss")
-                        }
-                    }.tint(.accentColor)
-                }
-                
-            }.task {
-                
-                isLoading = true
-                let ethAddress = ContractServices.shared.getWallet()
-                
-                let params = [ethAddress.address] as [AnyObject]
-                
-                ContractServices.shared.read(contractId: Contracts.RideManager, method: "isDriver", parameters : params)
-                { result in
-                    DispatchQueue.main.async { [self] in
-                        isLoading = false
-                        switch(result){
-                        case .success(let result):
-                            let number = result["0"] as! NSNumber
-                            
-                            isRegistered = Bool(exactly: number)!
-                            print("Is registered \(isRegistered)")
-                        case .failure(let error):
-                            print(error)
-                            //self.error = ContractError(title: "Failed to get balance.", description: error.errorDescription)
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink(destination: ProfileView().environmentObject(registered)
+                                                                 .environmentObject(balance)
+                                                                 .environmentObject(driver)
+                        ){
+                            Image(systemName: "person.crop.circle")
                         }
                     }
                 }
-                
-            }
-            .buttonStyle(.borderedProminent)
-            .safeAreaInset(edge: .top, content: {
-                Color.clear
-                    .frame(height: 0)
-                    .background(.bar)
-                    .border(.black)
-            })
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                        Button("Logout") {
-                            //webSocket.disconnectSocket()
-                            authentication.updateValidation(success: false)
-                        }
-                    }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(destination: ProfileView(isRegistered: isRegistered)
-                    ){
-                        Image(systemName: "person.crop.circle")
-                    }
-                }
-            }
-            .navigationTitle("")
-            .navigationViewStyle(StackNavigationViewStyle())
-            .navigationBarTitleDisplayMode(.inline)
+                //.navigationTitle("Driver")
+                .navigationViewStyle(StackNavigationViewStyle())
+                .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

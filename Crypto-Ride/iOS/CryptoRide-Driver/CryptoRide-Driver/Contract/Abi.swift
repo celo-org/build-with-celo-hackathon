@@ -31,6 +31,19 @@ let rideManagerAbi =
           "internalType": "bytes32",
           "name": "rideId",
           "type": "bytes32"
+        }
+      ],
+      "name": "Complete",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "rideId",
+          "type": "bytes32"
         },
         {
           "indexed": false,
@@ -53,6 +66,19 @@ let rideManagerAbi =
         }
       ],
       "name": "DriverAdded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "rideId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "DriverConfirmsDropOff",
       "type": "event"
     },
     {
@@ -111,6 +137,19 @@ let rideManagerAbi =
       "inputs": [
         {
           "indexed": false,
+          "internalType": "bytes32",
+          "name": "rideId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "PassengerConfirmsPickUp",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
           "internalType": "address",
           "name": "account",
           "type": "address"
@@ -130,19 +169,6 @@ let rideManagerAbi =
         }
       ],
       "name": "RideCanceled",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "bytes32",
-          "name": "rideId",
-          "type": "bytes32"
-        }
-      ],
-      "name": "StateChanged",
       "type": "event"
     },
     {
@@ -173,21 +199,21 @@ let rideManagerAbi =
     },
     {
       "inputs": [
-              {
-                "internalType": "uint256",
-                "name": "_startingRate",
-                "type": "uint256"
-              },
-              {
-                "internalType": "string",
-                "name": "_carAssetUrl",
-                "type": "string"
-              },
-              {
-                "internalType": "string",
-                "name": "_profileAssetUrl",
-                "type": "string"
-              }
+        {
+          "internalType": "uint256",
+          "name": "_startingRate",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "_carAssetUrl",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_profileAssetUrl",
+          "type": "string"
+        }
       ],
       "name": "addDriver",
       "outputs": [],

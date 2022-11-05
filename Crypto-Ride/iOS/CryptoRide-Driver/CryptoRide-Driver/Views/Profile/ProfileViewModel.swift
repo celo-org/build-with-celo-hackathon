@@ -19,22 +19,22 @@ struct DriverInfo {
 }
 
 struct Profile {
-    var profileImage = ""
-    var twitterHandle = ""
-    var facebookHandle = ""
-    var instagramHandle = ""
+    var name = "Zuck Musk"
+    //var profileImage = ""
+    var twitterHandle = "@elonmusk"
+    var instagramHandle = "@zuck"
 }
 
 struct Vehicle {
-    var vehicleImage = ""
-    var makeModel = ""
-    var color = ""
-    var vehicleType = ""
+   // var vehicleImage = ""
+    var year = "2020"
+    var makeModel = "Tesla Model X"
+    var color = "White"
+    var seatNumber = 4
 }
 
 struct Rate{
-    var rate = ""
-    var location = ""
+    var fare = 20
 }
 
 struct RegisterDriver {
@@ -45,7 +45,6 @@ struct RegisterDriver {
 
 class ProfileViewModel:ObservableObject {
     
-    //@Published var isDriver = false
     @Published var driverInfo:DriverInfo?
     
     @Published var registerNewDriver = RegisterDriver()
@@ -53,7 +52,9 @@ class ProfileViewModel:ObservableObject {
     @Published var isLoading = false
     @Published var error:Error? = nil
     
-    @Published var balance = ""
+    @Published var toAddress = ""
+    @Published var amount = ""
+
     
     private let context = CIContext()
     private let filter = CIFilter.qrCodeGenerator()
@@ -61,7 +62,7 @@ class ProfileViewModel:ObservableObject {
     
     init() {
         getDriverRate()
-        getTokenBalance()
+        //getTokenBalance()
     }
     
     func generateQRCode(from string: String) -> UIImage {
@@ -75,25 +76,6 @@ class ProfileViewModel:ObservableObject {
             return UIImage(systemName: "xmark") ?? UIImage()
         }
     
-    public func getTokenBalance() {
-        isLoading = true
-        let ethAddress = ContractServices.shared.getWallet()
-        let params = [ethAddress.address] as [AnyObject]
-        
-        ContractServices.shared.read(contractId:.Token, method:  CusdMethods.balanceOf.rawValue, parameters: params) { result in
-            DispatchQueue.main.async { [self] in
-                isLoading = false
-                switch(result) {
-                case .success(let result):
-                    let rawBalance = result["balance"] as! BigUInt
-                    balance = Web3.Utils.formatToEthereumUnits(rawBalance, toUnits: .eth, decimals: 3)!
-                    
-                case .failure(let error):
-                    print(error)
-                }
-            }
-        }
-    }
 
     
     public func getDriverRate() {
@@ -115,14 +97,12 @@ class ProfileViewModel:ObservableObject {
                     let carAssetUrl = rawRate[2] as! String
                     let infoAssetUrl = rawRate[3] as! String
                 
-                    let driver = DriverInfo(
+                    driverInfo = DriverInfo(
                         address: ethAddress.address,
                         isDriver: Bool(exactly: isDriver)!,
                         rate: rate,
                         carAssetLink: carAssetUrl,
                         infoAssetLink: infoAssetUrl)
-
-                    driverInfo = driver
                     
                 case .failure(let error):
                     self.error = ContractError(title: "Failed to get driver rate.", description: error.errorDescription)
@@ -132,26 +112,41 @@ class ProfileViewModel:ObservableObject {
     }
     
     
-    public func registerDriver( completion:@escaping(TransactionSendingResult) -> Void) {
+    public func registerDriver(rate:Int,name:String,car:String, completion:@escaping(TransactionSendingResult) -> Void) {
           
-        let params = [21,"car","profile"] as [AnyObject]
-                ContractServices.shared.write(contractId: .RideManager, method: "addDriver", parameters: params, password: "") { result in
-                    DispatchQueue.main.async { [unowned self] in
-                        switch(result){
-                        case .success(let result):
-                            print("Success")
-                            print(result)
-                            
-                        case .failure(let error):
-                            print("error")
-                            print(error)
-                        }
-                }
+        let params = [rate,name,car] as [AnyObject]
+            ContractServices.shared.write(contractId: .RideManager, method: "addDriver", parameters: params, password: "") { result in
+                DispatchQueue.main.async { [unowned self] in
+                    switch(result){
+                    case .success(let result):
+              
+                        completion(result)
+                    case .failure(let error):
+                        print("error")
+                        print(error)
+                    }
+            }
         }
             
     }
     
-    public func updateDriverRate() {
+    
+    func transfer(completion:@escaping(TransactionSendingResult) -> Void) {
+        let amount = Web3.Utils.parseToBigUInt(amount, units: .eth)
+        let ethAddress = EthereumAddress(toAddress)!
+        let params = [ethAddress.address,amount] as [AnyObject]
+        ContractServices.shared.write(contractId: .Token, method: "transfer", parameters: params, password: "") {
+            result in
+            DispatchQueue.main.async { [unowned self] in
+                switch(result){
+                case .success(let result):
+                    completion(result)
+                case .failure(let error):
+                    print("error")
+                    print(error)
+                }
+        }
+        }
         
     }
 

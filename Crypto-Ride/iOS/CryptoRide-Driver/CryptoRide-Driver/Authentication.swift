@@ -8,7 +8,7 @@
 import SwiftUI
 
 class Authentication:ObservableObject {
-    @Published var isValidated = false
+    @Published var isValidated = true
     
     
     func updateValidation(success:Bool) {

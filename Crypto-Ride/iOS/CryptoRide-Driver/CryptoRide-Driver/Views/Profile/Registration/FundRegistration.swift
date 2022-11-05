@@ -11,20 +11,21 @@ import web3swift
 struct FundRegistration: View {
     
     @EnvironmentObject var profileVM:ProfileViewModel
+    @EnvironmentObject var balance:Balance
     
     let wallet = ContractServices.shared.getWallet()
 
     
     var body: some View {
-        VStack(alignment: .leading){
+        VStack(){
             Spacer()
-            Text("Fund Your Driver Wallet Address").font(.title3)
-            
+            Text("Fund Your Driver Wallet Address").font(.title3).bold()
+            Text(wallet.address).font(.callout)
             Button(action: {
                 UIPasteboard.general.string = wallet.address
             }, label: {
                 VStack{
-                    Text(wallet.address).font(.callout)
+                    
                     Image(uiImage:profileVM.generateQRCode(from: wallet.address))
                         .resizable()
                         .interpolation(.none)
@@ -34,13 +35,14 @@ struct FundRegistration: View {
                 }
 
             })
-                .buttonStyle(.bordered)
+            .buttonStyle(.borderedProminent)
             
             Text("Balance").font(.title)
             HStack{
-                Text("cUSD:\(profileVM.balance)").font(.title3)
+                Text("CELO:\(balance.CELO)").font(.title3)
+                Text("cUSD:\(balance.cUSD)").font(.title3)
                 Button{
-                    profileVM.getTokenBalance()
+                    balance.getTokenBalance()
                 }label: {
                     Image(systemName: "arrow.clockwise.circle.fill")
                         .resizable()

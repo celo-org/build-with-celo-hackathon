@@ -19,18 +19,25 @@ struct ProfileRegistration: View {
     var body: some View {
         VStack{
             Spacer()
-            Image(systemName: "person.crop.circle").frame(width: 100, height: 100, alignment: .center)
-                .scaledToFit()
-            Text("Select Profile Picture")
+            Image(systemName: "person.crop.circle")
+                .resizable()
+                .frame(width: 50.0, height: 50.0)
             
-            Text("Links Profiles").font(.title3)
-       
-            TextField("Twitter Handle",text: $profileVM.registerNewDriver.profile.twitterHandle).keyboardType(.twitter)
-            TextField("Facebook Handle",text: $profileVM.registerNewDriver.profile.facebookHandle).keyboardType(.default)
-            TextField("Instagram Handle",text: $profileVM.registerNewDriver.profile.instagramHandle).keyboardType(.default)
+            Text("Links Profiles").font(.title3).bold()
+            Section{
+                TextField("Name",text: $profileVM.registerNewDriver.profile.name).keyboardType(.default)
+            }
+            Section{
+                TextField("Twitter Handle",text: $profileVM.registerNewDriver.profile.twitterHandle).keyboardType(.twitter)
+                TextField("Instagram Handle",text: $profileVM.registerNewDriver.profile.instagramHandle).keyboardType(.twitter)
+    
+            }
+
+
             Spacer()
         }.textFieldStyle(.roundedBorder)
             .disableAutocorrection(true)
+            .padding()
 
     }
 }

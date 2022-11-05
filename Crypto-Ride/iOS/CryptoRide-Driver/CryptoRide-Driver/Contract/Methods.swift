@@ -36,4 +36,5 @@ enum RideManagerMethods:String {
     case removeDriver = "removeDriver"
     case updateRate = "updateRate"
     
+    case approve = "approve"
 }

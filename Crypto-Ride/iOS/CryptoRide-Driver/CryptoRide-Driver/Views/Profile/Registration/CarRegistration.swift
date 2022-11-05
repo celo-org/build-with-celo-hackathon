@@ -18,19 +18,24 @@ struct CarRegistration: View {
     var body: some View {
         VStack{
             Spacer()
-            Image(systemName: "car").frame(width: 100, height: 100, alignment: .center)
-                .scaledToFit()
+            Image(systemName: "car")
+                .resizable()
+                .frame(width: 50.0, height: 50.0)
                 
-            Text("Select Vehicle Image")
             
-            Text("Vehicle Description")
-            
+            Text("Vehicle Description").font(.title3).bold()
+            TextField("Year",text: $profileVM.registerNewDriver.vehicle.year).keyboardType(.default)
             TextField("Make Model",text: $profileVM.registerNewDriver.vehicle.makeModel).keyboardType(.default)
             TextField("Color",text: $profileVM.registerNewDriver.vehicle.color).keyboardType(.default)
-            TextField("Vehicle Type",text: $profileVM.registerNewDriver.vehicle.vehicleType).keyboardType(.default)
+            HStack{
+                Text("Number Of Seats \(profileVM.registerNewDriver.vehicle.seatNumber)").font(.title2).bold()
+                Stepper("", value:  $profileVM.registerNewDriver.vehicle.seatNumber, in: 2...6)
+            }
+            //TextField("Vehicle Type",text: $profileVM.registerNewDriver.vehicle.).keyboardType(.default)
             Spacer()
         }.textFieldStyle(.roundedBorder)
             .disableAutocorrection(true)
+            .padding()
         
 
     }
