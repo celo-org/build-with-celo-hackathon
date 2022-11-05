@@ -2,7 +2,7 @@ const { ethers, upgrades } = require("hardhat")
 
 async function main() {
     const gac = await ethers.getContractFactory("Growachild")
-    let proxy = await upgrades.upgradeProxy("0x3dACfA490A54A02008d47D7e441ec73B11299721", gac); //alfajores (proxy deployed)
+    let proxy = await upgrades.upgradeProxy("0x9f59e812dAE124049BFf53A131c66fe456baE1f1", gac); //alfajores (proxy deployed)
     console.log("Contract has been successfully upgraded.")
 }
 

@@ -3,11 +3,15 @@ const { ethers, upgrades } = require("hardhat")
 
 async function main() {
 
+  const gactoken = await ethers.getContractFactory("GAC")
+  const proxyToken = await upgrades.deployProxy(gactoken)
+  console.log("Gac Coin deployed to:", proxyToken.address)
+
   const gac = await ethers.getContractFactory("Growachild")
-  const proxy = await upgrades.deployProxy(gac)
-  //const phoneLink = await phoneLinks.deploy();
-  //await phoneLink.deployed();
+  const proxy = await upgrades.deployProxy(gac, [proxyToken.address])
   console.log("Growachild deployed to:", proxy.address)
+
+
 }
 
 main()

@@ -7,6 +7,7 @@ import '@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol';
 import '@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol';
 import '@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol';
 import 'hardhat/console.sol';
+import './GAC.sol';
 import '@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol';
 import '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
  
@@ -21,6 +22,7 @@ contract Growachild is
     using Counters for Counters.Counter;
     Counters.Counter public _campaignID;
     Counters.Counter public _userid;
+    GAC public refiToken;
 
     struct NGO {
         string name;
@@ -63,11 +65,12 @@ contract Growachild is
   mapping(uint256 => uint) private taskCompleted;
   mapping(uint256 => uint) private lastWithdrawn;
 
-     function initialize() public initializer 
+     function initialize(GAC gacToken) public initializer 
      {
     __ERC20_init('', '');
     __ReentrancyGuard_init();
     __Ownable_init();
+    refiToken = gacToken;
       }
   modifier onlyLiveCampaign(uint256 _campaignID){
     require(campaignStatus[_campaignID],"Campaign forzen.");
@@ -183,6 +186,7 @@ contract Growachild is
       }
       campaignDetails[_ids].availableBalance += amount;
       campaignDetails[_ids].totalReceived += amount;
+      refiToken.mint(payable(msg.sender),amount);
   }
 
   function getMyCampaigns() external view returns (Campaign[] memory){
