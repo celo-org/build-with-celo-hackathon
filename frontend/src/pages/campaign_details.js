@@ -18,6 +18,7 @@ const CampaignDetails = () => {
     const { campId } = queryString.parse(search)
     const [campaign, setCampaign] = useState([])
     const [photos, setPhotos] = useState([])
+
     const [contentLoaded, setcontentLoaded] = useState([])
 
     useEffect(() => {
@@ -28,9 +29,10 @@ const CampaignDetails = () => {
     }, [])
 
     async function loadPhotos() {
-        const query = '*[_type == "task" && campaignid == $id] {dailytask}'
+        const query = '*[_type == "task" && campaignid == $id] {taskDescription,dailytask}'
         const params = { id: Number(campId) } //TODO:  req.url used twice
         const result = await client.fetch(query, params)
+        console.log("result", result)
         const baseUrl = urlFor(result[0]["dailytask"]["asset"]["_ref"].slice(6,))["options"].baseUrl
         const dataset = urlFor(result[0]["dailytask"]["asset"]["_ref"].slice(6,))["options"].dataset
         const projectId = urlFor(result[0]["dailytask"]["asset"]["_ref"].slice(6,))["options"].projectId
@@ -40,7 +42,8 @@ const CampaignDetails = () => {
                 let item = {
                     url:
                         `${baseUrl}/images/${projectId}/${dataset}/${i["dailytask"]["asset"]["_ref"]
-                            .slice(6,).slice(0, -4) + '.'}png`
+                            .slice(6,).slice(0, -4) + '.'}png`,
+                    description: i.taskDescription,
 
                 };
                 return item;
@@ -119,12 +122,13 @@ const CampaignDetails = () => {
                                     <div class="col-md-6 pr-md-5">
                                         <Carousel autoPlay="true" >
                                             <div>
-                                                <img src={campaign.campaignPic} alt="" /> 
-                                            </div> 
+                                                <img src={campaign.campaignPic} alt="" />
+
+                                            </div>
                                             {photos.map((photo, i) =>
                                                 <div>
                                                     <img src={photo.url} alt="" />
-                                                    
+                                                    <p>{photo.description}</p>
                                                 </div>
                                             )}
                                         </Carousel>
