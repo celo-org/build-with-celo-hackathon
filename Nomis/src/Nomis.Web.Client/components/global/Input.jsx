@@ -5,8 +5,7 @@ import { blockchains } from "../../utilities/blockchains";
 
 import { useHotkeys } from "react-hotkeys-hook";
 
-export default function Input({ fullAddress, blockchain }) {
-  const [isOpen, setIsOpen] = React.useState(false);
+export default function Input({ fullAddress }) {
   const [address, setAddress] = React.useState(fullAddress ? fullAddress : "");
 
   const router = useRouter();
@@ -16,7 +15,7 @@ export default function Input({ fullAddress, blockchain }) {
   React.useEffect(() => {
     const userAgent = window.navigator.userAgent;
     setIsMac(userAgent.search("Mac") !== -1 ? true : false);
-  });
+  }, []);
 
   const handleClick = async () => {
     await router.push(`${www}/score/${blockchains[0].slug}/${address}`);

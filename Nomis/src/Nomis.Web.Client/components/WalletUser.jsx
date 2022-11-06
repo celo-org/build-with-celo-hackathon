@@ -31,6 +31,7 @@ export default function WalletUser({
                 ? userpick2
                 : userpick3
             }
+            alt="Userpick"
           />
         </div>
         <div className="meta">

@@ -34,7 +34,7 @@ export default function Age({ wallet }) {
 
   return (
     <div className="card age">
-      <Image src={emoji} width="64" height="64" />
+      <Image src={emoji} width="64" height="64" alt="Emoji" />
       <h5>{title}</h5>
       <p>
         {age > 0

@@ -27,7 +27,7 @@ export default function Scored({ blockchain, fullAddress }) {
   const [wallet, setWallet] = React.useState(null);
   const [success, setSuccess] = React.useState(false);
 
-  React.useEffect(() => {
+  React.useEffect(({ blockchain, fullAddress }) => {
     const getData = async () => {
       try {
         const response = await fetch(
@@ -125,10 +125,10 @@ export default function Scored({ blockchain, fullAddress }) {
             <h2>There is No {address}</h2>
             <div className="paragraph">
               <p>
-                We can't find {fullAddress} on {blockchain} blockchain.
+                We can{`'`}t find {fullAddress} on {blockchain} blockchain.
               </p>
               <p>
-                If you think it's wrong please{" "}
+                If you think it{`'`}s wrong please{" "}
                 <Link href="mailto:gm@nomis.cc">
                   <a>contact us</a>
                 </Link>

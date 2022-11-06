@@ -13,7 +13,7 @@ export default function WalletData({ wallet, blockchain, fullAddress }) {
       ) : (
         <section className="noData">
           <div className="container">
-            <Image src={sad} width="64" height="64" />
+            <Image src={sad} width="64" height="64" alt="Emoji" />
             <h3>There is no data to show</h3>
             <p>
               {fullAddress} is a new or innactive wallet on {blockchain}{" "}

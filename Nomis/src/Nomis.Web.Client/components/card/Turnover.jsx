@@ -34,7 +34,7 @@ export default function Turnover({ wallet }) {
 
   return (
     <div className="card turnover">
-      <Image src={emoji} width="64" height="64" />
+      <Image src={emoji} width="64" height="64" alt="Emoji" />
       <h5>{title}</h5>
       <p>
         {turnover > 0
