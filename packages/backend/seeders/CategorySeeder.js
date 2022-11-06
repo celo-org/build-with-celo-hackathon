@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 const db = require('../app/models');
 
 const Category = db.categories;
@@ -65,19 +66,28 @@ let seedSubCategories = [
 ];
 
 const seedDB = async () => {
+  /* delete everything, including categories and subcategories */
   await Category.deleteMany({});
+  /* add the parent categories */
   await Category.insertMany(seedCategories);
 
   const plastic = await Category.findOne({ name: 'Plastics' });
-  console.log(plastic);
   if (plastic) {
     seedSubCategories = seedSubCategories.map((subcat) => {
       const modified_subcat = subcat;
       modified_subcat.parent = plastic._id;
       return modified_subcat;
     });
-    console.log(seedSubCategories);
-    await Category.insertMany(seedSubCategories);
+    /* for each subcategory */
+    for (let i = 0; i < seedSubCategories.length; i++) {
+      /* first create the subcategory */
+      const createdsubcat = await Category.create(seedSubCategories[i]);
+      /* then add the id of the subcat to the children of the parent subcategory */
+      await Category.updateOne(
+        { _id: createdsubcat.parent },
+        { $push: { children: createdsubcat._id } }
+      );
+    }
   }
 };
 

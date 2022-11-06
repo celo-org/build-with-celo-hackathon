@@ -1,6 +1,7 @@
 const db = require('../app/models');
 
 const Collector = db.collectors;
+const Location = db.locations;
 db.mongoose
   .connect(db.url, {
     useNewUrlParser: true,
@@ -14,14 +15,13 @@ db.mongoose
     process.exit();
   });
 
-const seedCollectors = [
+let seedCollectors = [
   {
     name: 'Collector Praise',
     email: 'praise@collector.com',
     phone: '09028950691',
     verified_at: '2022-10-12',
     wallet_address: '1234567890abc',
-    location: '63665371e6e5809af0a8e434',
   },
   {
     name: 'Collector Paul',
@@ -29,11 +29,20 @@ const seedCollectors = [
     phone: '08177002133',
     verified_at: '2022-10-12',
     wallet_address: 'abc0987654321',
-    location: '63665371e6e5809af0a8e436',
   },
 ];
 
 const seedDB = async () => {
+  /*
+    Add location to each collector
+    source on aggregate - https://www.kindacode.com/snippet/mongodb-get-a-random-document-from-a-collection/
+  */
+  const randomlocation = await Location.aggregate([{ $sample: { size: 1 } }]);
+  seedCollectors = seedCollectors.map((collector) => {
+    const modified_collector = collector;
+    modified_collector.location = randomlocation[0]._id;
+    return modified_collector;
+  });
   await Collector.deleteMany({});
   await Collector.insertMany(seedCollectors);
 };
