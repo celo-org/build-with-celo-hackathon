@@ -1,0 +1,71 @@
+header {
+  background: transparent;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  padding: 1rem 0;
+  backdrop-filter: $blur-hard;
+  -webkit-backdrop-filter: $blur-hard;
+  line-height: 1;
+  z-index: 99;
+  border-bottom: 0px solid transparent;
+
+  transition: background $fast, padding $fast, border-bottom $fast;
+
+  section {
+    justify-content: space-between;
+    align-items: center;
+
+    .logo {
+      font-size: 2rem;
+      transition: font-size $fast;
+    }
+
+    .right {
+      display: flex;
+    }
+  }
+
+  .mainMenu {
+    display: flex;
+    gap: 1rem;
+
+    a {
+      transition: color $fast;
+      position: relative;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: -0.5em;
+        bottom: -0.25em;
+        width: 0%;
+        height: 1px;
+        background: $text-title;
+
+        transition: left $fast, width $fast, opacity $fast;
+      }
+
+      &:hover {
+        color: $text-title;
+
+        &::before {
+          left: 0;
+          width: 100%;
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &.isScrolled {
+    background: $bg-alpha;
+    padding: 0;
+    border-bottom: 1px solid $border-color;
+
+    .logo {
+      font-size: 1.5rem;
+    }
+  }
+}
