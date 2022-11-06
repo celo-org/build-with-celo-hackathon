@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import {
-  Alert, Image, View, Text,
-} from 'react-native';
+import { Alert, Image, View, Text } from 'react-native';
 import { Button } from '@library';
 import { useWalletConnect } from '@walletconnect/react-native-dapp';
 import { CommonActions, useNavigation } from '@react-navigation/native';
@@ -17,12 +15,16 @@ const metamaskImage = require('@assets/metamask.png');
 const valoraImage = require('@assets/valora.png');
 const rainbowImage = require('@assets/rainbow.png');
 
-const IconComponent = (source) => () => <Image source={source} style={styles.image} />;
+const IconComponent = (source) => () =>
+  <Image source={source} style={styles.image} />;
 
-const navigateTo = (navigation, route) => navigation.dispatch(CommonActions.reset({
-  index: 0,
-  routes: [route],
-}));
+const navigateTo = (navigation, route) =>
+  navigation.dispatch(
+    CommonActions.reset({
+      index: 0,
+      routes: [route],
+    })
+  );
 
 const goToNextStep = async (navigation) => {
   if (await isNewUser()) {
@@ -38,7 +40,8 @@ const goToNextStep = async (navigation) => {
 const Wallet = () => {
   const connector = useWalletConnect();
   const navigation = useNavigation();
-  const { addNEFTtoWallet, changeToAlfajores, currentChainId } = useChainCheck();
+  const { addNEFTtoWallet, changeToAlfajores, currentChainId } =
+    useChainCheck();
   const [updateCurrentUser] = useUpdateCurrentUserMutation();
 
   const connectWallet = useCallback(() => {
@@ -52,7 +55,10 @@ const Wallet = () => {
   useEffect(() => {
     const saveWallet = async () => {
       if (connector) {
-        if (connector.connected && connector.chainId === Constants.manifest.extra.chainId) {
+        if (
+          connector.connected &&
+          connector.chainId === Constants.expoConfig.extra.chainId
+        ) {
           const response = await updateCurrentUser({
             walletAddress: connector.accounts[0],
           });
@@ -70,11 +76,14 @@ const Wallet = () => {
             await connector.killSession();
             Alert.alert('Something went wrong, please try again');
           }
-        } else if (connector.connected && connector.chainId !== Constants.manifest.extra.chainId) {
+        } else if (
+          connector.connected &&
+          connector.chainId !== Constants.expoConfig.extra.chainId
+        ) {
           Alert.alert(
             'Wrong blockchain',
             'You are not connected to the correct network. To proceed, please switch network',
-            [{ text: 'Switch', onPress: changeToAlfajores }],
+            [{ text: 'Switch', onPress: changeToAlfajores }]
           );
         }
       }
@@ -119,11 +128,15 @@ const Wallet = () => {
         onPress={() => goToNextStep(navigation)}
       />
       <View style={styles.learMoreContainer}>
-        <Text style={[styles.baseText, styles.newToWalletTxt]}>New to wallets?</Text>
+        <Text style={[styles.baseText, styles.newToWalletTxt]}>
+          New to wallets?
+        </Text>
         <Text style={[styles.baseText, styles.learnMoreTxt]}>Learn more</Text>
       </View>
     </View>
   );
 };
 
-export default withOnboardingView((navigation) => goToNextStep(navigation))(Wallet);
+export default withOnboardingView((navigation) => goToNextStep(navigation))(
+  Wallet
+);

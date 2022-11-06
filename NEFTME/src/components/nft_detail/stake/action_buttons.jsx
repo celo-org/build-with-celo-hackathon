@@ -9,12 +9,18 @@ import { useWalletConnect } from '@walletconnect/react-native-dapp';
 import { useSmartContract } from '@hooks';
 import { strIsEqual } from '@utils/words';
 import {
-  fetchNFTDetails, fetchStakers, fetchUserStakes, selectNFTDetails,
+  fetchNFTDetails,
+  fetchStakers,
+  fetchUserStakes,
+  selectNFTDetails,
 } from '@features/on_chain/nft';
 import styles from './styles';
 
 const ActionButtons = ({
-  tokenId, setIsLoading, setStakeModalVisible, tokensToStake,
+  tokenId,
+  setIsLoading,
+  setStakeModalVisible,
+  tokensToStake,
 }) => {
   const dispatch = useDispatch();
   const [transactionApproved, setTransactionApproved] = useState(false);
@@ -27,22 +33,24 @@ const ActionButtons = ({
       if (transactionApproved) return;
 
       if (Number.isNaN(tokensToStake) || Number(tokensToStake) === 0) {
-        Alert.alert('Invalid amount to stake');
+        Alert.alert('Invalid amount to invest');
         return;
       }
 
       setIsLoading(true);
       const contractMethods = await getContractMethods(
-        Constants.manifest.extra.neftmeErc20NEFTAddress,
+        Constants.expoConfig.extra.neftmeErc20NEFTAddress
       );
-      contractMethods.approve(
-        Constants.manifest.extra.neftmeErc721Address,
-        convertToETH18(tokensToStake),
-      ).send({ from: connector.accounts[0] })
+      contractMethods
+        .approve(
+          Constants.expoConfig.extra.neftmeErc721Address,
+          convertToETH18(tokensToStake)
+        )
+        .send({ from: connector.accounts[0] })
         .then((receipt) => {
           setIsLoading(false);
           if (receipt?.status) {
-            Alert.alert('Transaction approved, you can now stake your $NEFT');
+            Alert.alert('Transaction approved, you can now invest your $NEFT');
             setTransactionApproved(true);
           } else {
             Alert.alert('Transaction not approved, please try again');
@@ -61,7 +69,7 @@ const ActionButtons = ({
   const stakeNEFT = async () => {
     try {
       if (strIsEqual(connector.accounts[0], nftDetails.data[4])) {
-        Alert.alert('You can not stake in your own NFTs');
+        Alert.alert('You can not invest in your own NFTs');
         return;
       }
 
@@ -71,34 +79,49 @@ const ActionButtons = ({
       }
 
       if (Number.isNaN(tokensToStake) || Number(tokensToStake) === 0) {
-        Alert.alert('Invalid amount to stake');
+        Alert.alert('Invalid amount to invest');
         return;
       }
 
       setIsLoading(true);
       const contractMethods = await getContractMethods(
-        Constants.manifest.extra.neftmeErc721Address,
+        Constants.expoConfig.extra.neftmeErc721Address
       );
 
-      contractMethods.stake(
-        Number(tokenId),
-        convertToETH18(tokensToStake),
-      ).send({ from: connector.accounts[0] })
+      contractMethods
+        .stake(Number(tokenId), convertToETH18(tokensToStake))
+        .send({ from: connector.accounts[0] })
         .then(() => {
           setIsLoading(false);
-          Alert.alert('Success!', 'Your $NEFT were successfully staked', [{
-            text: 'Ok',
-            onPress: async () => {
-              const viewContractMethods = await getContractMethods(
-                Constants.manifest.extra.neftmeViewContractAddress,
-              );
-              const baseParams = { contractMethods, tokenId, forceRefresh: true };
-              dispatch(fetchNFTDetails({ ...baseParams, contractMethods: viewContractMethods }));
-              dispatch(fetchStakers({ ...baseParams }));
-              dispatch(fetchUserStakes({ ...baseParams, account: connector.accounts[0] }));
-              setStakeModalVisible(false);
+          Alert.alert('Success!', 'Your $NEFT were successfully invested', [
+            {
+              text: 'Ok',
+              onPress: async () => {
+                const viewContractMethods = await getContractMethods(
+                  Constants.expoConfig.extra.neftmeViewContractAddress
+                );
+                const baseParams = {
+                  contractMethods,
+                  tokenId,
+                  forceRefresh: true,
+                };
+                dispatch(
+                  fetchNFTDetails({
+                    ...baseParams,
+                    contractMethods: viewContractMethods,
+                  })
+                );
+                dispatch(fetchStakers({ ...baseParams }));
+                dispatch(
+                  fetchUserStakes({
+                    ...baseParams,
+                    account: connector.accounts[0],
+                  })
+                );
+                setStakeModalVisible(false);
+              },
             },
-          }]);
+          ]);
         })
         .catch(() => {
           setIsLoading(false);
@@ -122,7 +145,7 @@ const ActionButtons = ({
         primary={transactionApproved}
         buttonStyle={[styles.stakeButtonAction, styles.marginLeft10]}
         onPress={stakeNEFT}
-        text="Stake $NEFT"
+        text="Invest"
       />
     </View>
   );

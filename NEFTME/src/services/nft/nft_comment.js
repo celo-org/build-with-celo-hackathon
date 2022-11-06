@@ -3,7 +3,7 @@ import { getData } from '../storage';
 
 export const addComment = async (nftTokenId, comment) => {
   try {
-    const response = await fetch(`${Constants.manifest.extra.apiUrl}/nft/${nftTokenId}/comment`, {
+    const response = await fetch(`${Constants.expoConfig.extra.apiUrl}/nft/${nftTokenId}/comment`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -26,7 +26,7 @@ export const addComment = async (nftTokenId, comment) => {
 
 export const addCommentLike = async (nftTokenId, commentId) => {
   try {
-    const response = await fetch(`${Constants.manifest.extra.apiUrl}/nft/${nftTokenId}/comment/${commentId}/like`, {
+    const response = await fetch(`${Constants.expoConfig.extra.apiUrl}/nft/${nftTokenId}/comment/${commentId}/like`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -48,7 +48,7 @@ export const addCommentLike = async (nftTokenId, commentId) => {
 
 export const removeCommentLike = async (nftTokenId, commentId) => {
   try {
-    const response = await fetch(`${Constants.manifest.extra.apiUrl}/nft/${nftTokenId}/comment/${commentId}/like`, {
+    const response = await fetch(`${Constants.expoConfig.extra.apiUrl}/nft/${nftTokenId}/comment/${commentId}/like`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',

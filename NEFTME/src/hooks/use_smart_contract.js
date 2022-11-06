@@ -4,7 +4,7 @@ import Constants from 'expo-constants';
 import Web3 from 'web3';
 import nftABI from '../abi/neftme.json';
 
-const configs = Constants.manifest.extra;
+const configs = Constants.expoConfig.extra;
 
 const useSmartContract = () => {
   const connector = useWalletConnect();

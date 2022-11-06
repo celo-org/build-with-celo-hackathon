@@ -8,7 +8,7 @@ const headers = async () => ({
 });
 
 export const getAllNFTs = async () => {
-  const response = await fetch(`${Constants.manifest.extra.apiUrl}/nft`, {
+  const response = await fetch(`${Constants.expoConfig.extra.apiUrl}/nft`, {
     method: 'GET',
     headers: await headers(),
   });
@@ -21,7 +21,7 @@ export const getAllNFTs = async () => {
 };
 
 export const getNFTByTokenId = async (nftTokenID) => {
-  const response = await fetch(`${Constants.manifest.extra.apiUrl}/nft/${nftTokenID}`, {
+  const response = await fetch(`${Constants.expoConfig.extra.apiUrl}/nft/${nftTokenID}`, {
     method: 'GET',
     headers: await headers(),
   });

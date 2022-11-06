@@ -2,7 +2,7 @@ import Constants from 'expo-constants';
 import { convertToNFTAmount } from '@utils/nft';
 import { getData } from './storage';
 
-export const postAPINFT = async (nft) => {
+const postAPINFT = async (nft) => {
   try {
     const filename = nft.resource.split('/').pop();
     const match = /\.(\w+)$/.exec(filename);
@@ -11,10 +11,10 @@ export const postAPINFT = async (nft) => {
     const formData = new FormData();
     formData.append('description', nft.description);
     formData.append('communityPercentage', nft.communityPercentage);
-    formData.append('resource', { uri: nft.resource, name: filename });
-    formData.append('resource_type', nft.resource_type);
+    formData.append('resource', { uri: nft.resource, name: filename, type });
+    formData.append('resource_type', Constants.expoConfig.extra.mediaType.image);
 
-    const response = await fetch(`${Constants.manifest.extra.apiUrl}/nft`, {
+    const response = await fetch(`${Constants.expoConfig.extra.apiUrl}/nft`, {
       method: 'POST',
       body: formData,
       headers: {
@@ -26,6 +26,7 @@ export const postAPINFT = async (nft) => {
     });
 
     if (response?.status !== 200) return null;
+
     return response.json();
   } catch (err) {
     return null;
@@ -33,7 +34,7 @@ export const postAPINFT = async (nft) => {
 };
 
 const bindTokenId = async (id, tokenId) => {
-  const response = await fetch(`${Constants.manifest.extra.apiUrl}/nft/${id}`, {
+  const response = await fetch(`${Constants.expoConfig.extra.apiUrl}/nft/${id}`, {
     method: 'PATCH',
     body: JSON.stringify({ tokenId }),
     headers: {
@@ -50,7 +51,7 @@ const bindTokenId = async (id, tokenId) => {
 };
 
 const deleteAPINFT = async (id) => {
-  const response = await fetch(`${Constants.manifest.extra.apiUrl}/nft/${id}`, {
+  const response = await fetch(`${Constants.expoConfig.extra.apiUrl}/nft/${id}`, {
     method: 'DELETE',
     headers: {
       Accept: 'application/json',
@@ -87,7 +88,7 @@ export const mintNFT = async (contractMethods, nft, walletAddress) => {
       if (tokenId === undefined) {
         throw new Error('Returned tokenId is undefined');
       } else {
-      // Update apiNFT tokenId
+        // Update apiNFT tokenId
         try {
           await bindTokenId(apiNFT.id, tokenId);
           return ({

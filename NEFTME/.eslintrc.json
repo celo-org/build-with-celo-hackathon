@@ -37,6 +37,7 @@
     "react-native"
   ],
   "rules": {
+    "prettier/prettier": 0,
     "react/function-component-definition": "off",
     "react/style-prop-object": "off",
     "react/jsx-props-no-spreading": "off",

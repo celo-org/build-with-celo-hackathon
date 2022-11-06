@@ -9,11 +9,12 @@
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000",
+      "resizeMode": "cover"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/9876be34-f6d4-4320-90a2-d983fee425f4"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -21,12 +22,10 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSPhotoLibraryUsageDescription": "The app accesses your photos to let you share them with your friends.",
-        "NSPhotoLibraryAddUsageDescription": "Allow $(PRODUCT_NAME) to save photos.",
-        "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera",
-        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
+        "NSPhotoLibraryUsageDescription": "Allow $(PRODUCT_NAME) to access your photos.",
+        "NSPhotoLibraryAddUsageDescription": "Allow $(PRODUCT_NAME) to save photos."
       },
-      "bundleIdentifier": "com.luisneves.neftmedapp"
+      "bundleIdentifier": "com.neftme.dapp"
     },
     "android": {
       "adaptiveIcon": {
@@ -37,9 +36,9 @@
         "android.permission.READ_EXTERNAL_STORAGE",
         "android.permission.WRITE_EXTERNAL_STORAGE",
         "android.permission.ACCESS_MEDIA_LOCATION",
-        "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
-      ]
+      ],
+      "package": "com.neftme.dapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -71,12 +70,12 @@
           "user_media"
         ]
       },
-      "chainName": "Moonbeam Testnet",
-      "rpcUrl": "https://rpc.api.moonbase.moonbeam.network",
-      "neftmeErc721Address": "0xF43Af6c2cCfC4Ba295c37BC3ca4a6aE4bBe8435f",
-      "neftmeViewContractAddress": "0xc7cF7d37E0CFe981559070c7991441f48dB17d49",
-      "neftmeErc20NEFTAddress": "0xA8572DcBE1e2d4FE66BC8f15CE37090Db571D418",
-      "chainId": 1287,
+      "chainName": "Alfajores Testnet",
+      "rpcUrl": "https://alfajores-forno.celo-testnet.org",
+      "chainId": 44787,
+      "neftmeErc721Address": "0x3A2Fa083d0fe3F5cE394FEDccBc9b6cf865d3018",
+      "neftmeViewContractAddress": "0x26c0964C568f836470691b7121f85B42f9b7dDea",
+      "neftmeErc20NEFTAddress": "0x6A50e7f557D2295F6af98fc10171ecDdF34400fB",
       "neftTokenImageUrl": "https://neftme.com/logo_color.png",
       "nftActivity": {
         "staked": "Staked",
@@ -92,6 +91,9 @@
       "eas": {
         "projectId": "9876be34-f6d4-4320-90a2-d983fee425f4"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }

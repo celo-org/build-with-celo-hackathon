@@ -10,19 +10,25 @@ import { getUserByWallet } from '@services/user';
 import styles from './styles';
 
 const ActivityItem = ({
-  activityInfo, type, blockNumber, owner, setOfferModalVisible,
-  setChosenEventInfo, setChosenUser, activity,
+  activityInfo,
+  type,
+  blockNumber,
+  owner,
+  setOfferModalVisible,
+  setChosenEventInfo,
+  setChosenUser,
+  activity,
 }) => {
   const [user, setUser] = useState({});
   const [amount, setAmount] = useState(0);
   const [text, setText] = useState('');
   const navigation = useNavigation();
-  const navigateToProfile = () => navigation.navigate('CreatorProfile', { username: user.username });
+  const navigateToProfile = () =>
+    navigation.navigate('CreatorProfile', { username: user.username });
   const { data: currentUser } = useGetCurrentUserQuery();
 
-  const {
-    staked, unstaked, mintedNft, madeOffer, bidAccepted,
-  } = Constants.manifest.extra.nftActivity;
+  const { staked, unstaked, mintedNft, madeOffer, bidAccepted } =
+    Constants.expoConfig.extra.nftActivity;
   const stakedText = 'Staked';
   const unstakedText = 'Unstaked';
   const makeOfferText = 'Made an Offer';
@@ -46,7 +52,12 @@ const ActivityItem = ({
           break;
 
         case mintedNft:
-          if (strIsEqual(activityInfo[0], '0x0000000000000000000000000000000000000000')) {
+          if (
+            strIsEqual(
+              activityInfo[0],
+              '0x0000000000000000000000000000000000000000'
+            )
+          ) {
             setText(mintText);
           } else {
             setText(boughtText);
@@ -82,19 +93,17 @@ const ActivityItem = ({
     loadOwnerCreator();
   }, []);
 
-  const alreadyAccepted = () => (
-    activity.find((eventBlock) => (
-      eventBlock.blockNumber > blockNumber
-      && strIsEqual(eventBlock.eventName, 'Transfer')
-      && strIsEqual(eventBlock.eventInfo.to, currentUser.walletAddress)
-    )) !== undefined
-  );
+  const alreadyAccepted = () =>
+    activity.find(
+      (eventBlock) =>
+        eventBlock.blockNumber > blockNumber &&
+        strIsEqual(eventBlock.eventName, 'Transfer') &&
+        strIsEqual(eventBlock.eventInfo.to, currentUser.walletAddress)
+    ) !== undefined;
 
   return (
     <View style={styles.itemContainer}>
-      <Pressable
-        onPress={navigateToProfile}
-      >
+      <Pressable onPress={navigateToProfile}>
         <ProfileImage
           profileImage={user.profileImage}
           imageStyle={styles.image}
@@ -105,19 +114,14 @@ const ActivityItem = ({
       <View style={styles.reviewBox}>
         <Text style={styles.description}>{text}</Text>
         <View style={styles.descriptionAddress}>
-          {
-            [staked, madeOffer, unstaked, bidAccepted].includes(type) && (
-              <Text style={styles.descriptionNumber}>
-                {`${amount} NEFTS`}
-              </Text>
-            )
-          }
+          {[staked, madeOffer, unstaked, bidAccepted].includes(type) && (
+            <Text style={styles.descriptionNumber}>{`${amount} NEFTS`}</Text>
+          )}
         </View>
       </View>
-      {(text === makeOfferText
-        && strIsEqual(owner, currentUser.walletAddress))
-        && !alreadyAccepted()
-        && (
+      {text === makeOfferText &&
+        strIsEqual(owner, currentUser.walletAddress) &&
+        !alreadyAccepted() && (
           <Pressable style={styles.reviewButton} onPress={selectEvent}>
             <Text style={styles.reviewText}>Review</Text>
           </Pressable>
@@ -126,12 +130,14 @@ const ActivityItem = ({
   );
 };
 ActivityItem.propTypes = {
-  activity: PropTypes.arrayOf(PropTypes.shape({
-    blockNumber: PropTypes.number.isRequired,
-    eventInfo: PropTypes.instanceOf(Object).isRequired,
-    eventName: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
-  })).isRequired,
+  activity: PropTypes.arrayOf(
+    PropTypes.shape({
+      blockNumber: PropTypes.number.isRequired,
+      eventInfo: PropTypes.instanceOf(Object).isRequired,
+      eventName: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
+    })
+  ).isRequired,
   activityInfo: PropTypes.shape({
     staker: PropTypes.string,
     amount: PropTypes.string,

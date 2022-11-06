@@ -11,7 +11,7 @@ export const isNewUser = async () => {
 
 export const getUserByWallet = async (walletAddress) => {
   try {
-    const response = await fetch(`${Constants.manifest.extra.apiUrl}/user?wallet_address=${walletAddress}`, {
+    const response = await fetch(`${Constants.expoConfig.extra.apiUrl}/user?wallet_address=${walletAddress}`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -33,7 +33,7 @@ export const getUserByWallet = async (walletAddress) => {
 
 export const getUserByUsername = async (username) => {
   try {
-    const response = await fetch(`${Constants.manifest.extra.apiUrl}/user?username=${username}`, {
+    const response = await fetch(`${Constants.expoConfig.extra.apiUrl}/user?username=${username}`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -55,7 +55,7 @@ export const getUserByUsername = async (username) => {
 
 export const getProfileData = async () => {
   try {
-    const response = await fetch(`${Constants.manifest.extra.apiUrl}/me`, {
+    const response = await fetch(`${Constants.expoConfig.extra.apiUrl}/me`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -79,7 +79,7 @@ export const getProfileData = async () => {
 
 export const getFeaturedProfiles = async () => {
   try {
-    const response = await fetch(`${Constants.manifest.extra.apiUrl}/featured_profiles`, {
+    const response = await fetch(`${Constants.expoConfig.extra.apiUrl}/featured_profiles`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -115,7 +115,7 @@ export const saveProfilePhoto = async (
     };
 
     const contractMethods = await getContractMethods(
-      Constants.manifest.extra.neftmeErc721Address,
+      Constants.expoConfig.extra.neftmeErc721Address,
     );
     const mintedNFT = await mintNFT(contractMethods, nft, connector.accounts[0]);
     return mintedNFT?.success ? mintedNFT.url : false;
@@ -126,7 +126,7 @@ export const saveProfilePhoto = async (
 
 export const followUser = async (userId) => {
   try {
-    const response = await fetch(`${Constants.manifest.extra.apiUrl}/user/${userId}/follow`, {
+    const response = await fetch(`${Constants.expoConfig.extra.apiUrl}/user/${userId}/follow`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -146,7 +146,7 @@ export const followUser = async (userId) => {
 
 export const unfollowUser = async (userId) => {
   try {
-    const response = await fetch(`${Constants.manifest.extra.apiUrl}/user/${userId}/unfollow`, {
+    const response = await fetch(`${Constants.expoConfig.extra.apiUrl}/user/${userId}/unfollow`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

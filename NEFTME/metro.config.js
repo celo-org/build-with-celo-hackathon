@@ -11,6 +11,7 @@ module.exports = (() => {
   config.transformer = {
     ...transformer,
     babelTransformerPath: require.resolve('react-native-svg-transformer'),
+    minifierPath: 'metro-minify-terser'
   };
   config.resolver = {
     ...resolver,

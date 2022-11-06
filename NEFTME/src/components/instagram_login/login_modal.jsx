@@ -1,8 +1,6 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import {
-  View, Modal, TouchableOpacity, Image,
-} from 'react-native';
+import { View, Modal, TouchableOpacity, Image } from 'react-native';
 import qs from 'qs';
 import { WebView } from 'react-native-webview';
 import { doInstagramLogin } from '@services/login';
@@ -12,12 +10,15 @@ import styles from './styles';
 const closeButtonImage = require('@assets/close-button.png');
 
 const LoginModal = ({
-  onLoginSuccess, onLoginFailure, modalVisible, setModalVisible, setShowLoading,
+  onLoginSuccess,
+  onLoginFailure,
+  modalVisible,
+  setModalVisible,
+  setShowLoading,
 }) => {
   const webView = useRef(null);
-  const {
-    clientID, redirectUrl, oauthScopes, apiUrl,
-  } = Constants.manifest.extra.instagram;
+  const { clientID, redirectUrl, oauthScopes, apiUrl } =
+    Constants.expoConfig.extra.instagram;
 
   const onNavigationStateChange = async (webViewState) => {
     const { url } = webViewState;
@@ -42,7 +43,9 @@ const LoginModal = ({
     }
   };
 
-  const uri = `${apiUrl}/oauth/authorize/?client_id=${clientID}&redirect_uri=${redirectUrl}&response_type=code&scope=${oauthScopes.join(',')}`;
+  const uri = `${apiUrl}/oauth/authorize/?client_id=${clientID}&redirect_uri=${redirectUrl}&response_type=code&scope=${oauthScopes.join(
+    ','
+  )}`;
 
   return (
     <Modal

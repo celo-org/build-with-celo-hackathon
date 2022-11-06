@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Platform, ScrollView, View } from 'react-native';
+import { Alert, ScrollView, View } from 'react-native';
+import * as Device from 'expo-device';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useWalletConnect } from '@walletconnect/react-native-dapp';
 import { getCategories } from '@services/categories';
@@ -228,8 +229,8 @@ const EditProfile = () => {
             onFieldChange={(value) => setFieldValue('bio', value)}
             inputPlaceholder="Enter your bio"
             multiline
-            numberOfLines={Platform.OS === 'ios' ? null : 6}
-            minHeight={Platform.OS === 'ios' ? 120 : null}
+            numberOfLines={Device.osName === 'iOS' ? null : 6}
+            minHeight={Device.osName === 'iOS' ? 120 : null}
             inputStyle={{ paddingTop: 16 }}
             containerStyle={styles.marginTop16}
           />

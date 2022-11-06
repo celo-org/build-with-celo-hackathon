@@ -4,7 +4,7 @@ import WalletConnectProvider from '@walletconnect/web3-provider';
 import Constants from 'expo-constants';
 import Web3 from 'web3';
 
-const configs = Constants.manifest.extra;
+const configs = Constants.expoConfig.extra;
 
 const useChainCheck = () => {
   const connector = useWalletConnect();
@@ -52,7 +52,7 @@ const useChainCheck = () => {
             from: connector.accounts[0],
           });
         } catch (addError) {
-        // handle "add" error
+          // handle "add" error
         }
       }
     }
@@ -68,15 +68,15 @@ const useChainCheck = () => {
         params: {
           type: 'ERC20',
           options: {
-            address: Constants.manifest.extra.neftmeErc20NEFTAddress,
+            address: Constants.expoConfig.extra.neftmeErc20NEFTAddress,
             symbol: 'NEFT',
             decimals: 18,
-            image: Constants.manifest.extra.neftTokenImageUrl,
+            image: Constants.expoConfig.extra.neftTokenImageUrl,
           },
         },
       });
     } catch (err) {
-    // LOG Errors
+      // LOG Errors
     }
   }
 

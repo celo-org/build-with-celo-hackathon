@@ -3,7 +3,7 @@ import { setData, getData } from './storage';
 
 export const doLogin = async (email, password) => {
   try {
-    const response = await fetch(`${Constants.manifest.extra.apiUrl}/session`, {
+    const response = await fetch(`${Constants.expoConfig.extra.apiUrl}/session`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -32,7 +32,7 @@ export const doLogin = async (email, password) => {
 
 export const doLogout = async () => {
   try {
-    const response = await fetch(`${Constants.manifest.extra.apiUrl}/session`, {
+    const response = await fetch(`${Constants.expoConfig.extra.apiUrl}/session`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
@@ -54,7 +54,7 @@ export const doLogout = async () => {
 
 export const doInstagramLogin = async (code) => {
   try {
-    const response = await fetch(`${Constants.manifest.extra.apiUrl}/instagram_oauth`, {
+    const response = await fetch(`${Constants.expoConfig.extra.apiUrl}/instagram_oauth`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

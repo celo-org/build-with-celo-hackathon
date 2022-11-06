@@ -3,7 +3,7 @@ import { getData } from './storage';
 
 export const addLike = async (nftId) => {
   try {
-    const response = await fetch(`${Constants.manifest.extra.apiUrl}/nft/${nftId}/like`, {
+    const response = await fetch(`${Constants.expoConfig.extra.apiUrl}/nft/${nftId}/like`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -22,7 +22,7 @@ export const addLike = async (nftId) => {
 
 export const removeLike = async (nftId) => {
   try {
-    const response = await fetch(`${Constants.manifest.extra.apiUrl}/nft/${nftId}/like`, {
+    const response = await fetch(`${Constants.expoConfig.extra.apiUrl}/nft/${nftId}/like`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',

@@ -13,7 +13,7 @@ const baseQuery = async (args, api, extraOptions) => {
   }
 
   return fetchBaseQuery({
-    baseUrl: Constants.manifest.extra.apiUrl,
+    baseUrl: Constants.expoConfig.extra.apiUrl,
     prepareHeaders: async (headers) => {
       headers.set('authorization', `Bearer ${authToken}`);
       headers.set('accept', 'application/json');

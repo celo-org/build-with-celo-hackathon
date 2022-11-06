@@ -80,7 +80,7 @@ const ProfilePhoto = () => {
         resource: profilePhoto,
       };
       const contractMethods = await getContractMethods(
-        Constants.manifest.extra.neftmeErc721Address
+        Constants.expoConfig.extra.neftmeErc721Address
       );
       const mintedNFT = await mintNFT(
         contractMethods,
@@ -138,7 +138,7 @@ const ProfilePhoto = () => {
         text="Set as profile photo"
         buttonStyle={styles.setProfilePhotoButton}
         primary={!!profilePhoto}
-        onPress={profilePhoto ? onSetPress : () => {}}
+        onPress={profilePhoto ? onSetPress : () => { }}
       />
       {isLoading && <Loading />}
     </View>

@@ -11,7 +11,10 @@ import { fetchNFTBids } from '@features/on_chain/nft';
 import styles from './styles';
 
 const ActionButtons = ({
-  tokenId, setIsLoading, setShowOfferModal, tokensToOffer,
+  tokenId,
+  setIsLoading,
+  setShowOfferModal,
+  tokensToOffer,
 }) => {
   const [transactionApproved, setTransactionApproved] = useState(false);
   const connector = useWalletConnect();
@@ -29,12 +32,14 @@ const ActionButtons = ({
 
       setIsLoading(true);
       const contractMethods = await getContractMethods(
-        Constants.manifest.extra.neftmeErc20NEFTAddress,
+        Constants.expoConfig.extra.neftmeErc20NEFTAddress
       );
-      contractMethods.increaseAllowance(
-        Constants.manifest.extra.neftmeErc721Address,
-        convertToETH18(tokensToOffer),
-      ).send({ from: connector.accounts[0] })
+      contractMethods
+        .increaseAllowance(
+          Constants.expoConfig.extra.neftmeErc721Address,
+          convertToETH18(tokensToOffer)
+        )
+        .send({ from: connector.accounts[0] })
         .then((receipt) => {
           setIsLoading(false);
           if (receipt?.status) {
@@ -68,23 +73,29 @@ const ActionButtons = ({
 
       setIsLoading(true);
       const contractMethods = await getContractMethods(
-        Constants.manifest.extra.neftmeErc721Address,
+        Constants.expoConfig.extra.neftmeErc721Address
       );
 
-      contractMethods.bidERC20(
-        Number(tokenId),
-        Constants.manifest.extra.neftmeErc20NEFTAddress,
-        convertToETH18(tokensToOffer),
-      ).send({ from: connector.accounts[0] })
+      contractMethods
+        .bidERC20(
+          Number(tokenId),
+          Constants.expoConfig.extra.neftmeErc20NEFTAddress,
+          convertToETH18(tokensToOffer)
+        )
+        .send({ from: connector.accounts[0] })
         .then(() => {
-          dispatch(fetchNFTBids({ tokenId, contractMethods, forceRefresh: true }));
-          Alert.alert('Success!', 'Your offer was successful submitted', [{
-            text: 'Ok',
-            onPress: () => {
-              setIsLoading(false);
-              setShowOfferModal(false);
+          dispatch(
+            fetchNFTBids({ tokenId, contractMethods, forceRefresh: true })
+          );
+          Alert.alert('Success!', 'Your offer was successful submitted', [
+            {
+              text: 'Ok',
+              onPress: () => {
+                setIsLoading(false);
+                setShowOfferModal(false);
+              },
             },
-          }]);
+          ]);
         })
         .catch(() => {
           setIsLoading(false);

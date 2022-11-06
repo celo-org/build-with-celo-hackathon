@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import {
   KeyboardAvoidingView,
   Modal,
-  Platform,
   Text,
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import * as Device from 'expo-device';
 import { Button, Loading } from '@library';
 
 import GestureRecognizer from 'react-native-swipe-gestures';
@@ -53,7 +53,7 @@ const ActionModal = ({
           onPressOut={() => setActionModalVisible((prevValue) => !prevValue)}
         >
           <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            behavior={Device.osName === 'iOS' ? 'padding' : 'height'}
             style={styles.container}
           >
             <View style={styles.topBar} />

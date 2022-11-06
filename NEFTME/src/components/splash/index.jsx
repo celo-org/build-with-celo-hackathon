@@ -1,11 +1,20 @@
 import React, { useCallback, useEffect } from 'react';
-import SplashImage from '@assets/splash.svg';
+import { Image, StyleSheet } from 'react-native';
 import { CommonActions, useNavigation } from '@react-navigation/native';
 import { useWalletConnect } from '@walletconnect/react-native-dapp';
 import { isNewUser } from '@services/user';
 import Constants from 'expo-constants';
 import { removeData } from '@services/storage';
 import { useGetCurrentUserQuery } from '@features/current_user';
+
+const splashImage = require('@assets/splash.png');
+
+const styles = StyleSheet.create({
+  splashImage: {
+    width: '100%',
+    height: '100%',
+  },
+});
 
 const Splash = () => {
   const navigation = useNavigation();
@@ -38,7 +47,7 @@ const Splash = () => {
       if (connector && currentUser) {
         if (
           connector.connected &&
-          connector.chainId === Constants.manifest.extra.chainId
+          connector.chainId === Constants.expoConfig.extra.chainId
         ) {
           if (await isNewUser()) {
             navigateTo({
@@ -58,7 +67,7 @@ const Splash = () => {
     })();
   }, [connector, currentUser, navigateTo]);
 
-  return <SplashImage width="100%" height="100%" />;
+  return <Image source={splashImage} style={styles.splashImage} />;
 };
 
 export default Splash;

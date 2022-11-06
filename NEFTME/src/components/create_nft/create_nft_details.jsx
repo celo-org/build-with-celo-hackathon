@@ -1,6 +1,7 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import * as Device from 'expo-device';
 import { InputField } from '@library';
 import Header from './header';
 
@@ -52,7 +53,7 @@ const CreateNFTDetails = () => {
         screen: 'CreateNFTTokenomics',
         params: {
           nft: {
-            resource: route.params.resource,
+            resource: route.params.nftImage,
             description,
           },
         },
@@ -71,8 +72,8 @@ const CreateNFTDetails = () => {
             onFieldChange={setDescription}
             inputPlaceholder="Enter NFT Description"
             multiline
-            numberOfLines={Platform.OS === 'ios' ? null : 10}
-            minHeight={Platform.OS === 'ios' ? 200 : null}
+            numberOfLines={Device.osName === 'iOS' ? null : 10}
+            minHeight={Device.osName === 'iOS' ? 200 : null}
             inputStyle={styles.paddingTop16}
             containerStyle={styles.marginTop16}
           />
