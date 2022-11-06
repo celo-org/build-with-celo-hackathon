@@ -49,7 +49,13 @@ module.exports = {
   getOneCategory: async (req, res) => {
     const { id } = req.params;
     try {
-      const category = await Category.findById(id).populate('children');
+      const category = await Category.findById(id).populate({
+        // populate the depth as much as you want
+        // https://stackoverflow.com/a/47038544
+        path: 'children',
+        model: Category,
+        populate: { path: 'children', model: Category },
+      });
       if (!category) {
         return res.status(400).json({ success: false });
       }

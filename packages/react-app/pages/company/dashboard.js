@@ -12,6 +12,22 @@ const Dashboard = () => {
     const [alertModal, setAlertModal] = useState();
     const [approveOfferModal, setApproveOfferModal] = useState();
 
+
+    const [offer, setOffer] = useState({
+        title: '',
+        scrap_category: '',
+        scrap_subcategory: '',
+        description: '',
+        quantity_required: '',
+        amount_per_unit: '',
+        request_expires_at: '',
+        company:'',
+        collection_center:'',
+        location: '',
+        escrow_payment: '',
+        deliveries:'',
+    })
+
     const handleCat = () =>{
         setCatDropdown(!catDropdown)
     }
