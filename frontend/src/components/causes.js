@@ -74,6 +74,7 @@ const Causes = () => {
         console.log("data------------------", items)
         setCampaign(items)
         setLoadingState(false)
+        
     }
 
     return (
