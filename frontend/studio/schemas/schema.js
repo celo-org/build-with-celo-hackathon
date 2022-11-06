@@ -22,6 +22,11 @@ export default createSchema({
           type: 'number'
         },
         {
+          name: 'taskDescription',
+          title: 'Task Description',
+          type: 'string',
+        },
+        {
           name: 'dailytask',
           title: 'Daily Proof',
           type: 'image',

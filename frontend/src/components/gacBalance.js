@@ -11,9 +11,9 @@ const GacBalance = ({ gacBalance }) => {
                 <div class="container pd-0">
                     <div class="row no-gutters">
                         <div class="col-md-12 d-flex justify-content-center counter-wrap">
-                            <div class="block-18 color-1 align-items-stretch d-flex flex-column justify-content-center">
+                            <div class="block-18 color-3 align-items-stretch d-flex flex-column justify-content-center">
                                 <div class="text">
-                                    <span>👏: My Total Earnings(GAC Coins):</span>
+                                    <span>👏My Total Earnings(GAC Coins):</span>
                                     <strong class="number served-child">
                                         <AnimatedNumber
                                             value={value}

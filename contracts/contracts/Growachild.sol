@@ -186,7 +186,7 @@ contract Growachild is
       }
       campaignDetails[_ids].availableBalance += amount;
       campaignDetails[_ids].totalReceived += amount;
-      refiToken.mint(payable(msg.sender),amount);
+      refiToken.mint(payable(msg.sender),amount/10);
   }
 
   function getMyCampaigns() external view returns (Campaign[] memory){
