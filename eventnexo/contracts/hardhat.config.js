@@ -1,24 +1,20 @@
-require("@nomiclabs/hardhat-waffle");
-require("dotenv").config();
+require("@nomicfoundation/hardhat-toolbox");
+require("hardhat-deploy");
+require("@nomiclabs/hardhat-etherscan");
+require("hardhat-celo");
+require("dotenv").config({ path: ".env" });
 
-// This is a sample Hardhat task. To learn how to create your own go to
-// https://hardhat.org/guides/create-task.html
-task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
-  const accounts = await hre.ethers.getSigners();
+const defaultNetwork = "hardhat";
 
-  for (const account of accounts) {
-    console.log(account.address);
-  }
-});
-
-// You need to export an object to set up your config
-// Go to https://hardhat.org/config/ to learn more
-
-/**
- * @type import('hardhat/config').HardhatUserConfig
- */
+/** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
+  defaultNetwork,
   solidity: "0.8.10",
+  etherscan: {
+    apiKey: {
+      alfajores: "K7KR894CXR3JMRI6H84RIV5WT9X9FKS71K",
+    },
+  },
   settings: {
     optimizer: {
       enabled: true,
@@ -26,26 +22,27 @@ module.exports = {
     },
   },
   networks: {
-    mumbai: {
-      url: process.env.STAGING_ALCHEMY_KEY,
-      accounts: [process.env.PRIVATE_KEY],
+    localhost: {
+      url: "http://127.0.0.1:8545",
     },
-    mainnet: {
-      chainId: 1,
-      url: process.env.PROD_ALCHEMY_KEY,
+    celo: {
+      url: "https://forno.celo.org",
       accounts: [process.env.PRIVATE_KEY],
-    },
-    goerli: {
-      url: process.env.STAGING_RICKBERY_ALCHEMY_KEY,
-      accounts: [process.env.RICKBERY_PRIVATE_KEY],
+      chainId: 42220,
     },
     alfajores: {
       url: "https://alfajores-forno.celo-testnet.org",
-      accounts: {
-        mnemonic: process.env.MNEMONIC,
-        path: "m/44'/52752'/0'/0",
-      },
+      accounts: [process.env.PRIVATE_KEY],
       chainId: 44787,
     },
+  },
+  namedAccounts: {
+    deployer: 0,
+  },
+  typechain: {
+    outDir: "types",
+    target: "web3-v1",
+    alwaysGenerateOverloads: false, // should overloads with full signatures like deposit(uint256) be generated always, even if there are no overloads?
+    externalArtifacts: ["externalArtifacts/*.json"], // optional array of glob patterns with external artifacts to process (for example external libs from node_modules)
   },
 };

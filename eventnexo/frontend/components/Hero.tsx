@@ -5,12 +5,13 @@ import SecondaryButton from "./btn/SecondaryButton";
 export default function Hero() {
   return (
     <section className="flex w-full bg-primary border-b-2 border-b-black py-16 px-10">
-      <div className="max-w-6xl mx-auto my-0 relative">
-        <div className="flex flex-col-reverse md:flex-start items-start bg-white border-black border-2 rounded-[10px] w-full relative z-[10] top-[16px] left-[20px] lg:top-[20px] lg:left-[30px] p-[12px] h-[500px]">
+      <div className="max-w-6xl min-h-[400px] mx-auto my-0 relative flex items-center justify-center">
+        <h3 className="text-7xl font-black overflow-hidden text-ellipsis max-w-full text-center">
+          Community First Event Management App on Celo Network.
+        </h3>
+        {/* <div className="flex flex-col-reverse md:flex-start items-start bg-white border-black border-2 rounded-[10px] w-full relative z-[10] top-[16px] left-[20px] lg:top-[20px] lg:left-[30px] p-[12px] h-[500px]">
           <div className="w-full lg:w-[40%] min-h-[142px] px-6 lg:px-16 py-10">
-            <h3 className="text-3xl font-black overflow-hidden text-ellipsis max-w-full">
-              Explore celo blockcain
-            </h3>
+            
             <p className="mt-6 text-md font-bold overflow-hidden text-ellipsis">
               It is a long established fact that a reader will be distracted by
               the readable content of a page when looking at its layout. The
@@ -52,7 +53,7 @@ export default function Hero() {
             </div>
           </div>
         </div>
-        <span className="w-full h-full absolute left-0 top-0 rounded-[12px] border-2 border-black bg-white transition-opacity"></span>
+        <span className="w-full h-full absolute left-0 top-0 rounded-[12px] border-2 border-black bg-white transition-opacity"></span> */}
       </div>
     </section>
   );

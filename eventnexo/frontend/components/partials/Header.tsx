@@ -7,10 +7,14 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import AppLogo from "./AppLogo";
 import PrimaryButton from "../btn/PrimaryButton";
 import SecondaryButton from "../btn/SecondaryButton";
+import { useCelo } from "@celo/react-celo";
+import { shortenAddress } from "../../utils/address";
+import { Identicon } from "../Identicon";
 
 export default function NewHeader() {
   const [animateHeader, setAnimateHeader] = useState(false);
   const router = useRouter();
+  const { connect, address } = useCelo();
 
   const splitLocation = router.pathname.split("/");
   useEffect(() => {
@@ -110,7 +114,13 @@ export default function NewHeader() {
           <div className="hidden lg:flex items-center justify-end md:flex-1 lg:w-0 space-x-6">
             <SecondaryButton
               title="Create event"
-              onPressed={() => console.log(0)}
+              onPressed={function () {
+                if (address) {
+                  router.push("/account");
+                } else {
+                  connect();
+                }
+              }}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -127,11 +137,21 @@ export default function NewHeader() {
                 />
               </svg>
             </SecondaryButton>
-            <PrimaryButton
-              background="bg-secondary"
-              title="Connect Wallet"
-              onPressed={() => console.log(0)}
-            />
+            {address ? (
+              <PrimaryButton
+                background="bg-primary"
+                title={shortenAddress(address, true, true)}
+                onPressed={connect}
+              >
+                <Identicon address={address} size={24} />
+              </PrimaryButton>
+            ) : (
+              <PrimaryButton
+                background="bg-secondary"
+                title="Connect Wallet"
+                onPressed={connect}
+              />
+            )}
           </div>
         </div>
       </div>

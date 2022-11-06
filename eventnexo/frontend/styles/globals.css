@@ -16,6 +16,10 @@
   }
 }
 
+.ReactModal__Overlay {
+  background: rgb(0 0 0 / 75%) !important;
+}
+
 .hero-img {
   width: 100%;
 }

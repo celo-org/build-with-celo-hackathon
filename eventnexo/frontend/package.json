@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "@celo/contractkit": "^2.2.0",
-    "@celo/react-celo": "^4.2.0",
+    "@celo/react-celo": "^4.2.1",
     "@ethersproject/address": "^5.7.0",
     "@fontsource/fira-sans": "^4.5.10",
     "@fontsource/space-mono": "^4.5.10",
@@ -18,9 +18,12 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@headlessui/react": "^1.7.3",
     "@heroicons/react": "^2.0.12",
+    "@metamask/jazzicon": "https://github.com/jmrossy/jazzicon#7a8df28",
     "@reduxjs/toolkit": "^1.8.6",
     "bignumber.js": "^9.1.0",
+    "ethers": "^5.7.2",
     "next": "latest",
+    "next-persist": "^1.2.4",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-redux": "^8.0.4"
