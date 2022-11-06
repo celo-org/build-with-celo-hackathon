@@ -8,6 +8,7 @@ export const colors = {
   lightGreen: '#00FFC2',
   yellow: '#FCFF6C',
   subtitles: '#444444',
+  white: '#fff',
 }
 
 export const globalStyles = StyleSheet.create({

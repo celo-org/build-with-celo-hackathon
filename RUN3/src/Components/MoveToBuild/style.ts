@@ -125,5 +125,26 @@ export const styles = StyleSheet.create({
   actionBtns: {
     color: '#fff',
     fontSize: 20,
+    borderColor: '#fff',
+    borderWidth: 2,
+    width: 120,
+    borderRadius: 18,
+    textAlign: 'center',
+    paddingVertical: 4,
+  },
+  postImage: {
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width,
+    resizeMode: 'contain',
+  },
+  postBtn: {
+    width: 90,
+    height: 20,
+    borderRadius: 50,
+  },
+  postBtnCont: {
+    flexDirection: 'row',
+    marginRight: 12,
+    justifyContent: 'space-between',
   },
 })

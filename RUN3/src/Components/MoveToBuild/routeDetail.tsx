@@ -64,8 +64,8 @@ export default function RouteDetail({ navigation, route }: { navigation: any; ro
         <Polyline tappable coordinates={routeCoords} strokeColor={colors.primary} strokeWidth={4} />
       </MapView>
       <View style={styles.floatActions}>
-        <Button 
-          onPress={() => navigation.navigate('ecostory')} 
+        <Button
+          onPress={() => navigation.navigate('ecostory', { id: routeData.id })}
           style={[styles.btntFloat, globalStyles.primaryBg]}
         >
           Create Eco-Story

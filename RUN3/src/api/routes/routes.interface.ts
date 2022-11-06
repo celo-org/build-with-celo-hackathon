@@ -17,6 +17,6 @@ export interface Ecostory {
   description: string
   image: string
   points: number
-  title: string
-  user: User
+  title?: string
+  user?: User
 }

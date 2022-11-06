@@ -7,9 +7,9 @@ import '@ethersproject/shims'
 import { ethers } from 'ethers'
 
 import { StatusBar } from 'expo-status-bar'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Image } from 'react-native'
-import { Button, Text } from '@ui-kitten/components'
+import { Button, Spinner, Text } from '@ui-kitten/components'
 import Web3Auth, { LOGIN_PROVIDER, OPENLOGIN_NETWORK, State } from '@web3auth/react-native-sdk'
 import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import * as Linking from 'expo-linking'
@@ -19,7 +19,7 @@ import { CLIENT_ID, NET_PROVIDER } from 'react-native-dotenv'
 import { styles } from './styles'
 import { useWalletProvider } from '../../contexts/WalletContext'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { globalStyles } from '../../utils/globalStyles'
+import { colors, globalStyles } from '../../utils/globalStyles'
 import { createUser, getUserByEmail } from '../../api/users/users'
 
 global.Buffer = global.Buffer || Buffer
@@ -28,9 +28,11 @@ const resolvedRedirectUrl = Linking.createURL('', {})
 
 export default function Login({ navigation }: { navigation: any }) {
   const { setWalletWithProvider, setProvider, walletWithProvider } = useWalletProvider()
+  const [loader, setLoader] = useState(false)
 
   const login = async () => {
     try {
+      setLoader(true)
       const web3auth = new Web3Auth(WebBrowser, {
         clientId: CLIENT_ID,
         network: OPENLOGIN_NETWORK.TESTNET,
@@ -64,18 +66,25 @@ export default function Login({ navigation }: { navigation: any }) {
 
         await AsyncStorage.setItem('wallet', JSON.stringify(walletWithProvider))
         navigation.replace('home')
+        setLoader(false)
       }
     } catch (e) {
       console.error(e)
+      setLoader(false)
     }
   }
 
   return (
     <View style={styles.container}>
       <Image style={styles.logo} source={require('../../../assets/RUN3-logo-03.png')} />
-      <Button style={[styles.signBtn, globalStyles.primaryBg]} size="large" onPress={login}>
-        <Text style={styles.signBtnText}>LOGIN</Text>
-      </Button>
+      {loader ? (
+        <Spinner style={{ borderColor: colors.primary }} size="large" />
+      ) : (
+        <Button style={[styles.signBtn, globalStyles.primaryBg]} size="large" onPress={login}>
+          <Text style={styles.signBtnText}>LOGIN</Text>
+        </Button>
+      )}
+
       <StatusBar style="auto" />
     </View>
   )

@@ -8,11 +8,12 @@ import { styles } from './style'
 export default function Ecostory({ navigation, route }: { navigation: any; route: { params: Route } }) {
   const [camera, setCamera] = useState<Camera>(new Camera({}))
   const [hasPermission, setHasPermission] = useState<boolean>(false)
-  const [previewVisible, setPreviewVisible] = useState(false)
   const [capturedImage, setCapturedImage] = useState<CameraCapturedPicture>()
   const back = 1
   const front = 2
   const [type, setType] = useState(back)
+
+  const routeId = route.params?.id
 
   useEffect(() => {
     ;(async () => {
@@ -31,7 +32,6 @@ export default function Ecostory({ navigation, route }: { navigation: any; route
   const takePicture = async () => {
     if (!camera) return
     let photo = await camera.takePictureAsync()
-    setPreviewVisible(true)
     setCapturedImage(photo)
   }
 
@@ -41,11 +41,17 @@ export default function Ecostory({ navigation, route }: { navigation: any; route
 
   return (
     <View style={styles.flex1}>
-      {previewVisible ? (
-        <ImageBackground source={{ uri: capturedImage && capturedImage.uri }} style={styles.flex1}>
+      {capturedImage ? (
+        <ImageBackground source={{ uri: capturedImage.uri }} style={styles.flex1}>
           <View style={styles.buttonsCameraCont}>
-            <TouchableOpacity style={styles.cameraButtons} onPress={() => setPreviewVisible(false)}>
+            <TouchableOpacity style={styles.cameraButtons} onPress={() => setCapturedImage(undefined)}>
               <Text style={styles.actionBtns}>Re-take</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.cameraButtons}
+              onPress={() => navigation.navigate('ecoStoryForm', { capturedImage, routeId })}
+            >
+              <Text style={styles.actionBtns}>Save</Text>
             </TouchableOpacity>
           </View>
         </ImageBackground>
