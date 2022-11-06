@@ -13,7 +13,7 @@ import { useRoute } from '../../hooks/useRoute'
 export default function RouteList({ showMyRoutes }: { showMyRoutes: boolean }) {
   const [routes, setRoutes] = useState<Route[]>([])
   const [loader, setLoader] = useState<boolean>(false)
-  const navigation = useNavigation()
+  const navigation = useNavigation() as any
 
   const { getRoutesByUser } = useRoute()
 

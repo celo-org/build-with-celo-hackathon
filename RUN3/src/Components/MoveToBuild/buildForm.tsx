@@ -33,7 +33,7 @@ export const BuildForm = ({
   const [title, setTitle] = useState<string>('')
   const { mintRoute } = useRoute()
   const { transferRun3TtoContract } = useRun3T()
-  const navigation = useNavigation()
+  const navigation = useNavigation() as any
 
   const buildRoute = async () => {
     setIsLoading(true)

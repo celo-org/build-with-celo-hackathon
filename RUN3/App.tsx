@@ -71,7 +71,7 @@ export default function App() {
             <Stack.Screen name="home" component={HomeApp} options={{ headerTitle: (props) => <Header /> }} />
             <Stack.Screen name="builder" component={Builder} options={{ headerTitle: (props) => <Header /> }} />
             <Stack.Screen name="routeDetail" component={RouteDetail} options={{ headerTitle: (props) => <Header /> }} />
-            <Stack.Screen name="ecostory" component={Ecostory} options={{ headerTitle: (props) => <Header /> }} />
+            <Stack.Screen name="ecostory" component={Ecostory} options={{ headerShown: false }} />
           </Stack.Navigator>
         </NavigationContainer>
       </WalletProvider>

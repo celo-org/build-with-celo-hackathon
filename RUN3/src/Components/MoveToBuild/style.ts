@@ -112,4 +112,18 @@ export const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
   },
+  flex1: {
+    flex: 1,
+  },
+  cameraIcons: { color: '#fff', fontSize: 40 },
+  cameraButtons: {
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+  },
+  buttonsCameraCont: { flex: 1, flexDirection: 'row', justifyContent: 'space-between', margin: 30 },
+  actionBtns: {
+    color: '#fff',
+    fontSize: 20,
+  },
 })
