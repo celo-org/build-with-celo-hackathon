@@ -15,7 +15,11 @@ function RescueDetail() {
     language: '',
     name: '',
     numberOfPeople: '',
-    ageGroup: '',
+    lessthen1: '',
+    oneTofive: '',
+    sixTothirteen: '',
+    forAdults: '',
+    above60: '',
     reason: '',
     location: '',
     phoneNo: '',
@@ -25,14 +29,14 @@ function RescueDetail() {
   const [disabled, setDisabled] = useState(false)
 
   const uploadMetadataToIPFS = async () => {
-    const { language, name, numberOfPeople, ageGroup, reason, location, phoneNo, moreInfo } = rescueDesc
+    const { language, name, numberOfPeople, lessthen1, oneTofive, sixTothirteen, forAdults, above60, reason, location, phoneNo, moreInfo } = rescueDesc
 
-    if(!language || !name || !numberOfPeople || !ageGroup || !reason || !location || !phoneNo || !moreInfo) {
+    if(!language || !name || !numberOfPeople || !reason || !location || !phoneNo || !moreInfo) {
       return;
     }
 
     const nftJSON = {
-      language, name, numberOfPeople, ageGroup, reason, location, phoneNo, moreInfo
+      language, name, numberOfPeople, lessthen1, oneTofive, sixTothirteen, forAdults, above60, reason, location, phoneNo, moreInfo
     }
 
     try {
@@ -64,7 +68,7 @@ function RescueDetail() {
   
         let transaction = await contract.SendRescueRequest(metadataURL)
         await transaction.wait()
-        // console.log(transaction.hash)
+        console.log(transaction.hash)
         // setTxhash(transaction.hash)
   
         alert("Successfully send the request😀")
@@ -214,17 +218,66 @@ function RescueDetail() {
             />
           </div>
         </div>
-        <div className={styles.box}>
-          <span className={styles.text}>Age group*</span>
-          <div className={styles.input}>
-            <input
-              type="text"
-              placeholder='enter'
-              className={styles.inputbg}
-              onChange={e => setRescueDesc({...rescueDesc, ageGroup: e.target.value})}
-              value={rescueDesc.ageGroup}
+
+
+        <div className="w-11/12 min-h-16 flex-col">
+
+        <span className={styles.text}>Age group*</span>
+
+        <div className="bg-slate-300/[.2] shadow-2xl border-white-900/75 rounded-md w-full min-h-52 flex flex-col border-2 p-2">
+          
+          <div className="flex flex-col">
+            <span className='text-white font-bold ml-1 text-sm'>Less then 1 year</span>
+            <input 
+              type="number" 
+              placeholder='Enter the number of People'
+              className='rounded-md placeholder:text-sm p-1'
+              onChange={(e) => setRescueDesc({...rescueDesc, lessthen1: e.target.value})}
+              value={rescueDesc.lessthen1}
             />
           </div>
+
+          <div className="flex flex-col">
+            <span className='text-white font-bold ml-1 text-sm'>From 1 year to 5 year</span>
+            <input 
+              type="number" 
+              placeholder='Enter the number of People'
+              className='rounded-md placeholder:text-sm p-1'
+              onChange={(e) => setRescueDesc({...rescueDesc, oneTofive: e.target.value})}
+              value={rescueDesc.oneTofive}
+            />
+          </div>
+          <div className="flex flex-col">
+            <span className='text-white font-bold ml-1 text-sm'>From 6 year to 13 year</span>
+            <input 
+              type="number" 
+              placeholder='Enter the number of People'
+              className='rounded-md placeholder:text-sm p-1'
+              onChange={(e) => setRescueDesc({...rescueDesc, sixTothirteen: e.target.value})}
+              value={rescueDesc.sixTothirteen}
+            />
+          </div>
+          <div className="flex flex-col">
+            <span className='text-white font-bold ml-1 text-sm'>For Adults</span>
+            <input 
+              type="number" 
+              placeholder='Enter the number of People'
+              className='rounded-md placeholder:text-sm p-1'
+              onChange={(e) => setRescueDesc({...rescueDesc, forAdults: e.target.value})}
+              value={rescueDesc.forAdults}
+            />
+          </div>
+          <div className="flex flex-col">
+            <span className='text-white font-bold ml-1 text-sm'>Above 60</span>
+            <input 
+              type="number" 
+              placeholder='Enter the number of People'
+              className='rounded-md placeholder:text-sm p-1'
+              onChange={(e) => setRescueDesc({...rescueDesc, above60: e.target.value})}
+              value={rescueDesc.above60}
+            />
+          </div>
+        </div>
         </div>
 
         <div className={styles.box}>
