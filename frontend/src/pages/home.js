@@ -1,8 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { ethers } from 'ethers';
-import { getConfigByChain } from '../config'
-import GrowAChild from '../artifacts/contracts/Growachild.sol/Growachild.json'
-import RingLoader from "react-spinners/RingLoader";
+import React, { useState, useEffect } from 'react'; 
 import Body from '../components/body';
 import Summery from '../components/summery';
 import Advertise from '../components/advertise';

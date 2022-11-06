@@ -88,6 +88,7 @@ const CampaignDetails = () => {
         );
         console.log("it", items)
         setCampaign(items[0])
+        setcontentLoaded(true)
     }
 
     return (
@@ -117,9 +118,13 @@ const CampaignDetails = () => {
                                 <div class="row">
                                     <div class="col-md-6 pr-md-5">
                                         <Carousel autoPlay="true" >
+                                            <div>
+                                                <img src={campaign.campaignPic} alt="" /> 
+                                            </div> 
                                             {photos.map((photo, i) =>
                                                 <div>
                                                     <img src={photo.url} alt="" />
+                                                    
                                                 </div>
                                             )}
                                         </Carousel>

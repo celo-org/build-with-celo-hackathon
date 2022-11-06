@@ -132,6 +132,8 @@ const ActiveCampaign = ({ classOne, classTwo, index, campaign }) => {
                             <p class="mb-1"><h5 class="mb-0">Funds Utilised till date:<span class="value"> ${ethers.utils.formatUnits(campaign.totalUsed.toString(), 'ether')} </span></h5></p>
                             <p class="mb-1"><h5 class="mb-0">Total children benifited:<span class="value"> {campaign.noOfBeneficiaries}</span></h5></p>
                             <p class="mb-1"><h5 class="mb-0">Campaign Balance:<span class="value"> ${(Number(campaign.availableBalance) / 10 ** 18).toFixed(1)}</span></h5></p>
+                            <hr/>
+                            <p> Upload your proof of work</p>                          
                             <input type="file"
                                 name="Proof"
                                 required
@@ -142,6 +144,11 @@ const ActiveCampaign = ({ classOne, classTwo, index, campaign }) => {
                             ) : (
                                 <p>Show us what you did yesterday?</p>
                             )}
+
+                            <textarea id="w3review" name="w3review" rows="4" cols="50">
+                                
+                            </textarea>
+
 
                             {proof ? (
 
