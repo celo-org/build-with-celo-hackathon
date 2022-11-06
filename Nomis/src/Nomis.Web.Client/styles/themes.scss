@@ -1,0 +1,9 @@
+[data-theme="light"],
+[data-theme="dark"] {
+  body {
+    --root-text: 255;
+    --root-background: 0;
+    --root-overlay: 0.05;
+    --root-saturation: 60%;
+  }
+}

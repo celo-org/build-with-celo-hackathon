@@ -1,0 +1,60 @@
+$max-width: 1440px;
+$mobile-width: 600px;
+
+body {
+  background: $bg-main;
+}
+
+header,
+main,
+footer {
+  display: flex;
+  justify-content: center;
+}
+
+header,
+footer {
+  align-items: center;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: $max-width;
+}
+
+section {
+  display: flex;
+  width: 100%;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+main {
+  align-items: center;
+  justify-content: flex-start;
+  min-height: calc(100vh - 200px - 6rem);
+  flex-direction: column;
+
+  @media screen and (max-width: $mobile-width) {
+    min-height: calc(100vh - 197px - 6rem);
+  }
+}
+
+::-webkit-scrollbar {
+  $size: 0.5rem;
+  width: $size;
+  height: $size;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: $bg-overlay-2;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $bg-overlay-3;
+}
