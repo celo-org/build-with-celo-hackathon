@@ -1,0 +1,121 @@
+.DataTable {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  gap: 1rem;
+
+  .table {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+    position: relative;
+
+    .parameter,
+    .description {
+      width: 40%;
+      word-wrap: break-word;
+    }
+
+    .value {
+      word-wrap: break-word;
+      width: 20%;
+      min-width: 4rem;
+      padding: 0 0.5em;
+    }
+
+    .head {
+      padding: 1rem;
+      background: $bg-overlay-1;
+      border-radius: $border-m;
+      display: flex;
+      color: $text-title;
+    }
+
+    button {
+      background: $bg-overlay-1;
+      border: none;
+      padding: 1rem 1.5rem;
+      border-radius: $border-m;
+      line-height: 1;
+      color: $text-callout;
+      font-size: 1rem;
+      width: fit-content;
+      cursor: pointer;
+      margin: auto;
+
+      transition: background $fast, transform $fast;
+
+      @media screen and (max-width: $mobile-width) {
+        width: 100%;
+      }
+
+      &:hover {
+        background: $bg-overlay-2;
+      }
+
+      &:active {
+        background: $bg-overlay-3;
+        transform: scale(0.95);
+      }
+    }
+
+    .body {
+      display: flex;
+      flex-direction: column;
+      color: $text-caption;
+      max-height: 12rem;
+      overflow: hidden;
+
+      transition: max-height $slow;
+
+      @media screen and (max-width: $mobile-width) {
+        line-height: 1.25;
+        font-size: 0.75rem;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 3.5rem;
+        height: 4rem;
+        background: linear-gradient(transparent, $bg-overlay-1-solid);
+
+        transition: opacity $fast;
+      }
+
+      &.isVisible {
+        max-height: 2000px;
+
+        &::after {
+          opacity: 0;
+        }
+      }
+
+      .item {
+        align-items: center;
+        display: flex;
+        padding: 1rem 1rem;
+
+        border-bottom: 1px solid $border-color;
+
+        &:last-child {
+          border: none;
+        }
+
+        .description {
+          display: flex;
+          flex-direction: column;
+          gap: 0.25rem;
+
+          .units {
+            color: $text-footnote;
+            font-size: $size-footnote;
+          }
+        }
+      }
+    }
+  }
+}

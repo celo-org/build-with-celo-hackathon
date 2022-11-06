@@ -1,0 +1,49 @@
+.score {
+  background: $gradient-tech;
+
+  h3,
+  .number {
+    color: #fff !important;
+  }
+
+  p,
+  .number {
+    color: hsla(0, 100%, 100%, 80%);
+  }
+
+  .chart {
+    $size: 4rem;
+    width: $size;
+    height: $size;
+    position: relative;
+
+    canvas {
+      transform: scale(-1, 1);
+    }
+
+    .number,
+    .blur,
+    .bg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
+
+    .blur {
+      filter: blur(4px);
+      opacity: 0.75;
+    }
+
+    .number {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: $text-title;
+    }
+  }
+}

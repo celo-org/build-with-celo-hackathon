@@ -1,0 +1,60 @@
+@media screen and (max-width: $mobile-width) {
+  .mobile {
+    div {
+      font-size: 0.75rem;
+
+      span {
+        font-size: 0.5rem;
+      }
+    }
+  }
+}
+.UserStats {
+  display: flex;
+  gap: 1rem;
+
+  .age {
+    .container {
+      .units {
+        margin-left: -0.25rem;
+      }
+    }
+  }
+
+  div {
+    font-weight: 600;
+    text-align: center;
+
+    .container {
+      display: flex;
+      gap: 0.25rem;
+      align-items: flex-end;
+
+      span {
+        width: fit-content;
+        font-size: 1em;
+      }
+    }
+  }
+
+  .units {
+    font-weight: 400;
+  }
+
+  span {
+    font-weight: 400;
+    display: block;
+    font-size: 0.75rem;
+    color: $text-footnote;
+  }
+
+  div::before {
+    font-weight: 400;
+  }
+
+  .turnover {
+    border-left: 1px solid $border-color;
+    border-right: 1px solid $border-color;
+    padding: 0 1rem;
+  }
+}
