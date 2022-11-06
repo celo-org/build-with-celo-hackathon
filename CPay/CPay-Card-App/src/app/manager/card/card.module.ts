@@ -13,6 +13,7 @@ import { InputComponent } from 'src/app/components/input/input.component';
 import { SingleSelectComponent } from 'src/app/components/single-select/single-select.component';
 import { ImageComponent } from 'src/app/components/image/image.component';
 import { CheckboxComponent } from 'src/app/components/checkbox/checkbox.component';
+import { DatetimeComponent } from 'src/app/components/datetime/datetime.component';
 
 @NgModule({
   imports: [
@@ -22,6 +23,6 @@ import { CheckboxComponent } from 'src/app/components/checkbox/checkbox.componen
     CardPageRoutingModule
   ],
   declarations: [CardPage, ButtonComponent, MyCardComponent, InputComponent, 
-    SingleSelectComponent, ImageComponent, CheckboxComponent]
+    SingleSelectComponent, ImageComponent, CheckboxComponent, DatetimeComponent]
 })
 export class CardPageModule {}

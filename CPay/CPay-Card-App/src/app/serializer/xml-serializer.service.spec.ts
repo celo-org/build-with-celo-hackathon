@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ImageService } from './image.service';
+import { XmlSerializerService } from './xml-serializer.service';
 
-describe('ImageService', () => {
-  let service: ImageService;
+describe('XmlSerializerService', () => {
+  let service: XmlSerializerService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ImageService);
+    service = TestBed.inject(XmlSerializerService);
   });
 
   it('should be created', () => {

@@ -4,6 +4,10 @@ import { VirtualCard } from 'src/app/models/models';
 
 import { AlertController, IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
+import { BaseRequest } from 'src/app/models/Base';
+import { XmlSerializerService } from 'src/app/serializer/xml-serializer.service';
+import { CreateVirtualCardRequest } from './models/CreateVirtualCard';
+import { ValuesService } from 'src/app/services/values.service';
 
 @Component({
   selector: 'app-card',
@@ -17,13 +21,16 @@ export class CardPage implements OnInit {
   name: string;
 
   cards: VirtualCard [] = [];
+
   titleList: any[] = [
     { "name": "Mr", "value": "Mr" }, { "name": "Mrs", "value": "Mrs" }, { "name": "Ms", "value": "Ms" },
     { "name": "Miss", "value": "Miss" }
   ];
 
+  createCardRequest: CreateVirtualCardRequest = new CreateVirtualCardRequest();
+
   constructor(@Inject(LOCALE_ID) private locale: string, 
-    private alertController: AlertController) { }
+    private alertController: AlertController, private valuesService: ValuesService) { }
 
   ngOnInit() {
     this.getCards();
@@ -42,12 +49,22 @@ export class CardPage implements OnInit {
   }
 
   submit() {
+
+    console.log(this.createCardRequest);
+
     this.createCardModal.dismiss(this.name, 'confirm');
   }
 
   onWillDismiss(event: Event) {
+    this.createCardRequest.terminalID = this.valuesService.getTerminalID();
+    this.createCardRequest.campaignUUID = this.valuesService.getCampaignUUID();
+    this.createCardRequest.transactionID = this.valuesService.getTransactionID();
+    this.createCardRequest.transactionDate = new Date();
+    this.createCardRequest.checksum = this.valuesService.getChecksum();
+    console.log(this.createCardRequest);
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'confirm') {
+      console.log(this.createCardRequest.serialize());
       this.message = `Hello, ${ev.detail.data}!`;
     }
   }
@@ -61,6 +78,18 @@ export class CardPage implements OnInit {
   }
 
  async confirmCreateCardAlert() {
+  console.log("submit");
+  let base = new CreateVirtualCardRequest();
+  base.terminalID = "TerminalID12345";
+  base.campaignUUID = "ghvchv654cewhwe4c4wewejh";
+  base.customerReference = "myref123456";
+  base.cardLabel = "My New Card";
+  base.notificationNumber = "0796482349";
+  base.expiryDate = new Date("2025/11/02");
+  base.transactionID = "TransactionID12345";
+  base.transactionDate = new Date();
+  base.checksum = "123456";
+
   const alert = await this.alertController.create({
     header: 'Request new card?',
     cssClass: '',
@@ -77,6 +106,22 @@ export class CardPage implements OnInit {
   });
 
   await alert.present();
+ }
+
+ updateRef(ref: any) {
+  this.createCardRequest.customerReference = ref;
+ }
+
+ updateCardLabel(label: any) {
+  this.createCardRequest.cardLabel = label;
+ }
+
+ updateNotificationNumber(num: any) {
+  this.createCardRequest.notificationNumber = num;
+ }
+
+ updateExpiryDate(date: any) {
+  this.createCardRequest.expiryDate = new Date(date);
  }
 
 }

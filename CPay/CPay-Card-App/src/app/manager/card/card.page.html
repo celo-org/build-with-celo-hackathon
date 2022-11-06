@@ -25,18 +25,10 @@
 
       <ion-content>
         <div class="content">
-          <app-image></app-image>
-          <app-single-select [options]="titleList" placeholder="Title"></app-single-select>
-          <app-input type="text" placeholder="First Name"></app-input>
-          <app-input type="text" placeholder="Middle Name"></app-input>
-          <app-input type="text" placeholder="Last Name"></app-input>
-          <app-input type="text" placeholder="ID Number"></app-input>
-          <app-input type="text" placeholder="Mobile Phone Area Code"></app-input>
-          <app-input type="phone" placeholder="Mobile Phone Number"></app-input>
-          <app-input type="text" placeholder="Country"></app-input>
-          <app-input type="date" placeholder="Date of Birth"></app-input>
-          <app-checkbox label="Request Screening"></app-checkbox>
-
+          <app-input (changeEvent)="updateRef($event)" type="text" placeholder="Reference Number" maxlength="255"></app-input>
+          <app-input (changeEvent)="updateCardLabel($event)" type="text" placeholder="Card Label" maxlength="20"></app-input>
+          <app-input (changeEvent)="updateNotificationNumber($event)" type="text" placeholder="Notification Number (SMS Mumber)" maxlength="20"></app-input>
+          <app-datetime (changeEvent)="updateExpiryDate($event)" type="date" placeholder="Expiry Date"></app-datetime>
           <app-button (click)="confirmCreateCardAlert()" value="Submit" color="success"></app-button>
         </div>
       </ion-content>

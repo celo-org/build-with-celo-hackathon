@@ -1,3 +1,3 @@
 <ion-item>
-  <ion-input [type]="type" [placeholder]="placeholder"></ion-input>
+  <ion-input [(ngModel)]="value" (change)="textChanged()" [type]="type" [placeholder]="placeholder" [maxlength]="maxlength"></ion-input>
 </ion-item>
