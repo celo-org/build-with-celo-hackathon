@@ -1,0 +1,10 @@
+<ion-item id="open-modal">
+  <ion-label slot="start">{{placeholder}}</ion-label>
+  <ion-node slot="end">{{displayValue}}</ion-node>
+</ion-item>
+
+<ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)" [cssClass]="'center'">
+  <ng-template>
+    <ion-datetime [presentation]="type" [(ngModel)]="value" size="cover" [min]="minDate" max="3000-12-31"></ion-datetime>
+  </ng-template>
+</ion-modal>

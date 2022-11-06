@@ -1,0 +1,25 @@
+<ion-tabs>
+  <ion-header>
+    <ion-toolbar>
+      <img src="assets/account.png">
+      <ion-icon (click)="logout()" name="power" color="danger" slot="end"></ion-icon>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="history">
+      <ion-icon name="list"></ion-icon>
+      <ion-label>History</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="card">
+      <ion-icon name="card"></ion-icon>
+      <ion-label>Cards</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="transact">
+      <ion-icon name="cash"></ion-icon>
+      <ion-label>Transact</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

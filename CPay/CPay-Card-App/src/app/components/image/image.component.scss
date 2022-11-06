@@ -1,0 +1,26 @@
+.image {
+    margin: auto;
+    width: 144px;
+    height: 144px;
+
+    img {
+        border-radius: 50%;
+        background: lightgray;
+        width: 144px;
+        height: 144px;
+        margin: auto;
+    }
+}
+
+.camera {
+    ion-icon {
+        position: absolute;
+        top: 120px;
+        left: calc(50% + 30px);
+        width: 30px;
+        height: 30px;
+        margin: auto;
+        color: gray;
+        cursor: pointer;
+    }
+}

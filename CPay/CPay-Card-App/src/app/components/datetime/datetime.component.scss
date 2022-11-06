@@ -1,0 +1,25 @@
+ion-item {
+    border-radius: 10px;
+    height: 44px;
+    box-shadow: 1px 1px 1px 1px gray;
+    --highlight-hight: 0px;
+}
+
+ion-modal {
+    &.center {
+        --border-radius: 20px;
+        --width: calc(100% - 20px);
+        align-items: center;
+        --height: auto;
+        .ion-page {
+            position: relative;
+            display: block;
+            contain: content;
+        }
+    }
+}
+
+ion-datetime {
+    border-radius: 20px;
+    padding: 5px;
+}

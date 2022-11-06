@@ -1,0 +1,7 @@
+{
+  "name": "CPay-Card-Mobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

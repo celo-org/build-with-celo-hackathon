@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon slot="icon-only" name="arrow-back" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+    <ion-title slot="end">
+        Sign In
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="header">
+    <img src="assets/favicon1.png">
+  </div>
+
+  <form id="form">
+    <app-input type="email" placeholder="Email"></app-input>
+
+    <app-input type="password" placeholder="Password"></app-input>
+
+    <app-button [routerLink]="['/tabs']" value="Connect" color="primary"></app-button>
+
+    <a href="#">Forgot Password?</a>
+  </form>
+</ion-content>
