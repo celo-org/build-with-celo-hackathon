@@ -16,7 +16,7 @@ Analytics dashboard on celo attestation process, which will help us understandin
 - DappLooker: Platform DappLooker used for creating the charts and dashboard
 - SubGraph: subgraph creation on thegraph platform
 - Javascript
-- SQL for creation charts on DappLooker platform
+- SQL for creating charts on DappLooker platform
 
 ### Summary
 Before understanding the project we need a short understand of Celo attestation service, which is used for verification of phone number on chain. Subgraph is indexing transactions data of Attestation contracts.  Subgraph help understand attestation success rate and gas involved in the process. Subgraph is then registered at DappLooker platform to display metrics and KPIs.
