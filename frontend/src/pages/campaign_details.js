@@ -29,10 +29,9 @@ const CampaignDetails = () => {
     }, [])
 
     async function loadPhotos() {
-        const query = '*[_type == "task" && campaignid == $id] {taskDescription,dailytask}'
+        const query = '*[_type == "task" && campaignid == $id] {taskDescription,dailytask,date}'
         const params = { id: Number(campId) } //TODO:  req.url used twice
         const result = await client.fetch(query, params)
-        console.log("result", result)
         const baseUrl = urlFor(result[0]["dailytask"]["asset"]["_ref"].slice(6,))["options"].baseUrl
         const dataset = urlFor(result[0]["dailytask"]["asset"]["_ref"].slice(6,))["options"].dataset
         const projectId = urlFor(result[0]["dailytask"]["asset"]["_ref"].slice(6,))["options"].projectId
@@ -44,6 +43,7 @@ const CampaignDetails = () => {
                         `${baseUrl}/images/${projectId}/${dataset}/${i["dailytask"]["asset"]["_ref"]
                             .slice(6,).slice(0, -4) + '.'}png`,
                     description: i.taskDescription,
+                    date: i.date,
 
                 };
                 return item;
@@ -128,7 +128,7 @@ const CampaignDetails = () => {
                                             {photos.map((photo, i) =>
                                                 <div>
                                                     <img src={photo.url} alt="" />
-                                                    <p>{photo.description}</p>
+                                                    <p>{photo.date}: {photo.description}</p>
                                                 </div>
                                             )}
                                         </Carousel>
