@@ -27,11 +27,15 @@ export const getStaticProps: GetStaticProps = async(contex) => {
         language: '',
         name: '',
         numberOfPeople: '',
-        ageGroup: '',
+        lessthen1: '',
+        oneTofive: '',
+        sixTothirteen: '',
+        forAdults: '',
+        above60: '',
         reason: '',
         location: '',
         phoneNo: '',
-        moreInfo: ''
+        moreInfo: '',
       },
       value: {
         rescueId: 0,
@@ -143,26 +147,6 @@ function RescueInfo(props: any) {
 
       <div className={styles.subBox}>  
         <div className={styles.bg}>
-          <GroupsIcon fontSize='large' color='primary' />
-        </div>
-        <div className={styles.textBox}>
-          <span className={styles.dark}>Age group:</span>
-          <span className='font-bold'>{props.data.ageGroup}</span>
-        </div>
-      </div>
-
-      <div className={styles.subBox}>  
-        <div className={styles.bg}>
-          <PeopleAltIcon fontSize='large' color='primary' />
-        </div>
-        <div className={styles.textBox}>
-          <span className={styles.dark}>Number of people:</span>
-          <span className='font-bold'>{props.data.numberOfPeople}</span>
-        </div>
-      </div>
-
-      <div className={styles.subBox}>  
-        <div className={styles.bg}>
           <TranslateIcon fontSize='large' color='primary' />
         </div>
         <div className={styles.textBox}>
@@ -182,6 +166,64 @@ function RescueInfo(props: any) {
           <div className="font-bold">
             {props.data.location}
           </div>
+        </div>
+      </div>
+
+      <div className={styles.subBox}>  
+        <div className={styles.bg}>
+          <PeopleAltIcon fontSize='large' color='primary' />
+        </div>
+        <div className={styles.textBox}>
+          <span className={styles.dark}>Total Number of people:</span>
+          <span className='font-bold'>{props.data.numberOfPeople}</span>
+        </div>
+      </div>
+
+      <div className={styles.subBox}>  
+        <div className={styles.bg}>
+          <GroupsIcon fontSize='large' color='primary' />
+        </div>
+        <div className={styles.textBox}>
+          <span className={styles.dark}>Age less then 1 year:</span>
+          <span className='font-bold'>{props.data.lessthen1}</span>
+        </div>
+      </div>
+
+      <div className={styles.subBox}>  
+        <div className={styles.bg}>
+          <GroupsIcon fontSize='large' color='primary' />
+        </div>
+        <div className={styles.textBox}>
+          <span className={styles.dark}>Age from 1 to 5 year:</span>
+          <span className='font-bold'>{props.data.oneTofive}</span>
+        </div>
+      </div>
+
+      <div className={styles.subBox}>  
+        <div className={styles.bg}>
+          <GroupsIcon fontSize='large' color='primary' />
+        </div>
+        <div className={styles.textBox}>
+          <span className={styles.dark}>Age from 6 to 13 year:</span>
+          <span className='font-bold'>{props.data.sixTothirteen}</span>
+        </div>
+      </div>
+      <div className={styles.subBox}>  
+        <div className={styles.bg}>
+          <GroupsIcon fontSize='large' color='primary' />
+        </div>
+        <div className={styles.textBox}>
+          <span className={styles.dark}>For Adults:</span>
+          <span className='font-bold'>{props.data.forAdults}</span>
+        </div>
+      </div>
+      <div className={styles.subBox}>  
+        <div className={styles.bg}>
+          <GroupsIcon fontSize='large' color='primary' />
+        </div>
+        <div className={styles.textBox}>
+          <span className={styles.dark}>For above 60 year:</span>
+          <span className='font-bold'>{props.data.above60}</span>
         </div>
       </div>
 
