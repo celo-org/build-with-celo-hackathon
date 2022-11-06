@@ -65,6 +65,12 @@ From the **application** we can (on Alfajores):
 * display project details
 * donate cUSD to a project
 
+A quick overview of the tests (and relative contracts functionalities); gas estimates are not accurate as they include contracts deployment and setup tasks.
+
+![image](https://user-images.githubusercontent.com/26276572/200193699-1faf3358-f37e-4e02-a07d-dc44af3bce22.png)
+![image](https://user-images.githubusercontent.com/26276572/200193716-92da4c04-c422-415b-9852-3bcb6ebe6a84.png)
+
+
 ### How to test it locally
 Follow the instruction in the guide on the main [repo](https://riccap.github.io/projectz/). You will need at least a wallet that contains some cUSD on Alfajores to test the application locally. Please add a comment in the PR if you need any help.
 
