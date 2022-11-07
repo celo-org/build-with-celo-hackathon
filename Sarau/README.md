@@ -25,7 +25,7 @@ We intend to transform the Sarau into a complete event platform using NFT as a t
 - dApp repository: https://github.com/sarau-xyz/sarau-dapp
 - Contracts repository: https://github.com/sarau-xyz/sarau-contracts
 - IPFS Uploader repository: https://github.com/sarau-xyz/ipfs-uploader
-- CELO airdrop repository: 
+- CELO airdrop repository: https://github.com/sarau-xyz/dust-dispenser
 - Live demo: https://sarau.xyz
 
 #### Presentation
