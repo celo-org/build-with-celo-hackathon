@@ -35,6 +35,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 500px;
+  margin: auto;
   
   padding: 1rem;
 
@@ -45,7 +47,6 @@
   p {
     margin-top: 1rem;
     font-weight: 600;
-    width: 500px;
   }
 
   button {
