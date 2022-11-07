@@ -45,10 +45,10 @@ const DropOffs = () => {
 
                                 
 
-                                <div class="rounded-full w-full bg-gray-200 h-2">
+                                <div className="rounded-full w-full bg-gray-200 h-2">
                                     
-                                    <div class="bg-[#DD7D37] h-2 rounded-full wrapper relative " style={{'width' : '55%'}}>
-                                    {/* <span class="tooltipper text-[10px]">Celo explorer</span> */}
+                                    <div className="bg-[#DD7D37] h-2 rounded-full wrapper relative " style={{'width' : '55%'}}>
+                                    {/* <span className="tooltipper text-[10px]">Celo explorer</span> */}
 
                                     </div>
                                 </div>

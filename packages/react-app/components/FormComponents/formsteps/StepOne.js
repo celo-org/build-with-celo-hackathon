@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-const StepOne = ({handleClick, currentStep, steps}) => {
+const StepOne = ({handleClick, currentStep, steps, data}) => {
     const [fulfillRequest, setfulfillRequest] = useState();
 
     const handlefulfillRequest = () => {
@@ -46,21 +46,23 @@ const StepOne = ({handleClick, currentStep, steps}) => {
                         <div className="flex-1 w-full col-span-2">
                             <span className="text-gray-700 font-base mb-3">Location</span>
                             <div className="w-full h-12 px-4 py-2 mt-2 text-gray-700 bg-gray-100  border-0 border-gray-200 focus:border-gray-300 rounded-md focus:outline-none flex items-center text-sm">
-                                Ikeja
+                                {data && data.location.name}
                             </div>
                             
                         </div>
                         <div className="flex-1">
                             <span className="text-gray-700 font-base mb-3">Category of Scrap</span>
                             <div className="w-full h-12 px-4 py-2 mt-2 text-gray-700 bg-gray-100  border-0 border-gray-200 focus:border-gray-300 rounded-md focus:outline-none flex items-center text-sm">
-                                Plastics
+                                {data && data.scrap_category.name}    
                             </div>
                             
                         </div>
                         <div className="flex-1">
                             <span className="text-gray-700 font-base mb-3">Type of Scrap</span>
                             <div className="w-full h-12 px-4 py-2 mt-2 text-[#6B7280] bg-gray-100  border-0 border-gray-200 focus:border-gray-300 rounded-md focus:outline-none flex items-center text-sm">
-                                Polyethylene Terephthalate (PET)
+                            {data && data.scrap_subcategory.name}    
+
+                                {/* Polyethylene Terephthalate (PET) */}
                             </div>
                             
                         </div>
@@ -68,7 +70,8 @@ const StepOne = ({handleClick, currentStep, steps}) => {
                         <div className="flex-1">
                             <span className="text-gray-700 font-base mb-3">Quantity Provided</span>
                             <div className="w-full h-12 px-4 py-2 mt-2 text-[#6B7280] bg-gray-100  border-0 border-gray-200 focus:border-gray-300 rounded-md focus:outline-none flex items-center gap-3 text-sm">
-                                15kg
+                                {data && data.quantity_required}    
+
                             </div>
                             <small className='text-xs font-thin'>This quantity updates as collectors deliver </small>
                             
@@ -83,6 +86,7 @@ const StepOne = ({handleClick, currentStep, steps}) => {
                         <div className="flex-1 w-full col-span-2">
                             <span className="text-gray-700 font-base mb-3">Description</span>
                             <div className="w-full px-4 py-4 mt-2 text-[#6B7280] bg-gray-100   focus:border-gray-300 rounded-md focus:outline-none flex items-center text-sm h-24">
+                                {data && data.description}    
                                 
                             </div>
                             
@@ -163,7 +167,7 @@ const StepOne = ({handleClick, currentStep, steps}) => {
                 </div>
 
                     <div className='flex items-center justify-center gap-4 mt-5 mx-auto w-full'>
-                        <button className='px-9 py-3 border border-gray-300 bg-white text-gray-700 rounded-full w-1/2' type='button'  onC lick={()=>setfulfillRequest(false)}>Cancel</button>
+                        <button className='px-9 py-3 border border-gray-300 bg-white text-gray-700 rounded-full w-1/2' type='button'  onClick={()=>setfulfillRequest(false)}>Cancel</button>
                         <button className='px-9 py-3 border border-[#DD7D37] bg-[#DD7D37] text-white rounded-full w-1/2' onClick={() => handleClick("next")} >Proceed</button>
                     </div>
                 </div>

@@ -4,6 +4,8 @@ const db = require('../models');
 const Request = db.requests;
 const Location = db.locations;
 const Company = db.companies;
+const Category = db.categories;
+const CollectionCenter = db.collectioncenter;
 
 module.exports = {
   create: async (req, res) => {
@@ -46,7 +48,7 @@ module.exports = {
       });
       // Save request in the database
       request = request.save(request);
-      return res.send(request);
+      return res.send({status: true, request});
     } catch (error) {
       return res.status(500).send({
         message:
@@ -58,9 +60,19 @@ module.exports = {
     /**
      * TODO: paginate
      */
-    const { filter, location, companyId } = req.query;
+    let { filter, location, companyId, page, size } = req.query;
     let requests;
     try {
+      if (!page) {
+          // Make the Default value one
+          page = 1;
+      }
+
+      if (!size) {
+        size = 10;
+      }
+
+      let limit = parseInt(size);
       // if filter query exists, run filter by param (maybe location)
       if (filter === 'location' && location) {
         // confirm that location exists, if not - pass error
@@ -84,7 +96,11 @@ module.exports = {
         requests = await Request.find({ company: foundcompany._id }).exec();
       } else {
         // get all requests
-        requests = await Request.find().exec();
+        requests = await Request.find().sort({ id: -1 }).limit(limit).populate({ path: 'location', model: Location }).populate({ path: 'company', model: Company }).populate({ path: 'scrap_category', model: Category }).populate({ path: 'collection_center', model: CollectionCenter }).populate({
+          path: 'scrap_subcategory',
+          model: Category,
+          populate: { path: 'children', model: Category },
+        }).exec();
       }
       // no requests found
       if (!requests) {
@@ -92,7 +108,13 @@ module.exports = {
           message: `No requests found for your query.`,
         });
       }
-      return res.send(requests);
+      var count = requests.length;
+      return res.send(
+        { count, 
+          page,
+          size,
+          info: requests,
+      });
     } catch (error) {
       return res.status(500).send({
         message:
@@ -109,14 +131,18 @@ module.exports = {
      *      ? use dayjs library
      * ? filter properties from the model file or here
      */
-    const { requestId } = req.params;
+    // const { requestId } = req.params;
     try {
-      const request = await Request.findById(requestId);
+      const request = await Request.findById(req.params.id).populate({ path: 'location', model: Location }).populate({ path: 'company', model: Company }).populate({ path: 'scrap_category', model: Category }).populate({ path: 'collection_center', model: CollectionCenter }).populate({
+        path: 'scrap_subcategory',
+        model: Category,
+        populate: { path: 'children', model: Category },
+      });
       res.send(request);
     } catch (error) {
       res
         .status(500)
-        .send({ message: `Error retrieving request with id=${requestId}` });
+        .send({ message: `Error retrieving request ` });
     }
   },
   updateRequest: async (req, res) => {},

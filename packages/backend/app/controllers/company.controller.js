@@ -14,16 +14,30 @@ module.exports = {
         });
     }
   },
+  getOneCompany: async (req, res) => {
+    const id = req.params.id;
+
+    try {
+      console.log(id);
+        const company = await Company.findOne({ id: id });
+        return res.json({status: true, company});            
+    } catch (error) {
+        res.status(500).send({
+            message: error.message || "Some error occurred while retrieving Companies."
+        });
+    }
+  },
   companyRequests: async (req, res) => {
     
-    const { requestId } = req.params;
+    // const { requestId } = req.params.id;
+    // console.log(req.params.id)
     try {
-      const request = await Request.find({ company: requestId });
+      const request = await Requests.find({ company: req.params.id });
       res.send(request);
     } catch (error) {
       res
         .status(500)
-        .send({ message: `Error retrieving company requests with id=${requestId}` });
+        .send({ message: `Error retrieving company requests` });
     }
   },
   // companyRequests: (req, res) =>{

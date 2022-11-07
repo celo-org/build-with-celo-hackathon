@@ -10,6 +10,7 @@ import { CustomThemeProvider } from "@/contexts/userTheme";
 import { Provider } from "react-redux"
 import store from "@/state/index"
 import AppUpdater from "@/state/app/updater"
+import {QueryClientProvider, QueryClient} from 'react-query'
 
 function Updaters() {
   return (
@@ -19,9 +20,14 @@ function Updaters() {
   )
 }
 
+const queryClient = new QueryClient()
+
 function MyApp({ Component, pageProps }: AppProps): React.ReactElement {
   return (
     <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+
+      
       <CustomThemeProvider>
         <CeloProvider
           dapp={{
@@ -40,6 +46,7 @@ function MyApp({ Component, pageProps }: AppProps): React.ReactElement {
               horizontal: "right",
             }}
           >
+
             <Updaters/>
             <ApolloProvider client={client}>
               <div suppressHydrationWarning>
@@ -51,6 +58,7 @@ function MyApp({ Component, pageProps }: AppProps): React.ReactElement {
           </SnackbarProvider>
         </CeloProvider>
       </CustomThemeProvider>
+      </QueryClientProvider>
     </Provider>
   );
 }

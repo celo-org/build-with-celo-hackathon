@@ -1,38 +1,126 @@
 import Link from 'next/link'
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import CompanyLayout from '../../components/CompanyLayout/Layout'
 import DropdownIcon from '../../components/Icons/DropdownIcon'
 import ExpandMoreVertical from '../../components/Icons/ExpandMoreVertical'
 import UpwardIcon from '../../components/Icons/UpwardIcon'
+// import CategoryCall from '../../components/apiCalls/CategoryCall'
+import axios from 'axios'
+
+// export const getStaticProps = async () => {
+//     try{
+//       const res = await fetch('http://127.0.0.1:8080/api/category')
+//       if(res){
+//         console.log(res.data);
+//         const data = await res.json();
+  
+//         return {
+//           props: {categories: data.data}
+//         }
+//       }
+//       else{
+//         console.log("no data")
+//       }
+//     }catch(err){
+  
+//     }
+    
+//   }
 
 const Dashboard = () => {
+    
+
+    // console.log(CategoryCall, "category call")
+    const [categories, setCategories] = useState();
+    const [centers, setCenters] = useState();
+
     const [createOffer, setCreateOffer] = useState();
     const [catDropdown, setCatDropdown] = useState();
     const [typeDropdown, setypeDropdown] = useState();
+    const [centerDropdown, setCenterDropdown] = useState();
     const [alertModal, setAlertModal] = useState();
     const [approveOfferModal, setApproveOfferModal] = useState();
+    const [selectedCategory, setSelectedCategory] = useState();
+    const [subCategory, setSubCategory] = useState();
+    const [selectedSubCategory, setSelectedSubCategory] = useState();
+    const [selectedCenter, setSelectedCenter] = useState();
 
 
     const [offer, setOffer] = useState({
         title: '',
-        scrap_category: '',
-        scrap_subcategory: '',
         description: '',
         quantity_required: '',
         amount_per_unit: '',
         request_expires_at: '',
         company:'',
-        collection_center:'',
         location: '',
-        escrow_payment: '',
+        escrow_payment: '',  
         deliveries:'',
     })
+
+    const handleChange = (e) =>{
+        setInputs(prev => {
+            return {...prev, [e.target.name]:e.target.value}
+        })
+    }
+
+        useEffect(() => {
+            const CancelToken = axios.CancelToken;
+            const source = CancelToken.source();
+
+            const getCategories = async ()=>{
+                try{
+                    const res = await axios.get( "http://127.0.0.1:8080/api/category", { cancelToken: source.token } );
+                    setCategories(res.data.data)
+                    // console.log(res)
+                }catch(err){
+                    if(axios.isCancel(err)){
+                        console.log("cancelled");
+                    } else{
+                        throw err
+                    }
+                }
+            };
+            getCategories();
+            return () => {
+                source.cancel();
+            }
+        }, [])   
+        
+        
+        useEffect(() => {
+            const CancelToken = axios.CancelToken;
+            const source = CancelToken.source();
+
+            const getCenters = async ()=>{
+                try{
+                    const res = await axios.get( "http://127.0.0.1:8080/api/collectioncenters", { cancelToken: source.token } );
+                    console.log(res, "res")
+                    
+                    setCenters(res.data.collection_centers)
+                    console.log(centers, "centerss")
+                }catch(err){
+                    if(axios.isCancel(err)){
+                        console.log("cancelled");
+                    } else{
+                        throw err
+                    }
+                }
+            };
+            getCenters();
+            return () => {
+                source.cancel();
+            }
+        }, [])    
 
     const handleCat = () =>{
         setCatDropdown(!catDropdown)
     }
     const handleType = () =>{
         setypeDropdown(!typeDropdown)
+    }
+    const handleCollectionCenter = () =>{
+        setCenterDropdown(!centerDropdown)
     }
     const handleCreateOffer = () =>{
         setCreateOffer(!createOffer)
@@ -46,6 +134,38 @@ const Dashboard = () => {
         setAlertModal(false)
         setApproveOfferModal(!approveOfferModal)
     }
+    const handlSubmit = () =>{
+        const {
+        title,
+        description,
+        quantity_required,
+        amount_per_unit,
+        request_expires_at,
+        company,
+        location,
+        escrow_payment,
+        deliveries
+    } = inputs;
+
+        setCreateOffer(false)
+
+        setAlertModal(false)
+        setApproveOfferModal(!approveOfferModal)
+    }
+
+
+
+
+    const SelectCategory = (item, index) =>{
+        setSelectedCategory(item.item);
+        setSubCategory(item.item.children);
+    }
+    const SelectCenter = (item, index) =>{
+        setSelectedCenter(item.item);
+    }
+    const SelectSubCategory = (item, index) =>{
+        setSelectedSubCategory(item.item);
+    }
   return (
     <>
         <CompanyLayout>
@@ -56,7 +176,7 @@ const Dashboard = () => {
                     <div className='h-full pb-24 px-4 md:px-12 py-12'>
                         <div className='grow py-4 flex items-center justify-between mb-3 '> 
                             <h1 className="text-3xl font-bold text-gray-800 ">
-                                Dashboard
+                                Dashboard 
                             </h1>
                             <div>
                                 <button className='px-8 py-3 rounded-full shadow-md bg-[#DD7D37] hover:shadow-lg text-white transition duration-150 ease-in-out border-0' onClick={handleCreateOffer}>Create Offer</button>
@@ -362,7 +482,7 @@ const Dashboard = () => {
             </section>
 
             <div  className={`modal__box ${createOffer ? 'show' : ''}`}>
-                <div className="modal__box-wrapper shadow-lg rounded-2xl">
+                <div className="modal__box-wrapper shadow-lg rounded-2xl" style={{"overflow": "auto"}}>
         
                 <div className="flex items-start justify-between mb-6">
 
@@ -383,20 +503,30 @@ const Dashboard = () => {
                     </button>
 
                 </div>
-                <form>
+                <form className=''>
 
                 
                     
-                    <div>
+                    <div >
+                    <div className="mb-6">
+                            <div className="flex justify-between items-center mb-2">                                
+                                <label className="text-gray-700 font-medium">Title</label>
+                            </div>
+                            <div className=" relative grow  rounded-lg  items-center flex w-full h-12 ">
+                                <input type="text" className=" border border-gray-300 py-3 px-4  block w-full pl-4 pr-20 rounded-lg h-full focus:outline-none focus:border-gray-400 transition duration-300 ease" placeholder="What's the title?" name="title" onChange={handleChange}/>
+                                
+                            </div>
+
+                        </div>
                         <div className="mb-6">
                             <div className="flex justify-between items-center">                                
                                 <label className="text-gray-700 font-medium"  >Category of Scrap</label>
                             </div>
                             <div className="dropdown relative grow w-full" >
                                 <button className="w-full bg-white h-12 focus:outline-none active:outline-none  flex items-center justify-between border border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease"    type="button" onClick={handleCat} >
-                                    <span className="pointer-events-none flex items-center gap-2 text-gray-400">
-                                    Select the Scrap category
-                                    </span>
+
+                                    {selectedCategory ? <span className="pointer-events-none flex items-center gap-2 text-gray-600">{selectedCategory.name}</span> : <span className="pointer-events-none flex items-center gap-2 text-gray-400">Select the Scrap category</span>}
+                                    
                                     <span className="pointer-events-none ">
                                         <DropdownIcon />
                                     </span>
@@ -409,7 +539,17 @@ const Dashboard = () => {
                                         
                                         <div className=" py-4 divide-y">
                                             
-                                            <button className="flex items-center py-3 px-2 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
+                                        {categories && categories.map((item, index)=>(
+                                            <button className={`flex items-center py-3 px-2 hover:bg-gray-100 text-sm justify-between  border-0 rounded-lg w-full ${selectedCategory && selectedCategory.id === item.id ? 'bg-gray-100' : 'bg-white'} `} type="button"  key={index} onClick={()=>SelectCategory({item, index})}>
+                                                <div className="flex items-center justify-center gap-2 pr-2">
+                                                    <img src={`${item.icon}`} className='h-8 w-8'/>
+                                                </div>
+                                                <div className="flex grow flex-col justify-center items-start text-left">
+                                                        <p className="text-gray-700 font-normal text-base">{item.name}</p>
+                                                </div>
+                                            </button>
+                                        ))}
+                                            {/* <button className="flex items-center py-3 px-2 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
                                                 <div className="flex items-center justify-center gap-2 pr-2">
                                                     <img src="/images/plastics.svg" className='h-8 w-8'/>
                                                 </div>
@@ -432,7 +572,7 @@ const Dashboard = () => {
                                                 <div className="flex grow flex-col justify-center items-start text-left">
                                                         <p className="text-gray-700 font-normal text-base">Rubber</p>
                                                 </div>
-                                            </button>
+                                            </button> */}
                                         
                                         </div>
                                 </div>
@@ -445,9 +585,9 @@ const Dashboard = () => {
                             </div>
                             <div className="dropdown relative grow w-full">
                                 <button className="w-full bg-white h-12 focus:outline-none active:outline-none  flex items-center justify-between border border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease"   type="button" onClick={handleType}>
-                                    <span className="pointer-events-none flex items-center gap-2 text-gray-400">
-                                    Select the Scrap subcategory 
-                                    </span>
+
+                                {selectedSubCategory ? <span className="pointer-events-none flex items-center gap-2 text-gray-600">{selectedSubCategory.name}</span> : <span className="pointer-events-none flex items-center gap-2 text-gray-400">Select the Scrap subcategory</span>}
+
                                     <span className="pointer-events-none ">
                                         <DropdownIcon />
                                     </span>
@@ -458,9 +598,33 @@ const Dashboard = () => {
                                     <div className={` absolute border bg-white type-menu  ${typeDropdown ? 'show' : ''} large-dropdown px-3 shadow-md rounded-md w-full h-40 max-w-full overflow-y-auto scrollbar-change fade-in z-10`}>
                                                 
                                         
-                                        <div className=" py-4">
+                                        <div className=" py-4 h-full">
+                                        {selectedCategory ? 
+                                        
+                                        (subCategory.length < 1 ? 
+                                        
+                                        <div className='text-center h-full flex items-center justify-center flex-col'>
+                                            <div className='h-24 w-24'>
+                                                <img src='/images/file-not-found.svg' className='h-full w-full'/>
+                                            </div>
+                                            <div>No SubCategory</div>
+                                            </div>
+                                        
+                                         : (subCategory.map((item, index)=>(
+                                            <button className={`flex items-center py-3 px-1 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full ${selectedSubCategory && selectedSubCategory._id === item._id ? 'bg-gray-100' : 'bg-white'} `} type="button" key={index} onClick={()=>SelectSubCategory({item, index})}>
+                                                <p className="text-gray-700 font-normal text-base px-2">{item.name}</p>
+                                            </button>
+                                        )))) 
+                                        : <div className='text-center h-full flex items-center justify-center flex-col'>
+                                            <div className='h-24 w-24'>
+                                                <img src='/images/file-not-found.svg' className='h-full w-full'/>
+                                            </div>
+                                            <div>Please Choose a Category</div>
+                                        </div>
+                                    
+                                    }
                                             
-                                            <button className="flex items-center py-3 px-1 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
+                                            {/* <button className="flex items-center py-3 px-1 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
                                                 <p className="text-gray-700 font-normal text-base px-2">Polyethylene Terephthalate (PET)</p>
                                             </button>
                                             <button className="flex items-center py-3 px-1 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
@@ -471,7 +635,7 @@ const Dashboard = () => {
                                             </button>
                                             <button className="flex items-center py-3 px-1 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
                                                 <p className="text-gray-700 font-normal text-base px-2">Low-Density Polyethylene (LDPE)</p>
-                                            </button>
+                                            </button> */}
                                         
                                         </div>
                                 </div>
@@ -483,7 +647,7 @@ const Dashboard = () => {
                                 <label className="text-gray-700 font-medium">Description</label>
                             </div>
                             <div className=" relative grow w-full h-full" >
-                                <textarea className="w-full bg-white focus:outline-none active:outline-none  flex items-center justify-between border border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease" rows="3" placeholder='Description of the scrap' ></textarea>
+                                <textarea className="w-full bg-white focus:outline-none active:outline-none  flex items-center justify-between border border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease" rows="3" placeholder='Description of the scrap' name="description" onChange={handleChange} ></textarea>
                             </div>
                         </div>
                         <div className="mb-6">
@@ -499,11 +663,9 @@ const Dashboard = () => {
 
                                         </span>
                                     </button>
-                                    <input type="text" className=" border border-gray-300 py-3 px-4  block w-full pl-4 pr-20 rounded-lg h-full focus:outline-none focus:border-gray-400 transition duration-300 ease" placeholder="What's the quantity you need"/>
+                                    <input type="text" className=" border border-gray-300 py-3 px-4  block w-full pl-4 pr-20 rounded-lg h-full focus:outline-none focus:border-gray-400 transition duration-300 ease" placeholder="What's the quantity you need" name="quantity_required" onChange={handleChange}/>
                                     
                                 </div>
-
-                                
 
                                     <div className={` absolute border bg-white form-submenu large-dropdown px-3 py-3 shadow-md rounded-md w-full h-40 max-w-full overflow-y-auto scrollbar-change fade-in`}>
                                                 
@@ -553,7 +715,7 @@ const Dashboard = () => {
 
                                         </span>
                                     </button>
-                                    <input type="text" className=" border border-gray-300 py-3 px-4  block w-full pl-4 pr-20 rounded-lg h-full focus:outline-none focus:border-gray-400 transition duration-300 ease" placeholder="How much are you willing to pay for this?"/>
+                                    <input type="text" className=" border border-gray-300 py-3 px-4  block w-full pl-4 pr-20 rounded-lg h-full focus:outline-none focus:border-gray-400 transition duration-300 ease" placeholder="How much are you willing to pay for this?" name="amount_per_unit" onChange={handleChange}/>
                                     
                                 </div>
 
@@ -563,6 +725,7 @@ const Dashboard = () => {
                                                 
                                         
                                         <div className=" py-4">
+                                        
                                             
                                             <button className="flex items-center py-2 px-1 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
                                                 <div className="flex items-center justify-center gap-2 pr-2">
@@ -604,10 +767,11 @@ const Dashboard = () => {
                                 <button className='text-[#DD7D37] text-sm'>+ Add Collection Center</button>
                             </div>
                             <div className="dropdown relative grow mb-4 w-full" data-large-dropdown="">
-                                <button className="w-full bg-white h-12 focus:outline-none active:outline-none  flex items-center justify-between border border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease"   data-large-dropdown-btn="" type="button" >
-                                    <span className="pointer-events-none flex items-center gap-2 text-gray-400">
-                                        Select where your collection center would be
-                                    </span>
+                                <button className="w-full bg-white h-12 focus:outline-none active:outline-none  flex items-center justify-between border border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease"   data-large-dropdown-btn="" type="button"  onClick={handleCollectionCenter}>
+                                    
+                                    {selectedCenter ? <span className="pointer-events-none flex items-center gap-2 text-gray-600">{selectedCenter.title}</span> : <span className="pointer-events-none flex items-center gap-2 text-gray-400">Select where your collection center would be</span>}
+                                        
+                                    
                                     <span className="pointer-events-none ">
                                         <DropdownIcon />
                                     </span>
@@ -616,41 +780,23 @@ const Dashboard = () => {
 
                                 
 
-                                    <div className={` absolute border bg-white form-submenu large-dropdown px-3 py-3 shadow-md rounded-md w-full h-40 max-w-full overflow-y-auto scrollbar-change fade-in`}>
+                                    <div className={`absolute border bg-white type-menu  ${centerDropdown ? 'show' : ''} large-dropdown large-dropdown px-3 py-3 shadow-md rounded-md w-full h-28 max-w-full overflow-y-auto scrollbar-change fade-in`}>
                                                 
                                         
                                         <div className=" py-4">
+                                        {centers && centers.map((item, index)=>(
+                                            <button className={`flex items-center py-3 px-1 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full ${selectedCenter && selectedCenter.id === item.id ? 'bg-gray-100' : 'bg-white'} `} type="button" key={index} onClick={()=>SelectCenter({item, index})}>
+                                                <p className="text-gray-700 font-normal text-base px-2">{item.title}</p>
+                                            </button>
                                             
-                                            <button className="flex items-center py-2 px-1 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
-                                                <div className="flex items-center justify-center gap-2 pr-2">
-                                                    <img src="/images/metamask.png" className='h-8 w-8'/>
-                                                </div>
-                                                <div className="flex grow flex-col justify-center items-start text-left">
-                                                        <p className="text-neutral700 font-normal text-base">MetaMask</p>
-                                                </div>
-                                            </button>
-                                            <button className="flex items-center py-2 px-1 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
-                                                <div className="flex items-center justify-center gap-2 pr-2">
-                                                    <img src="/images/metamask.png" className='h-8 w-8'/>
-                                                </div>
-                                                <div className="flex grow flex-col justify-center items-start text-left">
-                                                        <p className="text-neutral700 font-normal text-base">MetaMask</p>
-                                                </div>
-                                            </button>
-                                            <button className="flex items-center py-2 px-1 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
-                                                <div className="flex items-center justify-center gap-2 pr-2">
-                                                    <img src="/images/metamask.png" className='h-8 w-8'/>
-                                                </div>
-                                                <div className="flex grow flex-col justify-center items-start text-left">
-                                                        <p className="text-neutral700 font-normal text-base">MetaMask</p>
-                                                </div>
-                                            </button>
-                                        
+                                        ))}
+                                          
                                         </div>
                                 </div>
                             
                             </div>
                         </div>
+
                         
                     {/* // border-l border-[#E6E3E3] border-r */}
 

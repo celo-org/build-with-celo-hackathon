@@ -224,7 +224,7 @@ const Home = () => {
                                         
                                        </div>
                                         <div>
-                                            <div class="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
+                                            <div className="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
                                                 
                                                 <span className='text-[#6D747D]'><span className='font-semibold text-[#3D4044]'>25%</span> gotten</span> 
                                             </div>
@@ -252,7 +252,7 @@ const Home = () => {
                                             
                                        </div>
                                         <div>
-                                            <div class="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
+                                            <div className="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
                                                 
                                                 <span className='text-[#6D747D]'><span className='font-semibold text-[#3D4044]'>25%</span> gotten</span> 
                                             </div>
@@ -280,7 +280,7 @@ const Home = () => {
                                             
                                        </div>
                                         <div>
-                                            <div class="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value': `${25}`, '--size': '4rem'}}>
+                                            <div className="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value': `${25}`, '--size': '4rem'}}>
                                                 
                                                 <span className='text-[#6D747D]'><span className='font-semibold text-[#3D4044]'>25%</span> gotten</span> 
                                             </div>
@@ -308,7 +308,7 @@ const Home = () => {
                                             
                                        </div>
                                         <div>
-                                            <div class="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
+                                            <div className="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
                                                 
                                                 <span className='text-[#6D747D]'><span className='font-semibold text-[#3D4044]'>25%</span> gotten</span> 
                                             </div>
@@ -336,7 +336,7 @@ const Home = () => {
                                             
                                        </div>
                                         <div>
-                                            <div class="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
+                                            <div className="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
                                                 
                                                 <span className='text-[#6D747D]'><span className='font-semibold text-[#3D4044]'>25%</span> gotten</span> 
                                             </div>
@@ -364,7 +364,7 @@ const Home = () => {
                                             
                                        </div>
                                         <div>
-                                            <div class="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
+                                            <div className="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
                                                 
                                                 <span className='text-[#6D747D]'><span className='font-semibold text-[#3D4044]'>25%</span> gotten</span> 
                                             </div>
@@ -392,7 +392,7 @@ const Home = () => {
                                             
                                        </div>
                                         <div>
-                                            <div class="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
+                                            <div className="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
                                                 
                                                 <span className='text-[#6D747D]'><span className='font-semibold text-[#3D4044]'>25%</span> gotten</span> 
                                             </div>
@@ -420,7 +420,7 @@ const Home = () => {
                                             
                                        </div>
                                         <div>
-                                            <div class="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
+                                            <div className="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '4rem'}}>
                                                 
                                                 <span className='text-[#6D747D]'><span className='font-semibold text-[#3D4044]'>25%</span> gotten</span> 
                                             </div>

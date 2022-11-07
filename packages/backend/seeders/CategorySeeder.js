@@ -18,15 +18,15 @@ db.mongoose
 const seedCategories = [
   {
     name: 'Plastics',
-    icon: 'loremipsum',
+    icon: '/images/plastics.svg',
   },
   {
     name: 'Metal',
-    icon: 'loremipsum',
+    icon: '/images/steel-square.svg',
   },
   {
     name: 'Rubber',
-    icon: 'loremipsum',
+    icon: '/images/tyre.svg',
   },
 ];
 

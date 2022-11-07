@@ -19,7 +19,7 @@ const Final = () => {
 
         const moneyClaimInterval = setInterval(() => {
             setMoneyClaimed(true);
-          }, 5000);
+          }, 1000);
         return () => clearInterval(moneyClaimInterval);
     }
 

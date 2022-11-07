@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Link from 'next/link';
 import React, {useState, useEffect} from 'react'
 import Final from '../../../components/FormComponents/formsteps/Final';
@@ -10,9 +11,60 @@ import UserLayout from '../../../components/UserLayout/Layout'
 import { UseContextProvider } from '../../../contexts/NavigationContext';
 
 
+export const getStaticPaths = async () => {
+    const res = await axios.get(`http://127.0.0.1:8080/api/request`)
+    if(res){
+        const data = await res.data.info;
+  
+        const paths = data.map(request => {
+            return {
+                params: {
+                    id: request.id.toString()
+                }
+            }
+        })
+
+        return {
+            paths,
+            fallback: false
+
+        }
+    }
+  }
 
 
-const RequestDetail = () => {
+  export const getStaticProps = async (context) =>{
+    try{
+        const id = context.params.id;
+        // const id = (location.pathname.split("/")[3]);
+        console.log(id)
+        const res = await axios.get('http://127.0.0.1:8080/api/request/' + id);
+
+        if(res){
+            console.log(res, "ress")
+            const data = await res.data;
+
+            return {
+                props: {data}
+            }
+
+        }
+    }catch(err){
+        return {
+            redirect: {
+                destination: '/login',
+                statusCode: 307
+            }
+        }
+
+    }
+ 
+  }
+
+
+
+const RequestDetail = ({data}) => {
+    console.log(data);
     const [fulfillRequest, setfulfillRequest] = useState();
     const [confirmTransfer, setConfirmTransfer] = useState();
     const [successTransfer, setSuccessTransfer] = useState();
@@ -44,7 +96,8 @@ const RequestDetail = () => {
         case 1:
           return <StepOne handleClick={handleClick}
           currentStep={currentStep}
-          steps={steps}
+          steps={steps} 
+          data={data}
           
           />;
         case 2:
@@ -100,7 +153,7 @@ const RequestDetail = () => {
                                             </div>
                                             <div className=' flex items-start justify-between mt-3 px-5 py-4 flex-col w-full gap-2'>
                                                 <div className='flex items-center justify-between w-full'>
-                                                    <h4 className='font-semibold text-[#3D4044] text-lg'>Jana Plasteeks LTD</h4>
+                                                    <h4 className='font-semibold text-[#3D4044] text-lg'>{data.title}</h4>
                                                     <p>PET Bottles</p>
                                                 </div>
 
@@ -109,14 +162,14 @@ const RequestDetail = () => {
                                                     <div className='flex items-center justify-start gap-2'>
                                                         <img src='/images/location.svg' className=''/>
                                                         <div>
-                                                            <p className='text-base text-[#6D747D]'>Ikeja, Lagos</p>
+                                                            <p className='text-base text-[#6D747D]'>{data.location && (data.location.name)} {data.location && (data.location.state)}</p>
                                                         </div>
                                                     </div> 
 
                                                     <h4 className=''>300kg</h4>
                                                 </div>
                                                 <div className='flex items-start justify-between w-full gap-2'>
-                                                    <p className='flex-1 text-xs text-[#878A90]'>By working in partnership with local collectors and recycling...</p>
+                                                    <p className='flex-1 text-xs text-[#878A90]'>{data.description.substring(0, 150)}</p>
                                                         <div className='flex items-end justify-start flex-col gap-1 flex-1'>
                                                             <p className='text-xs'>Request expires in:</p>
                                                             <div>
@@ -136,9 +189,9 @@ const RequestDetail = () => {
 
                                             
 
-                                            <div class="rounded-full w-full bg-gray-200 h-2">
+                                            <div className="rounded-full w-full bg-gray-200 h-2">
                                                 
-                                                <div class="bg-[#DD7D37] h-2 rounded-full wrapper relative " style={{'width' : '55%'}}>
+                                                <div className="bg-[#DD7D37] h-2 rounded-full wrapper relative " style={{'width' : '55%'}}>
 
                                                 </div>
                                             </div>

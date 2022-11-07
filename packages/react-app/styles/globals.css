@@ -649,3 +649,79 @@ background-color: #45CD85;
       box-shadow: -24px 0 #FFF, 24px 0 #FF3D00;
     }
   }
+
+
+
+  /* LOADING STATE */
+
+  .loadingstate__loader {
+    position: relative;
+    width: 164px;
+    height: 164px;
+  }
+  .loadingstate__loader::before , .loadingstate__loader::after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: #DD7D37;
+    left: 50%;
+    top: 50%;
+    animation: rotate 1s ease-in infinite;
+}
+.loadingstate__loader::after {
+  width: 20px;
+  height: 20px;
+  background-color: #FF3D00;
+  animation: rotate 1s ease-in infinite, moveY 1s ease-in infinite ;
+}
+
+@keyframes moveY {
+  0% , 100% {top: 10%}
+  45% , 55% {top: 59%}
+  60% {top: 40%}
+}
+@keyframes rotate {
+  0% { transform: translate(-50%, -100%) rotate(0deg) scale(1 , 1)}
+  25%{ transform: translate(-50%, 0%) rotate(180deg) scale(1 , 1)}
+  45% , 55%{ transform: translate(-50%, 100%) rotate(180deg) scale(3 , 0.5)}
+  60%{ transform: translate(-50%, 100%) rotate(180deg) scale(1, 1)}
+  75%{ transform: translate(-50%, 0%) rotate(270deg) scale(1 , 1)}
+  100%{ transform: translate(-50%, -100%) rotate(360deg) scale(1 , 1)}
+}
+    
+
+.load_more--loader, .load_more--loader:before, .load_more--loader:after {
+  border-radius: 50%;
+  width: 2.5em;
+  height: 2.5em;
+  animation-fill-mode: both;
+  animation: bblFadInOut 1.8s infinite ease-in-out;
+}
+.load_more--loader {
+  color: #FFF;
+  font-size: 7px;
+  position: relative;
+  text-indent: -9999em;
+  transform: translateZ(0);
+  animation-delay: -0.16s;
+}
+.load_more--loader:before,
+.load_more--loader:after {
+  content: '';
+  position: absolute;
+  top: 0;
+}
+.load_more--loader:before {
+  left: -3.5em;
+  animation-delay: -0.32s;
+}
+.load_more--loader:after {
+  left: 3.5em;
+}
+
+@keyframes bblFadInOut {
+  0%, 80%, 100% { box-shadow: 0 2.5em 0 -1.3em }
+  40% { box-shadow: 0 2.5em 0 0 }
+}
+    

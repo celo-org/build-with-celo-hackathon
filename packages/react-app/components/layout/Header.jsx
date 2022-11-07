@@ -21,8 +21,6 @@ const Header = () => {
             
           }else if (dropdown && testref.current && !testref.current.contains(e.target)){
             setDropdown(false);
-
-    
           }
         };
     

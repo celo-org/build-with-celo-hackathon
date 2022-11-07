@@ -1,9 +1,60 @@
 import Link from 'next/link'
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import CompanyLayout from '../../../components/CompanyLayout/Layout'
 import DropdownIcon from '../../../components/Icons/DropdownIcon'
+import {useQuery} from 'react-query'
+import axios from 'axios'
 
 const Offers = () => {
+
+    // const [requests, setRequests] = useState()
+    const id = '63668c437e1caa4f18ae319f'
+
+    const fetchRequests = async ()=>{
+        try{
+            const res = await axios.get( `http://127.0.0.1:8080/api/company/${id}/requests` );
+            return res.json()
+            // setRequests(res.data.data)
+            // console.log(res)
+        }catch(err){
+           console.log(err)
+        }
+    };
+
+    const {data, status} = useQuery("requests", fetchRequests)
+
+
+    if(status === "loading"){
+        return <div>loading</div>
+    }
+
+    if(status === "error"){
+        return <div>Error</div>
+    }
+
+
+    // useEffect(() => {
+    //     const CancelToken = axios.CancelToken;
+    //     const source = CancelToken.source();
+
+    //     const getCategories = async ()=>{
+    //         try{
+    //             const res = await axios.get( "http://127.0.0.1:8080/api/category", { cancelToken: source.token } );
+    //             setCategories(res.data.data)
+    //             // console.log(res)
+    //         }catch(err){
+    //             if(axios.isCancel(err)){
+    //                 console.log("cancelled");
+    //             } else{
+    //                 throw err
+    //             }
+    //         }
+    //     };
+    //     getCategories();
+    //     return () => {
+    //         source.cancel();
+    //     }
+    // }, [])   
   return (
     <>
         <CompanyLayout>
@@ -153,7 +204,7 @@ const Offers = () => {
                                                 </div>
 
                                                 <div>
-                                                    <div class="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '5rem'}}>
+                                                    <div className="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '5rem'}}>
                                                         
                                                         <span className='text-[#6D747D]'><span className='font-semibold text-[#3D4044]'>25% <br/></span> provided</span> 
                                                     </div>
