@@ -7,6 +7,7 @@ import Funders from "./pages/Funders";
 
 import WalletModal from "./components/Wallet/Modal";
 import { useSession } from "./utils/hooks";
+import Nav from "./components/Nav";
 
 export default function App() {
   const { isLoggedIn } = useSession();
@@ -14,41 +15,8 @@ export default function App() {
   const Start = () => {
     return (
       <div className="relative bg-white h-screen">
-        <section className="border-b">
-          <div
-            x-data="{ open: false }"
-            className="flex flex-col w-full p-4 mx-auto sm:px-6 lg:max-w-7xl lg:px-16 lg:items-center lg:justify-between lg:flex-row md:px-6"
-          >
-            <div className="flex flex-row items-center justify-between">
-              <a
-                href="./index.html"
-                className="focus:outline-none focus:shadow-outline"
-              >
-                <img className="h-20 w-20" src="/logo.png" alt="" />
-              </a>
-            </div>
-            <nav className="flex-col items-end flex-grow hidden px-5 md:pb-0 lg:flex lg:justify-end lg:flex-row lg:space-x-4">
-              <Link
-                to={"/"}
-                className="inline-flex items-center px-6 py-2 text-sm  text-[#385738] transition-all duration-500 ease-in-out transform bg-green bg-opacity-30 rounded-md hover:text-white md:mb-2 lg:mb-0  hover:bg-green hover:bg-opacity-50  focus:ring-2 ring-offset-current ring-offset-2"
-              >
-                For educators
-              </Link>
-              <Link
-                to={"/funders"}
-                className="inline-flex items-center px-6 py-2 text-sm  text-[#385738] transition-all duration-500 ease-in-out transform bg-green bg-opacity-30 rounded-md hover:text-white md:mb-2 lg:mb-0  hover:bg-green hover:bg-opacity-50  focus:ring-2 ring-offset-current ring-offset-2"
-              >
-                For sponsors
-              </Link>
-              <a
-                href="/"
-                className="inline-flex items-center px-6 py-2 text-sm  text-[#385738] transition-all duration-500 ease-in-out transform bg-green bg-opacity-30 rounded-md hover:text-white md:mb-2 lg:mb-0  hover:bg-green hover:bg-opacity-50  focus:ring-2 ring-offset-current ring-offset-2"
-              >
-                For teachers and parents
-              </a>
-            </nav>
-          </div>
-        </section>
+        <Nav />
+
         <section className="relative w-full h-screen overflow-hidden bg-center bg-no-repeat bg-cover bg-patternTop">
           <div className="container relative w-full px-8 pt-32 pb-24 mx-auto lg:px-4">
             <div className="flex flex-col w-full mb-12 text-left lg:text-center">
@@ -66,7 +34,7 @@ export default function App() {
                 impact and climate action.
               </p>
             </div>
-            <div className="flex w-full mt-6 max-w-7xl lg:justify-center">
+            <div className="flex w-full mt-6 justify-center">
               <div className="rounded-md shadow">
                 <Link
                   to={isLoggedIn ? "/dashboard" : "/onboarding"}
@@ -196,7 +164,7 @@ export default function App() {
         <section id="howitworks">
           <div className="container items-center px-5 py-24 mx-auto lg:px-24">
             <div className="flex flex-col w-full mb-6 text-left lg:text-center">
-              <h2 className="mb-6 font-serif text-xl font-bold tracking-tighter text-[#385738] md:text-8xl lg:text-6xl">
+              <h2 className="mb-6 font-serif text-3xl font-bold tracking-tighter text-[#385738] md:text-8xl lg:text-6xl">
                 Connecting Web3 with climate resilience is more than just
                 futuristic technology it is also about how young people can find
                 their place in the world. That’s what ZENA is aiming for. Have
@@ -303,56 +271,6 @@ export default function App() {
             </div>
           </div>
         </footer>
-        {/* <div className="mx-auto max-w-7xl">
-          <div className="z-10 bg-white pb-8 sm:pb-16 md:pb-20 lg:w-full lg:max-w-2xl lg:pb-28 xl:pb-32">
-            <main className="mx-auto mt-10 max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-              <div className="sm:text-center lg:text-left">
-                <h1 className="text-4xl font-bold tracking-tight text-font sm:text-5xl md:text-6xl">
-                  <span className="block text-green xl:inline">ZENA</span>{" "}
-                  <span className="block xl:inline">Dein Start ins Web3 </span>
-                </h1>
-                <p className="mt-3 mb-3 text-base text-font-light sm:mx-auto sm:mt-5 sm:max-w-xl sm:text-lg md:mt-5 md:text-xl lg:mx-0">
-                  Web3, Blockchain, Kryptographie, Token, NFT und vieles mehr
-                </p>
-                <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-                  <img
-                    className="h-56 w-full object-cover sm:h-72 md:h-96 lg:h-full lg:w-full"
-                    src="/Onboarding-1.jpeg"
-                    alt=""
-                  />
-                </div>
-                <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                  <div className="rounded-md shadow">
-                    <Link
-                      to={isLoggedIn ? "/dashboard" : "/onboarding"}
-                      className="flex w-full items-center justify-center rounded-md border border-transparent bg-green px-8 py-3 text-base font-medium text-white hover:bg-green-medium md:py-4 md:px-10 md:text-lg"
-                    >
-                      {isLoggedIn ? "Weiter geht's" : "Los geht's"}
-                    </Link>
-                  </div>
-                  <div className="mt-3 sm:mt-0 sm:ml-3">
-                    <a
-                      href="#"
-                      className="flex w-full items-center justify-center rounded-md border border-transparent bg-green bg-opacity-30 px-8 py-3 text-base font-medium text-green-medium hover:bg-green hover:bg-opacity-50 md:py-4 md:px-10 md:text-lg"
-                    >
-                      Elternhinweis
-                    </a>
-                  </div>
-                </div>
-                <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                  <div className="rounded-md shadow">
-                    <Link
-                      to={"/funders"}
-                      className="flex w-full items-center justify-center rounded-md border border-transparent bg-green px-8 py-3 text-base font-medium text-white hover:bg-green-medium md:py-4 md:px-10 md:text-lg"
-                    >
-                      Für Supporter
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </main>
-          </div>
-        </div> */}
       </div>
     );
   };

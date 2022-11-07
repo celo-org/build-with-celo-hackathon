@@ -10,10 +10,7 @@ export default function App({ children }: any) {
     <>
       <div className="min-h-full">
         <div className="bg-yellow pb-32">
-          <Disclosure
-            as="nav"
-            className="border-b border-yellow border-opacity-25 bg-yellow lg:border-none"
-          >
+          <Disclosure>
             {() => (
               <>
                 <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">

@@ -6,6 +6,7 @@ import { dexabi } from "../utils/dexabi";
 import { treasuryabi } from "../utils/treasuryabi";
 import { useEffect, useState } from "react";
 import { CeloProvider } from "@celo-tools/celo-ethers-wrapper";
+import Nav from "../components/Nav";
 
 const { REACT_APP_ZENA_TREASURY, REACT_APP_FAKE_DEX } = process.env;
 
@@ -59,18 +60,31 @@ const Funders = () => {
 
   return (
     <div className="min-h-full">
-      <div className="bg-yellow pb-32"></div>
+      <Nav />
 
-      <main className="-mt-32">
-        <div className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
+      <main>
+        <div>
           {/* Replace with your content */}
-          <div className="rounded-lg mt-16 bg-white px-5 py-6 shadow sm:px-6">
+          <div className="rounded-lg mt-4 bg-white px-5 py-6 shadow sm:px-6">
             <div className="rounded-lg">
               {" "}
               <div className="relative overflow-hidden bg-white h-screen">
-                <ConnectButton />
                 <div className="mx-auto mt-8 max-w-7xl">
                   <div>
+                    <div className="flex flex-col w-full mb-20 text-left lg:text-center">
+                      <h2 className="mb-6 font-serif text-4xl font-bold tracking-tighter text-[#385738] md:text-8xl lg:text-6xl">
+                        Fund ZENA & support <em>learn2impact</em>
+                      </h2>
+                      <p className="mx-auto text-lg leading-snug text-slate-500">
+                        ZENA app users will earn CO2-backed tokens by completing
+                        learning chapters and quests. These tokens can be
+                        exchanged into a certificate NFT, sequestering CO2.{" "}
+                        <b>Fund us, and enable learn2impact!</b>
+                      </p>
+                      <p className="mx-auto text-center mt-12 text-2xl font-bold leading-snug text-slate-500">
+                        <ConnectButton />
+                      </p>
+                    </div>
                     <dl className="mt-5 mb-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
                       {stats.map((item) => (
                         <div
@@ -88,11 +102,6 @@ const Funders = () => {
                     </dl>
                   </div>
                   <div className="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-                    <a href="#">
-                      <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        Fund ZENA & support <em>learn2impact</em>
-                      </h5>
-                    </a>
                     <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                       Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
                       sed diam nonumy eirmod tempor invidunt ut labore et dolore
@@ -109,6 +118,7 @@ const Funders = () => {
                       />
                       <br />
                       <button
+                        disabled={true}
                         type="submit"
                         className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                         role="button"
