@@ -18,11 +18,8 @@ export const useRun3T = () => {
   const getRun3TBalance = async () => {
     try {
       const run3tContract = new ethers.Contract(run3TAddress, abi, walletWithProvider)
-      console.log('logT5', run3tContract)
       const balance = await run3tContract?.balanceOf(walletWithProvider.address)
-      console.log('logT6', balance)
       const formatBalance = ethers.utils.formatEther(balance)
-      console.log('logT7', formatBalance)
       setRun3TBalance(formatBalance)
     } catch (e) {
       console.log('Error', e)

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Divider, List, ListItem, Spinner } from '@ui-kitten/components'
+import { Divider, List, ListItem, Spinner, Text } from '@ui-kitten/components'
 import { styles } from './style'
 import { getRoutes } from '../../api/routes/routes'
 import { Route } from '../../api/routes/routes.interface'
@@ -9,11 +9,13 @@ import { View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { colors, globalStyles } from '../../utils/globalStyles'
 import { useRoute } from '../../hooks/useRoute'
+import { useIsFocused } from '@react-navigation/native'
 
 export default function RouteList({ showMyRoutes }: { showMyRoutes: boolean }) {
   const [routes, setRoutes] = useState<Route[]>([])
   const [loader, setLoader] = useState<boolean>(false)
   const navigation = useNavigation() as any
+  const isFocused = useIsFocused()
 
   const { getRoutesByUser } = useRoute()
 
@@ -30,14 +32,14 @@ export default function RouteList({ showMyRoutes }: { showMyRoutes: boolean }) {
       setLoader(false)
     }
     getList()
-  }, [showMyRoutes])
+  }, [showMyRoutes, isFocused])
 
   const renderItem = ({ item }: { item: Route; index: number }) => (
     <ListItem
       key={item.id}
       title={item.title}
       onPress={() => {
-        navigation.navigate('routeDetail', item)
+        navigation.navigate('routeDetail', item.id)
       }}
       description={item.description}
       accessoryLeft={() => (
@@ -52,6 +54,11 @@ export default function RouteList({ showMyRoutes }: { showMyRoutes: boolean }) {
     return (
       <View style={styles.wrapSpinner}>
         <Spinner style={{ borderColor: colors.primary }} size="large" />
+        {showMyRoutes && (
+          <Text style={{ textAlign: 'center', width: '80%' }}>
+            This might take a while cause is being consulted in the blockchain, please be patient
+          </Text>
+        )}
       </View>
     )
 

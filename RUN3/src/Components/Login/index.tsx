@@ -27,7 +27,7 @@ global.Buffer = global.Buffer || Buffer
 const resolvedRedirectUrl = Linking.createURL('', {})
 
 export default function Login({ navigation }: { navigation: any }) {
-  const { setWalletWithProvider, setProvider, walletWithProvider } = useWalletProvider()
+  const { setWalletWithProvider, setProvider, userData, setUserData } = useWalletProvider()
   const [loader, setLoader] = useState(false)
 
   const login = async () => {
@@ -57,13 +57,15 @@ export default function Login({ navigation }: { navigation: any }) {
         setWalletWithProvider(walletWithProvider)
         const user = await getUserByEmail(state.userInfo.email)
         if (user === 'User not found') {
-          await createUser({
+          const newUser = await createUser({
             email: state.userInfo.email,
             name: state.userInfo.name,
             publicaddress: walletWithProvider.address,
           })
+          setUserData(newUser as any)
+        } else {
+          setUserData(user as any)
         }
-
         await AsyncStorage.setItem('wallet', JSON.stringify(walletWithProvider))
         navigation.replace('home')
         setLoader(false)

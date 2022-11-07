@@ -32,6 +32,7 @@ export const useRoute = () => {
       const routeContract = new ethers.Contract(routeAddress, abi, walletWithProvider)
       const routeIds = await routeContract.getUserRouteIds(walletWithProvider.address)
       let routesData = []
+
       if (routeIds.length) {
         routesData = await Promise.all(
           routeIds.map(async (element: BigNumber) => {

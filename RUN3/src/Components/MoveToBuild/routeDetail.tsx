@@ -4,26 +4,36 @@ import MapView, { Marker, PROVIDER_GOOGLE, Polyline } from 'react-native-maps'
 import { colors, globalStyles } from '../../utils/globalStyles'
 import * as Location from 'expo-location'
 import { Spinner, Button } from '@ui-kitten/components'
-import { BuildForm } from './buildForm'
 import { styles } from './style'
-import { useRun3T } from '../../hooks/useRUN3T'
+import { useIsFocused } from '@react-navigation/native'
 import { Route } from '../../api/routes/routes.interface'
+import { getRouteById } from '../../api/routes/routes'
 
-export default function RouteDetail({ navigation, route }: { navigation: any; route: { params: Route } }) {
+export default function RouteDetail({ navigation, route }: { navigation: any; route: { params: string } }) {
   const [routeCoords, setRouteCoords] = useState<(Location.LocationObjectCoords & { id: number })[]>([])
-  const routeData = route.params
-  useEffect(() => {
-    const points = route.params.coordinates.map((co, index) => {
-      return {
-        id: index,
-        latitude: co.latitude,
-        longitude: co.longitude,
-      }
-    }) as (Location.LocationObjectCoords & { id: number })[]
-    setRouteCoords(points)
-  }, [])
+  const [routeData, setRouteData] = useState<Route>()
+  const routeId = route.params
+  const isFocused = useIsFocused()
 
-  if (routeCoords.length === 0)
+  useEffect(() => {
+    if (isFocused) {
+      const getRouteData = async () => {
+        const data = (await getRouteById(routeId)) as Route
+        setRouteData(data)
+        const points = data.coordinates.map((co, index) => {
+          return {
+            id: index,
+            latitude: co.latitude,
+            longitude: co.longitude,
+          }
+        }) as (Location.LocationObjectCoords & { id: number })[]
+        setRouteCoords(points)
+      }
+      getRouteData()
+    }
+  }, [isFocused])
+
+  if (routeCoords.length === 0 || !routeData)
     return (
       <View style={globalStyles.container}>
         <Spinner style={{ borderColor: colors.primary }} size="large" />

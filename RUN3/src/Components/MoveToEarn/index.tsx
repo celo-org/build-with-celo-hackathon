@@ -12,6 +12,7 @@ import { colors, globalStyles } from '../../utils/globalStyles'
 import { AnimatedCircularProgress } from 'react-native-circular-progress'
 import { styles } from './style'
 import { Button } from '@ui-kitten/components'
+import { useIsFocused } from '@react-navigation/native'
 import { faCoins } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { useAsyncStorage } from '@react-native-async-storage/async-storage'
@@ -30,6 +31,7 @@ export default function MoveToEarn() {
   const { walletWithProvider, provider } = useWalletProvider()
   const [showRunner, setShowRunner] = useState(false)
   const [loading, setLoading] = useState(false)
+  const isFocused = useIsFocused()
 
   const subscription = useRef<Pedometer.Subscription | null>(null)
   const stepsToComplete = 100
@@ -116,7 +118,7 @@ export default function MoveToEarn() {
     if (!watchData) {
       getWatchDataByUser()
     }
-  }, [watchData])
+  }, [watchData, isFocused])
 
   useEffect(() => {
     subscribe()

@@ -29,7 +29,10 @@ export const getUserById = async (id: string) => {
 
 export const createUser = async (user: User) => {
   try {
-    return await addDoc(usersCollectionRef, user)
+    const newUser = await addDoc(usersCollectionRef, user)
+    const id = newUser.id
+    const userData = await getUserById(id)
+    return userData
   } catch (e) {
     return e
   }
