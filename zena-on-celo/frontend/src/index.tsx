@@ -4,21 +4,33 @@ import "./index.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
-import { publicProvider } from "wagmi/providers/public";
-import Alfajores from "@celo/rainbowkit-celo/chains/alfajores";
+import {
+  connectorsForWallets,
+  RainbowKitProvider,
+} from "@rainbow-me/rainbowkit";
+import { configureChains, createClient, WagmiConfig } from "wagmi";
+import Alfajores from "@celo/rainbowkit-celo/chains/alfajores.js";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
+import { Valora } from "./utils/valora.js";
+import {
+  metaMaskWallet,
+  walletConnectWallet,
+} from "@rainbow-me/rainbowkit/wallets";
 
 const { chains, provider, webSocketProvider } = configureChains(
   [Alfajores],
   [jsonRpcProvider({ rpc: (chain) => ({ http: chain.rpcUrls.default }) })]
 );
-
-const { connectors } = getDefaultWallets({
-  appName: "Zena",
-  chains,
-});
+const connectors = connectorsForWallets([
+  {
+    groupName: "Recommended with CELO",
+    wallets: [
+      Valora({ chains: chains }),
+      metaMaskWallet({ chains }),
+      walletConnectWallet({ chains }),
+    ],
+  },
+]);
 
 const wagmiClient = createClient({
   autoConnect: true,
