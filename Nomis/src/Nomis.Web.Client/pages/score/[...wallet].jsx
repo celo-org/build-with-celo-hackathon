@@ -15,7 +15,7 @@ import WalletData from "../../components/WalletData";
 import WalletUser from "../../components/WalletUser";
 
 export async function getServerSideProps(context) {
-  const blockchain = await context.query.wallet[0];
+  const blockchain = "celo";
   const fullAddress = await context.query.wallet[1];
 
   return { props: { blockchain, fullAddress } };
