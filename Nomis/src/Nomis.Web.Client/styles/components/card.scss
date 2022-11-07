@@ -1,0 +1,123 @@
+.card {
+  background: $bg-overlay-1;
+  padding: 1rem;
+  border-radius: $border-m;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  p {
+    @media screen and (max-width: $mobile-width) {
+      font-size: 0.75rem;
+    }
+  }
+
+  span {
+    width: 4rem !important;
+
+    @media screen and (max-width: $mobile-width) {
+      width: 3rem !important;
+    }
+  }
+
+  h5 {
+    margin-top: 0.75rem;
+  }
+}
+
+.score {
+  background: $gradient-tech !important;
+
+  h3,
+  .number {
+    color: #fff !important;
+  }
+
+  p,
+  .number {
+    color: hsla(0, 100%, 100%, 80%);
+  }
+
+  .chart {
+    max-width: 4rem;
+    max-height: 4rem;
+
+    @media screen and (max-width: $mobile-width) {
+      max-width: 3rem;
+      max-height: 3rem;
+    }
+
+    position: relative;
+
+    .number,
+    .blur,
+    .bg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
+
+    .blur {
+      filter: blur(4px);
+      opacity: 0.75;
+    }
+
+    .number {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.5rem;
+      @media screen and (max-width: $mobile-width) {
+        font-size: 1.125rem !important;
+      }
+      font-weight: 700;
+      color: $text-title;
+    }
+  }
+}
+
+.pulse {
+  position: relative;
+  overflow: hidden;
+
+  h5 {
+    margin-top: 5rem;
+    @media screen and (max-width: $mobile-width) {
+      margin-top: 4rem;
+    }
+  }
+
+  .chart {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 1rem;
+    height: 4rem;
+    @media screen and (max-width: $mobile-width) {
+      height: 3rem;
+    }
+    width: 100%;
+
+    canvas {
+      margin: 0 -0.5rem;
+      min-width: calc(100% + 1rem);
+      max-height: 100%;
+    }
+    .blur {
+      position: absolute;
+      max-height: 100%;
+      max-width: 100%;
+      display: block;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      filter: blur(4px);
+      opacity: 0.75;
+    }
+  }
+}

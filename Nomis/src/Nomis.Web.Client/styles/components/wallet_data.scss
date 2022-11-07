@@ -1,0 +1,62 @@
+.WalletData {
+  background: $bg-overlay-1;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem 1rem 1rem;
+  border-radius: $border-l;
+
+  .noData {
+    background: $bg-overlay-1;
+    border-radius: $border-m;
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+
+      h3 {
+        margin-top: 0.75rem;
+      }
+
+      span {
+        max-width: 64px !important;
+      }
+    }
+  }
+}
+.poweredBy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  margin: 0 1rem;
+  background: $bg-overlay-1;
+  border-radius: $border-l;
+
+  a {
+    transition: color $fast;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: -0.5em;
+      bottom: -0.25em;
+      width: 0%;
+      height: 1px;
+      background: $text-title;
+
+      transition: left $fast, width $fast, opacity $fast;
+    }
+
+    &:hover {
+      color: $text-title;
+
+      &::before {
+        left: 0;
+        width: 100%;
+        opacity: 1;
+      }
+    }
+  }
+}

@@ -1,0 +1,142 @@
+.Home {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  margin: 6rem 0;
+  @media screen and (max-width: $mobile-width) {
+    margin: 2rem 0;
+  }
+
+  .background {
+    position: absolute;
+    top: 10vh;
+    left: 10vw;
+    width: 80vw;
+    height: 80vh;
+    background: url("/background.png");
+    background-size: cover;
+    background-position: center center;
+    z-index: -1;
+
+    @media screen and (max-width: $mobile-width) {
+      top: 20vh;
+      left: 0;
+      width: 100vw;
+      height: 60vh;
+    }
+  }
+
+  .title {
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    text-align: center;
+    @media screen and (max-width: $mobile-width) {
+      text-align: initial;
+    }
+
+    h1 {
+      text-shadow: 0 0 1rem hsla(0, 0, 100, 0.6);
+    }
+
+    h2 {
+      font-weight: 400;
+    }
+  }
+
+  .buttons {
+    justify-content: center;
+
+    button {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: $border-m;
+      font-size: 1.25rem;
+      font-weight: 500;
+      font-family: $font-main;
+      line-height: 1;
+      cursor: pointer;
+      transition: transform $fast;
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+
+    .dapp {
+      background: $text-title;
+
+      span {
+        background: $gradient-tech;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+
+    .docs {
+      background: $bg-main;
+      color: $text-title;
+    }
+  }
+
+  .backed {
+    padding: 0.5rem 0.5rem 0.5rem 2rem;
+    background: $bg-overlay-1;
+    width: fit-content;
+    margin: auto;
+    align-items: center;
+    backdrop-filter: $blur-hard;
+    -webkit-backdrop-filter: $blur-hard;
+    border-radius: $border-m;
+    box-shadow: 0 1rem 2rem hsla(0, 0, 0, 0.1);
+    gap: 0;
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 52.72px;
+    }
+
+    @media screen and (max-width: $mobile-width) {
+      justify-content: center;
+      padding: 0.5rem;
+      width: calc(100% - 2rem);
+      flex-wrap: wrap;
+      p {
+        width: 100%;
+        text-align: center;
+        padding: 1rem;
+      }
+
+      a {
+        width: calc(100% / 3);
+        img {
+          width: 100%;
+        }
+      }
+    }
+
+    p {
+      margin-right: 1rem;
+      background: transparent;
+    }
+
+    a {
+      padding: 0.75rem 1rem;
+      border-radius: $border-s;
+      transition: background $fast;
+
+      &:hover {
+        background: $bg-overlay-2;
+      }
+    }
+
+    .inch {
+      padding: 1px 1rem;
+    }
+  }
+}
+
+body {
+  overflow-x: hidden;
+}

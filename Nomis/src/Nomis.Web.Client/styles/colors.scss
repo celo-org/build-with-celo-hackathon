@@ -1,0 +1,62 @@
+$_txt: var(--root-text);
+$_bg: var(--root-background);
+$_overlay: var(--root-overlay);
+
+$color-purple: hsl(259, 71%, 50%);
+$color-pink: hsl(310, 77%, 50%);
+$color-blue: hsl(200, 80%, 50%);
+$color-cyan: hsl(180, 70%, 50%);
+
+$gradient-tech: linear-gradient(265deg, $color-purple -1%, $color-pink 101%);
+$gradient-tech-moved: linear-gradient(
+  120deg,
+  $color-purple 20%,
+  $color-pink 50%
+);
+
+$_red: 0;
+$_yellow: 50;
+$_green: 130;
+$_blue: 200;
+
+$_saturation: var(--root-saturation);
+
+$_light: 60%;
+$_dark: 30%;
+
+$_tint: 20%;
+
+$danger-light: hsla($_red, $_saturation, $_light, 100%);
+$danger-dark: hsla($_red, $_saturation, $_dark, 100%);
+$danger-tint: hsla($_red, $_saturation, $_light, $_tint);
+
+$warning-light: hsla($_yellow, $_saturation, $_light, 100%);
+$warning-dark: hsla($_yellow, $_saturation, $_dark, 100%);
+$warning-tint: hsla($_yellow, $_saturation, $_light, $_tint);
+
+$success-light: hsla($_green, $_saturation, $_light, 100%);
+$success-dark: hsla($_green, $_saturation, $_dark, 100%);
+$success-tint: hsla($_green, $_saturation, $_light, $_tint);
+
+$information-light: hsla($_blue, $_saturation, $_light, 100%);
+$information-dark: hsla($_blue, $_saturation, $_dark, 100%);
+$information-tint: hsla($_blue, $_saturation, $_light, $_tint);
+
+$text-title: rgba($_txt, $_txt, $_txt, 1); //headings
+$text-body: rgba($_txt, $_txt, $_txt, 0.8); //base tetx
+$text-callout: rgba($_txt, $_txt, $_txt, 0.7); //links and buttons
+$text-caption: rgba($_txt, $_txt, $_txt, 0.6); //tips and etc
+$text-footnote: rgba($_txt, $_txt, $_txt, 0.4); //ghosty types
+
+$bg-main: rgba($_bg, $_bg, $_bg, 1);
+$bg-alpha: rgba($_bg, $_bg, $_bg, 0.8);
+
+$bg-overlay-1: rgba($_txt, $_txt, $_txt, $_overlay);
+$bg-overlay-2: rgba($_txt, $_txt, $_txt, calc($_overlay * 2));
+$bg-overlay-3: rgba($_txt, $_txt, $_txt, calc($_overlay * 3));
+
+$border-color: rgba($_txt, $_txt, $_txt, 0.1);
+
+// HARDCODED DOWN !
+
+$bg-overlay-1-solid: #0d0d0d;

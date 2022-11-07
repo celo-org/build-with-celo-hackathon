@@ -1,0 +1,20 @@
+{
+  "ApiVisibilitySettings": {
+    "AeternityAPIEnabled": true,
+    "BobaAPIEnabled": true,
+    "BscAPIEnabled": true,
+    "CeloAPIEnabled": true,
+    "CubeAPIEnabled": true,
+    "EthereumAPIEnabled": true,
+    "HapiExplorerAPIEnabled": true,
+    "EvmosAPIEnabled": true,
+    "MoonbeamAPIEnabled": true,
+    "PolygonAPIEnabled": true,
+    "RippleAPIEnabled": true,
+    "SolanaAPIEnabled": true,
+    "SnapshotAPIEnabled": true,
+    "KlaytnAPIEnabled": true,
+    "CscAPIEnabled": true,
+    "HederaAPIEnabled": true
+  }
+}

@@ -1,0 +1,102 @@
+.WalletUser {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 4.5rem;
+  padding: 1rem;
+  background: $bg-overlay-1;
+  border-radius: $border-l;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  height: fit-content;
+  max-width: 420px;
+
+  @media screen and (max-width: $mobile-width) {
+    position: static;
+    max-width: none;
+  }
+
+  .bio {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    align-items: center;
+    background: $bg-overlay-1;
+    width: 100%;
+    border-radius: $border-m;
+  }
+
+  .meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .userpick {
+    background: $bg-overlay-1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    $size: 9rem;
+    width: $size;
+    height: $size;
+    padding: 0.5rem;
+
+    span {
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.mobile {
+  display: none;
+  @media screen and (max-width: $mobile-width) {
+    display: flex;
+  }
+  .WalletUser {
+    position: fixed;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-radius: 0;
+    background: $bg-alpha;
+    backdrop-filter: $blur-hard;
+    -webkit-backdrop-filter: $blur-hard;
+    border-bottom: 1px solid $border-color;
+
+    transition: top $fast, opacity $fast;
+
+    .bio {
+      flex-direction: row;
+      padding: 0;
+      background: none;
+      gap: 1rem;
+      align-items: center;
+
+      .userpick {
+        $size: 4rem;
+        width: $size;
+        height: $size;
+        padding: 0.25rem;
+      }
+
+      .meta {
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+    }
+  }
+
+  &.isScrolled {
+    .WalletUser {
+      top: 3.5rem;
+      opacity: 1;
+    }
+  }
+}

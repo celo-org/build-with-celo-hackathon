@@ -1,0 +1,400 @@
+.Input {
+  margin: 0 1rem;
+  padding: 1rem;
+  background: $bg-overlay-1;
+  border-radius: $border-l;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+
+  @media screen and (max-width: $mobile-width) {
+    flex-direction: column;
+  }
+
+  .blockchains {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $bg-overlay-1;
+    padding: 0.5rem 1rem;
+    border-radius: $border-m;
+
+    @media screen and (max-width: $mobile-width) {
+      background: transparent;
+      padding: 0.5rem;
+    }
+
+    .blockchain {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      @media screen and (max-width: $mobile-width) {
+        gap: 1rem;
+        font-size: 1.5rem;
+      }
+
+      img {
+        $size: 2rem;
+        width: $size;
+        height: $size;
+        border-radius: 50%;
+
+        @media screen and (max-width: $mobile-width) {
+          $size: 3rem;
+          width: $size;
+          height: $size;
+        }
+      }
+    }
+  }
+  .field {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+
+    .inputWrapper {
+      display: flex;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+
+      input {
+        width: 100%;
+        padding: 1rem;
+        border: none;
+        font-size: calc(1.25rem - 1px);
+        font-family: $font-main;
+        border-radius: $border-m;
+        background: $bg-overlay-1;
+        border: 1px solid transparent;
+        color: $text-body;
+        max-height: 3.5rem;
+        min-height: 3.5rem;
+
+        transition: background $fast, border $fast;
+
+        &:hover {
+          background: $bg-overlay-2;
+        }
+
+        &:focus {
+          border: 1px solid $color-pink;
+
+          .loading {
+            opacity: 0;
+          }
+        }
+      }
+
+      .loading {
+        z-index: 3;
+        backdrop-filter: $blur-soft;
+        -webkit-backdrop-filter: $blur-soft;
+        position: absolute;
+        top: -50%;
+        right: 1rem;
+        transform: translateY(-50%);
+        padding: 0.5rem;
+        border-radius: $border-s;
+        background: $information-tint;
+        color: $information-light;
+
+        transition: top $fast;
+
+        &.isLoading {
+          top: 50%;
+        }
+      }
+
+      .shortcut {
+        z-index: 3;
+        backdrop-filter: $blur-soft;
+        -webkit-backdrop-filter: $blur-soft;
+        position: absolute;
+        top: 50%;
+        right: 0.75rem;
+        transform: translateY(-50%);
+        padding: 0.5rem;
+        border-radius: $border-s;
+        color: $text-caption;
+        border: 1px solid $border-color;
+        background: transparent;
+
+        transition: top $fast, background $fast;
+
+        @media screen and (max-width: $mobile-width) {
+          display: none;
+        }
+
+        &.isLoading,
+        &.hide {
+          top: 150%;
+        }
+
+        &.pressed {
+          background: $bg-overlay-1;
+        }
+      }
+    }
+    button {
+      min-width: fit-content;
+      border: none;
+      font-size: 1rem;
+      font-family: $font-main;
+      border-radius: $border-m;
+      padding: 1rem;
+      height: fit-content;
+      cursor: pointer;
+      background: transparent;
+      border: 1px solid $border-color;
+      font-weight: 500;
+      color: #ffffff;
+      max-height: 3.5rem;
+      min-height: 3.5rem;
+
+      transition: transform $fast, background $fast, border $fast;
+      position: relative;
+
+      &::before {
+        content: "Get Score";
+
+        @media screen and (max-width: $mobile-width) {
+          content: "navigate_next";
+          font-size: 2rem;
+          line-height: 1rem;
+          margin-left: 0.25rem;
+          font-family: $font-icon;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+
+      &:hover,
+      &:focus {
+        background: $bg-overlay-2;
+        border: 1px solid transparent;
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+  }
+}
+
+// .Input .blockchains.open {
+//   max-height: 509px;
+// }
+
+// .Input {
+//   margin: 0 1rem;
+//   padding: 1rem;
+//   display: flex;
+//   gap: 1rem;
+//   background: $bg-overlay-1;
+//   border-radius: $border-l;
+//   position: relative;
+//   line-height: 1;
+
+//   @media screen and (max-width: $mobile-width) {
+//     flex-direction: column;
+//   }
+
+//   .blockchains {
+//     display: flex;
+//     flex-direction: column;
+//     background: $bg-overlay-1;
+//     padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+//     border-radius: $border-m;
+//     max-height: 3.5rem;
+//     min-height: 3.5rem;
+//     overflow: hidden;
+//     position: absolute;
+//     min-width: fit-content;
+//     z-index: 2;
+//     backdrop-filter: $blur-hard;
+//     -webkit-backdrop-filter: $blur-hard;
+
+//     transition: max-height $fast, background $fast;
+
+//     .blockchain {
+//       border-radius: $border-s;
+//       transition: background $fast;
+//     }
+
+//     .blockchainActive {
+//       border-bottom: 1px solid $border-color;
+//       margin-bottom: 0.5rem;
+//       padding: 0.5rem 0.5rem 1rem 0.5rem;
+//     }
+
+//     .blockchain {
+//       padding: 0.5rem 1rem 0.5rem 0.5rem;
+//     }
+
+//     .blockchain,
+//     .blockchainActive {
+//       display: flex;
+//       align-items: center;
+//       gap: 0.5rem;
+
+//       img {
+//         $size: 2rem;
+//         width: $size;
+//         height: $size;
+//         border-radius: 50%;
+//       }
+//     }
+//   }
+
+//   .field {
+//     width: 100%;
+//     display: flex;
+//     gap: 1rem;
+//     @media screen and (max-width: $mobile-width) {
+//       flex-direction: column;
+//     }
+
+//     .inputWrapper {
+//       margin-left: calc(114.3px + 1rem);
+//       width: 100%;
+//       position: relative;
+//       overflow: hidden;
+
+//       input {
+//         width: 100%;
+//         padding: 1rem;
+//         border: none;
+//         font-size: calc(1.25rem - 1px);
+//         font-family: $font-main;
+//         border-radius: $border-m;
+//         background: $bg-overlay-1;
+//         border: 1px solid transparent;
+//         color: $text-body;
+//         max-height: 3.5rem;
+//         min-height: 3.5rem;
+
+//         transition: background $fast, border $fast;
+
+//         &:hover {
+//           background: $bg-overlay-2;
+//         }
+
+//         &:focus {
+//           border: 1px solid $color-pink;
+
+//           .loading {
+//             opacity: 0;
+//           }
+//         }
+//       }
+
+//       .loading {
+//         z-index: 3;
+//         backdrop-filter: $blur-soft;
+//         -webkit-backdrop-filter: $blur-soft;
+//         position: absolute;
+//         top: -50%;
+//         right: 1rem;
+//         transform: translateY(-50%);
+//         padding: 0.5rem;
+//         border-radius: $border-s;
+//         background: $information-tint;
+//         color: $information-light;
+
+//         transition: top $fast;
+
+//         &.isLoading {
+//           top: 50%;
+//         }
+//       }
+
+//       .shortcut {
+//         z-index: 3;
+//         backdrop-filter: $blur-soft;
+//         -webkit-backdrop-filter: $blur-soft;
+//         position: absolute;
+//         top: 50%;
+//         right: 0.75rem;
+//         transform: translateY(-50%);
+//         padding: 0.5rem;
+//         border-radius: $border-s;
+//         color: $text-caption;
+//         border: 1px solid $border-color;
+//         background: transparent;
+
+//         transition: top $fast, background $fast;
+
+//         @media screen and (max-width: $mobile-width) {
+//           display: none;
+//         }
+
+//         &.isLoading,
+//         &.hide {
+//           top: 150%;
+//         }
+
+//         &.pressed {
+//           background: $bg-overlay-1;
+//         }
+//       }
+//     }
+
+//     button {
+//       min-width: fit-content;
+//       border: none;
+//       font-size: 1rem;
+//       font-family: $font-main;
+//       border-radius: $border-m;
+//       padding: 1rem;
+//       height: fit-content;
+//       cursor: pointer;
+//       // background: $gradient-tech;
+//       background: transparent;
+//       border: 1px solid $border-color;
+//       font-weight: 500;
+//       color: #ffffff;
+//       max-height: 3.5rem;
+//       min-height: 3.5rem;
+
+//       transition: transform $fast, background $fast, border $fast;
+//       position: relative;
+
+//       &::before {
+//         content: "Get Score";
+
+//         @media screen and (max-width: $mobile-width) {
+//           content: "navigate_next";
+//           font-size: 2rem;
+//           margin-left: 0.25rem;
+//           font-family: $font-icon;
+//           position: absolute;
+//           top: 0;
+//           left: 0;
+//           right: 0;
+//           bottom: 0;
+//           display: flex;
+//           align-items: center;
+//           justify-content: center;
+//         }
+//       }
+
+//       @media screen and (max-width: $mobile-width) {
+//         width: calc(25% - 1.5rem);
+//         margin-left: calc(75% + 1.5rem);
+//       }
+
+//       &:hover,
+//       &:focus {
+//         background: $bg-overlay-2;
+//         border: 1px solid transparent;
+//       }
+
+//       &:active {
+//         transform: scale(0.95);
+//       }
+//     }
+//   }
+// }

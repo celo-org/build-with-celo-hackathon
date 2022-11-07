@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>7eed6390-25d3-47b1-b3e2-6d5a0f38f0c8</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nomis.Api.Celo\Nomis.Api.Celo.csproj" />
+    <ProjectReference Include="..\Nomis.Api.Common\Nomis.Api.Common.csproj" />
+    <ProjectReference Include="..\Nomis.Celoscan\Nomis.Celoscan.csproj" />
+    <ProjectReference Include="..\Nomis.Coingecko\Nomis.Coingecko.csproj" />
+  </ItemGroup>
+
+</Project>

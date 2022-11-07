@@ -1,0 +1,10 @@
+.scored {
+  display: flex;
+  padding: 1rem;
+  flex-direction: row;
+  gap: 1rem;
+
+  @media screen and (max-width: $mobile-width) {
+    flex-direction: column-reverse;
+  }
+}
