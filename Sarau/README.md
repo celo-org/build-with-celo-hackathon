@@ -11,7 +11,7 @@
 ##### Team Members
 - Gustavo Toledo, CEO/CTO
 - Romeu Campos, CFO
-- Israel Buzaum, CMO
+- Israel Buzaym, CMO
 
 #### Project Description
 Sarau is a dApp that enable users to collect NFTs that represent moments in a real life, for example, you can distribute to your audience an exclusive NFT to remember a event that you have created.
