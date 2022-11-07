@@ -9,7 +9,7 @@ export default function UserStats({ wallet, blockchain }) {
     : () => setIsMonth(true);
 
   const [coin, setCoin] = React.useState();
-  React.useEffect(({ blockchain }) => {
+  React.useEffect(() => {
     for (let i = 0; i < blockchains.length; i++) {
       if (blockchains[i].slug === blockchain) {
         setCoin(blockchains[i].coin);

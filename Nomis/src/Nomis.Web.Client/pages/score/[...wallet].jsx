@@ -93,27 +93,42 @@ export default function Scored({ blockchain, fullAddress }) {
           </section>
         )}
         {success && (
-          <div className="scored">
-            <WalletData
-              wallet={wallet}
-              blockchain={blockchain}
-              fullAddress={fullAddress}
-            />
-            <WalletUser
-              wallet={wallet}
-              blockchain={blockchain}
-              address={address}
-              fullAddress={fullAddress}
-            />
-            <div className={`mobile ${isScrolled ? "isScrolled" : ""}`}>
+          <>
+            <div className="scored">
+              <WalletData
+                wallet={wallet}
+                blockchain={blockchain}
+                fullAddress={fullAddress}
+              />
               <WalletUser
                 wallet={wallet}
                 blockchain={blockchain}
                 address={address}
                 fullAddress={fullAddress}
               />
+              <div className={`mobile ${isScrolled ? "isScrolled" : ""}`}>
+                <WalletUser
+                  wallet={wallet}
+                  blockchain={blockchain}
+                  address={address}
+                  fullAddress={fullAddress}
+                />
+              </div>
             </div>
-          </div>
+            <div className="poweredBy">
+              <p>
+                Powered by{" "}
+                <a
+                  href="https://celoscan.io"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  CeloScan
+                </a>{" "}
+                APIs
+              </p>
+            </div>
+          </>
         )}
         {wallet && !success && (
           <section className="message noSuccess">
@@ -140,19 +155,6 @@ export default function Scored({ blockchain, fullAddress }) {
             </button>
           </section>
         )}
-        <div className="poweredBy">
-          <p>
-            Powered by{" "}
-            <a
-              href="https://celoscan.io"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              CeloScan
-            </a>{" "}
-            APIs
-          </p>
-        </div>
       </div>
     </MainLayout>
   );

@@ -7,6 +7,7 @@ import { useHotkeys } from "react-hotkeys-hook";
 
 export default function Input({ fullAddress }) {
   const [address, setAddress] = React.useState(fullAddress ? fullAddress : "");
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const router = useRouter();
   const www = "";
@@ -18,10 +19,12 @@ export default function Input({ fullAddress }) {
   }, []);
 
   const handleClick = async () => {
+    setIsLoading(true);
     await router.push(`${www}/score/${blockchains[0].slug}/${address}`);
   };
 
   const handleEnter = async (e) => {
+    setIsLoading(true);
     if (e.keyCode === 13) {
       await router.push(`${www}/score/${blockchains[0].slug}/${address}`);
     }
@@ -58,7 +61,12 @@ export default function Input({ fullAddress }) {
             onFocus={() => setHide(!hide)}
             onBlur={() => setHide(!hide)}
           />
-          <div className="shortcut">{isMac ? "cmd+/" : "ctrl+/"}</div>
+          <div className={`loading${isLoading ? " isLoading" : ""}`}>
+            Loading
+          </div>
+          <div className={`shortcut${isLoading ? " isLoading" : ""}`}>
+            {isMac ? "cmd+/" : "ctrl+/"}
+          </div>
         </div>
         <button onClick={handleClick} className="button callout"></button>
       </div>
