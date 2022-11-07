@@ -1,16 +1,50 @@
-import { Box, Button, Container, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  MenuItem,
+  Typography,
+} from "@mui/material";
 import React, { useState } from "react";
 import { CssTextField } from "../CustomTextBox/CustomTextBox";
-import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
 import { useRef } from "react";
 import { useEffect } from "react";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
+
+const blockchain = [
+  {
+    value: "Ethereum",
+    label: "Ethereum",
+  },
+  {
+    value: "Polygon",
+    label: "Polygon",
+  },
+  {
+    value: "Celo",
+    label: "Celo",
+  },
+];
 
 const CreateEvent = () => {
   const [image, setImage] = useState();
   const [preview, setPreview] = useState();
+  const [time, setTime] = useState(dayjs("2022-08-18 T21:11:54"));
   const fileInputRef = useRef();
 
-  console.log(preview);
+  const [chain, setChain] = useState("Ethereum");
+
+  const handleChain = (event) => {
+    setChain(event.target.value);
+  };
+
+  const handleTime = (newTime) => {
+    setTime(newTime);
+  };
 
   useEffect(() => {
     if (image) {
@@ -50,7 +84,7 @@ const CreateEvent = () => {
             details that highlight what makes it unique.
           </Typography>
         </Box>
-        <Box color="#fff" sx={{ mt: "3%" }}>
+        <Box color="#D9D9D9" sx={{ mt: "3%" }}>
           <Typography fontWeight={700}>Event Title :</Typography>
           <CssTextField
             placeholder="Be clear and Descriptive"
@@ -58,7 +92,7 @@ const CreateEvent = () => {
             sx={{ mt: "1%" }}
           />
         </Box>
-        <Box color="#fff" sx={{ mt: "3%" }}>
+        <Box color="#D9D9D9" sx={{ mt: "3%" }}>
           <Typography fontWeight={700}>Organiser :</Typography>
           <CssTextField
             placeholder="Tell the anttendees who is organising the event"
@@ -66,7 +100,7 @@ const CreateEvent = () => {
             sx={{ mt: "1%" }}
           />
         </Box>
-        <Box color="#fff" sx={{ mt: "3%" }}>
+        <Box color="#D9D9D9" sx={{ mt: "3%" }}>
           <Typography fontWeight={700}>Description :</Typography>
           <CssTextField
             sx={{ ".MuiFormHelperText-root": { color: "#fff" } }}
@@ -77,7 +111,7 @@ const CreateEvent = () => {
             fullWidth
           />
         </Box>
-        <Box color="#fff" sx={{ mt: "3%" }}>
+        <Box color="#D9D9D9" sx={{ mt: "3%" }}>
           <Typography fontWeight={700}>Add a Logo :</Typography>
         </Box>
         <Box>
@@ -129,7 +163,7 @@ const CreateEvent = () => {
             }}
           />
         </Box>
-        <Box color="#fff" sx={{ mt: "3%" }}>
+        <Box color="#D9D9D9" sx={{ mt: "3%" }}>
           <Typography fontWeight={700}>Add a Banner Image :</Typography>
           <CssTextField
             sx={{ ".MuiFormHelperText-root": { color: "#fff" } }}
@@ -139,6 +173,105 @@ const CreateEvent = () => {
             placeholder="Description of the event"
             fullWidth
           />
+        </Box>
+        <Box>
+          <Grid container mt="3%" spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <Box fullWidth>
+                <Typography color="#D9D9D9" fontWeight={600}>
+                  Blockchain
+                </Typography>
+                <CssTextField
+                  value={chain}
+                  onChange={handleChain}
+                  select
+                  fullWidth
+                  sx={{ "	.MuiInputBase-root": { borderRadius: "0px" } }}
+                >
+                  {blockchain.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </CssTextField>
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Box fullWidth>
+                <Typography color="#D9D9D9" fontWeight={600}>
+                  Category
+                </Typography>
+                <CssTextField
+                  select
+                  fullWidth
+                  sx={{ "	.MuiInputBase-root": { borderRadius: "0px" } }}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Box fullWidth>
+                <Typography color="#D9D9D9" fontWeight={600}>
+                  Location
+                </Typography>
+                <CssTextField
+                  fullWidth
+                  sx={{ "	.MuiInputBase-root": { borderRadius: "0px" } }}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Box fullWidth>
+                <Typography color="#D9D9D9" fontWeight={600}>
+                  Venue
+                </Typography>
+                <CssTextField
+                  fullWidth
+                  sx={{ "	.MuiInputBase-root": { borderRadius: "0px" } }}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Box fullWidth>
+                <Typography color="#D9D9D9" fontWeight={600}>
+                  Time and date
+                </Typography>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DateTimePicker
+                    value={time}
+                    onChange={handleTime}
+                    renderInput={(params) => (
+                      <CssTextField
+                        {...params}
+                        fullWidth
+                        sx={{ "	.MuiInputBase-root": { borderRadius: "0px" } }}
+                      />
+                    )}
+                  />
+                </LocalizationProvider>
+              </Box>
+            </Grid>
+          </Grid>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              mt: "3%",
+              pb: "3%",
+            }}
+          >
+            {" "}
+            <Button
+              sx={{
+                width: { xs: "100px", sm: "350px" },
+                background: "#D9D9D9",
+                "&:hover": { background: "#D9D9D9" },
+                color: "#000",
+                textTransform: "capitalize",
+              }}
+            >
+              Submit
+            </Button>
+          </Box>
         </Box>
       </Container>
     </Box>
