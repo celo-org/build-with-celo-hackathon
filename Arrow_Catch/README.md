@@ -5,9 +5,6 @@
 
 ## Arrow Catch
 
-### @azizyano
-#### Hackathon Track
-
 ##### Africa (Morocco)
 
 ##### Team Members
@@ -35,7 +32,7 @@ in the profile you can see your balance (listed and not listed NFT)
 
 
 #### URLs
-Demo Video (soon after fixing all bugs)
+Demo Video https://youtu.be/5cWuV8RErDE
 
 
 #### Next Steps
