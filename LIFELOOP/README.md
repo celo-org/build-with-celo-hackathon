@@ -65,7 +65,7 @@ From the **application** we can (on Alfajores):
 A quick overview of the tests (and relative contracts functionalities); gas estimates are not accurate as they include contracts deployment and setup tasks.
 
 ![image](https://user-images.githubusercontent.com/26276572/200193699-1faf3358-f37e-4e02-a07d-dc44af3bce22.png)
-![image](https://user-images.githubusercontent.com/26276572/200193716-92da4c04-c422-415b-9852-3bcb6ebe6a84.png)
+![image](https://user-images.githubusercontent.com/26276572/200412945-9df2e3c8-3b1c-4671-95ba-eb4a86a49cfb.png)
 
 ### Demo
 Feel free to reach out to me (`Riccardo#6965`) on Discord to schedule a quick demo and Q&A session. If you have any questions or need help setting up the project we encourage you to comment on this PR.
