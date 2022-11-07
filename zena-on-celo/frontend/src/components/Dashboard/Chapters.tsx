@@ -17,16 +17,16 @@ export default function Chapters({ forceUpdate }: any) {
       name: "Web3 Basics",
       path: "/1",
       id: "1",
-      url: "/Kachel-1_Web3-basics.jpg",
+      url: "/Kachel-1_Web3-basics.png",
       icon: <BiNetworkChart size={iconSize} />,
       enabled: false,
       done: user?.stats?.quiz1 === "1" ? true : false,
     },
     {
-      name: "Blockchain und Token",
+      name: "Blockchain and Tokens",
       path: "/2",
       id: "2",
-      url: "/Kachel-2_Blockchain.jpg",
+      url: "/Kachel-2_Blockchain.png",
       icon: <BiCheckbox size={iconSize} />,
       enabled: false,
       done: user?.stats?.quiz2 === "1" ? true : false,
@@ -35,7 +35,7 @@ export default function Chapters({ forceUpdate }: any) {
       name: "ReFi",
       path: "/4",
       id: "4",
-      url: "/kachel-4_mint.jpg",
+      url: "/Kachel-3_REFI.png",
       icon: <RiPlantLine size={iconSize} />,
       enabled: false,
       done: user?.stats?.quiz4 === "1" ? true : false,
@@ -44,16 +44,16 @@ export default function Chapters({ forceUpdate }: any) {
       name: "NFTs",
       path: "/3",
       id: "3",
-      url: "/kachel-4_mint.jpg",
+      url: "/kachel-4_mint.png",
       icon: <BiImage size={iconSize} />,
       enabled: false, // not for celo hackathon
       done: user?.stats?.quiz3 === "1" ? true : false,
     },
     {
-      name: "Wallets / Schlüssel-verwahrung",
+      name: "Wallets",
       path: "/5",
       id: "5",
-      url: "/kachel-3_wallet.jpg",
+      url: "/kachel-3_wallet.png",
       icon: <BiKey size={iconSize} />,
       enabled: false,
       done: user?.stats?.quiz5 === "1" ? true : false,
@@ -62,7 +62,7 @@ export default function Chapters({ forceUpdate }: any) {
       name: "DAOs",
       path: "/6",
       id: "6",
-      url: "/Kachel-5_Dao.jpg",
+      url: "/Kachel-5_Dao.png",
       icon: <BiGroup size={iconSize} />,
       enabled: false,
       done: user?.stats?.quiz6 === "1" ? true : false,
@@ -105,15 +105,15 @@ export default function Chapters({ forceUpdate }: any) {
     <div className="container mx-auto pb-12">
       <div className="pb-1">
         <h2 className="text-2xl text-center font-bold mb-2 mt-10 leading-7 sm:truncate sm:text-3xl sm:tracking-tight">
-          Deine Lernkapitel
+          Your learning modules
         </h2>
 
         <p className="text-lg font-medium text-center text-gray-600">
-          Beginne jetzt deine Reise ins Web3!
+          Start your journey into Web3 now!
         </p>
       </div>
       <div className="grid grid-cols-4 gap-4 pt-1">
-        {chapters.map((chapter: any) => {
+        {chapters.map((chapter: any, i: number) => {
           return (
             <div className="col-span-4 md:col-span-2">
               <div className="p-6 border bg-white rounded-lg">
@@ -122,11 +122,15 @@ export default function Chapters({ forceUpdate }: any) {
                   className="inline-flex items-center text-blue-600 hover:underline"
                 >
                   <h5 className="mb-2 text-2xl font-semibold tracking-tight text-font dark:text-white">
-                    {chapter.name}
+                    Chapter #{i + 1}: {chapter.name}
                   </h5>
                 </Link>
                 <div className="grid bg-slate-50 mb-5 border border-green/20 h-32 place-items-center">
-                  {chapter.icon}
+                  <img
+                    className="object-cover object-center mx-auto rounded h-20 "
+                    alt="hero"
+                    src={chapter.url}
+                  />
                 </div>
 
                 <Link
@@ -151,7 +155,7 @@ export default function Chapters({ forceUpdate }: any) {
                       chapter.enabled ? "hover:bg-green-dark" : ""
                     } text-white font-bold py-2 px-4 rounded-full`}
                   >
-                    Abschließen
+                    Complete
                   </button>
                 ) : (
                   <button
