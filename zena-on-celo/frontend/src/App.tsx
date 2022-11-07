@@ -58,7 +58,7 @@ export default function App() {
           <div className="container px-5 py-32 mx-auto lg:px-24">
             <div className="flex flex-col w-full mb-20 text-left lg:text-center">
               <h2 className="mb-6 font-serif text-4xl font-bold tracking-tighter text-[#385738] md:text-8xl lg:text-6xl">
-                We incentivise learning with real climate action for GenZ.
+                We incentivise learning with real climate action for GenA.
               </h2>
               <p className="mx-auto text-lg leading-snug text-slate-500">
                 ZENA app users will earn CO2-backed tokens by completing
