@@ -3,7 +3,8 @@ ZENA
 ### Team name
 Team ZENA
 #### Hackathon Track
-Social Impact Track
+SocialFi / ReFi / NFTs / GameFi
+
 ##### Region location
 Berlin and Barcelona
 ##### Team Members
@@ -36,15 +37,16 @@ https://www.canva.com/design/DAFRADTnTZc/8EAKvTsxUM_-LitNjXroOw/view#6
 #### Next Steps
 #####  What do you need to do next to turn this prototype into a working solution?
 
-Invite initiatives and companies to act as funders for our gaming-like concept, so we’re able to gather BCT upfront and can incentivize youths to learn and improve their knowledge for real-world impact rather than just levels, points, and high scores.
+-Invite initiatives and companies to act as funders for our gaming-like concept, so we’re able to gather BCT upfront and can incentivize youths to learn 
+ and improve their knowledge for real-world impact rather than just levels, points, and high scores.
 
-Connecting with our local networks of teenagers and educators for testing and content creation.
+-Connecting with our local networks of teenagers and educators for testing and content creation.
 
-Add and connect to more eco credits (NCT, Rec token) and implement carbon retirement.
+-Add and connect to more eco credits (NCT, Rec token) and implement carbon retirement.
 
-Extend ZENA network within web3 with ReFi community (Toucan community, senken.io team, Regen Network etc.) and education focused communities (for example UN's Giga & Patchwork Kingdoms)
+-Extend ZENA network within web3 with ReFi community (Toucan community, senken.io team, Regen Network etc.) and education focused communities (for example   UN's Giga & Patchwork Kingdoms)
 
-Looking into more ways to MAKE EDUCATIONAL IMPACT and on chain climate action INVESTABLE.
+-Looking into more ways to MAKE EDUCATIONAL IMPACT and on chain climate action INVESTABLE.
 
 #### License
 MIT
