@@ -1,15 +1,15 @@
 import { FaMagic } from 'react-icons/fa';
 import { sacudaContext } from '../components/sacudaContext';
-import React, { useContext, useState } from 'react';
-import { Text, Heading, Input, Button, Linkimport, FormErrorMessage, FormLabel, FormControl, FormHelperText } from '@chakra-ui/react';
+import React from 'react';
+import { Text, Heading, Input, Button, FormErrorMessage, FormLabel, FormControl, FormHelperText } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form'
 import { useSession, signIn, signOff } from "next-auth/react";
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { useAccount } from 'wagmi';
-import { ConnectButton} from "@rainbow-me/rainbowkit";
 import styles from '../styles/home.module.scss';
 import '@rainbow-me/rainbowkit/styles.css';
+import { mutate } from "swr";
 
 export default function wobRegistration1() {
 
@@ -41,14 +41,36 @@ export default function wobRegistration1() {
         formState: { errors, isSubmitting },
         } = useForm()
     
-        function onSubmit(values) {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-            alert(JSON.stringify(values, null, 2))
-            resolve()
-            }, 3000)
-        })
-        }
+
+        const onSubmit = async (values) => {
+            console.log('regmail:'+session.user.email)
+            const reqemail = session.user.email;
+            const preProf = `{"profile": 0}`;
+            const prof = JSON.parse(preProf);
+
+            const finalValues = { ...values, ...prof}
+            try {
+              const res = await fetch(`/api/updateProfile/${reqemail}`, {
+                method: "PUT",
+                headers: {
+                  "Content-type": "application/json",
+                },
+                body: JSON.stringify(finalValues)
+
+              });
+              if (!res.ok) {
+                throw new Error(res.status);
+              }
+
+              const { data } = await res.json();
+              mutate(`/api/updateProfile/${reqemail}`, data, false);
+              router.push("/");
+            } catch (error) {
+              console.log(error);
+            }
+          };
+
+
 
     if (status === "loading") {
         return (
@@ -68,7 +90,7 @@ export default function wobRegistration1() {
 
     if (isConnected) {
         if(uMail===session.user.email) {
-            if (uProfile === undefined) {
+            if (uProfile === undefined || uProfile === 0) {
                 return (
                     <>
                     <main className={styles.form}>
@@ -85,118 +107,174 @@ export default function wobRegistration1() {
                         >
                             Let´s setup your WOB profile
                         </Text>
-                        <Text>
-                            <FormControl >
-                                <FormLabel marginBottom='1%'>Name</FormLabel>
-                                <Input type='bename' />
-                                <FormHelperText> Your name</FormHelperText>
-                            </FormControl>               
-                        </Text>
-                        <Text>
-                            <FormControl >
-                                <FormLabel marginBottom='1%'>Surname</FormLabel>
-                                <Input type='bename' />
-                                <FormHelperText> Your surname</FormHelperText>
-                            </FormControl>               
-                        </Text>
-                        <Text>
-                            <FormControl >
-                                <FormLabel marginBottom='1%'>LinkedIn profile</FormLabel>
-                                <Input type='bename' />
-                                <FormHelperText> Your personal linkedIn profile</FormHelperText>
-                            </FormControl>               
-                        </Text>
-                        <Text>
-                            <FormControl >
-                                <FormLabel marginBottom='1%'>Country</FormLabel>
-                                <Input type='bename' />
-                                <FormHelperText> Your country</FormHelperText>
-                            </FormControl>               
-                        </Text>
-                        <Text>
-                            <FormControl >
-                                <FormLabel marginBottom='1%'>Bussiness Name</FormLabel>
+                        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+                        
+                            <FormControl isInvalid={errors.name}>
+                                <FormLabel marginBottom='1%' htmlFor='name'>Name</FormLabel>
                                 <Input 
-                                    type='bname' 
+                                    type='text' 
+                                    id='name'
+                                    placeholder='Jane'
+                                    {...register('name', {
+                                        required: 'This is required',
+                                        minLength: { value: 1, message: 'Minimum length should be 1' },
+                                    })}
+                                    />
+                                <FormHelperText> Your name</FormHelperText>
+                                <FormErrorMessage>
+                                    {errors.name && errors.name.message}
+                                </FormErrorMessage>
+                            </FormControl>               
+                        
+
+                            <FormControl isInvalid={errors.name}>
+                                <FormLabel marginBottom='1%' htmlFor='surname'>Surname</FormLabel>
+                                <Input 
+                                    type='text' 
+                                    id='surname'
+                                    placeholder='Doe'
+                                    {...register('surname', {
+                                        required: 'This is required',
+                                        minLength: { value: 1, message: 'Minimum length should be 1' },
+                                    })}
+                                    />
+                                <FormHelperText> Your surname</FormHelperText>
+                                <FormErrorMessage>
+                                    {errors.name && errors.name.message}
+                                </FormErrorMessage>
+                            </FormControl>               
+
+                            <FormControl isInvalid={errors.name}>
+                                <FormLabel marginBottom='1%' htmlFor='linkedin'>LinkedIn profile</FormLabel>
+                                <Input 
+                                    type='url' 
+                                    id='linkedin'
+                                    placeholder='https://www.linkedin.com/in/myusername/'
+                                    {...register('linkedin', {
+                                        required: 'This is required',
+                                        minLength: { value: 1, message: 'Minimum length should be 1' },
+                                    })}
+                                    />
+                                <FormHelperText> Your personal linkedIn profile</FormHelperText>
+                                <FormErrorMessage>
+                                    {errors.name && errors.name.message}
+                                </FormErrorMessage>
+                            </FormControl>               
+                     
+                            <FormControl isInvalid={errors.name}>
+                                <FormLabel marginBottom='1%' htmlFor='country'>Country</FormLabel>
+                                <Input 
+                                    type='text' 
+                                    id='country'
+                                    placeholder='My country'
+                                    {...register('country', {
+                                        required: 'This is required',
+                                        minLength: { value: 1, message: 'Minimum length should be 1' },
+                                    })}
+                                    />
+                                <FormHelperText> Your country</FormHelperText>
+                                <FormErrorMessage>
+                                    {errors.name && errors.name.message}
+                                </FormErrorMessage>
+                            </FormControl>               
+                    
+                            <FormControl isInvalid={errors.name}>
+                                <FormLabel marginBottom='1%' htmlFor='bname'>Bussiness Name</FormLabel>
+                                <Input 
+                                    type='text' 
                                     id='bname'
-                                    placeholder='bname'
+                                    placeholder='My company'
                                     {...register('bname', {
                                         required: 'This is required',
                                         minLength: { value: 1, message: 'Minimum length should be 1' },
                                     })}
                                     />
                                 <FormHelperText> Your bussiness name</FormHelperText>
+                                <FormErrorMessage>
+                                    {errors.name && errors.name.message}
+                                </FormErrorMessage>
                             </FormControl>               
-                        </Text>
-                        <Text>
-                            <FormControl >
-                                <FormLabel marginBottom='1%'>Bussiness digital presence - Facebook</FormLabel>
+                     
+                            <FormControl isInvalid={errors.name}>
+                                <FormLabel marginBottom='1%' htmlFor='bfb'>Bussiness digital presence - Facebook</FormLabel>
                                 <Input 
-                                    type='bfb' 
+                                    type='url' 
                                     id='bfb'
-                                    placeholder='bfb'
+                                    placeholder='https://www.facebook.com/mybussinessname'
                                     {...register('bfb')}
                                     />
                                 <FormHelperText> Your bussiness Facebook link</FormHelperText>
+                                <FormErrorMessage>
+                                    {errors.name && errors.name.message}
+                                </FormErrorMessage>
                             </FormControl>               
-                        </Text>
-                        <Text>
-                            <FormControl >
-                                <FormLabel marginBottom='1%'>Bussiness digital presence - Instagram</FormLabel>
+                      
+                            <FormControl isInvalid={errors.name}>
+                                <FormLabel marginBottom='1%' htmlFor='big'>Bussiness digital presence - Instagram</FormLabel>
                                 <Input 
-                                    type='big' 
+                                    type='url' 
                                     id='big'
-                                    placeholder='big'
+                                    placeholder='https://www.instagram.com/mybussineesname/'
                                     {...register('big')}
                                     />
                                 <FormHelperText> Your bussiness Instagram link</FormHelperText>
+                                <FormErrorMessage>
+                                    {errors.name && errors.name.message}
+                                </FormErrorMessage>
                             </FormControl>               
-                        </Text>
-                        <Text>
-                            <FormControl >
-                                <FormLabel marginBottom='1%'>Bussiness digital presence - LinkedIn</FormLabel>
+                   
+                            <FormControl isInvalid={errors.name}>
+                                <FormLabel marginBottom='1%' htmlFor='blinked'>Bussiness digital presence - LinkedIn</FormLabel>
                                 <Input 
-                                    type='blinked' 
+                                    type='url' 
                                     id='blinked'
-                                    placeholder='blinked'
+                                    placeholder='https://www.linkedin.com/in/mybussinessname/'
                                     {...register('blinked')}
                                     />
                                 <FormHelperText> Your bussiness LinkedIn link</FormHelperText>
+                                <FormErrorMessage>
+                                    {errors.name && errors.name.message}
+                                </FormErrorMessage>
                             </FormControl>               
-                        </Text>
-                        <Text>
-                            <FormControl >
-                                <FormLabel marginBottom='1%'>Bussiness Idea</FormLabel>
+                   
+                            <FormControl isInvalid={errors.name}>
+                                <FormLabel marginBottom='1%' htmlFor='bidea'>Bussiness Idea</FormLabel>
                                 <Input 
-                                    type='bidea' 
+                                    type='text' 
                                     id='bidea'
-                                    placeholder='bidea'
+                                    placeholder='My company is about...'
                                     {...register('bidea', {
                                         required: 'This is required',
-                                        minLength: { value: 100, message: 'Minimum length should be 100' },
+                                        minLength: { value: 1, message: 'Minimum length should be 100' },
                                     })}
                                     />
                                 <FormHelperText> Your bussiness idea</FormHelperText>
+                                <FormErrorMessage>
+                                    {errors.name && errors.name.message}
+                                </FormErrorMessage>
                             </FormControl>               
-                        </Text>
-                        <Text>
-                            <FormControl >
-                                <FormLabel marginBottom='1%'>Bussiness Sector</FormLabel>
+                  
+                            <FormControl isInvalid={errors.name}>
+                                <FormLabel marginBottom='1%' htmlFor='bsector'>Bussiness Sector</FormLabel>
                                 <Input 
-                                    type='bsector' 
+                                    type='text' 
                                     id='bsector'
-                                    placeholder='bsector'
+                                    placeholder='Bussiness sector'
                                     {...register('bsector', {
                                         required: 'This is required',
                                         minLength: { value: 4, message: 'Minimum length should be 4' },
                                     })}
                                     />
                                 <FormHelperText> Your bussiness sector</FormHelperText>
+                                <FormErrorMessage>
+                                    {errors.name && errors.name.message}
+                                </FormErrorMessage>
                             </FormControl>               
-                        </Text>
+                       
                         <Button mt={4} colorScheme='teal' isLoading={isSubmitting} type='submit'>
                         Submit
                         </Button>
+                        </form>
                         </main>
                     </>
                   )
@@ -204,8 +282,6 @@ export default function wobRegistration1() {
             else
             mainRedirect();
         }
-        console.log('wob:'+uMail)
-        //signOff()
     }
     else
     walletRedirect();

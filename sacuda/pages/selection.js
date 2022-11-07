@@ -66,7 +66,26 @@ export default function selectionPage() {
             getUserProfile();
             window.localStorage.setItem('uProfile', uProfile) 
             switch(uProfile) {
-                case "1":
+                case 0:
+                    return(
+                        <main className={styles.container}>
+                            
+                                <Head>
+                                <title>Sacuda | A finantial revolution!</title>
+                                </Head>
+                                <Heading as={'h1'}>
+                                    Welcome {session.user.email}!
+                                </Heading>
+                                <Text 
+                                    as={'h2'}
+                                    marginTop='1%'
+                                    marginBottom='1%'
+                                >
+                                    We are waiting for your approval by one of our team members, please be patient!
+                                </Text>
+                        </main>
+                    )
+                case 1:
                     return(
                         <main className={styles.container}>
                             
@@ -85,7 +104,7 @@ export default function selectionPage() {
                                 </Text>
                         </main>
                     )
-                case "2":
+                case 2:
                     return(
                         <main className={styles.container}>
                             
@@ -106,7 +125,7 @@ export default function selectionPage() {
                         
                     )
                     
-                case "3":
+                case 3:
                     return(
                         <main className={styles.container}>
                             
