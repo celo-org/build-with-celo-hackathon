@@ -8,7 +8,7 @@ SocialFi / ReFi / NFTs / GameFi
 ##### Region location
 Berlin and Barcelona
 ##### Team Members
-We are a female team with expertise reaching from computer science, social science, design thinking to climate activism, financial and child education.
+We are a team of females with expertise reaching from computer science, social science, design thinking to climate activism, financial and child education.
 
 - Grit, Project Manager
 - Justina, UX Researcher
