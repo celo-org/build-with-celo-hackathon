@@ -19,6 +19,7 @@ export const SALT = '20f22f6c1144ae240b6fab1a84d91a4e9019a11b05d4ac18fa19b014358
 export const WALLETS_STORE = 'WalletList'
 export const USER_STORE = 'UserDetails'
 export const LOANS_STORE = 'LoansList'
+export const SPACES_STORE = 'SpacesList'
 export const SIGNER_STORE = 'CeloSigner'
 
 //Blockchain Constants

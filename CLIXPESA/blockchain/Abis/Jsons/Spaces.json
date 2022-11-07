@@ -143,6 +143,31 @@
   },
   {
     "inputs": [],
+    "name": "getMySpaces",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "spaceAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "spaceType",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct Spaces.ActiveSpace[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "returnSpaces",
     "outputs": [
       {

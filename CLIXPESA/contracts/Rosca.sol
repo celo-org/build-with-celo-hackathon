@@ -40,10 +40,10 @@ contract Rosca {
   IERC20 private token;
 
   //Initialize public variables
-  address payable[] public members;
+  address payable[] members;
   address payable[] admins;
   address payable dueMember;
-  mapping(address => uint256) public contributions;
+  mapping(address => uint256) contributions;
   mapping(address => bool) isMember;
   mapping(address => bool) isPotted;
   mapping(address => bool) isCtbCleared;
@@ -107,9 +107,9 @@ contract Rosca {
       string memory ctbDay,
       string memory ctbOccur,
       string memory disbDay,
-      string memory disbOccur,
       uint256 activeMembers,
       uint256 currentRound,
+      uint256 nxtDeadline,
       address creator,
       uint256 roscaBal,
       address roscaAddress
@@ -121,12 +121,9 @@ contract Rosca {
     ctbDay = RD.ctbDay;
     ctbOccur = RD.ctbOccur;
     disbDay = RD.disbDay;
-    disbOccur = RD.disbOccur;
     currentRound = roundNo;
     creator = admins[0];
     activeMembers = members.length;
-    roscaBal = getRoscaBalance();
-    roscaAddress = address(this);
     return (
       roscaName,
       imgLink,
@@ -134,12 +131,12 @@ contract Rosca {
       ctbDay,
       ctbOccur,
       disbDay,
-      disbOccur,
       activeMembers,
       currentRound,
+      ctbDeadline,
       creator,
-      roscaBal,
-      roscaAddress
+      token.balanceOf(address(this)),
+      address(this)
     );
   }
 

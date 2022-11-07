@@ -1,20 +1,14 @@
 import { Box, Button, FlatList, Stack, VStack, Spacer } from 'native-base'
 import { useState, useEffect, useCallback } from 'react'
 import { LoanItem } from 'clixpesa/components'
-
 import { useSelector, useDispatch } from 'react-redux'
-
 import { RefreshControl } from 'react-native'
-
-import { utils } from 'ethers'
-import celoHelper from '../../blockchain/helpers/celoHelper'
 import { fetchOffers } from './loansSlice'
 
 export default function LoanOffersScreen({ navigation }) {
-  const [refreshing, setRefreshing] = useState(false)
   const dispatch = useDispatch()
   const offers = useSelector((s) => s.loans.allOffers)
-  const [refreshing, setRefreshing] = useState()
+  const [refreshing, setRefreshing] = useState(false)
   useEffect(() => {
     const willFocusSubscription = navigation.addListener('focus', () => {
       dispatch(fetchOffers())
@@ -44,7 +38,6 @@ export default function LoanOffersScreen({ navigation }) {
             data={offers}
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
             showsVerticalScrollIndicator={false}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
             renderItem={({ item, index }) => (
               <Box
                 bg="white"

@@ -19,6 +19,7 @@ import { getRoscaData } from './spacesSlice'
 
 export default function RoscaHomeScreen({ navigation, route }) {
   const roscaAddress = route.params.roscaAddress
+  console.log(roscaAddress)
   const dispatch = useDispatch()
   const { roscaDetails } = useSelector((state) => state.spaces)
   const [isFetching, setIsFetching] = useState(false)
@@ -42,7 +43,7 @@ export default function RoscaHomeScreen({ navigation, route }) {
     })
   }, [navigation])
 
-  const prog = (300.89 / 5000.0) * 100
+  const prog = (roscaDetails.roscaBal / roscaDetails.goalAmount) * 100
   if (!roscaDetails) {
     return <Spinner size="lg" />
   }
@@ -126,7 +127,7 @@ export default function RoscaHomeScreen({ navigation, route }) {
             <Progress colorScheme="primary" value={prog} mx="4" bg="primary.100" />
             <HStack mx="5" my="2">
               <Text fontWeight="medium" color="muted.500">
-                30 Sep 2022 - 30 days to go
+                Due: {roscaDetails.dueDate}
               </Text>
               <Spacer />
               <Text _light={{ color: 'muted.500' }} fontWeight="medium">
@@ -142,7 +143,8 @@ export default function RoscaHomeScreen({ navigation, route }) {
             </Text>
             <Spacer />
             <Text _light={{ color: 'primary.600' }} fontWeight="medium" py={1}>
-              200/1635.89 cUSD
+              {roscaDetails.roscaBal}/
+              {(roscaDetails.goalAmount * 1) / (roscaDetails.activeMembers * 1)} cUSD
             </Text>
           </HStack>
         </Box>

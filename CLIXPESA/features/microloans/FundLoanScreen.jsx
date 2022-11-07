@@ -46,7 +46,8 @@ export default function FundLoanScreen({ navigation, route }) {
     setIsLoading(false)
     const thisLog = txReceipt.logs.find((el) => el.address === loanParams.address)
     const results = P2PLoanIface.parseLog({ data: thisLog.data, topics: thisLog.topics })
-    if (amount === utils.formatUnits(results.args[2], 'ether')) {
+    console.log(utils.formatUnits(results.args[2], 'ether'))
+    if (amount === utils.formatUnits(results.args[2], 'ether') * 1) {
       onOpen()
     }
   }

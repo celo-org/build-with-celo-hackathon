@@ -318,7 +318,7 @@
           ]
         },
         "Spaces": {
-          "address": "0xE5AFb22225b09F3e07f1137FEB91728da0BBfDC4",
+          "address": "0x8803e10E21e2effa2CC356b107204BE9a593801A",
           "abi": [
             {
               "anonymous": false,
@@ -460,6 +460,31 @@
               "name": "createRosca",
               "outputs": [],
               "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "getMySpaces",
+              "outputs": [
+                {
+                  "components": [
+                    {
+                      "internalType": "address",
+                      "name": "spaceAddress",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "spaceType",
+                      "type": "string"
+                    }
+                  ],
+                  "internalType": "struct Spaces.ActiveSpace[]",
+                  "name": "",
+                  "type": "tuple[]"
+                }
+              ],
+              "stateMutability": "view",
               "type": "function"
             },
             {
