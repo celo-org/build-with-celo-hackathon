@@ -14,6 +14,8 @@
     "@thirdweb-dev/react": "^3.2.6",
     "@thirdweb-dev/sdk": "^3.2.6",
     "ethers": "^5.7.1",
+    "formik": "^2.2.9",
+    "formik-file-and-image-input": "^0.0.6",
     "react": "^18.2.0",
     "react-alice-carousel": "^2.6.4",
     "react-dom": "^18.2.0",

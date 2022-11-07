@@ -7,6 +7,7 @@ import {
   Footer,
   Explore,
   EventDetail,
+  CreateEvent,
 } from "./components";
 
 import "@rainbow-me/rainbowkit/styles.css";
@@ -44,6 +45,7 @@ const App = () => {
               <Route path="/" element={<LandingPage />} />
               <Route path="/explore" element={<Explore />} />
               <Route path="/detail" element={<EventDetail />} />
+              <Route path="/createevent" element={<CreateEvent />} />
             </Routes>
             <Footer />
           </Box>
