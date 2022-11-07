@@ -27,7 +27,7 @@ export default function Scored({ blockchain, fullAddress }) {
   const [wallet, setWallet] = React.useState(null);
   const [success, setSuccess] = React.useState(false);
 
-  React.useEffect((blockchain, fullAddress) => {
+  React.useEffect(() => {
     const getData = async () => {
       try {
         const response = await fetch(
