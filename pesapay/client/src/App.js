@@ -4,7 +4,8 @@ import { useEthers } from "@usedapp/core";
 import styles from "./styles";
 
 import { uniswapLogo } from "./assets";
-import { Exchange, Loader, WalletButton } from "./components";
+import { Exchange, Loader, WalletButton, Networks } from "./components";
+//import Network from "./components/network,js";
 
 const App = () => {
   const { account } = useEthers();
@@ -19,7 +20,17 @@ const App = () => {
             alt="uniswap-logo"
             className="w-16 h-16 object-contain"
           />
-          <WalletButton />
+          {account ? (
+            <><div className={styles.Rheader}>
+                    <Networks />
+                    <WalletButton/>
+                    </div> 
+            </>
+                ) : (
+                <WalletButton />
+                )
+          }
+          
         </header>
 
         <div className={styles.exchangeContainer}>

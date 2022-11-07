@@ -1,24 +1,26 @@
-import React,{useState} from "react";
+import React, { useState } from "react"
 //import { formatUnits, parseUnits } from "ethers/lib/utils";
-import { ethers } from "ethers";
-import styles from "../styles";
+import { ethers } from "ethers"
+import styles from "../styles"
+import { getBalance } from "../utils/depositFunction"
 
 const Balance = () => {
-   const [bal, setbal] = useState("");
+  const [bal, setbal] = useState("")
 
-async function getBalance() {
-  
-  const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const address =  await window.ethereum.request({
-    method: "eth_requestAccounts",
-  });
-  
-  let balance = await provider.getBalance(address[0]);
-  // we use the code below to convert the balance from wei to eth
-  balance = ethers.utils.formatEther(balance);
-  setbal(balance)
-}
- getBalance()
+  async function getBalance() {
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const address = await window.ethereum.request({
+      method: "eth_requestAccounts",
+    })
+
+    let balance = await getBalance(provider, address)
+    // we use the code below to convert the balance from wei to eth
+    balance = ethers.utils.formatEther(balance)
+    console.log(balance)
+
+    setbal(balance)
+  }
+  getBalance()
 
   return (
     <div className={styles.balance}>
@@ -33,7 +35,7 @@ async function getBalance() {
         )}
       </p>
     </div>
-  );
-};
+  )
+}
 
-export default Balance;
+export default Balance

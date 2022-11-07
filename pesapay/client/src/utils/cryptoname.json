@@ -1,8 +1,8 @@
 [
-    { "token":"ETH", "tokenName":"ETH", "chainid":"1", "pricefeed":"0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"},
-    { "token":"MATIC", "tokenName":"MATIC", "chainid":"137", "pricefeed":"0x7bAC85A8a13A4BcD8abb3eB7d6b4d632c5a57676"},
-    { "token":"ETHg", "tokenName":"ETHg", "chainid":"5", "pricefeed":"0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"},
-    { "token":"Mumbai", "tokenName":"Mumbai", "chainid":"80001", "pricefeed":"0x7bAC85A8a13A4BcD8abb3eB7d6b4d632c5a57676"},
-    { "token":"BSC Testnet", "tokenName":"BSC Testnet", "chainid":"97", "pricefeed":"0x14e613AC84a31f709eadbdF89C6CC390fDc9540A"},
-    { "token":"Celo Alfajores Testnet", "tokenName":"Celo Alfajores Testnet", "chainid":"44787", "pricefeed":"0x9ae96129ed8FE0C707D6eeBa7b90bB1e139e543e"}
+    { "token":"ETH", "chainName":"ETH", "chainid":"1", "pricefeed":"0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"},
+    { "token":"MATIC", "chainName":"MATIC", "chainid":"137", "pricefeed":"0x7bAC85A8a13A4BcD8abb3eB7d6b4d632c5a57676"},
+    { "token":"ETHg", "chainName":"ETH Goerli", "chainid":"5", "pricefeed":"0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"},
+    { "token":"Mumbai", "chainName":"Mumbai", "chainid":"80001", "pricefeed":"0x7bAC85A8a13A4BcD8abb3eB7d6b4d632c5a57676"},
+    { "token":"BSC Testnet", "chainName":"BSC Testnet", "chainid":"97", "pricefeed":"0x14e613AC84a31f709eadbdF89C6CC390fDc9540A"},
+    { "token":"Celo Alfajores Testnet", "chainName":"Celo Alfajores Testnet", "chainid":"44787", "pricefeed":"0x9ae96129ed8FE0C707D6eeBa7b90bB1e139e543e"}
 ]

@@ -4,6 +4,7 @@ const styles = {
   innerContainer:
     "flex justify-between items-center flex-col max-w-[1280px] w-full",
   header: "flex flex-row justify-between items-center w-full sm:py-10 py-6",
+  Rheader: "flex flex-row justify-end  w-full sm:py-10 py-6",
   exchangeContainer:
     "flex-1 flex justify-start items-center flex-col w-full mt-10",
   headTitle: "text-white font-poppins font-black text-5xl tracking-wide",
@@ -33,7 +34,7 @@ const styles = {
 
   // WalletButton
   walletButton:
-    "bg-site-pink border-none outline-none px-6 py-2 font-poppins font-bold text-lg text-white rounded-3xl leading-[24px] hover:bg-pink-600 transition-all",
+    "ml-3 bg-site-pink border-none outline-none px-6 py-2 font-poppins font-bold text-lg text-white rounded-3xl leading-[24px] hover:bg-pink-600 transition-all",
 
   // loader
   loader: "flex justify-center items-center flex-col w-full min-h-full",
@@ -45,6 +46,6 @@ const styles = {
   balance: "w-full text-left mt-2 ml-2",
   balanceText: "font-poppins font-normal text-dim-white",
   balanceBold: "font-semibold text-white",
-}
+};
 
-export default styles
+export default styles;
