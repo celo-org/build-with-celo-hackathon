@@ -78,5 +78,7 @@ export const {
 //Created action
 export const getRoscaData = createAction('spaces/getRoscaData')
 export const getRoscaAddress = createAction('spaces/getRoscaAddress')
+export const fetchSpaces = createAction('loans/fetchSpaces')
+export const updateSpaces = createAction('loans/updateSpaces')
 
 export default spacesSlice.reducer

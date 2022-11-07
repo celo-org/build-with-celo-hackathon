@@ -1,5 +1,4 @@
 import { NativeBaseProvider } from 'native-base'
-import { Wallet } from 'ethers'
 import { Provider } from 'react-redux'
 import { StatusBar } from 'expo-status-bar'
 import { useState, useEffect } from 'react'
@@ -14,9 +13,15 @@ import { connectToProvider } from '../blockchain/provider'
 import { setUserDetails, setToken, setIsConnected } from '../features/essentials/essentialSlice'
 import { getWallets } from '../features/wallet/walletsManager'
 import { updateWalletAddress } from '../features/wallet/walletSlice'
+import { LogBox } from 'react-native'
 
 export default function App() {
   const [isInitComplete, setIsInitComplete] = useState()
+  // avoid warnings showing up in app. comment below code if you want to see warnings.
+  //useEffect(() => {
+  //LogBox.ignoreLogs(['Encountered two children with the same key ...'])
+  // LogBox.ignoreAllLogs()
+  //}, [])
   // Start Provider
   useEffect(() => {
     async function initProvider() {

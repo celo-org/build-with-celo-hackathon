@@ -26,6 +26,7 @@ import { utils } from 'ethers'
 import { useGetTokenTransfersQuery } from '../../app/services/blockscout'
 import { SectionHeader, TransactionItem } from '../../components'
 import { RefreshControl } from 'react-native'
+import * as WebBrowser from 'expo-web-browser'
 import { nanoid } from 'nanoid'
 
 export default function HomeScreen({ navigation }) {
@@ -91,6 +92,7 @@ export default function HomeScreen({ navigation }) {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true)
+    dispatch(fetchBalances())
     if (data) handleGetTransactions()
     wait(2000).then(() => setRefreshing(false))
   }, [])
@@ -164,18 +166,28 @@ export default function HomeScreen({ navigation }) {
       </Box>
       {/*news update*/}
       <Box bg="#fcfcfc" width="95%" rounded="md" mt="-5" zIndex="-2">
-        <HStack space="3" m="3" mt="8">
-          <Image
-            source={{
-              uri: 'https://wallpaperaccess.com/full/317501.jpg',
-            }}
-            alt="Alternate Text"
-            rounded="md"
-            width="52"
-          />
-          <Text maxW="70%">Get 5 cUSD with ClixCard and stand a chance to win 1 BTC</Text>
-          <Icon as={Feather} name="list" size="lg" position="absolute" ml="92%" />
-        </HStack>
+        <Pressable
+          onPress={() =>
+            WebBrowser.openBrowserAsync(
+              'https://www.coindesk.com/layer2/2022/10/14/clixpesa-is-bringing-traditional-kenyan-investing-techniques-to-web3/',
+            )
+          }
+        >
+          <HStack space="3" m="3" mt="8">
+            <Image
+              source={{
+                uri: 'https://www.coindesk.com/resizer/ibUgEB0_QW7Q2nCIZPaRsbYkn5o=/1056x704/filters:quality(80):format(webp)/cloudfront-us-east-1.images.arcpublishing.com/coindesk/KXQBKVK3PFEQBCXLYB46YRUEIU.jpg',
+              }}
+              alt="Alternate Text"
+              rounded="md"
+              width="52"
+            />
+            <Text maxW="70%">
+              Clixpesa Is Bringing Traditional Kenyan Investing Techniques to Web3
+            </Text>
+            <Icon as={Feather} name="list" size="lg" position="absolute" ml="92%" />
+          </HStack>
+        </Pressable>
       </Box>
 
       {/* Transactions */}

@@ -123,6 +123,7 @@ export default function ApplyLoanScreen({ navigation, route }) {
       pending: true,
       name: loanName,
       address: results.args[0],
+      principal: utils.formatUnits(results.args[2][6], 'ether'),
       balance: utils.formatUnits(results.args[2][6], 'ether'),
       paid: 0,
       dueDate: dueDate.toDateString(),

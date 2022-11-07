@@ -68,6 +68,7 @@ export default function LoansHomeScreen({ navigation }) {
       <FlatList
         width="95%"
         data={loans}
+        showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         ListHeaderComponent={
           <>
@@ -139,6 +140,7 @@ export default function LoansHomeScreen({ navigation }) {
           </Box>
         )}
         keyExtractor={(item) => item.address}
+        ListFooterComponent={<Box bg="muted.100" h={20}></Box>}
       />
 
       {/*<Text>{loanONRsAddr}</Text>*/}

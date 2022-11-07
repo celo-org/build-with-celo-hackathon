@@ -6,6 +6,10 @@ import { LOANS_STORE } from 'clixpesa/app/constants'
 import { storeUserLoan, modifyLoanDetails } from 'clixpesa/app/storage'
 import { areAddressesEqual } from '../../blockchain/utils/addresses'
 
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout))
+}
+
 export const loansListeners = (startListening) => {
   startListening({
     actionCreator: fetchOffers,
@@ -41,29 +45,39 @@ export const loansListeners = (startListening) => {
         methodType: 'read',
       })
       const loans = await getLoans()
-      results.forEach(async (result) => {
-        const results = await celoHelper.smartContractCall('P2PLoan', {
-          contractAddress: result[0],
-          method: 'getLoanDetails',
-          methodType: 'read',
+      if (loans.length > 0) {
+        results.forEach(async (result) => {
+          const results = await celoHelper.smartContractCall('P2PLoan', {
+            contractAddress: result[0],
+            method: 'getLoanDetails',
+            methodType: 'read',
+          })
+          const thisLoan = loans.find((loan) => areAddressesEqual(loan.address, result[0]))
+          const dueDate = new Date(results[12].toString() * 1)
+          const balance = utils.formatUnits(results[8], 'ether')
+          const paid = utils.formatUnits(results[9], 'ether')
+          const loanDetails = {
+            pending: balance == 0.0 && paid == 0.0 ? true : false,
+            name: thisLoan.name,
+            address: result[0],
+            principal: utils.formatUnits(results[6], 'ether'),
+            balance:
+              balance == 0.0 && paid == 0.0 ? utils.formatUnits(results[6], 'ether') : balance,
+            paid: utils.formatUnits(results[9], 'ether'),
+            dueDate: dueDate.toDateString(),
+            initiated: result[1],
+          }
+          try {
+            await modifyLoanDetails(LOANS_STORE, loanDetails)
+          } catch (error) {
+            await storeUserLoan(LOANS_STORE, loanDetails)
+          }
+
+          Object.assign(loansListCache, { [loanDetails.address]: loanDetails })
         })
-        const thisLoan = loans.find((loan) => areAddressesEqual(loan.address, result[0]))
-        const dueDate = new Date(results[12].toString() * 1)
-        const balance = utils.formatUnits(results[8], 'ether')
-        const paid = utils.formatUnits(results[9], 'ether')
-        const loanDetails = {
-          pending: balance == 0.0 && paid == 0.0 ? true : false,
-          name: thisLoan.name,
-          address: result[0],
-          principal: utils.formatUnits(results[6], 'ether'),
-          balance: balance == 0.0 && paid == 0.0 ? utils.formatUnits(results[6], 'ether') : balance,
-          paid: utils.formatUnits(results[9], 'ether'),
-          dueDate: dueDate.toDateString(),
-          initiated: result[1],
-        }
-        await modifyLoanDetails(LOANS_STORE, loanDetails)
-        Object.assign(loansListCache, { [loanDetails.address]: loanDetails })
-      })
+      } else {
+        listenerApi.dispatch(fetchLoans())
+      }
     },
   })
   startListening({
@@ -79,6 +93,7 @@ export const loansListeners = (startListening) => {
           method: 'getLoanDetails',
           methodType: 'read',
         })
+        wait(5000)
         const loanName = await getDefaultNewLoanName()
         const dueDate = new Date(results[12].toString() * 1)
         const balance = utils.formatUnits(results[8], 'ether')

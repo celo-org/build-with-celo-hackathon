@@ -11,10 +11,13 @@ import {
   Actionsheet,
   useDisclose,
   FlatList,
+  Modal,
+  Icon,
 } from 'native-base'
 import { TouchableOpacity } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { useState } from 'react'
+import { Ionicons } from '@expo/vector-icons'
 import {
   getRoscaData,
   setCtbSchedule,
@@ -23,15 +26,17 @@ import {
   setUserSpaces,
 } from './spacesSlice'
 import celoHelper from '../../blockchain/helpers/celoHelper'
+import { config } from '../../blockchain/configs/celo.config'
 import { spacesIface } from '../../blockchain/contracts'
 import { utils } from 'ethers'
 
 export default function SetRoscaGoalScreen({ navigation, route }) {
   const dispatch = useDispatch()
   const spaceInfo = useSelector((state) => state.spaces.spaceInfo)
-
+  const [newRosca, setNewRosca] = useState()
   const [amount, setAmount] = useState('0')
   const { isOpen, onOpen, onClose } = useDisclose()
+  const { isOpen: isOpen1, onOpen: onOpen1, onClose: onClose1 } = useDisclose()
   const [isSetCtb, setIsSetCtb] = useState(false)
   const [schedule, setSchedule] = useState({
     day: spaceInfo.ctbDay,
@@ -42,45 +47,55 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
   const userAddress = useSelector((s) => s.wallet.walletInfo.address)
   const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   const members = useSelector((state) => state.spaces.spaceInfo.members)
-
   const createRosca = async () => {
     setIsLoading(true)
-    const stableTokenAddress = '0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1'
     const ctbAmount = utils.parseEther(spaceInfo.ctbAmount.toString()).toString()
     const goalAmount = utils.parseEther(spaceInfo.goalAmount.toString()).toString()
-    let results
+    //let results
     const imageLink =
       'https://images.unsplash.com/photo-1493655430214-3dd7718460bb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
     try {
       let txData = {
-        address: stableTokenAddress,
-        params: [
-          spaceInfo.name,
-          imageLink,
-          spaceInfo.authCode,
-          goalAmount,
-          ctbAmount,
-          spaceInfo.ctbDay,
-          spaceInfo.ctbOccurence,
-          spaceInfo.disbDay,
-          spaceInfo.disbOccurence,
-        ],
+        token: config.contractAddresses['StableToken'],
+        roscaName: spaceInfo.name,
+        imageLink,
+        authCode: spaceInfo.authCode,
+        goalAmount,
+        ctbAmount,
+        ctbDay: spaceInfo.ctbDay,
+        ctbOccur: spaceInfo.ctbOccurence,
+        disbDay: spaceInfo.disbDay,
+        disbOccur: spaceInfo.disbOccurence,
       }
-
       const txReceipt = await celoHelper.smartContractCall('Spaces', {
         method: 'createRosca',
         methodType: 'write',
-        params: [txData.address, txData.params],
+        params: [Object.values(txData)],
       })
-      const { data, topics } = txReceipt.logs[1]
-      results = spacesIface.parseLog({ data, topics })
-      dispatch(setUserSpaces(results.args.roscaAddress))
+      handleTxResponce(txReceipt)
     } catch (e) {
       console.log(e)
-    } finally {
-      setIsLoading(false)
-      //dispatch(getRoscaData(results.args.roscaAddress))
-      navigation.navigate('RoscaHome', { roscaAddress: results.args.roscaAddress })
+    }
+  }
+
+  const handleTxResponce = (txReceipt) => {
+    setIsLoading(false)
+    const { data, topics } = txReceipt.logs.find(
+      (el) => el.address === config.contractAddresses['Spaces'],
+    )
+    const results = spacesIface.parseLog({ data, topics })
+    if (results) {
+      const roscaDetails = {
+        address: results.args.roscaAddress,
+        roscaName: results.args[2][1],
+        goalAmount: utils.formatUnits(results.args[2][4], 'ether'),
+        goalAmountPaid: 0,
+        ctbDay: results.args[2][6],
+        ctbOccur: results.args[2][7],
+      }
+      setNewRosca(roscaDetails)
+      dispatch(setUserSpaces(results.args.roscaAddress))
+      onOpen1()
     }
   }
 
@@ -248,6 +263,28 @@ export default function SetRoscaGoalScreen({ navigation, route }) {
             </Actionsheet.Content>
           </Actionsheet>
         </Stack>
+        <Modal isOpen={isOpen1} onClose={onClose1} animationPreset="slide">
+          <Modal.Content width="65%" maxWidth="400px">
+            <Modal.Body alignItems="center">
+              <Icon as={Ionicons} name="md-checkmark-circle" size="6xl" color="success.600" />
+              <Text textAlign="center" mt={3}>
+                Rosca created successfully!
+              </Text>
+              <Button
+                variant="subtle"
+                rounded="3xl"
+                w="60%"
+                mt={3}
+                _text={{ color: 'primary.600', fontWeight: 'semibold' }}
+                onPress={() => {
+                  onClose(), navigation.navigate('RoscaHome', { roscaAddress: newRosca.address })
+                }}
+              >
+                OK
+              </Button>
+            </Modal.Body>
+          </Modal.Content>
+        </Modal>
         <Spacer />
         <Stack alignItems="center" space={3} mb={8}>
           <Button
