@@ -1,6 +1,6 @@
 // @ts-ignore
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useSigner } from "wagmi";
+import { useAccount, useSigner } from "wagmi";
 import { ethers } from "ethers";
 import { dexabi } from "../utils/dexabi";
 import { treasuryabi } from "../utils/treasuryabi";
@@ -15,6 +15,7 @@ const Funders = () => {
   const provider = new CeloProvider(process.env.REACT_APP_RPC_URL);
   const [BCT, setBCT] = useState<string>();
   const [sequestered, setSequestered] = useState<string>();
+  const { isConnected } = useAccount();
 
   const dexContract = new ethers.Contract(REACT_APP_FAKE_DEX || "", dexabi);
 
@@ -68,7 +69,7 @@ const Funders = () => {
           <div className="rounded-lg mt-4 bg-white px-5 py-6 shadow sm:px-6">
             <div className="rounded-lg">
               {" "}
-              <div className="relative overflow-hidden bg-white h-screen">
+              <div className="relative  bg-white ">
                 <div className="mx-auto mt-8 max-w-7xl">
                   <div>
                     <div className="flex flex-col w-full mb-20 text-left lg:text-center">
@@ -102,25 +103,35 @@ const Funders = () => {
                     </dl>
                   </div>
                   <div className="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                      Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                      sed diam nonumy eirmod tempor invidunt ut labore et dolore
-                      magna aliquyam erat, sed diam voluptua
+                    <p className="mb-3 text-2xl text-gray-700 dark:text-gray-400">
+                      Ready to fund?
                     </p>
                     <form onSubmit={buy}>
-                      <input
-                        required
-                        step="0.01"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        style={{ width: 200 }}
-                        type="number"
-                        id="amount"
-                      />
+                      <label
+                        className="block text-gray-700 text-sm font-bold mb-2"
+                        htmlFor="amount"
+                      >
+                        amount (* required)
+                      </label>
+                      <div className="flex">
+                        <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                          BCT
+                        </span>
+                        <input
+                          required
+                          step="0.01"
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          style={{ width: 200 }}
+                          type="number"
+                          id="amount"
+                        />
+                      </div>
+
                       <br />
                       <button
-                        disabled={true}
+                        disabled={!isConnected}
                         type="submit"
-                        className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        className="disabled:opacity-25 flex w-full items-center justify-center rounded-md border border-transparent bg-green px-8 py-3 text-base font-medium text-white hover:bg-green-medium md:py-4 md:px-10 md:text-lg"
                         role="button"
                       >
                         Buy BCT & transfer to ZENA treasury
