@@ -50,9 +50,6 @@ Please refer to the project [wiki](https://github.com/ricCap/projectz/wiki) for 
   - remotely against Alfajores
 - [x] test contract with end-to-end workflow implemented: project created, donations, project started, partners approve checkpoints, project ends.
 
-### Demo
-Below a video showcasing some of the app functionalities.
-
 The **contracts** structure is the following:
 - a Manager contract that owns the other contracts of the application
 - an AddressBook control that provides access control functionalities
@@ -70,9 +67,11 @@ A quick overview of the tests (and relative contracts functionalities); gas esti
 ![image](https://user-images.githubusercontent.com/26276572/200193699-1faf3358-f37e-4e02-a07d-dc44af3bce22.png)
 ![image](https://user-images.githubusercontent.com/26276572/200193716-92da4c04-c422-415b-9852-3bcb6ebe6a84.png)
 
+### Demo
+Feel free to reach out to me (`Riccardo#6965`) on Discord to schedule a quick demo and Q&A session. If you have any questions or need help setting up the project we encourage you to comment on this PR.
 
 ### How to test it locally
-Follow the instruction in the guide on the main [repo](https://riccap.github.io/projectz/). You will need at least a wallet that contains some cUSD on Alfajores to test the application locally. Please add a comment in the PR if you need any help.
+Follow the instruction in the guide on the main [repo](https://riccap.github.io/projectz/). You will need at least a wallet that contains some cUSD on Alfajores to test the application locally.
 
 ### Next Steps
 The project is still in an early phase of development. Hence, many next steps can be identified before reaching a fully working prototype.
