@@ -1,4 +1,4 @@
-import * as Chart from "../Chart";
+import * as Chart from "../chart";
 
 export default function Score({ wallet }) {
   return (

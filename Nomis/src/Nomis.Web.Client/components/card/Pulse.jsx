@@ -1,6 +1,6 @@
 import React from "react";
 
-import * as Chart from "../Chart";
+import * as Chart from "../chart";
 
 export default function Pulse({ wallet, blockchain }) {
   // const activityString = "You've been quite active for the last 3 months";
