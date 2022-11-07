@@ -15,7 +15,7 @@ import WalletData from "../../components/WalletData";
 import WalletUser from "../../components/WalletUser";
 
 export async function getServerSideProps(context) {
-  const blockchain = "celo";
+  const blockchain = await context.query.wallet[0];
   const fullAddress = await context.query.wallet[1];
 
   return { props: { blockchain, fullAddress } };
@@ -27,7 +27,7 @@ export default function Scored({ blockchain, fullAddress }) {
   const [wallet, setWallet] = React.useState(null);
   const [success, setSuccess] = React.useState(false);
 
-  React.useEffect(({ blockchain, fullAddress }) => {
+  React.useEffect((blockchain, fullAddress) => {
     const getData = async () => {
       try {
         const response = await fetch(
