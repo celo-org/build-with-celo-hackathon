@@ -40,7 +40,7 @@ export default function EcoStoryForm({
       if (!file) return alert('Error with the file, please try again')
 
       const fileName = uuid.v4()
-      const storageRef = ref(storage, String(fileName))
+      const storageRef = ref(storage, `/files/${fileName}`)
       const response = await fetch(file.uri)
       const blob = await response.blob()
       const uploadTask = uploadBytesResumable(storageRef, blob)
@@ -57,7 +57,6 @@ export default function EcoStoryForm({
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            console.log('logD', downloadURL)
             ecoStory.image = downloadURL
             const stories = !currentRoute.ecostories ? [ecoStory] : [...currentRoute.ecostories, ecoStory]
             await updateRouteEcostories(routeId, stories)

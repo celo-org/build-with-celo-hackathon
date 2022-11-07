@@ -4,7 +4,7 @@
     "slug": "run3-celo",
     "version": "1.0.0",
     "scheme": "openloginexposdkexampleexpo",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
@@ -16,9 +16,7 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/30868dc3-7a22-491c-ae6c-955972ef189b"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "config": {
@@ -35,9 +33,7 @@
       "favicon": "./assets/favicon.png",
       "build": {
         "babel": {
-          "include": [
-            "@ui-kitten/components"
-          ]
+          "include": ["@ui-kitten/components"]
         }
       }
     },

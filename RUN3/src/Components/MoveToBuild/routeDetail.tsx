@@ -1,19 +1,39 @@
-import React, { useEffect, useState } from 'react'
-import { View, Text } from 'react-native'
+import React, { useEffect, useRef, useState } from 'react'
+import { View, Text, Dimensions, Image } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE, Polyline } from 'react-native-maps'
 import { colors, globalStyles } from '../../utils/globalStyles'
 import * as Location from 'expo-location'
 import { Spinner, Button } from '@ui-kitten/components'
 import { styles } from './style'
 import { useIsFocused } from '@react-navigation/native'
-import { Route } from '../../api/routes/routes.interface'
+import { Ecostory, Route } from '../../api/routes/routes.interface'
 import { getRouteById } from '../../api/routes/routes'
+import Carousel from 'react-native-snap-carousel'
 
 export default function RouteDetail({ navigation, route }: { navigation: any; route: { params: string } }) {
   const [routeCoords, setRouteCoords] = useState<(Location.LocationObjectCoords & { id: number })[]>([])
   const [routeData, setRouteData] = useState<Route>()
+  const [showEco, setShowEco] = useState(false)
   const routeId = route.params
   const isFocused = useIsFocused()
+  const carouselRef = useRef(null)
+  const width = Dimensions.get('window').width
+
+  const _renderItem = ({ item, index }: { item: Ecostory; index: number }) => {
+    return (
+      <View style={styles.carouselItem}>
+        <View style={{ backgroundColor: 'black', borderRadius: 10 }}>
+          <Image source={{ uri: item.image }} style={styles.carouselImg} />
+        </View>
+        <View style={{ padding: 8 }}>
+          <Text style={styles.carouselDes}>{item.description}</Text>
+          <Text style={styles.carouselUser}>
+            Created at {item.date} by {item.user?.name}
+          </Text>
+        </View>
+      </View>
+    )
+  }
 
   useEffect(() => {
     if (isFocused) {
@@ -46,6 +66,13 @@ export default function RouteDetail({ navigation, route }: { navigation: any; ro
       <View style={styles.floatingBox}>
         <Text style={styles.mapTitle}>{routeData.title}</Text>
         <Text style={[styles.boxText, { marginTop: 8 }]}>{routeData.description}</Text>
+        <Text style={[styles.boxText, { marginTop: 8 }]}>
+          Eco-Stories: {routeData.ecostories?.length}
+          {'   '}
+          <Button onPress={() => setShowEco(!showEco)} style={globalStyles.primaryBg} size="tiny">
+            {showEco ? 'HIDE' : 'SHOW'}
+          </Button>
+        </Text>
       </View>
       <MapView
         initialRegion={
@@ -73,6 +100,18 @@ export default function RouteDetail({ navigation, route }: { navigation: any; ro
         ))}
         <Polyline tappable coordinates={routeCoords} strokeColor={colors.primary} strokeWidth={4} />
       </MapView>
+      {showEco && (
+        <View style={styles.carousel}>
+          <Carousel
+            layout={'default'}
+            ref={carouselRef}
+            data={routeData.ecostories || []}
+            renderItem={_renderItem}
+            sliderWidth={width}
+            itemWidth={width - 100}
+          />
+        </View>
+      )}
       <View style={styles.floatActions}>
         <Button
           onPress={() => navigation.navigate('ecostory', { id: routeData.id })}
