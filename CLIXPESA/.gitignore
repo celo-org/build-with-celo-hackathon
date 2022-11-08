@@ -17,3 +17,7 @@ web-build/
 contracts/cache/
 contracts/artifacts/
 contracts/deployments/
+
+#subgraphs
+build/
+generated/

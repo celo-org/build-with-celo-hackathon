@@ -1,0 +1,20 @@
+type Loan @entity {
+  id: Bytes! # loan addewss
+  parties: [UserLoan!]! @derivedFrom(field: "loan")
+  principal: BigInt
+  balance: BigInt
+  paid: BigInt
+  dueDate: BigInt
+}
+
+type User @entity {
+  id: Bytes! #user address
+  name: String! #user name
+  loans: [UserLoan!]! @derivedFrom(field: "user")
+}
+
+type UserLoan @entity {
+  id: Bytes!
+  user: User!
+  loan: Loan!
+}
