@@ -1,13 +1,12 @@
 const router = require('express').Router();
 
 const requests = require('../controllers/request.controller');
+const deliveries = require('../controllers/delivery.controller');
 
 router.post('/', requests.create);
 router.get('/', requests.getRequests);
 router.get('/:id', requests.getOneRequest);
-router.get('/:id/requests', requests.getCompanyRequests);
-router.delete('/deleteAll', requests.deleteAll);
-// router.put('/:id', requests.updateRequest);
-// router.delete('/:id', requests.deleteRequest);
+router.delete('/', requests.deleteAll);
+router.get('/:id/deliveries', deliveries.getRequestDeliveries);
 
 module.exports = router;

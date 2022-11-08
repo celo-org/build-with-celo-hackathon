@@ -1,43 +1,42 @@
-const db = require("../models");
-const Requests = db.requests;
+const db = require('../models');
 
+const Requests = db.requests;
 const Company = db.companies;
 
 module.exports = {
   getCompanies: async (req, res) => {
     try {
-        const companies = await Company.find({});
-        return res.json({status: true, companies});            
+      const companies = await Company.find({});
+      return res.json({ status: true, companies });
     } catch (error) {
-        res.status(500).send({
-            message: error.message || "Some error occurred while retrieving Companies."
-        });
+      return res.status(500).send({
+        message:
+          error.message || 'Some error occurred while retrieving companies.',
+      });
     }
   },
   getOneCompany: async (req, res) => {
-    const id = req.params.id;
+    const { id } = req.params;
 
     try {
       console.log(id);
-        const company = await Company.findOne({ id: id });
-        return res.json({status: true, company});            
+      const company = await Company.findOne({ id });
+      return res.json({ status: true, data: company });
     } catch (error) {
-        res.status(500).send({
-            message: error.message || "Some error occurred while retrieving Companies."
-        });
+      return res.status(500).send({
+        message:
+          error.message || 'Some error occurred while retrieving companies.',
+      });
     }
   },
   companyRequests: async (req, res) => {
-    
     // const { requestId } = req.params.id;
     // console.log(req.params.id)
     try {
-      const request = await Requests.find({ company: req.params.id });
-      res.send(request);
+      const requests = await Requests.find({ company: req.params.id });
+      res.json({ success: true, data: requests });
     } catch (error) {
-      res
-        .status(500)
-        .send({ message: `Error retrieving company requests` });
+      res.status(500).send({ message: `Error retrieving company requests` });
     }
   },
   // companyRequests: (req, res) =>{
@@ -54,4 +53,3 @@ module.exports = {
   //   });
   // }
 };
-

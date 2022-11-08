@@ -12,7 +12,7 @@ import { UseContextProvider } from '../../../contexts/NavigationContext';
 
 
 export const getStaticPaths = async () => {
-    const res = await axios.get(`http://127.0.0.1:8080/api/request`)
+    const res = await axios.get(`http://127.0.0.1:8080/api/requests`)
     if(res){
         const data = await res.data.info;
   
@@ -38,7 +38,7 @@ export const getStaticPaths = async () => {
         const id = context.params.id;
         // const id = (location.pathname.split("/")[3]);
         console.log(id)
-        const res = await axios.get('http://127.0.0.1:8080/api/request/' + id);
+        const res = await axios.get('http://127.0.0.1:8080/api/requests/' + id);
 
         if(res){
             console.log(res, "ress")

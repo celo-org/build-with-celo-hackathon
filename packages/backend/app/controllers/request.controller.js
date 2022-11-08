@@ -48,7 +48,7 @@ module.exports = {
       });
       // Save request in the database
       request = request.save(request);
-      return res.send({status: true, request});
+      return res.send({ status: true, data: request });
     } catch (error) {
       return res.status(500).send({
         message:
@@ -60,19 +60,20 @@ module.exports = {
     /**
      * TODO: paginate
      */
-    let { filter, location, companyId, page, size } = req.query;
+    const { filter, location, companyId } = req.query;
+    let { page, size } = req.query;
     let requests;
     try {
       if (!page) {
-          // Make the Default value one
-          page = 1;
+        // Make the Default value one
+        page = 1;
       }
 
       if (!size) {
         size = 10;
       }
 
-      let limit = parseInt(size);
+      const limit = parseInt(size, 10);
       // if filter query exists, run filter by param (maybe location)
       if (filter === 'location' && location) {
         // confirm that location exists, if not - pass error
@@ -96,11 +97,19 @@ module.exports = {
         requests = await Request.find({ company: foundcompany._id }).exec();
       } else {
         // get all requests
-        requests = await Request.find().sort({ id: -1 }).limit(limit).populate({ path: 'location', model: Location }).populate({ path: 'company', model: Company }).populate({ path: 'scrap_category', model: Category }).populate({ path: 'collection_center', model: CollectionCenter }).populate({
-          path: 'scrap_subcategory',
-          model: Category,
-          populate: { path: 'children', model: Category },
-        }).exec();
+        requests = await Request.find()
+          .sort({ id: -1 })
+          .limit(limit)
+          .populate({ path: 'location', model: Location })
+          .populate({ path: 'company', model: Company })
+          .populate({ path: 'scrap_category', model: Category })
+          .populate({ path: 'collection_center', model: CollectionCenter })
+          .populate({
+            path: 'scrap_subcategory',
+            model: Category,
+            populate: { path: 'children', model: Category },
+          })
+          .exec();
       }
       // no requests found
       if (!requests) {
@@ -108,13 +117,8 @@ module.exports = {
           message: `No requests found for your query.`,
         });
       }
-      var count = requests.length;
-      return res.send(
-        { count, 
-          page,
-          size,
-          info: requests,
-      });
+      const count = requests.length;
+      return res.send({ count, page, size, data: requests });
     } catch (error) {
       return res.status(500).send({
         message:
@@ -133,47 +137,49 @@ module.exports = {
      */
     // const { requestId } = req.params;
     try {
-      const request = await Request.findById(req.params.id).populate({ path: 'location', model: Location }).populate({ path: 'company', model: Company }).populate({ path: 'scrap_category', model: Category }).populate({ path: 'collection_center', model: CollectionCenter }).populate({
-        path: 'scrap_subcategory',
-        model: Category,
-        populate: { path: 'children', model: Category },
-      });
+      const request = await Request.findById(req.params.id)
+        .populate({ path: 'location', model: Location })
+        .populate({ path: 'company', model: Company })
+        .populate({ path: 'scrap_category', model: Category })
+        .populate({ path: 'collection_center', model: CollectionCenter })
+        .populate({
+          path: 'scrap_subcategory',
+          model: Category,
+          populate: { path: 'children', model: Category },
+        });
       res.send(request);
     } catch (error) {
-      res
-        .status(500)
-        .send({ message: `Error retrieving request ` });
+      res.status(500).send({ message: `Error retrieving request ` });
     }
   },
   updateRequest: async (req, res) => {},
   deleteRequest: async (req, res) => {},
 
   // Delete all Tutorials from the database.
-  deleteAll : (req, res) => {
+  deleteAll: (req, res) => {
     Request.deleteMany({})
-      .then(data => {
+      .then((data) => {
         res.send({
-          message: `${data.deletedCount} Requests were deleted successfully!`
+          message: `${data.deletedCount} Requests were deleted successfully!`,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while removing all tutorials."
+            err.message || 'Some error occurred while removing all tutorials.',
         });
       });
   },
 
   getCompanyRequests: async (req, res) => {
-    
     const { requestId } = req.params;
     try {
       const request = await Request.find({ company: requestId });
       res.send(request);
     } catch (error) {
-      res
-        .status(500)
-        .send({ message: `Error retrieving company requests with id=${requestId}` });
+      res.status(500).send({
+        message: `Error retrieving company requests with id=${requestId}`,
+      });
     }
   },
 };
