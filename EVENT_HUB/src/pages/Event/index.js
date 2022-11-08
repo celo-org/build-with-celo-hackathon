@@ -28,45 +28,13 @@ function Event() {
     e.preventDefault()
 
     if (address) {
-      setLoading(true)
-      const CID = await saveToIPFS()
-      // return console.log(CID)
-
-
-      let deposit = ethers.utils.parseEther(refund);
-      // let deposit = refund
-      let eventDateAndTime = new Date(`${eventDate} ${eventTime}`);
-      let eventTimestamp = eventDateAndTime.getTime();
-
-
-      try {
-        const stableToken = await kit.contracts.getStableToken()
-        const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
-
-        const res = await eventHubContract.methods.createNewEvent(eventTimestamp, deposit, maxCapacity, CID, CID).send({
-          from: address,
-          // feeCurrency: stableToken.address,
-          gasLimit: '910000',
-
-        })
-        if (res) {
-          setLoading(false)
-        }
-
-      } catch (error) {
-        setLoading(false)
-        console.log("😥 " + error)
-        setStatus("😥 " + error.message)
-      }
-
-      // const { status } = await createNewEvent(eventHubContract, address, kit, {
-      //   eventTimestamp,
-      //   deposit,
-      //   maxCapacity,
-      //   CID,
-      //   ID: CID
-      // })
-      setStatus(status)
+      await createEvent()
+    } else {
+      console.log(kit.connection)
+      // const res = await connect()
+      // if (res) {
+      //   await createEvent()
+      // }
     }
 
   }
@@ -85,7 +53,57 @@ function Event() {
     )
   }
 
+  const createEvent = async () => {
+    setLoading(true)
+    const CID = await saveToIPFS()
+    // return console.log(CID)
+
+
+    let deposit = ethers.utils.parseEther(refund);
+    // let deposit = refund
+    let eventDateAndTime = new Date(`${eventDate} ${eventTime}`);
+    let eventTimestamp = eventDateAndTime.getTime();
+
+
+    try {
+      const stableToken = await kit.contracts.getStableToken()
+      const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
+
+      const res = await eventHubContract.methods.createNewEvent(eventTimestamp, deposit, maxCapacity, CID, CID).send({
+        from: address,
+        feeCurrency: stableToken.address,
+        gasLimit: '910000',
+
+      })
+      if (res) {
+        setLoading(false)
+      }
+
+    } catch (error) {
+      setLoading(false)
+      console.log("😥 " + error)
+      setStatus("😥 " + error.message)
+    }
+
+    // const { status } = await createNewEvent(eventHubContract, address, kit, {
+    //   eventTimestamp,
+    //   deposit,
+    //   maxCapacity,
+    //   CID,
+    //   ID: CID
+    // })
+    setStatus(status)
+  }
+
+  const loginToMetamask = async () => {
+    const accounts = await kit.connection.web3.eth.getAccounts()
+    if (!accounts.length) {
+      await kit.connection.web3.eth.requestAccounts()
+    }
+  }
+
   useEffect(() => {
+    loginToMetamask()
     // setEventHubContract(contract(kit))
   }, [])
 

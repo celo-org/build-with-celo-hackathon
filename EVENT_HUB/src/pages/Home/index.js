@@ -31,6 +31,7 @@ const getBalance = async () => {
 
     try {
       if (address) {
+        //TODO make function modular.
         const stableToken = await kit.contracts.getStableToken()
         const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
         // const res = await eventHubContract.methods.createNewRSVP(eventId).call()
@@ -40,9 +41,20 @@ const getBalance = async () => {
           gasLimit: '210000',
           value: deposit
         })
-        console.log('the res ', res)
+        console.log(res)
       } else {
-        await connect()
+        const result = await connect()
+        if (result) {
+          const stableToken = await kit.contracts.getStableToken()
+          const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
+          const res = await eventHubContract.methods.createNewRSVP(eventId).send({
+            from: address,
+            // feeCurrency: stableToken.address,
+            gasLimit: '210000',
+            value: deposit
+          })
+          console.log(res)
+        }
       }
     } catch (e) {
       console.log('catch ', e.message)
@@ -64,6 +76,7 @@ const getBalance = async () => {
       const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
 
       const txHash = await eventHubContract.methods.confirmAttendee(eventId, '0x01a3f5cB1BCf260d12A2466cE075398aAB8cA610').send({
+      // const txHash = await eventHubContract.methods.confirmAttendee(eventId, '0x9Edd3fb21e1BC3dBE3c5BCf8AB8044c706AAEA9C').send({
         from: address,
         gasLimit: '210000'
       })
@@ -79,13 +92,17 @@ const getBalance = async () => {
   const test = async eventId => {
     const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
     const txHash = await eventHubContract.methods.getEvent(eventId).call()
+    // const txHash = await eventHubContract.methods.withdrawUnclaimedDeposits(eventId).call()
     console.log(txHash)
   }
 
   const transfer = async eventId => {
     const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
-    const txHash = await eventHubContract.methods.withdrawUnclaimedDeposits(eventId).call()
-    // const txHash = await eventHubContract.methods.transfer(eventId).call()
+    // const txHash = await eventHubContract.methods.withdrawUnclaimedDeposits(eventId).call()
+    const txHash = await eventHubContract.methods.payOut(eventId).send({
+      from: address,
+      gasLimit: '210000'
+    })
     console.log(txHash)
   }
 

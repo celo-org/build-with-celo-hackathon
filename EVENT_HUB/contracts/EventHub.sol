@@ -13,7 +13,7 @@ contract EventHub {
         string eventDataCID
     );
 
-    event Transfer(string Message);
+    event Payout(string Message);
 
     event NewRSVP(string eventID, address attendeeAddress);
 
@@ -30,6 +30,7 @@ contract EventHub {
         uint256 maxCapacity;
         address payable[] confirmedRSVPs;
         address payable[] claimedRSVPs;
+        address payable[] payedAttendees;
         bool paidOut;
     }
 
@@ -45,6 +46,7 @@ contract EventHub {
 
         address payable[] memory confirmedRSVPs;
         address payable[] memory claimedRSVPs;
+        address payable[] memory payedAttendees;
 
         idToEvent[eventId] = CreateEvent(
             eventId,
@@ -55,6 +57,7 @@ contract EventHub {
             maxCapacity,
             confirmedRSVPs,
             claimedRSVPs,
+            payedAttendees,
             false
         );
 
@@ -72,20 +75,12 @@ contract EventHub {
 
 //    function createNewRSVP(string calldata eventId) public returns(uint256) {
     function createNewRSVP(string calldata eventId) public payable {
-        // look up event from our mapping
         CreateEvent storage myEvent = idToEvent[eventId];
-        // transfer deposit to our contract / require that they send in enough ETH to cover the deposit requirement of this specific event
-//        require(msg.value == myEvent.deposit, "NOT ENOUGH");
-        // require that the event hasn't already happened (<eventTimestamp)
+
+        require(msg.value == myEvent.deposit, "NOT ENOUGH");
         require(block.timestamp <= myEvent.eventTimestamp, "ALREADY HAPPENED");
+        require(myEvent.confirmedRSVPs.length < myEvent.maxCapacity, "This event has reached capacity");
 
-        // make sure event is under max capacity
-        require(
-            myEvent.confirmedRSVPs.length < myEvent.maxCapacity,
-            "This event has reached capacity"
-        );
-
-        // require that msg.sender isn't already in myEvent.confirmedRSVPs AKA hasn't already RSVP'd
         for (uint8 i = 0; i < myEvent.confirmedRSVPs.length; i++) {
             require(myEvent.confirmedRSVPs[i] != msg.sender, "ALREADY CONFIRMED");
         }
@@ -95,19 +90,16 @@ contract EventHub {
     }
 
     function confirmAllAttendees(string calldata eventId) external {
-        // look up event from our struct with the eventId
         CreateEvent memory myEvent = idToEvent[eventId];
 
-        // make sure you require that msg.sender is the owner of the event
         require(msg.sender == myEvent.eventOwner, "NOT AUTHORIZED");
 
-        // confirm each attendee in the rsvp array
         for (uint8 i = 0; i < myEvent.confirmedRSVPs.length; i++) {
             confirmAttendee(eventId, myEvent.confirmedRSVPs[i]);
         }
     }
 
-    function confirmAttendee(string memory eventId, address attendee) public  {
+    function confirmAttendee(string memory eventId, address attendee) public {
         // look up event from our struct using the eventId
 
 
@@ -139,15 +131,15 @@ contract EventHub {
         myEvent.claimedRSVPs.push(payable(attendee));
 
         // sending eth back to the staker `https://solidity-by-example.org/sending-ether`
-        (bool sent, ) = attendee.call{value: myEvent.deposit}("");
+//        (bool sent, ) = attendee.call{value: myEvent.deposit}("");
 
         // if this fails, remove the user from the array of claimed RSVPs
-        if (!sent) {
-            myEvent.claimedRSVPs.pop();
-        }
-
-        require(sent, "Failed to send Ether");
-        emit ConfirmedAttendee(eventId, attendee);
+//        if (!sent) {
+//            myEvent.claimedRSVPs.pop();
+//        }
+//
+//        require(sent, "Failed to send Ether");
+//        emit ConfirmedAttendee(eventId, attendee);
     }
 
     function withdrawUnclaimedDeposits(string calldata eventId) external {
@@ -182,7 +174,7 @@ contract EventHub {
         }
 
         require(sent, "Failed to send Ether");
-        emit DepositsPaidOut(eventId);
+//        emit DepositsPaidOut(eventId);
     }
 
     function getEventId(uint i) public view returns (string memory) {
@@ -220,13 +212,27 @@ contract EventHub {
         return address(this).balance;
     }
 
-    function transfer(string calldata eventId) public {
-        CreateEvent memory myEvent = idToEvent[eventId];
-//        balances[msg.sender] -= amount;
+    function payOut(string memory eventId) public {
+        CreateEvent storage myEvent = idToEvent[eventId];
+
+        uint256 absentees = myEvent.confirmedRSVPs.length - myEvent.claimedRSVPs.length;
+
+        uint256 unclaimed = absentees * myEvent.deposit;
+
+        uint256 share = unclaimed / myEvent.claimedRSVPs.length;
+
         for (uint8 i = 0; i < myEvent.claimedRSVPs.length; i++) {
-            myEvent.claimedRSVPs[i].transfer(address(this).balance);
+            myEvent.payedAttendees.push(payable(myEvent.claimedRSVPs[i]));
+            (bool sent, ) = myEvent.claimedRSVPs[i].call{value: (share + myEvent.deposit)}("");
+
+            if (!sent) {
+                myEvent.payedAttendees.pop;
+            }
+
+            require(sent, "Failed to send Ether");
         }
-        emit Transfer('Transfered the payout');
+        emit DepositsPaidOut(eventId);
+
     }
 }
 
