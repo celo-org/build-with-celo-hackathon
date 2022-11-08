@@ -16,7 +16,7 @@ struct CreditReportPercentages {
 
 contract Sacuda is ERC721, AccessControl {
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN");
-    bytes32 public constant MINTER_ROLE = keccak256("MINTER");
+    bytes32 public constant CLERK_ROLE = keccak256("CLERK");
     bytes32 public constant ENHANCER_ROLE = keccak256("ENHANCER");
     bytes32 public constant WOB_ROLE = keccak256("WOMAN_OF_BUSSINESS");
 
@@ -69,6 +69,7 @@ contract Sacuda is ERC721, AccessControl {
         creditLengthWeight = 15;
         creditMixWeight = 10;
         newCreditWeight = 10;
+        _setRoleAdmin(CLERK_ROLE, ADMIN_ROLE);
     }
 
     /** @dev Override required by AccessControl/ERC721 */
@@ -100,7 +101,7 @@ contract Sacuda is ERC721, AccessControl {
         address _user,
         bool _isEnhancer,
         string memory _name
-    ) external onlyRole(MINTER_ROLE) {
+    ) external onlyRole(CLERK_ROLE) {
         require(balanceOf(_user) == 0, "Already Registered");
         uint256 tokenId = ++totalSupply;
         _mint(_user, tokenId);
@@ -118,7 +119,24 @@ contract Sacuda is ERC721, AccessControl {
             emit UserReportUpdated(tokenId, 100, 0, 100, 100, 100);
         }
         name[tokenId] = _name;
+            emit UserReportUpdated(tokenId, 100, 0, 100, 100, 100);
         emit NameUpdated(tokenId, _name);
+    }
+
+    /** @dev Ability to burn some tokens only by BURNER roles */
+    function burn(uint256 tokenId) public onlyRole(CLERK_ROLE) {
+        // Remove the roles for the holder
+        address user = ownerOf(tokenId);
+        _revokeRole(ENHANCER_ROLE, user);
+        _revokeRole(WOB_ROLE, user);
+        // Free storage for credit report and name
+        delete report[tokenId];
+        delete name[tokenId];
+        // Burn the token
+        _burn(tokenId);
+        // Emit events for credit report and name
+        emit UserReportUpdated(tokenId, 0, 0, 0, 0, 0);
+        emit NameUpdated(tokenId, '');
     }
 
     /** @dev Override to have on-chain SVG NFTs */
@@ -163,7 +181,7 @@ contract Sacuda is ERC721, AccessControl {
     /** @notice Update username function */
     function updateName(uint256 tokenId, string memory _name)
         external
-        onlyRole(MINTER_ROLE)
+        onlyRole(CLERK_ROLE)
     {
         _requireMinted(tokenId);
         name[tokenId] = _name;
@@ -172,7 +190,7 @@ contract Sacuda is ERC721, AccessControl {
     /** @notice Update User's Credit Report */
     function updateReport(uint256 _tokenId, bytes memory data)
         external
-        onlyRole(ADMIN_ROLE)
+        onlyRole(CLERK_ROLE)
     {
         _requireMinted(_tokenId);
         CreditReportPercentages memory r;
@@ -230,5 +248,29 @@ contract Sacuda is ERC721, AccessControl {
             creditMix,
             newCredit
         );
+    }
+
+    /** -- Administrative functions for Roles -- */
+
+    /** @dev Function to add an admin (admin + minter + burner) */
+    function addAdmin(address user) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        _grantRole(ADMIN_ROLE, user);
+        _grantRole(CLERK_ROLE, user);
+    }
+
+    /** @dev Function to remove an admin (admin + minter + burner) */
+    function removeAdmin(address user) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        _revokeRole(ADMIN_ROLE, user);
+        _revokeRole(CLERK_ROLE, user);
+    }
+
+    /** @dev Function to add a clerk (minter + burner) */
+    function addClerk(address user) external onlyRole(ADMIN_ROLE) {
+        _grantRole(CLERK_ROLE, user);
+    }
+
+    /** @dev Function to remove a clerk (minter + burner) */
+    function removeClerk(address user) external onlyRole(ADMIN_ROLE) {
+        _revokeRole(CLERK_ROLE, user);
     }
 }
