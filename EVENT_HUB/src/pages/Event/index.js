@@ -4,25 +4,24 @@ import { useCelo } from '@celo/react-celo'
 import { Link } from 'react-router-dom'
 import { ethers } from 'ethers'
 import styles from './Event.module.css'
-import { contract, createNewEvent, eventHubContractAddress } from '../../utils'
+import { eventHubContractAddress } from '../../utils'
 import { addToIPFS } from '../../utils/ipfs'
 import EventHub from "../../artifacts/contracts/EventHub.sol/EventHub.json";
 
 function Event() {
-  const { connect, address, kit } = useCelo()
+  const { address, kit } = useCelo()
 
   // const [eventHubContract, setEventHubContract] = useState('')
   const [status, setStatus] = useState('')
   const [loading, setLoading] = useState(false)
-  const [eventName, setEventName] = useState("");
-  const [eventDate, setEventDate] = useState("");
-  const [eventTime, setEventTime] = useState("");
-  const [maxCapacity, setMaxCapacity] = useState("");
-  const [refund, setRefund] = useState("");
-  const [eventLink, setEventLink] = useState("");
-  const [eventDescription, setEventDescription] = useState("");
-  const [eventFile, setEventFile] = useState('');
-  const [eventID, setEventID] = useState(null);
+  const [eventName, setEventName] = useState('')
+  const [eventDate, setEventDate] = useState('')
+  const [eventTime, setEventTime] = useState('')
+  const [maxCapacity, setMaxCapacity] = useState('')
+  const [refund, setRefund] = useState('')
+  const [eventLink, setEventLink] = useState('')
+  const [eventDescription, setEventDescription] = useState('')
+  const [eventFile, setEventFile] = useState('')
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -105,7 +104,7 @@ function Event() {
   useEffect(() => {
     loginToMetamask()
     // setEventHubContract(contract(kit))
-  }, [])
+  })
 
   return (
     <div className={styles.container}>
