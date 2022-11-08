@@ -20,11 +20,12 @@ interface IProps {
 
 const JoinModal = ({ showJoinModal, setShowJoinModal } : IProps) => {
 
-  const SuccourAddress = "0x12F57C67FDd16109B549F0B40579694fE12bf9Fd"
-  const cUSDaddress = "0x07b8b15Afd654e9334A3D63396B5f9092bfb0D9E";
+  const SuccourAddress = "0x122e768c3E676dba4905959f89a7056A5053D839"
+  const cUSDaddress = "0x4D3742f7d4AE2Ac3619c413E75976A9c7067b70E";
 
 
   const {address} = useAccount();
+  const router = useRouter();
 
   const modalRef = useRef<any | any>();
   const [name, setName ] = useState("");
@@ -92,14 +93,12 @@ const JoinModal = ({ showJoinModal, setShowJoinModal } : IProps) => {
     mode: 'recklesslyUnprepared',
     addressOrName: SuccourAddress,
     contractInterface: Succour_abi,
-    functionName: 'approve',
+    functionName: 'joinDAO',
     args:[
       name,
       ethers.utils.parseEther(amount? amount.toString(): "0")
     ]
   })
-
-  const router = useRouter();
 
   const { isLoading: joinDaoWaitData } = useWaitForTransaction({
     hash: joinDaoData?.hash,
@@ -108,14 +107,14 @@ const JoinModal = ({ showJoinModal, setShowJoinModal } : IProps) => {
       toast.success('Transaction sent successfully!', {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 8000,
-     })
-     router.push("/dao")
-      
+    })
+    router.push("/dao")
+
     },
     onError(data){
       console.log(data)
       // add toastify; input: Error encountered in joining SuccourDAO
-      toast.error('Error encountered in joining SuccourDAO!', {  
+      toast.error('Error encountered in joining SuccourDAO!', {
         position: toast.POSITION.TOP_CENTER
     })
     }
@@ -134,6 +133,7 @@ const JoinModal = ({ showJoinModal, setShowJoinModal } : IProps) => {
       <div className={styles.join} ref={modalRef} onClick={closeModal}>
             {/* animating the whole container properties*/}
             <animated.div style={animation}>
+              {/* @ts-ignore */}
                 <div className={styles.wrapper}  showJoinModal={showJoinModal}>
                 <div className={styles.closeButton} onClick={() => setShowJoinModal((prev : any) => !prev)}></div>
                 <div className={styles.container}>

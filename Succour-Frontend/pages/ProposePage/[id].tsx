@@ -14,8 +14,8 @@ import Succour_abi from "../../abi/abi.json"
 
 
 
-const PrososePage = () => {
-  const SuccourAddress = "0x12F57C67FDd16109B549F0B40579694fE12bf9Fd"
+const ProposePage = () => {
+  const SuccourAddress = "0x122e768c3E676dba4905959f89a7056A5053D839"
 
 
   const {query} = useRouter()
@@ -83,4 +83,4 @@ const PrososePage = () => {
   )
 }
 
-export default PrososePage
+export default ProposePage

@@ -7,7 +7,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 import arrowLeftSvg from '../../assets/arrow-left.svg'
 import UserIcon from '../../assets/user.svg'
-import arrowRight from '../../assets/arrow-right.svg'
 import DonateModal from '../../layouts/donateModal/DonateModal'
 import AllDonors from '../../layouts/allDonors/AllDonors'
 import Succour_abi from "../../abi/abi.json"
@@ -15,7 +14,7 @@ import { useContractRead } from 'wagmi'
 import { useRouter } from 'next/router'
 
 const FundraiserProject = () => {
-  const SuccourAddress = "0x12F57C67FDd16109B549F0B40579694fE12bf9Fd"
+  const SuccourAddress = "0x122e768c3E676dba4905959f89a7056A5053D839"
 
   const {query} = useRouter()
   const pageId = query.id
@@ -28,14 +27,14 @@ const FundraiserProject = () => {
 
   const hexToDecimal = (hex:any) => parseInt(hex, 16);
 
-   const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
-     const openModal = () => {
-       setShowModal(prev => !prev);
-     }
+    const openModal = () => {
+      setShowModal(prev => !prev);
+    }
 
-     //handle sharing button
-     const handleShareClick = () => {
+    //handle sharing button
+    const handleShareClick = () => {
     if (navigator.share) {
       navigator
         .share({
@@ -96,11 +95,11 @@ const FundraiserProject = () => {
                 </div>
                 <div className={styles.fundraiser_donate_content}>
                   <div className={styles.donate_content}>
-                    <h1 className={styles.donate_title}>{`${(hexToDecimal(item[4]._hex)/1e18).toLocaleString} cUSD raised of ${(hexToDecimal(item[3]._hex)/1e18).toLocaleString}`}</h1>
+                    <h1 className={styles.donate_title}>{(hexToDecimal(item[4]._hex)/1e18).toLocaleString()} cUSD raised of {(hexToDecimal(item[3]._hex)/1e18).toLocaleString()}</h1>
                     <div className={styles.boxrate}>
                     <div
                     style={{
-                      background: "#7BA29A",
+                      background: "black",
                       borderRadius: "0px 5px 5px 0px",
                       height: "8px",
                       width: String(hexToDecimal(item[4]._hex)/hexToDecimal(item[3]._hex)/100) + "%"

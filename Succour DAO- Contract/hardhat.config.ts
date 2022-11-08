@@ -11,7 +11,7 @@ const config: HardhatUserConfig = {
       url: process.env.CELO_ALFAJORES,
       accounts:  [process.env.PRIVATE_KEY] as HttpNetworkAccountsUserConfig | undefined,
       chainId: 44787,
-   },
+   }
   },
   etherscan: {
     apiKey: process.env.API_TOKEN

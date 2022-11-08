@@ -16,47 +16,47 @@ const Footer = () => {
                               <div className={styles.footer_title}>
                                    Ready to get started? Join thousands of others today
                               </div>
-                              <Link href="/CreateFunding/CreateFunding">
-                               <button className={styles.button}>Create funding requests</button>
-                              </Link>
-                           
-                         </div>
-                     <div className={styles.footer_social}>
-
-                          <Link href="#">
-                           <div className={styles.social_item}>
-                            <Image src={DiscordIcon} alt="Discord" />
-                          </div>
-                          </Link> 
-
-                            <Link href="#">
-                           <div className={styles.social_item}>
-                          <Image src={LinkdedInIcon} alt="Discord" />
-                          </div>
-                          </Link> 
+                         <Link href="/CreateFunding/CreateFunding">
+                              <button className={styles.button}>Create funding requests</button>
+                         </Link>
+                         
+                    </div>
+                    <div className={styles.footer_social}>
 
                          <Link href="#">
-                           <div className={styles.social_item}>
-                          <Image src={DiscordWhiteIcon} alt="Discord" />
-                          </div>
-                          </Link> 
+                         <div className={styles.social_item}>
+                         <Image src={DiscordIcon} alt="Discord" />
+                         </div>
+                         </Link> 
 
-                            <Link href="#">
-                           <div className={styles.social_item}>
-                          <Image src={LinkededInWhiteIcon} alt="Discord" />
-                          </div>
-                          </Link> 
-                        </div>
+                         <Link href="#">
+                         <div className={styles.social_item}>
+                         <Image src={LinkdedInIcon} alt="Discord" />
+                         </div>
+                         </Link> 
 
-                        <div className={styles.footer_link}>
-                           <div className={styles.title}>Quick Links</div>
-                            <div className={styles.links}>
-                           <span className={styles.link}>Home</span>
-                           <span className={styles.link}>About</span>
-                           <span className={styles.link}>DAO</span>
-                           <span className={styles.link}>Funding</span>
-                           </div>
-                        </div>
+                    <Link href="#">
+                         <div className={styles.social_item}>
+                         <Image src={DiscordWhiteIcon} alt="Discord" />
+                         </div>
+                         </Link> 
+
+                         <Link href="#">
+                         <div className={styles.social_item}>
+                         <Image src={LinkededInWhiteIcon} alt="Discord" />
+                         </div>
+                         </Link> 
+                    </div>
+
+                    <div className={styles.footer_link}>
+                         <div className={styles.title}>Quick Links</div>
+                         <div className={styles.links}>
+                         <span className={styles.link}>Home</span>
+                         <span className={styles.link}>About</span>
+                         <span className={styles.link}>DAO</span>
+                         <span className={styles.link}>Funding</span>
+                         </div>
+                    </div>
                     </div>
                </div>
           </div>

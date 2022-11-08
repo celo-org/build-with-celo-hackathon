@@ -1,16 +1,13 @@
 import React from 'react'
 import styles from './votetime.module.scss'
-import { useContractRead, useContractWrite } from 'wagmi'
+import { useContractRead, useContractWrite, useWaitForTransaction } from 'wagmi'
 import { useRouter } from 'next/router'
 import Succour_abi from "../../abi/abi.json"
+import { toast } from 'react-toastify'
 
 const Votetime = () => {
-  const SuccourAddress = "0x12F57C67FDd16109B549F0B40579694fE12bf9Fd"
+  const SuccourAddress = "0x122e768c3E676dba4905959f89a7056A5053D839"
 
-<<<<<<< HEAD
-=======
-
->>>>>>> d32647a491f8e9a2b7f3ba4c8a15252d7da31dcf
   const {query} = useRouter()
 
   const pageId = query.id
@@ -41,17 +38,39 @@ const Votetime = () => {
     ]
   })
 
-<<<<<<< HEAD
-=======
+  const {isLoading: membervoteloading } = useWaitForTransaction({
+    hash: voteData?.hash,
+    onSuccess(){
+      toast.success('Transaction sent successfully!', {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 8000,
+      })
+    },
+    onError(){
+      toast.error('Error encountered on voting', {
+        position: toast.POSITION.TOP_CENTER
+    })
+    }
+  })
 
+  const handleSubmit = (e:any) => {
+    e.preventDefault();
 
->>>>>>> d32647a491f8e9a2b7f3ba4c8a15252d7da31dcf
+    voteDataWrite();
+  }
+
   return (
     <div className={styles.votetime}>
       <div className={styles.wrapper}>
         <div className={styles.container}>
       <div className={styles.votetime_container}>
-      <button className={styles.btn}>Vote</button>
+      <button
+      className={styles.btn}
+      disabled={voteLoading || membervoteloading}
+      onClick={handleSubmit}
+      >
+        {(voteLoading || membervoteloading) ? "Loading..." : "Vote"}
+      </button>
       <div className={styles.votetime_content}>
         {
           proposalId?.map((item, index)=>

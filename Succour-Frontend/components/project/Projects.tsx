@@ -10,12 +10,8 @@ import { Any } from '@react-spring/types'
 
 const Projects = () => {
 
-  const SuccourAddress = "0x12F57C67FDd16109B549F0B40579694fE12bf9Fd"
+  const SuccourAddress = "0x122e768c3E676dba4905959f89a7056A5053D839"
 
-<<<<<<< HEAD
-=======
-
->>>>>>> d32647a491f8e9a2b7f3ba4c8a15252d7da31dcf
   // read proposed project from the contract
 
   const {data: DAOProposals} = useContractRead({
@@ -60,7 +56,7 @@ console.log(DAOProposals, "view the contract proposals")
                                     </div>
                                     <div className={styles.project_text}>
                                       <div className={styles.project_time}>
-                                        {("0000" + hexToDecimal(item[0])).slice(-7)}
+                                        {("0000" + hexToDecimal(item[0])).slice(-5)}
                                       </div>
                                       <div className={styles.project_titled}>{item[3]}</div>
                                       <div className={styles.project_desc}>{`${item[4].slice(0, 100)}`}</div>

@@ -13,12 +13,13 @@ import { ethers } from "ethers"
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 const Propose = () => {
-     const SuccourAddress = "0x12F57C67FDd16109B549F0B40579694fE12bf9Fd"
+     const SuccourAddress = "0x122e768c3E676dba4905959f89a7056A5053D839"
      const [title, setTitle] = useState("")
      const [amountProposed, setAmountProposed] = useState("")
      const [projectDescription, setProjectDescription] = useState("")
 
      const { address } = useAccount();
+     const router = useRouter();
 
      const {
           data: proposeData,
@@ -40,6 +41,7 @@ const Propose = () => {
           hash: proposeData?.hash,
           onSuccess(){
                console.log("Successfully proposed")
+               router.push("/Projects/Projects")
                // add toastify; input: Successfully Proposed
           },
           onError(data){
@@ -80,7 +82,7 @@ const Propose = () => {
                          <input id="input" name="input" type="text" value={title} onChange={(e)=> setTitle(e.target.value)} />
 
                          <label>Amount proposed</label>
-                         <input id="input" name="input" type="text" value={amountProposed} onChange={(e) => setAmountProposed(e.target.value)} />
+                         <input id="input" name="input" type="number" value={amountProposed} onChange={(e) => setAmountProposed(e.target.value)} />
 
                          <label>Project description</label>
                          <textarea cols={30} rows={5} value={projectDescription} onChange={(e)=> setProjectDescription(e.target.value)}></textarea>
@@ -175,7 +177,7 @@ const Propose = () => {
                         }}
                       >
                         {chain.iconUrl && (
-                          <img
+                          <Image
                             alt={chain.name ?? 'Chain icon'}
                             src={chain.iconUrl}
                             style={{ width: 12, height: 12 }}

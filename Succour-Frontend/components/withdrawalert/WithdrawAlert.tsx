@@ -15,13 +15,10 @@ interface IProps {
 }
 
 const WithdrawAlert = ({ showModal, setShowModal } : IProps) => {
-<<<<<<< HEAD
-       const SuccourAddress = "0x12F57C67FDd16109B549F0B40579694fE12bf9Fd"
+     
+       const SuccourAddress = "0x122e768c3E676dba4905959f89a7056A5053D839"
        const router = useRouter();
-=======
-  const SuccourAddress = "0x12F57C67FDd16109B549F0B40579694fE12bf9Fd"
 
->>>>>>> d32647a491f8e9a2b7f3ba4c8a15252d7da31dcf
        const modalRef = useRef<any | any>();
        const [ cancel, setCancel ] = useState(false);
       
@@ -60,7 +57,6 @@ const WithdrawAlert = ({ showModal, setShowModal } : IProps) => {
         contractInterface: Succour_abi,
         functionName: 'requestToWithdrawDAO'
     })
-<<<<<<< HEAD
 
     const {isLoading: rtwLoader} = useWaitForTransaction({
         hash: requestToWithdrawData?.hash,
@@ -79,34 +75,11 @@ const WithdrawAlert = ({ showModal, setShowModal } : IProps) => {
         }
     })
 
-    
 
-=======
-
-    const {isLoading: rtwLoader} = useWaitForTransaction({
-        hash: requestToWithdrawData?.hash,
-        onSuccess(){
-              // add toastify; input: You've Requested for withdrawal
-              toast.success('You have Requested for withdrawal', {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 8000
-              })
-        },
-        onError(data){
-              console.log(data)
-              // add toastify; input: Unable to request for withdrawal
-                toast.error('Unable to request for withdrawal', 
-              { position: toast.POSITION.TOP_CENTER })
-        }
-    })
-
->>>>>>> d32647a491f8e9a2b7f3ba4c8a15252d7da31dcf
     const handleSubmit = (e:any) => {
       e.preventDefault();
       requestToWithdrawWrite();
   }
-
-<<<<<<< HEAD
   const handleCancel = () => {
     router.push('/dao')
   }
@@ -114,14 +87,11 @@ const WithdrawAlert = ({ showModal, setShowModal } : IProps) => {
     return (
         <>
         <ToastContainer />
-=======
-    return (
-        <>
->>>>>>> d32647a491f8e9a2b7f3ba4c8a15252d7da31dcf
         {showModal ? (
         <div className={styles.withdraw} ref={modalRef} onClick={closeModal}>
               {/* animating the whole container properties*/}
               <animated.div style={animation}>
+                {/* @ts-ignore */}
               <div className={styles.wrapper} showModal={showModal}>
                     <div className={styles.closeButton} onClick={() => setShowModal((prev : any) => !prev)}></div>
                   <div className={styles.container}>
@@ -132,7 +102,7 @@ const WithdrawAlert = ({ showModal, setShowModal } : IProps) => {
 
                         <h1 className={styles.title}>Are you sure you want to request to withdraw?</h1>
                         <p className={styles.desc}>Please note that this takes 14 days to be approved by the DAO</p>
-                      
+
                       <div className={styles.withdraw_btn}>
                         <button
                         className={styles.yes_btn}
@@ -141,17 +111,14 @@ const WithdrawAlert = ({ showModal, setShowModal } : IProps) => {
                         >
                         {(requestLoading || rtwLoader) ? "Loading..." : "Yes, request to Withdraw"}
                       </button>
-<<<<<<< HEAD
                         {/* <Link href="/profilepage/ProfilePage"> */}
-                        <button className={styles.cancel_btn} onClick={handleCancel}>No, Cancel</button>
+                        {/* <button className={styles.cancel_btn} onClick={handleCancel}>No, Cancel</button> */}
                         {/* </Link> */}
-=======
                         <Link href="/profilepage/ProfilePage">
                         <button className={styles.cancel_btn}>No, Cancel</button>
                         </Link>
->>>>>>> d32647a491f8e9a2b7f3ba4c8a15252d7da31dcf
                       </div>
-                    
+
                     </div>
 
                   </div>

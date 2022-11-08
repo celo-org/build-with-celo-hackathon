@@ -8,7 +8,7 @@ import Succour_abi from "../../abi/abi.json"
 import { useContractRead } from 'wagmi'
 
 const Projects = () => {
-  const SuccourAddress = "0x12F57C67FDd16109B549F0B40579694fE12bf9Fd"
+  const SuccourAddress = "0x122e768c3E676dba4905959f89a7056A5053D839"
 
     const [visible, setVisible] = useState(6);
 
@@ -40,16 +40,6 @@ const Projects = () => {
                   <div className={styles.fundraiser_container}>
                             <div className={styles.fundraiser_header}>
                             <span className={styles.title}>Browse fundraisers</span>
-                            <div className={styles.totheright}>
-
-                                {/* <Link href="/Viewmore/Viewmore">
-                                  <div className={styles.controller_right}>View all</div>
-                                </Link>
-                              <div  className={styles.icon}>
-                                <Image src={arrowRightIcon} alt='' />
-                              </div> */}
-
-                            </div>
                           </div>
 
                       <div className={styles.fundraiser_grid}>
@@ -65,7 +55,7 @@ const Projects = () => {
                                   <div className={styles.fundraiser_text}>
                                     <div className={styles.fundraiser_titled}>{item[1]}</div>
                                     <div className={styles.fundraiser_desc}>
-                                    {item[2].slice(0, 150)}
+                                    {item[2].slice(0, 150)}.....
                                     </div>
                                     <div className={styles.box}>
                                       <div
@@ -79,7 +69,7 @@ const Projects = () => {
                                     </div>
                                     <div className={styles.project_voteTiming}>
                                         <div className={styles.left_item}>
-                                          <h2 className={styles.number}>{`${(hexToDecimal(item[4]._hex)/1e18).toLocaleString} cUSD raised of ${(hexToDecimal(item[3]._hex)/1e18).toLocaleString}`}</h2>
+                                          <h2 className={styles.number}>{(hexToDecimal(item[4]._hex)/1e18).toLocaleString()} cUSD raised of {(hexToDecimal(item[3]._hex)/1e18).toLocaleString()}</h2>
                                           <h1 className={styles.donation}>{item[6].length} Donations</h1>
                                         </div>
                                     </div>

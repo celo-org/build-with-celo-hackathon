@@ -15,7 +15,7 @@ const Projects = () => {
       setVisible((prevValue) => prevValue + 6);
     }
 
-    const SuccourAddress = "0x12F57C67FDd16109B549F0B40579694fE12bf9Fd"
+    const SuccourAddress = "0x122e768c3E676dba4905959f89a7056A5053D839"
 
 
     // read proposed project from the contract
@@ -71,14 +71,14 @@ const Projects = () => {
                                     </div>
                                     <div className={styles.project_text}>
                                       <div className={styles.project_time}>
-                                        {("00000" + hexToDecimal(item[0])).slice(-6)}
+                                        {("0000" + hexToDecimal(item[0])).slice(-5)}
                                       </div>
                                       <div className={styles.project_titled}>{item[3]}</div>
                                       <div className={styles.project_desc}>{`${item[4].slice(0, 100)}`}</div>
                                       <div className={styles.project_voteTiming}>
                                         <div className={styles.left_item}>
                                           <h2 className={styles.lowest}>Amount Proposed</h2>
-                                          <h1 className={styles.ether}>{hexToDecimal(item[1]).toExponential(2)}</h1>
+                                          <h1 className={styles.ether}>{((hexToDecimal(item[1]._hex)/1e18).toLocaleString())}</h1>
                                         </div>
                                         <div className={styles.right_item}>
                                           <button className={styles.button}>Vote now</button>
@@ -109,17 +109,17 @@ const Projects = () => {
                                     </div>
                                     <div className={styles.project_text}>
                                       <div className={styles.project_time}>
-                                        {("000000" + hexToDecimal(item[0])).slice(-7)}
+                                        {("0000" + hexToDecimal(item[0])).slice(-5)}
                                       </div>
                                       <div className={styles.project_titled}>{item[3]}</div>
                                       <div className={styles.project_desc}>{`${item[4].slice(0, 100)}`}</div>
                                       <div className={styles.project_voteTiming}>
                                         <div className={styles.left_item}>
                                           <h2 className={styles.lowest}>Amount Gotten</h2>
-                                          <h1 className={styles.ether}>{hexToDecimal(item[2]).toExponential(2)}</h1>
+                                          <h1 className={styles.ether}>{((hexToDecimal(item[2]._hex)/1e18).toLocaleString())}</h1>
                                         </div>
                                         <div className={styles.right_item}>
-                                          <button className={styles.button}>Vote now</button>
+                                          <button className={styles.button}>Donate now</button>
                                         </div>
                                       </div>
                                     </div>

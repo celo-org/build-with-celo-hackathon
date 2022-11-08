@@ -72,7 +72,7 @@ const JoinDao = ({ showModal, setShowModal } : IProps) => {
                         <div className={styles.join_content}>
                         <h1 className={styles.title}>Join Succour DAO</h1>
                         <p className={styles.desc}>
-                            To join the Succour DAO, you need at least 30,000 cUSD balance. It is important to note that these amounts are subject to change as proposals for that will come up sometime in the future.
+                            To join the Succour DAO, you need at least 5,000 cUSD balance. It is important to note that these amounts are subject to change as proposals for that will come up sometime in the future.
                         </p>
 
                           <p className={styles.join_question}>Are you willing to join a non-profit organisation? <span>*</span></p>
@@ -80,7 +80,7 @@ const JoinDao = ({ showModal, setShowModal } : IProps) => {
                             <div className={styles.checkbox_container}>
                                 <input type="checkbox" checked={checked} onChange={handleChange} />
                                   <span className={styles.checkmark}></span>
-                                <label htmlFor="check">Yes</label>
+                                <label >Yes</label>
                             </div>
 
 

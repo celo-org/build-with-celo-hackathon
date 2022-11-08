@@ -4,10 +4,12 @@ import styles from './donate.module.scss'
 import walletIcon from '../../assets/wallet-2.svg'
 import Image from 'next/image'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { useAccount } from 'wagmi'
+import { useAccount, useContractRead } from 'wagmi'
 import { useContractWrite, useWaitForTransaction } from 'wagmi'
 import Succour_abi from "../../abi/abi.json"
 import { ethers } from 'ethers'
+import ERC20_ABI from "../../abi/ERC20.json"
+import { useRouter } from 'next/router'
 
 interface IProps {
      showModal: any;
@@ -15,10 +17,12 @@ interface IProps {
 }
 
 const DonateModal = ({ showModal, setShowModal } : IProps) => {
-  const SuccourAddress = "0x12F57C67FDd16109B549F0B40579694fE12bf9Fd"
+  const SuccourAddress = "0x122e768c3E676dba4905959f89a7056A5053D839"
+  const cUSDaddress = "0x4D3742f7d4AE2Ac3619c413E75976A9c7067b70E";
   const [depositamount, setDepositamount] = useState("");
 
   const { address } = useAccount();
+  const route = useRouter();
 
        const modalRef = useRef<any | any>();
       
@@ -47,6 +51,37 @@ const DonateModal = ({ showModal, setShowModal } : IProps) => {
           return () => document.removeEventListener('keydown', keyPress);
       }, [keyPress])
 
+
+
+      const {
+        data: approveData,
+        write: approvecUSDToken,
+        isLoading: approveLoading,
+      } = useContractWrite({
+        mode: 'recklesslyUnprepared',
+        addressOrName: cUSDaddress,
+        contractInterface: ERC20_ABI.abi,
+        functionName: 'approve',
+        args: [
+          SuccourAddress,
+          ethers.utils.parseEther(depositamount ? depositamount.toString(): "0")
+        ]
+      })
+
+      const {isLoading: approveWaitLoader} = useWaitForTransaction({
+        hash: approveData?.hash,
+        onSuccess(data){
+          depositWrite()
+        },
+        onError(data){
+          console.log(data, "error in depositing")
+        }
+
+      })
+
+
+      // call joinDAO on approve
+
       const {
         data: depositData,
         write: depositWrite,
@@ -55,17 +90,19 @@ const DonateModal = ({ showModal, setShowModal } : IProps) => {
         mode: 'recklesslyUnprepared',
         addressOrName: SuccourAddress,
         contractInterface: Succour_abi,
-        functionName: 'depositIntoDAO',
+        functionName: 'fundGoFund',
         args:[
-          ethers.utils.parseEther(depositamount ? depositamount.toString(): "0")
+          ethers.utils.parseEther(depositamount ? depositamount.toString(): "0"),
+          address
         ]
       })
-    
+
       const {
         isLoading: depositLoaderWait
       } = useWaitForTransaction({
         hash: depositData?.hash,
         onSuccess(){
+          route.push("/Crowdfunding")
           // add toastify; input: Deposit Successful
         },
         onError(data){
@@ -73,11 +110,12 @@ const DonateModal = ({ showModal, setShowModal } : IProps) => {
           // add toastify; input: Unable to deposit
         }
       })
-    
+
+
       const handleSubmit = (e:any) => {
         e.preventDefault();
-    
-        depositWrite();
+
+        approvecUSDToken();
       }
 
     return (
@@ -92,7 +130,7 @@ const DonateModal = ({ showModal, setShowModal } : IProps) => {
                   <div className={styles.container}>
                         <div className={styles.donate_content}>
                         <h1 className={styles.title}>How much would you like to donate?</h1>
-                        
+
                         <div className={styles.donate_input}>
                             <div className={styles.wallet_icon}>
                               <Image src={walletIcon} alt="" />
@@ -102,16 +140,16 @@ const DonateModal = ({ showModal, setShowModal } : IProps) => {
                             <option value="cUSD" selected>cUSD</option>
                           </select>
                         </div>
-                      
+
                         {
                           address ?
 
                           <button
-                          className={styles.deposit_btn}
-                          disabled={depositLoading || depositLoaderWait}
+                          className={styles.join_btn}
+                          disabled={depositLoading || depositLoaderWait || approveLoading || approveWaitLoader}
                           onClick={handleSubmit}
                           >
-                            {(depositLoading || depositLoaderWait) ? "Loading..." : "Donate"}
+                            {(depositLoading || depositLoaderWait || approveLoading || approveWaitLoader) ? "Loading..." : "Donate"}
                           </button> :
 
                              <div className={styles.connection}>
@@ -182,7 +220,7 @@ const DonateModal = ({ showModal, setShowModal } : IProps) => {
                         }}
                       >
                         {chain.iconUrl && (
-                          <img
+                          <Image
                             alt={chain.name ?? 'Chain icon'}
                             src={chain.iconUrl}
                             style={{ width: 12, height: 12 }}

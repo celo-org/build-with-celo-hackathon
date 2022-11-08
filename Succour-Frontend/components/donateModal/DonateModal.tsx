@@ -17,7 +17,7 @@ interface IProps {
 
 const DonateModal = ({ showModal, setShowModal } : IProps ) => {
 
-  const SuccourAddress = "0x12F57C67FDd16109B549F0B40579694fE12bf9Fd"
+  const SuccourAddress = "0x122e768c3E676dba4905959f89a7056A5053D839"
   const [depositamount, setDepositamount] = useState("");
 
   const { address } = useAccount();
@@ -190,7 +190,7 @@ const DonateModal = ({ showModal, setShowModal } : IProps ) => {
                         }}
                       >
                         {chain.iconUrl && (
-                          <img
+                          <Image
                             alt={chain.name ?? 'Chain icon'}
                             src={chain.iconUrl}
                             style={{ width: 12, height: 12 }}

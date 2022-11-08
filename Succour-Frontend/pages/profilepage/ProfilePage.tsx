@@ -1,5 +1,4 @@
 import {useState} from 'react'
-import { useRouter } from 'next/router'
 import Navbar from '../../components/navbar/Navbar'
 import styles from './profilepage.module.scss'
 import Link from 'next/link'
@@ -7,16 +6,15 @@ import Image from 'next/image'
 import arrowLeftSvg from '../../assets/arrow-left.svg'
 import WithDrawAlert from '../../components/withdrawalert/WithdrawAlert'
 import DepositModal from '../../components/depositModal/DepositModal'
-import { ToastContainer, toast } from 'react-toastify'
-import { useAccount, useContractRead, useContractWrite, useWaitForTransaction } from 'wagmi'
+import { useAccount, useContractRead} from 'wagmi'
 import Succour_abi from "../../abi/abi.json"
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 const ProfilePage = () => {
 
-  const SuccourAddress = "0x12F57C67FDd16109B549F0B40579694fE12bf9Fd"
+  const SuccourAddress = "0x122e768c3E676dba4905959f89a7056A5053D839"
   const { address } = useAccount();
-  const router = useRouter();
+
 
     const [showModal, setShowModal] = useState(false);
     const [showDepositModal, setShowDepositModal] = useState(false);
@@ -40,36 +38,16 @@ const ProfilePage = () => {
       ]
     })
 
-    console.log(userProfile, "userProfile")
-
-    const {
-        data: requestToWithdrawData,
-        write: requestToWithdrawWrite,
-        isLoading: requestLoading
-    } = useContractWrite({
-        mode: 'recklesslyUnprepared',
-        addressOrName: SuccourAddress,
-        contractInterface: Succour_abi,
-        functionName: 'requestToWithdrawDAO'
+    const {data: userPercentage} = useContractRead({
+      addressOrName: SuccourAddress,
+      contractInterface: Succour_abi,
+      functionName: 'memberPercentage',
+      args: [
+        address
+      ]
     })
 
-    const {isLoading: rtwLoader} = useWaitForTransaction({
-        hash: requestToWithdrawData?.hash,
-        onSuccess(){
-              // add toastify; input: You've Requested for withdrawal
-              toast.success('You have Requested for withdrawal', {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 8000
-              })
-              router.push('/dao')
-        },
-        onError(data){
-              console.log(data)
-              // add toastify; input: Unable to request for withdrawal
-                toast.error('Unable to request for withdrawal', 
-              { position: toast.POSITION.TOP_CENTER })
-        }
-    })
+    console.log(userProfile, "userProfile", userPercentage, "user percent")
 
     const handleSubmit = (e:any) => {
         openModal();
@@ -121,6 +99,8 @@ return (
               <div className={styles.profile_vote}>
                   <div className={styles.vote_count}>
                     <h2 className={styles.vote_power}>Voting Power: <span>{userProfile? hexToDecimal(userProfile[4]._hex): ""}</span></h2>
+                    {/* {(hexToDecimal(item[4]._hex)) * 100}% */}
+                    <h2 className={styles.vote_power}>Percentage in DAO: <span>{hexToDecimal(userPercentage?._hex)}%</span></h2>
                   </div>
 
                   <div className={styles.balance_count}>
@@ -135,9 +115,9 @@ return (
                         address ?
                         <>
                         {userProfile?
-                          Date.now()>= hexToDecimal(userProfile[5]._hex)?
-                            <button className={styles.withdraw}>Withdraw</button>:
-                            <button className={styles.withdraw}>You can not withdraw now </button>: ""
+                          Date.now()<= hexToDecimal(userProfile[5]._hex) || hexToDecimal(userProfile[5]._hex) == 0?
+                            <button className={styles.withdraw}>You can not withdraw now </button>:
+                            <button className={styles.withdraw}>Withdraw</button>: ""
                         }
                         <button
                         className={styles.request}

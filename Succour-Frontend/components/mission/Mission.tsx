@@ -21,7 +21,7 @@ const Mission = () => {
                  {/* <div className={styles.netvector}></div> */}
                  </h1>                 
                  <p className={styles.desc}>Assisting those in need, lending a helping hand to communities, cities, states, countries, and industry sectors in need is the mission of the decentralized organization Succour. The DAO is made up of charitable people from all over the world.</p>
-                 <p className={styles.desc}>Succor DAO's vision is to contribute significantly to the resolution of a major global problem.</p>
+                 <p className={styles.desc}>Succor DAOs vision is to contribute significantly to the resolution of a major global problem.</p>
                 </div>
                </div>
               <div className={styles.netvector_image}>

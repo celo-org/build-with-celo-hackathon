@@ -33,10 +33,10 @@ const RelatedProjects = () => {
                                {
                     data?.slice(0, visible)?.map(({ id, time, problemTitle, desc, lowest, etherAmount, voteButton }) => {
                        return (
-                         <Link href={`/ProjectPage/${id}`}>
-                         <div className={styles.project_item} key={id}>
+                         <Link href={`/ProjectPage/${id}`} key={id}>
+                         <div className={styles.project_item}>
                             <div className={styles.project_img}>
-                              <Image src="" className={styles.img} />
+                              <Image src="" alt="" className={styles.img} />
                             </div> 
                             <div className={styles.project_text}>
                               <div className={styles.project_time}>{time}</div>
