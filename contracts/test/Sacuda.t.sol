@@ -11,19 +11,20 @@ contract SacudaTest is Test {
     address amy = vm.addr(1);
     address betty = vm.addr(2);
     address caro = vm.addr(3);
-    bytes32 admin;
-    bytes32 minter;
+    // bytes32 admin;
+    // bytes32 minter;
 
     Sacuda public sacuda;
 
     function setUp() public {
         sacuda = new Sacuda();
-        minter = sacuda.MINTER_ROLE();
-        admin = sacuda.ADMIN_ROLE();
+        // minter = sacuda.MINTER_ROLE();
+        // admin = sacuda.ADMIN_ROLE();
     }
 
     function testMint() public {
-        sacuda.grantRole(minter, caro);
+        sacuda.addAdmin(address(this));
+        sacuda.addClerk(caro);
         vm.startPrank(caro);
         sacuda.mint(amy, false, "Amy");
         assertEq(sacuda.ownerOf(1), amy);
@@ -32,7 +33,8 @@ contract SacudaTest is Test {
     }
 
     function testMintEnhancer() public {
-        sacuda.grantRole(minter, caro);
+        sacuda.addAdmin(address(this));
+        sacuda.addClerk(caro);
         vm.startPrank(caro);
         sacuda.mint(caro, true, "Caro");
         assertEq(sacuda.ownerOf(1), caro);
@@ -42,7 +44,8 @@ contract SacudaTest is Test {
     }
 
     function testMintAndUpdateName() public {
-        sacuda.grantRole(minter, caro);
+        sacuda.addAdmin(address(this));
+        sacuda.addClerk(caro);
         vm.startPrank(caro);
         sacuda.mint(amy, false, "Amy");
         assertEq(sacuda.name(1), "Amy");
@@ -54,12 +57,12 @@ contract SacudaTest is Test {
 
     function testUpdateReport() public {
         uint8 num = 75;
-        sacuda.grantRole(admin, caro);
-        sacuda.grantRole(minter, caro);
+        sacuda.addAdmin(address(this));
+        sacuda.addClerk(caro);
         vm.startPrank(caro);
-        (uint8 paymentHistory, , , , ) = sacuda.report(2);
-        assertEq(paymentHistory, 0);
         sacuda.mint(betty, false, "Betty");
+        (uint8 paymentHistory, , , , ) = sacuda.report(1);
+        assertEq(paymentHistory, 100);
         sacuda.updateReport(
             1,
             abi.encode(num, num - 50, num + 10, num - 30, num + 20)
@@ -69,5 +72,28 @@ contract SacudaTest is Test {
         console.log("User Score: ", sacuda.score(1));
         assertEq(paymentHistory, num);
         console.log(sacuda.tokenURI(1));
+    }
+
+    function testBurn() public {
+        uint8 num = 75;
+        sacuda.addAdmin(address(this));
+        sacuda.addClerk(caro);
+        vm.startPrank(caro);
+        sacuda.mint(amy, false, "Amy");
+        assertEq(sacuda.ownerOf(1), amy);
+        (uint8 paymentHistory, , , , ) = sacuda.report(1);
+        assertEq(paymentHistory, 100);
+        assertEq(sacuda.name(1), "Amy");
+        sacuda.updateReport(
+            1,
+            abi.encode(num, num - 50, num + 10, num - 30, num + 20)
+        );
+        (paymentHistory, , , , ) = sacuda.report(1);
+        // console.log("User Score: ", sacuda.score(1));
+        assertEq(paymentHistory, num);
+        sacuda.burn(1);
+        (paymentHistory, , , , ) = sacuda.report(1);
+        assertEq(paymentHistory, 0);
+        assertEq(sacuda.name(1), "");
     }
 }
