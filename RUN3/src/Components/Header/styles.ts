@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logOut: {
-    right: 50,
-    color: colors.secondary,
+    left: 70,
   },
 })

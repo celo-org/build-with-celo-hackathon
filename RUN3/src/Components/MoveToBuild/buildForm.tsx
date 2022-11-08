@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { KeyboardAvoidingView, View } from 'react-native'
 import { Button, Card, Input, Text } from '@ui-kitten/components'
 import { styles } from './style'
 import { globalStyles } from '../../utils/globalStyles'
@@ -51,7 +51,7 @@ export const BuildForm = ({
 
         await mintRoute(res.id)
         setIsLoading(false)
-        navigation.navigate('routeDetail', res)
+        navigation.navigate('routeDetail', res.id)
         setRouteCoords([])
       } else {
         alert('There was an error, please try again')

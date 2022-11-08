@@ -17,7 +17,7 @@ export default function Header() {
       <Image
         source={require('../../../assets/RUN3-logo-03.png')}
         style={{
-          width: '100%',
+          width: 100,
           height: 40,
           resizeMode: 'contain',
         }}

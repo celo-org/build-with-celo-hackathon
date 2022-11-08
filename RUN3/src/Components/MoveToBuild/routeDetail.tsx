@@ -67,11 +67,13 @@ export default function RouteDetail({ navigation, route }: { navigation: any; ro
         <Text style={styles.mapTitle}>{routeData.title}</Text>
         <Text style={[styles.boxText, { marginTop: 8 }]}>{routeData.description}</Text>
         <Text style={[styles.boxText, { marginTop: 8 }]}>
-          Eco-Stories: {routeData.ecostories?.length}
+          Eco-Stories: {routeData.ecostories?.length || 0}
           {'   '}
-          <Button onPress={() => setShowEco(!showEco)} style={globalStyles.primaryBg} size="tiny">
-            {showEco ? 'HIDE' : 'SHOW'}
-          </Button>
+          {routeData.ecostories?.length && (
+            <Button onPress={() => setShowEco(!showEco)} style={globalStyles.primaryBg} size="tiny">
+              {showEco ? 'HIDE' : 'SHOW'}
+            </Button>
+          )}
         </Text>
       </View>
       <MapView
