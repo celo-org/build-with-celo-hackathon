@@ -3,15 +3,14 @@ import {
     Input,
     Space,
     Button,
-    InputNumber,
     Tooltip,
     Divider,
     Collapse,
     Avatar,
     Select,
-    Typography,
     Alert,
 } from "antd";
+
 import {
     BankOutlined,
     InfoCircleOutlined,
@@ -43,6 +42,7 @@ import {
     swapEthToWeth,
 } from "../helpers";
 import { useMemo } from "react";
+import { makePayment } from "../api/metatransaction";
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
@@ -169,7 +169,7 @@ const SliceForm = ({
                 ethers.utils.parseEther(amount.toString())
             );
         })();
-    }, [signer]);
+    }, [signer,chain?.id]);
 
     const onFinish = async (data) => {
         if (!sliceContract) {
@@ -181,7 +181,9 @@ const SliceForm = ({
         for (let i = 0; i < data.Tokens.length; i++) {
             const promise = new Promise(async (resolve, reject) => {
                 try {
+
                     console.log(data.Tokens);
+
 
                     const { amountOut, inputToken } = data.Tokens[i];
 
@@ -199,8 +201,7 @@ const SliceForm = ({
 
                     ];
 
-                    console.log(paymentDetails);
-
+                    /*
                     // approve tokens   
                     await approve(
                         inputToken,
@@ -213,7 +214,21 @@ const SliceForm = ({
                         ...paymentDetails
                     );
 
-                    await txn.wait();
+                    await txn.wait(); 
+                    */
+
+                    await makePayment(
+                        sliceContract,
+                        signer,
+                        await signer.getAddress(),
+                        inputToken,
+                        address,
+                        ethers.utils.parseEther(amountOut),
+                        ethers.utils.parseEther(amountIn),
+                        data.payeruid,
+                        [inputToken, data.targetToken],
+                        data.payToken)
+
 
                     resolve();
                 } catch (error) {
@@ -231,15 +246,14 @@ const SliceForm = ({
             totalPaid
         ] = await sliceContract?.getSliceInfo();
 
-        console.log(totalPaid, totalReceivable);
+        // console.log(totalPaid, totalReceivable);
 
         if (totalPaid >= totalReceivable) {
             //close window
             window.close();
-            
         }
 
-        window.location.reload();
+        // window.location.reload();
     };
 
     if (isError || !sliceInfo) {
@@ -343,6 +357,36 @@ const SliceForm = ({
                     </>
                 )}
             </Form.List>
+            <Form.Item 
+            label="Pay With"
+            name="payToken"
+            initialValue={TOKENS.Celo}>
+                <Select
+                    prefix={<SendOutlined className="site-form-item-icon" />}
+                    placeholder="Token"
+                    size="large"
+                    style={{ width: 120 }}
+                    defaultValue={TOKENS.Celo}
+                >
+                    {
+                        Object.entries(TOKENS).map(([key, value]) => (
+                            <Select.Option
+                                value={value}
+                            >
+                                <Avatar
+                                    size={24}
+                                    style={{ backgroundColor: "whitesmoke" }}
+                                    src={
+                                        TokenIcons[
+                                        TokenSymbol[value]
+                                        ]
+                                    }
+                                /> {key}
+                            </Select.Option>))
+                    }
+
+                </Select>
+            </Form.Item>
             <Collapse
                 collapsible="header"
                 ghost

@@ -8,41 +8,45 @@ const { ethers } = require("hardhat");
 const hre = require("hardhat");
 
 async function main() {
-    const cdefiContract = await ethers.getContractFactory("cDEFI");
-    const cethContract = await ethers.getContractFactory("cETH");
-    const ceurContract = await ethers.getContractFactory("cEUR");
-    const crealContract = await ethers.getContractFactory("cREAL");
-    const cusdContract = await ethers.getContractFactory("cUSD");
+    // const celoContract = await ethers.getContractFactory("Celo");
+    // const cdefiContract = await ethers.getContractFactory("cDEFI");
+    // const cethContract = await ethers.getContractFactory("cETH");
+    // const ceurContract = await ethers.getContractFactory("cEUR");
+    // const crealContract = await ethers.getContractFactory("cREAL");
+    // const cusdContract = await ethers.getContractFactory("cUSD");
+    // const usdcContract = await ethers.getContractFactory("USDC");
+    // const wmaticContract = await ethers.getContractFactory("WMATIC");
     const daiContract = await ethers.getContractFactory("DAI");
-    const usdcContract = await ethers.getContractFactory("USDC");
-    const wmaticContract = await ethers.getContractFactory("WMATIC");
 
-    const deployedcdefiContract = await cdefiContract.deploy();
-    const deployedcethContract = await cethContract.deploy();
-    const deployedceurContract = await ceurContract.deploy();
-    const deployedcrealContract = await crealContract.deploy();
-    const deployedcusdContract = await cusdContract.deploy();
+    // const deployedceloContract = await celoContract.deploy();
+    // const deployedcdefiContract = await cdefiContract.deploy();
+    // const deployedcethContract = await cethContract.deploy();
+    // const deployedceurContract = await ceurContract.deploy();
+    // const deployedcrealContract = await crealContract.deploy();
+    // const deployedcusdContract = await cusdContract.deploy();
+    // const deployedusdcContract = await usdcContract.deploy();
+    // const deployedwmaticContract = await wmaticContract.deploy();
     const deployeddaiContract = await daiContract.deploy();
-    const deployedusdcContract = await usdcContract.deploy();
-    const deployedwmaticContract = await wmaticContract.deploy();
 
-    await deployedcdefiContract.deployed();
-    await deployedcethContract.deployed();
-    await deployedceurContract.deployed();
-    await deployedcrealContract.deployed();
-    await deployedcusdContract.deployed();
+    // await deployedceloContract.deployed();
+    // await deployedcdefiContract.deployed();
+    // await deployedcethContract.deployed();
+    // await deployedceurContract.deployed();
+    // await deployedcrealContract.deployed();
+    // await deployedcusdContract.deployed();
+    // await deployedusdcContract.deployed();
+    // await deployedwmaticContract.deployed();
     await deployeddaiContract.deployed();
-    await deployedusdcContract.deployed();
-    await deployedwmaticContract.deployed();
 
-    storeContractData(deployedcdefiContract, "cDEFI");
-    storeContractData(deployedcethContract, "cETH");
-    storeContractData(deployedceurContract, "cEUR");
-    storeContractData(deployedcrealContract, "cREAL");
-    storeContractData(deployedcusdContract, "cUSD");
+    // storeContractData(deployedceloContract, "Celo");
+    // storeContractData(deployedcdefiContract, "cDEFI");
+    // storeContractData(deployedcethContract, "cETH");
+    // storeContractData(deployedceurContract, "cEUR");
+    // storeContractData(deployedcrealContract, "cREAL");
+    // storeContractData(deployedcusdContract, "cUSD");
+    // storeContractData(deployedusdcContract, "USDC");
+    // storeContractData(deployedwmaticContract, "WMATIC");
     storeContractData(deployeddaiContract, "DAI");
-    storeContractData(deployedusdcContract, "USDC");
-    storeContractData(deployedwmaticContract, "WMATIC");
 }
 
 const storeContractData = (contract, contractName) => {
