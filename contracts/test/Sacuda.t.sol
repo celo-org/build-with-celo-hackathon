@@ -6,6 +6,8 @@ import "forge-std/Test.sol";
 import "../src/Sacuda.sol";
 
 // Alfajores Deployment (v1): 0xe49E6147B6327522ECAc51cc31C95940945AEc08
+// Alfajores Deployment (v2): 0x0fB0fb607D8eF3d11B814F2f7F91B8F2cAa7eB90
+// Alfajores Deployment (v2): 0xB05b4290cD6d5AD0925d89ADfda0149ee1dCCACa
 
 contract SacudaTest is Test {
     address amy = vm.addr(1);

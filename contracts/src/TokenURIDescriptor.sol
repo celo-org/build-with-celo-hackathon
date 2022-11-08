@@ -66,6 +66,24 @@ library TokenURIDescriptor {
         string memory _name,
         string memory _symbol
     ) internal pure returns (string memory) {
+        string memory traits;
+        if (_isEnhancer) {
+            traits = string(
+                abi.encodePacked(
+                    '","attributes":[{"trait_type":"User Type","value":"',
+                    "Enhancer"
+                )
+            );
+        } else {
+            traits = string(
+                abi.encodePacked(
+                    '","attributes":[{"trait_type":"User Type","value":"',
+                    "WOB",
+                    '"},{"trait_type":"Score","value":"',
+                    Strings.toString(_score)
+                )
+            );
+        }
         string memory o = string(
             abi.encodePacked(
                 '{"name":"',
@@ -74,17 +92,18 @@ library TokenURIDescriptor {
                 Strings.toString(_tokenId),
                 " (",
                 _userName,
-                ")"
+                ")",
+                '","symbol":"',
+                _symbol
             )
         );
         string memory output = string(
             abi.encodePacked(
                 o,
-                '","symbol":"',
-                _symbol,
                 '","description":"Sacuda Scoring","image": "data:image/svg+xml;base64,',
                 Base64.encode(bytes(getSVG(_isEnhancer, _score, _userName))),
-                '"}'
+                traits,
+                '"}]}'
             )
         );
 
