@@ -67,6 +67,7 @@ buck-out/
 
 # Xcode
 #
+dist/
 build/
 *.pbxuser
 !default.pbxuser
@@ -118,3 +119,6 @@ buck-out/
 web-build/
 
 # @end expo-cli
+
+#Hardhat files
+cache
