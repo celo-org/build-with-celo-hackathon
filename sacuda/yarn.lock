@@ -5415,6 +5415,11 @@ randombytes@^2.1.0:
   dependencies:
     safe-buffer "^5.1.0"
 
+react-chakra-pagination@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-chakra-pagination/-/react-chakra-pagination-1.0.1.tgz#3bbcae50589fe8dc4aed0032f5ad565db0e55f76"
+  integrity sha512-S/ldhbvYBXpmOuurNm4s9KmOa7A2i+PInE1GVwTauS3BDkAePp1TfpWhScq/V2f3Mq57uFEFlkVMWTTsukc+6A==
+
 react-clientside-effect@^1.2.6:
   version "1.2.6"
   resolved "https://registry.yarnpkg.com/react-clientside-effect/-/react-clientside-effect-1.2.6.tgz#29f9b14e944a376b03fb650eed2a754dd128ea3a"
@@ -5452,7 +5457,7 @@ react-hook-form@^7.39.1:
   resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.39.1.tgz#ded87d4b3f6692d1f9219515f78ca282b6e1ebf7"
   integrity sha512-MiF9PCILN5KulhSGbnjohMiTOrB47GerDTichMNP0y2cPUu1GTRFqbunOxCE9N1499YTLMV/ne4gFzqCp1rxrQ==
 
-react-icons@^4.3.1:
+react-icons@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.6.0.tgz#f83eda179af5d02c047449a20b702c858653d397"
   integrity sha512-rR/L9m9340yO8yv1QT1QurxWQvWpbNHqVX0fzMln2HEb9TEIrQRGsqiNFQfiv9/JEUbyHmHPlNTB2LWm2Ttz0g==
@@ -5507,6 +5512,11 @@ react-style-singleton@^2.2.1:
     get-nonce "^1.0.0"
     invariant "^2.2.4"
     tslib "^2.0.0"
+
+react-table@^7.8.0:
+  version "7.8.0"
+  resolved "https://registry.yarnpkg.com/react-table/-/react-table-7.8.0.tgz#07858c01c1718c09f7f1aed7034fcfd7bda907d2"
+  integrity sha512-hNaz4ygkZO4bESeFfnfOft73iBUj8K5oKi1EcSHPAibEydfsX2MyU6Z8KCr3mv3C9Kqqh71U+DhZkFvibbnPbA==
 
 react@^18.2.0:
   version "18.2.0"

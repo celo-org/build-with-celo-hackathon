@@ -2,15 +2,9 @@ import connectMongo from '../../../utils/connectMongo';
 import Sacuda from '../../../models/sacudaModel';
 
 export default async function updateProfileHandler(req, res) {
-  // const {
-  //   method,
-  //   query: {reqemail},
-  // } = req;
 
   const { method,body } = req
   const { reqemail } = req.query
-
-  const filter = { email: reqemail };
 
   await connectMongo();
 
