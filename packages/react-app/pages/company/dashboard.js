@@ -9,7 +9,7 @@ import axios from 'axios'
 
 // export const getStaticProps = async () => {
 //     try{
-//       const res = await fetch('http://127.0.0.1:8080/api/category')
+//       const res = await fetch('http://127.0.0.1:8080/api/categories')
 //       if(res){
 //         console.log(res.data);
 //         const data = await res.json();
@@ -70,7 +70,7 @@ const Dashboard = () => {
 
             const getCategories = async ()=>{
                 try{
-                    const res = await axios.get( "http://127.0.0.1:8080/api/category", { cancelToken: source.token } );
+                    const res = await axios.get( "http://127.0.0.1:8080/api/categories", { cancelToken: source.token } );
                     setCategories(res.data.data)
                     // console.log(res)
                 }catch(err){

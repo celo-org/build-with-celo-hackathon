@@ -12,7 +12,7 @@ const Offers = () => {
 
     const fetchRequests = async ()=>{
         try{
-            const res = await axios.get( `http://127.0.0.1:8080/api/company/${id}/requests` );
+            const res = await axios.get( `http://127.0.0.1:8080/api/companies/${id}/requests` );
             return res.json()
             // setRequests(res.data.data)
             // console.log(res)
@@ -39,7 +39,7 @@ const Offers = () => {
 
     //     const getCategories = async ()=>{
     //         try{
-    //             const res = await axios.get( "http://127.0.0.1:8080/api/category", { cancelToken: source.token } );
+    //             const res = await axios.get( "http://127.0.0.1:8080/api/categories", { cancelToken: source.token } );
     //             setCategories(res.data.data)
     //             // console.log(res)
     //         }catch(err){

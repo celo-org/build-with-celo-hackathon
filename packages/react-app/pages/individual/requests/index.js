@@ -10,7 +10,7 @@ import LoadingState from '../../../components/LoadingState'
 const Requests = () => {
 
     const fetchRequests = async ({ pageParam = 1 }) => {
-        const res = await fetch(`http://127.0.0.1:8080/api/request?page=${pageParam}&size=9`);
+        const res = await fetch(`http://127.0.0.1:8080/api/requests?page=${pageParam}&size=9`);
         return res.json();
     }
 
@@ -60,7 +60,7 @@ const Requests = () => {
     }
     // const fetchRequests = async ()=>{
     //     try{
-    //         const res = await axios.get( `http://127.0.0.1:8080/api/request` );
+    //         const res = await axios.get( `http://127.0.0.1:8080/api/requests` );
     //         // console.log(res)
     //         return res.data
     //         // setRequests(res.data.data)

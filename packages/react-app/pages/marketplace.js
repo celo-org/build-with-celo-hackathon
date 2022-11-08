@@ -6,7 +6,7 @@ import DropdownIcon from '../components/Icons/DropdownIcon'
 
 export const getStaticProps = async () => {
     try{
-      const res = await fetch('http://127.0.0.1:8080/api/request')
+      const res = await fetch('http://127.0.0.1:8080/api/requests')
       if(res){
         console.log(res);
         const data = await res.json();
