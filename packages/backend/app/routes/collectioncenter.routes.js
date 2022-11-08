@@ -1,11 +1,9 @@
-const CollectionCenter = require("../controllers/collectioncenter.controller.js");
+const router = require('express').Router();
+const CollectionCenter = require('../controllers/collectioncenter.controller');
 
-var router = require("express").Router();
-
-router.post("/", CollectionCenter.create);
-router.get("/", CollectionCenter.getCollectionCenters);
-router.get("/:id", CollectionCenter.getOneCollectionCenter);
-router.get("/company/:id", CollectionCenter.getCompanyCollectionCenters);
-
+router.post('/', CollectionCenter.create);
+router.get('/', CollectionCenter.getCollectionCenters);
+router.get('/:id', CollectionCenter.getOneCollectionCenter);
+router.get('/companies/:id', CollectionCenter.getCompanyCollectionCenters);
 
 module.exports = router;
