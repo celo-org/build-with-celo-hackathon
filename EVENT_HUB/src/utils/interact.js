@@ -23,7 +23,7 @@ export const createNewEvent = async (contract, address, kit, { eventTimestamp, d
       status: (
         <span>
           ✅{" "}
-          <a target="_blank" href={`https://explorer.celo.org/alfajores/tx/${res.transactionHash}/token-transfers/`}>
+          <a target="_blank" href={`https://explorer.celo.org/alfajores/tx/${res.transactionHash}/token-transfers/`} rel="noreferrer">
             View the status of your transaction on Celo Explorer!
           </a>
           <br />
