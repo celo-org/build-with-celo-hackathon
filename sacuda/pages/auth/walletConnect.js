@@ -10,7 +10,7 @@ import { useAccount } from 'wagmi';
 import styles from '../../styles/home.module.scss';
 import '@rainbow-me/rainbowkit/styles.css';
 
-const walletConnect = () => {
+const WalletConnect = () => {
   
   const router = useRouter();
   const { isConnected, address } = useAccount()
@@ -109,4 +109,4 @@ const walletConnect = () => {
   )
 }
 
-export default walletConnect;
+export default WalletConnect;

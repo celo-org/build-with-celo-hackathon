@@ -15,12 +15,12 @@ const NftViewer = () => {
 
     return (
         <>
-            {!data ?
-                <>No NFT yet {JSON.stringify(data)}</>
+            {data?.toNumber() == 0 ?
+                <>No NFT yet</>
                 :
                 <>
                     <Center>
-                        <NftImage tokenId={data.toNumber()} />
+                        <NftImage tokenId={data.toNumber()} maxWidth='200' />
                     </Center>
                 </>
             }
