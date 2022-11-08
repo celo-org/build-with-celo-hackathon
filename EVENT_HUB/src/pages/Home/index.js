@@ -2,27 +2,22 @@
 import { useState, useEffect } from 'react'
 import { useCelo } from '@celo/react-celo'
 import axios from 'axios'
-
-import {contract, eventHubContractAddress} from "../../utils";
+import { eventHubContractAddress} from '../../utils'
+import EventHub from '../../artifacts/contracts/EventHub.sol/EventHub.json'
 
 import styles from './Home.module.css'
-import EventHub from "../../artifacts/contracts/EventHub.sol/EventHub.json";
 
 
 const Home = () => {
   const ipfsGateway = 'https://gateway.pinata.cloud/ipfs'
 
-  // const [eventHubContract, setEventHubContract] = useState('')
   const { connect, address, kit } = useCelo()
   const [events, setEvents] = useState([])
   const [status, setStatus] = useState('')
-  const [balances, setBalances] = useState({ CELO: 0, cUSD: 0, Vault: 0 });
-  const [info, setInfo] = useState('')
 
 
 const getBalance = async () => {
   const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
-
   const res = await eventHubContract.methods.getBalance().call()
   console.log(res)
 }
@@ -37,7 +32,7 @@ const getBalance = async () => {
         // const res = await eventHubContract.methods.createNewRSVP(eventId).call()
         const res = await eventHubContract.methods.createNewRSVP(eventId).send({
           from: address,
-          // feeCurrency: stableToken.address,
+          feeCurrency: stableToken.address,
           gasLimit: '210000',
           value: deposit
         })
@@ -49,7 +44,7 @@ const getBalance = async () => {
           const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
           const res = await eventHubContract.methods.createNewRSVP(eventId).send({
             from: address,
-            // feeCurrency: stableToken.address,
+            feeCurrency: stableToken.address,
             gasLimit: '210000',
             value: deposit
           })
@@ -57,15 +52,13 @@ const getBalance = async () => {
         }
       }
     } catch (e) {
-      console.log('catch ', e.message)
+      console.log(e.message)
     }
   }
 
   const confirm = async (eventId) => {
     const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
-
     const txHash = await eventHubContract.methods.getConfirmedRSVPs(eventId).call()
-    // const txHash = await eventHubContract.methods.getEventLength().call()
     console.log(txHash)
 
   }
@@ -126,8 +119,6 @@ const getBalance = async () => {
       setEvents(res)
     }
     eventList()
-    // setEventHubContract(contract(kit))
-    // getBalanceHandle()
   }, [])
 
   return (
