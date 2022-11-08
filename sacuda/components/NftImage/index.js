@@ -5,7 +5,7 @@ import { contractConfig } from '../../utils/constants';
 
 
 const NftImage = (props) => {
-    const { tokenId } = props;
+    const { tokenId, maxWidth } = props;
     const { address, isConnected } = useAccount();
 
     const [decodedURIImage, setDecodedURIImage] = useState('');
@@ -33,7 +33,7 @@ const NftImage = (props) => {
                 <>No Image</>
                 :
                 // <>Here goes the image</>
-                <Image src={decodedURIImage} alt='NFT Image' />
+                <Image src={decodedURIImage} alt='NFT Image' maxWidth={maxWidth ? maxWidth : 500} />
             }
         </>
     );
