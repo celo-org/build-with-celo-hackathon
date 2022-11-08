@@ -37,8 +37,8 @@ contract Sacuda is ERC721, AccessControl {
     /** @dev Name Storage */
     mapping(uint256 => string) public name;
 
-    // /** @dev Is Enhancer Storage */
-    // mapping(uint256 => bool) public isEnhancer;
+    /** @dev tokenId Storage */
+    mapping(address => uint256) public nftId;
 
     /** Errors */
     error NotAPercentage();
@@ -105,6 +105,7 @@ contract Sacuda is ERC721, AccessControl {
         require(balanceOf(_user) == 0, "Already Registered");
         uint256 tokenId = ++totalSupply;
         _mint(_user, tokenId);
+        nftId[_user] = tokenId;
         // isEnhancer[tokenId] = _isEnhancer;
         if (_isEnhancer) {
             _grantRole(ENHANCER_ROLE, _user);
@@ -119,7 +120,7 @@ contract Sacuda is ERC721, AccessControl {
             emit UserReportUpdated(tokenId, 100, 0, 100, 100, 100);
         }
         name[tokenId] = _name;
-            emit UserReportUpdated(tokenId, 100, 0, 100, 100, 100);
+        emit UserReportUpdated(tokenId, 100, 0, 100, 100, 100);
         emit NameUpdated(tokenId, _name);
     }
 
@@ -133,10 +134,11 @@ contract Sacuda is ERC721, AccessControl {
         delete report[tokenId];
         delete name[tokenId];
         // Burn the token
+        delete nftId[user];
         _burn(tokenId);
         // Emit events for credit report and name
         emit UserReportUpdated(tokenId, 0, 0, 0, 0, 0);
-        emit NameUpdated(tokenId, '');
+        emit NameUpdated(tokenId, "");
     }
 
     /** @dev Override to have on-chain SVG NFTs */
