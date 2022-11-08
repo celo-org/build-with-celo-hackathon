@@ -440,8 +440,11 @@ const Requests = () => {
                         
 
                                     <div className='flex items-center justify-center mt-8'>
-                                        <button className='text-[#DD7D37] px-12 py-2 text-sm border border-[#DD7D37] rounded-full' onClick={fetchNextPage}>Load More</button>
+                                        <button className='text-[#DD7D37] px-12 py-2 text-sm border border-[#DD7D37] rounded-full' onClick={fetchNextPage}>Load More {isFetching && !isFetchingNextPage ? <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status"><span class="visually-hidden">Loading...</span></div> : null}
+                                        
+                                        </button>
                                     </div>
+                                    
                                     {/* {isFetching && !isFetchingNextPage ? <span className='load_more--loader'></span> : null} */}
 
 
