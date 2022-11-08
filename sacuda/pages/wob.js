@@ -23,7 +23,6 @@ export default function wobRegistration1() {
     })
 
     const {uMail,setUMail} = sacudaContext();
-    
     const {uProfile, setUProfile} = sacudaContext();
 
     const wobDashRedirect = () => {
@@ -40,35 +39,35 @@ export default function wobRegistration1() {
         register,
         formState: { errors, isSubmitting },
         } = useForm()
-    
 
-        const onSubmit = async (values) => {
-            console.log('regmail:'+session.user.email)
-            const reqemail = session.user.email;
-            const preProf = `{"profile": 0}`;
-            const prof = JSON.parse(preProf);
 
-            const finalValues = { ...values, ...prof}
-            try {
-              const res = await fetch(`/api/updateProfile/${reqemail}`, {
-                method: "PUT",
-                headers: {
-                  "Content-type": "application/json",
-                },
-                body: JSON.stringify(finalValues)
+    const onSubmit = async (values) => {
+        console.log('regmail:'+session.user.email)
+        const reqemail = session.user.email;
+        const preProf = `{"profile": 0}`;
+        const prof = JSON.parse(preProf);
 
-              });
-              if (!res.ok) {
-                throw new Error(res.status);
-              }
+        const finalValues = { ...values, ...prof}
+        try {
+            const res = await fetch(`/api/updateProfile/${reqemail}`, {
+            method: "PUT",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify(finalValues)
 
-              const { data } = await res.json();
-              mutate(`/api/updateProfile/${reqemail}`, data, false);
-              router.push("/");
-            } catch (error) {
-              console.log(error);
+            });
+            if (!res.ok) {
+            throw new Error(res.status);
             }
-          };
+
+            const { data } = await res.json();
+            mutate(`/api/updateProfile/${reqemail}`, data, false);
+            router.push("/");
+        } catch (error) {
+            console.log(error);
+        }
+        };
 
 
 
@@ -107,8 +106,7 @@ export default function wobRegistration1() {
                         >
                             Let´s setup your WOB profile
                         </Text>
-                        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-                        
+                        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>                      
                             <FormControl isInvalid={errors.name}>
                                 <FormLabel marginBottom='1%' htmlFor='name'>Name</FormLabel>
                                 <Input 
@@ -124,9 +122,7 @@ export default function wobRegistration1() {
                                 <FormErrorMessage>
                                     {errors.name && errors.name.message}
                                 </FormErrorMessage>
-                            </FormControl>               
-                        
-
+                            </FormControl>
                             <FormControl isInvalid={errors.name}>
                                 <FormLabel marginBottom='1%' htmlFor='surname'>Surname</FormLabel>
                                 <Input 
@@ -142,8 +138,7 @@ export default function wobRegistration1() {
                                 <FormErrorMessage>
                                     {errors.name && errors.name.message}
                                 </FormErrorMessage>
-                            </FormControl>               
-
+                            </FormControl>
                             <FormControl isInvalid={errors.name}>
                                 <FormLabel marginBottom='1%' htmlFor='linkedin'>LinkedIn profile</FormLabel>
                                 <Input 
@@ -159,8 +154,7 @@ export default function wobRegistration1() {
                                 <FormErrorMessage>
                                     {errors.name && errors.name.message}
                                 </FormErrorMessage>
-                            </FormControl>               
-                     
+                            </FormControl>                                  
                             <FormControl isInvalid={errors.name}>
                                 <FormLabel marginBottom='1%' htmlFor='country'>Country</FormLabel>
                                 <Input 
@@ -176,8 +170,7 @@ export default function wobRegistration1() {
                                 <FormErrorMessage>
                                     {errors.name && errors.name.message}
                                 </FormErrorMessage>
-                            </FormControl>               
-                    
+                            </FormControl>                                  
                             <FormControl isInvalid={errors.name}>
                                 <FormLabel marginBottom='1%' htmlFor='bname'>Bussiness Name</FormLabel>
                                 <Input 
@@ -193,8 +186,7 @@ export default function wobRegistration1() {
                                 <FormErrorMessage>
                                     {errors.name && errors.name.message}
                                 </FormErrorMessage>
-                            </FormControl>               
-                     
+                            </FormControl>                                   
                             <FormControl isInvalid={errors.name}>
                                 <FormLabel marginBottom='1%' htmlFor='bfb'>Bussiness digital presence - Facebook</FormLabel>
                                 <Input 
@@ -207,8 +199,7 @@ export default function wobRegistration1() {
                                 <FormErrorMessage>
                                     {errors.name && errors.name.message}
                                 </FormErrorMessage>
-                            </FormControl>               
-                      
+                            </FormControl>                                    
                             <FormControl isInvalid={errors.name}>
                                 <FormLabel marginBottom='1%' htmlFor='big'>Bussiness digital presence - Instagram</FormLabel>
                                 <Input 
@@ -221,8 +212,7 @@ export default function wobRegistration1() {
                                 <FormErrorMessage>
                                     {errors.name && errors.name.message}
                                 </FormErrorMessage>
-                            </FormControl>               
-                   
+                            </FormControl>                                 
                             <FormControl isInvalid={errors.name}>
                                 <FormLabel marginBottom='1%' htmlFor='blinked'>Bussiness digital presence - LinkedIn</FormLabel>
                                 <Input 
@@ -235,8 +225,7 @@ export default function wobRegistration1() {
                                 <FormErrorMessage>
                                     {errors.name && errors.name.message}
                                 </FormErrorMessage>
-                            </FormControl>               
-                   
+                            </FormControl>                                 
                             <FormControl isInvalid={errors.name}>
                                 <FormLabel marginBottom='1%' htmlFor='bidea'>Bussiness Idea</FormLabel>
                                 <Input 
@@ -252,8 +241,7 @@ export default function wobRegistration1() {
                                 <FormErrorMessage>
                                     {errors.name && errors.name.message}
                                 </FormErrorMessage>
-                            </FormControl>               
-                  
+                            </FormControl>                                
                             <FormControl isInvalid={errors.name}>
                                 <FormLabel marginBottom='1%' htmlFor='bsector'>Bussiness Sector</FormLabel>
                                 <Input 
@@ -269,8 +257,7 @@ export default function wobRegistration1() {
                                 <FormErrorMessage>
                                     {errors.name && errors.name.message}
                                 </FormErrorMessage>
-                            </FormControl>               
-                       
+                            </FormControl>                                    
                         <Button mt={4} colorScheme='teal' isLoading={isSubmitting} type='submit'>
                         Submit
                         </Button>

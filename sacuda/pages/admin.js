@@ -1,51 +1,37 @@
-import { useState, useRef } from "react";
-import axios from "axios";
-import styles from '../styles/home.module.scss';
-import {
-    Flex,
-    Avatar,
-    Text,
-    Box,
-    Icon,
-    Button,
-    Heading,
-    Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  FormControl,
-  FormLabel,
-  Input,
-  SimpleGrid,
-  Link
-  } from "@chakra-ui/react";
-
+import { useState } from "react";
+import Head from 'next/head';
+import { Text, Box, Icon, Button, Heading, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Input, SimpleGrid, Link, FormControl, FormLabel, FormHelperText, FormErrorMessage } from "@chakra-ui/react";
 import { FiEye, FiUser } from "react-icons/fi";
-
 import { Table } from "react-chakra-pagination";
+import { useForm } from 'react-hook-form'
+import { useSession, signIn, signOff } from "next-auth/react";
+import { useAccount } from 'wagmi';
+import styles from '../styles/home.module.scss';
+import '@rainbow-me/rainbowkit/styles.css';
 
 const url = "http://localhost:3000/api/getUsers";
 
 export default function admin({users}) {
+    
+    const { isConnected } = useAccount();
+    const { status, data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+        signIn(); //What to show to unathenticated users
+    }
+    })
+
     const [page, setPage] = useState(1);
-
-    const { onOpen } = useDisclosure()
-    const initialRef = useRef(null)
-    const finalRef = useRef(null)
-
     const [modalValue, setModalValue] = useState([])
     const [isOpen,setIsOpen] = useState(false)
+    const [buttonState,setButtonState] =useState()
+
     function onClose(){
         setIsOpen(false)
       }
 
     function handleEditClick({user}){
         setIsOpen(true)
-     // we've set the passed todo to modal value
         setModalValue(user)
         console.log({user})
      }
@@ -58,9 +44,75 @@ export default function admin({users}) {
         setIsOpen(false)
       }
 
-      function handleEditInputChange(e,id){ 
-        setModalValue({ ...modalValue, text: e.target.value });
+    function handleEditInputChange(e,id){ 
+    setModalValue({ ...modalValue, text: e.target.value });
+    }
+
+    const {
+        handleSubmit,
+        register,
+        formState: { errors, isSubmitting },
+        } = useForm()
+
+
+    const onSubmit = async (values) => {
+
+        if (buttonState === 1) {
+        console.log('regmail:'+modalValue.email)
+        const reqemail = modalValue.email;
+        const preProf = `{"profile": 2}`;
+        const prof = JSON.parse(preProf);
+
+        const finalValues = { ...values, ...prof}
+        try {
+            const res = await fetch(`/api/updateProfile/${reqemail}`, {
+            method: "PUT",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify(finalValues)
+
+            });
+            if (!res.ok) {
+            throw new Error(res.status);
+            }
+
+            const { data } = await res.json();
+            mutate(`/api/updateProfile/${reqemail}`, data, false);
+            router.push("/");
+        } catch (error) {
+            console.log(error);
         }
+        };
+    
+    if (buttonState === 2) {
+        console.log('regmail:'+modalValue.email)
+        const reqemail = modalValue.email;
+        const preProf = `{"profile": 100}`;
+        const prof = JSON.parse(preProf);
+
+        const finalValues = { ...values, ...prof}
+        try {
+            const res = await fetch(`/api/updateProfile/${reqemail}`, {
+            method: "PUT",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify(finalValues)
+
+            });
+            if (!res.ok) {
+            throw new Error(res.status);
+            }
+
+            const { data } = await res.json();
+            mutate(`/api/updateProfile/${reqemail}`, data, false);
+            router.push("/");
+        } catch (error) {
+            console.log(error);
+        }
+        };
+    }
 
     const tableData = users.map((user, index) => ({
         name: user.name,
@@ -110,9 +162,12 @@ export default function admin({users}) {
         return (
             <>
             <main className={styles.lists}>
+            <Head>
+                <title>Sacuda | A finantial revolution!</title>
+            </Head>
             <Box p="12">
-            <Heading size="sm" as="h1">
-            List of Sacuda Users
+            <Heading as="h1">
+            Admin Dashboard - List of Sacuda WOBs
             </Heading>
             <Box mt="6">
             <Table
@@ -135,7 +190,7 @@ export default function admin({users}) {
             <ModalContent  className={styles.lists}>
             <ModalHeader><Heading as='h1'>BUSSINESS NAME: {modalValue.bname} SECTOR: {modalValue.bsector}</Heading></ModalHeader>
             <ModalCloseButton />
-            <form onSubmit={handleEditSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
             <ModalBody>
             <Heading as='h1' textDecoration='underline'>WOB Details</Heading>
             <SimpleGrid columns={5} className={styles.lists}>
@@ -157,37 +212,61 @@ export default function admin({users}) {
             </SimpleGrid>
             <SimpleGrid columns={2}  className={styles.lists}>
                 <Box><Heading as='h1' textDecoration='underline'>Bussiness Diagnostic</Heading>
-                    <Input
-                    height='80px'
-                    width='50%'
-
-                    value={modalValue.biag} 
-                    key={modalValue.id}
-                    variant="outline" 
-                    type="text" 
-                    placeholder="Diagnostic..."
-                    />
+                    <FormControl isInvalid={errors.name}>
+                        <FormLabel marginBottom='1%' htmlFor='name'>Please enter the bussiness diagnostic below</FormLabel>
+                            <Input
+                                height='80px'
+                                width='50%'
+                                value={modalValue.bdiag} 
+                                key={modalValue.id}
+                                variant="outline" 
+                                type="text" 
+                                placeholder="Diagnostic..."
+                                id='bdiag'
+                                {...register('bdiag', {
+                                    required: 'This is required',
+                                    minLength: { value: 1, message: 'Minimum length should be 1' },
+                                })}
+                            />
+                        <FormErrorMessage>
+                            {errors.name && errors.name.message}
+                        </FormErrorMessage>
+                    </FormControl>
                 </Box>    
                 <Box><Heading as='h1' textDecoration='underline'>Bussiness Scoring</Heading>
-                    <Input  
-                    height='80px'
-                    width='50%'
-                    value={modalValue.bscore} 
-                    key={modalValue.id}
-                    variant="outline" 
-                    type="text" 
-                    placeholder="Scoring..."
-                    />
+                <FormControl isInvalid={errors.name}>
+                        <FormLabel marginBottom='1%' htmlFor='name'>Please enter the bussiness scoring below. If the bussiness does not meet approval criteria, please enter a scoring of 0</FormLabel>
+                            <Input
+                                height='80px'
+                                width='50%'
+                                value={modalValue.bscore} 
+                                key={modalValue.id}
+                                variant="outline" 
+                                type="text" 
+                                placeholder="Diagnostic..."
+                                id='bscore'
+                                {...register('bscore', {
+                                    required: 'This is required',
+                                    minLength: { value: 1, message: 'Minimum length should be 1' },
+                                })}
+                            />
+                        <FormErrorMessage>
+                            {errors.name && errors.name.message}
+                        </FormErrorMessage>
+                    </FormControl>
                 </Box>
             </SimpleGrid>
             </ModalBody>
             <ModalFooter>
-            <Button colorScheme="teal" mr={3} onClick={onClose}>
-            Close
-            </Button>
-            <Button type="submit" colorScheme="teal" mr={3}>
-            Update
-            </Button>
+                <Button colorScheme="blue" mr={3} onClick={onClose}>
+                    Close
+                </Button>
+                <Button type="submit" colorScheme="red" mr={3} onClick={() => (setButtonState(2))}>
+                    Disapprove
+                </Button>
+                <Button type="submit" colorScheme="green" mr={3} onClick={() => (setButtonState(1))}>
+                    Approve
+                </Button>
             </ModalFooter>
           </form>
           
