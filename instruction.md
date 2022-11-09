@@ -4,12 +4,26 @@
 - [Development](#development)
 - [Build](#build)
 
+
+
 ## Install
 
 Run within the root directory containing package.json
 
 ```
 npm install
+
+```
+## Installation order
+
+```
+1.login -localhost-3000
+2.market -localhost-3001
+3.exchange -localhost 3002
+4.auction frame -localhost 3003 (depended on market 3001)
+5.Master CMS - localhost 3004
+6. management CMS -localhost 3005
+
 ```
 
 ## Development
