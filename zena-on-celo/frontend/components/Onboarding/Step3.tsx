@@ -21,7 +21,7 @@ export default function Step3({ setUserData, userData }: Props) {
       <div className="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
         <div className="mx-auto max-w-screen-sm text-center">
           <h2 className="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-font dark:text-white">
-            Bitte wähle einen Avatar
+            Please choose an Avatar!
           </h2>
         </div>
         <div>

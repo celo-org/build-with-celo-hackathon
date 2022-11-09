@@ -95,7 +95,7 @@ const Content = () => {
                 />
               </div>
               <p className="pl-14 text-sm font-medium text-font-light">
-                Kontostand
+                Balance
               </p>
             </dt>
             <dd className="ml-16 flex items-baseline pb-6 sm:pb-7">

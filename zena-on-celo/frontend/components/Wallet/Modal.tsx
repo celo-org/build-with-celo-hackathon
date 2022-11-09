@@ -50,11 +50,11 @@ export default function Modal() {
                         <div className="flex justify-between p-5 rounded-t border-b dark:border-gray-600">
                           <div className="ml-4 mt-4">
                             <h2 className="text-2xl font-bold leading-7 text-font sm:truncate sm:text-3xl sm:tracking-tight">
-                              {user?.name}&apos;s Wallet
+                              {user?.name}&apos;'s Wallet
                             </h2>
 
                             <p className="mt-1 text-sm text-font-light">
-                              Öffentliche Adresse: {REACT_APP_USER_ADDRESS}
+                              Public Address: {REACT_APP_USER_ADDRESS}
                             </p>
                           </div>
                           <h3 className="text-xl font-medium text-font dark:text-white"></h3>

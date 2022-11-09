@@ -14,6 +14,7 @@ export default function Onboarding() {
 
   const [userData, setUserData] = useState<User>();
   if (isLoggedIn && process.browser) router.push("/dashboard");
+  const isDisabled = step === 1 && !userData?.name;
 
   return (
     <div className="grid h-screen place-items-center">
@@ -23,14 +24,15 @@ export default function Onboarding() {
       {/* {step === 4 && <Final />} */}
 
       <button
+        disabled={isDisabled}
         onClick={() =>
           step === 3 && process.browser
             ? router.push("/dashboard")
             : setStep(step + 1)
         }
-        className="bg-green hover:bg-green-medium text-white font-bold py-2 px-4 rounded-full"
+        className="disabled:opacity-50 bg-green hover:bg-green-medium text-white font-bold py-2 px-4 rounded-full"
       >
-        Weiter
+        Next step
       </button>
     </div>
   );

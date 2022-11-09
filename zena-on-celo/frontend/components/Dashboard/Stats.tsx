@@ -17,12 +17,13 @@ export default function Stats() {
       <div className="grid grid-cols-6 gap-4">
         <div className="col-span-6">
           <div className="flex">
-            Kapitel ({counter}/6) <QuestionMarkCircleIcon width="15" />
+            Chapters finished: ({counter}/6){" "}
+            <QuestionMarkCircleIcon width="15" />
           </div>
           <div className="w-full h-6 bg-gray-200 rounded-full dark:bg-gray-700">
             <div
               style={{ width: `${(counter * 100) / 6}%` }}
-              className="h-6 bg-green rounded-full dark:bg-blue-500"
+              className="h-6 bg-[#c761c5] rounded-full dark:bg-blue-500"
             ></div>
           </div>
         </div>

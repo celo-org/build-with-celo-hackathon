@@ -7,6 +7,7 @@ import Sequester from "../components/Dashboard/Sequester";
 import Stats from "../components/Dashboard/Stats";
 import { useRouter } from "next/router";
 import WalletModal from "../components/Wallet/Modal";
+import Nav from "../components/Nav";
 
 export default function Dashboard() {
   const router = useRouter();
