@@ -27,7 +27,7 @@ function NFTCard(props: any) {
       <div className={styles.imgbg}>
         <img src={props.data.NFTinfo} className={styles.img} alt="/" />
       </div>
-      <span className='font-bold text-white'>NFT id: {props.data.NFTId}</span>
+      <span className='font-bold text-black'>NFT id: {props.data.NFTId}</span>
     </div>
   )
 }

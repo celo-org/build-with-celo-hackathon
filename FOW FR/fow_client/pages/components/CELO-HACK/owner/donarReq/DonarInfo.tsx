@@ -18,6 +18,8 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import SendIcon from '@mui/icons-material/Send';
 import IconButton from '@mui/material/IconButton';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import NearMeIcon from '@mui/icons-material/NearMe';
+import Timer10SelectIcon from '@mui/icons-material/Timer10Select';
 import { uploadDonateJSONtoIPFS, uploadFileToIPFS } from '../../../../api/pinata';
 import { GetStaticProps } from 'next';
 
@@ -284,6 +286,38 @@ function DonationInfo(props: any) {
           </div>
         </div>
       </div>
+
+
+
+
+      <div className={styles.subBox}>  
+        <div className={styles.bg}>
+          <NearMeIcon fontSize='large' color='primary' />
+        </div>
+        <div className={styles.textBox}>
+          <span className={styles.dark}>Location of Stay:</span>
+          <div className="font-bold">
+            {props.data.locationOfStay}
+          </div>
+        </div>
+      </div>
+
+
+      <div className={styles.subBox}>  
+        <div className={styles.bg}>
+          <Timer10SelectIcon fontSize='large' color='primary' />
+        </div>
+        <div className={styles.textBox}>
+          <span className={styles.dark}>Period of Stay:</span>
+          <div className="font-bold">
+            {props.data.periodOfStay}
+          </div>
+        </div>
+      </div>
+
+
+
+
 
       <div className={styles.subBox}>  
         <div className={styles.bg}>

@@ -18,7 +18,7 @@ function OwnerOption() {
   }
 
   const styles = {
-    page: `w-screen h-screen flex flex-col justify-between items-center max-w-screen-sm bg-[url('/images2/bg3.png')]`,
+    page: `w-screen h-screen flex flex-col justify-between items-center max-w-screen-sm bg-[url('/images2/bg4.png')]`,
     top: `w-full h-2/6 flex justify-center items-center`,
     mid: `w-full h-2/6 flex flex-col justify-between items-center`,
     bottom: `w-full h-1/4 flex flex-col justify-center items-center`,
@@ -39,7 +39,7 @@ function OwnerOption() {
         <div className={styles.mid}>
           <div className="flex flex-col justify-start items-center">
             <span className='font-extrabold text-2xl'>Owner Dashboard</span>
-            <span className='font-bold text-sm text-gray-400'>choose one</span>
+            <span className='font-bold text-sm text-gray-600'>choose one</span>
           </div>
 
           <div className="w-9/12 h-3/6 flex justify-around items-start">
@@ -48,14 +48,14 @@ function OwnerOption() {
               <button className={styles.btn} onClick={donateClick}>
                 <img src="/images2/Fundraising.png" alt="/" className='w-full h-full rounded-full' />
               </button>
-              <span className='text-xs text-gray-400 font-bold'>Donation request</span>
+              <span className='text-xs text-gray-600 font-bold'>Donation request</span>
             </div>
 
             <div className="flex flex-col justify-center items-center">
               <button className={styles.btn} onClick={resqueClick}>
                 <img src="/images2/delivery.png" alt="/" className='w-full h-full rounded-full' />
               </button>
-              <span className='text-xs text-gray-400 font-bold'>Rescue request</span>
+              <span className='text-xs text-gray-600 font-bold'>Rescue request</span>
             </div>
 
           </div>

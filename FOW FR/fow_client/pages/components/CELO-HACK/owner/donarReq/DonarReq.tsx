@@ -61,7 +61,7 @@ function DonarReq() {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center bg-slate-900">
+    <div className="flex flex-col justify-center items-center bg-inherit">
       <div className="w-full flex justify-between">
         <Link href="/components/CELO-HACK/owner/OwnerOption">
           <ArrowBackIcon fontSize='large' color='primary' />

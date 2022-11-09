@@ -18,7 +18,7 @@ function PaymentComplete() {
   }
 
   return (
-    <div className="flex justify-center items-center bg-slate-900">
+    <div className="flex justify-center items-center bg-inherit">
       <div className={styles.page}>
         <div className={styles.main}>
           <div className={styles.one}>
@@ -26,12 +26,12 @@ function PaymentComplete() {
           </div>
           <div className={styles.two}>
             {/* <span className='font-semibold text-3xl'>${data.finalAmount}</span> */}
-            <span className='text-2xl font-bold text-white'>Thank You!</span>
-            <span className='text-xs text-gray-500'>Please use the link below to track your Food Donation Process</span>
+            <span className='text-2xl font-bold text-black'>Thank You!</span>
+            <span className='text-xs text-gray-600'>Please use the link below to track your Food Donation Process</span>
           </div>
           <div className={styles.three}>
-            <span className='font-semibold text-xl text-white'>Verification Code:</span>
-            <span className='font-semibold text-gray-500 text-sm'>
+            <span className='font-semibold text-xl text-black'>Verification Code:</span>
+            <span className='font-semibold text-gray-600 text-sm'>
               12udb42234yhjfdrf
             </span>
           </div>

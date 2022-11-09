@@ -34,7 +34,7 @@ function DonationInfo(props: any) {
     bg: `border-2 w-14 p-2 rounded-xl border-sky-600`,
     subBox: `border-2 border-sky-600 rounded-xl bg-slate-300/[.9] shadow-2xl border-white-900/75 w-full h-full mt-1 mb-1 flex`,
     dark: `font-bold text-sm`,
-    light: `font-bold text-xs text-gray-400`,
+    light: `font-bold text-xs text-gray-600`,
     textBox: `flex flex-col justify-around ml-3 h-full`,
   }
 

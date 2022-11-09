@@ -22,6 +22,8 @@ function DonateDetails() {
     phoneNo: '',
     time: '',
     date: '',
+    locationOfStay: '',
+    periodOfStay: '',
     items: '',
     quentity: 0,
     img: ''
@@ -52,14 +54,14 @@ function DonateDetails() {
 
   const uploadDonateJSON: any = async () => {
 
-    const { language, name, location, phoneNo, time, date, items, quentity, img } = donationDesc
+    const { language, name, location, phoneNo, time, date, locationOfStay, periodOfStay, items, quentity, img } = donationDesc
 
     if(!language || !name || !location || !phoneNo || !time || !date || !items || !quentity || !img) {
       return;
     }
 
     const nftJSON = {
-      language, name, location, phoneNo, time, date, items, quentity, img
+      language, name, location, phoneNo, time, date, locationOfStay, periodOfStay, items, quentity, img
     }
 
     try {
@@ -91,7 +93,7 @@ function DonateDetails() {
   
         let transaction = await contract.SendDonationRequest(metadataURL)
         await transaction.wait()
-        console.log(transaction.hash)
+        console.log("donationDesc: ", donationDesc)
   
   
         alert("Successfully send the request😀")
@@ -107,16 +109,16 @@ function DonateDetails() {
   }
 
   const styles = {
-    page: `w-screen max-w-screen-sm h-screen flex flex-col justify-start items-center bg-slate-900`,
+    page: `w-screen max-w-screen-sm h-screen flex flex-col justify-start items-center bg-inherit`,
     head: `w-full h-20 flex justify-between items-center`,
     box: `w-11/12 h-16`,
-    text: `text-sm font-bold text-white`,
+    text: `text-sm font-bold text-black`,
     input: `bg-slate-300/[.9] shadow-2xl border-white-900/75 w-full h-7`,
     inputbg: `w-full h-full bg-inherit pl-2 placeholder:text-sm`,
   }
 
   return (
-    <div className="flex flex-col justify-center items-center bg-slate-900">
+    <div className="flex flex-col justify-center items-center bg-inherit">
       <div className="w-full flex justify-between">
         <Link href="/">
           <ArrowBackIcon fontSize='large' color='primary' />
@@ -134,9 +136,23 @@ function DonateDetails() {
           </Link>
         </div>
 
-        <div className="flex justify-around items-center">
+        <div className="flex justify-around items-center w-full">
+
           <div className="flex flex-col justify-center items-center w-full">
-            <span className={styles.text}>Languages:</span>
+            <span className={styles.text}>Your name:</span>
+            <div className="bg-slate-300/[.9] shadow-2xl border-white-900/75 w-10/12 h-7">
+              <input 
+                type="text" 
+                placeholder='enter your name' 
+                className={styles.inputbg}
+                onChange={e => setDonationDesc({...donationDesc, name: e.target.value})}
+                value={donationDesc.name}
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col justify-center items-center w-full">
+            <span className={styles.text}>Choose Language:</span>
             <div className="bg-slate-300/[.9] shadow-2xl border-white-900/75 w-10/12 h-7">
               <select 
                 data-placeholder="Choose a Language..." 
@@ -219,18 +235,7 @@ function DonateDetails() {
               </select>
             </div>
           </div>
-          <div className="flex flex-col justify-center items-center w-full">
-            <span className={styles.text}>Your name:</span>
-            <div className="bg-slate-300/[.9] shadow-2xl border-white-900/75 w-10/12 h-7">
-              <input 
-                type="text" 
-                placeholder='enter your name' 
-                className={styles.inputbg}
-                onChange={e => setDonationDesc({...donationDesc, name: e.target.value})}
-                value={donationDesc.name}
-              />
-            </div>
-          </div>
+
         </div>
 
         <div className={styles.box}>
@@ -260,29 +265,59 @@ function DonateDetails() {
           </div>
         </div>
 
-        <div className={styles.box}>
-          <span className={styles.text}>Pickup Time:</span>
-          <div className={styles.input}>
-            <input 
-              type="time" 
-              placeholder='select' 
-              className={styles.inputbg}
-              onChange={e => setDonationDesc({...donationDesc, time: e.target.value})}
-              value={donationDesc.time}
-            />
+        <div className="flex justify-around items-center w-full">
+          <div className="flex flex-col justify-center items-center w-5/12">
+            <span className={styles.text}>Pickup Time:</span>
+            <div className={styles.input}>
+              <input 
+                type="time" 
+                placeholder='select' 
+                className={styles.inputbg}
+                onChange={e => setDonationDesc({...donationDesc, time: e.target.value})}
+                value={donationDesc.time}
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col justify-center items-center w-5/12">
+            <span className={styles.text}>Pickup Day:</span>
+            <div className={styles.input}>
+              <input 
+                type="date" 
+                placeholder='enter' 
+                className={styles.inputbg}
+                onChange={e => setDonationDesc({...donationDesc, date: e.target.value})}
+                value={donationDesc.date}
+              />
+            </div>
           </div>
         </div>
 
-        <div className={styles.box}>
-          <span className={styles.text}>Pickup Day:</span>
-          <div className={styles.input}>
-            <input 
-              type="date" 
-              placeholder='enter' 
-              className={styles.inputbg}
-              onChange={e => setDonationDesc({...donationDesc, date: e.target.value})}
-              value={donationDesc.date}
-            />
+        <div className="flex justify-around items-center w-full">
+          <div className="flex flex-col justify-center items-center w-5/12">
+            <span className={styles.text}>Location of Stay:</span>
+            <div className={styles.input}>
+              <input 
+                type="text" 
+                placeholder='enter the location' 
+                className={styles.inputbg}
+                onChange={e => setDonationDesc({...donationDesc, locationOfStay: e.target.value})}
+                value={donationDesc.locationOfStay}
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col justify-center items-center w-5/12">
+            <span className={styles.text}>Period of Stay:</span>
+            <div className={styles.input}>
+              <input 
+                type="text" 
+                placeholder='enter the time period' 
+                className={styles.inputbg}
+                onChange={e => setDonationDesc({...donationDesc, periodOfStay: e.target.value})}
+                value={donationDesc.periodOfStay}
+              />
+            </div>
           </div>
         </div>
         
@@ -315,7 +350,7 @@ function DonateDetails() {
           </div>
         </div>
 
-        <div className="w-full h-2/6 flex flex-col justify-between items-center bg-slate-900">
+        <div className="w-full h-2/6 flex flex-col justify-between items-center bg-inherit">
           <div className="w-full h-4/6 flex flex-col justify-around items-center">
             <span className={styles.text}>Photos:{imgUrl && "Uploded!!!"}</span>
             <IconButton color="primary" aria-label="upload picture" component="label">
@@ -324,13 +359,13 @@ function DonateDetails() {
             </IconButton>
             <div className='flex'>
             <input type="checkbox" />
-              <label htmlFor="text" className='text-xs text-bold text-gray-400 ml-1'>I assure that the details provided are accurate</label>
+              <label htmlFor="text" className='text-xs text-bold text-gray-600 ml-1'>I assure that the details provided are accurate</label>
             </div>
           </div>
           <div className="w-full h-1/5 flex justify-center mb-2">
             <Button variant='contained' disabled={disabled} onClick={submit} className='w-10/12 h-10 bg-sky-700'>Submit</Button>
           </div>
-            <span className='text-sm text-white'>{message}</span>
+            <span className='text-sm text-black'>{message}</span>
         </div>
       </div>
     </div>

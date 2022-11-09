@@ -53,6 +53,8 @@ export const uploadDonateJSONtoIPFS = async(JSONBody: {
     phoneNo: string;
     time: string;
     date: string;
+    locationOfStay: string;
+    periodOfStay: string;
     items: string;
     quentity: number;
     img: string;

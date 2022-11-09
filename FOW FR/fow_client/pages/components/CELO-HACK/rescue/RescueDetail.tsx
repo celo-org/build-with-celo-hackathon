@@ -83,16 +83,16 @@ function RescueDetail() {
   }
 
   const styles = {
-    page: `w-screen max-w-screen-sm h-screen flex flex-col justify-start items-center bg-slate-900`,
+    page: `w-screen max-w-screen-sm h-screen flex flex-col justify-start items-center bg-inherit`,
     head: `w-full h-20 flex justify-between items-center`,
     box: `w-11/12 h-16`,
-    text: `text-sm font-bold text-white`,
+    text: `text-sm font-bold text-black`,
     input: `bg-slate-300/[.9] shadow-2xl border-white-900/75 w-full h-7`,
     inputbg: `w-full h-full bg-inherit pl-2 placeholder:text-sm`,
   }
 
   return (
-    <div className="flex flex-col justify-center items-center bg-slate-900">
+    <div className="flex flex-col justify-center items-center bg-inherit">
       <div className="w-full flex justify-between">
         <Link href="/">
           <ArrowBackIcon fontSize='large' color='primary' />
@@ -224,10 +224,10 @@ function RescueDetail() {
 
         <span className={styles.text}>Age group*</span>
 
-        <div className="bg-slate-300/[.2] shadow-2xl border-white-900/75 rounded-md w-full min-h-52 flex flex-col border-2 p-2">
+        <div className="bg-slate-300/[.9] shadow-2xl border-white-900/75 rounded-md w-full min-h-52 flex flex-col border-2 p-2">
           
           <div className="flex flex-col">
-            <span className='text-white font-bold ml-1 text-sm'>Less then 1 year</span>
+            <span className='text-black font-bold ml-1 text-sm'>Less then 1 year</span>
             <input 
               type="number" 
               placeholder='Enter the number of People'
@@ -238,7 +238,7 @@ function RescueDetail() {
           </div>
 
           <div className="flex flex-col">
-            <span className='text-white font-bold ml-1 text-sm'>From 1 year to 5 year</span>
+            <span className='text-black font-bold ml-1 text-sm'>From 1 year to 5 year</span>
             <input 
               type="number" 
               placeholder='Enter the number of People'
@@ -248,7 +248,7 @@ function RescueDetail() {
             />
           </div>
           <div className="flex flex-col">
-            <span className='text-white font-bold ml-1 text-sm'>From 6 year to 13 year</span>
+            <span className='text-black font-bold ml-1 text-sm'>From 6 year to 13 year</span>
             <input 
               type="number" 
               placeholder='Enter the number of People'
@@ -258,7 +258,7 @@ function RescueDetail() {
             />
           </div>
           <div className="flex flex-col">
-            <span className='text-white font-bold ml-1 text-sm'>For Adults</span>
+            <span className='text-black font-bold ml-1 text-sm'>For Adults</span>
             <input 
               type="number" 
               placeholder='Enter the number of People'
@@ -268,7 +268,7 @@ function RescueDetail() {
             />
           </div>
           <div className="flex flex-col">
-            <span className='text-white font-bold ml-1 text-sm'>Above 60</span>
+            <span className='text-black font-bold ml-1 text-sm'>Above 60</span>
             <input 
               type="number" 
               placeholder='Enter the number of People'
@@ -336,7 +336,7 @@ function RescueDetail() {
         <div className="h-24 w-full flex flex-col justify-center items-center">
           <div className="flex">
             <input type="checkbox" />
-            <label htmlFor="text" className='text-xs text-bold text-gray-400 ml-1'>I assure that the details provided are accurate</label>
+            <label htmlFor="text" className='text-xs text-bold text-black ml-1'>I assure that the details provided are accurate</label>
           </div>
           <Button variant='contained' onClick={submit} disabled={disabled} className='w-10/12 h-10 bg-sky-700'>Submit</Button>
           <span className='text-sm text-white'>{message}</span>

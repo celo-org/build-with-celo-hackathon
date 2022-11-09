@@ -56,7 +56,7 @@ function RescueCard(props: any) {
         }
       </div>
       <div className="w-full flex justify-around items-center">
-        <span className='text-sm font-bold text-gray-500'>Rescue Id: {props.data.rescueId}</span>
+        <span className='text-sm font-bold text-black'>Rescue Id: {props.data.rescueId}</span>
         <Button variant='contained' className='bg-sky-700'>
           <span className='text-sm capitalize' onClick={fetchData}>{!click ? "see details" : "hide details"}</span>
         </Button>

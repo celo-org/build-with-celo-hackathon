@@ -55,7 +55,7 @@ function DonationCard(props: any) {
         }
       </div>
       <div className="w-full flex justify-around items-center">
-        <span className='text-sm font-bold text-gray-500'>Donation Id: {props.data.donationId}</span>
+        <span className='text-sm font-bold text-black'>Donation Id: {props.data.donationId}</span>
         <Button variant='contained' className='bg-sky-700'>
           <span className='text-sm capitalize' onClick={fetchData}>{!click ? "see details" : "hide details"}</span>
         </Button>

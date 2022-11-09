@@ -77,7 +77,7 @@ function FirstPage() {
   }
 
   const styles = {
-    page: `w-screen h-screen flex flex-col justify-between items-center max-w-screen-sm bg-slate-900 bg-[url('/images2/bg3.png')]`,
+    page: `w-screen h-screen flex flex-col justify-between items-center max-w-screen-sm bg-[url('/images2/bg4.png')]`,
     top: `w-full h-2/6 flex justify-center items-center`,
     mid: `w-full h-2/6 flex flex-col justify-between items-center`,
     bottom: `w-full h-1/4 flex flex-col justify-center items-center`,
@@ -98,7 +98,7 @@ function FirstPage() {
         <div className={styles.mid}>
           <div className="flex flex-col justify-start items-center">
             <span className='font-extrabold text-2xl'>Want To Share Food?</span>
-            <span className='font-bold text-sm text-gray-400'>choose one</span>
+            <span className='font-bold text-sm text-gray-600'>choose one</span>
           </div>
 
           {
@@ -113,14 +113,14 @@ function FirstPage() {
                 <button className={styles.btn} onClick={donateClick}>
                   <img src="/images2/Fundraising.png" alt="/" className='w-full h-full rounded-full' />
                 </button>
-                <span className='text-xs text-gray-400 font-bold'>Donate</span>
+                <span className='text-xs text-gray-600 font-bold'>Donate</span>
               </div>
 
               <div className="flex flex-col justify-center items-center">
                 <button className={styles.btn} onClick={resqueClick}>
                   <img src="/images2/delivery.png" alt="/" className='w-full h-full rounded-full' />
                 </button>
-                <span className='text-xs text-gray-400 font-bold'>Rescuer</span>
+                <span className='text-xs text-gray-600 font-bold'>Need Rescue</span>
               </div>
 
             </div>
@@ -133,7 +133,7 @@ function FirstPage() {
                 <button className="w-20 h-20 rounded-full">
                   <img src="/images2/owner.png" alt="/" className='w-full h-full rounded-full' />
                 </button>
-                <span className='text-xs text-gray-400 font-bold'>Owner</span>
+                <span className='text-xs text-gray-600 font-bold'>Owner</span>
 
                 {
                   click 
@@ -200,7 +200,7 @@ function FirstPage() {
 
               <Link href='/components/CELO-HACK/rescue/RescueDetail'>
                 <Button variant='contained' className='w-full bg-sky-700'>
-                  <span className='capitalize' onClick={connectWallet}>Resque?</span>
+                  <span className='capitalize' onClick={connectWallet}>Rescue?</span>
                 </Button>
               </Link>
 

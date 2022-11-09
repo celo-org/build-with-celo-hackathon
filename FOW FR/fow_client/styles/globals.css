@@ -4,6 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-[#0f172a] tracking-wide
+    /* @apply bg-[#C7D0EF] tracking-wide */
+    @apply bg-[#ffffff] tracking-wide
   }
 }
