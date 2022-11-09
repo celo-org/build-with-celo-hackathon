@@ -19,6 +19,7 @@ import celoHelper from 'clixpesa/blockchain/helpers/celoHelper'
 import { utils } from 'ethers'
 import { P2PLoanIface } from 'clixpesa/blockchain/contracts'
 import { fetchLoans, updateLoans } from './loansSlice'
+import { areAddressesEqual } from '../../blockchain/utils/addresses'
 
 export default function FundLoanScreen({ navigation, route }) {
   const loanParams = route.params
@@ -35,7 +36,7 @@ export default function FundLoanScreen({ navigation, route }) {
     const txReceipt = await celoHelper.smartContractCall('P2PLoan', {
       approvalContract: 'StableToken',
       contractAddress: loanParams.address,
-      method: loanParams.initiated ? 'FundLoan' : 'RepayLoan',
+      method: loanParams.lender ? 'FundLoan' : 'RepayLoan',
       methodType: 'write',
       params: [value],
     })
@@ -44,10 +45,9 @@ export default function FundLoanScreen({ navigation, route }) {
 
   const handleTxResponce = (txReceipt) => {
     setIsLoading(false)
-    const thisLog = txReceipt.logs.find((el) => el.address === loanParams.address)
+    const thisLog = txReceipt.logs.find((el) => areAddressesEqual(el.address, loanParams.address))
     const results = P2PLoanIface.parseLog({ data: thisLog.data, topics: thisLog.topics })
-    console.log(utils.formatUnits(results.args[2], 'ether'))
-    if (amount === utils.formatUnits(results.args[2], 'ether') * 1) {
+    if (utils.parseEther(amount).toString() === results.args[2].toString()) {
       onOpen()
     }
   }
@@ -110,7 +110,7 @@ export default function FundLoanScreen({ navigation, route }) {
               mt={3}
               _text={{ color: 'primary.600', fontWeight: 'semibold' }}
               onPress={() => {
-                onClose(), handleLoanUpdate(), navigation.goBack()
+                onClose(), navigation.goBack()
               }}
             >
               OK

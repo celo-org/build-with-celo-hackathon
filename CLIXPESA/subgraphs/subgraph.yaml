@@ -6,7 +6,7 @@ dataSources:
     name: Loans
     network: celo-alfajores
     source:
-      address: "0xA6Cf98ee0aBE14E376bf3B2c2e6Ce2D1E05bB8fE"
+      address: "0xfd8614A67630D219C795997A87b26D31255Fa811"
       abi: Loans
       startBlock: 14387280
     mapping:

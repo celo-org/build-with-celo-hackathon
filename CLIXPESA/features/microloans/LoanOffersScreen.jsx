@@ -70,19 +70,19 @@ export default function LoanOffersScreen({ navigation }) {
           />
         </Stack>
         <Spacer />
-        <Stack position="absolute" bottom={12} alignItems="center" space={3} width="95%">
-          <Button
-            rounded="3xl"
-            w="60%"
-            _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
-            onPress={() => {
-              navigation.navigate('createOffer')
-            }}
-          >
-            Create an Offer
-          </Button>
-        </Stack>
       </VStack>
+      <Stack position="absolute" bottom={8} alignItems="center" space={3} width="95%">
+        <Button
+          rounded="3xl"
+          w="60%"
+          _text={{ color: 'primary.100', fontWeight: 'semibold', mb: '0.5' }}
+          onPress={() => {
+            navigation.navigate('createOffer')
+          }}
+        >
+          Create an Offer
+        </Button>
+      </Stack>
     </Box>
   )
 }

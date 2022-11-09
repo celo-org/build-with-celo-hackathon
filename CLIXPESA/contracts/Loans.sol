@@ -81,6 +81,7 @@ contract Loans {
     return activeLoans;
   }
 
+  //Get myLoans
   function getMyLoans() external view returns (ActiveLoan[] memory) {
     return myActiveLoans[msg.sender];
   }

@@ -42,6 +42,7 @@ contract Spaces {
     return roscas;
   }
 
+  //get myspaces
   function getMySpaces() external view returns (ActiveSpace[] memory) {
     return mySpaces[msg.sender];
   }

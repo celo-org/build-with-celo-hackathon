@@ -5,7 +5,7 @@
       "chainId": "44787",
       "contracts": {
         "Loans": {
-          "address": "0xA6Cf98ee0aBE14E376bf3B2c2e6Ce2D1E05bB8fE",
+          "address": "0xfd8614A67630D219C795997A87b26D31255Fa811",
           "abi": [
             {
               "inputs": [],
@@ -318,7 +318,7 @@
           ]
         },
         "Spaces": {
-          "address": "0x8803e10E21e2effa2CC356b107204BE9a593801A",
+          "address": "0xF1540d422c7dcC2a694e66873980974E9b5F3bAd",
           "abi": [
             {
               "anonymous": false,

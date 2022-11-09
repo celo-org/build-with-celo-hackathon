@@ -13,29 +13,6 @@ export default function LoansHomeScreen({ navigation }) {
   const walletAddress = useSelector((s) => s.wallet.walletInfo.address)
   const { data, error, isLoading, refetch } = useGetUserLoansQuery(walletAddress)
 
-  const handleLoans = () => {
-    const thisloans = []
-    const thisResp = data.user.loans
-    thisResp.forEach((resp) => {
-      const dueDate = new Date(resp.loan.dueDate * 1)
-      const balance = utils.formatUnits(resp.loan.balance, 'ether')
-      const paid = utils.formatUnits(resp.loan.paid, 'ether')
-      const loan = {
-        name: resp.name,
-        address: resp.loan.id,
-        pending: balance == 0.0 && paid == 0.0 ? true : false,
-        principal: utils.formatUnits(resp.loan.principal, 'ether'),
-        balance:
-          balance == 0.0 && paid == 0.0 ? utils.formatUnits(resp.loan.principal, 'ether') : balance,
-        paid,
-        dueDate: dueDate.toDateString(),
-        lender: resp.lender,
-      }
-      thisloans.push(loan)
-    })
-    setLoans(thisloans)
-  }
-
   let totalBalance = 0.0
 
   const wait = (timeout) => {
@@ -51,10 +28,6 @@ export default function LoansHomeScreen({ navigation }) {
     })
   }, [data])
 
-  useEffect(() => {
-    if (data && !isLoading) handleLoans()
-  }, [data, isLoading])
-
   if (loans.length > 0) {
     loans.forEach((loan) => {
       if (!loan.pending) {
@@ -63,7 +36,36 @@ export default function LoansHomeScreen({ navigation }) {
     })
   }
 
-  console.log('Rerender')
+  const handleLoans = () => {
+    if (typeof data.user === 'object' && data.user !== null) {
+      const thisloans = []
+      const thisResp = data.user.loans
+      thisResp.forEach((resp) => {
+        const dueDate = new Date(resp.loan.dueDate * 1)
+        const balance = utils.formatUnits(resp.loan.balance, 'ether')
+        const paid = utils.formatUnits(resp.loan.paid, 'ether')
+        const loan = {
+          name: resp.name,
+          address: resp.loan.id,
+          pending: balance == 0.0 && paid == 0.0 ? true : false,
+          principal: utils.formatUnits(resp.loan.principal, 'ether'),
+          balance:
+            balance == 0.0 && paid == 0.0
+              ? utils.formatUnits(resp.loan.principal, 'ether')
+              : balance,
+          paid,
+          dueDate: dueDate.toDateString(),
+          lender: resp.lender,
+        }
+        thisloans.push(loan)
+      })
+      setLoans(thisloans)
+    }
+  }
+
+  useEffect(() => {
+    if (data && !isLoading) handleLoans()
+  }, [data, isLoading])
 
   return (
     <Box flex={1} bg="muted.100" alignItems="center">
@@ -121,7 +123,7 @@ export default function LoansHomeScreen({ navigation }) {
               itemTitle={item.name}
               payProgress={
                 item.pending
-                  ? item.initiated
+                  ? item.lender
                     ? 'Please fund loan'
                     : 'Waiting for funds'
                   : (item.paid * 1).toFixed(2).toString() +
