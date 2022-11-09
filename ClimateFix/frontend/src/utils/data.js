@@ -221,28 +221,29 @@ export const countries = [
   "Zimbabwe",
 ];
 
- export const userType = [
-  'Expert', 'User'
-];
+export const userType = ["Expert", "User"];
 
 export const locations = [
   {
+    id: 1,
     image: Nigeria,
     country: "Nigeria",
     figure: "12, 454",
-    route: "/plant-now"
+    route: `/plant-now/${1}`,
   },
   {
+    id: 2,
     image: SouthAfrica,
     country: "South Africa",
     figure: "5, 204",
-    route: "/plant-now"
+    route: `/plant-now/${2}`,
   },
   {
+    id: 3,
     image: Mexico,
     country: "Mexico",
     figure: "14, 719",
-    route: "/plant-now"
+    route: `/plant-now/${3}`,
   },
   // {
   //   image: Ghana,
@@ -319,11 +320,37 @@ export const states = [
   "Sokoto",
   "Taraba",
   "Yobe",
-  "Zamfara"
+  "Zamfara",
 ];
 
+export const SouthAfricaStates = [
+  "Eastern Cape",
+  "Free State",
+  "Gauteng",
+  "KwaZulu-Natal",
+  "Limpopo",
+  "Mpumalanga",
+  "Northern Cape",
+  "North West",
+  "Western Cape",
+];
+
+export const MexicoStates = [
+  'Aguascalientes', 'Baja California', 'Baja California Sur' , 'Campeche', 'Coahuila', 'Colima', 'Chiapas', 'Chihuahua', 'Durango', 'Mexico City', 'Guanajuato', 'Guerrero', 'Hidalgo', 'Jalisco', 'Mexico', 'Michoacan', 'Morelos', 'Nayarit', 'Nuevo León', 'Oaxaca', 'Puebla', 'Queretaro', 'Quintana Roo', 'San Luis Potosi', 'Sinaloa', 'Sonora', 'Tabasco', 'Tamaulipas', 'Tlaxcala', 'Veracruz', 'Yucatán', 'Zacatecas'
+]
+
 export const allTrees = [
-  "Mountain Fig", "Bush Fig", "Sycamore", "Gmelina Tree", "Jan Yaro", "Mahogany", "Bakin Faru", "Mango", "Moringa", "Cashew", "African Peach"
+  "Mountain Fig",
+  "Bush Fig",
+  "Sycamore",
+  "Gmelina Tree",
+  "Jan Yaro",
+  "Mahogany",
+  "Bakin Faru",
+  "Mango",
+  "Moringa",
+  "Cashew",
+  "African Peach",
 ];
 
 export const allExperts = [
@@ -331,30 +358,30 @@ export const allExperts = [
     name: "Chuks Dave",
     email: "chuksdave@gmail.com",
     title: "Mango Experts",
-    image: Expert1
+    image: Expert1,
   },
   {
     name: "Danny Ace",
     email: "danny@gmail.com",
     title: "Mahogany Expert",
-    image: Expert2
+    image: Expert2,
   },
   {
     name: "Hexdee",
     email: "hexdee@gmail.com",
     title: "Cashew Expert",
-    image: Expert3
+    image: Expert3,
   },
   {
     name: "Jessica Jean",
     email: "jessica@gmail.com",
     title: "Moringa Expert",
-    image: Expert4
+    image: Expert4,
   },
   {
     name: "Olalademi Asake",
     email: "asake@gmail.com",
     title: "African Peach Expert",
-    image: Expert5
+    image: Expert5,
   },
-]
+];

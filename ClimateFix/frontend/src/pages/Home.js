@@ -77,7 +77,6 @@ const Home = () => {
       )
       .then((res) => {
         setWeatherData(res?.data);
-        console.log(res);
       })
       .catch((err) => console.log(err));
   }, []);

@@ -27,7 +27,7 @@ const AppRoute = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/expert-home" element={<ExpertHome />} />
-        <Route path="/plant-now" element={<PlantNow />} />
+        <Route path="/plant-now/:id" element={<PlantNow />} />
         <Route path="/invite-pending" element={<InvitePending />} />
         <Route path="/upload-video" element={<UploadVideo />} />
         <Route path="/success" element={<SuccessUpload />} />
