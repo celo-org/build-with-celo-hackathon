@@ -133,7 +133,7 @@ const getBalance = async () => {
           <h2>Get rewarded for attending events</h2>
           <p>Get refunded for attending while you share from a pool of event absentees. It is that simple!</p>
         </div>
-        <img src={uspImg} alt="usp image"/>
+        <img src={uspImg} alt="usp"/>
       </div>
 
       {events.length && events.map(event => (
