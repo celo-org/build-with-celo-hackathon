@@ -1,6 +1,29 @@
 .header {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  background: red;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.menu-icon {
+  height: 30px;
+  display: grid;
+  cursor: pointer;
+}
+
+.menu-icon div {
+  height: 2px;
+  width: 30px;
+  background: #fefefe;
+}
+
+.connect button {
+  border: 3px solid #fefefe;
+  border-radius: 50px;
+  padding: 12px 20px;
+  background: transparent;
+  color: #fefefe;
+  letter-spacing: 4px;
+  font-weight: 600;
 }

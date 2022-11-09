@@ -4,7 +4,8 @@ import AppHeader from './components/layout/Header'
 import Home from './pages/Home'
 import Event from './pages/Event'
 import { CeloProvider, Alfajores, NetworkNames } from '@celo/react-celo';
-import '@celo/react-celo/lib/styles.css';
+import '@celo/react-celo/lib/styles.css'
+import './App.css'
 
 function WrappedApp() {
   return (

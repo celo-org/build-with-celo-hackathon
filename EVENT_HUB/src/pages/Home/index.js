@@ -5,6 +5,8 @@ import axios from 'axios'
 import { eventHubContractAddress} from '../../utils'
 import EventHub from '../../artifacts/contracts/EventHub.sol/EventHub.json'
 
+import uspImg from '../../assets/img/usp-img.png'
+
 import styles from './Home.module.css'
 
 
@@ -123,7 +125,17 @@ const getBalance = async () => {
 
   return (
     <div className={styles.container}>
-      <h4>{status}</h4>
+      <div className={`app-bg ${styles.hero}`}>
+        <h1 class={styles['app-name']}>Event <br/>Hub</h1>
+      </div>
+      <div className={`app-bg app-pd ${styles.usp}`}>
+        <div className={styles['usp-txt']}>
+          <h2>Get rewarded for attending events</h2>
+          <p>Get refunded for attending while you share from a pool of event absentees. It is that simple!</p>
+        </div>
+        <img src={uspImg} alt="usp image"/>
+      </div>
+
       {events.length && events.map(event => (
         <div>
           <img width="200px" src={`${ipfsGateway}/${event.ipfs_pin_hash}`} alt=""/>
@@ -138,6 +150,7 @@ const getBalance = async () => {
           <button onClick={() => test(event.ipfs_pin_hash)}>test</button>
           <button onClick={() => transfer(event.ipfs_pin_hash)}>Transfer</button>
           <button onClick={getBalance}>Get Balance</button>
+          <h4>{status}</h4>
         </div>
       ))}
     </div>

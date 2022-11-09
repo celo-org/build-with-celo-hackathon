@@ -1,13 +1,13 @@
 // import { Link } from 'react-router-dom'
 import { useEffect } from 'react'
-import {useCelo} from "@celo/react-celo";
-// import {ethers} from 'ethers'
+import { useCelo } from '@celo/react-celo'
+import { truncate } from '../../../utils'
 
 import styles from './Header.module.css'
 
 function AppHeader() {
 
-  const { address, connect, disconnect } = useCelo()
+  const { address, connect } = useCelo()
 
 
   useEffect(() => {
@@ -15,7 +15,7 @@ function AppHeader() {
   })
 
   return (
-    <header className={styles.header}>
+    <header className={`app-pd app-bg ${styles.header}`}>
       <div className={styles['menu-icon']}>
         <div></div>
         <div></div>
@@ -25,9 +25,8 @@ function AppHeader() {
       {/*  <Link to='/event'>Event</Link>*/}
       {/*  <Link to='/rsvps'>RSVPs</Link>*/}
       {/*</div>*/}
-      <div>
-        {address ? <button>{address}</button> : <button onClick={connect}>Connect</button>}
-        <button onClick={disconnect}>Logout</button>
+      <div className={styles.connect}>
+        {address ? <button>{truncate(address)}</button> : <button onClick={connect}>CONNECT</button>}
       </div>
     </header>
   )
