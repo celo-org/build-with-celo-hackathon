@@ -132,7 +132,7 @@ function DonateDetails() {
         <div className={styles.head}>
           <span className='text-2xl font-bold text-sky-600'>Donate Details</span>
           <Link href="/components/CELO-HACK/donate/MyDonations">
-            <Button variant='contained' className='bg-sky-700'><span className="capitalize text-sm">Donation</span></Button>
+            <Button variant='contained' className='bg-sky-700'><span className="capitalize text-sm">My Donations</span></Button>
           </Link>
         </div>
 

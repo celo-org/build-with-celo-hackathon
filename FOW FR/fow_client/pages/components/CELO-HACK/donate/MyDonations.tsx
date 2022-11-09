@@ -72,11 +72,24 @@ function MyDonations() {
         </Link>
       </div>
       <div className={styles.page}>
-        <Link href="/components/CELO-HACK/donate/MyNFTs">
-          <Button variant='contained' size='small' className='bg-sky-700'>
-            <span className='text-sm capitalize'>Show My NFTs</span>
-          </Button>
-        </Link>
+        {
+
+          data.length === 0 ?
+
+          <div>
+            <p className='text-sky-600 font-bold text-xl'>You don&apos;t have any donation details</p> 
+            <p className='text-sky-600 font-bold text-sm'>(once you donate, the details will shown here)</p> 
+          </div>
+          
+          :
+
+          <Link href="/components/CELO-HACK/donate/MyNFTs">
+            <Button variant='contained' size='small' className='bg-sky-700'>
+              <span className='text-sm capitalize'>Show My NFTs</span>
+            </Button>
+          </Link>
+
+        }
         {data.map((value, index) => {
             return <DonationCard data={value} key={index} />
         })}

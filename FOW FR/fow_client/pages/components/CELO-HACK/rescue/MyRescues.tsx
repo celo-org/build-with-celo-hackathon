@@ -71,6 +71,15 @@ function MyRescues() {
         </Link>
       </div>
       <div className={styles.page}>
+        <span className='text-sky-600 font-bold text-xl ml-4'>
+          {
+            data.length === 0 ? 
+
+            <span>You don&apos;t have any Rescue request</span> : 
+
+            <span></span>
+          }
+        </span>
         {data.map((value, index) => {
             return <RescueCard data={value} key={index} />
         })}
