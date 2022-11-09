@@ -11,19 +11,25 @@ import { spacesListeners } from '../features/spaces/spacesEffects'
 import { loansListeners } from '../features/microloans/loansEffects'
 
 import { blockscoutApi } from './services/blockscout'
+import { subgraphsApi } from './services/subgraphs'
 
 const listenerMiddleware = createListenerMiddleware()
 
 export default configureStore({
   reducer: {
     [blockscoutApi.reducerPath]: blockscoutApi.reducer,
+    [subgraphsApi.reducerPath]: subgraphsApi.reducer,
     essential: essentialReducer,
     wallet: walletReducer,
     spaces: spacesReducer,
     loans: loansReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().prepend(listenerMiddleware.middleware, blockscoutApi.middleware),
+    getDefaultMiddleware().prepend(
+      listenerMiddleware.middleware,
+      blockscoutApi.middleware,
+      subgraphsApi.middleware,
+    ),
 })
 
 //Listeners

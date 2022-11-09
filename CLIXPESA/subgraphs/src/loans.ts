@@ -1,10 +1,11 @@
-import { BigInt, log } from '@graphprotocol/graph-ts'
 import { Loans, CreatedLoan } from '../generated/Loans/Loans'
 import { Loan, User, UserLoan } from '../generated/schema'
+import { P2PLoan } from '../generated/templates'
 
 export function handleCreatedLoan(event: CreatedLoan): void {
   //create the loan
   let loan = new Loan(event.params.loanAddress)
+  P2PLoan.create(event.params.loanAddress)
   loan.principal = event.params.LD.principal
   loan.balance = event.params.LD.balance
   loan.paid = event.params.LD.paid
@@ -26,20 +27,19 @@ export function handleCreatedLoan(event: CreatedLoan): void {
   let user1Loan = new UserLoan(user1.id.concat(loan.id))
   user1Loan.user = user1.id
   user1Loan.loan = loan.id
+  user1Loan.lender = true
+  user1Loan.name = `Loan 0x${loan.id.toHexString().slice(2, 6).toUpperCase()}`
 
   let user2Loan = new UserLoan(user2.id.concat(loan.id))
   user2Loan.user = user2.id
   user2Loan.loan = loan.id
+  user2Loan.lender = false
+  user2Loan.name = `Loan 0x${loan.id.toHexString().slice(2, 6).toUpperCase()}`
+
   // Entities can be written to the store with `.save()`
   loan.save()
   user1Loan.save()
   user2Loan.save()
-
-  // Note: If a handler doesn't require existing field values, it is faster
-  // _not_ to load the entity from the store. Instead, create it fresh with
-  // `new Entity(...)`, set the fields that should be updated and save the
-  // entity back to the store. Fields that were not set or unset remain
-  // unchanged, allowing for partial updates to be applied.
 
   // It is also possible to access smart contracts from mappings. For
   // example, the contract that has emitted the event can be connected to

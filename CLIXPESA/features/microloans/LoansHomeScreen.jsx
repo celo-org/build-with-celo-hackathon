@@ -1,44 +1,42 @@
 import { Box, Text, HStack, Icon, FlatList, Pressable, Button } from 'native-base'
 import { RefreshControl } from 'react-native'
 import { Feather, Ionicons } from '@expo/vector-icons'
-import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState, useCallback } from 'react'
-import { getLoans, getDefaultNewLoanName } from './loansManager'
-import { fetchLoans, updateLoans } from './loansSlice'
+import { useSelector } from 'react-redux'
 import { FeatureHomeCard, FeatureItem } from 'clixpesa/components'
-import celoHelper from '../../blockchain/helpers/celoHelper'
 import { utils } from 'ethers'
+import { useGetUserLoansQuery } from '../../app/services/subgraphs'
 
 export default function LoansHomeScreen({ navigation }) {
-  const dispatch = useDispatch()
-  const loanONRsAddr = useSelector((s) => s.loans.ONRsAddr)
-  const [refreshing, setRefreshing] = useState(false)
   const [loans, setLoans] = useState([])
+  const [refreshing, setRefreshing] = useState(false)
+  const walletAddress = useSelector((s) => s.wallet.walletInfo.address)
+  const { data, error, isLoading, refetch } = useGetUserLoansQuery(walletAddress)
 
-  const [tempBal, setTempBal] = useState(0.0)
-  let totalBalance = 0.0
-  useEffect(() => {
-    const fetchMyLoans = async () => {
-      const myLoans = await celoHelper.smartContractCall('Loans', {
-        method: 'getMyLoans',
-        methodType: 'read',
-      })
-      const results = await getLoans()
-      setLoans(results)
-      for (const idx in myLoans) {
-        if (!results.find((ln) => ln.address === myLoans[idx][0])) {
-          dispatch(fetchLoans())
-          return
-        }
+  const handleLoans = () => {
+    const thisloans = []
+    const thisResp = data.user.loans
+    thisResp.forEach((resp) => {
+      const dueDate = new Date(resp.loan.dueDate * 1)
+      const balance = utils.formatUnits(resp.loan.balance, 'ether')
+      const paid = utils.formatUnits(resp.loan.paid, 'ether')
+      const loan = {
+        name: resp.name,
+        address: resp.loan.id,
+        pending: balance == 0.0 && paid == 0.0 ? true : false,
+        principal: utils.formatUnits(resp.loan.principal, 'ether'),
+        balance:
+          balance == 0.0 && paid == 0.0 ? utils.formatUnits(resp.loan.principal, 'ether') : balance,
+        paid,
+        dueDate: dueDate.toDateString(),
+        lender: resp.lender,
       }
-    }
-
-    const unsubscribe = navigation.addListener('focus', () => {
-      fetchMyLoans()
+      thisloans.push(loan)
     })
+    setLoans(thisloans)
+  }
 
-    return unsubscribe
-  }, [navigation])
+  let totalBalance = 0.0
 
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout))
@@ -46,13 +44,16 @@ export default function LoansHomeScreen({ navigation }) {
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true)
-    dispatch(updateLoans())
+    refetch()
     wait(2000).then(async () => {
-      const results = await getLoans()
-      setLoans(results)
+      if (data && !isLoading) handleLoans()
       setRefreshing(false)
     })
-  }, [])
+  }, [data])
+
+  useEffect(() => {
+    if (data && !isLoading) handleLoans()
+  }, [data, isLoading])
 
   if (loans.length > 0) {
     loans.forEach((loan) => {
@@ -60,8 +61,9 @@ export default function LoansHomeScreen({ navigation }) {
         totalBalance += loan.balance * 1
       }
     })
-    wait(1000).then(() => dispatch(updateLoans()))
   }
+
+  console.log('Rerender')
 
   return (
     <Box flex={1} bg="muted.100" alignItems="center">
@@ -69,7 +71,9 @@ export default function LoansHomeScreen({ navigation }) {
         width="95%"
         data={loans}
         showsVerticalScrollIndicator={false}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        refreshControl={
+          <RefreshControl refreshing={refreshing || isLoading} onRefresh={onRefresh} />
+        }
         ListHeaderComponent={
           <>
             <FeatureHomeCard
@@ -113,7 +117,7 @@ export default function LoansHomeScreen({ navigation }) {
             mt={1}
           >
             <FeatureItem
-              initiated={item.initiated}
+              initiated={item.lender}
               itemTitle={item.name}
               payProgress={
                 item.pending
