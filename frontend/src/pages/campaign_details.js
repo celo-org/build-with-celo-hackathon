@@ -22,6 +22,7 @@ const CampaignDetails = () => {
     const [contentLoaded, setcontentLoaded] = useState([])
 
     useEffect(() => {
+        console.log("det1")
         setcontentLoaded(false)
         loadPhotos()
         load()
@@ -29,9 +30,12 @@ const CampaignDetails = () => {
     }, [])
 
     async function loadPhotos() {
+        console.log("det2")
         const query = '*[_type == "task" && campaignid == $id] {taskDescription,dailytask,date}'
         const params = { id: Number(campId) } //TODO:  req.url used twice
+        console.log("res", Number(campId))
         const result = await client.fetch(query, params)
+
         const baseUrl = urlFor(result[0]["dailytask"]["asset"]["_ref"].slice(6,))["options"].baseUrl
         const dataset = urlFor(result[0]["dailytask"]["asset"]["_ref"].slice(6,))["options"].dataset
         const projectId = urlFor(result[0]["dailytask"]["asset"]["_ref"].slice(6,))["options"].projectId

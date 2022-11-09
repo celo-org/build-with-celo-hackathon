@@ -9,6 +9,7 @@ const Gallery = () => {
     const [contentLoaded, setcontentLoaded] = useState([])
 
     useEffect(() => {
+        console.log("hgjf")
         setcontentLoaded(false)
         loadPhotos()
     }, [])
@@ -16,6 +17,7 @@ const Gallery = () => {
     async function loadPhotos() {
         const query = '*[_type == "task"] {dailytask}'
         const result = await client.fetch(query)
+        console.log("res", result)
         const baseUrl = urlFor(result[0]["dailytask"]["asset"]["_ref"].slice(6,))["options"].baseUrl
         const dataset = urlFor(result[0]["dailytask"]["asset"]["_ref"].slice(6,))["options"].dataset
         const projectId = urlFor(result[0]["dailytask"]["asset"]["_ref"].slice(6,))["options"].projectId
@@ -31,6 +33,7 @@ const Gallery = () => {
                 return item;
             })
         )
+        console.log("items", items)
         setPhotos(items)
         setcontentLoaded(true)
     }

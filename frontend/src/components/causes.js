@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'; 
+import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import { getConfigByChain } from '../config'
 import GrowAChild from '../artifacts/contracts/Growachild.sol/Growachild.json'
@@ -31,7 +31,7 @@ const Causes = () => {
     const [loadingState, setLoadingState] = useState(true)
 
     useEffect(() => {
-        viewCampaigns() 
+        viewCampaigns()
     }, [])
 
     async function viewCampaigns() {
@@ -74,45 +74,30 @@ const Causes = () => {
         console.log("data------------------", items)
         setCampaign(items)
         setLoadingState(false)
-        
+
     }
 
     return (
         <section class="ftco-section bg-light">
             <div class="container-fluid">
                 <div class="row justify-content-center mb-5 pb-3">
-                    <div class="col-md-5 heading-section text-center">
-                        <h2 class="mb-4">Our Campaigns</h2>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <div class="col-md-7 heading-section text-center">
+                        <h2 class="mb-4">Some Statistics</h2>
+                        <p>1. An estimated <b>153 million</b> children worldwide are orphans (UNICEF).</p>
+                        <p>2. Asia holds the largest number of orphaned children, at <b>71 million</b> – India alone is home to <b>31 million</b> orphans. This is followed by Africa, which harbors 59 million.
+                            .</p>
+                        <p>3. Each day, <b>39,000</b> children are forced from their homes alone because of the death of a parent, family illness or abuse and abandonment. COVID-19: Schools for more than <b>168 million</b> children globally have been <b>completely closed</b> for almost a full year, says UNICEF
+                        </p>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12 ">
-                        <OwlCarousel center margin={20} nav loop rewind autoplay  {...options}>
-
-
-                            {!loadingState ? (
-                                <>
-                                    
-                                    {campaign.map((camp, id) => (
-                                        <div class="item">
-                                            <Cause key={id} details={camp} />
-                                        </div>
-                                    ))}
-                                </>
-                            ) : (
-                                <div class='loader'>
-                                    <Dna
-                                        visible={true}
-                                        height="150"
-                                        width="150"
-                                        ariaLabel="dna-loading"
-                                        wrapperStyle={{}}
-                                        wrapperClass="dna-wrapper"
-                                    />
-                                </div>
-                            )}
-                        </OwlCarousel>
+                <div class="row justify-content-center mb-5 pb-3">
+                    <div class="col-md-7 heading-section text-center">
+                        <h2 class="mb-4">Our Solutions</h2>
+                        <p>1. GrowAChild only approves trusted organizations after manual and automated verification (OTP-based) and then records their data on the blockchain  .</p>
+                        <p>2. Asia holds the largest number of orphaned children, at <b>71 million</b> – India alone is home to <b>31 million</b> orphans. This is followed by Africa, which harbors 59 million.
+                            .</p>
+                        <p>3. Each day, <b>39,000</b> children are forced from their homes alone because of the death of a parent, family illness or abuse and abandonment. COVID-19: Schools for more than <b>168 million</b> children globally have been <b>completely closed</b> for almost a full year, says UNICEF
+                        </p>
                     </div>
                 </div>
             </div>
