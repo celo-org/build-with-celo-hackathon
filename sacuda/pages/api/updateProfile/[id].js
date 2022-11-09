@@ -4,7 +4,7 @@ import Sacuda from '../../../models/sacudaModel';
 export default async function updateProfileHandler(req, res) {
 
   const { method,body } = req
-  const { reqemail } = req.query
+  const reqemail = req.query
 
   await connectMongo();
 
@@ -12,8 +12,7 @@ export default async function updateProfileHandler(req, res) {
 
     case "PUT":
       try {
-        
-        const profData = await Sacuda.findOneAndUpdate(req.query, req.body, {
+        const profData = await Sacuda.findOneAndUpdate({email: reqemail.id}, req.body, {
           //new: true,
           //runValidators: true,
         });
@@ -29,7 +28,7 @@ export default async function updateProfileHandler(req, res) {
       break;
 
     default:
-      console.log('cosas3')
+      console.log('cosas3'+[req.query])
       res.status(400).json({ success: false });
       break;
   }

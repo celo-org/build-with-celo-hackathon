@@ -1,6 +1,6 @@
 import { FaMagic } from 'react-icons/fa';
 import { sacudaContext } from '../../components/sacudaContext';
-import React from 'react';
+import React, { useEffect, useState} from 'react';
 import { Text, Heading } from '@chakra-ui/react';
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from 'next/router';
@@ -22,7 +22,11 @@ const walletConnect = () => {
   })
 
   const {uMail,setUMail} = sacudaContext ()
+  const {uData,setUData} = useState({})
 
+  useEffect(() => {
+    window.localStorage.setItem('uMail', undefined) 
+  });
 
   const writeProfileBasics = async () => {
     const res = await fetch('/api/handler', {
@@ -46,8 +50,16 @@ const walletConnect = () => {
       },
       body: JSON.stringify(session.user.email),
     });
+    console.log('mail'+session.user.email)
     const resdata = await res.json();
+    if (resdata.data === null) {
+    setUMail(null)
+    }
+    else if (resdata.data.email === session.user.email) {
     setUMail(resdata.data.email)
+    } 
+    else
+    console.log('Error'+resdata+error)
   };  
 
   const mainRedirect = () => {
@@ -80,7 +92,7 @@ const walletConnect = () => {
             writeProfileBasics()
             }
                else {
-                 signOut()
+                 //signOut()
                }
   }
     else

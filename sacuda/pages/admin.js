@@ -36,18 +36,6 @@ export default function admin({users}) {
         console.log({user})
      }
 
-
-    function handleEditSubmit(e){
-        e.preventDefault();
-        editTodo(modalValue.id,modalValue)
-        setModalValue("")
-        setIsOpen(false)
-      }
-
-    function handleEditInputChange(e,id){ 
-    setModalValue({ ...modalValue, text: e.target.value });
-    }
-
     const {
         handleSubmit,
         register,
@@ -85,33 +73,33 @@ export default function admin({users}) {
         }
         };
     
-    if (buttonState === 2) {
-        console.log('regmail:'+modalValue.email)
-        const reqemail = modalValue.email;
-        const preProf = `{"profile": 100}`;
-        const prof = JSON.parse(preProf);
+        if (buttonState === 2) {
+            console.log('regmail:'+modalValue.email)
+            const reqemail = modalValue.email;
+            const preProf = `{"profile": 100}`;
+            const prof = JSON.parse(preProf);
 
-        const finalValues = { ...values, ...prof}
-        try {
-            const res = await fetch(`/api/updateProfile/${reqemail}`, {
-            method: "PUT",
-            headers: {
-                "Content-type": "application/json",
-            },
-            body: JSON.stringify(finalValues)
+            const finalValues = { ...values, ...prof}
+            try {
+                const res = await fetch(`/api/updateProfile/${reqemail}`, {
+                method: "PUT",
+                headers: {
+                    "Content-type": "application/json",
+                },
+                body: JSON.stringify(finalValues)
 
-            });
-            if (!res.ok) {
-            throw new Error(res.status);
+                });
+                if (!res.ok) {
+                throw new Error(res.status);
+                }
+
+                const { data } = await res.json();
+                mutate(`/api/updateProfile/${reqemail}`, data, false);
+                router.push("/");
+            } catch (error) {
+                console.log(error);
             }
-
-            const { data } = await res.json();
-            mutate(`/api/updateProfile/${reqemail}`, data, false);
-            router.push("/");
-        } catch (error) {
-            console.log(error);
-        }
-        };
+            };
     }
 
     const tableData = users.map((user, index) => ({
@@ -288,7 +276,7 @@ export const getServerSideProps = async () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(0)
+        body: JSON.stringify({profile: 0})
       });
       const {data} = await response.json();
       return {

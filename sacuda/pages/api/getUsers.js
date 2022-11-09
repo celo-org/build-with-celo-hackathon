@@ -10,7 +10,7 @@ export default async function getUsersHandler(req, res) {
   switch (method) {
     case "POST":
       try {
-        const profData = await Sacuda.find({profile: req.body});
+        const profData = await Sacuda.find(req.body);
         if (!profData) {
           return res.status(400).json({ success: false });
         }
