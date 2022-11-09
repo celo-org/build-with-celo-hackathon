@@ -1,0 +1,89 @@
+a { cursor: pointer; }
+
+.app-container {
+    min-height: 350px;
+}
+.kyc {
+      height: 500px;
+      width: 428px; 
+ }
+.modal {  font-size: 12px;}
+.modal > .header {  width: 100%;  border-bottom: 1px solid gray;  font-size: 18px;  text-align: center;  padding: 5px;}
+.modal > .content {  width: 100%;  padding: 10px 5px;}.modal > .actions {  width: 100%;  padding: 10px 5px;  margin: auto;  text-align: center;}
+.modal > .close {  cursor: pointer;  position: absolute;  display: block;  padding: 2px 5px;  line-height: 20px;  right: -10px;  top: -10px;  font-size: 24px;  background: #ffffff;  border-radius: 18px;  border: 1px solid #cfcece;}
+
+.popup-content {
+  margin: auto;
+  background: rgb(255, 255, 255);
+  width: 50%;
+  padding: 5px;
+  border: 1px solid #d7d7d7;
+}
+.popup-arrow {
+  color: rgb(255, 255, 255);
+}
+[role='tooltip'].popup-content {
+  width: 200px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
+  border-radius: 5px;
+}
+
+.popup-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+[data-popup='tooltip'].popup-overlay {
+  background: transparent;
+}
+
+.popup-arrow {
+  filter: drop-shadow(0 -3px 3px rgba(0, 0, 0, 0.16));
+  color: #fff;
+  stroke-width: 2px;
+  stroke: #d7d7d7;
+  stroke-dasharray: 30px;
+  stroke-dashoffset: -54px;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+
+.loader-container {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.834)
+        url("https://media.giphy.com/media/8agqybiK5LW8qrG3vJ/giphy.gif") center
+        no-repeat;
+    z-index: 1;
+}
+
+.loader-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.834);
+    z-index: 1;
+}
+
+.spinner {
+    width: 64px;
+    height: 64px;
+    border: 8px solid;
+    border-color: #3d5af1 transparent #3d5af1 transparent;
+    border-radius: 50%;
+    animation: spin-anim 1.2s linear infinite;
+}
+
+@keyframes spin-anim {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
