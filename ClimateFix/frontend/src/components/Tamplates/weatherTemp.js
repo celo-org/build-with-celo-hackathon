@@ -28,23 +28,23 @@ const WeatherTemp = ({ weatherData }) => {
       ) : (
         <>
           <Text mt="20px" fontSize="24px" color="brand.dark">
-            Partly Cloudy
+            No data available
           </Text>
           <Flex mt="30px" alignItems="center">
             <Box w="100%" ml="14px">
               <Text fontSize="12px" color="brand.orange">
-                {weatherData?.dayOfWeek[0]}
+                {/* {weatherData?.dayOfWeek[0]} */}
               </Text>
-              <Flex alignItems="center" mt="15px">
+              {/* <Flex alignItems="center" mt="15px">
                 <Image src={CloudIcon} alt="cloud" w={30} h={30} />
                 <Text fontWeight="light" fontSize="13px" ml="10px">
                   {weatherData?.narrative[0]}
                 </Text>
-              </Flex>
+              </Flex> */}
             </Box>
           </Flex>
 
-          <Flex mt="20px" alignItems="center">
+          {/* <Flex mt="20px" alignItems="center">
             <Box w="100%" ml="14px">
               <Text fontSize="12px" color="brand.orange">
                 {weatherData?.dayOfWeek[1]}
@@ -84,7 +84,7 @@ const WeatherTemp = ({ weatherData }) => {
                 </Text>
               </Flex>
             </Box>
-          </Flex>
+          </Flex> */}
         </>
       )}
     </Box>

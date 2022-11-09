@@ -209,54 +209,7 @@ const Home = () => {
           </Box>
         </Box>
         {/* Weather Condition */}
-        <WeatherTemp weatherData={weatherData} />
-        {/* <Box
-          w="27%"
-          bg="#F2F2F2"
-          style={{ boxShadow: "rgba(0, 0, 0, 0.04) 0px 3px 5px" }}
-          borderRadius="8px"
-          p="20px"
-        >
-          <Image
-            src={Cloud}
-            alt="cloud"
-            w={120}
-            h={120}
-            mt="-50px"
-            ml="-30px"
-          />
-          <Text mt="20px" ml="20px" fontSize="24px" color="brand.dark">
-            Partly Cloudy
-          </Text>
-          <Flex mt="30px" alignItems="center">
-            <Box w="100%" ml="14px">
-              <Text fontSize="12px" color="brand.orange">
-                {weatherData?.dayOfWeek[0]}
-              </Text>
-              <Flex fontSize="15px" alignItems="center" mt="15px">
-                <Image src={CloudIcon} alt="cloud" w={30} h={30} />
-                <Text fontWeight="light" fontSize="14px" ml="10px">
-                  {weatherData?.narrative[0]}
-                </Text>
-              </Flex>
-            </Box>
-          </Flex>
-
-          <Flex mt="20px" alignItems="center">
-            <Box w="100%" ml="14px">
-              <Text fontSize="12px" color="brand.orange">
-                {weatherData?.dayOfWeek[1]}
-              </Text>
-              <Flex fontSize="15px" alignItems="center" mt="15px">
-                <Image src={CloudIcon} alt="cloud" w={30} h={30} />
-                <Text fontWeight="light" fontSize="14px" ml="10px">
-                  {weatherData?.narrative[1]}
-                </Text>
-              </Flex>
-            </Box>
-          </Flex>
-
-        </Box> */}
+        <WeatherTemp weatherData={weatherData || {}} />
       </Box>
     </Box>
   );
