@@ -37,9 +37,9 @@ The protocol:
 
 ### Summary
 
-At the protocol's core, businesses should be enabled to create their own unique ecosystem of carbon-offsetting projects and define reward definition, acquisition, redemption, ownership and reputation control for users/partners interacting with these ecosystems.
+At the protocol's core, businesses will be enabled to create their own unique ecosystem of carbon-offsetting projects and setup reward definition, acquisition, redemption, ownership and reputation control for users/partners interacting with these ecosystems.
 
-Partners and users should also be able to integrate seamlessly with this ecosystem using the toolings we will build.
+Partners and users will also be able to integrate seamlessly with this ecosystem using the toolings we are building.
 
 For the hackathon, we've implemented a PoC for one of the components of this ecosystem: a basic liquidity pool + reward definition & redemption smart contract. The ecosystem comprises of a list of carbon-offsetting projects from the Toucan Protocol and allows users to financially contribute to and get rewards from the ecosystem. We've also implemented a frontend application to demonstrate how end-users may interact with the ecosystem.
 
