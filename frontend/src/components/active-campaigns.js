@@ -114,6 +114,7 @@ const ActiveCampaign = ({ classOne, classTwo, index, campaign }) => {
                 });
         } else {
             toast.error('File size should be less than 1MB')
+            setLoadingState(false)
         }
     }
     return (
@@ -143,7 +144,10 @@ const ActiveCampaign = ({ classOne, classTwo, index, campaign }) => {
                             {loadingState ? (
                                 <p><PulseLoader size={10} />Loading...</p>
                             ) : (
-                                <p>Show us what you did yesterday?</p>
+                                <>
+                                    <p>Show us what you did yesterday?</p>
+                                    <p>**File size less than 1MB</p>
+                                </>
                             )}
 
                             <textarea id="taskDescription" name="taskDescription" rows="4" cols="50">

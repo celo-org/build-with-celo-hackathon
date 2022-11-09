@@ -37,6 +37,10 @@ const CreateCampaign = () => {
     });
 
     async function createCampaign() {
+        if (formInput.name === '' || formInput.description === '' || formInput.noOfBeneficiary === 0 ||
+            formInput.dailyFund === 0) {
+            toast.error("Please fill up all the fields")
+        }
         await (window).ethereum.send('eth_requestAccounts') // opens up metamask extension and connects Web2 to Web3
         const provider = new ethers.providers.Web3Provider(window.ethereum) //create provider
         const network = await provider.getNetwork()
@@ -66,10 +70,7 @@ const CreateCampaign = () => {
 
     async function onChange(e) {
         const file = e.target.files[0]
-        if
-            (1 == 1)
-        //(e.target.files[0].size <= 100000 && e.target.files[0].size >= 50000) 
-        {
+        if (e.target.files[0].size <= 500000) {
             setLoadingState(true)
             console.log("file", client)
 
@@ -85,7 +86,8 @@ const CreateCampaign = () => {
                 console.log(`Error is: ${e}`)
             }
         } else {
-            toast.error('File size should be between 50-100 KB')
+            toast.error('File size should be less than 500 KB')
+            setLoadingState(false)
         }
 
     }
@@ -122,7 +124,7 @@ const CreateCampaign = () => {
                                         ...formInput,
                                         noOfBeneficiary: Number(e.target.value),
                                     }))
-                                } type="text" class="form-control" placeholder="Number of Children to be benefited" required />
+                                } type="number" class="form-control" placeholder="Number of Children to be benefited" required />
                             </div>
                             <div class="form-group">
                                 <input onChange={(e) =>
@@ -130,10 +132,10 @@ const CreateCampaign = () => {
                                         ...formInput,
                                         dailyFund: Number(e.target.value),
                                     }))
-                                } type="text" class="form-control" placeholder="Daily fund requirement (in USD)" required />
+                                } type="number" class="form-control" placeholder="Daily fund requirement (in USD)" required />
                             </div>
                             <div>Campaign Display Picture</div>
-                            <div className='warn'>File size should be between 50-100 KB</div>
+                            <div className='warn'>File size should be less than 500 KB</div>
                             <div class="form-group">
                                 <input type="file"
                                     name="Asset"

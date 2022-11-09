@@ -1,4 +1,4 @@
-import React,  { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Fancybox from './Fancybox';
 import { Dna } from 'react-loader-spinner'
 import { client, urlFor } from "../lib/sanityClient";
@@ -32,6 +32,7 @@ const Gallery = () => {
                 return item;
             })
         )
+        console.log("items", items)
         setPhotos(items)
         setcontentLoaded(true)
     }
@@ -52,24 +53,24 @@ const Gallery = () => {
             }
 
 
-         
-                {contentLoaded &&
-                    <div class="d-md-flex">
-                        {photos.map((photo, i) =>
-                            <Fancybox options={{ infinite: false }}>
-                                <button class="gallery image-popup d-flex justify-content-center align-items-center img" data-fancybox="gallery"
-                                    style={{ backgroundImage: `url(${photo.url})` }}
-                                    data-src={photo.url}>
-                                    <div class="icon d-flex justify-content-center align-items-center">
-                                        <span class="icon-search"></span>
-                                    </div>
-                                </button>
-                            </Fancybox>
-                        )}
-                    </div>
-                }
 
-            
+            {contentLoaded &&
+                <div class="d-md-flex">
+                    {photos.map((photo, i) =>
+                        <Fancybox options={{ infinite: false }}>
+                            <button class="gallery image-popup d-flex justify-content-center align-items-center img" data-fancybox="gallery"
+                                style={{ backgroundImage: `url(${photo.url})` }}
+                                data-src={photo.url}>
+                                <div class="icon d-flex justify-content-center align-items-center">
+                                    <span class="icon-search"></span>
+                                </div>
+                            </button>
+                        </Fancybox>
+                    )}
+                </div>
+            }
+
+
         </section>
 
     )

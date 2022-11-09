@@ -71,29 +71,33 @@ const Donate = ({ campaignId }) => {
     }
 
     const pay = async () => {
-        setLoading(true)
-        try {
-            await (window).ethereum.send('eth_requestAccounts') // opens up metamask extension and connects Web2 to Web3
-            const provider = new ethers.providers.Web3Provider(window.ethereum) //create provider
-            const network = await provider.getNetwork()
-            const signer = provider.getSigner()
-            const gacContract = new ethers.Contract(
-                getConfigByChain(network.chainId)[0].contractProxyAddress,
-                GrowAChild.abi,
-                signer
-            )
-            const token = getConfigByChain(network.chainId)[0].cUSDAddress
-            const tx = await gacContract.deposit(Number(campaignId), ethers.utils.parseUnits(formInput.amount.toString(), 'ether'), token)
-            toast('Payment in progress !!', { icon: '👏' })
-            const receipt = await provider
-                .waitForTransaction(tx.hash, 1, 150000)
-                .then(() => {
-                    toast.success(`Donated Successfully !!`)
-                    setLoading(false)
-                })
-        } catch (e) {
-            toast.error('Transaction Cancelled !!')
-            setLoading(false)
+        if (formInput.amount === 0) {
+            toast.error("Donation cannot be 0")
+        } else {
+            setLoading(true)
+            try {
+                await (window).ethereum.send('eth_requestAccounts') // opens up metamask extension and connects Web2 to Web3
+                const provider = new ethers.providers.Web3Provider(window.ethereum) //create provider
+                const network = await provider.getNetwork()
+                const signer = provider.getSigner()
+                const gacContract = new ethers.Contract(
+                    getConfigByChain(network.chainId)[0].contractProxyAddress,
+                    GrowAChild.abi,
+                    signer
+                )
+                const token = getConfigByChain(network.chainId)[0].cUSDAddress
+                const tx = await gacContract.deposit(Number(campaignId), ethers.utils.parseUnits(formInput.amount.toString(), 'ether'), token)
+                toast('Payment in progress !!', { icon: '👏' })
+                const receipt = await provider
+                    .waitForTransaction(tx.hash, 1, 150000)
+                    .then(() => {
+                        toast.success(`Donated Successfully !!`)
+                        setLoading(false)
+                    })
+            } catch (e) {
+                toast.error('Transaction Cancelled !!')
+                setLoading(false)
+            }
         }
     }
     return (

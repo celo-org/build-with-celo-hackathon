@@ -18,32 +18,39 @@ const Register = () => {
         since: 0,
         addess: '',
         country: '',
+        file: ''
     });
+    const [error, setError] = useState('')
 
     async function saveNGO() {
-        setLoadingState(true)
-        await (window).ethereum.send('eth_requestAccounts') // opens up metamask extension and connects Web2 to Web3
-        const provider = new ethers.providers.Web3Provider(window.ethereum) //create provider
-        const network = await provider.getNetwork()
-        const signer = provider.getSigner()
-        const gacContract = new ethers.Contract(
-            getConfigByChain(network.chainId)[0].contractProxyAddress,
-            GrowAChild.abi,
-            signer
-        )
+        if (formInput.name === '' || formInput.intro === '' || formInput.regNo === '' || formInput.govtName === '' ||
+            formInput.since === 0 || formInput.addess === '' || formInput.country === '' || formInput.file === '') {
+            toast.error('Please complete all the fields.')
+        } else {
+            setLoadingState(true)
+            await (window).ethereum.send('eth_requestAccounts') // opens up metamask extension and connects Web2 to Web3
+            const provider = new ethers.providers.Web3Provider(window.ethereum) //create provider
+            const network = await provider.getNetwork()
+            const signer = provider.getSigner()
+            const gacContract = new ethers.Contract(
+                getConfigByChain(network.chainId)[0].contractProxyAddress,
+                GrowAChild.abi,
+                signer
+            )
 
-        const tx = await gacContract.registerNGO(
-            formInput.name, formInput.intro, formInput.regNo, formInput.govtName,
-            formInput.since, formInput.addess, formInput.country
-        )
-        toast('Verification in progress !!', { icon: '👏' })
-        const receipt = await provider
-            .waitForTransaction(tx.hash, 1, 150000)
-            .then(() => {
-                toast.success(`NGO Registered Successfully !!`)
-                setLoadingState(false)
-                navigate('/');
-            })
+            const tx = await gacContract.registerNGO(
+                formInput.name, formInput.intro, formInput.regNo, formInput.govtName,
+                formInput.since, formInput.addess, formInput.country
+            )
+            toast('Verification in progress !!', { icon: '👏' })
+            const receipt = await provider
+                .waitForTransaction(tx.hash, 1, 150000)
+                .then(() => {
+                    toast.success(`NGO Registered Successfully !!`)
+                    setLoadingState(false)
+                    navigate('/');
+                })
+        }
     }
 
     return (
@@ -92,7 +99,7 @@ const Register = () => {
                                     ...formInput,
                                     since: Number(e.target.value),
                                 }))
-                            } type="text" class="form-control" placeholder="Registration Valid from (yyyy)" required />
+                            } type="number" class="form-control" placeholder="Registration Valid from (yyyy)" required />
                         </div>
                         <div class="form-group">
                             <input onChange={(e) =>
@@ -109,6 +116,15 @@ const Register = () => {
                                     country: (e.target.value),
                                 }))
                             } type="text" class="form-control" placeholder="Country of Registration" required />
+                        </div>
+                        <div class="form-group">
+                            <span>Enter proof of registration</span>
+                            <span>(For KYC purpose only)</span>
+                            <input onChange={(e) =>
+                                updateFormInput((formInput) => ({
+                                    ...formInput,
+                                    file: (e.target.files[0])
+                                }))} type="file" class="form-control" required />
                         </div>
 
 

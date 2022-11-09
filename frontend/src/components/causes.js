@@ -94,10 +94,14 @@ const Causes = () => {
                     <div class="col-md-7 heading-section text-center">
                         <h2 class="mb-4">Our Solutions</h2>
                         <p>1. GrowAChild only approves trusted organizations after manual and automated verification (OTP-based) and then records their data on the blockchain  .</p>
-                        <p>2. Asia holds the largest number of orphaned children, at <b>71 million</b> – India alone is home to <b>31 million</b> orphans. This is followed by Africa, which harbors 59 million.
-                            .</p>
-                        <p>3. Each day, <b>39,000</b> children are forced from their homes alone because of the death of a parent, family illness or abuse and abandonment. COVID-19: Schools for more than <b>168 million</b> children globally have been <b>completely closed</b> for almost a full year, says UNICEF
+                        <p>2. GrowAChild allows traceability of funds through smart contracts</p>
+                        <p>3. GrowAChild allows periodic releasing of funds through smart contract, backed by submitted data and reports verifiable on chain.
                         </p>
+                        <p>4. Provision of individual dashboards to donors to understand the impact of their donation.</p>
+                        <p>5. GrowAChild ensures automatic reimbursement of donations back to donors through smart contracts in case of project cancellation or other issues</p>
+                        <p>6. $GAC utility tokens are going to be used as a REFI token that will be issued back to the donors and later on to be available for trading/swapping</p>
+
+
                     </div>
                 </div>
             </div>
