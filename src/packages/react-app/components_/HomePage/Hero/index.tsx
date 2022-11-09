@@ -7,8 +7,8 @@ import Image from "next/image";
 const Hero = () => {
   return (
     <Grid container justifyContent='space-between' sx={{ paddingX: { xs: 4, md: 8 } }} className="bg-ash" py={4}>
-      <Grid item xs={12} lg={5}  mr={2}>
-        <Typography fontWeight="bold" variant="h2">
+      <Grid display={'flex '} flexDirection='column' justifyContent={'center'} item xs={12} lg={5}  mr={2}>
+        <Typography fontWeight={800} variant="h3">
           {heroText.heading}
         </Typography>
         <Typography variant="h6" my={4}>

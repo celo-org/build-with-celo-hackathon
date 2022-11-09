@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import Select from "react-select";
 import countryList from "react-select-country-list";
 import Alert from "@mui/material/Alert";
+import { Box, Grid, Input, TextareaAutosize, TextField } from "@mui/material";
 
 const Home = () => {
   const { address } = useCelo();
@@ -109,7 +110,52 @@ const Home = () => {
     }
   };
 
-  return <div></div>;
+  return (
+    <Grid sx={{ paddingX: { xs: 4, md: 10 } }} className="bg-ash" py={4}>
+      <Box sx={{ backgroundColor: "white", borderRadius: "20px" }}>
+        <Box
+          sx={{ borderTopRightRadius: "20px", borderTopLeftRadius: "20px" }}
+          className="proposal-header"
+        ></Box>
+       <Box py={4} sx={{ paddingX: { xs: 4, md: 10 },marginX: { xs: 4, md: 10 } }}>
+       <h2>Create Proposal</h2>
+
+       <Box>
+        <p>Title of Proposal</p>
+        <TextField fullWidth id="outlined-basic"  variant="outlined" />
+       </Box>
+
+       <Box>
+        <p>Country</p>
+        <Select required options={options} onChange={onCountryChange} />
+       </Box>
+
+       <Box>
+        <p>Why should this proposal be accepted?</p>
+        <TextField fullWidth id="outlined-basic"  variant="outlined" />
+       </Box>
+
+       <Box>
+        <p>Why do you qualify to document this history (Provide proof of competence where applicable)</p>
+        <TextField fullWidth id="outlined-basic"  variant="outlined" />
+       </Box>
+
+
+       <Box>
+        <p>Proposal Details</p>
+        <TextField fullWidth id="outlined-basic"  variant="outlined" />
+       </Box>
+
+       <Box>
+        <p>Proposal Budget</p>
+        <TextField  label= '$' fullWidth id="outlined-basic" type='number'  variant="outlined" />
+       </Box>
+
+<button style={{marginTop: '20px', width: '100%'}} className="btn-primary">Submit</button>
+       </Box>
+      </Box>
+    </Grid>
+  );
 };
 
 export default Home;
