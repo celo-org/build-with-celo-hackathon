@@ -8,6 +8,7 @@ import { connectorsForWallets, RainbowKitProvider, ConnectButton } from "@rainbo
 import { metaMaskWallet, omniWallet, walletConnectWallet } from '@rainbow-me/rainbowkit/wallets';
 import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
+import '@rainbow-me/rainbowkit/styles.css';
 
 // Import known recommended wallets
 import { Valora, CeloWallet, CeloDance } from "@celo/rainbowkit-celo/wallets";
@@ -18,7 +19,8 @@ import { Alfajores, Celo } from "@celo/rainbowkit-celo/chains";
 import '../styles/globals.css';
 
 const { chains, provider } = configureChains(
-  [Alfajores, Celo],
+  // [Alfajores, Celo],
+  [Alfajores],
   [jsonRpcProvider({ rpc: (chain) => ({ http: chain.rpcUrls.default }) })]
 );
 
@@ -34,7 +36,7 @@ const connectors = connectorsForWallets([
       walletConnectWallet({ chains }),
     ],
   },
-  ]);
+]);
 
 const wagmiClient = createClient({
   autoConnect: true,
@@ -53,9 +55,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           <RainbowKitProvider chains={chains}>
             <SacudaProvider>
               <Header />
-                <Component 
-                 {...pageProps}
-                 />
+              <Component
+                {...pageProps}
+              />
             </SacudaProvider>
           </RainbowKitProvider>
         </WagmiConfig>
