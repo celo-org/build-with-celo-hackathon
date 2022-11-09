@@ -57,19 +57,19 @@ const JoinModal = ({ showProfileModal, setShowProfileModal } : IProps) => {
                           <h1 className={styles.link}>View all members profile</h1>
                           </Link>
                           <span className={styles.border}></span>
-                          <Link href="/feeds/Feeds">
+                          <Link href="/Projects/Projects">
                           <h1 className={styles.link}>View proposals feed</h1>
                           </Link>
                           <span className={styles.border}></span>
-                     </div>
+                    </div>
 
-                    </div>                  
-               </div>
-               </animated.div>
+                    </div>
+                </div>
+                </animated.div>
           </div>
             ): null}
           </>
-     )
+)
 }
 
 export default JoinModal

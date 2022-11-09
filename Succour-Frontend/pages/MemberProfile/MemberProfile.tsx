@@ -9,6 +9,7 @@ import Succour_abi from "../../abi/abi.json"
 
 const MemberProfile = () => {
 
+
   const SuccourAddress = "0x122e768c3E676dba4905959f89a7056A5053D839"
   const { address } = useAccount();
 
@@ -18,16 +19,19 @@ const MemberProfile = () => {
     functionName: "viewMembers"
   })
 
-  const {data: userPercentage} = useContractRead({
+
+
+
+
+
+  const {data: totalBalance} = useContractRead({
     addressOrName: SuccourAddress,
     contractInterface: Succour_abi,
-    functionName: 'memberPercentage',
-    args: [
-      address
-    ]
+    functionName: 'totalDAOBalance',
   })
 
-  console.log(memberslist, "list of members")
+
+
 
   const hexToDecimal = (hex:any) => parseInt(hex, 16);
 
@@ -70,7 +74,7 @@ return (
                               <td className={styles.td}>{item[2]}</td>
                               <td className={styles.td}>{((hexToDecimal(item[3]._hex)/1e18).toLocaleString())}</td>
                               <td className={styles.td}>{hexToDecimal(item[4]._hex)}</td>
-                              <td className={styles.td}>{hexToDecimal(userPercentage?._hex)}%</td>
+                              <td className={styles.td}>{((hexToDecimal(item[3]._hex)/(hexToDecimal(totalBalance?._hex)))*100).toFixed()}%</td>
                         </tr>
                         ): ""
                       }

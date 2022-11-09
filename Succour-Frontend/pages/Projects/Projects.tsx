@@ -16,11 +16,11 @@ const Projects = () => {
                      <div className={styles.projects_content}>
                         <h1 className={styles.projects_title}>Contribute to pressing world issues</h1>
                         <p className={styles.projects_desc}>
-                        Paul Allen: “You look at things you enjoy in your life, but much more important is what you can do to make the world a better place.”
+                           Paul Allen: “You look at things you enjoy in your life, but much more important is what you can do to make the world a better place.”
 
-                        We at Succour believe that by providing food, healthcare, education, warmth, and other resources to as many as are in need of them, we will be doing a whole lot to make the world a better place.
-                        Hence, we urge you to support us by contributing to projects put forward to help people around the world.
-                     </p>
+                           We at Succour believe that by providing food, healthcare, education, warmth, and other resources to as many as are in need of them, we will be doing a whole lot to make the world a better place.
+                           Hence, we urge you to support us by contributing to projects put forward to help people around the world.
+                        </p>
                      <Link href="/Propose/Propose">
                      <button className={styles.btn}>Propose a project</button>
                      </Link>

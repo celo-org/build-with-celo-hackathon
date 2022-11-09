@@ -1,9 +1,10 @@
-import styled from "styled-components";
 
+//@ts-ignore
+import styled from "styled-components";
 export const NavbarContainer = styled.nav`
  position: fixed;
  width: 100%;
- height: ${(props) => (props.click ? "100vh" : "105px" )};
+ height: ${(props:any) => (props.click ? "100vh" : "105px" )};
  background: #070606;
  display: flex;
  z-index: 1000;

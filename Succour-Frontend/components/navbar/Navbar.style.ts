@@ -102,9 +102,9 @@ export const NavbarButton = styled.button`
   border-radius: 30px;
   margin-right: 40px;
   @media (max-width: 700px) {
-     display: none;
+    display: none;
   }
-  
+
   &:hover {
     background: #331F33;
   }
@@ -129,27 +129,27 @@ export const NavbarButtonExtended = styled.button`
   }
 `
 export const NavbarUser = styled.div`
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     cursor: pointer; 
-     width: 64px;
-     height: 64px;
-     background: linear-gradient(120.83deg, #131313 0%, rgba(54, 53, 53, 0) 100%, rgba(54, 53, 53, 0) 100%);
-     border-radius: 30px;
-     @media(max-width: 700px) {
-          display: none;
-     }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer; 
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(120.83deg, #131313 0%, rgba(54, 53, 53, 0) 100%, rgba(54, 53, 53, 0) 100%);
+    border-radius: 30px;
+    @media(max-width: 700px) {
+        display: none;
+    }
 `
 export const NavbarUserExtended = styled.div`
-     cursor: pointer; 
-     width: 64px;
-     height: 64px;
-     background: linear-gradient(120.83deg, #131313 0%, rgba(54, 53, 53, 0) 100%, rgba(54, 53, 53, 0) 100%);
-     border-radius: 30px;
-     display: flex;
-     align-items: center;
-     justify-content: center;
+    cursor: pointer;
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(120.83deg, #131313 0%, rgba(54, 53, 53, 0) 100%, rgba(54, 53, 53, 0) 100%);
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `
 export const NavbarLinkExtended = styled.a`
   cursor: pointer;
@@ -163,12 +163,12 @@ export const NavbarLinkExtended = styled.a`
   text-decoration: none;
   margin: 19px;
   &:hover {
-     color: #FFFFFF;
+      color: #FFFFFF;
   }
 `
 export const NavbarLinkRightContainer = styled.div`
- display: flex;
- margin-top: 10px;
+  display: flex;
+  margin-top: 10px;
 `;
 
 export const OpenLinksButton = styled.button`
@@ -180,15 +180,15 @@ export const OpenLinksButton = styled.button`
   font-size: 45px;
   cursor: pointer;
   @media (min-width: 700px) {
-     display: none;
+      display: none;
   }
 `
 
 export const NavbarExtendedContainer = styled.div`
- display: flex;
- flex-direction: column;
- align-items: center;
- @media (min-width: 700px) {
-     display: none;
- }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @media (min-width: 700px) {
+      display: none;
+  }
 `
