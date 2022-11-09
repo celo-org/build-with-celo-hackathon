@@ -34,7 +34,7 @@ export default function Step3({ setUserData, userData }: Props) {
                 src="https://avatars.dicebear.com/api/avataaars/teste.svg"
                 alt="avatar"
                 className={`shadow rounded-full max-w-full h-auto align-middle border-none cursor-pointer ${
-                  avatar === "test.svge" ? "p-1 ring-2 ring-green-dark" : ""
+                  avatar === "teste.svg" ? "p-1 ring-2 ring-green-dark" : ""
                 }`}
               />
             </div>

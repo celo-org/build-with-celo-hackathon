@@ -27,7 +27,7 @@ export default function Sequester() {
     );
   }
 
-  if (counter < 7 && counter > 0) {
+  if (counter < 6 && counter > 0) {
     return (
       <div className="container mx-auto pt-6 pb-6 text-center">
         <div className="mt-8 md:mt-0 md:order-1">

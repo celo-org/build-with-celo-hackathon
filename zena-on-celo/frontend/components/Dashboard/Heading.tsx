@@ -12,7 +12,7 @@ export default function Heading() {
             <img
               style={{ backgroundColor: "aliceblue" }}
               className="h-24 w-24 rounded-full ring-4 ring-white sm:h-32 sm:w-32"
-              src={`https://avatars.dicebear.com/api/avataaars/${user?.avatar}`}
+              src={user?.avatar}
               alt=""
             />
           </div>
