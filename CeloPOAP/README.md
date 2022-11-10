@@ -24,9 +24,9 @@ Features
 - POAP NFT Marketplace for selling POAPS earned
 
 #### Bounties
-LAVA RPC - Used for Testnet deployment , Hardhat tests
-VALORA - Integrated through Walletconnect
-Graph Bounty - NFT Marketplace subgraph
+- LAVA RPC - Used for Testnet deployment , Hardhat tests
+- VALORA - Integrated through Walletconnect
+- Graph Bounty - NFT Marketplace subgraph
 
 
 #### Presentation
