@@ -1,5 +1,6 @@
 import 'dart:async';
 // import 'dart:ffi';
+import 'package:ama_timer/controllers/connect_controller.dart';
 import 'package:ama_timer/pages/PlantingPage.dart';
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
@@ -248,6 +249,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   WalletController walletController = WalletController();
   PomodoroState _state = PomodoroState.INIT;
+  final ConnectController _connectController = ConnectController();
   int n=1;
   @override
   Widget build(BuildContext context) {
@@ -273,6 +275,10 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            ElevatedButton(onPressed: (){
+              walletController.userFaucet(0, 4);
+            },
+                child: Text("UserFoset")),
             _seedsWidget(),
             SizedBox(height: 30,),
             CircularCountDownTimer(
