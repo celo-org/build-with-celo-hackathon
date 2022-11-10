@@ -17,7 +17,10 @@ export default function RouteDetail({ navigation, route }: { navigation: any; ro
   const routeId = route.params
   const isFocused = useIsFocused()
   const carouselRef = useRef(null)
-  const width = Dimensions.get('window').width
+  const { width, height } = Dimensions.get('window')
+
+  const LATITUDE_DELTA = 0.0098
+  const LONGITUDE_DELTA = LATITUDE_DELTA * (width / height)
 
   const _renderItem = ({ item, index }: { item: Ecostory; index: number }) => {
     return (
@@ -76,32 +79,32 @@ export default function RouteDetail({ navigation, route }: { navigation: any; ro
           )}
         </Text>
       </View>
-      <MapView
-        initialRegion={
-          routeCoords[0] && {
+      {routeCoords[0] && (
+        <MapView
+          region={{
             longitude: routeCoords[0].longitude,
             latitude: routeCoords[0].latitude,
-            latitudeDelta: 0.009,
-            longitudeDelta: 0.009,
-          }
-        }
-        provider={PROVIDER_GOOGLE}
-        style={styles.map}
-      >
-        {routeCoords.map((marker) => (
-          <Marker
-            key={marker.id}
-            coordinate={{
-              longitude: marker.longitude,
-              latitude: marker.latitude,
-            }}
-            draggable
-            tappable
-            title="Starting Point"
-          />
-        ))}
-        <Polyline tappable coordinates={routeCoords} strokeColor={colors.primary} strokeWidth={4} />
-      </MapView>
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA,
+          }}
+          provider={PROVIDER_GOOGLE}
+          style={styles.map}
+        >
+          {routeCoords.map((marker) => (
+            <Marker
+              key={marker.id}
+              coordinate={{
+                longitude: marker.longitude,
+                latitude: marker.latitude,
+              }}
+              draggable
+              tappable
+              title="Starting Point"
+            />
+          ))}
+          <Polyline tappable coordinates={routeCoords} strokeColor={colors.primary} strokeWidth={4} />
+        </MapView>
+      )}
       {showEco && (
         <View style={styles.carousel}>
           <Carousel

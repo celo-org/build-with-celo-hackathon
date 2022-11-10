@@ -13,6 +13,7 @@ import { useIsFocused } from '@react-navigation/native'
 
 export default function RouteList({ showMyRoutes }: { showMyRoutes: boolean }) {
   const [routes, setRoutes] = useState<Route[]>([])
+  const [myRoutes, setMyRoutes] = useState<Route[]>([])
   const [loader, setLoader] = useState<boolean>(false)
   const navigation = useNavigation() as any
   const isFocused = useIsFocused()
@@ -21,14 +22,17 @@ export default function RouteList({ showMyRoutes }: { showMyRoutes: boolean }) {
 
   useEffect(() => {
     const getList = async () => {
-      setLoader(true)
+      if ((routes.length === 0 && !showMyRoutes) || (myRoutes.length === 0 && showMyRoutes)) {
+        setLoader(true)
+      }
       let list
       if (showMyRoutes) {
         list = (await getRoutesByUser()) as Route[]
+        setMyRoutes(list)
       } else {
         list = (await getRoutes()) as Route[]
+        setRoutes(list)
       }
-      setRoutes(list)
       setLoader(false)
     }
     getList()
@@ -62,5 +66,12 @@ export default function RouteList({ showMyRoutes }: { showMyRoutes: boolean }) {
       </View>
     )
 
-  return <List style={styles.listContainer} data={routes} ItemSeparatorComponent={Divider} renderItem={renderItem} />
+  return (
+    <List
+      style={styles.listContainer}
+      data={showMyRoutes ? myRoutes : routes}
+      ItemSeparatorComponent={Divider}
+      renderItem={renderItem}
+    />
+  )
 }

@@ -4,7 +4,7 @@ import { Dimensions, StyleSheet } from 'react-native'
 export const styles = StyleSheet.create({
   listContainer: {
     backgroundColor: '#fff',
-    height: '100%',
+    height: '90%',
   },
   wrapSpinner: {
     backgroundColor: '#fff',
@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
     borderRadius: 30,
     backgroundColor: colors.lightGreen,
     position: 'absolute',
-    bottom: 80,
+    bottom: 20,
     right: 10,
     shadowColor: '#171717',
     shadowOffset: { width: -2, height: 4 },

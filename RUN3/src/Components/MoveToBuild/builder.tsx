@@ -111,54 +111,54 @@ export default function Builder() {
         />
       )}
       <View>
-        <MapView
-          initialRegion={
-            routeCoords[0] && {
+        {routeCoords[0] && (
+          <MapView
+            region={{
               longitude: routeCoords[0].longitude,
               latitude: routeCoords[0].latitude,
               latitudeDelta: 0.003,
               longitudeDelta: 0.003,
-            }
-          }
-          provider={PROVIDER_GOOGLE}
-          style={styles.map}
-        >
-          {routeCoords.map((marker) => (
-            <Marker
-              onDragStart={(e) => {
-                const coords = e.nativeEvent.coordinate
-                const index = routeCoords.findIndex(
-                  (route) => route.latitude === coords.latitude && route.longitude === coords.longitude
-                )
-                setMarkerIndex(index)
-                setLoadingCalc(true)
-              }}
-              onDragEnd={(e) => {
-                const coords = e.nativeEvent.coordinate
-                setRouteCoords((prev) => {
-                  const routes = [...prev]
-                  routes[markerIndex] = {
-                    ...routes[markerIndex],
-                    latitude: coords.latitude,
-                    longitude: coords.longitude,
-                  }
+            }}
+            provider={PROVIDER_GOOGLE}
+            style={styles.map}
+          >
+            {routeCoords.map((marker) => (
+              <Marker
+                onDragStart={(e) => {
+                  const coords = e.nativeEvent.coordinate
+                  const index = routeCoords.findIndex(
+                    (route) => route.latitude === coords.latitude && route.longitude === coords.longitude
+                  )
+                  setMarkerIndex(index)
+                  setLoadingCalc(true)
+                }}
+                onDragEnd={(e) => {
+                  const coords = e.nativeEvent.coordinate
+                  setRouteCoords((prev) => {
+                    const routes = [...prev]
+                    routes[markerIndex] = {
+                      ...routes[markerIndex],
+                      latitude: coords.latitude,
+                      longitude: coords.longitude,
+                    }
 
-                  return routes
-                })
-                setLoadingCalc(false)
-              }}
-              key={marker.id}
-              coordinate={{
-                longitude: marker.longitude,
-                latitude: marker.latitude,
-              }}
-              draggable
-              tappable
-              title="Starting Point"
-            />
-          ))}
-          <Polyline tappable coordinates={routeCoords} strokeColor={colors.primary} strokeWidth={4} />
-        </MapView>
+                    return routes
+                  })
+                  setLoadingCalc(false)
+                }}
+                key={marker.id}
+                coordinate={{
+                  longitude: marker.longitude,
+                  latitude: marker.latitude,
+                }}
+                draggable
+                tappable
+                title="Starting Point"
+              />
+            ))}
+            <Polyline tappable coordinates={routeCoords} strokeColor={colors.primary} strokeWidth={4} />
+          </MapView>
+        )}
       </View>
       {!loadingCalc && (
         <View style={styles.floatActions}>
