@@ -1,0 +1,201 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "roscaAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "roscaCreator",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "contract IERC20",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "roscaName",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "imgLink",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "authCode",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "goalAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "ctbAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "ctbDay",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "ctbOccur",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "disbDay",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "disbOccur",
+            "type": "string"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct RoscaDetails",
+        "name": "RD",
+        "type": "tuple"
+      }
+    ],
+    "name": "CreatedRosca",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "contract IERC20",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "roscaName",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "imgLink",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "authCode",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "goalAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "ctbAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "ctbDay",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "ctbOccur",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "disbDay",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "disbOccur",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct RoscaDetails",
+        "name": "rD",
+        "type": "tuple"
+      }
+    ],
+    "name": "createRosca",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getMySpaces",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "spaceAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "spaceType",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct Spaces.ActiveSpace[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "returnSpaces",
+    "outputs": [
+      {
+        "internalType": "contract Rosca[]",
+        "name": "",
+        "type": "address[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "roscas",
+    "outputs": [
+      {
+        "internalType": "contract Rosca",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

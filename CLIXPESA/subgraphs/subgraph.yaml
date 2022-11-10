@@ -1,0 +1,46 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Loans
+    network: celo-alfajores
+    source:
+      address: "0xfd8614A67630D219C795997A87b26D31255Fa811"
+      abi: Loans
+      startBlock: 14387280
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/loans.ts
+      entities:
+        - CreatedLoan
+      abis:
+        - name: Loans
+          file: ./abis/Loans.json
+      eventHandlers:
+        - event: CreatedLoan(address,address,(string,address,address,string,address,string,uint256,uint256,uint256,uint256,uint256,uint256,uint256))
+          handler: handleCreatedLoan
+templates:
+  - name: P2PLoan
+    kind: ethereum
+    network: celo-alfajores
+    source:
+      abi: P2PLoan
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/p2ploan.ts
+      entities:
+        - LoanFunded
+        - LoanRepaid
+      abis:
+        - name: P2PLoan
+          file: ./abis/P2PLoan.json
+      eventHandlers:
+        - event: LoanFunded(uint256,address,uint256)
+          handler: handleLoanFunded
+        - event: LoanRepaid(uint256,address,uint256)
+          handler: handleLoanRepaid
