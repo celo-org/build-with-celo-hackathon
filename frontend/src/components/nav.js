@@ -1,11 +1,12 @@
 import React from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { useAccount } from 'wagmi';
+import { useAccount, useNetwork } from 'wagmi';
 
 
 const NavBar = () => {
 
     const { address } = useAccount()
+    const { chain, chains } = useNetwork()
 
 
     return (
@@ -20,6 +21,9 @@ const NavBar = () => {
                         <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
                         <li class="nav-item"><a href="campaigns" class="nav-link">Campaigns</a></li>
                         <li class="nav-item"><a href="gallery" class="nav-link">Gallery</a></li>
+                        {chain?.id === 44787 && (
+                            <li class="nav-item"><a href="faucet" class="nav-link">Faucet</a></li>
+                        )}
                         {address && (
                             <li class="nav-item"><a href="dashboard" class="nav-link">Dashboard</a></li>
                         )}

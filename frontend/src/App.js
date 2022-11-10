@@ -1,7 +1,7 @@
 import Home from "./pages/home";
 import Campaigns from "./pages/campaigns";
 import Gallery from "./pages/gallery";
-import Contact from "./pages/contact";
+import Faucet from "./pages/faucet";
 import PageNotFound from "./pages/pageNotFound";
 import NavBar from './components/nav';
 import Footer from './components/footer';
@@ -30,7 +30,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="/campaigns" element={<Campaigns />} />
           <Route exact path="/gallery" element={<Gallery />} />
-          <Route exact path="/contactUs" element={<Contact />} />
+          <Route exact path="/faucet" element={<Faucet />} />
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/campaign-details" element={<CampaignDetails />} />
           <Route element={<PrivateWrapper auth={{ isAuthenticated: address }} />}>
