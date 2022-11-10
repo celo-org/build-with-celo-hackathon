@@ -53,7 +53,7 @@ Since this is a PoC, it is only deployed on the Alfajores testnet. However, we'd
 
 ### Presentation
 
-TBD
+See intro video [here](https://www.loom.com/share/90013c4097d64adfaa5a10421840c912).
 
 ### Next Steps
 
