@@ -21,7 +21,7 @@ SOLUTION:
 3. GrowAChild allows periodic releasing of funds through smart contract, backed by submitted data and reports verifiable on chain.
 4. Provision of individual dashboards to donors to understand the impact of their donation.
 5. GrowAChild ensures automatic reimbursement of donations back to donors through smart contracts in case of project cancellation or other issues
-6. $GCFI utility tokens are going to be used as a REFI token that will be issued back to the donors and later on to be available for trading/swapping.
+6. GAC utility tokens are going to be used as a REFI token that will be issued back to the donors and later on to be available for trading/swapping.
 
 
 
