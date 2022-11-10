@@ -7,10 +7,7 @@ import BigNumber from "bignumber.js"
 import Loading from './loading';
 
 const ERC20_DECIMALS = 18
-//const DaoContractAddress = "0x764354Ab0CDE955258aA7b6fE3C6718A868BA535"
-//const cUSDContractAddress = "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1"
-
-const DaoContractAddress = "0x8c7bfbBfaFD09F336ffBfe36f83ddbe05eFdDFc1"
+const DaoContractAddress = "0x40ee15560407fbCD4beb8cC0CC0E04563E538464"
 const cUSDContractAddress = "0x03e4CcA31f8B0264F3587e969771fE9a7f88415f"
 let kit
 
@@ -119,7 +116,7 @@ function App() {
   }
 
   async function executeProposal(proposalId) {
-    notification("⌛ Executing Proposal");
+    notification("⌛ Executing Proposal"); 
     try {
       await contract.methods
         .executeProposal(proposalId)
@@ -171,7 +168,7 @@ function App() {
       notification(`⚠️ ${error}`)
     }
     if (isApprove){
-      notification(`⌛ Awaiting Contribution...`)
+      notification(`⌛ Awaiting Purchase...`)
       try {
         await contract.methods
           .contribute(_amount)
@@ -307,11 +304,14 @@ function App() {
 
   return (
     <div className="container">
+      
+
         <div className="alert alert-warning sticky-top mt-2" style={{zIndex:"5" }} role="alert">
           <span id="notification">Loading...</span>
         </div>
 
-      <h1 className="text-center">DAO</h1>
+      
+      <div style={{backgroundColor: '#98FB98', color: 'w', fontFamily:'algerian'}}><h1 className="text-center">TRI-DAO</h1></div>
       <p>Account: {accounts[0]}</p>
       <p>Shares: {shares}</p>
       <p>Wallet Balance: {balance}</p>
@@ -320,17 +320,17 @@ function App() {
         <>
         <div className="row">
           <div className="col-sm-12">
-            <h2>Withdraw Funds</h2>
+            <div style={{backgroundColor: '#98FB98', color: 'BLACK'}}><h2 className="text-center">Withdraw Funds</h2></div>
             <form onSubmit={e => withdrawFunds(e)}>
               <div className="form-group">
                 <label htmlFor="amount">Amount</label>
-                <input type="number" className="form-control" min={0} id="amount" value={inputs.withdrawAmount} onChange={e => onChange("withdrawAmount", e)} placeholder="Amount to withdraw in cUSD" />
+                <input type="number" className="form-control" min={0} id="amount" value={inputs.withdrawAmount} onChange={e => onChange("withdrawAmount", e)} placeholder="Amount to withdraw in JCL" />
               </div>
               <div className="form-group">
                 <label htmlFor="to">To</label>
                 <input type="text" className="form-control" id="to" value={inputs.withdrawTo} onChange={e => onChange("withdrawTo", e)} />
               </div>
-              <button type="submit" className="btn btn-primary">Submit</button>
+              <button type="submit" className="btn btn-primary" color='yellow'>Submit</button>
             </form>
           </div>
         </div>
@@ -340,11 +340,11 @@ function App() {
 
       <div className="row">
         <div className="col-sm-12">
-          <h2>Contribute</h2>
+          <div style={{backgroundColor: '#98FB98', color: 'BLACK'}}><h2 className="text-center">Purchase Shares</h2></div>
           <form onSubmit={e => contribute(e)}>
             <div className="form-group">
               <label htmlFor="amount">Amount</label>
-              <input type="number" className="form-control" id="amount" min={0} value={inputs.contributeAmount} onChange={e => onChange("contributeAmount", e)} placeholder="Amount to Deposit in cUSD"/>
+              <input type="number" className="form-control" id="amount" min={0} value={inputs.contributeAmount} onChange={e => onChange("contributeAmount", e)} placeholder="Amount to Deposit in JCL"/>
             </div>
             <button type="submit" className="btn btn-primary">Submit</button>
           </form>
@@ -355,7 +355,7 @@ function App() {
 
       <div className="row">
         <div className="col-sm-12">
-          <h2>Redeem shares</h2>
+          <div style={{backgroundColor: '#98FB98', color: 'BLACK'}}><h2 className="text-center">Redeem Shares</h2></div>
           <form onSubmit={e => redeemShares(e)}>
             <div className="form-group">
               <label htmlFor="amount">Amount</label>
@@ -370,7 +370,7 @@ function App() {
 
       <div className="row">
         <div className="col-sm-12">
-          <h2>Transfer shares</h2>
+          <div style={{backgroundColor: '#98FB98', color: 'BLACK'}}><h2 className="text-center">Transfer Shares</h2></div>
           <form onSubmit={e => transferShares(e)}>
             <div className="form-group">
               <label htmlFor="amount">Amount</label>
@@ -389,7 +389,7 @@ function App() {
 
       <div className="row">
         <div className="col-sm-12">
-          <h2>Create proposal</h2>
+          <div style={{backgroundColor: '#98FB98', color: 'BLACK'}}><h2 className="text-center">Create Proposal</h2></div>
           <form onSubmit={e => createProposal(e)}>
             <div className="form-group">
               <label htmlFor="name">Name</label>
@@ -397,7 +397,7 @@ function App() {
             </div>
             <div className="form-group">
               <label htmlFor="amount">Amount</label>
-              <input type="number" className="form-control" id="amount" min={0} value={inputs.proposalAmount} placeholder="Amount in cUSD" onChange={e => onChange("proposalAmount", e)} />
+              <input type="number" className="form-control" id="amount" min={0} value={inputs.proposalAmount} placeholder="Amount in JCL" onChange={e => onChange("proposalAmount", e)} />
             </div>
             <div className="form-group">
               <label htmlFor="recipient">Recipient</label>
@@ -412,7 +412,7 @@ function App() {
 
       <div className="row">
         <div className="col-sm-12">
-          <h2>Proposals</h2>
+          <div style={{backgroundColor: '#98FB98', color: 'BLACK'}}><h2 className="text-center">Proposals</h2></div>
           <table className="table">
             <thead>
               <tr>
@@ -431,7 +431,7 @@ function App() {
                 <tr key={proposal.id}>
                   <td>{proposal.id}</td>
                   <td>{proposal.name}</td>
-                  <td>{new BigNumber(proposal.amount).shiftedBy(-ERC20_DECIMALS).toString()} cUSD</td>
+                  <td>{new BigNumber(proposal.amount).shiftedBy(-ERC20_DECIMALS).toString()} JCL</td>
                   <td>{proposal.recipient}</td>
                   <td>{new BigNumber(proposal.votes).shiftedBy(-ERC20_DECIMALS).toString()}</td>
                   <td>
@@ -451,8 +451,8 @@ function App() {
                   <td>
                     {proposal.executed ? 'Yes' : (
                       admin.toLowerCase() === accounts[0].toLowerCase() ? (
-                        <button 
-                          onClick={e => executeProposal(proposal.id)}
+                        <button
+                          onClick={e => executeProposal(proposal.id).disabled = true}
                           type="submit" 
                           className="btn btn-primary">
                           Execute

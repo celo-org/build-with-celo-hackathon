@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://blisado1.github.io/Dao-Dapp",
+  "homepage": "http://zahracolt.github.io/Tri-Dao-Dapp",
   "dependencies": {
     "@celo/contractkit": "^2.2.0",
     "@celo/react-celo": "^4.2.1",
