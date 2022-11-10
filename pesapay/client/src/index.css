@@ -19,7 +19,7 @@ input[type="number"] {
 .gradient_btn {
   background: linear-gradient(
     103.91deg,
-    #9b51e0 21.01%,
+    #ffcf00 21.01%,
     rgba(48, 129, 237, 0.8) 100%
   );
 }
@@ -32,7 +32,7 @@ input[type="number"] {
   height: 123px;
   border-radius: 50%;
 
-  background: #fb37ff;
+  background: #ffcf00;
   filter: blur(200px);
 }
 
@@ -44,16 +44,16 @@ input[type="number"] {
   height: 123px;
   border-radius: 50%;
 
-  background: #18b2de;
+  background: #35D07F;
   filter: blur(200px);
 }
 
 .gradient-border {
   background: linear-gradient(
     168.82deg,
-    #fb37ff 1.7%,
+    #ffcf00 1.7%,
     rgba(155, 111, 238, 0) 27.12%,
     rgba(123, 127, 234, 0) 61.28%,
-    #1bb2de 99.52%
+    #35D07F 99.52%
   );
 }

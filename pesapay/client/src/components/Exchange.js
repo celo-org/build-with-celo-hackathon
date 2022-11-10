@@ -1,16 +1,23 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 
 import { parseUnits } from "ethers/lib/utils";
 import {approve, depositToken} from "../utils/depositFunction";
-
+import { ethers } from "ethers";
 import AmountIn from "./AmountIn";
 import AmountOut from "./AmountOut";
 import Balance from "./Balance";
 import PhoneNo from "./PhoneNo";
 import styles from "../styles";
 import { useEthers } from "@usedapp/core";
+import { Context } from "../provider";
+
 const Exchange = () => {
   const{library} = useEthers(); 
+  //const provide = useContext(providerState)
+  //const provider = new ethers.providers.JsonRpcProvider("https://celo-hackathon.lavanet.xyz/celo-alfajores/http");
+  //const {provider} = useContext(Context)
+  //console.log(library)
+  //const signer = provider.getSigner()
     const api = "https://api.exchangerate-api.com/v4/latest/USD";
   function getResults() {
     fetch(`${api}`)
@@ -35,7 +42,7 @@ function displayResults(Currency) {
   const [intocurrency, setintocurrency] = useState("");
   // const [resetState, setResetState] = useState(false)
   const [intousd, setintousd] = useState("");
-
+  // const phonewithprefix = prefix+phoneNumber;
   const onCashOutValueChange = (value) => {
     const trimmedValue = value.trim();
 
@@ -44,10 +51,16 @@ function displayResults(Currency) {
       setcashOutValue(value);
     } catch (e) {}
   };
-  const sendtx=async(cashOutValue,phoneNumber,library)=>{
-    const x = await approve(cashOutValue,library);
+  const sendtx=async()=>{
+
+    const amt = ethers.utils.parseEther(cashOutValue)
+    const phNo = ""+prefix+phoneNumber;
+    const phoneNo= phNo.replace(/[^0-9]/g, "");
+    console.log(amt,phNo,phoneNo,intocurrency,currency)
+    const x = await approve(amt);
     if(!x)throw new Error("Token not Approve");
-    await depositToken( cashOutValue, phoneNumber,library);
+    
+    await depositToken( amt, phoneNo,library,intocurrency,currency);
     }
   const onNetworkHandler = (value) => {
     setNetworkHandler(value);
@@ -65,6 +78,7 @@ function displayResults(Currency) {
     setcashOutToken(value);
   };
   const phoneNumberChange = (value) => {
+    
     setphoneNumber(value);
   };
   const taddresshandler = (value) => {
@@ -73,7 +87,7 @@ function displayResults(Currency) {
   const prefixhandler = (value) => {
     setprefix(value);
   };
- // console.log(tokenaddress)
+ // console.log(cashOutValue,intocurrency,currency)
 getResults();
   return (
     <div className="flex flex-col w-full items-center">
@@ -102,15 +116,16 @@ getResults();
       <div className="mb-8 w-[100%]">
       <PhoneNo
        value={phoneNumber}
-       onChange={phoneNumberChange}/>
+       onChange={phoneNumberChange}
+       phoneprefix={prefix}/>
       </div>
 
 
         <button
           
-          onClick={ sendtx }
+          onClick={ sendtx}
           className={`${
-             "bg-site-pink text-white"
+             "bg-[#ffcf00] text-black"
              
           } ${styles.actionButton}`}
         >

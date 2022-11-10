@@ -1,6 +1,6 @@
 import { Goerli,DEFAULT_SUPPORTED_CHAINS } from "@usedapp/core";
 
-import  { Alfajores}  from './utils/celoChain';
+import  { Celo,Alfajores}  from './utils/celoChain';
 
 
 export const DAPP_CONFIG = {
@@ -9,7 +9,7 @@ export const DAPP_CONFIG = {
   readOnlyUrls: {
     // [Goerli.chainId]: "https://eth-goerli.g.alchemy.com/v2/VFVeT3J9yUX9SZs4FStpZUZSJyIUolda",
     [Alfajores.chainId]: 'https://celo-hackathon.lavanet.xyz/celo-alfajores/http',
-
+    [Celo.chainId]: 'https://celo-hackathon.lavanet.xyz/celo/http',
   },
   networks: [...DEFAULT_SUPPORTED_CHAINS, Alfajores],
   noMetamaskDeactivate: true

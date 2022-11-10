@@ -8,9 +8,8 @@ const AmountOut = ({ onSelect, value, cPrefix }) => {
   const [showList, setShowList] = useState(false);
   const [activeCurrency, setActiveCurrency] = useState("Select");
   const ref = useRef()
-
+  
   useOnClickOutside(ref, () => setShowList(false))
-
 
 
   return (

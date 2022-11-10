@@ -68,7 +68,18 @@ const networks = {
       decimals: 18
     },
     rpcUrls: ["https://alfajores-forno.celo-testnet.org"],
-    blockExplorerUrls: ["https://docs.celo.org/"]
+    blockExplorerUrls: ["https://alfajores.celoscan.io"]
+  },
+  42220: {
+    chainId: `0x${Number(42220).toString(16)}`,
+    chainName: "Celo",
+    nativeCurrency: {
+      name: "CELO",
+      symbol: "CELO",
+      decimals: 18
+    },
+    rpcUrls: ["https://celo.quickestnode.com"],
+    blockExplorerUrls: ["https://celoscan.io"]
   }
 
 };

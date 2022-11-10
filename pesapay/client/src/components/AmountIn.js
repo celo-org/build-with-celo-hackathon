@@ -5,7 +5,10 @@ import { useOnClickOutside } from "../utils";
 import styles from "../styles";
 import tokens from "../utils/tokenname.json";
 import { handlePriceFeed } from "../utils/pricefeed";
+import { useEthers } from "@usedapp/core";
+
 const AmountIn = ({ value, onChange, onChain, inUsd, onToken, taddress }) => {
+  const { chainId,account } = useEthers();
   const [showList, setShowList] = useState(false);
   const [activeToken, setActiveToken] = useState("Select");
   const [activeChainId, setactiveChainId] = useState("");
@@ -13,15 +16,24 @@ const AmountIn = ({ value, onChange, onChain, inUsd, onToken, taddress }) => {
   const ref = useRef();
   useOnClickOutside(ref, () => setShowList(false))
 
-  const chainid=()=>{
-    const chainid =  parseInt((window.ethereum.chainId),16);
+  const chainid=async()=>{
+    const chainId = await window.ethereum.request({ method: "eth_chainId" });
+    const chainid =  parseInt((chainId),16);
     setactiveChainId(chainid)
     setShowList(!showList)
   }
+
+  // const x=async()=>{
+  //   const y = await chainid();
+  //   console.log(y)
+  // }
+
+
+
   // useEffect(() => {
   //   chainid()
-  // }, []);  
-  //console.log(activeChainId);
+  // }, [activeChainId]);  
+  // console.log(activeChainId);
   return (
     <div className={styles.amountContainer}>
       <input
@@ -33,7 +45,7 @@ const AmountIn = ({ value, onChange, onChain, inUsd, onToken, taddress }) => {
         className={styles.amountInput}
       />
 
-      <div className="relative" onClick={() =>  chainid()}>
+      <div className="relative" onClick={async() =>  await chainid()}>
         <button className={styles.currencyButton}>
           {activeToken}
           <img
@@ -48,6 +60,7 @@ const AmountIn = ({ value, onChange, onChain, inUsd, onToken, taddress }) => {
         {showList && (
           <ul ref={ref} className={styles.currencyList}>
             {tokens[activeChainId].map(({ tokenName,pricefeed,add}, index) => (
+              
             <li
               key={index}
               className={`${styles.currencyListItem} ${

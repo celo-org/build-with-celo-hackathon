@@ -36,7 +36,11 @@
 
 "44787":[
   { "tokenName":"Celo Alfajores", "pricefeed":"0x9ae96129ed8FE0C707D6eeBa7b90bB1e139e543e", "add":"0x91A794303F6A1D18Ae03ec689983568D76121E00"},
- 
+  { "tokenName":"cUSDT", "pricefeed":"0x3E7d1eAB13ad0104d2750B8863b489D65364e32D", "add":"0x91A794303F6A1D18Ae03ec689983568D76121E00"}
+  
+],
+"42220":[
+  { "tokenName":"Celo Mainnet", "pricefeed":"0x9ae96129ed8FE0C707D6eeBa7b90bB1e139e543e", "add":"0x91A794303F6A1D18Ae03ec689983568D76121E00"},
   { "tokenName":"cUSDT", "pricefeed":"0x3E7d1eAB13ad0104d2750B8863b489D65364e32D", "add":"0x91A794303F6A1D18Ae03ec689983568D76121E00"}
   
 ]

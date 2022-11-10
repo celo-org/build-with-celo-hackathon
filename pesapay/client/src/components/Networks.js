@@ -4,15 +4,16 @@ import { chevronDown } from "../assets";
 import { useOnClickOutside } from "../utils";
 import styles from "../styles";
 import chains from "../utils/cryptoname.json";
+import { useEthers } from "@usedapp/core";
 //import { handlePriceFeed } from "../utils/pricefeed";
-const Networks = ({ onSelect }) => {
+const Networks = () => {
   const [showList, setShowList] = useState(false);
-  const [activeChain, setActiveChain] = useState("Select");
-
+  const [activeChain, setActiveChain] = useState("Select Network");
+  const { chainId } = useEthers();
   const ref = useRef()
 
   useOnClickOutside(ref, () => setShowList(false))
-
+//console.log(activeChain)
   return (
 
       <div className="relative" onClick={() => setShowList(!showList)}>
@@ -36,12 +37,15 @@ const Networks = ({ onSelect }) => {
                 activeChain === chainName ? "bg-site-dim2" : ""
               } cursor-pointer`}
               onClick={async() => {
-                if (typeof onSelect === "function") onSelect(chainid);
+                if (typeof onSelect === "function") ;
                                 
-                if(parseInt((window.ethereum.chainId),16) != chainid){
-                  handleNetworkSwitch(chainid)
-                  setActiveChain(chainName);                  
-                }else{setActiveChain((chainName))}
+                if(chainId != chainid){
+                  await handleNetworkSwitch(chainid)
+                  setActiveChain(chainName);
+                  
+                }else{setActiveChain(chainName)
+                  
+                    }
                 
                 setShowList(false);
               }}

@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import styles from "../styles";
 import { chevronDown } from "../assets";
-const PhoneNo = ({value,onChange}) => {
+const PhoneNo = ({value,onChange,phoneprefix}) => {
    
   return (
     <div className={styles.amountContainer}>
@@ -14,6 +14,7 @@ const PhoneNo = ({value,onChange}) => {
             alt="cheveron-down"
             className={`w-4 h-4 object-contain ml-2 rotate-90`}
           />
+          {phoneprefix}
         </label >
         </div>
 
@@ -23,8 +24,10 @@ const PhoneNo = ({value,onChange}) => {
         disabled={false}
         onChange={(e) => typeof onChange === "function" && onChange(e.target.value)}
         className={`${styles.amountInput}`}
-        type="number"
-        placeholder="01-1234567890" 
+        type="tel"
+        maxLength="9"
+        minLength="9"
+        placeholder="Enter Phone No" 
       />
 
     </div>
