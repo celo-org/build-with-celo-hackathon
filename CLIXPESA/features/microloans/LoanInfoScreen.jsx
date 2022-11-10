@@ -60,7 +60,9 @@ export default function LoanInfoScreen({ navigation, route }) {
         amount: utils.formatUnits(thisTx.args[0], 'ether'),
         token: 'cUSD',
       }
-      thisTxs.push(txItem)
+      if (tx.isError !== '1') {
+        thisTxs.push(txItem)
+      }
     })
     {
       /*console.log(thisTxs)*/
@@ -74,9 +76,8 @@ export default function LoanInfoScreen({ navigation, route }) {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true)
-    dispatch(updateLoans())
     refetch()
-    wait(2000).then(() => {
+    wait(1000).then(() => {
       if (data) handleGetTransaction()
       setRefreshing(false)
     })
@@ -108,7 +109,7 @@ export default function LoanInfoScreen({ navigation, route }) {
                 icon: (
                   <Icon as={Feather} name="arrow-up-right" size="md" color="primary.600" mr="1" />
                 ),
-                name: loan.initiated ? 'Fund' : 'Repay',
+                name: loan.lender ? 'Fund' : 'Repay',
                 screen: 'fundLoan',
                 screenParams: loan,
               }}
@@ -155,7 +156,7 @@ export default function LoanInfoScreen({ navigation, route }) {
               </Text>
             </HStack>
             <Text color="primary.800">
-              {loan.initiated
+              {loan.lender
                 ? 'Please fund the Loan. Loanee is eagerly waiting for the chums!'
                 : 'Your Keep calm. Loan will be credited once your lender releases the funds!'}
             </Text>

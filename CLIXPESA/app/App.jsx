@@ -18,10 +18,10 @@ import { LogBox } from 'react-native'
 export default function App() {
   const [isInitComplete, setIsInitComplete] = useState()
   // avoid warnings showing up in app. comment below code if you want to see warnings.
-  //useEffect(() => {
-  //LogBox.ignoreLogs(['Encountered two children with the same key ...'])
-  // LogBox.ignoreAllLogs()
-  //}, [])
+  useEffect(() => {
+    //LogBox.ignoreLogs(['Encountered two children with the same key ...'])
+    LogBox.ignoreAllLogs()
+  }, [])
   // Start Provider
   useEffect(() => {
     async function initProvider() {
