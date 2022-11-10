@@ -1,7 +1,7 @@
 
 ## Project Name
 
-Celo Network Tokens Subgraph and Analytics Dapp
+Celo Network Tokens Analytics Dapp to track key performance metrics
 
 ### Team name
 DappLooker
@@ -19,15 +19,6 @@ India
 
 #### Project Description
 
-- Implemented Analytics Dapp by querying data from subgraph
-    The analytics Dapp contains tracks below performance metrics:
-
-        - Celo Tokens TVL
-        - Unique Users with atleast 1 Transaction
-        - Daily TVL
-        - Weekly Transaction Volume
-        - Weekly Gas Consumed
-
 - Implemented Celo Network Tokens subgraph
 
 Subgraph is indexing transactions data of Celo network token contracts. Subgraph is then queried to display key performance metrics and KPIs.
@@ -43,9 +34,18 @@ The subgraph contains entities for below token contracts:
 
     - stCELO: **0xa97be82bee72a809fe4b3ad158535879028babcb**
 
+- Implemented Analytics Dapp by querying data from subgraph
+    The analytics Dapp contains tracks below performance metrics:
+
+        - Celo Tokens TVL
+        - Unique Users with atleast 1 Transaction
+        - Daily TVL
+        - Weekly Transaction Volume
+        - Weekly Gas Consumed
+
 #### Summary
 
-Implemented below functionalities:
+Implemented below functionalities in the project:
 - Implement Analytics Dapp
 - Implement Celo Network Tokens subgraph
 
@@ -71,17 +71,17 @@ Implemented below functionalities:
 #### URLs
 Celo Network Tokens Subgraph - https://thegraph.com/hosted-service/subgraph/dapplooker/celo-tokens-analytics-subgraph
 
-Celo Network Tokens Analytics Dapp - https://dapplooker.com/dapp/celo-all-tokens-120082
+Celo Network Tokens Analytics Dapp - https://analytics.dapplooker.com/public/dashboard/f97e8ce0-4b76-4ce4-9a89-ef3aaf9642f6
 
 #### Presentation
 Celo Network Tokens Subgraph - https://thegraph.com/hosted-service/subgraph/dapplooker/celo-tokens-analytics-subgraph
 
-Celo Network Tokens Analytics Dapp - https://dapplooker.com/dapp/celo-all-tokens-120082
+Celo Network Tokens Analytics Dapp - https://analytics.dapplooker.com/public/dashboard/f97e8ce0-4b76-4ce4-9a89-ef3aaf9642f6
 
 #### Next Steps
 - Integrate more Celo network tokens
 - Detailed analytics Dapp for each token
-- Alerts on token transactions
+- Set Alerts on token transactions
 
 #### License
 This repository includes an [unlicensed](http://unlicense.org/) statement though you may want to [choose a different license](https://choosealicense.com/).
