@@ -78,28 +78,31 @@ const ActiveCampaign = ({ classOne, classTwo, index, campaign }) => {
 
     const uploadProof = async () => {
         // upload image to sanity with date and campaign id
-        const proofDoc = {
-            _type: "task",
-            campaignid: campaign?.campaignID,
-            taskDescription: document.getElementById('taskDescription').value,
-            dailytask: {
-                _type: "image",
-                asset: {
-                    _type: "reference",
-                    _ref: imagesAssets?._id,
+        if (document.getElementById('taskDescription').value === '' || imagesAssets === null) {
+            toast.error("Provide adequate proof")
+        } else {
+            const proofDoc = {
+                _type: "task",
+                campaignid: campaign?.campaignID,
+                taskDescription: document.getElementById('taskDescription').value,
+                dailytask: {
+                    _type: "image",
+                    asset: {
+                        _type: "reference",
+                        _ref: imagesAssets?._id,
+                    },
                 },
-            },
-            date: Date(),
-        };
-        try {
-            const result = await client.create(proofDoc);
-            // upload signal to blockchain telling that task for today completed
-            saveonChain()
+                date: Date(),
+            };
+            try {
+                const result = await client.create(proofDoc);
+                // upload signal to blockchain telling that task for today completed
+                saveonChain()
 
-        } catch (e) {
-            console.log("error is ", e)
+            } catch (e) {
+                console.log("error is ", e)
+            }
         }
-
     }
 
     async function onChange(e) {
