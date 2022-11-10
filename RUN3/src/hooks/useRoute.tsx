@@ -41,12 +41,14 @@ export const useRoute = () => {
             const routeUrlArr = tokenUri.split('/')
             const routeFbId = routeUrlArr.length && routeUrlArr[routeUrlArr.length - 1]
             const routeRes = await getRouteById(routeFbId)
-            if (!routeRes) return []
+            console.log('logTT', routeRes)
+            if (routeRes === 'Route not found') return null
             return routeRes
           })
         )
       }
-      return routesData
+
+      return routesData.filter((route) => route !== null)
     } catch (e) {
       console.log('error on getRoutesByUser', e)
     }
