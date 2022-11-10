@@ -11,7 +11,8 @@ Nigeria
 #### Project Description
 An on-chain analysis of Uniswap_v3 overview metrics
 
-
+#### Dashboard Link
+[Uniswap_v3_celo Metrics](https://analytics.dapplooker.com/dashboard/269-uniswap-v3-celo-metrics)
 
 #### Summary
 This dashboard tracks all onchain metrics of the Uniswap_v3_celo DEX which you can track 
