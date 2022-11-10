@@ -1,0 +1,166 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+#  - kind: ethereum/contract
+#    name: MooToken
+#    network: celo
+#    source:
+#      address: "0x17700282592D6917F6A73D0bF8AcCf4D578c131e"
+#      abi: MooToken
+#      startBlock: 7700000
+#    mapping:
+#      kind: ethereum/events
+#      apiVersion: 0.0.5
+#      language: wasm/assemblyscript
+#      entities:
+#        - Token
+#      abis:
+#        - name: MooToken
+#          file: ./abis/Moo.json
+#        - name: ERC20
+#          file: ./abis/ERC20.json
+#        - name: ERC20SymbolBytes
+#          file: ./abis/ERC20SymbolBytes.json
+#        - name: ERC20NameBytes
+#          file: ./abis/ERC20NameBytes.json
+#      eventHandlers:
+#        - event: Transfer(indexed address,indexed address,uint256)
+#          handler: handleTransfer
+#      file: ./src/mappings/core.ts
+  - kind: ethereum/contract
+    name: celotoken
+    network: celo
+    source:
+      address: "0x471EcE3750Da237f93B8E339c536989b8978a438"
+      abi: celotoken
+      startBlock: 7700000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - User
+        - Token
+      abis:
+        - name: celotoken
+          file: ./abis/celo.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mappings/core.ts
+  - kind: ethereum/contract
+    name: cReal
+    network: celo
+    source:
+      address: "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787"
+      abi: cReal
+      startBlock: 10000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - User
+        - Token
+      abis:
+        - name: cReal
+          file: ./abis/Moo.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mappings/core.ts
+  - kind: ethereum/contract
+    name: cEUR
+    network: celo
+    source:
+      address: "0xd8763cba276a3738e6de85b4b3bf5fded6d6ca73"
+      abi: cEUR
+      startBlock: 5820000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - User
+        - Token
+      abis:
+        - name: cEUR
+          file: ./abis/Moo.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mappings/core.ts
+  - kind: ethereum/contract
+    name: cUSD
+    network: celo
+    source:
+      address: "0x765de816845861e75a25fca122bb6898b8b1282a"
+      abi: cUSD
+      startBlock: 7700000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - User
+        - Token
+      abis:
+        - name: cUSD
+          file: ./abis/Moo.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mappings/core.ts
+  - kind: ethereum/contract
+    name: stCELO
+    network: celo
+    source:
+      address: "0xC668583dcbDc9ae6FA3CE46462758188adfdfC24"
+      abi: stCELO
+      startBlock: 7700002
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - User
+        - Token
+      abis:
+        - name: stCELO
+          file: ./abis/Moo.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mappings/core.ts
+

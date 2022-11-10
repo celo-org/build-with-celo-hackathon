@@ -1,0 +1,41 @@
+type Token @entity {
+  # token address
+  id: ID!
+
+  # mirrored from the smart contract
+  symbol: String!
+  name: String!
+  decimals: BigInt!
+  lastUpdatedTimestamp: BigInt! # uint256
+  gasConsumed: BigDecimal!
+
+  # used for other stats like marketcap
+  totalSupply: BigInt!
+
+  # token specific volume
+  totalVolume: BigDecimal!
+
+  # transactions across all pairs
+  txCount: BigInt!
+
+}
+
+
+type TokenDayData @entity {
+  id: ID!
+  dayTimestamp: Int!
+  token: Token!
+
+  # volume stats
+  dailyVolumeToken: BigDecimal!
+  dailyGasConsumed: BigDecimal!
+  dailyTxns: BigInt!
+  lastUpdatedTimestamp: BigInt! # uint256
+}
+
+type User @entity {
+  id: ID!
+  user: Bytes!   # Address
+  token: Token!
+  lastUpdatedTimestamp: BigInt! # uint256
+}
