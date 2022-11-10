@@ -19,6 +19,8 @@ import FirebaseDatabase
 
 class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
     
+    @Published var error:Error? = nil
+    
     @Published var region = MKCoordinateRegion()
     @Published var updateRegion = false
     
@@ -27,7 +29,6 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
     
     @Published var rejectedDrivers:[DriverDetails] = []
     @Published var drivers:[DriverDetails] = []
-    
     
     // Set driver address to point index
     private var driverMap:[String:Int] = [:]
@@ -42,21 +43,23 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
     
     // Avarge price of ride When building route
     @Published var normalizedPrice:Double = 0.00
+    @Published var recommendedPrice:Double = 0.00
     @Published var route:MKRoute?
     
-    private let manager = CLLocationManager()
-    // Max distance away from drivers
-    private let radiusInM: Double = 5 * 1000
     
     @Published var currentLocation:CLLocation?
     private var lastGeocodeTime:Date? = Date()
-
+    
     private var db:Firestore!
+    
+    private let manager = CLLocationManager()
+    // Max distance away from drivers
+    private let radiusInM: Double = 1609.34
+    private var removedDrivers:[String] = []
     
     override init() {
         super.init()
 
-        //FirebaseApp.configure()
         db = Firestore.firestore()
         
         manager.delegate = self
@@ -78,7 +81,6 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
     
     public func cleanMapView() {
         clean = true
-        //route = nil
     }
     
 
@@ -121,8 +123,6 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
                 if let place = places{
                     // get
                     let city =  place.first?.locality ?? ""
-                    //TODO Throw if city is empty
-                    // get local drivers for are current location
                     geoQuery(userLocation: coords,city: city)
  
                 }
@@ -139,20 +139,23 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
     func getRideEstimates() {
         
         if(route == nil){return}
+    
         var total = 0.0
         for index in drivers.indices {
-      
-            if (drivers[index].info == nil) {return}
-            if (drivers[index].info!.rate == nil) {return}
+           
+            if (drivers[index].info == nil) {break}
+            if (drivers[index].info!.rate == nil) {break}
             let rate = Double(drivers[index].info!.rate!)
-            if rate == 0.0{break}
-            
-            let priceWithDriverRate = 60 / rate
-            let driverRateAppliedToRide = route!.expectedTravelTime *  (priceWithDriverRate / 60)
-            total += driverRateAppliedToRide
-            drivers[index].rateAppliedToRide = driverRateAppliedToRide
+         
+            if rate != 0.0{
+                let priceWithDriverRate = 60 / rate
+                let driverRateAppliedToRide = route!.expectedTravelTime *  (priceWithDriverRate / 60)
+                total += driverRateAppliedToRide
+                drivers[index].rateAppliedToRide = driverRateAppliedToRide
+            }
         }
         normalizedPrice = total / Double(drivers.count)
+        recommendedPrice = total / Double(drivers.count)
     }
     
     
@@ -179,15 +182,17 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
                         address: details.address,
                         isDriver: Bool(exactly: isDriver)!,
                         rate: rate,
-                        carAssetLink: details.info!.carAssetLink,
-                        infoAssetLink: details.info!.infoAssetLink)
-                    
-                    //getRideEstimates(index: index, rate: Double(rate))
+                        carAssetLink: carAssetUrl,
+                        infoAssetLink: infoAssetUrl,
+                        twitterHandle: details.info!.twitterHandle,
+                        facebookHandle: details.info!.facebookHandle)
                     
                     self.drivers[index].info = driverInfo
+                    getRideEstimates()
                    
                 case .failure(let error):
-                    print("Failed to get driver details")
+                    self.error = error
+                    //print("Failed to get driver details")
                     //self.error = ContractError(title: "Failed to get driver rate.", description: error.errorDescription)
                 }
             }
@@ -218,11 +223,12 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
                                       reputation: reputation,
                                       totalRating: totalRatings,
                                       count: rideCount)
-                    
+                   
                     self.drivers[index].stats = driverStats
                    
                 case .failure(let error):
-                    print("Failed to get driver details")
+                    self.error = error
+                    //print("Failed to get driver details")
                     //self.error = ContractError(title: "Failed to get driver rate.", description: error.errorDescription)
                 }
             }
@@ -230,45 +236,66 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
     }
     
     
-    
+    private var refHandle:UInt?
     // MARK: listenForChanges
     /// Updates driver locations and pin annotations
     /// Remove drivers that sure pass passenger distance
+    
     func listenForChanges(driver:String) {
         
-        let ref = Database.database().reference().child("driver").child(driver)
+        let ref = Database.database().reference().child("driver")
         
-        ref.observe(.value, with: { [ self](snapshot) in
+        refHandle = ref.child(driver).observe(.value, with: { [ self](snapshot) in
             
             let driverAddress = snapshot.key as String
+            
             let driverLocation = snapshot.value as? [String:Any]
             if driverLocation == nil {return}
             
             let lat = driverLocation!["lat"] as! Double
             let long = driverLocation!["long"] as! Double
-                             
-            let index = self.driverMap[driverAddress]
-            
-            let newLocation = CLLocationCoordinate2D(latitude: lat, longitude: long)
-            let driverCL = CLLocation(latitude:lat, longitude: lat)
-            let distanceAway = driverCL.distance(from: currentLocation!)
          
-            //if distanceAway > radiusInM {
+            let index = self.driverMap[driverAddress]
+            if(index == nil){return}
+            let newLocation = CLLocationCoordinate2D(latitude: lat, longitude: long)
+            let driverCL = CLLocation(latitude:lat, longitude: long)
+ 
+            let distanceAway = currentLocation!.distance(from: driverCL)
+
+            if distanceAway > radiusInM {
+
+                //removedDrivers.append(driverAddress)
                 // Remove annoatation if driver is too far away
                 //removeAnnotation = driverPoints[index!]
-                //ref.root
-                //ref.removeObserver(withHandle: driverAddress)
-            //}
-        
-            self.driverPoints[index!].coordinate = newLocation
-            
-            //if selectedAnnotation != nil && updateRegion {
-            if self.driverPoints[index!] == selectedAnnotation{
-                changeRegion(driver: driverAddress)
+                //driverPoints.remove(at: index!)
+                //driverMap[driverAddress] = nil
+                //drivers.remove(at:index!)
+                //ref.removeObserver(withHandle: refHandle!)
+
+            }else{
+                self.driverPoints[index!].coordinate = newLocation
+
+                if self.driverPoints[index!] == selectedAnnotation{
+                    changeRegion(driver: driverAddress)
+                }
             }
-            //}
-        
         })
+        
+        ref.observe(.childRemoved, with: {[self] (snapshot) in
+            // get driver address to remove
+            let driverAddress = snapshot.key as String
+            let index = driverMap[driverAddress]
+            if index == nil {return}
+        
+            // Remove driver annotation
+            removeAnnotation = driverPoints[index!]
+            // Remove arrays with driver details
+            driverPoints.remove(at: index!)
+            //driverMap[driverAddress] = nil
+            drivers.remove(at:index!)
+        })
+        
+        
     }
     
     // MARK: geoQuery
@@ -289,7 +316,7 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
         // depending on overlap, but in most cases there are 4.
         let queryBounds = GFUtils.queryBounds(forLocation: userLocation,
                                               withRadius: radiusInM)
-        
+      
         let queries = queryBounds.map { bound -> Query in
             return db.collection("cities").document(city).collection("Drivers")
                 .order(by: "geoHash")
@@ -309,51 +336,41 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
                 let lat = document.data()["lat"] as? Double ?? 0
                 let lng = document.data()["lng"] as? Double ?? 0
                 
-                let name = document.data()["name"] as? String ?? ""
-                let car = document.data()["car"] as? String ?? ""
-                
+                let facebook = document.data()["facebook"] as? String ?? ""
+                let twitter = document.data()["twitter"] as? String ?? ""
+        
                 let coordinates = CLLocation(latitude: lat, longitude: lng)
                 let centerPoint = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
                 
                 // We have to filter out a few false positives due to GeoHash accuracy, but
                 // most will match
-                //let distance = centerPoint.distance(from: coordinates)
                 let distance = GFUtils.distance(from: coordinates, to: centerPoint)
 
                 if distance <= radiusInM {
+   
                     var driver = DriverDetails(address: document.data()["driver"] as! String)
                     
                     if driverMap.contains(where: { $0.key.hasPrefix(driver.address) }){
                         // Driver already listed
                         print("Driver already listed")
                     }else{
-                      
+                        
                         let carAnnotationView = CarAnnotation()
                         carAnnotationView.title = driver.address
-                        //carAnnotationView.coordinate =
-                        //carAnnotationView.image = UIImage(named: "car.circle")
-                        //carAnnotationView.colour = UIColor.blue
-                        
-                        //carAnnotationView.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(lng))
-                        
-                        //let driverPoint = MKPointAnnotation()
-                        //driverPoint.title = driver.address
-          
-                    
+      
                         // Add driver pointAnnotation to driverPoints
                         let index = driverPoints.count
                         driverPoints.append(carAnnotationView)
                         
-                        let info = DriverInfo(address: driver.address, isDriver: nil, rate: nil, carAssetLink: car, infoAssetLink: name)
+                        let info = DriverInfo(address: driver.address, isDriver: nil, rate: nil, carAssetLink: "", infoAssetLink: "",twitterHandle:twitter, facebookHandle: facebook)
                         
                         // Maps driver address to MKPoint array index
                         driverMap[driver.address] = index
                         driver.info = info
-                        
+     
                         drivers.append(driver)
                         
                         // Get driver details from smart contract
-                        print("Getting driver details and rating")
                         getDriverDetails(details:driver, index: index)
                         getDriverRating(details:driver,index:index)
                         // List for location changes in realTime DB

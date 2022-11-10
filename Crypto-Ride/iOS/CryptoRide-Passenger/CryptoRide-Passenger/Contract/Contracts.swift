@@ -7,7 +7,7 @@
 
 import Foundation
 
-
+// Enum contracts 
 enum Contracts:Int {
     case RideManager = 0
     case cUSD = 2

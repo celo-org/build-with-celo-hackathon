@@ -7,12 +7,13 @@
 
 import Foundation
 
-
+// cUSD Token Methods
+// Note cUSD token conforms to the ERC20 
 enum CusdMethods:String {
     case balanceOf = "balanceOf"
 }
 
-
+// Ride Manager contract method strings
 enum RideManagerMethods:String {
     case getActiveRide = "getActiveRide"
     case getRide = "getRide"

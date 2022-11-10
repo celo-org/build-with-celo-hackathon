@@ -18,7 +18,7 @@ struct CryptoRide_PassengerApp: App {
     var body: some Scene {
         WindowGroup {
                     if authentication.isValidated {
-                        ContentView().environmentObject(authentication)
+                        ContentView(password: authentication.password).environmentObject(authentication)
                     }else {
                         LoginView().environmentObject(authentication)
                     }

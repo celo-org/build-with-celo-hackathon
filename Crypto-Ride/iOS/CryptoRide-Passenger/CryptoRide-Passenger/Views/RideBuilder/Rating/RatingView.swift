@@ -7,8 +7,8 @@
 
 import SwiftUI
 
+// MARK: RatingView
 struct RatingView: View {
-    //@Binding var rating:Int?
     var rating:Int
     
     var label = ""
@@ -29,24 +29,9 @@ struct RatingView: View {
             ForEach(1..<maximumRating + 1, id :\.self ){ number in
                 image(for: number)
                     .foregroundColor(number > rating ? offColor : onColor)
-                    
-                    //.onTapGesture {
-                    //    self.rating = number
-                    //}.disabled(disabled)
-                
+
             }
-    
         }
-        .gesture(
-            // TODO add drag gesture
-            DragGesture()
-            .onChanged { gesture in
-                //print(gesture)
-            }
-            .onEnded{ end in
-               // print(end)
-                
-            })
     }
     
     func image(for number: Int) -> Image {

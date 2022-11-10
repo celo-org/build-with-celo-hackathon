@@ -8,11 +8,13 @@
 import SwiftUI
 
 class Authentication:ObservableObject {
-    @Published var isValidated = false
+    @Published var isValidated = true
+    var password = ""
     
-    func updateValidation(success:Bool) {
+    func updateValidation(success:Bool,password:String?) {
         withAnimation {
             isValidated = success
+            self.password = password ?? ""
         }
     }
 }

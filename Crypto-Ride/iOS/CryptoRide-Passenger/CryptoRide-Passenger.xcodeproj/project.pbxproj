@@ -10,14 +10,13 @@
 		3003AB7C2912F4470045D3CC /* Reputation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3003AB7B2912F4470045D3CC /* Reputation.swift */; };
 		3003AB7E2913063F0045D3CC /* Coordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3003AB7D2913063F0045D3CC /* Coordinates.swift */; };
 		3003AB8029130C5F0045D3CC /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3003AB7F29130C5F0045D3CC /* Settings.swift */; };
-		3003AB8229130FE40045D3CC /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3003AB8129130FE40045D3CC /* ErrorView.swift */; };
 		300FCCBB2911A1F9005F3536 /* Ride.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCBA2911A1F9005F3536 /* Ride.swift */; };
 		300FCCBF2911A2D2005F3536 /* Balance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCBE2911A2D2005F3536 /* Balance.swift */; };
 		300FCCC12911A5E6005F3536 /* MainBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCC02911A5E6005F3536 /* MainBuilder.swift */; };
 		300FCCC42911A82E005F3536 /* MainBuilderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCC32911A82E005F3536 /* MainBuilderViewModel.swift */; };
 		300FCCC62911B2F0005F3536 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCC52911B2F0005F3536 /* RatingView.swift */; };
 		300FCCCD2911C87B005F3536 /* InRide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCCC2911C87B005F3536 /* InRide.swift */; };
-		300FCCCF2911DE29005F3536 /* AnnouncedRide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCCE2911DE29005F3536 /* AnnouncedRide.swift */; };
+		300FCCCF2911DE29005F3536 /* AnnouncedRideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCCE2911DE29005F3536 /* AnnouncedRideView.swift */; };
 		300FCCD129122C2C005F3536 /* PassengerPickUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCD029122C2C005F3536 /* PassengerPickUp.swift */; };
 		300FCCD32912321E005F3536 /* DriverDropOff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCD22912321E005F3536 /* DriverDropOff.swift */; };
 		300FCCD5291233C2005F3536 /* PassengerDropOff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCD4291233C2005F3536 /* PassengerDropOff.swift */; };
@@ -30,6 +29,8 @@
 		30A17ABA28F8D78F00635D7D /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A17AB928F8D78F00635D7D /* Address.swift */; };
 		30A17ABC28F8DFEA00635D7D /* Abi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A17ABB28F8DFEA00635D7D /* Abi.swift */; };
 		30A17ABE28F8E37800635D7D /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A17ABD28F8E37800635D7D /* Network.swift */; };
+		30A2401C29180F0A0040E8AA /* ErrorFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A2401B29180F0A0040E8AA /* ErrorFilter.swift */; };
+		30A2401E29180F750040E8AA /* LogDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A2401D29180F750040E8AA /* LogDecoder.swift */; };
 		30A6EC212909D75D007830FB /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC202909D75D007830FB /* Events.swift */; };
 		30A6EC232909D80E007830FB /* WebSockets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC222909D80E007830FB /* WebSockets.swift */; };
 		30A6EC25290C9352007830FB /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC24290C9352007830FB /* Credentials.swift */; };
@@ -52,13 +53,11 @@
 		30AA5AE628D2E72000EEB7A4 /* RideService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AE528D2E72000EEB7A4 /* RideService.swift */; };
 		30AA5AEC28D2ECB700EEB7A4 /* RideLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AEB28D2ECB700EEB7A4 /* RideLocation.swift */; };
 		30AA5AEE28D2ECDE00EEB7A4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30AA5AED28D2ECDE00EEB7A4 /* GoogleService-Info.plist */; };
-		30AA5AF028D2EE6A00EEB7A4 /* Drivers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AEF28D2EE6A00EEB7A4 /* Drivers.swift */; };
 		30AA5AF228D2F89E00EEB7A4 /* SelectDrivers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AF128D2F89E00EEB7A4 /* SelectDrivers.swift */; };
 		30AA5AF428D2FB3100EEB7A4 /* RideOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AF328D2FB3100EEB7A4 /* RideOverView.swift */; };
 		30AA5AF628D2FBC500EEB7A4 /* BroadCastRide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AF528D2FBC500EEB7A4 /* BroadCastRide.swift */; };
 		30D850B328FDBD6C00E59D4B /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D850B228FDBD6C00E59D4B /* ProfileView.swift */; };
 		30D850B528FDBD9300E59D4B /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D850B428FDBD9300E59D4B /* ProfileViewModel.swift */; };
-		30D850BC28FDD76A00E59D4B /* BalanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D850BB28FDD76A00E59D4B /* BalanceViewModel.swift */; };
 		30D850BE28FDDBDD00E59D4B /* WalletServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D850BD28FDDBDD00E59D4B /* WalletServices.swift */; };
 		30D850C428FDEC3D00E59D4B /* Contracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D850C328FDEC3D00E59D4B /* Contracts.swift */; };
 		30D850C928FDF09800E59D4B /* ContractError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D850C828FDF09800E59D4B /* ContractError.swift */; };
@@ -92,14 +91,13 @@
 		3003AB7B2912F4470045D3CC /* Reputation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reputation.swift; sourceTree = "<group>"; };
 		3003AB7D2913063F0045D3CC /* Coordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinates.swift; sourceTree = "<group>"; };
 		3003AB7F29130C5F0045D3CC /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
-		3003AB8129130FE40045D3CC /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		300FCCBA2911A1F9005F3536 /* Ride.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ride.swift; sourceTree = "<group>"; };
 		300FCCBE2911A2D2005F3536 /* Balance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Balance.swift; sourceTree = "<group>"; };
 		300FCCC02911A5E6005F3536 /* MainBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBuilder.swift; sourceTree = "<group>"; };
 		300FCCC32911A82E005F3536 /* MainBuilderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBuilderViewModel.swift; sourceTree = "<group>"; };
 		300FCCC52911B2F0005F3536 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		300FCCCC2911C87B005F3536 /* InRide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InRide.swift; sourceTree = "<group>"; };
-		300FCCCE2911DE29005F3536 /* AnnouncedRide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncedRide.swift; sourceTree = "<group>"; };
+		300FCCCE2911DE29005F3536 /* AnnouncedRideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncedRideView.swift; sourceTree = "<group>"; };
 		300FCCD029122C2C005F3536 /* PassengerPickUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassengerPickUp.swift; sourceTree = "<group>"; };
 		300FCCD22912321E005F3536 /* DriverDropOff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverDropOff.swift; sourceTree = "<group>"; };
 		300FCCD4291233C2005F3536 /* PassengerDropOff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassengerDropOff.swift; sourceTree = "<group>"; };
@@ -112,6 +110,8 @@
 		30A17AB928F8D78F00635D7D /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		30A17ABB28F8DFEA00635D7D /* Abi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Abi.swift; sourceTree = "<group>"; };
 		30A17ABD28F8E37800635D7D /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		30A2401B29180F0A0040E8AA /* ErrorFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorFilter.swift; sourceTree = "<group>"; };
+		30A2401D29180F750040E8AA /* LogDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDecoder.swift; sourceTree = "<group>"; };
 		30A6EC202909D75D007830FB /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
 		30A6EC222909D80E007830FB /* WebSockets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSockets.swift; sourceTree = "<group>"; };
 		30A6EC24290C9352007830FB /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
@@ -137,13 +137,11 @@
 		30AA5AE528D2E72000EEB7A4 /* RideService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideService.swift; sourceTree = "<group>"; };
 		30AA5AEB28D2ECB700EEB7A4 /* RideLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RideLocation.swift; sourceTree = "<group>"; };
 		30AA5AED28D2ECDE00EEB7A4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		30AA5AEF28D2EE6A00EEB7A4 /* Drivers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Drivers.swift; sourceTree = "<group>"; };
 		30AA5AF128D2F89E00EEB7A4 /* SelectDrivers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDrivers.swift; sourceTree = "<group>"; };
 		30AA5AF328D2FB3100EEB7A4 /* RideOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideOverView.swift; sourceTree = "<group>"; };
 		30AA5AF528D2FBC500EEB7A4 /* BroadCastRide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadCastRide.swift; sourceTree = "<group>"; };
 		30D850B228FDBD6C00E59D4B /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		30D850B428FDBD9300E59D4B /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
-		30D850BB28FDD76A00E59D4B /* BalanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewModel.swift; sourceTree = "<group>"; };
 		30D850BD28FDDBDD00E59D4B /* WalletServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletServices.swift; sourceTree = "<group>"; };
 		30D850C328FDEC3D00E59D4B /* Contracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contracts.swift; sourceTree = "<group>"; };
 		30D850C828FDF09800E59D4B /* ContractError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractError.swift; sourceTree = "<group>"; };
@@ -218,7 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				300FCCCC2911C87B005F3536 /* InRide.swift */,
-				300FCCCE2911DE29005F3536 /* AnnouncedRide.swift */,
+				300FCCCE2911DE29005F3536 /* AnnouncedRideView.swift */,
 				300FCCD029122C2C005F3536 /* PassengerPickUp.swift */,
 				300FCCD22912321E005F3536 /* DriverDropOff.swift */,
 				300FCCD4291233C2005F3536 /* PassengerDropOff.swift */,
@@ -265,6 +263,8 @@
 			children = (
 				30A6EC31290CA5A3007830FB /* ContractCoordinates.swift */,
 				30A6EC36290CB45A007830FB /* Constants.swift */,
+				30A2401B29180F0A0040E8AA /* ErrorFilter.swift */,
+				30A2401D29180F750040E8AA /* LogDecoder.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -308,7 +308,6 @@
 				30AA5ADD28D2DB4600EEB7A4 /* Modules */,
 				30AA5ADA28D2DA7600EEB7A4 /* Services */,
 				30AA5AAE28D2D8E400EEB7A4 /* CryptoRide_PassengerApp.swift */,
-				30AA5AEF28D2EE6A00EEB7A4 /* Drivers.swift */,
 				30AA5AD828D2D9E700EEB7A4 /* MapView.swift */,
 				30AA5AB028D2D8E400EEB7A4 /* ContentView.swift */,
 				30AA5AB228D2D8E600EEB7A4 /* Assets.xcassets */,
@@ -370,12 +369,10 @@
 		30AA5AE428D2E2C500EEB7A4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				3003AB8129130FE40045D3CC /* ErrorView.swift */,
 				300FCCC92911C779005F3536 /* InRideViews */,
 				30A6EC3B290D91AF007830FB /* Annotations */,
 				30A6EC26290C9386007830FB /* Login */,
 				30D850D228FF262E00E59D4B /* RideBuilder */,
-				30D850C528FDEE5F00E59D4B /* ViewModels */,
 				30D850B128FDBD1F00E59D4B /* Profile */,
 				3003AB7F29130C5F0045D3CC /* Settings.swift */,
 			);
@@ -389,14 +386,6 @@
 				30D850B428FDBD9300E59D4B /* ProfileViewModel.swift */,
 			);
 			path = Profile;
-			sourceTree = "<group>";
-		};
-		30D850C528FDEE5F00E59D4B /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				30D850BB28FDD76A00E59D4B /* BalanceViewModel.swift */,
-			);
-			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		30D850D228FF262E00E59D4B /* RideBuilder */ = {
@@ -680,7 +669,7 @@
 			files = (
 				30A6EC212909D75D007830FB /* Events.swift in Sources */,
 				300FCCBB2911A1F9005F3536 /* Ride.swift in Sources */,
-				300FCCCF2911DE29005F3536 /* AnnouncedRide.swift in Sources */,
+				300FCCCF2911DE29005F3536 /* AnnouncedRideView.swift in Sources */,
 				30A6EC28290C939D007830FB /* LoginView.swift in Sources */,
 				3003AB7E2913063F0045D3CC /* Coordinates.swift in Sources */,
 				3003AB7C2912F4470045D3CC /* Reputation.swift in Sources */,
@@ -695,6 +684,7 @@
 				30A6EC3D290D91CD007830FB /* CarAnnotation.swift in Sources */,
 				300FCCD129122C2C005F3536 /* PassengerPickUp.swift in Sources */,
 				30A6EC2A290C93A8007830FB /* LoginViewModel.swift in Sources */,
+				30A2401E29180F750040E8AA /* LogDecoder.swift in Sources */,
 				300FCCDC29123E08005F3536 /* Canceled.swift in Sources */,
 				30AA5AE628D2E72000EEB7A4 /* RideService.swift in Sources */,
 				30D850C928FDF09800E59D4B /* ContractError.swift in Sources */,
@@ -702,14 +692,12 @@
 				300FCCDA29123AA0005F3536 /* Complete.swift in Sources */,
 				30A6EC32290CA5A3007830FB /* ContractCoordinates.swift in Sources */,
 				30A6EC25290C9352007830FB /* Credentials.swift in Sources */,
-				30AA5AF028D2EE6A00EEB7A4 /* Drivers.swift in Sources */,
 				30A17ABA28F8D78F00635D7D /* Address.swift in Sources */,
 				30AA5AF628D2FBC500EEB7A4 /* BroadCastRide.swift in Sources */,
 				3038106B28FA36BE00D3DC0D /* Methods.swift in Sources */,
 				300FCCD5291233C2005F3536 /* PassengerDropOff.swift in Sources */,
 				30D850C428FDEC3D00E59D4B /* Contracts.swift in Sources */,
 				30AA5AB128D2D8E400EEB7A4 /* ContentView.swift in Sources */,
-				30D850BC28FDD76A00E59D4B /* BalanceViewModel.swift in Sources */,
 				300FCCC12911A5E6005F3536 /* MainBuilder.swift in Sources */,
 				300FCCC42911A82E005F3536 /* MainBuilderViewModel.swift in Sources */,
 				30AA5AE128D2DE0300EEB7A4 /* LocationManager.swift in Sources */,
@@ -720,11 +708,11 @@
 				300FCCD32912321E005F3536 /* DriverDropOff.swift in Sources */,
 				30AA5AD928D2D9E700EEB7A4 /* MapView.swift in Sources */,
 				30AA5AF428D2FB3100EEB7A4 /* RideOverView.swift in Sources */,
+				30A2401C29180F0A0040E8AA /* ErrorFilter.swift in Sources */,
 				3003AB8029130C5F0045D3CC /* Settings.swift in Sources */,
 				30D850BE28FDDBDD00E59D4B /* WalletServices.swift in Sources */,
 				30D850B328FDBD6C00E59D4B /* ProfileView.swift in Sources */,
 				3038106928FA166100D3DC0D /* Wallet.swift in Sources */,
-				3003AB8229130FE40045D3CC /* ErrorView.swift in Sources */,
 				300FCCC62911B2F0005F3536 /* RatingView.swift in Sources */,
 				30AA5AAF28D2D8E400EEB7A4 /* CryptoRide_PassengerApp.swift in Sources */,
 			);

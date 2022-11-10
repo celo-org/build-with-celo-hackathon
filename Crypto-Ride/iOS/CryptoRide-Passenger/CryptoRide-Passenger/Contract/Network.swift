@@ -8,6 +8,7 @@
 import Foundation
 import BigInt
 
+// Testnet settings
 let alfajoresTestnet = Network(chainId: BigUInt(44787) , rpcEndpoint: "https://alfajores-forno.celo-testnet.org")
 
 let webSocketURI = "wss://alfajores-forno.celo-testnet.org/ws"

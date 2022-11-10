@@ -7,8 +7,9 @@
 
 import SwiftUI
 
+// MARK: PassengerDropOff
 struct PassengerDropOff: View {
-    
+    // Loading
     @State var isLoading = false
     @State var confirmDropOff = false
 
@@ -37,6 +38,7 @@ struct PassengerDropOff: View {
                             isLoading = true
                             rideService.passengerConfirmsDropOff(rating: rating.driverRating) {
                                 result in
+                                confirmDropOff = false 
                                 // wait for event
                             }
                         }, label: {
@@ -57,7 +59,7 @@ struct PassengerDropOff: View {
                             confirmDropOff.toggle()
                         }, label: {
                             Text("Confirm Drop Off")
-                        })
+                        }).disabled(confirmDropOff)
                     }
                     
                     HStack{

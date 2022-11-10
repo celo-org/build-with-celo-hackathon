@@ -105,6 +105,12 @@ let rideManagerAbi =
         },
         {
           "indexed": false,
+          "internalType": "address",
+          "name": "passenger",
+          "type": "address"
+        },
+        {
+          "indexed": false,
           "internalType": "address[]",
           "name": "drivers",
           "type": "address[]"

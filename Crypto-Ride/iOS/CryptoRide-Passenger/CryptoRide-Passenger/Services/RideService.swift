@@ -15,7 +15,6 @@ import BigInt
 
 class RideService:ObservableObject{
     
-    
     // Drop locations relative on mapView
     @Published var userLocation = false
     @Published var startDropLocation:CGPoint? = nil
@@ -40,8 +39,8 @@ class RideService:ObservableObject{
     var startAnnotation:MKPointAnnotation = MKPointAnnotation()
     var endAnnotation:MKPointAnnotation = MKPointAnnotation()
 
-
-    @Published var error:Error? = nil
+    @Published var error:ContractError? = nil
+    
     // Ride details 
     @Published var rideId:String? = nil
     @Published var ride:Ride = Ride()
@@ -49,6 +48,7 @@ class RideService:ObservableObject{
     // Passenger ride state
     @Published var passengerState = PassengerStates.none
     
+    private let password:String
     
     // Observe changes in rideState in webSockets
     var stateObserver: AnyCancellable?
@@ -68,11 +68,16 @@ class RideService:ObservableObject{
             }
     }
     
+    init(password:String){
+        self.password = password
+    }
+    
 
-    func checkRideTime() -> Bool {
-        //let totalDriverTime = 5 * 30
+    func checkRideTime(numberOfDrivers:Int) -> Bool {
+        // 
+        let totalAcceptanceTiem = Int(ride.time) + Int(numberOfDrivers * 30)
         // Add drivers to time
-        return Int(ride.time) < Int(Date().timeIntervalSince1970)
+        return totalAcceptanceTiem < Int(Date().timeIntervalSince1970)
     }
     
     // MARK: getActiveRide
@@ -167,20 +172,15 @@ class RideService:ObservableObject{
     ///            - `driverList` Array of strings witch are the acceptable drivers for ride
     ///            - `ridePrice` Price of ride in decimal 18 formate
     ///
-    func broadCastRide(startLocation:CLLocationCoordinate2D,endLocation:CLLocationCoordinate2D,driverlist:[String],ridePrice:Double,completion:@escaping(TransactionSendingResult) -> Void) {
+    func broadCastRide(startLocation:CLLocationCoordinate2D,endLocation:CLLocationCoordinate2D,driverlist:[String],ridePrice:BigUInt,completion:@escaping(TransactionSendingResult) -> Void) {
        
         let startCoords =  ContractCoordinates.encodeCoordinate(coordinates: startLocation)
         let endCoords =  ContractCoordinates.encodeCoordinate(coordinates: endLocation)
         
-        // Use 0.1 for testing
-        let wei = 100000000000000000
-        
-        //let wei = Web3.Utils.formatToEthereumUnits("100000000000000000", toUnits: .wei, decimals: 18, decimalSeparator: ".")!
-       
-        let params = [startCoords,endCoords,driverlist,wei,false] as [AnyObject]
+        let params = [startCoords,endCoords,driverlist,ridePrice,false] as [AnyObject]
         
         
-        ContractServices.shared.write(contractId: .RideManager, method: RideManagerMethods.announceRide.rawValue, parameters: params, password: "")
+        ContractServices.shared.write(contractId: .RideManager, method: RideManagerMethods.announceRide.rawValue, parameters: params, password: password)
         {
             result in
            DispatchQueue.main.async { [unowned self] in
@@ -191,7 +191,7 @@ class RideService:ObservableObject{
                                     
                                      startCoordinates: startLocation,
                                      endCoordinates: endLocation,
-                                     price: BigUInt(wei),
+                                     price: ridePrice,
                                      time: BigUInt(Date().timeIntervalSince1970),
                                      acceptedDriver: nil,
                                      passenger: EthereumAddress(ContractServices.shared.getWallet().address)!,
@@ -213,7 +213,7 @@ class RideService:ObservableObject{
     func passengerConfirmsPickUp(completion:@escaping(TransactionSendingResult) -> Void) {
         let params = [rideId!] as [AnyObject]
         
-        ContractServices.shared.write(contractId: .RideManager, method: RideManagerMethods.passengerConfirmsPickUp.rawValue, parameters: params, password: ""){
+        ContractServices.shared.write(contractId: .RideManager, method: RideManagerMethods.passengerConfirmsPickUp.rawValue, parameters: params, password: password){
             result in
             DispatchQueue.main.async { [unowned self] in
                 switch(result){
@@ -238,13 +238,13 @@ class RideService:ObservableObject{
     func passengerConfirmsDropOff(rating:Int,completion:@escaping(TransactionSendingResult) -> Void)  {
  
         let params = [rideId!,rating] as [AnyObject]
-        ContractServices.shared.write(contractId: .RideManager, method: RideManagerMethods.passengerConfirmsDropOff.rawValue, parameters: params, password: ""){
+        ContractServices.shared.write(contractId: .RideManager, method: RideManagerMethods.passengerConfirmsDropOff.rawValue, parameters: params, password: password){
             result in
             DispatchQueue.main.async { [unowned self] in
                 switch(result){
                 case .success(let value):
-                    // Wait for event
                     print(value)
+                    // Wait for event
                 case .failure(let error):
                     self.error = error
                     //self.error = ContractError(title: "Failed for passenger to confirm dropOff", description: error.errorDescription)
@@ -260,7 +260,7 @@ class RideService:ObservableObject{
     ///
     func cancelRide(completion:@escaping(TransactionSendingResult) -> Void) {
         let params = [rideId!] as [AnyObject]
-        ContractServices.shared.write(contractId: .RideManager, method: RideManagerMethods.cancelRide.rawValue, parameters: params, password: "")
+        ContractServices.shared.write(contractId: .RideManager, method: RideManagerMethods.cancelRide.rawValue, parameters: params, password: password)
         {
             result in
             DispatchQueue.main.async { [unowned self] in
@@ -272,11 +272,7 @@ class RideService:ObservableObject{
                     self.error = error
                     //self.error = ContractError(title: "Failed to announce ride", description: error.errorDescription)
                 }
-                
             }
         }
     }
-    
-    
-    
 }

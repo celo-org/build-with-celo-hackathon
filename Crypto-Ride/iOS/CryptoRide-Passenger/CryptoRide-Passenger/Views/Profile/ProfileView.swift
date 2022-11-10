@@ -9,25 +9,18 @@ import SwiftUI
 import CodeScanner
 import web3swift
 
-struct TxParams {
-    var from:String = ""
-    var to:String = ""
-    var value:String = ""
-}
-
-
 struct ProfileView:View {
-    
-    //@EnvironmentObject var balanceVM:BalanceViewModel
+    // Init profile view model
     @StateObject var profileVM = ProfileViewModel()
     @EnvironmentObject var balance:Balance
     @EnvironmentObject var reputation:Reputation
     
     @State private var isShowingScanner = false
+    @State var isTransfer = false
     
     
     var body: some View {
-        
+        ScrollView {
         VStack(alignment: .center) {
             VStack{
 
@@ -47,41 +40,44 @@ struct ProfileView:View {
                     Text("$\(balance.cUSD) cUSD")
                 }.padding()
                 
-                //Text(balanceVM.balance)
-        
-            //}
+
             VStack{
                 Text("To Address").font(.title3)
                 HStack{
                     TextField("0x00", text: $profileVM.toAddress)
                     Button(action:{
-                        print("past")
+                        profileVM.toAddress = UIPasteboard.general.string ?? ""
                     }, label: {
                         Image(systemName: "doc.on.clipboard")
                     })
                 }
                 Text("Send cUSD").font(.title3)
                 HStack{
-                    
                     TextField("0", text:  $profileVM.amount)
                     Button(action:{
-                        print("MAX")
+                        profileVM.amount = balance.cUSD
                     }, label: {
                         Text("MAX")
                     })
                 }
                 Button(action:{
-                    print("SEND")
+                    isTransfer = true
+                    profileVM.transfer(){ success in
+                        balance.getTokenBalance(.cUSD)
+                        profileVM.amount = ""
+                        profileVM.toAddress = ""
+                        isTransfer = false
+                    }
                 }, label: {
                     Text("Send")
-                })
+                }).disabled(profileVM.toAddress.isEmpty || profileVM.amount.isEmpty || isTransfer )
                 
             }
             
             
             Divider()
             Text("Receive").font(.title3)
-            
+            // Clickable qr code past address to device pasteboard
             Button(action: {
                 UIPasteboard.general.string = ContractServices.shared.getWallet().address
             }, label: {
@@ -92,15 +88,15 @@ struct ProfileView:View {
                     .padding()
                     .frame(width: 230, height: 230)
             })
-                
-            //Divider()
-
-
+            Text(ContractServices.shared.getWallet().address).font(.body).bold().lineLimit(2)
+            // Part of the qr code Scanner currently not used
         }.sheet(isPresented: $isShowingScanner) {
             CodeScannerView(codeTypes: [.qr] ) { response in
                 isShowingScanner = false
                 switch response {
                 case .success(let result):
+                    // If qr was read successful try to separate ethereum string from qr
+                    // Note there is no standard for reading qr codes, this is using MetaMask format
                     let ethereumAddress = result.string.components(separatedBy: "ethereum:")
                     if ethereumAddress.isEmpty {return}
                     guard let toEthAddress = EthereumAddress(ethereumAddress[1]) else {
@@ -127,6 +123,7 @@ struct ProfileView:View {
                 }
     
             }
+        }
     }
 }
 

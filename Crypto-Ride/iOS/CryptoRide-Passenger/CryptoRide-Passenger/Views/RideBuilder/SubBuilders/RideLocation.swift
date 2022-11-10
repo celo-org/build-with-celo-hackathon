@@ -25,7 +25,6 @@ struct RideLocation:View {
                     GeometryReader { geo in
                         
                         Image(systemName: "mappin")
-                            
                             .resizable()
                             .scaledToFit()
                             .frame(width: 50, height: 50, alignment: .center)
@@ -40,15 +39,13 @@ struct RideLocation:View {
                                 }else if(ride.showDropOnEnd){
                                     ride.endDropLocation = CGPoint(x: geo.frame(in: .global).midX, y: geo.frame(in: .global).maxY)
                                 }
-                                
                             }
                     }.frame(width: 50, height: 50, alignment: .center)
                 }
 
 
-           
             Spacer()
-                HStack{
+                HStack(spacing: 40){
                     Spacer()
                     Button(action:{
                         builderVm.builderStates = .selectDrivers
@@ -56,20 +53,17 @@ struct RideLocation:View {
                         Image(systemName: "chevron.right")
                     }).padding()
                     .buttonStyle(.borderedProminent)
+                    .disabled(ride.startLocation == nil || ride.endLocation == nil)
                 }
             VStack{
-                if (ride.showDropOnStart || ride.showDropOnEnd){
-            
-         
-                }else{
     
                     Text("Where would you like to go?").font(.subheadline)
                         .bold()
                     HStack{
-                        TextField("Pickup",text: $ride.humanStartLocation)
+                        TextField("Pick-Up",text: $ride.humanStartLocation)
                         Button {
                             ride.userLocation = true
-                            ride.updateRoute = true
+                            ride.updateRoute = true // update route if start pin was dropped
                         } label: {
                             Image(systemName: "location.square.fill")
                                 .foregroundColor(.white)
@@ -77,7 +71,6 @@ struct RideLocation:View {
                         }
                         Button {
                             ride.showDropOnStart = true
-                            //ride.updateRoute = true
                         } label: {
                             Image(systemName: "mappin")
                                
@@ -85,21 +78,17 @@ struct RideLocation:View {
                         }
                     }
                     
-                    
                     HStack{
-                        TextField("Drop-off",text: $ride.humanEndLocation)
+                        TextField("Drop-Off",text: $ride.humanEndLocation)
                         
                         Button {
                             ride.showDropOnEnd = true
-                            //ride.updateRoute = true
                         } label: {
                             Image(systemName: "mappin")
                                 .foregroundColor(.white)
                         }
                     }
                 
-                }
-            
             }
             .textFieldStyle(.roundedBorder)
             .padding(EdgeInsets(top: 8, leading: 16,

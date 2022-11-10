@@ -14,9 +14,16 @@ class Reputation:ObservableObject {
     @Published var reputation:String = ""
     @Published var totalRating:String = ""
     @Published var rideCount:String = ""
-
+    
     @Published var isLoading = false
 
+    init() {
+        // fetch on init
+        getReputation()
+    }
+    
+    // MARK: getReputation
+    /// fetch reputation for wallet address
     public func getReputation() {
         let ethAddress = ContractServices.shared.getWallet()
         let params = [ethAddress.address] as [AnyObject]
@@ -27,17 +34,17 @@ class Reputation:ObservableObject {
                 switch(result) {
                 case .success(let result):
                     let passengerRating = result["0"] as! Array<Any>
-                    
+                    // Cast as bigUInt
                     let bigRating = passengerRating[0] as! BigUInt
                     let bigReputation = passengerRating[1] as! BigUInt
                     // Not sure what the second position 
                     let bigCount = passengerRating[3] as! BigUInt
                     // Int needed for rating view
                     rating = Int(bigRating)
-                    // Strings
+                    // Only need the description of reputation and count
                     reputation = bigReputation.description
                     rideCount = bigCount.description
-                    
+                  
                 case .failure(let error):
                     print(error)
                 }

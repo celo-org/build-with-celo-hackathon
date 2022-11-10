@@ -26,7 +26,7 @@ class ContractCoordinates {
     /// [3137306514947930125,4212202955449841939]
     ///
     /// - Parameters:
-    ///         - `coordinates` CLLocationCoordinate2D location
+    ///         - `coordinates` CLLocationCoordinate2D coordinate points to encode
     ///
     static func encodeCoordinate(coordinates:CLLocationCoordinate2D) -> [Int] {
         let long = Double(coordinates.longitude)
@@ -54,7 +54,7 @@ class ContractCoordinates {
         // Get index of the decimal
         let rangeLong: Range<String.Index> = stringLong.range(of: ".")!
         let indexLong: Int = stringLong.distance(from: stringLong.startIndex, to: rangeLong.lowerBound)
-        // Insert decmial index at first index of string
+        // Insert decmial index from start index of string
         stringLong.insert(contentsOf: String(indexLong), at: stringLong.startIndex)
         // Remove decimal point
         stringLong = stringLong.replacingOccurrences(of: ".", with: "", options: .literal, range: nil)
@@ -82,13 +82,18 @@ class ContractCoordinates {
     ///             - 2 is negative
     ///             - 1 is positive
     /// - Parameters:
-    ///         - `coordinates`  location
+    ///          - `coordinates` array of `BigUInt`as  encoded coordinate points
     ///
     static func decodeCoordinate(coordinates:[BigUInt]) -> CLLocationCoordinate2D {
-
+        // arraify the BigUInt
         var seqLat = Array(coordinates[0].description)
+        
+        // get whole number count
         let latDecimalPoint = seqLat[0].wholeNumberValue
+        
+        // remove whole number count
         seqLat.remove(at:0)
+        // insert decimal point
         seqLat.insert(".", at: latDecimalPoint!)
         // Replace index 1 with neg if value is two
         if seqLat[1] == "2" {
@@ -108,7 +113,8 @@ class ContractCoordinates {
         }else{
             seqLong.remove(at: 0)
         }
-
+        
+        // Cast long and lat into strings
         let formatLong = String(seqLong)
         let formatLat = String(seqLat)
         

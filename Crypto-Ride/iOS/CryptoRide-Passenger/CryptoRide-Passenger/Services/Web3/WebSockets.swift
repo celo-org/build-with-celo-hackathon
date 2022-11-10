@@ -55,31 +55,31 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
         case subscribed
         case unsubscribed
     }
-    
+    // Subscription socket state
     @Published var subscriptionState = SubscriptionState.none
-    @Published var newEvent = false
+    // Socket & SubscriptionId
+    private var socketProvider:WebsocketProvider? = nil
+    private var subscription:Subscription? = nil
 
     // Progress for driver accepts time
     @Published var progress = 0.0
+    
+    // Timer shutdowns
     private var abortTimer = false
     @Published var timeOver = false
-    @Published var driverIndexInProgress:Int? = nil
     
-    // Temp ride if driver wants accept ride
+    @Published var driverIndexInProgress:Int? = nil
     @Published var newAnnounceRide:AnnouncedRide?
     
-    @Published var rideId:String? = nil // rideId
+    // Note - RideServices observes changes on ride varibles
+    // Ride Id
+    @Published var rideId:String? = nil
+    // Ride State
     @Published var rideState:Int = 0
-    
-    private var socketProvider:WebsocketProvider? = nil
-    private var subscription:Subscription? = nil
-    
-    @Published var acceptedDriver:String? = nil
     
     
     init() {
         // Create and connect socket
-        // 🔴 Are we connected to internet
         socketProvider = WebsocketProvider(webSocketURI, delegate: self)
         socketProvider!.connectSocket()
     }
@@ -136,140 +136,95 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
         }
     }
     
+    // MARK: gotError
+    /// Errors that could arise
     func gotError(error: Error) {
         print("Got error \(error)")
     }
     
-    
-    struct AnnouncedRide {
-        let rideId: String
-        let valueId: String
-        let addressCount: Int
-        let driverAddress:[EthereumAddress]
-    }
-    
-    // TODO decode into types
-    func decodeLog(data:String) -> AnnouncedRide {
-        let hexString = data.dropFirst(2)
-        let arrayValue = Array(hexString)
-
-        let rideIdRange: ClosedRange = 0...63
-        let valueRange: ClosedRange = 64...127
-        let arrayCountRange: ClosedRange = 128...191
-
-
-        let rideId = String(arrayValue[rideIdRange])
-        
-        let valueId = String(arrayValue[valueRange])
-        //idkValue.count
-        let arrayCount = String(arrayValue[arrayCountRange])
-        //arrayCountValue.count
-        let amount = Int(arrayCount)!
-        
-        var start = 192
-        var end = 255
-        var driverAddress:[EthereumAddress] = []
-        for _ in 0...(amount - 1) {
-            let addressRange: ClosedRange = start...end
-            let bytes32Address = String(arrayValue[addressRange])
-            
-            // Hacky way to force a bytes32 to ethereum address
-            let addressArray = Array(bytes32Address)
-            let cutZero: ClosedRange = 24...63
-            var address = String(addressArray[cutZero])
-            address = "0x"+address
-            driverAddress.append(EthereumAddress(address)!)
-            
-            start += 64
-            end += 64
-        }
-        let announcedRide = AnnouncedRide(
-            rideId: "0x" + rideId,
-            valueId: valueId,
-            addressCount: amount,
-            driverAddress: driverAddress)
-        return(announcedRide)
-    }
-    
-    
+    // MARK: setDriverAccpetTime
+    /// Starts timer associated when announceRide is emitted
+    ///
     func setDriverAccpetTime() {
         self.abortTimer = false
+        // get total drivers count from annouced ride
         let totalDriver = newAnnounceRide!.driverAddress.count
+        // Calculate total wait time
         let waitTime = Double(totalDriver * 30)
         var secondsRemaining = Double(totalDriver * 30)
-
+        // Start timer
         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { (Timer) in
+            // Check if timer is over or aborted
             if secondsRemaining >= 0 && !self.abortTimer {
+                // Set progress
                 self.progress = secondsRemaining / waitTime
                 // index of current driver
                 let driverIndex = Int(secondsRemaining) / 30
                 if driverIndex < totalDriver {
                     self.driverIndexInProgress = driverIndex
                 }
+                // subtract seconds remaining
                 secondsRemaining -= 1
             } else {
+                // Set progress to zero & stop timer
                 self.progress = 0.0
                 Timer.invalidate()
                 
             }
         }
-        
     }
      
     
     // MARK: handleEvent
+    /// Handles emited events from the ride manager contract
+    ///
+    /// - Note: Currently handles events only related to change to ride states
+    ///
+    /// - Parameters :
+    ///                 - `message` : SocketMessage - raw event log from emitted by contract
+    ///
     func handleEvent(message:SocketMessage) {
+     
         switch(message.params.result.topics.first) {
-            
-            
         case Topics.announceRide.rawValue:
-            print("AnnoncedRide")
-            let data = message.params.result.data
-            let announcedRide = decodeLog(data: data)
-            // Check if passenger address match event log event
-            rideId = announcedRide.rideId // 🔴 TODO THIS WORKS FOR NOW, BUT WE LISTEN CHECK IF NEW EVENT HAS passenger Address
-            rideState = 1
-            //if announcedRide.driverAddress.contains(WalletServices.shared.getKeyManager().addresses!.first!) {
-            newAnnounceRide = announcedRide
-            //rideState = 1
-                // Set driver accept time
-            timeOver = false
-            setDriverAccpetTime()
-            
-            //}
-
+            // Check if are rideId is empty
+            if rideId == nil {
+                let data = message.params.result.data
+                // decode are log data
+                let announcedRide = LogDecoder.decodeAnnoucedRide(data: data)
+                // Check if annouced ride matches are address
+                if announcedRide.passengerAddress.address == ContractServices.shared.getWallet().address {
+                    // set rideId to announced rideId
+                    rideId = announcedRide.rideId
+                    // Change ride state
+                    rideState = 1
+                    newAnnounceRide = announcedRide
+                    // Start timer
+                    timeOver = false
+                    setDriverAccpetTime()
+                }
+            }
             
         case Topics.driverAcceptsRide.rawValue:
             // check if rideId is not nil
             if rideId != nil {
-                print("Driver accepts ride")
-                let hexString = message.params.result.data as String
-                let arrayValue = Array(hexString)
                 
-                let rideIdRange: ClosedRange = 0...65
-                let driverAddressRange: ClosedRange = 66...129
-                print(driverAddressRange)
-                let rideId = String(arrayValue[rideIdRange])
-                print(rideId)
-                print(self.rideId)
+                // Driver Address range currently not used
+                let _: ClosedRange = 66...129
+                
+                let rideId = LogDecoder.decodeRideId(data: message.params.result.data)
+
                 // Check if recived rideId equals are rideId
                 if self.rideId! == rideId {
                     rideState = 2 // update ridestate known by topic
+                    // abort timer
                     abortTimer = true
-                    // set driver address in ride
-                    //let driverAddress = String(arrayValue[driverAddressRange])
-                    //ride!.acceptedDriver = EthereumAddress(driverAddress)!
-                    //print(driverAddress)
                 }
             }
             
         case Topics.passengerConfirmsPickUp.rawValue:
-            print("Passenger Confirms PickUp")
             if self.rideId != nil {
-                let hexString = message.params.result.data as String
-                let arrayValue = Array(hexString)
-                let rideIdRange: ClosedRange = 0...65
-                let rideId = String(arrayValue[rideIdRange])
+                let rideId = LogDecoder.decodeRideId(data: message.params.result.data)
                 if self.rideId == rideId{
                     rideState = 3 // update ride state
                     abortTimer = true
@@ -277,37 +232,33 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
 
             }
         case Topics.driverConfirmsDropOff.rawValue:
-            print("Driver Confirms drop off")
             if self.rideId != nil {
-                let hexString = message.params.result.data as String
-                let arrayValue = Array(hexString)
-                let rideIdRange: ClosedRange = 0...65
-                let rideId = String(arrayValue[rideIdRange])
+                let rideId = LogDecoder.decodeRideId(data: message.params.result.data)
                 if self.rideId == rideId{
                     rideState = 4 // update ride state
                 }
             }
             
         case Topics.passengerConfirmsDropOff.rawValue:
-            print("Passenger Confirms drop off")
             if self.rideId != nil {
-                let hexString = message.params.result.data as String
-                let arrayValue = Array(hexString)
-                let rideIdRange: ClosedRange = 0...65
-                let rideId = String(arrayValue[rideIdRange])
+                let rideId = LogDecoder.decodeRideId(data: message.params.result.data)
                 if self.rideId == rideId{
                     rideState = 5 // update ride state
+                    // Discard rideId as ride is complete
+                    self.rideId = nil
                 }
             }
             
         case Topics.cancelRide.rawValue:
-            print("Driver canceled ride")
             if rideId != nil {
-                //if self.rideId == ride
-                rideState = 6
-                abortTimer = true
+                let rideId = LogDecoder.decodeRideId(data: message.params.result.data)
+                if self.rideId == rideId {
+                    rideState = 6
+                    abortTimer = true
+                    // Discard rideId as ride is canceled
+                    self.rideId = nil
+                }
             }
-            let data = message.params.result.data
             
         default:
             print("Unkown Topic")

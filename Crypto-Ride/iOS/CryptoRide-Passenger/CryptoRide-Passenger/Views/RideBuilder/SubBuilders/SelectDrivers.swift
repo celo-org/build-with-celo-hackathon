@@ -29,6 +29,25 @@ struct SelectDrivers:View {
                         }.buttonStyle(.bordered)
                         
                         Spacer()
+                        Button(action: {
+                            builderVm.facebookLink(userName:manager.selectedDriver!.info!.facebookHandle!)
+                        }, label: {
+                            Image("facebook")
+                                .resizable()
+                                .frame(width: 40, height: 40, alignment: .center)
+                                .scaledToFit()
+                            
+                        }).buttonStyle(.borderless)
+                        Spacer()
+                        Button(action: {
+                            builderVm.twitterLink(userName:manager.selectedDriver!.info!.twitterHandle!)
+                        }, label: {
+                            Image("twitter")
+                                .resizable()
+                                .frame(width: 40, height: 40, alignment: .center)
+                                .scaledToFit()
+                        }).buttonStyle(.borderless)
+                        Spacer()
                     }
                     HStack{
                         Image(systemName: "person.crop.circle")
@@ -52,18 +71,6 @@ struct SelectDrivers:View {
                         }
                     }
                     
-                    HStack{
-                        Button(action: {
-                            
-                        }, label: {
-                            Text("Instagram")
-                        })
-                        Button(action: {
-                            
-                        }, label: {
-                            Text("Twitter")
-                        })
-                    }
                  
                 }.background(.bar)
                     .cornerRadius(15)
@@ -109,13 +116,8 @@ struct SelectDrivers:View {
                                 manager.changeRegion(driver: manager.selectedDriver!.address)
                             } label: {
                                 
-                                if manager.drivers[index].rateAppliedToRide != nil {
-                                    
-                                    let rate:String = String(format: "%.1f", manager.drivers[index].rateAppliedToRide)
-                                    Text("Price: $\(rate)")
-                                }else{
-                                    Text("Driver Rate: $\(manager.drivers[index].info!.rate!.description)")
-                                }
+                                let rate:String = String(format: "%.1f", manager.drivers[index].rateAppliedToRide)
+                                Text("Price: $\(rate)")
                                 
                                 Text(manager.drivers[index].address)
                                     .font(.footnote)

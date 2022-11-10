@@ -8,6 +8,7 @@
 import Foundation
 import BigInt
 
+// MARK: Coordinate
 struct Coordinate {
     var lat:BigInt
     var long:BigInt

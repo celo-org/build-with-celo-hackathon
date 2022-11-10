@@ -37,7 +37,8 @@ struct MapView: UIViewRepresentable {
         rideService.startAnnotation.title = "PickUp"
         mapView.addAnnotation(rideService.endAnnotation)
         rideService.endAnnotation.title = "DropOff"
-        
+        //mapView.register(CarAnnotationView.self, forAnnotationViewWithReuseIdentifier: "car")
+        //mapView.register(CarAnnotation.self, forAnnotationViewWithReuseIdentifier:"car" )
         return mapView
     }
     
@@ -102,6 +103,7 @@ struct MapView: UIViewRepresentable {
             rideService.startAnnotation.title = nil
             rideService.endAnnotation.title = nil
             mapView.removeAnnotation(rideService.endAnnotation)
+            
             return
         }
     
@@ -129,7 +131,7 @@ struct MapView: UIViewRepresentable {
             uiView.addAnnotation(rideService.startAnnotation)
   
             getHumanAddress(coordinates: rideService.startAnnotation.coordinate, isStart: true)
-            
+        
             rideService.showDropOnStart = false
             rideService.startDropLocation = nil
             
@@ -150,10 +152,9 @@ struct MapView: UIViewRepresentable {
         if(manager.route != nil ) {
             // Check if need to snap back to route
             if(manager.snapToRoute){
-                print("Snap to map")
                 uiView.setVisibleMapRect(
                     manager.route!.polyline.boundingMapRect,
-                    edgePadding: UIEdgeInsets(top: 10, left: 50, bottom: 100, right: 50),
+                    edgePadding: UIEdgeInsets(top: 60, left: 40, bottom: 300, right:40),
                     animated: true)
                 manager.snapToRoute = false
             }
@@ -186,14 +187,15 @@ struct MapView: UIViewRepresentable {
             
             let directions = MKDirections(request: request)
             directions.calculate { response, error in
-                print("Found route to location")
+                
                 guard let route = response?.routes.first else { return }
                 manager.route = route
+                
                 manager.getRideEstimates()
                 uiView.addOverlay(route.polyline)
                 uiView.setVisibleMapRect(
                     route.polyline.boundingMapRect,
-                    edgePadding: UIEdgeInsets(top: 20, left: 20, bottom: 60, right: 20),
+                    edgePadding: UIEdgeInsets(top: 60, left: 40, bottom: 150, right:40),
                     animated: true)
                 rideService.updateRoute = false
                 return
@@ -201,75 +203,6 @@ struct MapView: UIViewRepresentable {
     
         }
         
-        
-            /*
-            if rideService.startAnnotation.coordinate.latitude == 0.0 ||
-                rideService.startAnnotation.coordinate.longitude == 0.0 ||
-                rideService.endAnnotation.coordinate.longitude == 0.0 ||
-                rideService.endAnnotation.coordinate.latitude == 0.0{return}
-            
-            if manager.route != nil {
-                mapView.removeOverlays(mapView.overlays)
-                manager.route = nil
-            }
-            
-            let p1 = MKPlacemark(coordinate: rideService.startAnnotation.coordinate)
-            let p2 = MKPlacemark(coordinate: rideService.endAnnotation.coordinate)
-            
-            let request = MKDirections.Request()
-            request.source = MKMapItem(placemark: p1)
-            request.destination = MKMapItem(placemark: p2)
-            request.transportType = .automobile
-            
-            
-            let directions = MKDirections(request: request)
-            directions.calculate { response, error in
-                print("Found route to location")
-                guard let route = response?.routes.first else { return }
-                manager.route = route
-                manager.getRideEstimates()
-                uiView.addOverlay(route.polyline)
-                uiView.setVisibleMapRect(
-                    route.polyline.boundingMapRect,
-                    edgePadding: UIEdgeInsets(top: 20, left: 20, bottom: 60, right: 20),
-                    animated: true)
-                rideService.updateRoute = false
-            }
-        
-        
-        */
-
-                
-/*
- 
- 
-        if(rideService.startLocation == nil || rideService.endLocation == nil) {return}
-             
-
-                    let p1 = MKPlacemark(coordinate: rideService.startLocation!)
-                    let p2 = MKPlacemark(coordinate: rideService.startLocation!)
-                    
-                    let request = MKDirections.Request()
-                    request.source = MKMapItem(placemark: p1)
-                    request.destination = MKMapItem(placemark: p2)
-                    request.transportType = .automobile
-                    print("Update")
-                    
-                    let directions = MKDirections(request: request)
-                    directions.calculate { response, error in
-                        print("Found route to location")
-                        guard let route = response?.routes.first else { return }
-                        manager.route = route
-                        //manager.getRideEstimates()
-                        uiView.addOverlay(route.polyline)
-                        uiView.setVisibleMapRect(
-                            route.polyline.boundingMapRect,
-                            edgePadding: UIEdgeInsets(top: 20, left: 20, bottom: 60, right: 20),
-                            animated: true)
-                        //rideService.updateRoute = false
-                        return
-                    }
-                */
     }
     
     // Used for testing driver locations
@@ -288,20 +221,32 @@ struct MapView: UIViewRepresentable {
         }
         
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
+            
             if annotation is MKUserLocation {
                     return nil
                 }
             if annotation is CarAnnotation {
                 
-                let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "driver")
-                //let annotationView = CarAnnotationView(annotation: annotation, reuseIdentifier: "pin")
-                annotationView.canShowCallout = true
-                annotationView.markerTintColor = .systemBlue
+                let reuseId = "car"
+
+                var anView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
+                if anView == nil {
+                    anView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+                    anView!.canShowCallout = true
+                }
+                else {
+                    anView!.annotation = annotation
+                }
+                //let cpa = annotation as! CarAnnotationView
+                anView!.image =  UIImage(systemName: "car.fill")
                 
+                
+                //let annotationView = CarAnnotationView(annotation: annotation, reuseIdentifier: "car")
+                //annotationView.canShowCallout = true
+                //annotationView.markerTintColor = .systemBlue
                 
                 //annotationView.image = UIImage(systemName: "car.fill")?.withTintColor(.green, renderingMode: .alwaysOriginal)
-                //annotationView.tintColor = .green
+                //annotationView.tintColor = .blue
                 //annotationView.backgroundColor = .blue
                 //annotationView.tintColor = .systemBlue
                 
@@ -309,7 +254,8 @@ struct MapView: UIViewRepresentable {
                 //annotationView.image = UIGraphicsImageRenderer(size:size).image {
                 //    _ in annotationView.image!.draw(in:CGRect(origin:.zero, size:size))
                 //}
-                return annotationView
+                return anView
+                //return annotationView
             }else{
                 // Default pin annotation
                 return(nil)

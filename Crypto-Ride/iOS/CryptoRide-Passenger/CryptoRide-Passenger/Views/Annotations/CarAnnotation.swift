@@ -9,9 +9,8 @@ import Foundation
 import MapKit
 import UIKit
 
+// MARK: CarAnnotation
 class CarAnnotation : NSObject, MKAnnotation {
-
-    
     dynamic var coordinate: CLLocationCoordinate2D
     dynamic var title: String?
     dynamic var subtitle: String?
@@ -26,7 +25,8 @@ class CarAnnotation : NSObject, MKAnnotation {
         self.colour = UIColor.white
     }
 }
-
+// MARK: CarAnnotationView
+// Driver annotation view displayed as a car
 class CarAnnotationView: MKAnnotationView {
     private var imageView: UIImageView!
 
@@ -35,7 +35,6 @@ class CarAnnotationView: MKAnnotationView {
 
         self.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
         self.imageView = UIImageView(image:  UIImage(named: "car.circle"))
-        //self.imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
         self.addSubview(self.imageView)
         self.imageView.layer.cornerRadius = 5.0
         self.imageView.layer.masksToBounds = true
@@ -53,29 +52,6 @@ class CarAnnotationView: MKAnnotationView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-
-class CustomAnnotation: MKPointAnnotation {
-    var pinCustomImage: UIImage!
-}
-
-class CustomAnnotationView: MKAnnotationView {
-    override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
-        super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
-        canShowCallout = true
-        update(for: annotation)
-    }
-
-    override var annotation: MKAnnotation? { didSet { update(for: annotation) } }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func update(for annotation: MKAnnotation?) {
-        image = (annotation as? CustomAnnotation)?.pinCustomImage
     }
 }
 

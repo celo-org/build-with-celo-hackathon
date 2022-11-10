@@ -7,6 +7,8 @@
 
 import Foundation
 
+// MARK: Credentials
+// Password during loginView
 struct Credentials:Codable {
     var password:String = ""
 }

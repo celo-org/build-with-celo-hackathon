@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import BigInt
 
 
 struct RideOverView:View {
@@ -17,10 +18,28 @@ struct RideOverView:View {
     @EnvironmentObject var builderVm:MainBuilderViewModel
     
     @State var isLoading = false
+    @State var isApproveIsLoading = false
     
     var body: some View {
         VStack{
-            
+            HStack{
+                Button(action: {
+                    
+                }, label: {
+                    Text("$\(balance.cUSD) cUSD").font(.body)
+                }).clipShape(Capsule())
+                    .buttonStyle(.bordered)
+                Spacer()
+                Button(action: {
+                    
+                }, label: {
+                    Text("\(balance.CELO) CELO")
+                        .font(.body)
+                        .clipShape(Capsule())
+                })
+                    .buttonStyle(.bordered)
+            }
+
             Spacer()
             if isLoading == false {
                 HStack{
@@ -34,9 +53,8 @@ struct RideOverView:View {
                     Spacer()
                     Button(action:{
                         let drivers = manager.drivers.map {$0.address}
-                        print("BroadCast ride")
                         isLoading = true
-                        ride.broadCastRide(startLocation:ride.startLocation!, endLocation: ride.endLocation!, driverlist: drivers, ridePrice: manager.normalizedPrice) {
+                        ride.broadCastRide(startLocation:ride.startLocation!, endLocation: ride.endLocation!, driverlist: drivers, ridePrice: BigUInt(builderVm.ridePrice)) {
                              result in
                             // update ride if broad cast was successful
                             ride.passengerState = .inRide
@@ -45,86 +63,95 @@ struct RideOverView:View {
                     } , label: {
                         Image(systemName: "paperplane.fill")
                     }).padding()
-                    
-                    
+                        .disabled(!builderVm.isApproved) // Dont broadcast if not approved
                         .buttonStyle(.borderedProminent)
                 }
-                VStack{
+                VStack(spacing: 15){
                     
-                    HStack{
+                    HStack(){
+                        Spacer()
                         Text("Drivers").bold()
                         Spacer()
-                        Text("Price").bold()
-                    }
-                    
-                    VStack(alignment: .leading, spacing: 5){
-                        ForEach(manager.drivers, id: \.address) { driver in
-                            HStack{
-                                Spacer()
-                                VStack(alignment: .leading) {
-                                    Text("\(driver.info!.infoAssetLink!)").font(.subheadline).bold()
-                                    Text("\(driver.info!.carAssetLink!)").font(.subheadline).bold()
-                                    
-                                }
-                                Spacer()
-                                VStack{
-                                    Text("$ \(driver.info!.rate!.description)").font(.subheadline).bold()
-                                }
-                                Spacer()
-                            }
-                        }
-                    }
-                    Divider()
-                    if manager.route != nil {
-                        VStack{
-                            Text("Route").font(.headline).bold()
-                            HStack{
-                                
-                                Text(" \((manager.route!.distance * 3.28084) / 5280 ) Miles")
-                                Text(" \(manager.route!.expectedTravelTime / 60) Min ")
-                            }
-                        }
-                        Divider()
-                    }
-                    VStack{
-                        Text("Balance").font(.headline).bold()
-                        HStack {
-                            Text("\(balance.cUSD) cUSD").font(.body).bold()
-                            Spacer()
-                            Text("\(balance.CELO) CELO").font(.body).bold()
-                        }
-                        
-                    }
-                    Divider()
-                    Text("Recommend Price").font(.headline).bold()
-                    HStack{
-                        
-                        Text("\(String(format: "%.0f", manager.normalizedPrice)) cUSD").font(.body).bold()
-                        // Limit ride price to under 500
-                        Stepper("Adjust Price", value: $manager.normalizedPrice, in: 1...500).font(.subheadline)
-                    }
-                    Divider()
-                    
-                    HStack{
-                        Text("Funds Approved")
-                        if(balance.celoApproved.isEmpty){
-                            ProgressView()
-                        }else{
-                            Text("\(balance.celoApproved) cUSD")
-                            if balance.celoApproved == "0" {
-                                Button{
-                                    
-                                    // Call token approval then double check allowance
-                                    balance.setApproval() { success in
-                                        balance.getAllowance(address: rideManagerAddress.address)
-                                    }
-                                    
-                                }label: {
-                                    Text("Approve")
-                                }.buttonStyle(.borderedProminent)
-                            }
+                 
+                        HStack{
                             
+                            ForEach(manager.drivers, id: \.address) { driver in
+                                
+                               
+                                    Image(systemName: "car.fill")
+                            }
                         }
+                        Spacer()
+                     
+                    }
+                    if manager.route != nil {
+                        HStack{
+                            Spacer()
+                            Text("Route").font(.headline).bold()
+                               
+                            Spacer()
+                            
+                            Text(" \(String(format: "%.0f",(manager.route!.distance * 3.28084) / 5280 )) Miles")
+                            Text(" \(String(format: "%.0f",(manager.route!.expectedTravelTime / 60))) Min ")
+                            
+                            Spacer()
+                    
+                        }
+                        
+                    }
+                    Divider()
+                    VStack(alignment: .leading, spacing: 5){
+                        HStack{
+                            Text("Ride Price").font(.title2).bold()
+                            Spacer()
+                            HStack {
+                                Text("Recommended").font(.headline)
+                                Text("\(String(format: "%.0f", manager.recommendedPrice)) cUSD").font(.subheadline).bold()
+                                Spacer()
+                            }
+                        }
+                        
+                        if manager.recommendedPrice + 15 < manager.normalizedPrice  {
+                            Text("Price too high, you might be over paying for ride.").font(.footnote)
+                        }else if manager.recommendedPrice - 15 > manager.normalizedPrice {
+                            Text("Price too low, drivers may turn down your ride .").font(.footnote)
+                        }
+                        
+                        HStack{
+                           
+                            Spacer()
+                            Text("\(String(format: "%.0f", manager.normalizedPrice)) cUSD").font(.body).bold()
+                            Spacer()
+                            // Limit ride price to under 500
+                            Stepper("Adjust Price", value: $manager.normalizedPrice, in: 1...500).font(.subheadline)
+                        }
+                    }
+    
+                    HStack{
+                        Spacer()
+                        if(isApproveIsLoading){
+                            ProgressView().tint(.blue)
+                        }else if !builderVm.isApproved {
+                            Button{
+                                isApproveIsLoading = true
+                                // Call token approval
+                                balance.setApproval(amount: manager.normalizedPrice) { success in
+                                    isApproveIsLoading = false
+                                    builderVm.isApproved = true
+                                    
+                                }
+                                
+                            }label: {
+                                Text("Approve Funds")
+                            }.buttonStyle(.borderedProminent)
+                                
+                        }else{
+                           
+                            Text("Funds Appoved").font(.title2).bold()
+                            Image(systemName: "checkmark.circle").foregroundColor(.blue)
+                                
+                        }
+                        Spacer()
                     }
             }.background(.bar)
             }else{

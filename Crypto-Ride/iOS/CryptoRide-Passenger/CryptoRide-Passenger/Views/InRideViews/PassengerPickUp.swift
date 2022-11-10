@@ -7,8 +7,9 @@
 
 import SwiftUI
 
+// MARK: PassengerPickUp
 struct PassengerPickUp: View {
-    
+    // Environment Object
     @EnvironmentObject var rideService:RideService
     @State var isLoading = false
     
