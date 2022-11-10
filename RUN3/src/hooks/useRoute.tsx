@@ -41,7 +41,7 @@ export const useRoute = () => {
             const routeUrlArr = tokenUri.split('/')
             const routeFbId = routeUrlArr.length && routeUrlArr[routeUrlArr.length - 1]
             const routeRes = await getRouteById(routeFbId)
-            console.log('logTT', routeRes)
+
             if (routeRes === 'Route not found') return null
             return routeRes
           })
