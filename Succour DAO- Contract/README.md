@@ -24,16 +24,22 @@ The second part of this project involve another smart contract. This contract wi
 
 
 #### Summary
-Describe the basic functionality of your project. What are the features you were able to implement? What features would you like to implement?
+We have made this project as user-friendly as possible; with a front-end connected to the smart contract users can easily join the Succour DAO, propose projects, donate to projects execution and withdraw from he DAO if they wish. Creating crowd funding, donating, and withdrawals have also been made easy.
+We have also implemented the Universal Upgradeable Proxy Standard-EIP-1822 for easy upgradability of the smart contract.
 
-#### URLs
+#### URLs  
+Link to DApp: <https://succour-dao.vercel.app/>  
+Link to Figma design: <https://www.figma.com/file/nCnRlZ42Uscx3U8ETzUtVe/Hackathon-project?node-id=1%3A2>
+GitHub Repo Link: <https://github.com/Adebara123/Succour-DAO/tree/Succour-DAO>
 List any URLs relevant to demonstrating your prototype
 
 #### Presentation
+
 List any links to your presentation or any related visuals you want to share.
 
 #### Next Steps
-What do you need to do next to turn this prototype into a working solution?
+For succour to turn into a working solution, a lot of publicity has to be done to draw the attention of as many as possible to join the DAO and make us of the Decentralized Crowd-Funding platform.
+
 
 #### License
 This repository includes an [unlicensed](http://unlicense.org/) statement though you may want to [choose a different license](https://choosealicense.com/).
