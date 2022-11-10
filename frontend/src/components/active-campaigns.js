@@ -18,26 +18,32 @@ const ActiveCampaign = ({ classOne, classTwo, index, campaign }) => {
 
     async function saveonChain() {
         setLoadingState(true)
-        await (window).ethereum.send('eth_requestAccounts') // opens up metamask extension and connects Web2 to Web3
-        const provider = new ethers.providers.Web3Provider(window.ethereum) //create provider
-        const network = await provider.getNetwork()
-        const signer = provider.getSigner()
-        const gacContract = new ethers.Contract(
-            getConfigByChain(network.chainId)[0].contractProxyAddress,
-            GrowAChild.abi,
-            signer
-        )
+        try {
+            await (window).ethereum.send('eth_requestAccounts') // opens up metamask extension and connects Web2 to Web3
+            const provider = new ethers.providers.Web3Provider(window.ethereum) //create provider
+            const network = await provider.getNetwork()
+            const signer = provider.getSigner()
+            const gacContract = new ethers.Contract(
+                getConfigByChain(network.chainId)[0].contractProxyAddress,
+                GrowAChild.abi,
+                signer
+            )
 
-        const tx = await gacContract.completedTask(campaign?.campaignID)
+            const tx = await gacContract.completedTask(campaign?.campaignID)
 
-        toast('Verification in progress !!', { icon: '👏' })
-        const receipt = await provider
-            .waitForTransaction(tx.hash, 1, 150000)
-            .then(() => {
-                toast.success(`Task Completed Successfully !!`)
-                setLoadingState(false)
-                setTaskDone(true)
-            })
+            toast('Verification in progress !!', { icon: '👏' })
+            const receipt = await provider
+                .waitForTransaction(tx.hash, 1, 150000)
+                .then(() => {
+                    toast.success(`Task Completed Successfully !!`)
+                    setProof(true)
+                    setLoadingState(false)
+                    setTaskDone(true)
+                })
+        } catch (e) {
+            toast.error("Transaction Cancelled")
+            setLoadingState(false)
+        }
     }
 
     const withdraw = async () => {
@@ -89,7 +95,7 @@ const ActiveCampaign = ({ classOne, classTwo, index, campaign }) => {
             const result = await client.create(proofDoc);
             // upload signal to blockchain telling that task for today completed
             saveonChain()
-            setProof(true)
+
         } catch (e) {
             console.log("error is ", e)
         }
@@ -97,24 +103,29 @@ const ActiveCampaign = ({ classOne, classTwo, index, campaign }) => {
     }
 
     async function onChange(e) {
-        const files = e.target.files[0]
-        setLoadingState(true)
-        if (files.size <= 1000000) {
 
-            //setWrongTypeofImage(false);
-            client.assets
-                .upload('image', files, { contentType: files.type, filename: files.name })
-                .then((document) => {
-                    setImagesAssets(document);
-                    setFile(true)
-                    setLoadingState(false)
-                })
-                .catch((error) => {
-                    console.log('Upload failed:', error.message);
-                });
+        const files = e.target.files[0]
+        if (files.type != 'image/png') {
+            toast.error("Please upload png files only for clarity")
         } else {
-            toast.error('File size should be less than 1MB')
-            setLoadingState(false)
+            setLoadingState(true)
+            if (files.size <= 1000000) {
+
+                //setWrongTypeofImage(false);
+                client.assets
+                    .upload('image', files, { contentType: files.type, filename: files.name })
+                    .then((document) => {
+                        setImagesAssets(document);
+                        setFile(true)
+                        setLoadingState(false)
+                    })
+                    .catch((error) => {
+                        console.log('Upload failed:', error.message);
+                    });
+            } else {
+                toast.error('File size should be less than 1MB')
+                setLoadingState(false)
+            }
         }
     }
     return (
@@ -146,7 +157,7 @@ const ActiveCampaign = ({ classOne, classTwo, index, campaign }) => {
                             ) : (
                                 <>
                                     <p>Show us what you did yesterday?</p>
-                                    <p>**File size less than 1MB</p>
+                                    <p>**File size less than 1MB(only png files allowed)</p>
                                 </>
                             )}
 

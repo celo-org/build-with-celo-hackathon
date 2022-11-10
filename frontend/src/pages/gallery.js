@@ -9,7 +9,6 @@ const Gallery = () => {
     const [contentLoaded, setcontentLoaded] = useState([])
 
     useEffect(() => {
-        console.log("hgjf")
         setcontentLoaded(false)
         loadPhotos()
     }, [])

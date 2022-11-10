@@ -120,7 +120,7 @@ const Donate = ({ campaignId }) => {
                         </button>)}
                 </>
             ) : (<button class="btn btn-white py-2 mt-2" onClick={approve}>
-                Approve Contract
+                Start Donating
             </button>)
             }
 

@@ -36,6 +36,7 @@ const CampaignDetails = () => {
         console.log("res", Number(campId))
         const result = await client.fetch(query, params)
 
+
         const baseUrl = urlFor(result[0]["dailytask"]["asset"]["_ref"].slice(6,))["options"].baseUrl
         const dataset = urlFor(result[0]["dailytask"]["asset"]["_ref"].slice(6,))["options"].dataset
         const projectId = urlFor(result[0]["dailytask"]["asset"]["_ref"].slice(6,))["options"].projectId
@@ -53,6 +54,7 @@ const CampaignDetails = () => {
                 return item;
             })
         )
+
         setPhotos(items)
         setcontentLoaded(true)
 

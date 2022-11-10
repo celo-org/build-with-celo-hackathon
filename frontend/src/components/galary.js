@@ -32,7 +32,7 @@ const Gallery = () => {
                 return item;
             })
         )
-        console.log("items", items)
+        console.log("itemssss", items)
         setPhotos(items)
         setcontentLoaded(true)
     }
