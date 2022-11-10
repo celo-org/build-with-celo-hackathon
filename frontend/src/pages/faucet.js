@@ -58,9 +58,9 @@ const Faucet = () => {
                                 <div class="form-group">
                                     <input type="text" value={getConfigByChain(chain?.id)[0].cUSDAddress} class="form-control" />
                                 </div>
+                                <span>Your Wallet Address</span>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" value={address}
-                                        placeholder="Your Wallet Address" />
+                                    <input type="text" class="form-control" value={address} />
                                 </div>
                                 <span>Amount (in cUSD)</span>
                                 <div class="form-group">
