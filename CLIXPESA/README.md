@@ -36,28 +36,28 @@ While members of a chama can be able to borrow from each other within their savi
 
 #### URLs
 
-[Clixpesa webiste](clixpesa.com)
-[Clixpesa App](https://expo.dev/@kachdn/clixpesa-defi?serviceType=classic&distribution=expo-go)
+- [Clixpesa webiste](clixpesa.com)
+- [Clixpesa App](https://expo.dev/@kachdn/clixpesa-defi?serviceType=classic&distribution=expo-go)
 
 #### Presentation
 
 - Checkout [Our Pitch](https://docs.google.com/presentation/d/1yUEGqP3dS5eO3Biv39dFAS07dadhBerPnlrHnRoMfRA/edit?usp=sharing).
 - Watch the [Live Demo](https://youtu.be/_-OuI6YpsRs).
 - Try it yourself. [Clixpesa App](https://expo.dev/@kachdn/clixpesa-defi?serviceType=classic&distribution=expo-go)
-  _ps: to run the app, you will need an [expo go app](https://expo.dev/client) installed._
+_ps: to run the app, you will need an [expo go app](https://expo.dev/client) installed._
   _scan the [qr code](https://expo.dev/@kachdn/clixpesa-defi?serviceType=classic&distribution=expo-go) with your phone's camera or with expo go. Enjoy!_
 
 #### Next Steps
 
--Solidify our smart contracts including some audits
--Work on KYC and AML
--Raise the Pre-seed round
--End to end testing with a pilot group
+- Solidify our smart contracts including some audits
+- Work on KYC and AML
+- Raise the Pre-seed round
+- End to end testing with a pilot group
 
 #### When moon? when token?
 
--Haha, keep calm. simple is not easy!
--We intend to fully launch in **Q1/2023**.
+- Haha, keep calm. simple is not easy!
+- We intend to fully launch in **Q1/2023**.
 
 #### License
 
