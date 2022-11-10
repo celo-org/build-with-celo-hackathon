@@ -23,13 +23,20 @@ Features
 - POAP Management platform for event owners
 - POAP NFT Marketplace for selling POAPS earned
 
+#### Bounties
+LAVA RPC - Used for Testnet deployment , Hardhat tests
+VALORA - Integrated through Walletconnect
+Graph Bounty - NFT Marketplace subgraph
+
 
 #### Presentation
-List any links to your presentation or any related visuals you want to share.
+https://youtu.be/qReGESFjzMo
 
 #### Next Steps
 Testnet Deployment
 Live Deployment
+
+
 
 #### License
 This repository includes an MIT License
