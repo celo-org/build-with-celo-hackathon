@@ -1,0 +1,185 @@
+<c-toaster class="p-3" position="fixed" [placement]="placement"></c-toaster>
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-12">
+            <h3>Add Your Event</h3>
+            
+            <div class="card " >
+                <div class="card-header">Enter Details</div>
+                <div class="card-body">
+
+                    <form [formGroup]="mainFormGroup" (ngSubmit)="onSubmit(mainFormGroup)">
+                        <div class="container text-center">
+
+                            <div class="row">
+                                <div class="col-12 my-2" >
+                                    <div [cFormFloating]="true" class="my-3" >
+                                        <input cFormControl id="floatingInput" placeholder="What's the occassion/event?" formControlName="eventName" type="text" sizing="sm" 
+                                            [ngClass]="{ 'is-invalid': mainFormGroup.get('eventName').touched && mainFormGroup.get('eventName').invalid, 'is-valid': mainFormGroup.get('eventName').touched && mainFormGroup.get('eventName').valid }"
+                                        />
+                                        <label cLabel for="floatingInput">What's the occassion/event?</label>
+                                            
+                                        <div class="error-message" *ngIf="mainFormGroup.get('eventName').invalid && mainFormGroup.get('eventName').touched">
+                                            <div *ngFor="let error of  objectKeys(mainFormGroup.get('eventName')?.errors)">                                        
+                                            {{validationMessages.eventName[error]}}
+                                            </div>
+                                        </div>
+    
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12 my-2" >
+                                    <div [cFormFloating]="true" class="my-3" >
+                                        <textarea style="height: 100px;" rows="4" cFormControl id="floatingInput" placeholder="" formControlName="desc"  sizing="sm" 
+                                            [ngClass]="{ 'is-invalid': mainFormGroup.get('desc').touched && mainFormGroup.get('desc').invalid, 'is-valid': mainFormGroup.get('desc').touched && mainFormGroup.get('desc').valid }"
+                                        ></textarea>
+                                        <label cLabel for="floatingInput">Description</label>
+                                            
+                                        <div class="error-message" *ngIf="mainFormGroup.get('desc').invalid && mainFormGroup.get('desc').touched">
+                                            <div *ngFor="let error of  objectKeys(mainFormGroup.get('desc')?.errors)">                                        
+                                            {{validationMessages.desc[error]}}
+                                            </div>
+                                        </div>
+    
+                                    </div>
+                                </div>
+
+                                <div class="col-12 my-2" >
+                                    <div [cFormFloating]="true" class="my-3" >
+                                        <input cFormControl id="floatingInput" placeholder="" formControlName="maxCapacity" type="number" sizing="sm" 
+                                            [ngClass]="{ 'is-invalid': mainFormGroup.get('maxCapacity').touched && mainFormGroup.get('maxCapacity').invalid, 'is-valid': mainFormGroup.get('maxCapacity').touched && mainFormGroup.get('maxCapacity').valid }"
+                                        />
+                                        <label cLabel for="floatingInput">Expected Number of Attendees</label>
+                                            
+                                        <div class="error-message" *ngIf="mainFormGroup.get('maxCapacity').invalid && mainFormGroup.get('maxCapacity').touched">
+                                            <div *ngFor="let error of  objectKeys(mainFormGroup.get('maxCapacity')?.errors)">                                        
+                                            {{validationMessages.maxCapacity[error]}}
+                                            </div>
+                                        </div>
+    
+                                    </div>
+                                </div>
+
+                                <div class="col-12 my-2">
+                                    <div [cFormFloating]="true" class="my-3" >
+                                        <input cFormControl id="floatingInput" [dpDayPicker]="datePickerConfig"  placeholder="" formControlName="date"  sizing="sm" mode="daytime" [ngClass]="{ 'is-invalid': mainFormGroup.get('date').touched && mainFormGroup.get('date').invalid, 'is-valid': mainFormGroup.get('date').touched && mainFormGroup.get('date').valid }"/>
+                                        <label cLabel for="floatingInput">Event Date</label>
+                                        
+                                        <div cFormText class="mt-2">
+                                            
+                                        </div>
+    
+                                        <div class="error-message" *ngIf="mainFormGroup.get('date').invalid && mainFormGroup.get('date').touched">
+                                            <div *ngFor="let error of  objectKeys(mainFormGroup.get('date')?.errors)">                                        
+                                            {{validationMessages.date[error]}}
+                                            </div>
+                                        </div>
+    
+                                    </div>
+                                </div>
+
+                                <div class="col-12 my-2" >
+                                    <div [cFormFloating]="true" class="my-3" >
+                                        <input cFormControl id="floatingInput" placeholder="" formControlName="eventCode" type="text" sizing="sm" 
+                                            [ngClass]="{ 'is-invalid': mainFormGroup.get('eventCode').touched && mainFormGroup.get('eventCode').invalid, 'is-valid': mainFormGroup.get('eventCode').touched && mainFormGroup.get('eventCode').valid }"
+                                        />
+                                        <label cLabel for="floatingInput">Event Code</label>
+
+                                        <div cFormText class=" my-2">
+                                            Your attendees will need to Enter in this event code to verify they attended the event
+                                        </div>
+                                            
+                                        <div class="error-message" *ngIf="mainFormGroup.get('eventCode').invalid && mainFormGroup.get('eventCode').touched">
+                                            <div *ngFor="let error of  objectKeys(mainFormGroup.get('eventCode')?.errors)">                                        
+                                            {{validationMessages.eventCode[error]}}
+                                            </div>
+                                        </div>
+    
+                                    </div>
+                                </div>
+
+                                <div class="col-12 my-2" >
+                                    <div [cFormFloating]="true" class="my-3" >
+                                        <input cFormControl id="floatingInput" placeholder="" formControlName="orgName" type="text" sizing="sm" 
+                                            [ngClass]="{ 'is-invalid': mainFormGroup.get('orgName').touched && mainFormGroup.get('orgName').invalid, 'is-valid': mainFormGroup.get('orgName').touched && mainFormGroup.get('orgName').valid }"
+                                        />
+                                        <label cLabel for="floatingInput">Organization</label>
+                                            
+                                        <div class="error-message" *ngIf="mainFormGroup.get('orgName').invalid && mainFormGroup.get('orgName').touched">
+                                            <div *ngFor="let error of  objectKeys(mainFormGroup.get('orgName')?.errors)">                                        
+                                            {{validationMessages.orgName[error]}}
+                                            </div>
+                                        </div>
+    
+                                    </div>
+                                </div>
+
+                                <div class="col-12 my-2" >
+                                    <div [cFormFloating]="true" class="my-3" >
+                                        <input cFormControl id="floatingInput" placeholder="" formControlName="logo" type="text" sizing="sm" 
+                                            [ngClass]="{ 'is-invalid': mainFormGroup.get('logo').touched && mainFormGroup.get('logo').invalid, 'is-valid': mainFormGroup.get('logo').touched && mainFormGroup.get('logo').valid }"
+                                        />
+                                        <label cLabel for="floatingInput">Event Logo URL (JPEG|PNG , Rounded, 500px x 500px)</label>
+                                            
+                                        <div class="error-message" *ngIf="mainFormGroup.get('logo').invalid && mainFormGroup.get('logo').touched">
+                                            <div *ngFor="let error of  objectKeys(mainFormGroup.get('logo')?.errors)">                                        
+                                            {{validationMessages.logo[error]}}
+                                            </div>
+                                        </div>
+    
+                                    </div>
+                                </div>
+
+                                <div class="col-12 my-2" >
+                                    <div [cFormFloating]="true" class="my-3" >
+                                        <input cFormControl id="floatingInput" placeholder="" formControlName="website" type="text" sizing="sm" 
+                                            [ngClass]="{ 'is-invalid': mainFormGroup.get('website').touched && mainFormGroup.get('website').invalid, 'is-valid': mainFormGroup.get('website').touched && mainFormGroup.get('website').valid }"
+                                        />
+                                        <label cLabel for="floatingInput">Your Website</label>
+                                            
+                                        <div class="error-message" *ngIf="mainFormGroup.get('website').invalid && mainFormGroup.get('website').touched">
+                                            <div *ngFor="let error of  objectKeys(mainFormGroup.get('website')?.errors)">                                        
+                                            {{validationMessages.website[error]}}
+                                            </div>
+                                        </div>
+    
+                                    </div>
+                                </div>
+
+                                <div class="col-12 my-2" >
+                                    <div [cFormFloating]="true" class="my-3" >
+                                        <input cFormControl id="floatingInput" placeholder="" formControlName="email" type="email" sizing="sm" 
+                                            [ngClass]="{ 'is-invalid': mainFormGroup.get('email').touched && mainFormGroup.get('email').invalid, 'is-valid': mainFormGroup.get('email').touched && mainFormGroup.get('email').valid }"
+                                        />
+                                        <label cLabel for="floatingInput">Your Email</label>
+                                            
+                                        <div class="error-message" *ngIf="mainFormGroup.get('email').invalid && mainFormGroup.get('email').touched">
+                                            <div *ngFor="let error of  objectKeys(mainFormGroup.get('email')?.errors)">                                        
+                                            {{validationMessages.email[error]}}
+                                            </div>
+                                        </div>
+    
+                                    </div>
+                                </div>
+                               
+                            </div>
+
+                            <div class="row p-5" style="font-weight: bold;">
+                                <!-- Button -->
+                                <div class="container mt-5">
+                                    <button class="btn btn-primary px-4 " type="submit" [disabled]="mainFormGroup.invalid">Create Event POAP</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>

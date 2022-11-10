@@ -1,0 +1,271 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "contract IPOAPMarket",
+        "name": "poapMarket",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventID",
+        "type": "uint256"
+      }
+    ],
+    "name": "eventAdded",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "_poapMarket",
+    "outputs": [
+      {
+        "internalType": "contract IPOAPMarket",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "start",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "offset",
+        "type": "uint256"
+      }
+    ],
+    "name": "allOwnersEvents",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "key",
+        "type": "uint256"
+      }
+    ],
+    "name": "contains",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "eventName",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "desc",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "orgName",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "logo",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "email",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "date",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "website",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "poapsMinted",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxCapacity",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "eventOwner",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct POAP.EventStruct",
+        "name": "eventDetails",
+        "type": "tuple"
+      },
+      {
+        "internalType": "string",
+        "name": "eventCode",
+        "type": "string"
+      }
+    ],
+    "name": "createNewEvent",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
+    "name": "eventAt",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "key",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "value",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "eventsSize",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "key",
+        "type": "uint256"
+      }
+    ],
+    "name": "tryGetEventByKey",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

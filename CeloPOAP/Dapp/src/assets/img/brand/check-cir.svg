@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="115px" height="115px" viewBox="0 0 115 115" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient gradientUnits="userSpaceOnUse" x1="14.034789" y1="14.034789" x2="81.79853" y2="81.79853" id="gradient_1">
+      <stop offset="0%" stop-color="#9DFFCE" />
+      <stop offset="100%" stop-color="#50D18D" />
+    </linearGradient>
+    <linearGradient gradientUnits="userSpaceOnUse" x1="0.00060107006" y1="19.66321" x2="55.104774" y2="19.66321" id="gradient_2">
+      <stop offset="82.4%" stop-color="#135D36" />
+      <stop offset="93.09999%" stop-color="#125933" />
+      <stop offset="100%" stop-color="#11522F" />
+    </linearGradient>
+    <path d="M0 0L115 0L115 115L0 115L0 0Z" id="path_1" />
+    <clipPath id="mask_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <g id="Checked-icon">
+    <path d="M0 0L115 0L115 115L0 115L0 0Z" id="Background" fill="#FFFFFF" fill-opacity="0" fill-rule="evenodd" stroke="none" />
+    <g clip-path="url(#mask_1)">
+      <path d="M105.417 57.5C105.417 83.962 83.962 105.417 57.5 105.417C31.038 105.417 9.58334 83.962 9.58334 57.5C9.58334 31.038 31.038 9.58334 57.5 9.58334C83.962 9.58334 105.417 31.038 105.417 57.5L105.417 57.5Z" id="Shape" fill="url(#gradient_1)" stroke="none" />
+      <path d="M51.0145 78.3606L31.8478 59.1939C30.9111 58.2571 30.9111 56.7406 31.8478 55.8062L35.2355 52.4185C36.1723 51.4817 37.6889 51.4817 38.6233 52.4185L52.7084 66.5036L78.7726 40.4393C79.7094 39.5025 81.226 39.5025 82.1603 40.4393L85.548 43.827C86.4848 44.7638 86.4848 46.2803 85.548 47.2147L54.4022 78.3606C53.4678 79.2973 51.9489 79.2973 51.0145 78.3606L51.0145 78.3606Z" id="Shape" fill="url(#gradient_2)" stroke="none" />
+    </g>
+  </g>
+</svg>

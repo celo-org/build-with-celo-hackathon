@@ -1,0 +1,47 @@
+<c-carousel style="width:105%;margin-left: -25.5px;">
+    <!-- <c-carousel-indicators></c-carousel-indicators> -->
+    <c-carousel-inner >
+      <c-carousel-item *ngFor="let slide of slides">
+        <img
+          alt="{{slide.title}}"
+          class="d-block w-100"
+          loading="lazy"
+          src="{{slide.src}}"
+        />
+        <c-carousel-caption class="">
+          <!-- <h1 class="mb-3">{{slide.title}}</h1> -->
+          <!-- <h5 class="text-justify mb-5">{{slide.subtitle}} <span class="d-none d-md-block" *ngIf="slide.subtitle"><br/>{{slide.subtitle2}}</span></h5> -->
+
+          <div class="d-flex justify-content-left mt-2 mt-md-4">
+            <div class="mx-2 ">
+                <a  routerLink="../poaps/create" class="btn btn-sm btn-light  btn-purple text-white px-4 py-3">Create a POAP</a>
+            </div>
+            <div class="mx-2">
+                <a  routerLink="../poaps/view-mine" class="btn btn-sm btn-light btn-purple text-white px-4 py-3">View your POAPs</a>
+            </div>
+        </div>
+        </c-carousel-caption>
+      </c-carousel-item>
+    </c-carousel-inner>
+    <!-- <c-carousel-control [routerLink] caption="Previous" direction="prev"></c-carousel-control>
+    <c-carousel-control [routerLink] caption="Next" direction="next"></c-carousel-control> -->
+  </c-carousel>
+
+<div class="container-fluid home-carousel-container">
+    <div class="row">
+        <div class="col-12">
+
+            
+
+            
+
+        </div>
+    </div>
+
+
+</div>
+
+<!-- Logo -->
+<!-- <div class="container text-center mt-4">
+    <img src="/assets/img/brand/zsaleslogo2.png" alt="Zsales LaunchPad Logo" height="100">  
+</div> -->

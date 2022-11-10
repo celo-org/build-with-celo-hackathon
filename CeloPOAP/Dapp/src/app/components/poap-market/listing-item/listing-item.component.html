@@ -1,0 +1,30 @@
+
+<div *ngIf="!poapNft">
+    Loading ..
+</div>
+
+
+<div class="card " *ngIf="poapNft">
+    <div class="card-body" >
+		<div class="">
+			<div class="mx-2 px-2 text-center"> 
+				<img [src]="poapNft.imageUrl" alt="nft logo"  class="img-fluid img-thumbnail img-rounded"/> 
+			</div>
+			<div class="mx-2 px-2 text-center">
+				<div>
+	              <b>
+	                {{poapNft.name}} - #{{poapNft.tokenId}}
+	              </b>
+	            </div>
+	            <div>Price: {{ price }} CELO  </div>
+	            <div>
+	              Seller: {{isOwner ? "You" : nftSeller.substring(0, 6) + "..."}}
+	            </div>
+			</div>
+			
+		</div>
+	
+                       
+
+    </div>
+</div>
