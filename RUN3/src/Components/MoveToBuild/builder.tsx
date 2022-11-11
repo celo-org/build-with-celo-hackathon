@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { View, Text } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE, Polyline } from 'react-native-maps'
 import { colors, globalStyles } from '../../utils/globalStyles'
@@ -18,6 +18,7 @@ export default function Builder() {
   const [currentDistance, setCurrentDistance] = useState<number>(0)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const isFocused = useIsFocused()
+  const mapRef = useRef(null)
 
   const { run3TBalance, getRun3TBalance } = useRun3T()
   const addCoordToRoute = async () => {
@@ -79,6 +80,17 @@ export default function Builder() {
     })()
   }, [routeCoords])
 
+  useEffect(() => {
+    // Workaround for IOS issue for initial Region
+    setTimeout(() => {
+      if (routeCoords.length === 1 && mapRef.current) {
+        // Workaround for IOS issue on library for initial Region
+        //@ts-ignore
+        mapRef.current.animateToRegion(mapRef.current.props.initialRegion, 1)
+      }
+    }, 3000)
+  }, [routeCoords])
+
   if (routeCoords.length === 0 || isLoading)
     return (
       <View style={globalStyles.container}>
@@ -113,7 +125,8 @@ export default function Builder() {
       <View>
         {routeCoords[0] && (
           <MapView
-            region={{
+            ref={mapRef}
+            initialRegion={{
               longitude: routeCoords[0].longitude,
               latitude: routeCoords[0].latitude,
               latitudeDelta: 0.003,
@@ -122,14 +135,11 @@ export default function Builder() {
             provider={PROVIDER_GOOGLE}
             style={styles.map}
           >
-            {routeCoords.map((marker) => (
+            {routeCoords.map((marker, index) => (
               <Marker
+                identifier={index.toString()}
                 onDragStart={(e) => {
-                  const coords = e.nativeEvent.coordinate
-                  const index = routeCoords.findIndex(
-                    (route) => route.latitude === coords.latitude && route.longitude === coords.longitude
-                  )
-                  setMarkerIndex(index)
+                  setMarkerIndex(Number(e.nativeEvent.id))
                   setLoadingCalc(true)
                 }}
                 onDragEnd={(e) => {
@@ -152,8 +162,6 @@ export default function Builder() {
                   latitude: marker.latitude,
                 }}
                 draggable
-                tappable
-                title="Starting Point"
               />
             ))}
             <Polyline tappable coordinates={routeCoords} strokeColor={colors.primary} strokeWidth={4} />

@@ -97,9 +97,6 @@ export default function RouteDetail({ navigation, route }: { navigation: any; ro
                 longitude: marker.longitude,
                 latitude: marker.latitude,
               }}
-              draggable
-              tappable
-              title="Starting Point"
             />
           ))}
           <Polyline tappable coordinates={routeCoords} strokeColor={colors.primary} strokeWidth={4} />
