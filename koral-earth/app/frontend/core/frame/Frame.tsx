@@ -9,6 +9,7 @@ import classNames from 'classnames';
 import { TopBar } from './ui/TopBar';
 import type { Network } from '../../../common/blockchain';
 import { celoNetworkConfig, CeloNetworkNames } from '../../../common/celo';
+import styles from './Frame.module.scss';
 
 const network = process.env.NEXT_PUBLIC_BLOCKCHAIN_NETWORK as Network;
 const celoNetworks = celoNetworkConfig(network);
@@ -54,6 +55,17 @@ export const Frame = ({ children, title = 'Koral Earth' }: Props) => {
                 SupportedProviders.WalletConnect,
               ],
               searchable: true,
+            },
+            reactModalProps: {
+              style: {
+                overlay: {
+                  zIndex: 10000,
+                },
+              },
+              overlayClassName: classNames(
+                styles.celoModal,
+                'tw-z-40 tw-fixed tw-inset-0'
+              ),
             },
           }}
           networks={celoNetworks}
