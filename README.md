@@ -1,21 +1,21 @@
 
 ## Project Name
 
-Celo Network Tokens Analytics Dapp to track key performance metrics
+Celo Network Tokens Analytics Dapp
 
 ### Team name
 DappLooker
 
 #### Hackathon Track
 
-Implement Celo Network Tokens Analytics Dapp
+Implement Celo Network Tokens Analytics Dapp to Track Performance Metrics.
 
 ##### Region location
 India
 
 ##### Team Members
 - Abhay - Blockchain Engineer
-- Hitesh - Analyst
+- Hitesh - Data Engineer
 
 #### Project Description
 
@@ -35,7 +35,7 @@ The subgraph contains entities for below token contracts:
     - stCELO: **0xa97be82bee72a809fe4b3ad158535879028babcb**
 
 - Implemented Analytics Dapp by querying data from subgraph
-    The analytics Dapp contains tracks below performance metrics:
+    The analytics Dapp tracks below performance metrics:
 
         - Celo Tokens TVL
         - Unique Users with atleast 1 Transaction
@@ -49,8 +49,9 @@ Implemented below functionalities in the project:
 - Implement Analytics Dapp
 - Implement Celo Network Tokens subgraph
 
+Below Performance Metrics are tracked:
 
-- **Token details and Number of users per token **
+- **Token details and Number of users per token**
 
     <img width="1440" alt="Token Details" src="https://raw.githubusercontent.com/abhayait/build-with-celo-hackathon/main/celo-tokens-analytics-dapp/images/token%20-details.png">
 
