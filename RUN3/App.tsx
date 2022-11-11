@@ -4,7 +4,7 @@ import { useWalletProvider, WalletProvider } from './src/contexts/WalletContext'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Home from './src/Components/Home'
-import { Text } from 'react-native'
+import { Text, LogBox } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Header from './src/Components/Header'
 import { ApplicationProvider, BottomNavigation, BottomNavigationTab } from '@ui-kitten/components'
@@ -60,7 +60,7 @@ const HomeApp = () => {
 
 export default function App() {
   const { walletWithProvider } = useWalletProvider()
-
+  LogBox.ignoreAllLogs()
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
       <WalletProvider>
