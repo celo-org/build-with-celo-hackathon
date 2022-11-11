@@ -1,15 +1,15 @@
 import { useState } from 'react'
-import {BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom'
-import { DrawerContext } from './contexts/DrawerContext'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import { DrawerContext, FormContext } from './contexts/AppContext'
 import AppHeader from './components/layout/Header'
 import Home from './pages/Home'
 import Event from './pages/Event'
-import { CeloProvider, Alfajores, NetworkNames } from '@celo/react-celo';
+import { CeloProvider, Alfajores, NetworkNames } from '@celo/react-celo'
 import '@celo/react-celo/lib/styles.css'
 import './app.css'
 
 
-function WrappedApp() {
+const WrappedApp = () => {
   return (
     <CeloProvider
       networks={[Alfajores]}
@@ -28,34 +28,38 @@ function WrappedApp() {
     >
       <App />
     </CeloProvider>
-  );
+  )
 }
 
-function App() {
+const App = () => {
 
   const [drawer, setDrawer] = useState(false)
+  const [showEventForm, setShowEventForm] = useState(false)
 
   return (
     <DrawerContext.Provider value={{drawer, setDrawer}}>
-      <Router>
-        <div>
-          <div className={`${drawer ? 'show-drawer' : ''} drawer`}>
-            <div className="drawer-links">
-              <h1 className={`app-name app-name-drawer`}>Event Hub</h1>
-              <Link to='/'>Home</Link>
-              <Link to='/event'>Event</Link>
-              <Link to='/rsvps'>RSVPs</Link>
-              <span className="close-btn" onClick={() => setDrawer(false)}>&#x2715;</span>
+      <FormContext.Provider value={{showEventForm, setShowEventForm}}>
+        <Router>
+          <div>
+            <div className={`${drawer ? 'show-drawer' : ''} drawer`}>
+              <div className="drawer-links">
+                <h1 className={`app-name app-name-drawer`}>Event Hub</h1>
+                <Link to='/'>Home</Link>
+                <Link to='/event'>Event</Link>
+                <Link to='/rsvps'>RSVPs</Link>
+                <span className="close-btn" onClick={() => setDrawer(false)}>&#x2715;</span>
+              </div>
             </div>
-          </div>
-          <AppHeader/>
-          <Routes>
-            <Route path="/" element={<Home/>}/>
-            <Route path="/event" element={<Event/>}/>
-          </Routes>
+            <AppHeader/>
+            <Event/>
+            <Routes>
+              <Route path="/" element={<Home/>}/>
+              <Route path="/event" element={<Event/>}/>
+            </Routes>
 
-        </div>
-      </Router>
+          </div>
+        </Router>
+      </FormContext.Provider>
     </DrawerContext.Provider>
   )
 }

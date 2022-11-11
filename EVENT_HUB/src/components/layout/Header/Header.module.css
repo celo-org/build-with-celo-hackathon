@@ -17,3 +17,9 @@
   width: 30px;
   background: #fefefe;
 }
+
+.create-event-btn {
+  margin-right: 12px;
+  color: darkgoldenrod;
+  border: 3px solid darkgoldenrod;
+}
