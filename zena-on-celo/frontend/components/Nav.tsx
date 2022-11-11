@@ -34,13 +34,13 @@ const Nav = ({ isDashboard }: any) => {
                   </Disclosure.Button>
                 </div>
               )}
-              {!isDashboard && (
-                <div className="flex flex-shrink-0 items-center">
-                  <a href="/">
-                    <img className="h-20 w-20" src="/logo.png" alt="" />
-                  </a>
-                </div>
-              )}
+
+              <div className="flex flex-shrink-0 items-center">
+                <a href="/">
+                  <img className="h-20 w-20" src="/logo.png" alt="" />
+                </a>
+              </div>
+
               {!isDashboard && (
                 <div className="hidden md:ml-6 md:flex md:items-center md:space-x-4">
                   {navigation.map((item) => (
