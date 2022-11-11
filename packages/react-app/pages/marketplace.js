@@ -2,30 +2,55 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Link from 'next/link'
 import React from 'react'
 import Layout from '../components/layout/Layout';
-import DropdownIcon from '../components/Icons/DropdownIcon'
+import DropdownIcon from '../components/Icons/DropdownIcon';
+import { useQuery, useInfiniteQuery } from 'react-query'
+import LoadingState from '../components/LoadingState'
 
-export const getStaticProps = async () => {
-    try{
-      const res = await fetch('http://127.0.0.1:8080/api/requests')
-      if(res){
-        console.log(res);
-        const data = await res.json();
+
+
+// export const getStaticProps = async () => {
+//     try{
+//       const res = await fetch('http://127.0.0.1:8080/api/requests')
+//       if(res){
+//         console.log(res);
+//         const data = await res.json();
   
-        return {
-          props: {requests: data}
-        }
-      }
-    }catch(err){
+//         return {
+//           props: {requests: data}
+//         }
+//       }
+//     }catch(err){
   
-    }
+//     }
     
-    // console.log(res, "resuslt")
-  
-    // console.log(data, "dattaaaa")
-    
-  }
+//   }
 
 const MarketPlace = () => {
+
+
+    const fetchRequests = async ({ pageParam = 1 }) => {
+        const res = await fetch(`http://127.0.0.1:8080/api/requests?page=${pageParam}&size=9`);
+        return res.json();
+    }
+
+    const {
+        isLoading,
+        isError,
+        error,
+        data,
+        fetchNextPage,
+        isFetching,
+        isFetchingNextPage
+    } = useInfiniteQuery(['requests'], fetchRequests, {
+        getNextPageParam: (lastPage, pages) => {
+            return lastPage.page + 1
+        }
+    })
+
+    if (isError) {
+        return <h2>{error.message}</h2>
+    }
+    
   return (
     <>
 
@@ -102,236 +127,77 @@ const MarketPlace = () => {
                   </div>
 
 
-                  <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-9 gap-y-9 '>
-                      <div className='card shadow-lg py-3 rounded-md'>
-                          <div className=''>
-                              <div className='w-full h-56'>
-                                  <img src='/images/marketimage.png' className='w-full h-full object-cover rounded-md'/>
-                              </div>
-                          </div>
-                          <div className=' flex items-start justify-between mt-3 px-5 py-4 flex-col w-full gap-2'>
-                              <div className='flex items-center justify-between w-full'>
-                                  <h4 className='font-semibold text-[#3D4044] text-lg'>Jana Plasteeks LTD</h4>
-                                  <p>PET Bottles</p>
-                              </div>
+                                    {isLoading 
 
-                              
-                              <div  className='flex items-center justify-between w-full'>
-                                  <div className='flex items-center justify-start gap-2'>
-                                      <img src='/images/location.svg' className=''/>
-                                      <div>
-                                          <p className='text-base text-[#6D747D]'>Ikeja, Lagos</p>
-                                      </div>
-                                  </div> 
+                                        ? 
+                                        
+                                        <div className='flex items-center justify-center'>
+                                            <LoadingState />
+                                        </div> : 
 
-                                  <h4 className=''>300kg</h4>
-                              </div>
-                              <div className='flex items-start justify-between w-full gap-2'>
-                                  <p className='flex-1 text-xs text-[#878A90]'>By working in partnership with local collectors and recycling...</p>
-                                    <div className='flex items-end justify-start flex-col gap-1 flex-1'>
-                                        <p className='text-xs'>Request expires in:</p>
-                                        <div>
-                                            <p className='text-base text-[#3D4044] font-semibold'>12d : 24h : 34m : 32s</p>
+                                        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-9 gap-y-9 '>
+                                        {data.pages.map(page =>
+                                                    page.data.map((request, index) => (
+                                                        <>
+                                                            <Link href={`/individual/requests/${request.id}`} key={index}>
+                                                            
+                                                                <a key={index}>
+
+                                                                <div className='card shadow-lg py-3 rounded-md'>
+                                                                    <div className=''>
+                                                                        <div className='w-full h-56'>
+                                                                            <img src='/images/marketimage.png' className='w-full h-full object-cover rounded-md'/>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className=' flex items-start justify-between mt-3 px-5 py-4 flex-col w-full gap-2'>
+                                                                        <div className='flex items-center justify-between w-full'>
+                                                                            <h4 className='font-semibold text-[#3D4044] text-lg'>Jana Plasteeks LTD</h4>
+                                                                            <p>PET Bottles</p>
+                                                                        </div>
+
+                                                                        
+                                                                        <div  className='flex items-center justify-between w-full'>
+                                                                            <div className='flex items-center justify-start gap-2'>
+                                                                                <img src='/images/location.svg' className=''/>
+                                                                                <div>
+                                                                                    <p className='text-base text-[#6D747D]'>Ikeja, Lagos</p>
+                                                                                </div>
+                                                                            </div> 
+
+                                                                            <h4 className=''>300kg</h4>
+                                                                        </div>
+                                                                        <div className='flex items-start justify-between w-full gap-2'>
+                                                                            <p className='flex-1 text-xs text-[#878A90]'>By working in partnership with local collectors and recycling...</p>
+                                                                                <div className='flex items-end justify-start flex-col gap-1 flex-1'>
+                                                                                    <p className='text-xs'>Request expires in:</p>
+                                                                                    <div>
+                                                                                        <p className='text-base text-[#3D4044] font-semibold'>12d : 24h : 34m : 32s</p>
+                                                                                    </div>
+                                                                                </div> 
+
+                                                                                
+                                                                            </div>
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                                </a>
+                                                            </Link>
+                                                        </>
+                                                    ))
+                                                )}
+                                            
+
+                                            
+                                                        
                                         </div>
-                                    </div> 
 
-                                    
-                                </div>
-                              
-                          </div>
-                      </div>
-                      <div className='card shadow-lg py-3 rounded-md'>
-                          <div className=''>
-                              <div className='w-full h-56'>
-                                  <img src='/images/marketimage.png' className='w-full h-full object-cover rounded-md'/>
-                              </div>
-                          </div>
-                          <div className=' flex items-start justify-between mt-3 px-5 py-4 flex-col w-full gap-2'>
-                              <div className='flex items-center justify-between w-full'>
-                                  <h4 className='font-semibold text-[#3D4044] text-lg'>Jana Plasteeks LTD</h4>
-                                  <p>PET Bottles</p>
-                              </div>
+                                    }
 
-                              
-                              <div  className='flex items-center justify-between w-full'>
-                                  <div className='flex items-center justify-start gap-2'>
-                                      <img src='/images/location.svg' className=''/>
-                                      <div>
-                                          <p className='text-base text-[#6D747D]'>Ikeja, Lagos</p>
-                                      </div>
-                                  </div> 
-
-                                  <h4 className=''>300kg</h4>
-                              </div>
-                              <div className='flex items-start justify-between w-full gap-2'>
-                                  <p className='flex-1 text-xs text-[#878A90]'>By working in partnership with local collectors and recycling...</p>
-                                    <div className='flex items-end justify-start flex-col gap-1 flex-1'>
-                                        <p className='text-xs'>Request expires in:</p>
-                                        <div>
-                                            <p className='text-base text-[#3D4044] font-semibold'>12d : 24h : 34m : 32s</p>
-                                        </div>
-                                    </div> 
-
-                                    
-                                </div>
-                              
-                          </div>
-                      </div>
-                      <div className='card shadow-lg py-3 rounded-md'>
-                          <div className=''>
-                              <div className='w-full h-56'>
-                                  <img src='/images/marketimage.png' className='w-full h-full object-cover rounded-md'/>
-                              </div>
-                          </div>
-                          <div className=' flex items-start justify-between mt-3 px-5 py-4 flex-col w-full gap-2'>
-                              <div className='flex items-center justify-between w-full'>
-                                  <h4 className='font-semibold text-[#3D4044] text-lg'>Jana Plasteeks LTD</h4>
-                                  <p>PET Bottles</p>
-                              </div>
-
-                              
-                              <div  className='flex items-center justify-between w-full'>
-                                  <div className='flex items-center justify-start gap-2'>
-                                      <img src='/images/location.svg' className=''/>
-                                      <div>
-                                          <p className='text-base text-[#6D747D]'>Ikeja, Lagos</p>
-                                      </div>
-                                  </div> 
-
-                                  <h4 className=''>300kg</h4>
-                              </div>
-                              <div className='flex items-start justify-between w-full gap-2'>
-                                  <p className='flex-1 text-xs text-[#878A90]'>By working in partnership with local collectors and recycling...</p>
-                                    <div className='flex items-end justify-start flex-col gap-1 flex-1'>
-                                        <p className='text-xs'>Request expires in:</p>
-                                        <div>
-                                            <p className='text-base text-[#3D4044] font-semibold'>12d : 24h : 34m : 32s</p>
-                                        </div>
-                                    </div> 
-
-                                    
-                                </div>
-                              
-                          </div>
-                      </div>
-                      <div className='card shadow-lg py-3 rounded-md'>
-                          <div className=''>
-                              <div className='w-full h-56'>
-                                  <img src='/images/marketimage.png' className='w-full h-full object-cover rounded-md'/>
-                              </div>
-                          </div>
-                          <div className=' flex items-start justify-between mt-3 px-5 py-4 flex-col w-full gap-2'>
-                              <div className='flex items-center justify-between w-full'>
-                                  <h4 className='font-semibold text-[#3D4044] text-lg'>Jana Plasteeks LTD</h4>
-                                  <p>PET Bottles</p>
-                              </div>
-
-                              
-                              <div  className='flex items-center justify-between w-full'>
-                                  <div className='flex items-center justify-start gap-2'>
-                                      <img src='/images/location.svg' className=''/>
-                                      <div>
-                                          <p className='text-base text-[#6D747D]'>Ikeja, Lagos</p>
-                                      </div>
-                                  </div> 
-
-                                  <h4 className=''>300kg</h4>
-                              </div>
-                              <div className='flex items-start justify-between w-full gap-2'>
-                                  <p className='flex-1 text-xs text-[#878A90]'>By working in partnership with local collectors and recycling...</p>
-                                    <div className='flex items-end justify-start flex-col gap-1 flex-1'>
-                                        <p className='text-xs'>Request expires in:</p>
-                                        <div>
-                                            <p className='text-base text-[#3D4044] font-semibold'>12d : 24h : 34m : 32s</p>
-                                        </div>
-                                    </div> 
-
-                                    
-                                </div>
-                              
-                          </div>
-                      </div>
-                      <div className='card shadow-lg py-3 rounded-md'>
-                          <div className=''>
-                              <div className='w-full h-56'>
-                                  <img src='/images/marketimage.png' className='w-full h-full object-cover rounded-md'/>
-                              </div>
-                          </div>
-                          <div className=' flex items-start justify-between mt-3 px-5 py-4 flex-col w-full gap-2'>
-                              <div className='flex items-center justify-between w-full'>
-                                  <h4 className='font-semibold text-[#3D4044] text-lg'>Jana Plasteeks LTD</h4>
-                                  <p>PET Bottles</p>
-                              </div>
-
-                              
-                              <div  className='flex items-center justify-between w-full'>
-                                  <div className='flex items-center justify-start gap-2'>
-                                      <img src='/images/location.svg' className=''/>
-                                      <div>
-                                          <p className='text-base text-[#6D747D]'>Ikeja, Lagos</p>
-                                      </div>
-                                  </div> 
-
-                                  <h4 className=''>300kg</h4>
-                              </div>
-                              <div className='flex items-start justify-between w-full gap-2'>
-                                  <p className='flex-1 text-xs text-[#878A90]'>By working in partnership with local collectors and recycling...</p>
-                                    <div className='flex items-end justify-start flex-col gap-1 flex-1'>
-                                        <p className='text-xs'>Request expires in:</p>
-                                        <div>
-                                            <p className='text-base text-[#3D4044] font-semibold'>12d : 24h : 34m : 32s</p>
-                                        </div>
-                                    </div> 
-
-                                    
-                                </div>
-                              
-                          </div>
-                      </div>
-                      <div className='card shadow-lg py-3 rounded-md'>
-                          <div className=''>
-                              <div className='w-full h-56'>
-                                  <img src='/images/marketimage.png' className='w-full h-full object-cover rounded-md'/>
-                              </div>
-                          </div>
-                          <div className=' flex items-start justify-between mt-3 px-5 py-4 flex-col w-full gap-2'>
-                              <div className='flex items-center justify-between w-full'>
-                                  <h4 className='font-semibold text-[#3D4044] text-lg'>Jana Plasteeks LTD</h4>
-                                  <p>PET Bottles</p>
-                              </div>
-
-                              
-                              <div  className='flex items-center justify-between w-full'>
-                                  <div className='flex items-center justify-start gap-2'>
-                                      <img src='/images/location.svg' className=''/>
-                                      <div>
-                                          <p className='text-base text-[#6D747D]'>Ikeja, Lagos</p>
-                                      </div>
-                                  </div> 
-
-                                  <h4 className=''>300kg</h4>
-                              </div>
-                              <div className='flex items-start justify-between w-full gap-2'>
-                                  <p className='flex-1 text-xs text-[#878A90]'>By working in partnership with local collectors and recycling...</p>
-                                    <div className='flex items-end justify-start flex-col gap-1 flex-1'>
-                                        <p className='text-xs'>Request expires in:</p>
-                                        <div>
-                                            <p className='text-base text-[#3D4044] font-semibold'>12d : 24h : 34m : 32s</p>
-                                        </div>
-                                    </div> 
-
-                                    
-                                </div>
-                              
-                          </div>
-                      </div>
-                      
-                                
-                  </div>
-
-                  <div className='flex items-center justify-center mt-8 pt-8'>
-                                <a href='' className='text-[#DD7D37] px-12 py-2 text-sm border border-[#DD7D37] rounded-full'>Load More</a>
-                            </div>
+                                    <div className='flex items-center justify-center mt-8'>
+                                        <button className='text-[#DD7D37] px-12 py-2 text-sm border border-[#DD7D37] rounded-full' onClick={fetchNextPage}>Load More {isFetching && !isFetchingNextPage ? <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status"></div> : null}
+                                        
+                                        </button>
+                                    </div>
 
                 </div>                
               </div>  

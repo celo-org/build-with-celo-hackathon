@@ -148,7 +148,7 @@ const Requests = () => {
                         
                         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-9 gap-y-9 '>
                         {data.pages.map(page =>
-                            page.info.map((request, index) => (
+                            page.data.map((request, index) => (
                                 <>
                                     <Link href={`/individual/requests/${request.id}`} key={index}>
                                     
@@ -440,7 +440,7 @@ const Requests = () => {
                         
 
                                     <div className='flex items-center justify-center mt-8'>
-                                        <button className='text-[#DD7D37] px-12 py-2 text-sm border border-[#DD7D37] rounded-full' onClick={fetchNextPage}>Load More {isFetching && !isFetchingNextPage ? <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status"><span class="visually-hidden">Loading...</span></div> : null}
+                                        <button className='text-[#DD7D37] px-12 py-2 text-sm border border-[#DD7D37] rounded-full' onClick={fetchNextPage}>Load More {isFetching && !isFetchingNextPage ? <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status"></div> : null}
                                         
                                         </button>
                                     </div>
