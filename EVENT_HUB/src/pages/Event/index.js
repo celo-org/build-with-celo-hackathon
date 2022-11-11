@@ -96,7 +96,7 @@ function Event() {
   }
 
   const reset = () => {
-    setShowEventForm(true)
+    setShowEventForm(false)
   }
 
   useEffect(() => {
@@ -165,7 +165,7 @@ function Event() {
           </div>
         </div>
         <div className="">
-          <button type="button"  onClick={reset}>Cancel</button>
+          <button type="button" onClick={reset}>Cancel</button>
           <button type="button" className="">Create</button>
         </div>
       </form>
