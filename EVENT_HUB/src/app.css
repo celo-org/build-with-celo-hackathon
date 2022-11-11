@@ -1,26 +1,44 @@
-.drawerr {
-    /*height: 0;*/
-    /*width: 100%;*/
-    /*position: fixed;*/
-    /*bottom: 0;*/
-    /*z-index: 999;*/
-    /*transition: 0.5s;*/
-    /*background: #9ca3af;*/
-    /*overflow-y: hidden;*/
-
-    height: 100%; /* 100% Full-height */
-    width: 0; /* 0 width - change this with JavaScript */
-    position: fixed; /* Stay in place */
-    z-index: 99999; /* Stay on top */
-    top: 0; /* Stay at the top */
-    left: 0;
-    background-color: red; /* Black*/
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 60px; /* Place content 60px from the top */
+.drawer {
+    height: 0;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    z-index: 999;
     transition: 0.5s;
+    background: #9ca3af;
+    overflow-y: hidden;
+}
+
+.drawer-links {
+    display: grid;
+    padding-left: 100px;
+    padding-top: 60px;
+}
+
+.drawer-links a {
+    margin-bottom: 30px;
+    font-size: 3rem;
+    font-weight: 500;
+
 }
 
 .show-drawer {
-    /*height: 100%;*/
-    width: 300px;
+    height: 100vh;
 }
+
+.app-name-drawer {
+    font-size: 5rem;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: left;
+}
+
+.close-btn {
+    font-weight: 700;
+    font-size: 3rem;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    cursor: pointer;
+}
+

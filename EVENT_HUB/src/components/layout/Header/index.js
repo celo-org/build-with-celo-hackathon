@@ -1,16 +1,15 @@
-import { Link } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useEffect, useContext} from 'react'
 import { useCelo } from '@celo/react-celo'
 import { truncate } from '../../../utils'
 
 import styles from './Header.module.css'
+import {DrawerContext} from "../../../contexts/DrawerContext";
 
-function AppHeader() {
+const AppHeader = () => {
 
   const { address, connect } = useCelo()
 
-  const [drawer, setDrawer] = useState(false)
-
+  const { drawer, setDrawer } = useContext(DrawerContext)
 
   useEffect(() => {
     // connect()

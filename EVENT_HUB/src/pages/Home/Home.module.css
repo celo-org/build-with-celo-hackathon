@@ -6,14 +6,6 @@
   margin-top: -80px;
 }
 
-.app-name {
-  text-align: center;
-  font-size: 17rem;
-  font-family: 'Londrina Shadow', cursive;
-  color: darkgoldenrod;
-  margin: 0;
-}
-
 .usp {
   display: grid;
   grid-template-columns: 1fr 1fr;

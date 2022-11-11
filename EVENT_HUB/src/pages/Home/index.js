@@ -1,7 +1,5 @@
 
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useCelo } from '@celo/react-celo'
 import Events from '../../components/Events'
 
 import uspImg from '../../assets/img/usp-img.png'
@@ -10,21 +8,13 @@ import styles from './Home.module.css'
 
 
 const Home = () => {
-  const ipfsGateway = 'https://gateway.pinata.cloud/ipfs'
 
   const navigate = useNavigate()
-
-  const { connect, address, kit } = useCelo()
-  const [events, setEvents] = useState([])
-  const [status, setStatus] = useState('')
-
-
-
 
   return (
     <div className={styles.container}>
       <div className={`app-bg ${styles.hero}`}>
-        <h1 class={styles['app-name']}>Event <br/>Hub</h1>
+        <h1 class={'app-name'}>Event <br/>Hub</h1>
       </div>
       <div className={`app-bg app-pd ${styles.usp}`}>
         <div className={styles['usp-txt']}>

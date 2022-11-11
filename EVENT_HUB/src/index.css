@@ -12,8 +12,20 @@ code {
     monospace;
 }
 
+a {
+  text-decoration: none;
+}
+
 p{
   line-height: 2rem;
+}
+
+.app-name {
+  text-align: center;
+  font-size: 17rem;
+  font-family: 'Londrina Shadow', cursive;
+  color: darkgoldenrod;
+  margin: 0;
 }
 
 .app-btn {

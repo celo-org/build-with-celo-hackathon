@@ -1,11 +1,13 @@
-
+import { useState } from 'react'
 import {BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom'
+import { DrawerContext } from './contexts/DrawerContext'
 import AppHeader from './components/layout/Header'
 import Home from './pages/Home'
 import Event from './pages/Event'
 import { CeloProvider, Alfajores, NetworkNames } from '@celo/react-celo';
 import '@celo/react-celo/lib/styles.css'
 import './app.css'
+
 
 function WrappedApp() {
   return (
@@ -31,28 +33,30 @@ function WrappedApp() {
 
 function App() {
 
-  // const mystyle = {
-  //   background: 'yellow',
-  //   height: '100vh',
-  //   position: 'fixed'
-  // }
+  const [drawer, setDrawer] = useState(false)
 
   return (
-    <Router>
-      <div>
-        <div className={`${drawer ? 'show-drawer' : ''} drawerr`}>
-          <Link to='/'>Home</Link>
-          <Link to='/event'>Event</Link>
-          <Link to='/rsvps'>RSVPs</Link>
-        </div>
-        <AppHeader />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/event" element={<Event />} />
-        </Routes>
+    <DrawerContext.Provider value={{drawer, setDrawer}}>
+      <Router>
+        <div>
+          <div className={`${drawer ? 'show-drawer' : ''} drawer`}>
+            <div className="drawer-links">
+              <h1 className={`app-name app-name-drawer`}>Event Hub</h1>
+              <Link to='/'>Home</Link>
+              <Link to='/event'>Event</Link>
+              <Link to='/rsvps'>RSVPs</Link>
+              <span className="close-btn" onClick={() => setDrawer(false)}>&#x2715;</span>
+            </div>
+          </div>
+          <AppHeader/>
+          <Routes>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/event" element={<Event/>}/>
+          </Routes>
 
-      </div>
-    </Router>
+        </div>
+      </Router>
+    </DrawerContext.Provider>
   )
 }
 
