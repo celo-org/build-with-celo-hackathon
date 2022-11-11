@@ -3,6 +3,7 @@
 pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "./interfaces/IToucanCarbonOffsets.sol";
 
 contract AMA_SponsorEscrow {
     enum State {
@@ -15,7 +16,7 @@ contract AMA_SponsorEscrow {
 
     // Drafting with cUSD until green partner is chosen
     enum Asset {
-        TREE
+        NCT
     }
 
     struct Escrow {
@@ -40,7 +41,10 @@ contract AMA_SponsorEscrow {
     address payable ama_escrowFeeAddr; // Our Fees are taken here
     address ama_contractAddr;
 
-    IERC20 TREEToken = IERC20(0xE574F636E9Dd392987d32c6d249cda305C615b25); // AMA_TimeTreeToken contract address
+    //ToucanNCT Celo: 0x02De4766C272abc10Bc88c220D214A26960a7e92
+    //IERC20 based token
+    IToucanCarbonOffsets ToucanNCT = IToucanCarbonOffsets(0xfb60a08855389F3c0A66b29aB9eFa911ed5cbCB5); // Toucan Alfajores contract address
+    // view: https://alfajores.celoscan.io/address/0xfb60a08855389F3c0A66b29aB9eFa911ed5cbCB5
 
     uint256 public nEscrow;
     mapping(uint256 => Escrow) public escrows; // List of escrows the sponsor has
@@ -76,14 +80,15 @@ contract AMA_SponsorEscrow {
 
         newEscrow.title = title;
 
-        newEscrow.currency = Asset.TREE;
-        newEscrow.fees = value / 400; // service fee of 0.25%
+        newEscrow.currency = Asset.NCT;
+        newEscrow.fees = value / 100 * 15; // service fee of 15%
         newEscrow.funds = value - newEscrow.fees; // Lock up funds
 
         // Front end should have allowance and approve _value via Web3
-        //uint256 treeBalance = TREEToken.balanceOf(msg.sender);
-        //require(value <= treeBalance, "Insufficient funds");
-        //TREEToken.transferFrom(msg.sender, address(this), value);  // Lock up cUSD to this SC addr
+        uint256 treeBalance = ToucanNCT.balanceOf(msg.sender);
+        require(value <= treeBalance, "Insufficient funds");
+        ToucanNCT.transferFrom(msg.sender, address(this), value);  // Lock up NCTs TCO2 to this SC addr
+
 
         newEscrow.settlementTime = settlementTime;
         newEscrow.escrowState = State.ACTIVE;
@@ -127,11 +132,11 @@ contract AMA_SponsorEscrow {
     }
 
     function cancel(uint256 id) public onlySponsor(id) {
-        if (escrows[id].currency == Asset.TREE) {
-            TREEToken.allowance(address(this), payable(ama_addr));
-            TREEToken.allowance(address(this), ama_escrowFeeAddr);
-            TREEToken.transfer(payable(ama_addr), escrows[id].funds);
-            TREEToken.transfer(ama_escrowFeeAddr, escrows[id].fees);
+        if (escrows[id].currency == Asset.NCT) {
+            ToucanNCT.allowance(address(this), payable(ama_addr));
+            ToucanNCT.allowance(address(this), ama_escrowFeeAddr);
+            ToucanNCT.transfer(payable(ama_addr), escrows[id].funds);
+            ToucanNCT.transfer(ama_escrowFeeAddr, escrows[id].fees);
         }
 
         // Reset funds
@@ -146,11 +151,15 @@ contract AMA_SponsorEscrow {
             //&& escrows[id].sponsorApproval
         ) {
             // Everyone must Approve
-            if (escrows[id].currency == Asset.TREE) {
-                TREEToken.allowance(address(this), escrows[id].partner);
-                TREEToken.allowance(address(this), ama_escrowFeeAddr);
-                TREEToken.transfer(escrows[id].partner, escrows[id].funds);
-                TREEToken.transfer(ama_escrowFeeAddr, escrows[id].fees);
+            // Retire TCOs and take our fee
+            if (escrows[id].currency == Asset.NCT) {
+                //ToucanNCT.allowance(address(this), escrows[id].partner);
+                //ToucanNCT.allowance(address(this), ama_escrowFeeAddr);
+                //ToucanNCT.transfer(escrows[id].partner, escrows[id].funds);
+                ToucanNCT.transfer(ama_escrowFeeAddr, escrows[id].fees);
+                ToucanNCT.retireFrom(address(this), escrows[id].funds);
+
+                emit SponorshipRetired(address(this), escrows[id].sponsor, id, escrows[id].funds);
             }
 
             escrows[id].funds = 0;
@@ -161,26 +170,38 @@ contract AMA_SponsorEscrow {
         }
     }
 
+    event SponorshipRetired(
+        address who,
+        address sponsor,
+        uint256 escrow,
+        uint256 amount
+    );
+
+
     /**
      * @notice returns the portion of the request available
      */
-    function userFaucet(uint256 id, uint256 requestValue) public onlyWhitelisted returns (uint256) {
+    function userFaucet(uint256 id, uint256 trees) public onlyWhitelisted returns (uint256) {
         //** limit requests for funds per address per period
+        //1 'Trees' = 8 seedlings in the app
+
+        uint256 debitValue = trees; // 1 tree = 1 ton.
+
         require(escrows[id].escrowState == State.ACTIVE, "Escrow unavailable to faucet");
-        require(requestValue <= 8, "Request level exceeded");
+        require(debitValue <= 1, "Request level exceeded");
         require(block.timestamp > lockTime[msg.sender], "You can't request again so soon. Please try again later");
 
         uint256 funds = escrows[id].funds;
-        if (requestValue > funds) {
-            requestValue = funds;
+        if (debitValue > funds) {
+            debitValue = funds;
             releaseFunds(id); // close the fund
         }
-        escrows[id].funds = escrows[id].funds - requestValue;
+        escrows[id].funds = escrows[id].funds - debitValue;
 
         //keep this user out for a while
         lockTime[msg.sender] = block.timestamp + 4 hours;
 
-        return requestValue;
+        return debitValue;
     }
 
     modifier onlyWhitelisted() {

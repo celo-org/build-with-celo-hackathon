@@ -86,7 +86,7 @@ export default function Index() {
       {/* Navbar */}
       <nav className="fren-nav d-flex">
         <div>
-          <h3>MENU_</h3>
+          <h3><Link href="/sponsor">Sponsor</Link></h3>
         </div>
         <div className="d-flex" style={{ marginLeft: "auto" }}>
           <div>
