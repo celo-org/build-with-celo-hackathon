@@ -9,6 +9,8 @@ class CryptoWallet {
       universalLink: 'https://rainbow.me/', deeplink: 'rainbow://');
   static const CryptoWallet talken =
       CryptoWallet(universalLink: 'https://talken.io');
+  static const CryptoWallet valora =
+  CryptoWallet(universalLink: 'https://talken.io');
 
   /// universal link for iOS
   final String universalLink;

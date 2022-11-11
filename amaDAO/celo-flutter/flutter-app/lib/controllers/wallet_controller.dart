@@ -69,22 +69,23 @@ class WalletController extends ChangeNotifier {
       // print(val)
 
       var val = BigInt.parse("200"); 
-;
+
       var contractAddress = "0x15084Af99493C80E537C24647957CBC4b2b566f7";
     
       var cred = walletConnectHelper.getEthereumCredentials();
+      
       var contractAbi = Storage(address: EthereumAddress.fromHex(contractAddress), client: web3client);
-      await contractAbi.store(val, credentials: cred );
-
-      var valRet = await contractAbi.retrieve();
-      print(valRet);
+      // await contractAbi.store(val, credentials: cred );
+      //
+      // var valRet = await contractAbi.retrieve();
+      // print(valRet);
 
     
-      //var cred = Credentials();
-      //var credentials = web3client.credentialsFromPrivateKey("0x...");
+      // var cred = Credentials();
+      var credentials = web3client.credentialsFromPrivateKey("0x...");
 
-      //contract.store(val, credentials: publicWalletAddress.);
-      //contract.retrieve();
+      contractAbi.store(val, credentials: cred);
+      contractAbi.retrieve();
 
       // Update ui
       notifyListeners();

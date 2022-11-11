@@ -5,7 +5,7 @@ class PrimaryButton extends StatelessWidget {
   final String text;
   final Color background ;
   final double radius;
-  final double padding;
+  final EdgeInsetsGeometry padding;
   final double margin;
   final GestureTapCallback onTap;
   final Color textColor;
@@ -15,7 +15,7 @@ class PrimaryButton extends StatelessWidget {
       {Key? key,
         this.background = const Color(0xff2ec955),
         this.radius = 8,
-        this.padding = 10,
+        this.padding = const EdgeInsets.all(8),
         this.margin = 10,
         this.textColor = const Color(0xff000000),
   }) : super(key: key);
@@ -25,7 +25,7 @@ class PrimaryButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.all(padding),
+        padding: padding,
         margin: EdgeInsets.all(margin),
         decoration: BoxDecoration(
           color: background,

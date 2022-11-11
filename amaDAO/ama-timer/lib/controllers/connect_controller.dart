@@ -1,123 +1,54 @@
-import 'dart:math';
 
-import 'package:eip55/eip55.dart';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_web3/flutter_web3.dart';
+
 import 'package:web3dart/web3dart.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../model/app_info.dart';
-import '../utils/constants.dart';
-import '../utils/wallet_connect_helper.dart';
+class ConnectController extends ChangeNotifier{
+  static const chainId = 4;
 
-class WalletController extends ChangeNotifier {
-  bool balRefresh = false;
-  int bottomNavbarIndex = 0;
+  String currentAddress = "";
+  int currentChain = -1;
+  bool get isEnabled => ethereum !=null;
+  bool get isInOperatingChain =>  chainId==currentChain;
+  bool get isConnected => isEnabled &&  currentAddress.isNotEmpty;
 
-  EtherAmount bal = EtherAmount.fromUnitAndValue(EtherUnit.wei, 0);
-
-  final WalletConnectHelper walletConnectHelper = WalletConnectHelper(
-    bridge: GlobalConstants.bridge,
-    appInfo: AppInfo(
-      name: GlobalConstants.name,
-      description: GlobalConstants.name,
-      url: GlobalConstants.url,
-    ),
-  );
-
-  bool isConnectWallet = false;
-  String? publicWalletAddress;
-  init() {
-
-    SharedPreferences.getInstance().then((value)  {
-      publicWalletAddress = value.getString('address');
-      isConnectWallet = value.getBool('connected')==true;
-      if(isConnectWallet){
-        walletConnectHelper.getWalletConnect();
+  Future<void> connect() async{
+    if(isEnabled){
+      final acess = await ethereum!.requestAccount();
+      print(acess);
+      if(acess.isNotEmpty) {
+        currentAddress = acess.first;
+        print(currentAddress);
       }
-    });
-
-  }
-
-  late Web3Client web3client;
-  //late StreamChicken2Contract contract;
-
-
-
-  void connectWallet(context) async {
-    print("connect to Wallet");
-
-    isConnectWallet =
-    await walletConnectHelper.initSession(context, chainId: GlobalConstants.testnetChainId);
-    print(isConnectWallet);
-    if (isConnectWallet) {
-      publicWalletAddress = walletConnectHelper
-          .getEthereumCredentials()
-          .getEthereumAddress()
-          .toString();
-
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('address', publicWalletAddress!);
-      await prefs.setBool('connected', true);
-      walletConnectHelper.getEthereumCredentials().provider;
-
-
-      // publicWalletAddress = toEIP55Address(publicWalletAddress!);
-
-      // Init web3client
-      initWeb3Client();
-
-      // get Balance
-      await getBalance();
-
-      // Init contract
-      //initContract();
-
-      // Update ui
+      currentChain = await ethereum!.getChainId();
       notifyListeners();
     }
   }
 
-  void updateBottomNavbarIndex(int value) {
-    bottomNavbarIndex = value;
+  clear(){
+    currentAddress="";
+    currentChain = -1;
     notifyListeners();
+    // update();
   }
+  init(){
+    // var prefs = SharedAppData()
 
-  // Disconnet wallet
-  void disconnectWallet() {
-    walletConnectHelper.dispose();
-    isConnectWallet = false;
-    publicWalletAddress = null;
-    bottomNavbarIndex = 0;
-    notifyListeners();
+  if(isEnabled){
+    ethereum!.onAccountsChanged((accounts) {
+      clear();
+    });
+    ethereum!.onChainChanged((accounts) {
+      clear();
+    });
+
   }
-
-  void initWeb3Client() {
-    web3client = Web3Client(GlobalConstants.apiUrl, Client());
-  }
-
-  Future getBalance() async {
-    var address =
-    await walletConnectHelper.getEthereumCredentials().extractAddress();
-    bal = await web3client.getBalance(address);
-    notifyListeners();
-  }
-
-  // Send token
-  void makeContract() async {
-    var val = BigInt.parse("200");
-
-    var contractAddress = publicWalletAddress;
-
-    var cred = walletConnectHelper.getEthereumCredentials();  //Fails here (need to cast?)
-    // var contractAbi = Storage(address: EthereumAddress.fromHex(contractAddress), client: web3client);
-    // await contractAbi.store(val, credentials: cred );
-    //
-    // var valRet = await contractAbi.retrieve();
-    // print(valRet);
   }
 
 
-
+  static const address = '';
+  static const deadAddress = '';
+  Contract? contract;
   String abi ='''[
   {
     "inputs": [],
@@ -403,7 +334,6 @@ class WalletController extends ChangeNotifier {
   }
 ]''';
 
-
   Future<DeployedContract> loadContract() async {
     // String abi = await rootBundle.loadString('assets/ama.abi.json');
     // contract address
@@ -414,17 +344,27 @@ class WalletController extends ChangeNotifier {
   }
 
   Future<dynamic> userFaucet(int id, int seeds) async {
-    final cred = walletConnectHelper.getEthereumCredentials();
+
+    ethereum?.request("method",[]);
+    "params: ["
+        "{ from: '0xb60e8dd61c5d32be8058bb8eb970870f07233155',"
+        "to: '0xd46e8dd67c5d32be8058bb8eb970870f07244567',"
+        "gas: '0x76c0', "
+        "gasPrice: '0x9184e72a000',"
+        "value: '0x9184e72a',"
+        "data:'0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675',},]";
+    // final cred = walletConnectHelper.getEthereumCredentials();
     // final privateKey  = EthPrivateKey.fromHex("he");
     final contract = await loadContract();
     final function = contract.function("userFaucet");
-    final result = await web3client.callRaw(
-      // sender: cred.getEthereumAddress(),
-      contract:contract.address,
-      data:function.encodeCall([
-        BigInt.from(id),BigInt.from(seeds),
-      ]),
-    );
+    final result = "";
+    // final result = await web3client.callRaw(
+    //   // sender: cred.getEthereumAddress(),
+    //   contract:contract.address,
+    //   data:function.encodeCall([
+    //     BigInt.from(id),BigInt.from(seeds),
+    //   ]),
+    // );
 
     print("result from userFaucet: $result");
 
@@ -453,19 +393,7 @@ class WalletController extends ChangeNotifier {
     // );
     return result;
   }
-  Future<dynamic> userFaucetFunction(int id,int seeds) async  {
-    final contract = await loadContract();
-    final function = contract.function('userFaucet');
-    final transaction = Transaction.callContract(
-        contract: contract,
-        function: function,
-        parameters: [
-          BigInt.from(id),BigInt.from(seeds),
-        ]);
-    final cred = walletConnectHelper.getEthereumCredentials();
 
-    return web3client.sendTransaction(cred, transaction);
-  }
 
 
 }
