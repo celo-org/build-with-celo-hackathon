@@ -1,0 +1,73 @@
+
+.event-container {
+    display: grid;
+    grid-template-columns: 25% 25% 25%;
+    justify-content: center;
+}
+
+.event-item {
+    display: grid;
+    justify-content: center;
+    margin: 20px;
+    font-size: 14px;
+}
+
+.event-item span {
+    margin-bottom: 8px;
+}
+
+.event-item:nth-child(1) {
+    border: 2px solid #A072FF;
+    border-radius: 8px;
+    color: #A072FF;
+    padding: 20px 24px;
+}
+
+.event-item:nth-child(1) button{
+    border: 4px solid #A072FF;
+    border-radius: 8px;
+    background: #A072FF;
+    padding: 14px 20px;
+    font-weight: 900;
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+.event-item:nth-child(2) {
+    border: 2px solid #00A84F;
+    border-radius: 8px;
+    color: #00A84F;
+    padding: 20px 24px;
+}
+
+.event-item:nth-child(2) button{
+    border: 4px solid #00A84F;
+    border-radius: 8px;
+    background: #00A84F;
+    padding: 14px 20px;
+    font-weight: 900;
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+.event-item:nth-child(3) {
+    border: 2px solid #FF9602;
+    border-radius: 8px;
+    color: #FF9602;
+    padding: 20px 24px;
+}
+
+.event-item:nth-child(3) button{
+    border: 4px solid #FF9602;
+    border-radius: 8px;
+    background: #FF9602;
+    padding: 14px 20px;
+    font-weight: 900;
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+.event-item img{
+    max-height: 150px;
+}
+

@@ -1,11 +1,11 @@
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import {BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom'
 import AppHeader from './components/layout/Header'
 import Home from './pages/Home'
 import Event from './pages/Event'
 import { CeloProvider, Alfajores, NetworkNames } from '@celo/react-celo';
 import '@celo/react-celo/lib/styles.css'
-import './App.css'
+import './app.css'
 
 function WrappedApp() {
   return (
@@ -31,9 +31,20 @@ function WrappedApp() {
 
 function App() {
 
+  // const mystyle = {
+  //   background: 'yellow',
+  //   height: '100vh',
+  //   position: 'fixed'
+  // }
+
   return (
     <Router>
-      <div className="App">
+      <div>
+        <div className={`${drawer ? 'show-drawer' : ''} drawerr`}>
+          <Link to='/'>Home</Link>
+          <Link to='/event'>Event</Link>
+          <Link to='/rsvps'>RSVPs</Link>
+        </div>
         <AppHeader />
         <Routes>
           <Route path="/" element={<Home />} />

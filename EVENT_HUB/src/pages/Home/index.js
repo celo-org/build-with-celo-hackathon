@@ -1,9 +1,8 @@
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useCelo } from '@celo/react-celo'
-import axios from 'axios'
-import { eventHubContractAddress} from '../../utils'
-import EventHub from '../../artifacts/contracts/EventHub.sol/EventHub.json'
+import Events from '../../components/Events'
 
 import uspImg from '../../assets/img/usp-img.png'
 
@@ -13,115 +12,14 @@ import styles from './Home.module.css'
 const Home = () => {
   const ipfsGateway = 'https://gateway.pinata.cloud/ipfs'
 
+  const navigate = useNavigate()
+
   const { connect, address, kit } = useCelo()
   const [events, setEvents] = useState([])
   const [status, setStatus] = useState('')
 
 
-const getBalance = async () => {
-  const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
-  const res = await eventHubContract.methods.getBalance().call()
-  console.log(res)
-}
 
-  const rsvp = async (eventId, deposit) => {
-
-    try {
-      if (address) {
-        //TODO make function modular.
-        const stableToken = await kit.contracts.getStableToken()
-        const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
-        // const res = await eventHubContract.methods.createNewRSVP(eventId).call()
-        const res = await eventHubContract.methods.createNewRSVP(eventId).send({
-          from: address,
-          feeCurrency: stableToken.address,
-          gasLimit: '210000',
-          value: deposit
-        })
-        console.log(res)
-      } else {
-        const result = await connect()
-        if (result) {
-          const stableToken = await kit.contracts.getStableToken()
-          const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
-          const res = await eventHubContract.methods.createNewRSVP(eventId).send({
-            from: address,
-            feeCurrency: stableToken.address,
-            gasLimit: '210000',
-            value: deposit
-          })
-          console.log(res)
-        }
-      }
-    } catch (e) {
-      console.log(e.message)
-    }
-  }
-
-  const confirm = async (eventId) => {
-    const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
-    const txHash = await eventHubContract.methods.getConfirmedRSVPs(eventId).call()
-    console.log(txHash)
-
-  }
-
-  const confirmAttendee = async (eventId) => {
-
-    try {
-      const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
-
-      const txHash = await eventHubContract.methods.confirmAttendee(eventId, '0x01a3f5cB1BCf260d12A2466cE075398aAB8cA610').send({
-      // const txHash = await eventHubContract.methods.confirmAttendee(eventId, '0x9Edd3fb21e1BC3dBE3c5BCf8AB8044c706AAEA9C').send({
-        from: address,
-        gasLimit: '210000'
-      })
-      // const txHash = await eventHubContract.methods.confirmAttendee(eventId, address).send({from: address})
-      // const txHash = await eventHubContract.methods.getEventLength().call()
-      console.log('gg ', txHash)
-    } catch (e) {
-      setStatus(e.message)
-    }
-
-  }
-
-  const test = async eventId => {
-    const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
-    const txHash = await eventHubContract.methods.getEvent(eventId).call()
-    // const txHash = await eventHubContract.methods.withdrawUnclaimedDeposits(eventId).call()
-    console.log(txHash)
-  }
-
-  const transfer = async eventId => {
-    const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
-    // const txHash = await eventHubContract.methods.withdrawUnclaimedDeposits(eventId).call()
-    const txHash = await eventHubContract.methods.payOut(eventId).send({
-      from: address,
-      gasLimit: '210000'
-    })
-    console.log(txHash)
-  }
-
-  useEffect( () => {
-    async function eventList () {
-
-      const url = `https://api.pinata.cloud/data/pinList?status=pinned`
-      const res = await axios
-        .get(url, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${process.env.REACT_APP_PINATA_JWT}`
-          }
-        })
-        .then(function (response) {
-          return response.data.rows
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-      setEvents(res)
-    }
-    eventList()
-  }, [])
 
   return (
     <div className={styles.container}>
@@ -136,23 +34,13 @@ const getBalance = async () => {
         <img src={uspImg} alt="usp"/>
       </div>
 
-      {events.length && events.map(event => (
-        <div>
-          <img width="200px" src={`${ipfsGateway}/${event.ipfs_pin_hash}`} alt=""/>
-          <div>EVent Name: { event.metadata.keyvalues.name }</div>
-          <div>Time: { event.metadata.keyvalues.dateAndTime }</div>
-          <div>CID: { event.ipfs_pin_hash }</div>
-          <div>Maximum capacity: { event.metadata.keyvalues.capacity }</div>
-          <div>Deposit: { kit.connection.web3.utils.fromWei(event.metadata.keyvalues.deposit, 'ether') }</div>
-          <button onClick={() => rsvp(event.ipfs_pin_hash, event.metadata.keyvalues.deposit)}>RSVP</button>
-          <button onClick={() => confirm(event.ipfs_pin_hash)}>Get confirmed RSVP</button>
-          <button onClick={() => confirmAttendee(event.ipfs_pin_hash)}>Confirm Attendee</button>
-          <button onClick={() => test(event.ipfs_pin_hash)}>test</button>
-          <button onClick={() => transfer(event.ipfs_pin_hash)}>Transfer</button>
-          <button onClick={getBalance}>Get Balance</button>
-          <h4>{status}</h4>
+      <div className={`app-bg ${styles.events}`}>
+        <h1>Upcoming Events</h1>
+        <Events/>
+        <div className={styles['button-container-div']}>
+          <button onClick={() => navigate('/event')} className="app-btn">VIEW MORE</button>
         </div>
-      ))}
+      </div>
     </div>
   )
 }

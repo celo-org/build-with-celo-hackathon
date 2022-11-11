@@ -1,0 +1,26 @@
+.drawerr {
+    /*height: 0;*/
+    /*width: 100%;*/
+    /*position: fixed;*/
+    /*bottom: 0;*/
+    /*z-index: 999;*/
+    /*transition: 0.5s;*/
+    /*background: #9ca3af;*/
+    /*overflow-y: hidden;*/
+
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 99999; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: red; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s;
+}
+
+.show-drawer {
+    /*height: 100%;*/
+    width: 300px;
+}

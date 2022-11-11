@@ -1,5 +1,5 @@
-// import { Link } from 'react-router-dom'
-import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import { useCelo } from '@celo/react-celo'
 import { truncate } from '../../../utils'
 
@@ -9,6 +9,8 @@ function AppHeader() {
 
   const { address, connect } = useCelo()
 
+  const [drawer, setDrawer] = useState(false)
+
 
   useEffect(() => {
     // connect()
@@ -16,17 +18,13 @@ function AppHeader() {
 
   return (
     <header className={`app-pd app-bg ${styles.header}`}>
-      <div className={styles['menu-icon']}>
+      <div onClick={() => setDrawer(!drawer)} className={styles['menu-icon']}>
         <div></div>
         <div></div>
       </div>
-      {/*<div>*/}
-      {/*  <Link to='/'>Home</Link>*/}
-      {/*  <Link to='/event'>Event</Link>*/}
-      {/*  <Link to='/rsvps'>RSVPs</Link>*/}
-      {/*</div>*/}
+
       <div className={styles.connect}>
-        {address ? <button>{truncate(address)}</button> : <button onClick={connect}>CONNECT</button>}
+        {address ? <button className="app-btn">{truncate(address)}</button> : <button className="app-btn" onClick={connect}>CONNECT</button>}
       </div>
     </header>
   )
