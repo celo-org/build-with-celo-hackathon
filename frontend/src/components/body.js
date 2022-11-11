@@ -23,8 +23,8 @@ const Body = () => {
                                 <Parallax translateY={[-20, 25]}>
                                     <p>
                                         <Fancybox options={{ infinite: false }} >
-                                            <a href="https://www.youtube.com/watch?v=E1xkXZs0cAQ" class="btn btn-white btn-outline-white px-4 py-3 popup-vimeo" data-fancybox="gallery"
-                                                data-src="https://www.youtube.com/watch?v=E1xkXZs0cAQ" >
+                                            <a href="https://youtu.be/AKzF2fLbWLE" class="btn btn-white btn-outline-white px-4 py-3 popup-vimeo" data-fancybox="gallery"
+                                                data-src="https://youtu.be/AKzF2fLbWLE" >
                                                 <span class="icon-play mr-2"></span>Watch Video</a>
                                         </Fancybox>
 
