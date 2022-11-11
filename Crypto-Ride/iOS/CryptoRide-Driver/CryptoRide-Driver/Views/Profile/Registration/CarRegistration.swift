@@ -9,9 +9,6 @@ import SwiftUI
 
 struct CarRegistration: View {
     
-    //@State var carMake = ""
-    //@State var carColor = ""
-    //@State var carNumberOfDoors = ""
     
     @EnvironmentObject var profileVM:ProfileViewModel
     

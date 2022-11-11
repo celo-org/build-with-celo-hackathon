@@ -9,10 +9,6 @@ import SwiftUI
 
 struct ProfileRegistration: View {
     
-    // Could add more
-    //@State var twitter = ""
-    //@State var facebook = ""
-    //@State var instagram = ""
     
     @EnvironmentObject var profileVM:ProfileViewModel
     

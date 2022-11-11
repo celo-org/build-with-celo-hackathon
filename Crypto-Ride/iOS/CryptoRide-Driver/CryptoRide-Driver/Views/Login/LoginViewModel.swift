@@ -9,17 +9,18 @@ import Foundation
 import web3swift
 
 class LoginViewModel:ObservableObject {
+    // login credentials
     @Published var credentials = Credentials()
-    
+    // progress during loading
     @Published var showProgressView = false
-    
+    // keyStore errors
     @Published var error:WalletServices.KeyStoreServicesError?
-    
+    // bool if keyStore exist on device
     @Published var hasKeyStore = WalletServices.shared.hasKeyStore
-
+    // mnemonics for newly created wallets
     @Published var mnemonics = ""
 
-    
+    // MARK: login
     func login(completion: @escaping(Bool) -> Void) {
         
         // Create keystore if no keystore was found

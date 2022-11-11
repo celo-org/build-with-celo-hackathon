@@ -11,10 +11,24 @@ struct LoginView: View {
     @StateObject private var loginVM = LoginViewModel()
     @EnvironmentObject var authentication:Authentication
     
+    @State var isLoading = false
+    @State private var animateGradient = false
+    
     var body: some View {
         ZStack(alignment: .top) {
             
+            LinearGradient(colors: [Color("PrimaryGreen"), Color("CeloGold")], startPoint: animateGradient ? .topLeading : .bottomLeading, endPoint: animateGradient ? .bottomTrailing : .topTrailing)
+                .ignoresSafeArea()
+                .onAppear {
+                    withAnimation(.linear(duration: 8.0).repeatForever(autoreverses: true)) {
+                        animateGradient.toggle()
+                    }
+                }
+            .edgesIgnoringSafeArea(.all)
+            
             VStack(alignment: .center) {
+                Text("CryptoRide").font(.title).bold().padding()
+                Text("Driver").font(.title3).bold().padding()
                 Spacer()
                 
                 VStack(alignment: .leading,spacing: 10){
@@ -22,45 +36,41 @@ struct LoginView: View {
                     Text(loginVM.hasKeyStore ? "Password":"New Password")
                         .font(.subheadline)
                         .bold()
-                    TextField("",text: $loginVM.credentials.password)
-                    Button{
-                        loginVM.login {success in
-                                // Update validation
-                                //if loginVM.hasKeyStore {
-                                authentication.updateValidation(success: success)
-                                //}
+                    TextField("",text: $loginVM.credentials.password).disabled(isLoading)
+                    HStack{
+                        Spacer()
+                        if isLoading {
+                            ProgressView()
+                                .tint(.blue)
+                            Spacer()
+                        }else{
+                            Button{
+                                isLoading = true
+                                loginVM.login {success in
+                                    isLoading = false
+                                    authentication.updateValidation(success: success, password:loginVM.credentials.password )
+                                }
+                            }label: {
+                                Text("login")
                             }
-                    }label: {
-                        Text("login")
+
+                        }
+
                     }
                 }.padding([.leading, .trailing], 20)
                 Spacer()
-                
-                HStack{
-                    Button("New Wallet"){
-                        print("off")
-                    }
-                    Spacer()
-                    Button("Import Wallet"){
-                        print("off")
-                    }
+                VStack{
+                    Text("Powered By").font(.subheadline).bold().lineLimit(2)
+                    Image("Celo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 80, height: 30, alignment: .center)
                 }
-                Spacer()
+            
             }
 
         }.textFieldStyle(.roundedBorder)
-            .buttonStyle(.borderedProminent)
-        
-        
-        
-        //.toolbar {
-        //    ToolbarItem(placement: .navigationBarTrailing) {
-                //NavigationLink(destination: ProfileView(isRegistered: false)
-        //        ){
-        //            Text("Import Wallet")
-        //        }
-        //    }
-        //}
+        .buttonStyle(.borderedProminent)
         .navigationTitle("Crypto Driver")
         .navigationViewStyle(StackNavigationViewStyle())
         .navigationBarTitleDisplayMode(.inline)

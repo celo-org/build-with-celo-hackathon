@@ -47,6 +47,8 @@ struct showToDropOff: View {
                             isLoading = true
                             rideService.driverConfirmsDropOff(passengerRating: rating.driverRating) {
                                 result in
+                                
+                                confirmDropOff = false
                                 // wait for event
                             }
                         }, label: {
@@ -58,6 +60,7 @@ struct showToDropOff: View {
                 }.background(.bar)
                     .padding()
                     .cornerRadius(15)
+                    .clipShape(Rectangle())
                 Spacer()
             }else{
                 VStack{
@@ -73,18 +76,19 @@ struct showToDropOff: View {
                             confirmDropOff.toggle()
                         }, label: {
                             Text("Confirm Drop Off")
-                        })
+                        }).disabled(isLoading)
                     }
                     
                     HStack{
                         Spacer()
                         Text("Current Task:").font(.title2).bold()
-                        Text("Take Passenger to drop Off location").font(.headline).padding()
+                        Text("Take Passenger to drop off location.").font(.headline).padding()
                         Spacer()
                     }
                 }.background(.bar)
                     .padding()
                     .cornerRadius(15)
+                    .clipShape(Rectangle())
             }
            
         }

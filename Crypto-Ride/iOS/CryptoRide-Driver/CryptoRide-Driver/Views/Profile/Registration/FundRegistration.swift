@@ -42,7 +42,8 @@ struct FundRegistration: View {
                 Text("CELO:\(balance.CELO)").font(.title3)
                 Text("cUSD:\(balance.cUSD)").font(.title3)
                 Button{
-                    balance.getTokenBalance()
+                    balance.getTokenBalance(.CUSD)
+                    balance.getTokenBalance(.Celo)
                 }label: {
                     Image(systemName: "arrow.clockwise.circle.fill")
                         .resizable()
@@ -51,7 +52,9 @@ struct FundRegistration: View {
                         .frame(width: 40, height: 40, alignment: .center)
                 }
             }
-            
+            SecureField("Wallet Password", text: $profileVM.password)
+                .multilineTextAlignment(.center) 
+                .textFieldStyle(.roundedBorder)
             Spacer()
         }
 

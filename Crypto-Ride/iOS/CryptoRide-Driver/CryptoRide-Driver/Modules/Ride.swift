@@ -10,6 +10,8 @@ import web3swift
 import MapKit
 import BigInt
 
+// MARK: RideState
+/// Ride states within the smart contract
 enum RideState {
     case None
     case Announced
@@ -24,10 +26,12 @@ enum RideState {
 struct AnnouncedRide {
     let rideId: String
     let valueId: String
+    let passengerAddress:EthereumAddress
     let addressCount: Int
     let driverAddress:[EthereumAddress]
 }
 
+// MARK: Ride
 struct Ride {
     var shared:Bool = false
     var startCoordinates:CLLocationCoordinate2D? = nil

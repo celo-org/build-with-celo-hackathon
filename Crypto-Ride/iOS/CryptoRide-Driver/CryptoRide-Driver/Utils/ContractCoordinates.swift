@@ -11,15 +11,23 @@ import CoreLocation
 
 class ContractCoordinates {
     
+    
     // MARK: encodeCoordinate
     /// Custom coordinate formate for soldity contracts
     ///
     /// First number represents how many positions the decimals sites
-    /// Second number presents is point is negative
+    /// Second number represents is point is negative
     ///             - 2 is negative
     ///             - 1 is positive
+    ///
+    /// [37.35022091004023,  -122.00158516290249]
+    /// [37.306514947930125, -122.02955449841939]
+    ///
+    /// [313735022091004023,  4212200158516290249]
+    /// [3137306514947930125,4212202955449841939]
+    ///
     /// - Parameters:
-    ///         - `coordinates` CLLocationCoordinate2D location
+    ///         - `coordinates` CLLocationCoordinate2D coordinate points to encode
     ///
     static func encodeCoordinate(coordinates:CLLocationCoordinate2D) -> [Int] {
         let long = Double(coordinates.longitude)
@@ -47,7 +55,7 @@ class ContractCoordinates {
         // Get index of the decimal
         let rangeLong: Range<String.Index> = stringLong.range(of: ".")!
         let indexLong: Int = stringLong.distance(from: stringLong.startIndex, to: rangeLong.lowerBound)
-        // Insert decmial index at first index of string
+        // Insert decmial index from start index of string
         stringLong.insert(contentsOf: String(indexLong), at: stringLong.startIndex)
         // Remove decimal point
         stringLong = stringLong.replacingOccurrences(of: ".", with: "", options: .literal, range: nil)
@@ -70,20 +78,23 @@ class ContractCoordinates {
     // MARK: decodeCoordinate
     /// Custom coordinate formate for soldity contracts
     ///
-    /// First number represents how many positions the decimals sites
+    /// First number represents how many whole numbers left of the decimal point
     /// Second number presents is point is negative
     ///             - 2 is negative
     ///             - 1 is positive
     /// - Parameters:
-    ///         - `coordinates`  location
+    ///         - `coordinates` array of `BigUInt`as  encoded coordinate points
     ///
     static func decodeCoordinate(coordinates:[BigUInt]) -> CLLocationCoordinate2D {
-
+        // arraify the BigUInt
         var seqLat = Array(coordinates[0].description)
+        // get whole number count
         let latDecimalPoint = seqLat[0].wholeNumberValue
+        // remove whole number count
         seqLat.remove(at:0)
+        // insert decimal point
         seqLat.insert(".", at: latDecimalPoint!)
-        // Replace index 1 with neg if value is two
+        // replace second index with neg if value is two
         if seqLat[1] == "2" {
             seqLat[1] = "-"
         }else{
@@ -101,7 +112,7 @@ class ContractCoordinates {
         }else{
             seqLong.remove(at: 0)
         }
-
+        // Cast long and lat into strings
         let formatLong = String(seqLong)
         let formatLat = String(seqLat)
         

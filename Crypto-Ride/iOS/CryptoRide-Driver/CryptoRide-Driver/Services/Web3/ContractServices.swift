@@ -11,37 +11,38 @@ import BigInt
 
 
 class ContractServices {
-    
+    // Shared contract instance
     static let shared = ContractServices()
-    
+    // Web3 instance
     private var w3:web3
+    // Wallet from keyManager
     private var wallet:Wallet
     
+    // Contract addresses
     private var rideManagerContract:web3.web3contract
-    private var tokenContract:web3.web3contract
+    private var cUSDContract:web3.web3contract
+    private var CeloContract:web3.web3contract
        
     init() {
         
+        // Get wallet data from keystore manager
         let keystore = WalletServices.shared.keystoreManager!
-        
-        //print(keystore.addresses)
-        //let keystore = try! EthereumKeystoreV3(privateKey: Data(hex: "11ddbb8a140f4593a91070c4b179c802dc9bff5933e3d441ecc823b49939f417"))!
-    
         let keyData = try! JSONEncoder().encode(keystore.keystoreParams);
         let address = keystore.addresses!.first!.address
-    
         wallet = Wallet(address: address, data: keyData, name: "Driver", isHD: true)
   
-        // add wallet data to keystoreManager
+        // add keystore to keystoreManager used for signing tx
         let keystoreManager = KeystoreManager([keystore])
-        
+        // Set up web provider
         let provider = Web3HttpProvider(URL(string: alfajoresTestnet.rpcEndpoint)!, network: .Custom(networkID: alfajoresTestnet.chainId))
         w3 = web3(provider: provider!)
         w3.addKeystoreManager(keystoreManager)
         
         
         // TODO change erc20 abi with celo's token abi
-        tokenContract = w3.contract(Web3.Utils.erc20ABI, at: cUSD , abiVersion: abiVerison)!
+        // Construct contract address 
+        cUSDContract = w3.contract(Web3.Utils.erc20ABI, at: cUSD , abiVersion: abiVerison)!
+        CeloContract = w3.contract(Web3.Utils.erc20ABI, at: CELO , abiVersion: abiVerison)!
         rideManagerContract = w3.contract(rideManagerAbi,at:rideManagerAddress,abiVersion:abiVerison )!
        
     }
@@ -52,18 +53,39 @@ class ContractServices {
         return self.wallet
     }
     
-    
-    public func getContract(contract:Contracts) -> web3.web3contract{
+    // MARK: getContract
+    /// match contract enum to web3 contract
+    ///
+    ///
+    /// - Parameters :
+    ///              `contract` : Contracts  Enum - Contract  to get
+    ///
+    /// - Returns: web3.web3contract of related contract
+    private func getContract(contract:Contracts) -> web3.web3contract{
         switch(contract) {
         case Contracts.RideManager:
             return rideManagerContract
-        case Contracts.Token:
-            return tokenContract
+        case Contracts.CUSD:
+            return cUSDContract
+        case Contracts.Celo:
+            return CeloContract
         }
     }
     
-
-    func read(contractId:Contracts,method:String,parameters:[AnyObject],completion:@escaping(Result<[String:Any],Web3Error>) -> Void) {
+    // MARK: read
+    /// async method to read data from a given contract method
+    ///
+    ///
+    /// - Parameters :
+    ///               `contractId` : Enum type - as contract used to read from
+    ///
+    ///               `method` : String - called contract methods
+    ///
+    ///               `parameters` :  [AnyObject] - parameters associated with contract call
+    ///
+    /// - Returns: completion: <String:Any> on success , `ContractError` on failure
+    ///
+    func read(contractId:Contracts,method:String,parameters:[AnyObject],completion:@escaping(Result<[String:Any],ContractError>) -> Void) {
     
         let contract = getContract(contract: contractId)
         DispatchQueue.global().asyncAfter(deadline: .now()){ [unowned self] in
@@ -73,14 +95,12 @@ class ContractServices {
 
                 let extraData: Data = Data() // Extra data for contract method
                 
-                //var options = TransactionOptions
                 
                 var options = TransactionOptions.defaultOptions
                 options.from = senderAddress
                 options.gasPrice = .automatic
                 options.gasLimit = .automatic
                 
-        
                 let tx = contract.read(method,
                                        parameters: parameters,
                                        extraData: extraData,
@@ -90,12 +110,23 @@ class ContractServices {
                
                 completion(.success(result))
             }catch {
-                completion(.failure(error as! Web3Error))
+                completion(.failure(ErrorFilter.typeCheck(error: error)))
             }
         }
     }
-  
-    func write(contractId:Contracts,method:String,parameters:[AnyObject],password:String,completion:@escaping(Result<TransactionSendingResult,Web3Error>) -> Void) {
+    
+    // MARK: write
+    /// async method to write data to a given contract method
+    ///
+    /// - Parameters :
+    ///                 - `contractId` : Enum type - as contract used to read from
+    ///                 - `method` : String - called contract methods
+    ///                 - `parameters` :  [AnyObject] - parameters associated with contract call
+    ///                 - `password`:String - password of keymanager used to sign transaction
+    ///
+    /// - Returns: completion: `TransactionSendingResult` on success , `ContractError` on failure
+    ///
+    func write(contractId:Contracts,method:String,parameters:[AnyObject],password:String,completion:@escaping(Result<TransactionSendingResult,ContractError>) -> Void) {
         let contract = getContract(contract: contractId)
         DispatchQueue.global().async{ [unowned self] in
             do{
@@ -118,7 +149,8 @@ class ContractServices {
            
                 completion(.success(result))
             }catch {
-                completion(.failure(error as! Web3Error))
+                
+                completion(.failure(ErrorFilter.typeCheck(error: error)))
                 
             }
         }

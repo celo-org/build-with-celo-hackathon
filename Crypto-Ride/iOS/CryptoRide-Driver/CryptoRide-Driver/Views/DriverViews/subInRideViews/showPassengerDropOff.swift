@@ -22,6 +22,7 @@ struct showPassengerDropOff: View {
         }.background(.bar)
             .padding()
             .cornerRadius(15)
+            .clipShape(Rectangle())
     }
 }
 

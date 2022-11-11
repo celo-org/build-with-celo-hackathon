@@ -25,6 +25,9 @@
 		300FCCB32910DAF7005F3536 /* Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCB22910DAF7005F3536 /* Driver.swift */; };
 		300FCCB72910E841005F3536 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCB62910E841005F3536 /* Settings.swift */; };
 		300FCCB92910ED09005F3536 /* RideComplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCB82910ED09005F3536 /* RideComplete.swift */; };
+		30A2401A29171FCD0040E8AA /* ErrorFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A2401929171FCD0040E8AA /* ErrorFilter.swift */; };
+		30A24023291AECFA0040E8AA /* LocationRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A24022291AECF90040E8AA /* LocationRegistration.swift */; };
+		30A24027291C64D80040E8AA /* NBRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A24026291C64D80040E8AA /* NBRatingView.swift */; };
 		30A6EC062905A3C6007830FB /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC052905A3C6007830FB /* LoginView.swift */; };
 		30A6EC082905A60D007830FB /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC072905A60D007830FB /* LoginViewModel.swift */; };
 		30A6EC0C2905A872007830FB /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC0B2905A872007830FB /* Credentials.swift */; };
@@ -100,6 +103,9 @@
 		300FCCB22910DAF7005F3536 /* Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Driver.swift; sourceTree = "<group>"; };
 		300FCCB62910E841005F3536 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		300FCCB82910ED09005F3536 /* RideComplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideComplete.swift; sourceTree = "<group>"; };
+		30A2401929171FCD0040E8AA /* ErrorFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorFilter.swift; sourceTree = "<group>"; };
+		30A24022291AECF90040E8AA /* LocationRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRegistration.swift; sourceTree = "<group>"; };
+		30A24026291C64D80040E8AA /* NBRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NBRatingView.swift; path = Profile/NBRatingView.swift; sourceTree = "<group>"; };
 		30A6EC052905A3C6007830FB /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		30A6EC072905A60D007830FB /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		30A6EC0B2905A872007830FB /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
@@ -239,6 +245,7 @@
 				30A6EC1429064DE0007830FB /* RateRegistration.swift */,
 				30A6EC162906556C007830FB /* FundRegistration.swift */,
 				30A6EC18290662A8007830FB /* SendRegistration.swift */,
+				30A24022291AECF90040E8AA /* LocationRegistration.swift */,
 			);
 			path = Registration;
 			sourceTree = "<group>";
@@ -249,6 +256,7 @@
 				30A6EC34290CA8C1007830FB /* ContractCoordinates.swift */,
 				30A6EC38290CB4B7007830FB /* Constants.swift */,
 				300FCC8F290F93D3005F3536 /* LogDecoder.swift */,
+				30A2401929171FCD0040E8AA /* ErrorFilter.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -341,6 +349,7 @@
 				30CAE60729034CF4001271FB /* Profile */,
 				30CAE5F929033C0F001271FB /* Map */,
 				300FCCB62910E841005F3536 /* Settings.swift */,
+				30A24026291C64D80040E8AA /* NBRatingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -656,6 +665,7 @@
 				30A6EC0C2905A872007830FB /* Credentials.swift in Sources */,
 				30CAE5F429033BEF001271FB /* Wallet.swift in Sources */,
 				300FCCB72910E841005F3536 /* Settings.swift in Sources */,
+				30A24023291AECFA0040E8AA /* LocationRegistration.swift in Sources */,
 				30CAE60D29034E61001271FB /* ContractServices.swift in Sources */,
 				30A6EC39290CB4B7007830FB /* Constants.swift in Sources */,
 				30CAE5F629033BF8001271FB /* Methods.swift in Sources */,
@@ -680,7 +690,9 @@
 				300FCC8A290F8AFD005F3536 /* ProgressState.swift in Sources */,
 				30A6EC1B29071DA0007830FB /* WebSockets.swift in Sources */,
 				30A6EC35290CA8C1007830FB /* ContractCoordinates.swift in Sources */,
+				30A24027291C64D80040E8AA /* NBRatingView.swift in Sources */,
 				30A6EC172906556C007830FB /* FundRegistration.swift in Sources */,
+				30A2401A29171FCD0040E8AA /* ErrorFilter.swift in Sources */,
 				30A6EC0E2905AB20007830FB /* Authentication.swift in Sources */,
 				30CAE5EE29033BD2001271FB /* Address.swift in Sources */,
 				30CAE5BE29033B2B001271FB /* ContentView.swift in Sources */,

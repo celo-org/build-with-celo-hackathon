@@ -10,5 +10,6 @@ import Foundation
 
 enum Contracts:Int {
     case RideManager = 0
-    case Token = 2
+    case Celo = 1
+    case CUSD = 2
 }

@@ -7,12 +7,12 @@
 
 import SwiftUI
 
+// Driver states for the content views
 enum DriverStates {
     case none
     case notRegistered
     case noRide
     case inRide
-    case rideComplete // Passenger is entered a ride
 }
 
 struct ContentView: View {
@@ -32,8 +32,8 @@ struct ContentView: View {
     
     let mapView:MapView = MapView()
     
-    init() {
-        rideService = RideService()
+    init(password:String) {
+        rideService = RideService(password:password)
         webSocket = WebSockets()
         // setup rideState observer from webSocket to rideService
         rideService.observeRideState(propertyToObserve: webSocket.$rideState)
@@ -48,9 +48,10 @@ struct ContentView: View {
         case .none:
             return AnyView(ProgressState())
         case .notRegistered:
-            return AnyView(Registration().environmentObject(registered)
-                                         .environmentObject(balance)
-                                        .environmentObject(driver))
+            return AnyView(Registration().environmentObject(balance)
+                                         .environmentObject(driver)
+                                         .environmentObject(manager)
+                                         .environmentObject(registered))
         case .noRide:
             return AnyView(ListingState().environmentObject(webSocket)
                                          .environmentObject(rideService)
@@ -60,31 +61,28 @@ struct ContentView: View {
                                         .environmentObject(manager)
                                         .environmentObject(webSocket))
                             
-        case .rideComplete:
-            return AnyView(Text("ride complete"))
         }
     }
     
     var body: some View {
         NavigationView {
             ZStack {
+                
                     mapView
                         .environmentObject(manager)
                         .environmentObject(rideService)
-                        //.environmentObject(webSocket)
+                        .environmentObject(driver)
                         .edgesIgnoringSafeArea(.all)
                 
                     containedView()
             }.task {
-                // Start progress view
-                // isLoading = true
                 // Get driver address
                 let driverAddress = ContractServices.shared.getWallet().address
                 // check if driver is registered
                 rideService.isDriver(address:driverAddress ) {
                     isDriver in
-                    registered.isRegistered = isDriver
-        
+                        registered.isRegistered = isDriver
+                        
                     if isDriver {
                         // If registered check if driver is in active ride
                         rideService.getActiveRide(address: driverAddress) {
@@ -124,29 +122,32 @@ struct ContentView: View {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                             Button("Logout") {
-                                //webSocket.disconnectSocket()
-                                // TODO DELETE FIREBASE ENTRY
-                                authentication.updateValidation(success: false)
+                                webSocket.disconnectSocket()
+                                //manager.deleteDB()
+                                authentication.updateValidation(success: false, password: "")
                             }
                         }
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink(destination: ProfileView().environmentObject(registered)
+                        NavigationLink(destination: ProfileView()
                                                                  .environmentObject(balance)
                                                                  .environmentObject(driver)
+                                                                 .environmentObject(registered)
                         ){
                             Image(systemName: "person.crop.circle")
                         }
                     }
                 }
-                //.navigationTitle("Driver")
+                .navigationTitle("Driver")
                 .navigationViewStyle(StackNavigationViewStyle())
                 .navigationBarTitleDisplayMode(.inline)
+                .alert(item:$rideService.error) { error in
+                    Alert(title: Text(error.title), message: Text(error.description), dismissButton: .cancel() {
+                        rideService.error = nil
+                            //rideService.sendingWriteTx = false
+                            print("Dismissed")
+                    })
+                }
         }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}

@@ -23,7 +23,6 @@ struct inRideState: View {
     @StateObject var rating = Rating()
     
     
-    
     // MARK: nextStep
     /// Given the `rideState` returns next step
     func nextStep() -> AnyView {
@@ -48,11 +47,13 @@ struct inRideState: View {
             return AnyView(RideComplete()
                 .environmentObject(rideService)
                 .environmentObject(webSockets)
+                .environmentObject(manager)
             )
         case 6:
             return AnyView(RideCanceled()
                 .environmentObject(rideService)
                 .environmentObject(webSockets)
+                .environmentObject(manager)
             )
         default:
             return AnyView(Text("Unkown State"))
@@ -63,24 +64,28 @@ struct inRideState: View {
         VStack{
             
             HStack {
-                if rideService.ride.rideState != 6 || rideService.ride.rideState != 5{
-                Button {
-                    isCancelingProgress = true
-                    rideService.cancelRide(){ result in
-                        rideService.removeRoute = true
-                        rideService.removePickUpRoute = true
-                        // Wait for event
-                    }
-                }label: {
-                    Text("Cancel Ride")
-                    ProgressView().disabled(isCancelingProgress).tint(.red)
-                }.buttonStyle(.borderedProminent)
-                    .tint(.red)
-                    .disabled(isCancelingProgress || rideService.ride.rideState == 6)
-                Spacer()
-            }
+                if rideService.ride.rideState == 6 || rideService.ride.rideState == 5 {
+                    
+                }else{
+                        
+                    Button {
+                        isCancelingProgress = true
+                        rideService.cancelRide(){ result in
+                            rideService.removeRoute = true
+                            rideService.removePickUpRoute = true
+                            // Wait for event
+                        }
+                    }label: {
+                        Text("Cancel Ride")
+                        ProgressView().disabled(isCancelingProgress).tint(.red)
+                    }.buttonStyle(.borderedProminent)
+                        .tint(.red)
+                        .disabled(isCancelingProgress)
+                    Spacer()
+                }
             }
             Spacer()
+            // Present the next ride step
             nextStep()
    
         }

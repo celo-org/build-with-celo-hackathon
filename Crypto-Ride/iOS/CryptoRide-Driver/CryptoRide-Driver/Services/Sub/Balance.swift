@@ -8,35 +8,40 @@
 import BigInt
 import web3swift
 
+// MARK: Balance
+/// Manages token balances 
 class Balance:ObservableObject {
+    // Token balances
     @Published var cUSD:String = ""
     @Published var CELO:String = ""
     
     @Published var isLoading = false
     
-    func updatecUSD(cusd:String) {
-        cUSD = cusd
-    }
-    func updatecCELO(celo:String) {
-        CELO = celo
-    }
-    
     init() {
-        getTokenBalance()
+        // Fetch token balance for driver wallet address
+        getTokenBalance(.Celo)
+        getTokenBalance(.CUSD)
     }
     
-    public func getTokenBalance() {
+    // MARK: getTokenBalance
+    /// Read balance from given a toke contract
+    public func getTokenBalance(_ tokenContract:Contracts) {
         isLoading = true
         let ethAddress = ContractServices.shared.getWallet()
         let params = [ethAddress.address] as [AnyObject]
         
-        ContractServices.shared.read(contractId:.Token, method:  CusdMethods.balanceOf.rawValue, parameters: params) { result in
+        ContractServices.shared.read(contractId:tokenContract, method:  CusdMethods.balanceOf.rawValue, parameters: params) { result in
             DispatchQueue.main.async { [self] in
                 isLoading = false
                 switch(result) {
                 case .success(let result):
                     let rawBalance = result["balance"] as! BigUInt
-                    cUSD = Web3.Utils.formatToEthereumUnits(rawBalance, toUnits: .eth, decimals: 3)!
+                    if tokenContract == .CUSD{
+                        cUSD = Web3.Utils.formatToEthereumUnits(rawBalance, toUnits: .eth, decimals: 3)!
+                    }else{
+                        CELO = Web3.Utils.formatToEthereumUnits(rawBalance, toUnits: .eth, decimals: 3)!
+                    }
+                   
             
                 case .failure(let error):
                     print(error)

@@ -9,41 +9,46 @@ import Foundation
 import SwiftUI
 import MapKit
 
+// MARK: MapView
+/// MapView is primarily build for storyboard.
+/// SwiftUI conversion from a storyboard view
 struct MapView: UIViewRepresentable {
     typealias UIViewType = MKMapView
     
+    // MKMapView
     let mapView = MKMapView()
     
+    // EnvironmentObjects
     @EnvironmentObject var manager:LocationManager
     @EnvironmentObject var rideService:RideService
-    //@EnvironmentObject var webSocket:WebSockets
+    @EnvironmentObject var driver:Driver
 
-    
+    // Coordinator for mapView
     func makeCoordinator() -> MapViewCoordinator {
         return MapViewCoordinator()
     }
     
-    
+    // Set Delegate and settings for mapview
     func makeUIView(context: Context) -> MKMapView {
         mapView.delegate = context.coordinator
         mapView.showsUserLocation = true
         mapView.setUserTrackingMode(.follow, animated: true)
         mapView.showsCompass = true
         mapView.region = manager.region
-        
+        // Set start and end annotation titles
         rideService.startAnnotation.title = "PickUp"
-        mapView.addAnnotation(rideService.endAnnotation)
         rideService.endAnnotation.title = "DropOff"
         
         return mapView
     }
     
     
-    
+    // MARK: updateUIView
+    /// Responsible for changes and updates to the mapView
+    /// - NOTE: Do to the way mapView is built for story board booleans are used to trigger changes in the mapView
     func updateUIView(_ uiView: MKMapView, context: Context) {
-        // Update view here
-
         
+        // Remove overlays and start end annoations from mapView
         if rideService.removeAll {
             uiView.removeOverlays(uiView.overlays)
             mapView.removeAnnotation(rideService.startAnnotation)
@@ -51,6 +56,7 @@ struct MapView: UIViewRepresentable {
             rideService.removeAll = false
         }
         
+        // Snap to MKRoute
         if(manager.route != nil ) {
             // Check if need to snap back to route
             if(rideService.snapToRoute){
@@ -62,24 +68,31 @@ struct MapView: UIViewRepresentable {
             }
         }
         
+        // Remove only MKroute from mapView
         if rideService.removeRoute {
             uiView.removeOverlay(manager.route!.polyline)
             rideService.removeRoute = false
         }
         
-        if rideService.removePickUpRoute {
+        // Remove pickUp Route from MapView
+        // Pickup route is between driver and pickup location
+        if rideService.removePickUpRoute && manager.pickUpRoute != nil{
             uiView.removeOverlay(manager.pickUpRoute!.polyline)
             rideService.removePickUpRoute = false
         }
-
+        
+        // Calculates MKRoute between the drivers current location and start location
+        // Adds MKRoute polyline to the mapview
         if rideService.showPickUpRoute && rideService.ride.rideState == 2 {
             
             if(rideService.ride.startCoordinates != nil || rideService.ride.endCoordinates  != nil) {
+                // Setup placemarks
                 let p1 = MKPlacemark(coordinate: uiView.userLocation.coordinate)
                 let p2 = MKPlacemark(coordinate: rideService.ride.startCoordinates!)
+                // Add annotation to mapView
                 mapView.addAnnotation(rideService.startAnnotation)
                 mapView.addAnnotation(rideService.endAnnotation)
-                
+                // Build route request
                 let request = MKDirections.Request()
                 request.source = MKMapItem(placemark: p1)
                 request.destination = MKMapItem(placemark: p2)
@@ -88,11 +101,12 @@ struct MapView: UIViewRepresentable {
                 let directions = MKDirections(request: request)
                 directions.calculate { response, error in
                     
-                    print("Found route to location")
                     guard let route = response?.routes.first else { return }
                     manager.pickUpRoute = route
-                    //manager.getRideEstimates()
-                    route.polyline.title = "PickUp Route"
+                    // Get ride estimates
+                    manager.getRideEstimates(rate: driver.fare)
+                    route.polyline.title = "Pick Up Route"
+                    // Add route overlay to mapview
                     uiView.addOverlay(route.polyline)
                     uiView.setVisibleMapRect(
                         route.polyline.boundingMapRect,
@@ -104,7 +118,8 @@ struct MapView: UIViewRepresentable {
             }
         }
         
-        // Update route for announced rides
+        // Calculates MKRoute between the start and end coordinate location
+        // Adds MKRoute polyline to the mapview
         if rideService.updateRoute {
             
             if(rideService.ride.startCoordinates != nil || rideService.ride.endCoordinates  != nil) {
@@ -124,10 +139,10 @@ struct MapView: UIViewRepresentable {
                 
                 let directions = MKDirections(request: request)
                 directions.calculate { response, error in
-                    print("Found route to location")
                     guard let route = response?.routes.first else { return }
                     manager.route = route
-                    //manager.getRideEstimates()
+                   
+                    manager.getRideEstimates(rate: driver.fare)
                     uiView.addOverlay(route.polyline)
                     uiView.setVisibleMapRect(
                         route.polyline.boundingMapRect,
@@ -144,7 +159,7 @@ struct MapView: UIViewRepresentable {
     }
     
     
-    
+    // MARK: MapViewCoordinator
     class MapViewCoordinator: NSObject, MKMapViewDelegate {
         
         
@@ -157,8 +172,8 @@ struct MapView: UIViewRepresentable {
                 return circle
             } else {
                 let renderer = MKPolylineRenderer(overlay: overlay)
-                print(renderer.polyline.title)
-                if renderer.polyline.title ==  "PickUp Route" {
+                // Switch between polyline color
+                if renderer.polyline.title ==  "Pick Up Route" {
                     renderer.strokeColor = .systemGreen
                     renderer.lineWidth = 5
                 }else{

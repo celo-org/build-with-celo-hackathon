@@ -11,12 +11,16 @@ struct RideComplete: View {
     
     @EnvironmentObject var rideService:RideService
     @EnvironmentObject var webSocket:WebSockets
+    @EnvironmentObject var manager:LocationManager
     
     var body: some View {
         Button(action: {
-            // Change driver state to noride 
+            // Change driver state to noride
+            rideService.ride.rideState = 0
             rideService.driverState = .noRide
             rideService.removeAll = true
+            rideService.rideId = nil
+            manager.isActive = true
             webSocket.acceptingNewRides = true
         }, label: {
             Text("Ride Complete")

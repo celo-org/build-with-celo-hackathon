@@ -7,38 +7,43 @@
 
 import SwiftUI
 
+// View states for registration
+enum setView{
+    case profile
+    case car
+    case location
+    case rate
+    case fund
+}
 
 struct ProfileView: View {
-    
+    // EnvironmentObject
     @EnvironmentObject var registered:Registered
     @EnvironmentObject var balance:Balance
     @EnvironmentObject var driver:Driver
     @EnvironmentObject var manager:LocationManager
-    
-    enum setView{
-        case profile
-        case car
-        case rate
-        case fund
-    }
-    
-    @State var currentView = setView.profile
-
+    // State objects
     @StateObject var profileVM = ProfileViewModel()
     @State var isLoading = false
     @State var isTransfer = false
     
+    // Selectable tokens
+    var tokens = ["cUSD","CELO"]
+
     var body: some View {
         
         VStack{
             if registered.isRegistered == false {
-                switch(currentView){
+                switch(registered.currentView){
                 case setView.profile:
                     ProfileRegistration().environmentObject(profileVM)
                 case setView.car:
                     CarRegistration().environmentObject(profileVM)
+                case setView.location:
+                    LocationRegistration().environmentObject(driver)
                 case setView.rate:
                     RateRegistration().environmentObject(profileVM)
+                    
                 case setView.fund:
                     FundRegistration().environmentObject(profileVM)
                                       .environmentObject(balance)
@@ -48,13 +53,15 @@ struct ProfileView: View {
                     Spacer()
                    
                     Button{
-                        switch(currentView){
+                        switch(registered.currentView){
                         case setView.profile:
-                            currentView = setView.car
+                            registered.currentView = setView.car
                         case setView.car:
-                            currentView = setView.rate
+                            registered.currentView = setView.rate
+                        case setView.location:
+                            registered.currentView = setView.rate
                         case setView.rate:
-                            currentView = setView.fund
+                            registered.currentView = setView.fund
                         case setView.fund:
                             isLoading = true
                             
@@ -66,26 +73,28 @@ struct ProfileView: View {
                             let defaults = UserDefaults.standard
                             defaults.set(profileVM.registerNewDriver.profile.twitterHandle, forKey: "twitter")
                             defaults.set(profileVM.registerNewDriver.profile.instagramHandle, forKey: "instagram")
-
+                             
                             profileVM.registerDriver(rate:profileVM.registerNewDriver.rate.fare, name: profileVM.registerNewDriver.profile.name, car: car) { success in
                                 isLoading = false
                                 registered.isRegistered = true
+                                profileVM.password = ""
                             }
                         }
                         
                     }label: {
-                        if currentView == .fund{
+                        if registered.currentView == .fund{
                             HStack{
                                 if isLoading{
                                     ProgressView()
                                 }
-                                Image(systemName: "paperplane.fill")
                                 Text("Send")
+                                Image(systemName: "paperplane.fill")
+                                
                             }
                         }else{
                             HStack{
-                                Image(systemName: "chevron.forward.square.fill")
                                 Text("Next")
+                                Image(systemName: "chevron.forward.square.fill")
                             }
                         }
                         
@@ -112,8 +121,35 @@ struct ProfileView: View {
                             
                             }.padding()
                             HStack{
-                                Text("$\(balance.cUSD) cUSD")
-                            }.padding()
+                                HStack{
+                                    Image("cUSDEx")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 40, height: 30, alignment: .center)
+                                    Text("\(balance.cUSD)")
+                                    
+                                }
+                                Divider()
+                                HStack{
+                                    Image("CeloEx")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 40, height: 40, alignment: .center)
+                                    Text("\(balance.CELO)")
+                                    
+                                }
+                                Button{
+                                    balance.getTokenBalance(.CUSD)
+                                    balance.getTokenBalance(.Celo)
+                                }label: {
+                                    Image(systemName: "arrow.clockwise.circle.fill")
+                                        .resizable()
+                                        .interpolation(.none)
+                                        .scaledToFit()
+                                        .frame(width: 20, height: 20, alignment: .center)
+                                }.buttonStyle(.borderless)
+                                
+                            }
                             
                         }
                         Divider()
@@ -127,31 +163,53 @@ struct ProfileView: View {
                                     Image(systemName: "doc.on.clipboard")
                                 })
                             }
-                            Text("Send cUSD").font(.title3)
+                            HStack{
+                                Text("Send").font(.title3)
+                                Picker("", selection: $profileVM.tokenSelected) {
+                                                ForEach(tokens, id: \.self) {
+                                                    Text($0)
+                                        }
+                                }
+                            }
+     
                             HStack{
                                 
                                 TextField("0", text:  $profileVM.amount)
                                 Button(action:{
-                                    profileVM.amount = balance.cUSD
+                                    if profileVM.tokenSelected == "cUSD" {
+                                        profileVM.amount = balance.cUSD
+                                    }else{
+                                        profileVM.amount = balance.CELO
+                                    }
+                                   
                                 }, label: {
                                     Text("MAX")
                                 })
+                               
                             }
+                            SecureField("Wallet Password", text: $profileVM.password)
+                                .multilineTextAlignment(.center)
+                                .textFieldStyle(.roundedBorder)
+                            
                             Button(action:{
                                 isTransfer = true
                                 profileVM.transfer(){ success in
-                                    balance.getTokenBalance()
+                                    // Get request for token balance
+                                    balance.getTokenBalance(.CUSD)
+                                    balance.getTokenBalance(.Celo)
+                                    // Clear all inputs
                                     profileVM.amount = ""
                                     profileVM.toAddress = ""
+                                    profileVM.password = ""
                                     isTransfer = false
                                 }
                             }, label: {
                                 Text("Send")
-                            }).disabled(profileVM.toAddress.isEmpty || profileVM.amount.isEmpty || isTransfer )
+                            }).disabled(profileVM.toAddress.isEmpty || profileVM.amount.isEmpty || isTransfer || profileVM.password.isEmpty)
                             
                         }
                         Divider()
-                        Text("Receive").font(.title3)
+                        Text("Receive").font(.title3).bold()
                         
                         Button(action: {
                             UIPasteboard.general.string = ContractServices.shared.getWallet().address
@@ -175,7 +233,17 @@ struct ProfileView: View {
                 }
             }
 
-        } .toolbar {
+        } .alert(item:$profileVM.error) { error in
+            Alert(title: Text(profileVM.error!.title), message: Text(profileVM.error!.description), dismissButton: .cancel() {
+                    profileVM.error = nil
+                    profileVM.amount = ""
+                    profileVM.toAddress = ""
+                    profileVM.password = ""
+                    isTransfer = false
+                })
+        }
+        
+        .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink(destination: Settings().environmentObject(registered)
                                                          .environmentObject(balance)
@@ -186,6 +254,7 @@ struct ProfileView: View {
                 }
             }
         }
+
     }
 }
 

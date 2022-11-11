@@ -34,10 +34,14 @@ struct Settings: View {
             }
             .navigationTitle("Settings")
         }
-            HStack{
+            VStack{
+                SecureField("Wallet Password", text: $driver.password)
+                    .multilineTextAlignment(.center) 
+                    .textFieldStyle(.roundedBorder)
                 if !isLoading {
                     Button(action: {
                         isLoading = true
+                        // Update the driver fare price in the smart contract
                         driver.updateDriverFare(fare: driver.fare){
                             result in
                             isLoading = false
@@ -50,6 +54,7 @@ struct Settings: View {
                     }, label: {
                         Text("Update")
                     }).buttonStyle(.borderedProminent)
+                        .disabled(driver.password.isEmpty)
                 } else {
                     ProgressView().tint(.blue)
                 }

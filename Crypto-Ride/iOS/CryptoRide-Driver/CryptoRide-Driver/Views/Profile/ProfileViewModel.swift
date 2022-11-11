@@ -46,25 +46,39 @@ struct RegisterDriver {
 class ProfileViewModel:ObservableObject {
     
     @Published var driverInfo:DriverInfo?
-    
+    // Registration observable
     @Published var registerNewDriver = RegisterDriver()
     
     @Published var isLoading = false
-    @Published var error:Error? = nil
+    @Published var error:ContractError? = nil
     
+    // Token Transfer variables
     @Published var toAddress = ""
     @Published var amount = ""
-
+    @Published var password = ""
+    @Published var tokenSelected = "cUSD"
+    var tokenContract:Contracts = .CUSD
     
+
+    // Qr code generator
     private let context = CIContext()
     private let filter = CIFilter.qrCodeGenerator()
     
     
     init() {
+        // get driver rate price
         getDriverRate()
-        //getTokenBalance()
     }
     
+    // MARK: generateQRCode
+    /// Encodes string data as a qr code in a UIImage
+    ///
+    /// - Parameters:
+    ///         - `from string` String containing ethereum address
+    ///
+    /// - Returns:
+    ///         - `UIImage` uiimage containing the qr code
+    ///
     func generateQRCode(from string: String) -> UIImage {
             let data = Data(string.utf8)
             filter.setValue(data, forKey: "inputMessage")
@@ -77,7 +91,10 @@ class ProfileViewModel:ObservableObject {
         }
     
 
-    
+    // MARK: getDriverRate
+    /// Get driver rate from ride manager contract
+    /// - Returns:
+    ///         - Escaping <TranscationSendingResult>
     public func getDriverRate() {
         isLoading = true
         let ethAddress = ContractServices.shared.getWallet()
@@ -105,45 +122,59 @@ class ProfileViewModel:ObservableObject {
                         infoAssetLink: infoAssetUrl)
                     
                 case .failure(let error):
-                    self.error = ContractError(title: "Failed to get driver rate.", description: error.errorDescription)
+                    self.error = error
                 }
             }
         }
     }
     
-    
+    // MARK: registerDriver
+    /// Registers driver address to ride manager smart contract
+    ///
+    /// - Parameters:
+    ///         `rate` Integer : drivers flate fee per hour of drive time
+    ///         `name`String:   name of driver
+    ///         `car` String : car description
+    ///
+    /// - Returns:
+    ///         - Escaping <TranscationSendingResult>
     public func registerDriver(rate:Int,name:String,car:String, completion:@escaping(TransactionSendingResult) -> Void) {
-          
         let params = [rate,name,car] as [AnyObject]
-            ContractServices.shared.write(contractId: .RideManager, method: "addDriver", parameters: params, password: "") { result in
+            ContractServices.shared.write(contractId: .RideManager, method: "addDriver", parameters: params, password: password) { result in
                 DispatchQueue.main.async { [unowned self] in
                     switch(result){
                     case .success(let result):
-              
                         completion(result)
                     case .failure(let error):
-                        print("error")
-                        print(error)
+                        self.error = error
                     }
             }
         }
             
     }
     
-    
+    // MARK: transfer
+    /// Transfers tokens from passengers wallet  to `toAddress`
+    /// Note: currently only transfers cUSD token
+    ///
+    /// - Returns:
+    ///              - @escaping(TranscationSendingResult)
     func transfer(completion:@escaping(TransactionSendingResult) -> Void) {
         let amount = Web3.Utils.parseToBigUInt(amount, units: .eth)
-        let ethAddress = EthereumAddress(toAddress)!
+        guard let ethAddress = EthereumAddress(toAddress) else {
+            self.error = ContractError(title: "Failed", description: "Invalid To Address")
+            return
+        }
         let params = [ethAddress.address,amount] as [AnyObject]
-        ContractServices.shared.write(contractId: .Token, method: "transfer", parameters: params, password: "") {
+        ContractServices.shared.write(contractId: tokenContract, method: "transfer", parameters: params, password: password) {
             result in
             DispatchQueue.main.async { [unowned self] in
+                
                 switch(result){
                 case .success(let result):
                     completion(result)
                 case .failure(let error):
-                    print("error")
-                    print(error)
+                    self.error = error
                 }
         }
         }

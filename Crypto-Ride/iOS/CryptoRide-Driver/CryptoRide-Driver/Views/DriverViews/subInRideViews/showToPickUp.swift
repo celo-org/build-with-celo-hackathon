@@ -29,12 +29,13 @@ struct showToPickUp: View {
             HStack{
                 Spacer()
                 Text("Current Task:").font(.title2).bold()
-                Text("Passenger PickUp").font(.headline).padding()
+                Text("Drive to pick up point.").font(.headline).padding()
                 Spacer()
             }
   
         }
-        .cornerRadius(10)
+        .cornerRadius(15)
+        .clipShape(Rectangle())
         .background(.bar)
             .padding()
     }

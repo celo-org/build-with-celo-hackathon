@@ -55,24 +55,30 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
         case subscribed
         case unsubscribed
     }
+    
     // Published for new rides
     @Published var acceptingNewRides = false
     @Published var newAnnounceRide:AnnouncedRide?
     @Published var abortTimer = false
+    
     // Temp ride object when selected annouced ride
     @Published var tempRide:Ride? = nil
     @Published var showInterest = false
     @Published var wasAcceptedByDriver = false
     @Published var cleanMap = false
     
-    // Progress for driver to selected a ride in seconds
+    // Progress for driver to selected a ride
     @Published var progress = 0.0
     
-    // RideId
+    // Note - RideServices observes changes on ride varibles
+    // Ride Id
     @Published var rideId:String? = nil
+    // Ride State
     @Published var rideState:Int = 0
-
+    
+    // Subscription socket state
     @Published var subscriptionState = SubscriptionState.none
+    // Socket & SubscriptionId
     private var socketProvider:WebsocketProvider? = nil
     private var subscription:Subscription? = nil
     
@@ -98,6 +104,7 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
     /// Writes to the socket when connected
     /// Only subscribing to contract logs, that includes emitted events
     func socketConnected(_ headers: [String : String]) {
+        
         let ethSubscribe =
                     """
                             {"jsonrpc":"2.0", "id": 1, "method": "eth_subscribe", "params": ["logs", {"address": "\(rideManagerAddress.address)" } ]}
@@ -137,8 +144,9 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
         print("Got error \(error)")
     }
     
-
-    
+    // MARK: setDriverAccpetTime
+    /// Starts timer associated when announceRide is emitted
+    ///
     func setDriverAccpetTime() {
         // Start time should be the ride object
         let driverPosition = newAnnounceRide!.driverAddress.firstIndex(of: WalletServices.shared.getKeyManager().addresses!.first!)!
@@ -146,16 +154,20 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
         let driverWaitTime = driverPosition * 30
         let currentTime = Int(Date().timeIntervalSince1970) // in seconds
         let driverStartTimeFromNow = currentTime + driverWaitTime
-        
+        // Remaining amount of time for driver to accept ride
         var secondsRemaining = 30
-
+        // Start timer
         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { (Timer) in
             let now = Int(Date().timeIntervalSince1970)
+            // Check if time is has exceeded 30 seconds
             if driverStartTimeFromNow < now {
                 if secondsRemaining >= 0 {
+                    // set progress to precent left
                     self.progress = Double(secondsRemaining) / 30.0
                     secondsRemaining -= 1
                 } else {
+                    // set announced ride to nil
+                    // aport timer
                     self.newAnnounceRide = nil
                     Timer.invalidate()
                 }
@@ -166,8 +178,18 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
         }
     }
     
+    
     // MARK: handleEvent
+    /// Handles emited events from the ride manager contract
+    ///
+    /// - Note: Currently handles events only related to change to ride states
+    /// - Note: RideManager has observer to are rideState
+    ///
+    /// - Parameters :
+    ///                 - `message` : SocketMessage - raw event log  emitted by contract
+    ///
     func handleEvent(message:SocketMessage) {
+
         switch(message.params.result.topics.first) {
             
         case Topics.announceRide.rawValue:
@@ -178,6 +200,7 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
             // Decode announced ride details
             let data = message.params.result.data
             let announcedRide = LogDecoder.decodeAnnoucedRide(data: data)
+            
             // Check if driver is a listed driver in ride
             if announcedRide.driverAddress.contains(WalletServices.shared.getKeyManager().addresses!.first!) {
 
@@ -193,7 +216,7 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
            
 
         case Topics.driverAcceptsRide.rawValue:
-            print("Driver Accepts Ride")
+           
             let hexString = message.params.result.data as String
             let arrayValue = Array(hexString)
             
@@ -211,7 +234,6 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
                 
             }else{
                 // Check if new announced ride id matchies rideId
-                
                 if rideId == newAnnounceRide?.rideId {
                     
                     let driverAddressRange: ClosedRange = 90...129
@@ -220,10 +242,8 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
                     // Check if another driver as accepted the ride before us
                     
                     if driverEthAddress.address != ContractServices.shared.getWallet().address {
-                        
                         newAnnounceRide = nil
                         tempRide = nil
-                        
                         wasAcceptedByDriver = true
                     }
                 }
@@ -231,7 +251,7 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
             return
             
         case Topics.passengerConfirmsPickUp.rawValue:
-            print("Passenger Confirms PickUp")
+           
 
             if self.rideId != nil {
                 let hexString = message.params.result.data as String
@@ -246,20 +266,20 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
             return
             
         case Topics.driverConfirmsDropOff.rawValue:
-            print("Driver Confirms drop off")
+            
             if self.rideId != nil {
                 let hexString = message.params.result.data as String
                 let arrayValue = Array(hexString)
                 let rideIdRange: ClosedRange = 0...65
                 let rideId = String(arrayValue[rideIdRange])
                 if self.rideId == rideId{
-                    rideState = 4 // update ride state
+                    rideState = 4
                 }
             }
             return
             
         case Topics.complete.rawValue:
-            print("Passenger Confirms drop off")
+           
             if self.rideId != nil {
                 
                 let hexString = message.params.result.data as String
@@ -267,27 +287,28 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
                 let rideIdRange: ClosedRange = 0...65
                 let rideId = String(arrayValue[rideIdRange])
                 if self.rideId == rideId{
-                    rideState = 5 // update ride state
+                    rideState = 5
                 }
             }
             return
             
             
         case Topics.cancelRide.rawValue:
-            print("canceled")
+       
             if self.rideId != nil {
                 let hexString = message.params.result.data as String
                 let arrayValue = Array(hexString)
                 let rideIdRange: ClosedRange = 0...65
                 let rideId = String(arrayValue[rideIdRange])
                 if self.rideId == rideId{
-                    rideState = 6 // update ride state
+                    rideState = 6
                 }
             }
             
             return
             
         default:
+            // unknown topics are ignored
             print("Unkown Topic")
             
         }

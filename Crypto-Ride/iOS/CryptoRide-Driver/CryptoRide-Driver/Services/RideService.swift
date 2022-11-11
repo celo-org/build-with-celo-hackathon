@@ -20,18 +20,22 @@ struct Coordinate {
     var long:BigInt
 }
 
+struct Passenger {
+    var rating:Int
+    var reputation:String
+    var rideCount:String
+}
+
 class RideService:ObservableObject{
     
-
     // Coordinate points to human readable
     @State var humanStartLocation:String = ""
     @State var humanEndLocation:String = ""
     
-    // Map View commands
+    // MapView commands
     @Published var updateRoute = false
     @Published var showPickUpRoute = false
     @Published var snapToRoute = false
-    
     @Published var removePickUpRoute = false
     @Published var removeRoute = false
     @Published var removeAll = false
@@ -39,16 +43,19 @@ class RideService:ObservableObject{
     // Pickup and dropOff Annoations
     @Published var startAnnotation:MKPointAnnotation = MKPointAnnotation()
     @Published var endAnnotation:MKPointAnnotation = MKPointAnnotation()
-
+    
+    // Errors
     @Published var error:ContractError? = nil
     
-    // Ride states
+    // Ride details
     @Published var rideId:String?
-    //@Published var rideState:BigUInt?
     @Published var driverState:DriverStates = .none
     @Published var ride:Ride = Ride()
-    
+    // Driver rating
     @Published var driverRating = 0
+    
+    // Understand private only refers to var accessible only within class
+    private var password:String
     
     // MARK: observeRideState
     /// Change `rideState` from new events from websockets
@@ -69,25 +76,25 @@ class RideService:ObservableObject{
                     break
                 case 4:
                         self.removePickUpRoute = true
-                        self.removeRoute = true
+                        //self.removeRoute = true
                     break
                 
                 default:
                     break
                 }
-                //if $0 == 2{
-                //    self.showPickUpRoute = true
-                //    self.removeRoute = 1
-                //}
-                //if $0 == 4 {
-                //    self.removePickUpRoute = true
-                //    self.removeRoute = true
-                //    self.removeRoute = 2
-                //}
             }
     }
     
+    init(password:String){
+        self.password = password
+    }
     
+    // MARK: isDriver
+    /// Async method to fetch ride details from `rideManager` contract
+    /// - Parameters:
+    ///            - `address` string of ethereum address to check if driver
+    /// - Returns: completion: `Bool` on success
+    ///
     func isDriver(address:String,completion:@escaping(Bool) -> Void) {
         let params = [address] as [AnyObject]
         
@@ -101,13 +108,52 @@ class RideService:ObservableObject{
                     let isRegistered = Bool(exactly: number)!
                     completion(isRegistered)
                 case .failure(let error):
-                    print(error)
-                    self.error = ContractError(title: "Failed to get balance.", description: error.errorDescription)
+                    self.error = error
+                }
+            }
+        }
+    }
+    
+    // MARK: getReputation
+    /// Async method to fetch reputation for a given address in `rideManager` contract
+    ///
+    /// - Parameters:
+    ///            - `address` string eth address to check for active ride
+    ///
+    /// - Returns: completion: `Passenger` on success
+    ///
+    public func getReputation(address:String,completion:@escaping(Passenger) -> Void) {
+        let params = [address] as [AnyObject]
+        
+        ContractServices.shared.read(contractId:.RideManager, method:  RideManagerMethods.getReputation.rawValue, parameters: params) { result in
+            DispatchQueue.main.async { [self] in
+                switch(result) {
+                case .success(let result):
+                    let driverRating = result["0"] as! Array<Any>
+                    
+                    let bigRating = driverRating[0] as! BigUInt
+                    let bigReputation = driverRating[1] as! BigUInt
+                    //let bigTotalRating = driverRating[2] as! BigUInt
+                    let bigCount = driverRating[3] as! BigUInt
+                    // Int needed for rating view
+                    let passenger = Passenger(rating: Int(bigRating), reputation: bigReputation.description, rideCount: bigCount.description)
+                    completion(passenger)
+                case .failure(let error):
+                    self.error = error
                 }
             }
         }
     }
 
+    // MARK: getActiveRide
+    /// Async method to fetch active ride for a given address in `rideManager` contract
+    ///
+    ///
+    /// - Parameters:
+    ///            - `address` string eth address to check for active ride
+    ///
+    /// - Returns: completion: `String` on success
+    ///
 
     func getActiveRide(address:String,completion:@escaping(String) -> Void) {
  
@@ -123,16 +169,25 @@ class RideService:ObservableObject{
                     let rideId = value["0"]! as! Data
                     // cast to hexString add hex identifier
                     let rideIdString = "0x" + rideId.bytes.toHexString()
+                    // Complete with rideId
                     completion(rideIdString)
     
                 case .failure(let error):
-                    self.error = ContractError(title: "Faild to get active rides", description: error.errorDescription)
+                    self.error = error
                 }
             }
         }
     }
     
     
+    // MARK: getRide
+    /// Async method to get ride details from the `rideManager` contract
+    ///
+    /// - Parameters:
+    ///            - `rideId`64 char long string of ride Id
+    ///
+    /// - Returns: completion: `Ride` on success
+    ///
     func getRide(rideId:String,completion:@escaping(Ride) -> Void) {
         
         let params = [rideId] as [AnyObject]
@@ -160,7 +215,6 @@ class RideService:ObservableObject{
                     let passenger = rideObject[6] as! EthereumAddress
                     let rideState = rideObject[7] as! BigUInt
 
-                    // self.ride
                     let ride = Ride(
                             shared: shared,
                             startCoordinates: startCoordinates,
@@ -174,104 +228,82 @@ class RideService:ObservableObject{
 
                     completion(ride)
                 case .failure(let error):
-                    self.error = ContractError(title: "Failed to get ride by ID", description: error.errorDescription)
+                    self.error = error
                 }
                 
             }
         }
     }
     
-
     
-    func setApproval(completion:@escaping(TransactionSendingResult) -> Void) {
-        //let wei = Web3.Utils.formatToEthereumUnits("1", toUnits: .wei, decimals: 18, decimalSeparator: ".")!
-        let wei = 100000000000000000
-        let appoveAddress = [rideManagerAddress,wei] as [AnyObject]
-        
-        ContractServices.shared.write(contractId: .Token, method: RideManagerMethods.approve.rawValue, parameters:appoveAddress , password: "Password"){
-            result in
-            DispatchQueue.main.async { [unowned self] in
-                 switch(result) {
-                 case .success(let tx):
-                     completion(tx)
-                 case .failure(let error):
-                     print(error)
-                     self.error = ContractError(title: "Failed to announce ride", description: error.errorDescription)
-                 }
-         
-             }
-        }
-        
-    }
-    
-    
+    // MARK: acceptRide
+    /// Async method to change ride state to DriverAccepted  `rideManager` contract
+    ///
+    /// - Parameters:
+    ///            - `rideId`  64 char long string of represents ride Id
+    ///
+    /// - Returns: completion: `TransactionSendingResult` on success
+    ///
     func acceptRide(rideId:String,completion:@escaping(TransactionSendingResult) -> Void) {
         let params = [rideId] as [AnyObject]
         print(rideId)
-        ContractServices.shared.write(contractId: .RideManager, method: RideManagerMethods.driverAcceptsRide.rawValue, parameters: params, password: "") {
+        ContractServices.shared.write(contractId: .RideManager, method: RideManagerMethods.driverAcceptsRide.rawValue, parameters: params, password: password) {
             result in
             DispatchQueue.main.async { [unowned self] in
                 switch(result) {
                 case .success(let value):
                     completion(value)
                 case .failure(let error):
-                    print(error)
-                    self.error = ContractError(title: "Failed to accpet ride", description: error.errorDescription)
+                    self.error = error
                 }
             }
         }
     }
     
-    func passengerConfirmsPickUp() {
-        let params = [rideId!] as [AnyObject]
-        
-        ContractServices.shared.write(contractId: .RideManager, method: RideManagerMethods.passengerConfirmsPickUp.rawValue, parameters: params, password: ""){
-            result in
-            DispatchQueue.main.async { [unowned self] in
-                switch(result){
-                case .success(let value):
-                    print(value)
-                case .failure(let error):
-                    print(error)
-                    self.error = ContractError(title: "Failed for passenger to confirm pickup", description: error.errorDescription)
-                }
-                
-            }
-        }
-    }
     
-    
+    // MARK: driverConfirmsDropOff
+    /// Async method to change ride state to driver confirms drop off in `RideManager` contract
+    ///
+    /// - Parameters:
+    ///            - `passengerRating` Integer from 1-5 representing rating of passenger
+    ///
+    /// - Returns: completion: `TransactionSendingResult` on success
+    ///
     func driverConfirmsDropOff(passengerRating:Int,completion:@escaping(TransactionSendingResult) -> Void) {
+       
         let params = [rideId!,passengerRating] as [AnyObject]
         
-        ContractServices.shared.write(contractId: .RideManager, method: RideManagerMethods.driverConfirmsDropOff.rawValue, parameters: params, password: ""){
+        ContractServices.shared.write(contractId: .RideManager, method: RideManagerMethods.driverConfirmsDropOff.rawValue, parameters: params, password: password){
             result in
             DispatchQueue.main.async { [unowned self] in
                 switch(result){
                 case .success(let value):
                     completion(value)
                 case .failure(let error):
-                    self.error = ContractError(title: "Failed for driver to confirm dropOff", description: error.errorDescription)
+                    self.error = error
                 }
                 
             }
         }
     }
     
+    // MARK: cancelRide
+    /// Async method to change ride state to canceled in`RideManager` contract
+    ///
+    /// - Returns: completion: `TransactionSendingResult` on success
+    ///
     func cancelRide(completion:@escaping(TransactionSendingResult) -> Void) {
-
         let params = [rideId] as [AnyObject]
-        ContractServices.shared.write(contractId: .RideManager, method: RideManagerMethods.cancelRide.rawValue, parameters: params, password: "")
+        ContractServices.shared.write(contractId: .RideManager, method: RideManagerMethods.cancelRide.rawValue, parameters: params, password: password)
         {
             result in
             DispatchQueue.main.async { [unowned self] in
                 switch(result) {
                 case .success(let value):
                     completion(value)
-                    //self.ride = nil
                 case .failure(let error):
                     print(error)
-                    self.error = ContractError(title: "Failed to announce ride", description: error.errorDescription)
+                    self.error = error
                 }
                 
             }
