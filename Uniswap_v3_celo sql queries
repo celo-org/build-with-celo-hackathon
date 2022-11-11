@@ -1,0 +1,218 @@
+### Uniswap_v3_Celo unique user
+SELECT count(distinct "uniswap_v3_celo"."accounts"."id") AS "count"
+FROM "uniswap_v3_celo"."accounts"
+
+### Active Celo accounts on Uniswap_v3
+SELECT count(distinct "uniswap_v3_celo"."active_accounts"."id") AS "count"
+FROM "uniswap_v3_celo"."active_accounts"
+
+### Active Uniswap_v3 Celo pool
+#### This count the total numbers of pool deployed on celo via Uniswap_v3
+SELECT count(distinct "uniswap_v3_celo"."deposits"."pool") AS "count"
+FROM "uniswap_v3_celo"."deposits"
+
+### Deposited Amount in USD
+SELECT sum("uniswap_v3_celo"."deposits"."amount_u_s_d") AS "sum"
+FROM "uniswap_v3_celo"."deposits"
+
+### Uniswap_v3_Celo Deposit count
+SELECT count(distinct "uniswap_v3_celo"."deposits"."hash") AS "count"
+FROM "uniswap_v3_celo"."deposits"
+
+### Numbers of Depositors
+#### This measure the unique count of address that has deposited into the Uniswap_v3_celo
+SELECT count(distinct "uniswap_v3_celo"."deposits"."from") AS "count"
+FROM "uniswap_v3_celo"."deposits"
+
+### Withdrawal Amount in USD
+SELECT sum("uniswap_v3_celo"."withdraws"."amount_u_s_d") AS "sum"
+FROM "uniswap_v3_celo"."withdraws"
+
+### Uniswap_v3_Celo withdrawal count
+SELECT count(distinct "uniswap_v3_celo"."withdraws"."hash") AS "count"
+FROM "uniswap_v3_celo"."withdraws"
+
+### Number of withdrawals
+SELECT count(distinct "uniswap_v3_celo"."withdraws"."to") AS "count"
+FROM "uniswap_v3_celo"."withdraws"
+
+### Uniswap_v3_Celo_deposit_count
+#### The number of deposit count from - '0x3d79edaabc0eab6f08ed885c05fc0b014290d95a'
+SELECT count (distinct "hash") AS "count"
+FROM "uniswap_v3_celo"."deposits"
+where "from" = '0x3d79edaabc0eab6f08ed885c05fc0b014290d95a'
+
+### Uniswap_v3_Celo_Deposit count
+#### Nos of time an asset was deposited into uniswap v3 via celo and the asset is not coming from  '0x3d79edaabc0eab6f08ed885c05fc0b014290d95a'
+SELECT count(distinct "hash") AS "count"
+FROM "uniswap_v3_celo"."deposits"
+where "from" <> '0x3d79edaabc0eab6f08ed885c05fc0b014290d95a'
+
+### Uniswap_v3_Celo withdrawal count
+#### Nos of time an asset was withdrawn fromUniswap_v3 via celo and the assets is coming from the contract - "0x3d79edaabc0eab6f08ed885c05fc0b014290d95a"
+SELECT count(distinct "uniswap_v3_celo"."withdraws"."hash") AS "count"
+FROM "uniswap_v3_celo"."withdraws"
+WHERE "uniswap_v3_celo"."withdraws"."to" = '0x3d79edaabc0eab6f08ed885c05fc0b014290d95a'
+
+### Uniswap_v3_Celo withdrawal count
+#### Nos of time an asset was withdrawn fromUniswap_v3 via celo and the assets is not coming from the contract - "0x3d79edaabc0eab6f08ed885c05fc0b014290d95a"
+SELECT count(distinct "hash") AS "count"
+FROM "uniswap_v3_celo"."withdraws"
+WHERE "to" <> '0x3d79edaabc0eab6f08ed885c05fc0b014290d95a'
+
+### Sum of Amount in USD deposited Grouped by From
+#### This measures the amount of assets in USD deposited from the depositor into Uniswap_v3_celo
+SELECT "uniswap_v3_celo"."deposits"."from" AS "from", sum("uniswap_v3_celo"."deposits"."amount_u_s_d") AS "sum"
+FROM "uniswap_v3_celo"."deposits"
+GROUP BY "uniswap_v3_celo"."deposits"."from"
+ORDER BY "uniswap_v3_celo"."deposits"."from" ASC
+
+### Sum of Amount in USD withdrawn grouped by From address
+SELECT "source"."from" AS "from", "source"."sum" AS "sum"
+FROM (SELECT "uniswap_v3_celo"."withdraws"."from" AS "from", sum("uniswap_v3_celo"."withdraws"."amount_u_s_d") AS "sum" FROM "uniswap_v3_celo"."withdraws"
+GROUP BY "uniswap_v3_celo"."withdraws"."from"
+ORDER BY "uniswap_v3_celo"."withdraws"."from" ASC) "source"
+WHERE "source"."sum" > 0
+
+### Amount deposited by pool
+#### This tracks the amount of assets in usd deposited in each pool on Uniswap_v3_celo
+SELECT "uniswap_v3_celo"."deposits"."pool" AS "pool", sum("uniswap_v3_celo"."deposits"."amount_u_s_d") AS "sum"
+FROM "uniswap_v3_celo"."deposits"
+GROUP BY "uniswap_v3_celo"."deposits"."pool"
+ORDER BY "uniswap_v3_celo"."deposits"."pool" ASC
+
+### Amount Withdrawn  by Pool
+SELECT "uniswap_v3_celo"."withdraws"."pool" AS "pool", sum("uniswap_v3_celo"."withdraws"."amount_u_s_d") AS "sum"
+FROM "uniswap_v3_celo"."withdraws"
+GROUP BY "uniswap_v3_celo"."withdraws"."pool"
+ORDER BY "uniswap_v3_celo"."withdraws"."pool" ASC
+
+### Amount in USD deposited with Time
+SELECT CAST("uniswap_v3_celo"."deposits"."timestamp" AS date) AS "timestamp", sum("uniswap_v3_celo"."deposits"."amount_u_s_d") AS "sum"
+FROM "uniswap_v3_celo"."deposits"
+GROUP BY CAST("uniswap_v3_celo"."deposits"."timestamp" AS date)
+ORDER BY CAST("uniswap_v3_celo"."deposits"."timestamp" AS date) ASC
+
+### Amount in USD Withdrawn with  Time
+SELECT CAST("uniswap_v3_celo"."withdraws"."timestamp" AS date) AS "timestamp", sum("uniswap_v3_celo"."withdraws"."amount_u_s_d") AS "sum"
+FROM "uniswap_v3_celo"."withdraws"
+GROUP BY CAST("uniswap_v3_celo"."withdraws"."timestamp" AS date)
+ORDER BY CAST("uniswap_v3_celo"."withdraws"."timestamp" AS date) ASC
+
+### 0x3d79edaabc0eab6f08ed885c05fc0b014290d95a comparison with other addresses
+SELECT "source"."sum" AS "sum", "source"."pool" AS "pool"
+FROM (SELECT sum("uniswap_v3_celo"."deposits"."amount_u_s_d") AS "sum",
+    case 
+        when "uniswap_v3_celo"."deposits"."from" = '0x3d79edaabc0eab6f08ed885c05fc0b014290d95a' then '0x3d79edaabc0eab6f08ed885c05fc0b014290d95a'
+        else 'others'
+    end as pool
+FROM "uniswap_v3_celo"."deposits"
+GROUP BY 2) "source"
+
+### 0x3d79edaabc0eab6f08ed885c05fc0b014290d95a withdrawal comparison with other addresses
+SELECT sum("uniswap_v3_celo"."withdraws"."amount_u_s_d") AS "sum",
+    case
+        when "uniswap_v3_celo"."withdraws"."to" = '0x3d79edaabc0eab6f08ed885c05fc0b014290d95a' then '0x3d79edaabc0eab6f08ed885c05fc0b014290d95a'
+        else 'others'
+    end AS pool 
+FROM "uniswap_v3_celo"."withdraws"
+GROUP BY 2
+--ORDER BY "uniswap_v3_celo"."withdraws"."to" ASC
+
+### Amount In USD vs  Amount Out USD with Time
+SELECT CAST("uniswap_v3_celo"."swaps"."timestamp" AS date) AS "timestamp", sum("uniswap_v3_celo"."swaps"."amount_in_u_s_d") AS "sum", sum("uniswap_v3_celo"."swaps"."amount_out_u_s_d") AS "sum_2"
+FROM "uniswap_v3_celo"."swaps"
+GROUP BY CAST("uniswap_v3_celo"."swaps"."timestamp" AS date)
+ORDER BY CAST("uniswap_v3_celo"."swaps"."timestamp" AS date) ASC
+
+### Amount swap token_in
+SELECT "source"."token_in" AS "token_in", "source"."sum" AS "sum"
+FROM (SELECT "uniswap_v3_celo"."swaps"."token_in" AS "token_in", sum("uniswap_v3_celo"."swaps"."amount_in_u_s_d") AS "sum" FROM "uniswap_v3_celo"."swaps"
+GROUP BY "uniswap_v3_celo"."swaps"."token_in"
+ORDER BY "uniswap_v3_celo"."swaps"."token_in" ASC) "source"
+WHERE "source"."sum" > 0 ORDER BY "source"."sum" DESC
+
+### Amount Swap token_out
+SELECT "source"."token_out" AS "token_out", "source"."sum" AS "sum"
+FROM (SELECT "uniswap_v3_celo"."swaps"."token_out" AS "token_out", sum("uniswap_v3_celo"."swaps"."amount_out_u_s_d") AS "sum" FROM "uniswap_v3_celo"."swaps"
+GROUP BY "uniswap_v3_celo"."swaps"."token_out"
+ORDER BY "uniswap_v3_celo"."swaps"."token_out" ASC) "source"
+WHERE "source"."sum" > 0 ORDER BY "source"."sum" DESC
+
+### Daily activities on Uniswap_v3_celo
+#### This tracks the number of daily activities in the dex
+SELECT CAST("uniswap_v3_celo"."events"."timestamp" AS date) AS "timestamp", count(*) AS "count"
+FROM "uniswap_v3_celo"."events"
+GROUP BY CAST("uniswap_v3_celo"."events"."timestamp" AS date)
+ORDER BY CAST("uniswap_v3_celo"."events"."timestamp" AS date) ASC
+
+### Uniswap_v3_celo Swap Count
+SELECT count(distinct "uniswap_v3_celo"."swaps"."hash") AS "count"
+FROM "uniswap_v3_celo"."swaps"
+
+### Daily TVL Metrics
+#### This tracks the daily cumulative TVL  on Uniswap_v3_celo
+SELECT CAST("uniswap_v3_celo"."financials_daily_snapshots"."timestamp" AS date) AS "timestamp", sum("uniswap_v3_celo"."financials_daily_snapshots"."total_value_locked_u_s_d") AS "sum"
+FROM "uniswap_v3_celo"."financials_daily_snapshots"
+GROUP BY CAST("uniswap_v3_celo"."financials_daily_snapshots"."timestamp" AS date)
+ORDER BY CAST("uniswap_v3_celo"."financials_daily_snapshots"."timestamp" AS date) ASC
+
+### Total TVL in the Dex Amm Protocols,
+#### This contains the amount of assets in usd locked in the Uniswap_v3_celo pool
+SELECT sum("uniswap_v3_celo"."dex_amm_protocols"."total_value_locked_u_s_d") AS "sum"
+FROM "uniswap_v3_celo"."dex_amm_protocols"
+
+### Daily cumulative Volume USD
+SELECT CAST("uniswap_v3_celo"."financials_daily_snapshots"."timestamp" AS date) AS "timestamp", sum("uniswap_v3_celo"."financials_daily_snapshots"."cumulative_volume_u_s_d") AS "sum"
+FROM "uniswap_v3_celo"."financials_daily_snapshots"
+GROUP BY CAST("uniswap_v3_celo"."financials_daily_snapshots"."timestamp" AS date)
+ORDER BY CAST("uniswap_v3_celo"."financials_daily_snapshots"."timestamp" AS date) ASC
+
+### Cumulative USD volume in the Dex Amm Protocols,
+#### This tracks the total cumulative USD volume in the Uniswap_v3_celo dex AMM protocol
+SELECT sum("uniswap_v3_celo"."dex_amm_protocols"."cumulative_volume_u_s_d") AS "sum"
+FROM "uniswap_v3_celo"."dex_amm_protocols"
+
+### Daily Cumulative Total Revenue in USD,
+SELECT CAST("uniswap_v3_celo"."financials_daily_snapshots"."timestamp" AS date) AS "timestamp", sum("uniswap_v3_celo"."financials_daily_snapshots"."cumulative_total_revenue_u_s_d") AS "sum"
+FROM "uniswap_v3_celo"."financials_daily_snapshots"
+GROUP BY CAST("uniswap_v3_celo"."financials_daily_snapshots"."timestamp" AS date)
+ORDER BY CAST("uniswap_v3_celo"."financials_daily_snapshots"."timestamp" AS date) ASC
+
+### Daily Cumulative Supply Side Revenue in USD
+SELECT CAST("uniswap_v3_celo"."financials_daily_snapshots"."timestamp" AS date) AS "timestamp", sum("uniswap_v3_celo"."financials_daily_snapshots"."cumulative_supply_side_revenue_u_s_d") AS "sum"
+FROM "uniswap_v3_celo"."financials_daily_snapshots"
+GROUP BY CAST("uniswap_v3_celo"."financials_daily_snapshots"."timestamp" AS date)
+ORDER BY CAST("uniswap_v3_celo"."financials_daily_snapshots"."timestamp" AS date) ASC
+
+### Daily Cumulative Total Revenue in USD by pool
+SELECT "source"."pool" AS "pool", "source"."sum" AS "sum"
+FROM (SELECT "uniswap_v3_celo"."liquidity_pool_daily_snapshots"."pool" AS "pool", sum("uniswap_v3_celo"."liquidity_pool_daily_snapshots"."cumulative_total_revenue_u_s_d") AS "sum" FROM "uniswap_v3_celo"."liquidity_pool_daily_snapshots"
+GROUP BY "uniswap_v3_celo"."liquidity_pool_daily_snapshots"."pool"
+ORDER BY "uniswap_v3_celo"."liquidity_pool_daily_snapshots"."pool" ASC) "source"
+WHERE "source"."sum" > 0
+
+### Daily Cumulative Total Revenue in USD by pool
+SELECT "source"."pool" AS "pool", "source"."sum" AS "sum"
+FROM (SELECT "uniswap_v3_celo"."liquidity_pool_daily_snapshots"."pool" AS "pool", sum("uniswap_v3_celo"."liquidity_pool_daily_snapshots"."cumulative_total_revenue_u_s_d") AS "sum" FROM "uniswap_v3_celo"."liquidity_pool_daily_snapshots"
+GROUP BY "uniswap_v3_celo"."liquidity_pool_daily_snapshots"."pool"
+ORDER BY "uniswap_v3_celo"."liquidity_pool_daily_snapshots"."pool" ASC) "source"
+WHERE "source"."sum" > 0
+
+### Uniswap_v3_Celo_tokens
+SELECT "uniswap_v3_celo"."tokens"."name" AS "name", "uniswap_v3_celo"."tokens"."symbol" AS "symbol", "uniswap_v3_celo"."tokens"."last_price_u_s_d" AS "last_price_u_s_d"
+FROM "uniswap_v3_celo"."tokens"
+WHERE "uniswap_v3_celo"."tokens"."last_price_u_s_d" > 0
+ORDER BY "uniswap_v3_celo"."tokens"."name" ASC
+
+### Uniswap_v3 Protocols Metrics
+SELECT "uniswap_v3_celo"."protocols"."id" AS "id", 
+"uniswap_v3_celo"."protocols"."name" AS "name", 
+"uniswap_v3_celo"."protocols"."network" AS "network", 
+"uniswap_v3_celo"."protocols"."type" AS "type", 
+"uniswap_v3_celo"."protocols"."total_value_locked_u_s_d" AS "total_value_locked_u_s_d", 
+"uniswap_v3_celo"."protocols"."cumulative_supply_side_revenue_u_s_d" AS "cumulative_supply_side_revenue_u_s_d", 
+"uniswap_v3_celo"."protocols"."cumulative_total_revenue_u_s_d" AS "cumulative_total_revenue_u_s_d", 
+"uniswap_v3_celo"."protocols"."cumulative_unique_users" AS "cumulative_unique_users", 
+"uniswap_v3_celo"."protocols"."total_pool_count" AS "total_pool_count"
+FROM "uniswap_v3_celo"."protocols"
