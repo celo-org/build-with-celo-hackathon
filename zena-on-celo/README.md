@@ -34,6 +34,8 @@ https://zena-on-celo-dbb414.spheron.app
 #### Presentation
 https://www.canva.com/design/DAFRADTnTZc/8EAKvTsxUM_-LitNjXroOw/view#6
 
+https://youtu.be/HfUL3MTFeCk
+
 #### Next Steps
 #####  What do you need to do next to turn this prototype into a working solution?
 
@@ -41,6 +43,8 @@ https://www.canva.com/design/DAFRADTnTZc/8EAKvTsxUM_-LitNjXroOw/view#6
  and improve their knowledge for real-world impact rather than just levels, points, and high scores.
 
 -Connecting with our local networks of teenagers and educators for testing and content creation.
+
+-keep studying web3 concepts, social systems, regenerative cryptoeconomics and consult education studies experts and token engineers
 
 -Add and connect to more eco credits (NCT, Rec token) and implement carbon retirement.
 
