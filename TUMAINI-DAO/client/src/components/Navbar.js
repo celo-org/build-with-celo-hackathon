@@ -15,19 +15,19 @@ const Navbar = (props) => {
         />
       </div>
       <div>
-        <ul className="hidden md:flex items-center justify-around xl:text-lg lg:text-base md:text-normal text-normal font-mono">
-          <li className="mr-8">
+        <ul className="hidden md:flex items-center justify-around xl:text-lg lg:text-base md:text-normal text-normal font-jost">
+          <li className="mr-8 font-jost">
             <Link to="/">Home</Link>
           </li>
-          <li className="mr-8">
+          <li className="mr-8 font-jost">
             <Link to="/proposals">Proposals</Link>
           </li>
-          <li className="mx-5">
+          <li className="font-jost">
             <Link to="/community">Community</Link>
           </li>
-          <li className="ml-8">
+          {/* <li className="ml-8">
             <Link to="/create_proposal">Propose</Link>
-          </li>
+          </li> */}
         </ul>
       </div>
       <div>

@@ -23,7 +23,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/proposals" element={<Proposals />} />
             <Route path="/proposal_page" element={<ProposalPage />} />
-            <Route path="/create_proposal" element={<CreateProposal />} />
+            {/* <Route path="/create_proposal" element={<CreateProposal />} /> */}
             <Route path="/mint_token" element={<MintTokenPage />} />
             <Route path="/community" element={<Community />} />
           </Routes>

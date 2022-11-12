@@ -9,11 +9,11 @@ const Proposals = () => {
   const { showModal } = useContext(AppContext);
 
   return (
-    <div className="flex flex-col items-center justify-center bg-indigo-50">
+    <div className="flex flex-col items-center justify-center w-full bg-indigo-50 h-screen">
       <Navbar />
         <CreateProposal />
         {showModal?<NewProposal />:null}
-      <div className="mt-[50px] mx-2 max-w-[1100px] w-[100%] flex items-center flex-col ">
+      <div className="w-4/5 mx-auto flex items-center flex-col ">
         <Proposal />
        
       </div>

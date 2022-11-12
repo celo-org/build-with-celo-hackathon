@@ -19,7 +19,7 @@ const ProposalTemplate = (props) => {
             <img
               src={process.env.PUBLIC_URL + "/planting.jpg"}
               alt=""
-              className="h-[300px] w-[350px] object-cover rounded-md"
+              className="h-[300px] w-full object-cover rounded-md"
             />
           </div>
           <div className="flex flex-col gap-4 m-1">

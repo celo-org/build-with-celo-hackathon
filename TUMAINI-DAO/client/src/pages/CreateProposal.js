@@ -65,8 +65,8 @@ const CreateProposal = () => {
     connectWallet();
   },[]);
   return (
-    <div className="flex flex-col items-start bg-white  w-full md:h-[120px] h-[100%] rounded-lg mt-[80px]">
-      <div className="w-4/5 mx-auto">
+    <div className="flex flex-col items-start  w-full rounded-lg">
+      <div className="w-4/5 py-8 mx-auto">
       <h1 className="font-jost font-bold text-3xl m-2 text-black">
         Create a New Proposal
       </h1>
