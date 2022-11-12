@@ -15,7 +15,7 @@ const Navbar = (props) => {
         />
       </div>
       <div>
-        <ul className="hidden md:flex items-center justify-around text-xl font-mono">
+        <ul className="hidden md:flex items-center justify-around xl:text-lg lg:text-base md:text-normal text-normal font-mono">
           <li className="mr-8">
             <Link to="/">Home</Link>
           </li>

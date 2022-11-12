@@ -12,7 +12,7 @@ const ProposalTemplate = (props) => {
 
   return (
     <div className="flex w-full">
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 " >
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  " >
       {props.proposal.map((proposals, index) => (
         <div key={proposals[0]} className="flex flex-col gap-3 items-center justify-start m-5 p-2 bg-white shadow-lg max-w-[100%] rounded-lg font-roboto" >
           <div className="">
