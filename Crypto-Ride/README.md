@@ -10,8 +10,8 @@ Decentralized ride sharing
   * [Project Description](#project-description)
   * [Challenges](#challenges)
   * [Celo Network](#why-on-the-celo-network)
-  * [Requirements](#requirements)
   * [Quick Start](#quick-start)
+    + [Requirements](#requirements)
     + [Contract Deployment](#1-download-and-install)
         * [Compiling](#1-compiling)
         * [Migrating](#2-migrating)
@@ -94,7 +94,7 @@ Adding [identities](https://docs.celo.org/protocol/identity) could mitigate the 
 
         - Used as payment for the ride service. 
         
-        Celo's three stable tokens.
+        Celo's cUSD stable token.
         
             - cUSD
 
@@ -140,7 +140,7 @@ The most basic functionality of this project is just a smart contract with an ap
 - Passenger and Driver rating & reputation.
 - Driver & passenger identities. (Using [Celo's Identity Protocol](https://docs.celo.org/protocol/identity))
 
-<b>Addiontial features should be added making the experance more familiar to existing ride sharing. </b>
+<b>Additional features could be added making the experance more familiar to existing ride sharing. </b>
 
 - Driver rewards for good reputation
 - Direct messaging between passenger and driver
@@ -152,6 +152,8 @@ The most basic functionality of this project is just a smart contract with an ap
 
 Simply the ride has four steps from start to finish, anywhere within the ride is cancellable by either party. The contract keeps track of the steps by using 6 different ride states. These states cannot be skipped and only called from the correct party. Here are some important topics for each state.
 
+- <b>None</b>
+    - Default state for all new address.
 
 - <b>Passenger Request Ride</b>
 
@@ -176,9 +178,6 @@ Simply the ride has four steps from start to finish, anywhere within the ride is
     - Driver and passenger reputation will be increased.
 
     - Ride complete.
-
-- <b>None</b>
-    - Default state for all new address.
     
 - <b>Canceled</b>
     - Ride has been canceled.
@@ -188,7 +187,11 @@ Simply the ride has four steps from start to finish, anywhere within the ride is
 ![Important State Diagram](ReadMeAssets/RideStates.png)
 
 
-## Requirements
+## Quick Start
+
+### Requirements
+
+- Git 
 
 - Contract (Optional)
 
@@ -199,29 +202,132 @@ Simply the ride has four steps from start to finish, anywhere within the ride is
      - Web3.js v1.7.4
 
 - iOS Dapps
-
+     - macOS
      - Xcode Version 13.4.1
      - Target iOS 15.5
+     - [Cocoa Pods 1.11.3](cocoapods.org) or greater
 
-## Quick Start
+---
 
 ### Contract Deployment (Optional)
 
-#### 1. Compiling 
+By default the iOS dapps use a pre-deployed ride manager contract on the Alfajores Testnet.
 
-#### 2. Migrating 
+#### Download and Install
 
-### iOS Dapp
+1. Open your terminal and git clone the project repo.
 
-#### 1. Download and Install 
+        git clone -b Crypto-Ride https://github.com/MitchTODO/build-with-celo-hackathon.git
 
-#### 2. Building and Launch Simulator 
+2. `cd` into the smart contract selection of the project and install npm libraries.
+
+        cd build-with-celo-hackathon/Crypto-Ride/SmartContracts
+
+   Install npm libraries with the following command
+
+        npm install 
+
+#### Compiling 
+
+1. With the same terminal run truffle compile to build the smart contracts.
+
+        truffle compile
+
+   This will create a build folder containing the important contract details.
+
+
+#### Migrating / Deploying
+
+Depending on what network you are deploying to, your settings will be different. This readme will walk through on deploying to Alfajores Testnet.
+
+Need a wallet funded with CELO and access to the private key. 
+
+1. Launch Metamask to generate a new wallet. This wallet will act as the contract owner.
+
+2. Copy your address and navigate over to [Alfajores Testnet faucet](https://celo.org/developers/faucet) to fund your wallet.
+
+3. Within Metamask go to wallet details and copy the private key. Paste your private key in the truffle config file on line 79.
+
+4. With the terminal run the truffle migration command with the network options set to `testnet`.
+
+        truffle migrate --network testnet
+
+***Keep your terminal open you will need the output from the migrate command***
+
+### iOS Dapps
+
+#### Download and Install
+
+1. If you havn't already lunch the terminal & git clone the project repo. 
+
+        git clone -b Crypto-Ride https://github.com/MitchTODO/build-with-celo-hackathon.git
+
+   Next Install Podfiles
+
+   ***Note: This process will need to be done for both dapps***
+
+2. With the same terminal cd into driver app.
+
+        cd Hackathon/build-with-celo-hackathon/Crypto-Ride/iOS/CryptoRide-Driver
+
+3. Run the following command to install the Pod libraries.
+
+        pod install 
+
+    **If your running on M1 chip use**
+
+            arch -x86_64 pod install
+
+4. Repeat for the passenger app.
+
+#### Building and Launch Simulator 
+
+   ***Note: This process will need to be done for both dapps***
+
+1. Open Xcode and select `Open a project or file` then navigate and open driver's workspace file.
+
+    `Crypto-Ride -> iOS -> CryptoRide-Driver -> CryptoRide-Driver.xcworkspace`
+
+2. Select a iOS Simulator and build the App.
+
+    ***Note: You might need to change your siging & Capabilities***
+
+Repeat for the passenger app.
 
 Continue to the [dapp walk through](#).
 
 ## Contract Overview
 
+The ride manager contract inhearits three other contracts `ReputationManager`, `AdminControls` and `DriverRole`. With numerous utility contracts within.
+
+-<b>ReputationManager: </b> Enforces a reputation system for passengers and drivers, based on different out comes of a ride. 
+
+-<b>AdminControls: </b> Adjustable settings within the ride manager contract. Only callable by the contract owner.
+
+-<b>DriverRole: </b> Registration contract for drivers.
+
+### Escrow
+
+Escrow component is built into the ride share architecture of the ride manager contract. Before a passenger announces a ride, they must approve the ride price from the token contract. This in turn grants the escrow to transfer funds on behive of the passenger. Funds are held until one of two events. 
+
+- No drivers accept the ride forcing the passenger to cancel and resubmit, in which funds are returned.
+
+- Having a driver accept the ride having the escrow payout the driver upon drop off.
+
+
+### Ride cancellation
+
+
+
+
 ## iOS Overview
+
+### Drivers locations
+
+### Wallet Type
+
+### Handling Events 
+
 
 ## Licence
 
