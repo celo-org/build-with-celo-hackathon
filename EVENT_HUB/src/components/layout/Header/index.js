@@ -2,7 +2,7 @@ import { useEffect, useContext } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useCelo } from '@celo/react-celo'
 import { truncate } from '../../../utils'
-import {DrawerContext, FormContext} from '../../../contexts/AppContext'
+import { DrawerContext, FormContext } from '../../../contexts/AppContext'
 
 import styles from './Header.module.css'
 

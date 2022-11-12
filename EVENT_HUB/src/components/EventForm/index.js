@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useCelo } from '@celo/react-celo'
 import { FormContext } from '../../contexts/AppContext'
 import { ethers } from 'ethers'
@@ -6,9 +6,9 @@ import { eventHubContractAddress } from '../../utils'
 import { addToIPFS } from '../../utils/ipfs'
 import EventHub from '../../artifacts/contracts/EventHub.sol/EventHub.json'
 
-import styles from './Event.module.css'
+import styles from './EventForm.module.css'
 
-function Event() {
+const EventForm= () => {
   const { showEventForm, setShowEventForm } = useContext(FormContext)
 
   const { address, kit } = useCelo()
@@ -105,7 +105,7 @@ function Event() {
 
 
   return (
-    <div className={`app-bg ${styles.container} ${showEventForm ? '' : styles['hide-form']}`}>
+    <div className={`app-bg ${styles.container} ${showEventForm ? '' : styles['hide-form']}`} onClick={reset}>
       <form id="form" onSubmit={handleSubmit} className={styles.form}>
         <h4>{status}</h4>
         <h4>{loading ? 'loading ...' :  ''}</h4>
@@ -124,40 +124,48 @@ function Event() {
             </div>
           </div>
 
-          <div className="">
-            <label htmlFor="date" className="">Date & time</label>
-            <input
-              type="date"
-              required
-              value={eventDate}
-              onChange={(e) => setEventDate(e.target.value)}
-            />
-
-            <input type="time" required value={eventTime} onChange={(e) => setEventTime(e.target.value)}/>
+          <div className={styles.grid}>
+            <div className={styles.date}>
+              <label htmlFor="date" className="">Date</label>
+              <input
+                type="date"
+                required
+                value={eventDate}
+                onChange={(e) => setEventDate(e.target.value)}
+              />
+            </div>
+            <div className={styles.time}>
+              <label htmlFor="time" className="">Time</label>
+              <input type="time" required value={eventTime} onChange={(e) => setEventTime(e.target.value)}/>
+            </div>
           </div>
 
-          <div className="">
-            <label>Max capacity</label>
-            <input type="number" min="1" inputMode="numeric" placeholder="100" value={maxCapacity} onChange={(e) => setMaxCapacity(parseInt(e.target.value))}/>
+          <div className={styles.grid}>
+            <div className={styles.max}>
+              <label>Max capacity</label>
+              <input type="number" min="1" inputMode="numeric" placeholder="100" value={maxCapacity} onChange={(e) => setMaxCapacity(parseInt(e.target.value))}/>
+            </div>
+            <div className={styles.file}>
+              <label>File</label>
+              <input type="file" placeholder="file" onChange={ e => setEventFile(e.target.files[0]) }/>
+            </div>
           </div>
-
-          <input type="file" placeholder="file" onChange={ e => setEventFile(e.target.files[0]) }/>
-
-          <div className="">
-            <label className="">Refundable deposit</label>
-            <input
-              type="number"
-              min="0"
-              inputMode="decimal"
-              placeholder="0.00"
-              value={refund}
-              onChange={(e) => setRefund(e.target.value)}
-            />
-          </div>
-
-          <div className="">
-            <label>Event link</label>
-            <input type="text" className="" required value={eventLink} onChange={(e) => setEventLink(e.target.value)}/>
+          <div className={styles.grid}>
+            <div className={styles.deposit}>
+              <label className="">Refundable deposit</label>
+              <input
+                type="number"
+                min="0"
+                inputMode="decimal"
+                placeholder="0.00"
+                value={refund}
+                onChange={(e) => setRefund(e.target.value)}
+              />
+            </div>
+            <div className="">
+              <label>Event link</label>
+              <input type="text" className="" required value={eventLink} onChange={(e) => setEventLink(e.target.value)}/>
+            </div>
           </div>
           <div className="">
             <label htmlFor="about" className="">Event description</label>
@@ -173,4 +181,4 @@ function Event() {
   )
 }
 
-export default Event
+export default EventForm

@@ -1,19 +1,22 @@
 import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import axios from 'axios'
 import { useCelo } from '@celo/react-celo'
 import EventHub from '../../artifacts/contracts/EventHub.sol/EventHub.json'
 import { cleanDate, eventHubContractAddress } from '../../utils'
 
-import styles from './Events.module.css'
+import styles from './EventLists.module.css'
 
-
-const Events = () => {
+const EventLists = () => {
   const ipfsGateway = 'https://gateway.pinata.cloud/ipfs'
 
+  const location = useLocation()
   const { address, connect, kit } = useCelo()
 
+  const [loading, setLoading] = useState(false)
   const [events, setEvents] = useState([])
   const [status, setStatus] = useState('')
+  const [eventPage, setEventPage] = useState(false)
 
   const getBalance = async () => {
     const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
@@ -98,10 +101,10 @@ const Events = () => {
     console.log(txHash)
   }
 
-
-
   useEffect( () => {
     async function eventList () {
+
+      setLoading(true)
 
       const url = `https://api.pinata.cloud/data/pinList?status=pinned`
       const res = await axios
@@ -116,16 +119,31 @@ const Events = () => {
         })
         .catch(function (error) {
           console.log(error)
+          setLoading(false)
         })
-      setEvents(res)
+
+      if (res) {
+        setLoading(false)
+        setEvents(res)
+      }
+
     }
     eventList()
-  }, [])
+
+  })
+
+  useEffect( () => {
+
+    if (location.pathname === '/events') {
+      setEventPage(true)
+    }
+
+  }, [location])
 
   return (
     <div className={`${styles['event-container']}`}>
       {events.length && events.map(event => (
-        <div className={styles['event-item']}>
+        <div  className={eventPage ? styles['page-event-item'] : styles['event-item']}>
           <h4>{event.metadata.keyvalues.name}</h4>
           <span>Refundable Deposit: {kit.connection.web3.utils.fromWei(event.metadata.keyvalues.deposit, 'ether')} cUSD</span>
           <span>Capacity: {event.metadata.keyvalues.capacity}</span>
@@ -138,4 +156,4 @@ const Events = () => {
   )
 }
 
-export default Events
+export default EventLists

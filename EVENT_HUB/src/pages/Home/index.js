@@ -1,6 +1,6 @@
 
 import { useNavigate } from 'react-router-dom'
-import Events from '../../components/Events'
+import Events from '../../components/EventLists'
 
 import uspImg from '../../assets/img/usp-img.png'
 

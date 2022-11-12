@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import { DrawerContext, FormContext } from './contexts/AppContext'
 import AppHeader from './components/layout/Header'
 import Home from './pages/Home'
-import Event from './pages/Event'
+import Events from './pages/Events'
+import EventForm from './components/EventForm'
 import { CeloProvider, Alfajores, NetworkNames } from '@celo/react-celo'
 import '@celo/react-celo/lib/styles.css'
 import './app.css'
@@ -45,16 +46,16 @@ const App = () => {
               <div className="drawer-links">
                 <h1 className={`app-name app-name-drawer`}>Event Hub</h1>
                 <Link to='/'>Home</Link>
-                <Link to='/event'>Event</Link>
+                <Link to='/events'>Events</Link>
                 <Link to='/rsvps'>RSVPs</Link>
                 <span className="close-btn" onClick={() => setDrawer(false)}>&#x2715;</span>
               </div>
             </div>
             <AppHeader/>
-            <Event/>
+            <EventForm/>
             <Routes>
               <Route path="/" element={<Home/>}/>
-              <Route path="/event" element={<Event/>}/>
+              <Route path="/events" element={<Events/>}/>
             </Routes>
 
           </div>
