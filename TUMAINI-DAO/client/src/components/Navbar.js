@@ -39,7 +39,7 @@ const Navbar = (props) => {
           </>
         ) : (
           <>
-            <button type="button" className="secondary-btn">
+            <button type="button" className="py-2 px-4 text-white bg-black rounded-full">
               {truncateAddress(props.user)}
             </button>
           </>
