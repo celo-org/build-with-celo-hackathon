@@ -48,6 +48,7 @@ const App = () => {
                 <Link to='/'>Home</Link>
                 <Link to='/events'>Events</Link>
                 <Link to='/rsvps'>RSVPs</Link>
+                <button className="app-btn app-create-event-btn">Create Event</button>
                 <span className="close-btn" onClick={() => setDrawer(false)}>&#x2715;</span>
               </div>
             </div>

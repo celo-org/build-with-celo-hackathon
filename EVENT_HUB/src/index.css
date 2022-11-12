@@ -47,3 +47,11 @@ p{
 .app-bg {
   background: #000;
 }
+
+@media (max-width: 767px) {
+  .app-name {
+    font-size: 7rem;
+  }
+
+
+}

@@ -23,3 +23,9 @@
   color: darkgoldenrod;
   border: 3px solid darkgoldenrod;
 }
+
+@media (max-width: 600px) {
+  .create-event-btn {
+    display: none;
+  }
+}

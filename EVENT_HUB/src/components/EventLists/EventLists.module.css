@@ -3,13 +3,14 @@
     display: grid;
     grid-template-columns: 25% 25% 25%;
     justify-content: center;
+    position: relative;
 }
 
 .event-item, .page-event-item {
     display: grid;
     justify-content: center;
     margin: 20px;
-    font-size: 14px;
+    font-size: 0.9em;
     border-radius: 8px;
     padding: 20px 24px;
 }
@@ -63,5 +64,13 @@
 
 .event-item img, .page-event-item img{
     max-height: 150px;
+}
+
+@media (max-width: 1024px) {
+    .event-container {
+        display: block;
+        justify-content: center;
+        position: relative;
+    }
 }
 

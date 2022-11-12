@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useCelo } from '@celo/react-celo'
 import EventHub from '../../artifacts/contracts/EventHub.sol/EventHub.json'
 import { cleanDate, eventHubContractAddress } from '../../utils'
+import Loader from '../Loader'
 
 import styles from './EventLists.module.css'
 
@@ -130,10 +131,6 @@ const EventLists = () => {
     }
     eventList()
 
-  })
-
-  useEffect( () => {
-
     if (location.pathname === '/events') {
       setEventPage(true)
     }
@@ -141,8 +138,9 @@ const EventLists = () => {
   }, [location])
 
   return (
-    <div className={`${styles['event-container']}`}>
-      {events.length && events.map(event => (
+
+      <div className={`${styles['event-container']}`}>
+      {!loading && events.length && events.map(event => (
         <div  className={eventPage ? styles['page-event-item'] : styles['event-item']}>
           <h4>{event.metadata.keyvalues.name}</h4>
           <span>Refundable Deposit: {kit.connection.web3.utils.fromWei(event.metadata.keyvalues.deposit, 'ether')} cUSD</span>
@@ -152,7 +150,10 @@ const EventLists = () => {
           <img width="200px" src={`${ipfsGateway}/${event.ipfs_pin_hash}`} alt=""/>
         </div>
       ))}
+
+      {loading && <div className="loader-container"><Loader/></div>}
     </div>
+
   )
 }
 

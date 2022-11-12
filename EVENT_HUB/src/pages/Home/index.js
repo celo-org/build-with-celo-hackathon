@@ -28,7 +28,7 @@ const Home = () => {
         <h1>Upcoming Events</h1>
         <Events/>
         <div className={styles['button-container-div']}>
-          <button onClick={() => navigate('/event')} className="app-btn">VIEW MORE</button>
+          <button onClick={() => navigate('/events')} className="app-btn">VIEW MORE</button>
         </div>
       </div>
     </div>
