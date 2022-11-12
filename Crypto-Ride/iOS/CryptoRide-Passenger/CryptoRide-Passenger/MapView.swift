@@ -9,40 +9,41 @@ import Foundation
 import SwiftUI
 import MapKit
 
-
+// MARK: MapView
+/// MapView is primarily build for storyboard.
+/// SwiftUI conversion from a storyboard view
 struct MapView: UIViewRepresentable {
     typealias UIViewType = MKMapView
-    
+    // MKMapView
     let mapView = MKMapView()
     
+    // EnvironmentObjects
     @EnvironmentObject var manager:LocationManager
     @EnvironmentObject var rideService:RideService
     
-    //var startAnnotation:MKPointAnnotation = MKPointAnnotation()
-    //var endAnnotation:MKPointAnnotation = MKPointAnnotation()
-
-    
+    // Coordinator for mapView
     func makeCoordinator() -> MapViewCoordinator {
         return MapViewCoordinator()
     }
     
-    
+    // Set Delegate and settings for mapview
     func makeUIView(context: Context) -> MKMapView {
         mapView.delegate = context.coordinator
         mapView.showsUserLocation = true
         mapView.setUserTrackingMode(.follow, animated: true)
         mapView.showsCompass = true
         mapView.region = manager.region
+        // We are going to add are pickUp and dropOff annoations
+        // On init no location is set
         mapView.addAnnotation(rideService.startAnnotation)
         rideService.startAnnotation.title = "PickUp"
         mapView.addAnnotation(rideService.endAnnotation)
         rideService.endAnnotation.title = "DropOff"
-        //mapView.register(CarAnnotationView.self, forAnnotationViewWithReuseIdentifier: "car")
-        //mapView.register(CarAnnotation.self, forAnnotationViewWithReuseIdentifier:"car" )
+
         return mapView
     }
     
-    
+    // Converts coordinates to human readable address
     func getHumanAddress(coordinates:CLLocationCoordinate2D,isStart:Bool) {
         let address = CLGeocoder.init()
         address.reverseGeocodeLocation(CLLocation.init(latitude: coordinates.latitude, longitude:coordinates.longitude)) { (places, error) in
@@ -61,16 +62,16 @@ struct MapView: UIViewRepresentable {
             }
     }
     
+    // MARK: updateUIView
+    /// Responsible for changes and updates to the mapView
+    /// - NOTE: Do to the way mapView is built for story board booleans are used to trigger changes in the mapView
     func updateUIView(_ uiView: MKMapView, context: Context) {
-        
-        
-        
-        
+        // Removal of a annoation
         if(manager.removeAnnotation != nil) {
             uiView.removeAnnotation(manager.removeAnnotation!)
             manager.removeAnnotation = nil
         }
-        
+        // Update map reigon
         if(manager.updateRegion) {
             if manager.selectedAnnotation == nil {
                 manager.updateRegion = false
@@ -81,18 +82,13 @@ struct MapView: UIViewRepresentable {
             manager.updateRegion = false
         }
         
-        //if(manager.isTracking) {
-        //    manager.trackAnnotation
-        //}
-        
+        // Add driver annoations
         if(!manager.driverPoints.isEmpty){
-            //uiView.addAnnotations()
             uiView.addAnnotations(manager.driverPoints)
-            //print("Adding driver pins")
         }
         
  
-        
+        // Removes all Overlays and route annotaions
         if(manager.clean){
             mapView.removeOverlays(mapView.overlays)
             manager.route = nil
@@ -108,7 +104,7 @@ struct MapView: UIViewRepresentable {
         }
     
         
-        
+        // Setting of route start annotation as current location
         if(rideService.userLocation) {
   
             rideService.startAnnotation.coordinate = CLLocationCoordinate2D(latitude: manager.currentLocation!.coordinate.latitude, longitude: manager.currentLocation!.coordinate.longitude )
@@ -121,17 +117,19 @@ struct MapView: UIViewRepresentable {
             rideService.userLocation = false
         }
         
+        // Setting of route start annotation as drop location
         if(rideService.showDropOnStart && rideService.startDropLocation != nil) {
-            
+            // Covert screen drop location to coordinate on map
             let coordinate = self.mapView.convert(rideService.startDropLocation!, toCoordinateFrom: self.mapView)
+            // Set start annotation coordinates to pin drop coordinates
             rideService.startAnnotation.coordinate = coordinate
-            
+            // Set start location
             rideService.startLocation = coordinate
-            
+            // add start annotation to mapView
             uiView.addAnnotation(rideService.startAnnotation)
-  
+            // Convert pin drop coordinates to human readabl
             getHumanAddress(coordinates: rideService.startAnnotation.coordinate, isStart: true)
-        
+            // Set drop location back to default
             rideService.showDropOnStart = false
             rideService.startDropLocation = nil
             
@@ -149,6 +147,7 @@ struct MapView: UIViewRepresentable {
             rideService.endDropLocation = nil
         }
         
+        // Snaps to the bounding map of a MKRoute
         if(manager.route != nil ) {
             // Check if need to snap back to route
             if(manager.snapToRoute){
@@ -160,7 +159,8 @@ struct MapView: UIViewRepresentable {
             }
         }
 
-        // Update route for announced rides
+        // Calculates MKRoute between the two pin drop coordinates
+        // Adds MKRoute polyline to the mapview
         if rideService.updateRoute {
             var p1:MKPlacemark?
             var p2:MKPlacemark?
@@ -172,14 +172,16 @@ struct MapView: UIViewRepresentable {
                 p1 = MKPlacemark(coordinate: rideService.startLocation!)
                 p2 = MKPlacemark(coordinate: rideService.endLocation!)
             }
-
+            // Check if are points are nil
             if(p1 == nil && p2 == nil){
                 return
             }
+            // Check if route exist
             if manager.route != nil {
+                // remove existing route from map
                 mapView.removeOverlays(mapView.overlays)
             }
-
+            // Build route request
             let request = MKDirections.Request()
             request.source = MKMapItem(placemark: p1!)
             request.destination = MKMapItem(placemark: p2!)
@@ -190,8 +192,9 @@ struct MapView: UIViewRepresentable {
                 
                 guard let route = response?.routes.first else { return }
                 manager.route = route
-                
+                // Get ride estimates
                 manager.getRideEstimates()
+                // Add mkroute polyline to mapView
                 uiView.addOverlay(route.polyline)
                 uiView.setVisibleMapRect(
                     route.polyline.boundingMapRect,
@@ -206,12 +209,13 @@ struct MapView: UIViewRepresentable {
     }
     
     // Used for testing driver locations
+    // Currently not used
     func addRadiusCircle(location: CLLocation){
         let circle = MKCircle(center: location.coordinate, radius: 10)
         self.mapView.addOverlay(circle)
-        
     }
     
+    // MARK: MapViewCoordinator
     class MapViewCoordinator: NSObject, MKMapViewDelegate {
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
             let renderer = MKPolylineRenderer(overlay: overlay)
@@ -221,12 +225,13 @@ struct MapView: UIViewRepresentable {
         }
         
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-            
+            // Check Annoation type
             if annotation is MKUserLocation {
                     return nil
                 }
+
             if annotation is CarAnnotation {
-                
+                // Use custom annotations for driver pins
                 let reuseId = "car"
 
                 var anView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
@@ -237,25 +242,11 @@ struct MapView: UIViewRepresentable {
                 else {
                     anView!.annotation = annotation
                 }
-                //let cpa = annotation as! CarAnnotationView
+  
                 anView!.image =  UIImage(systemName: "car.fill")
                 
-                
-                //let annotationView = CarAnnotationView(annotation: annotation, reuseIdentifier: "car")
-                //annotationView.canShowCallout = true
-                //annotationView.markerTintColor = .systemBlue
-                
-                //annotationView.image = UIImage(systemName: "car.fill")?.withTintColor(.green, renderingMode: .alwaysOriginal)
-                //annotationView.tintColor = .blue
-                //annotationView.backgroundColor = .blue
-                //annotationView.tintColor = .systemBlue
-                
-                //let size = CGSize(width: 40, height: 40)
-                //annotationView.image = UIGraphicsImageRenderer(size:size).image {
-                //    _ in annotationView.image!.draw(in:CGRect(origin:.zero, size:size))
-                //}
                 return anView
-                //return annotationView
+     
             }else{
                 // Default pin annotation
                 return(nil)

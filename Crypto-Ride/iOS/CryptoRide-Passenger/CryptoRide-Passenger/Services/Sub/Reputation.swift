@@ -24,6 +24,10 @@ class Reputation:ObservableObject {
     
     // MARK: getReputation
     /// fetch reputation for wallet address
+    /// Set data
+    ///  - Rating
+    ///  - Reputation
+    ///  - Ride Count
     public func getReputation() {
         let ethAddress = ContractServices.shared.getWallet()
         let params = [ethAddress.address] as [AnyObject]

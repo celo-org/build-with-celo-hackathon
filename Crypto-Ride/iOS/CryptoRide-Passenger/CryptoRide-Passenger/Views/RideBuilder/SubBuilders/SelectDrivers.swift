@@ -27,27 +27,26 @@ struct SelectDrivers:View {
                         }label: {
                             Image(systemName:"xmark.square.fill").padding(10)
                         }.buttonStyle(.bordered)
-                        
                         Spacer()
                         Button(action: {
                             builderVm.facebookLink(userName:manager.selectedDriver!.info!.facebookHandle!)
                         }, label: {
                             Image("facebook")
                                 .resizable()
-                                .frame(width: 40, height: 40, alignment: .center)
+                                .frame(width: 30, height: 30, alignment: .center)
                                 .scaledToFit()
                             
                         }).buttonStyle(.borderless)
-                        Spacer()
+                   
                         Button(action: {
                             builderVm.twitterLink(userName:manager.selectedDriver!.info!.twitterHandle!)
                         }, label: {
                             Image("twitter")
                                 .resizable()
-                                .frame(width: 40, height: 40, alignment: .center)
+                                .frame(width: 30, height: 30, alignment: .center)
                                 .scaledToFit()
                         }).buttonStyle(.borderless)
-                        Spacer()
+                        
                     }
                     HStack{
                         Image(systemName: "person.crop.circle")
@@ -69,7 +68,7 @@ struct SelectDrivers:View {
                             }
                            
                         }
-                    }
+                    }.padding(5)
                     
                  
                 }.background(.bar)

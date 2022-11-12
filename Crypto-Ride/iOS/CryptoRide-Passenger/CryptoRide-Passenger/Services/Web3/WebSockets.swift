@@ -181,7 +181,7 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
     /// - Note: Currently handles events only related to change to ride states
     ///
     /// - Parameters :
-    ///                 - `message` : SocketMessage - raw event log from emitted by contract
+    ///                 - `message` : SocketMessage - raw event log  emitted by contract
     ///
     func handleEvent(message:SocketMessage) {
      
@@ -209,9 +209,10 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
             // check if rideId is not nil
             if rideId != nil {
                 
+                //let arrayValue = Array(message.params.result.data)
                 // Driver Address range currently not used
-                let _: ClosedRange = 66...129
-                
+                //let driverRange: ClosedRange = 90...129
+   
                 let rideId = LogDecoder.decodeRideId(data: message.params.result.data)
 
                 // Check if recived rideId equals are rideId
@@ -244,7 +245,7 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
                 let rideId = LogDecoder.decodeRideId(data: message.params.result.data)
                 if self.rideId == rideId{
                     rideState = 5 // update ride state
-                    // Discard rideId as ride is complete
+                    // Discard rideId when ride is complete
                     self.rideId = nil
                 }
             }
@@ -255,7 +256,7 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
                 if self.rideId == rideId {
                     rideState = 6
                     abortTimer = true
-                    // Discard rideId as ride is canceled
+                    // Discard rideId when ride is canceled
                     self.rideId = nil
                 }
             }

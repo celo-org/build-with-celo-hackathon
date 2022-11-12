@@ -11,33 +11,21 @@ import SwiftUI
 import CoreImage.CIFilterBuiltins // qr code generation
 
 
-// Token transfer params
-struct TxParams {
-    var from:String = ""
-    var to:String = ""
-    var value:String = ""
-}
-
-
 class ProfileViewModel:ObservableObject {
    
-    // Published variable
-    //@Published var lastTx:WriteTransaction?
-    // Transfer params
-    @Published var txParams:TxParams = TxParams()
+    // Errors
     @Published var error:ContractError?
     @Published var showProgress = false
-    
+    // Transfer variables
     @Published var toAddress = ""
     @Published var amount = ""
-    
+    @Published var password = ""
+    @Published var tokenSelected = "cUSD"
+    var tokenContract:Contracts = .cUSD
+    // Qr code
     private let context = CIContext()
     private let filter = CIFilter.qrCodeGenerator()
     
-    // Set for enabled send button
-    var sendDisabled:Bool {
-        txParams.to.isEmpty || txParams.value.isEmpty || showProgress
-    }
     
     // MARK: generateQRCode
     /// Encodes string data as a qr code in a UIImage
@@ -67,9 +55,12 @@ class ProfileViewModel:ObservableObject {
     ///              - @escaping(TranscationSendingResult)
     func transfer(completion:@escaping(TransactionSendingResult) -> Void) {
         let amount = Web3.Utils.parseToBigUInt(amount, units: .eth)
-        let toAddress = EthereumAddress(toAddress)!
-        let params = [toAddress.address,amount] as [AnyObject]
-        ContractServices.shared.write(contractId: .cUSD, method: "transfer", parameters: params, password: "") {
+        guard let ethAddress = EthereumAddress(toAddress) else {
+            self.error = ContractError(title: "Failed", description: "Invalid To Address")
+            return
+        }
+        let params = [ethAddress.address,amount] as [AnyObject]
+        ContractServices.shared.write(contractId: tokenContract, method: "transfer", parameters: params, password: password) {
             result in
             DispatchQueue.main.async { [unowned self] in
                 switch(result){

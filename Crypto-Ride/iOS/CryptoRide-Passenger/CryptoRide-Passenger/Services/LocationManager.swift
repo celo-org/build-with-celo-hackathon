@@ -17,51 +17,69 @@ import FirebaseCore
 import FirebaseFirestore
 import FirebaseDatabase
 
+
+// MARK: LocationManager
+/// Tracking driver positions on mapView
+/// Tracking of user location
+/// Geobased query to get active drivers in local area
+/// Driver ride estimates
+/// 
+/// - TODO
+///     - Improve management of driver locations
+///
 class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
     
     @Published var error:Error? = nil
     
+    // Region variables
     @Published var region = MKCoordinateRegion()
     @Published var updateRegion = false
     
+    // MapView variables
     @Published var snapToRoute = false
     @Published var clean = false
     
+    // Drivers and rejected drivers
     @Published var rejectedDrivers:[DriverDetails] = []
     @Published var drivers:[DriverDetails] = []
     
-    // Set driver address to point index
+    // Map driver address array index
     private var driverMap:[String:Int] = [:]
+    
     // List of driver annotations
     @Published var driverPoints:[CarAnnotation] = []
     
+    // MapView will remove annotations set
     @Published var removeAnnotation:MKAnnotation? = nil
 
     // Selecting Annotations on mapView
     @Published var selectedDriver:DriverDetails?
     @Published var selectedAnnotation:CarAnnotation?
     
-    // Avarge price of ride When building route
+    // Route Pricing
     @Published var normalizedPrice:Double = 0.00
     @Published var recommendedPrice:Double = 0.00
+    
+    // Route of ride
     @Published var route:MKRoute?
     
-    
+    // CLLocationManagerDelegate variables
     @Published var currentLocation:CLLocation?
     private var lastGeocodeTime:Date? = Date()
+    private let manager = CLLocationManager()
     
+    // FireStore db
     private var db:Firestore!
     
-    private let manager = CLLocationManager()
     // Max distance away from drivers
     private let radiusInM: Double = 1609.34
     private var removedDrivers:[String] = []
     
     override init() {
         super.init()
-
+        // Init are firestore
         db = Firestore.firestore()
-        
+        // Setup CLLocationManagerDelegate
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.requestWhenInUseAuthorization()
@@ -69,9 +87,9 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
     }
     
     
-    
     // MARK: changeRegion
     /// Snaps map to a driver annotation
+    ///
     public func changeRegion(driver:String) {
         let driverIndex = driverMap[driver]
         selectedAnnotation = driverPoints[driverIndex!]
@@ -86,11 +104,11 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
 
     // MARK: locationManager
     /// Updates user location on the mapView
-    /// Passes user location into geoQuery use to find local driver
+    /// Calls geoQuery to find local driver with current location
     ///
-    /// Parameters:
+    /// - Parameters:
     ///     - `manager` CLLocation Manager for delegate call
-    ///     - `locations` update user locations
+    ///     - `locations` Updates on user locations
     ///
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         // Get last location in map
@@ -121,8 +139,9 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
             address.reverseGeocodeLocation(CLLocation.init(latitude: $0.coordinate.latitude, longitude:$0.coordinate.longitude)) {
                 [unowned self] (places, error) in
                 if let place = places{
-                    // get
+                    // Get current city
                     let city =  place.first?.locality ?? ""
+                    // Make request for drivers with are location
                     geoQuery(userLocation: coords,city: city)
  
                 }
@@ -136,33 +155,39 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
     // MARK: getRideEstimates
     /// Uses driver rate and route to estimate ride cost
     /// Sets the normalized ride price avarging driver rates
+    ///
     func getRideEstimates() {
         
         if(route == nil){return}
     
         var total = 0.0
         for index in drivers.indices {
-           
+            // Check if driver rates are nil
             if (drivers[index].info == nil) {break}
             if (drivers[index].info!.rate == nil) {break}
             let rate = Double(drivers[index].info!.rate!)
-         
+            // Average drivers fares with route length and time
             if rate != 0.0{
-                let priceWithDriverRate = 60 / rate
+                let priceWithDriverRate = 60 / rate // convert rate into minutes
+                // Apply minutes to time expected
                 let driverRateAppliedToRide = route!.expectedTravelTime *  (priceWithDriverRate / 60)
+                
                 total += driverRateAppliedToRide
+                // Set driver ride price
                 drivers[index].rateAppliedToRide = driverRateAppliedToRide
             }
         }
+        // Avarage ride price with total and amount of drivers
         normalizedPrice = total / Double(drivers.count)
         recommendedPrice = total / Double(drivers.count)
     }
     
     
     // MARK: getDriverDetails
-    ///
-    /// Parameters
-    ///     - details
+    /// Gets drivers details from ride manager contract
+    /// - Parameters
+    ///     - `details`: DriverDetails object
+    ///     - `index` : index to add driver info object
     func getDriverDetails(details:DriverDetails,index:Int){
         let params = [details.address] as [AnyObject]
         ContractServices.shared.read(contractId: .RideManager, method: RideManagerMethods.getDriverRate.rawValue, parameters: params)
@@ -186,30 +211,30 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
                         infoAssetLink: infoAssetUrl,
                         twitterHandle: details.info!.twitterHandle,
                         facebookHandle: details.info!.facebookHandle)
-                    
+                    // Add driver info to array at driver index
                     self.drivers[index].info = driverInfo
+                    // Calculate ride estimates with driver rates
                     getRideEstimates()
                    
                 case .failure(let error):
                     self.error = error
-                    //print("Failed to get driver details")
-                    //self.error = ContractError(title: "Failed to get driver rate.", description: error.errorDescription)
                 }
             }
         }
     }
     
     
-    // MARK: getDriverDetails
-    ///
-    /// Parameters
-    ///     - details
+    // MARK: getDriverRating
+    /// Gets driver reputation from ride manager contract
+    /// - Parameters
+    ///     - `details`: DriverDetails object
+    ///     - `index` : index to add driver info object
     func getDriverRating(details:DriverDetails,index:Int){
         let params = [details.address] as [AnyObject]
         ContractServices.shared.read(contractId: .RideManager, method: RideManagerMethods.getReputation.rawValue, parameters: params)
         { result in
             DispatchQueue.main.async { [unowned self] in
-                //isLoading = false
+            
                 switch(result){
                 case .success(let result):
                     let rawStats = result["0"] as! [AnyObject]
@@ -228,23 +253,23 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
                    
                 case .failure(let error):
                     self.error = error
-                    //print("Failed to get driver details")
-                    //self.error = ContractError(title: "Failed to get driver rate.", description: error.errorDescription)
                 }
             }
         }
     }
     
     
-    private var refHandle:UInt?
+  
     // MARK: listenForChanges
+    /// Get changes from driver location from Realtime db.
     /// Updates driver locations and pin annotations
-    /// Remove drivers that sure pass passenger distance
-    
+    /// Remove drivers that  pass passenger distance
+    ///
+    private var refHandle:UInt?
     func listenForChanges(driver:String) {
         
         let ref = Database.database().reference().child("driver")
-        
+        // Observe change to the coodinates by the driver wallet address
         refHandle = ref.child(driver).observe(.value, with: { [ self](snapshot) in
             
             let driverAddress = snapshot.key as String
@@ -257,42 +282,40 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
          
             let index = self.driverMap[driverAddress]
             if(index == nil){return}
+            // need to make two coordinate object
             let newLocation = CLLocationCoordinate2D(latitude: lat, longitude: long)
-            let driverCL = CLLocation(latitude:lat, longitude: long)
- 
+            let driverCL = CLLocation(latitude:lat, longitude: long) // CLLocation used to measure distance
+            // get distance between passenger location and driver CLLocation
             let distanceAway = currentLocation!.distance(from: driverCL)
 
-            if distanceAway > radiusInM {
+            self.driverPoints[index!].coordinate = newLocation
 
-                //removedDrivers.append(driverAddress)
-                // Remove annoatation if driver is too far away
-                //removeAnnotation = driverPoints[index!]
-                //driverPoints.remove(at: index!)
-                //driverMap[driverAddress] = nil
-                //drivers.remove(at:index!)
-                //ref.removeObserver(withHandle: refHandle!)
-
-            }else{
-                self.driverPoints[index!].coordinate = newLocation
-
-                if self.driverPoints[index!] == selectedAnnotation{
-                    changeRegion(driver: driverAddress)
-                }
+            if self.driverPoints[index!] == selectedAnnotation{
+                changeRegion(driver: driverAddress)
             }
+            
         })
         
         ref.observe(.childRemoved, with: {[self] (snapshot) in
             // get driver address to remove
             let driverAddress = snapshot.key as String
-            let index = driverMap[driverAddress]
-            if index == nil {return}
-        
-            // Remove driver annotation
-            removeAnnotation = driverPoints[index!]
-            // Remove arrays with driver details
-            driverPoints.remove(at: index!)
-            //driverMap[driverAddress] = nil
-            drivers.remove(at:index!)
+            
+            for annotation in driverPoints {
+                if annotation.title == driverAddress {
+                    // Remove driver annotation
+                    removeAnnotation = annotation
+                    let index = driverMap[driverAddress]
+                    if index == nil {return}
+                    
+                    // Remove arrays with driver details
+                    driverPoints.remove(at: index!)
+                    driverMap[driverAddress] = nil
+                    drivers.remove(at:index!)
+                    ref.removeObserver(withHandle: refHandle!)
+                }
+            }
+            
+
         })
         
         
@@ -304,13 +327,11 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
     /// - Note: Read data from FireBase.
     ///
     /// - Parameters:
-    ///                 - `userLocation`: CLLocationCoordinate2D of passenger.
+    ///              - `userLocation`: CLLocationCoordinate2D of passenger.
+    ///              - `city`: string city name of passengers current location
     ///
     func geoQuery(userLocation:CLLocationCoordinate2D,city:String) {
-     
-        // Find drivers within 5000 meters of passenger
-  
-
+    
         // Each item in 'bounds' represents a startAt/endAt pair. We have to issue
         // a separate query for each pair. There can be up to 9 pairs of bounds
         // depending on overlap, but in most cases there are 4.
@@ -352,7 +373,7 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
                     
                     if driverMap.contains(where: { $0.key.hasPrefix(driver.address) }){
                         // Driver already listed
-                        print("Driver already listed")
+                        //print("Driver already listed")
                     }else{
                         
                         let carAnnotationView = CarAnnotation()

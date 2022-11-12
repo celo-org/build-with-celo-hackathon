@@ -7,8 +7,10 @@
 
 import SwiftUI
 
+// MARK: Authentication
+/// Authentication object for login - out service
 class Authentication:ObservableObject {
-    @Published var isValidated = true
+    @Published var isValidated = false
     var password = ""
     
     func updateValidation(success:Bool,password:String?) {

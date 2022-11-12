@@ -9,46 +9,45 @@ import SwiftUI
 import MapKit
 import Combine
 
+// Passenger ride states
 enum PassengerStates {
     case none
-    case insignificantFunds
     case noRide
     case inRide
-    case rideComplete // Passenger is entered a ride
 }
 
 struct ContentView: View {
     
     @EnvironmentObject var authentication:Authentication
     
-    @ObservedObject var manager = LocationManager()
-    
     @StateObject var balance = Balance()
     @StateObject var reputation = Reputation()
     
     @ObservedObject var rideService:RideService
     @ObservedObject var webSocket:WebSockets
-
+    @ObservedObject var manager = LocationManager()
     
     let mapView:MapView = MapView()
 
-    
+
     init(password:String) {
+        // Set up are Observed Objects
         rideService = RideService(password:password)
         webSocket = WebSockets()
 
         rideService.observeState(propertyToObserve: webSocket.$rideState)
         rideService.observeRideId(propertyToObserve: webSocket.$rideId)
+
     }
 
     
-
+    // MARK: containedView
+    /// Jump between view based on passenger state
     func containedView() -> AnyView {
         switch rideService.passengerState {
         case .none:
             return AnyView(ProgressView())
-        case .insignificantFunds:
-            return AnyView(Text("Need more money"))
+
         case .noRide:
             return AnyView(
                 MainBuilder().environmentObject(rideService)
@@ -63,9 +62,7 @@ struct ContentView: View {
                         .environmentObject(webSocket)
                    
             )
-        case .rideComplete:
-            return AnyView(Text("Ride compelet"))
-         }
+        }
     }
  
    
@@ -82,7 +79,10 @@ struct ContentView: View {
                 containedView()
              
             }.task {
+                // IMPORTANT get ride state of passenger address
+                // This will set the course for what view is presented
                 let passengerAddress = ContractServices.shared.getWallet().address
+                // Check if passenger address is in active ride
                 rideService.getActiveRide(address: passengerAddress){
                     rideId in
                     if rideId == ZERO_BYTES {
@@ -90,7 +90,7 @@ struct ContentView: View {
                     }else{
                         webSocket.rideId = rideId
                         rideService.rideId = rideId
-
+                        // Get details of the active ride
                         rideService.getRide(rideId: rideId) {
                             ride in
                             rideService.startAnnotation.coordinate = ride.startCoordinates!
@@ -112,9 +112,10 @@ struct ContentView: View {
                 })
             .alert(item:$rideService.error) { error in
                 Alert(title: Text(error.title), message: Text(error.description), dismissButton: .cancel() {
-                        print("Error")
+                        rideService.error = nil
                     })
             }
+            .navigationTitle("Passenger")
             .navigationViewStyle(StackNavigationViewStyle())
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

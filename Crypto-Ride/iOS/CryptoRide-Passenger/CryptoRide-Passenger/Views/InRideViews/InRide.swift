@@ -72,7 +72,7 @@ struct InRide: View {
         // Views for progressing or canceling a ride
         VStack(alignment: .center){
             // hide Cancel button if ride is over or was canceled
-            if rideService.ride.rideState != 6 || rideService.ride.rideState != 5 || rideService.ride.rideState != 0 {
+            if rideService.ride.rideState != 6 && rideService.ride.rideState != 5 && rideService.ride.rideState != 0 {
                 HStack{
                     Button {
            
@@ -95,9 +95,10 @@ struct InRide: View {
 
                     Spacer()
                 }
-                Spacer()
-                nextView().disabled(isLoading)
+  
             }
+            Spacer()
+            nextView().disabled(isLoading)
         }
     }
 }

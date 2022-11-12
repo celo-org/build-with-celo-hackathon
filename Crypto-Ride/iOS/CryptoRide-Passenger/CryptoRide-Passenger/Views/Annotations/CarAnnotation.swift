@@ -15,14 +15,14 @@ class CarAnnotation : NSObject, MKAnnotation {
     dynamic var title: String?
     dynamic var subtitle: String?
     dynamic var image: UIImage?
-    dynamic var colour: UIColor?
+    dynamic var color: UIColor?
 
     override init() {
         self.coordinate = CLLocationCoordinate2D()
         self.title = nil
         self.subtitle = nil
         self.image = nil
-        self.colour = UIColor.white
+        self.color = UIColor.white
     }
 }
 // MARK: CarAnnotationView

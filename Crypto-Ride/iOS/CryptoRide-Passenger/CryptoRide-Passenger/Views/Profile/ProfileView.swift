@@ -17,7 +17,8 @@ struct ProfileView:View {
     
     @State private var isShowingScanner = false
     @State var isTransfer = false
-    
+    // Transferable tokens
+    var tokens = ["cUSD","CELO"]
     
     var body: some View {
         ScrollView {
@@ -35,9 +36,34 @@ struct ProfileView:View {
                 
                 }
                 HStack{
-                    Text("Balance")
-                    Text("\(balance.CELO) CELO")
-                    Text("$\(balance.cUSD) cUSD")
+                    HStack{
+                        Image("cUSDEx")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 40, height: 30, alignment: .center)
+                        Text("\(balance.cUSD)")
+                        
+                    }
+                    Divider()
+                    HStack{
+                        Image("CeloEx")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 40, height: 40, alignment: .center)
+                        Text("\(balance.CELO)")
+                        
+                    }
+                    Button{
+                        balance.getTokenBalance(.CELO)
+                        balance.getTokenBalance(.cUSD)
+                    }label: {
+                        Image(systemName: "arrow.clockwise.circle.fill")
+                            .resizable()
+                            .interpolation(.none)
+                            .scaledToFit()
+                            .frame(width: 20, height: 20, alignment: .center)
+                    }.buttonStyle(.borderless)
+                    
                 }.padding()
                 
 
@@ -51,21 +77,44 @@ struct ProfileView:View {
                         Image(systemName: "doc.on.clipboard")
                     })
                 }
-                Text("Send cUSD").font(.title3)
+                HStack{
+                    Text("Send").font(.title3)
+                    Picker("", selection: $profileVM.tokenSelected) {
+                                    ForEach(tokens, id: \.self) {
+                                        Text($0)
+                            }
+                    }
+                }
+
                 HStack{
                     TextField("0", text:  $profileVM.amount)
                     Button(action:{
-                        profileVM.amount = balance.cUSD
+                        if profileVM.tokenSelected == "cUSD" {
+                            profileVM.amount = balance.cUSD
+                        }else{
+                            profileVM.amount = balance.CELO
+                        }
                     }, label: {
                         Text("MAX")
                     })
                 }
+                
+                TextField("Wallet Password", text: $profileVM.password)
+                    .multilineTextAlignment(.center)
+                    .textFieldStyle(.roundedBorder)
+                if isTransfer{
+                    ProgressView()
+                }
                 Button(action:{
                     isTransfer = true
                     profileVM.transfer(){ success in
+                        // Get request for token balance
                         balance.getTokenBalance(.cUSD)
+                        balance.getTokenBalance(.CELO)
+                        // Clear all inputs
                         profileVM.amount = ""
                         profileVM.toAddress = ""
+                        profileVM.password = ""
                         isTransfer = false
                     }
                 }, label: {
@@ -90,7 +139,18 @@ struct ProfileView:View {
             })
             Text(ContractServices.shared.getWallet().address).font(.body).bold().lineLimit(2)
             // Part of the qr code Scanner currently not used
-        }.sheet(isPresented: $isShowingScanner) {
+        }.alert(item:$profileVM.error) { error in
+            Alert(title: Text(profileVM.error!.title), message: Text(profileVM.error!.description), dismissButton: .cancel() {
+                    profileVM.error = nil
+                    profileVM.amount = ""
+                    profileVM.toAddress = ""
+                    profileVM.password = ""
+                    isTransfer = false
+                })
+        }
+        
+        
+        .sheet(isPresented: $isShowingScanner) {
             CodeScannerView(codeTypes: [.qr] ) { response in
                 isShowingScanner = false
                 switch response {
@@ -103,7 +163,7 @@ struct ProfileView:View {
                         return
                     }
                     
-                    profileVM.txParams.to = toEthAddress.address
+                    //profileVM.txParams.to = toEthAddress.address
                     
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -113,16 +173,6 @@ struct ProfileView:View {
             .padding(EdgeInsets(top: 8, leading: 16,
                                    bottom: 8, trailing: 16))
             .buttonStyle(.borderedProminent)
-            .toolbar {
- 
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(destination: Settings()
-                    ){
-                        Image(systemName: "gear")
-                    }
-                }
-    
-            }
         }
     }
 }

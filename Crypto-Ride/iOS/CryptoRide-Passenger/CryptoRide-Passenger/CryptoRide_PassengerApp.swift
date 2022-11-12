@@ -12,11 +12,13 @@ struct CryptoRide_PassengerApp: App {
     @StateObject var authentication = Authentication()
     
     init() {
+        // Configure firebase
         FirebaseApp.configure()
     }
     
     var body: some Scene {
         WindowGroup {
+                    // check if we are validated
                     if authentication.isValidated {
                         ContentView(password: authentication.password).environmentObject(authentication)
                     }else {

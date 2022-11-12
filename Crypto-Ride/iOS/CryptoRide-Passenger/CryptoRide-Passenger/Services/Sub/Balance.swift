@@ -33,6 +33,7 @@ class Balance:ObservableObject {
     ///
     /// - Parameters:
     ///         - `token` token to get balance of
+    ///
     public func getTokenBalance(_ token:Contracts) {
         isLoading = true
 
@@ -86,9 +87,9 @@ class Balance:ObservableObject {
     /// - Parameters:
     ///         - `amount` amount to approve
     func setApproval(amount:Double,completion:@escaping(TransactionSendingResult) -> Void) {
-        let bigAmount = BigUInt(exactly: Int(amount))!
-        let wei = Web3.Utils.formatToEthereumUnits(bigAmount, toUnits: .wei, decimals: 18, decimalSeparator: ".")!
-        // let wei = 100000000000000000
+        //let bigAmount = BigUInt(exactly: Int(amount))!
+        //let wei = Web3.Utils.formatToEthereumUnits(bigAmount, toUnits: .wei, decimals: 18, decimalSeparator: ".")!
+         let wei = 100000000000000000
         let appoveAddress = [rideManagerAddress,wei] as [AnyObject]
         
         ContractServices.shared.write(contractId: .cUSD, method: RideManagerMethods.approve.rawValue, parameters:appoveAddress , password: ""){
