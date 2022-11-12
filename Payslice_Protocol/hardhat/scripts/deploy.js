@@ -20,10 +20,12 @@ async function main() {
   // const deployedSlice = await sliceContract.deploy(deployForwarder.address);
   // const deployedPayslice = await paysliceContract.deploy();
 
-  await deployForwarder.deployed();
-  // await deployedLogger.deployed();
+   // await deployedLogger.deployed();
   // await deployedSlice.deployed();
   // await deployedPayslice.deployed();
+  await deployForwarder.deployed();
+  await deployForwarder.registerRelayer("0xdf69cf42e1e8cf4acfb8b09649096ecfe1cee0d7");
+ 
 
   // const txn = await deployedPayslice.initialize(
   //   deployedSlice.address,
@@ -37,6 +39,7 @@ async function main() {
   // storeContractData(deployedPayslice, "Payslice");
   // storeContractData(deployedLogger, "Logger");
   storeContractData(deployForwarder, "PaysliceForwarder");
+  
 
   // console.log(`
   // logger contract at: ${deployedLogger.address} \r\n

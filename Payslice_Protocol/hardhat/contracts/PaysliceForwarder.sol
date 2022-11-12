@@ -8,9 +8,10 @@ import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 
 import "./interfaces/IUniswapV2.sol";
+import "./interfaces/ERC20Permit.sol";
 
 ///@author Nartey Kodjo-Sarso <narteysarso@gmail.com>
-contract PaysliceForwarder is EIP712, Ownable{
+contract PaysliceForwarder is EIP712, Ownable {
     using ECDSA for bytes32;
 
     struct ForwardRequest {
@@ -31,7 +32,14 @@ contract PaysliceForwarder is EIP712, Ownable{
 
     address public exchangeAddress;
 
+    mapping(address => bool) private _relayerAddress;
+
     mapping(address => uint256) private _nonces;
+
+    modifier _onlyRelayAddress() {
+        require(_relayerAddress[_msgSender()], "Only relayer allowed");
+        _;
+    }
 
     constructor(address _exchangeAddress) EIP712("PaysliceForwarder", "0.0.1") {
         exchangeAddress = _exchangeAddress;
@@ -117,27 +125,22 @@ contract PaysliceForwarder is EIP712, Ownable{
         bytes32 _r,
         bytes32 _s
     ) public returns (bool) {
-        (bool success, ) = _paytoken.call(
-            abi.encodeWithSignature(
-                "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)",
-                _owner,
-                _spender,
-                _value,
-                _deadline,
-                _v,
-                _r,
-                _s
-            )
+        ERC20Permit(_paytoken).permit(
+            _owner,
+            _spender,
+            _value,
+            _deadline,
+            _v,
+            _r,
+            _s
         );
 
-        require(success, "Failed to approve allowance");
-
-        return success;
+        return true;
     }
 
     function executeGasPayment(
-       address _paytoken,
-       address _owner,
+        address _paytoken,
+        address _owner,
         address _spender,
         uint256 _value,
         uint256 _deadline,
@@ -153,7 +156,7 @@ contract PaysliceForwarder is EIP712, Ownable{
             return false;
         }
 
-        bool success = executeApproval(
+        bool approvalSuccess = executeApproval(
             _paytoken,
             _owner,
             _spender,
@@ -164,7 +167,7 @@ contract PaysliceForwarder is EIP712, Ownable{
             _s
         );
 
-        if (!success) return success;
+        require(approvalSuccess, "Approval Failed");
 
         (bool transferSuccess, ) = _paytoken.call(
             abi.encodeWithSignature(
@@ -180,6 +183,42 @@ contract PaysliceForwarder is EIP712, Ownable{
         return transferSuccess;
     }
 
+    function convertPaytokenToFeeToken(address _paytoken, uint _value)
+        public
+        onlyOwner
+    {
+        (bool approveSuccess, ) = _paytoken.call(
+            abi.encodeWithSignature(
+                "approve(address,uint256)",
+                exchangeAddress,
+                _value
+            )
+        );
+
+        require(approveSuccess, "Failed to approve exchange");
+
+        address[] memory path = new address[](2);
+        path[0] = _paytoken;
+        path[1] = feeToken;
+
+        IUniswapV2(exchangeAddress).swapExactTokensForTokens(
+            _value,
+            _value / 1000,
+            path,
+            address(this)
+        );
+    }
+
+    function registerRelayer(address _relayer) public onlyOwner returns (bool) {
+        require(_relayer != address(0), "Invalid relayer address");
+        require(_relayer != address(this), "Forwarder cannot be relayer");
+        require(!_relayerAddress[_relayer], "Relayer already added");
+
+        _relayerAddress[_relayer] = true;
+
+        return true;
+    }
+
     function gasCost(uint amountOut, address[] memory path)
         public
         view
@@ -192,16 +231,12 @@ contract PaysliceForwarder is EIP712, Ownable{
         require(_to != address(0), "Invalid address");
         require(_amount > 0, "Amount must is not enough");
 
-       uint balance = IERC20(feeToken).balanceOf(address(this));
+        uint balance = IERC20(feeToken).balanceOf(address(this));
 
-       require(_amount <= balance, "Available funds not enough");
+        require(_amount <= balance, "Available funds not enough");
 
         (bool transferSuccess, ) = feeToken.call(
-            abi.encodeWithSignature(
-                "transfer(address,uint)",
-                _to,
-                _amount
-            )
+            abi.encodeWithSignature("transfer(address,uint)", _to, _amount)
         );
 
         require(transferSuccess, "Fees withdrawal failed");

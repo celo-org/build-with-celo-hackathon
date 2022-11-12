@@ -10,6 +10,10 @@ export const TokenIcons = {
     "Celo": "https://raw.githubusercontent.com/ubeswap/default-token-list/master/assets/asset_CELO.png"
 }
 
+export const ERC20PermitTokens = [
+    "0x3BECa8cE2b6c18BB69669879865c213f13C9f902"
+];
+
 export const TokenSymbol = {
     "0x25D401b92b9C58521c4F312c18147c069F932206":"Celo",
     "0xD16324B00B0bD87af2182eB28C7FC941EE20ec75":"cDEFI",
