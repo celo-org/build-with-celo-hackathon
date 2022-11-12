@@ -20,16 +20,15 @@ struct ListingState: View {
     
     
     func checkPrice() -> Bool {
-
-        let arePrice = Double(webSocket.tempRide!.price)!
-        let ridePrice = Double(manager.driverRidePrice!)
-
-        if arePrice < ridePrice {
-            return true // good deal
-        }else if (arePrice - 10) < ridePrice {
-            return true
+        
+  
+        let driverPrice = Double(manager.driverRidePrice!)
+        let ridePrice = Double(webSocket.tempRide!.price)!
+    
+        if (driverPrice - 10) > ridePrice {
+            return false
         }else{
-            return false // bad deal
+            return true
         }
         
     }
@@ -62,7 +61,17 @@ struct ListingState: View {
                 ProgressView().tint(.blue)
             }else{
                 
-            
+            if webSocket.wasAcceptedByDriver {
+                Button(action: {
+                    rideService.removeAll = true
+                    rideService.rideId = nil
+                    webSocket.wasAcceptedByDriver = false
+                    webSocket.showInterest = false
+                }, label: {
+                    Text("Ride excepted by another driver")
+                })
+            }
+                
             // only present if announced ride not nil
             if webSocket.newAnnounceRide != nil {
                 
@@ -111,7 +120,7 @@ struct ListingState: View {
                         HStack{
                             Spacer()
                             Text("Price").font(.title2).bold()
-                            Text("\(webSocket.tempRide!.price.description) cUSD").font(.subheadline).bold()
+                            Text(" \(webSocket.tempRide!.price.description) cUSD").font(.subheadline).bold()
                             Spacer()
                         }
                         
@@ -120,7 +129,8 @@ struct ListingState: View {
                             HStack{
                                 Spacer()
                                 Text("Driver Price").font(.subheadline).bold()
-                                Text("\(manager.driverRidePrice!) cUSD").font(.subheadline).bold()
+                               
+                                Text(" \(String(format: "%.2f",manager.driverRidePrice!)) cUSD").font(.subheadline).bold()
                                 Spacer()
                                 VStack{
                                     
@@ -208,15 +218,7 @@ struct ListingState: View {
 
               
             }
-                if webSocket.wasAcceptedByDriver {
-                    Button(action: {
-                        rideService.removeAll = true
-                        webSocket.wasAcceptedByDriver = false
-                        webSocket.showInterest = false
-                    }, label: {
-                        Text("Ride excepted by another driver")
-                    })
-                }
+
             }
         }.padding()
     }

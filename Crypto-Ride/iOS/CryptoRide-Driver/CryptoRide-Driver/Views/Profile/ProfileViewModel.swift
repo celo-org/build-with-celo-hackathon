@@ -20,13 +20,11 @@ struct DriverInfo {
 
 struct Profile {
     var name = "Zuck Musk"
-    //var profileImage = ""
     var twitterHandle = "@elonmusk"
     var instagramHandle = "@zuck"
 }
 
 struct Vehicle {
-   // var vehicleImage = ""
     var year = "2020"
     var makeModel = "Tesla Model X"
     var color = "White"
@@ -48,6 +46,7 @@ class ProfileViewModel:ObservableObject {
     @Published var driverInfo:DriverInfo?
     // Registration observable
     @Published var registerNewDriver = RegisterDriver()
+    @Published var currentView = setView.profile
     
     @Published var isLoading = false
     @Published var error:ContractError? = nil

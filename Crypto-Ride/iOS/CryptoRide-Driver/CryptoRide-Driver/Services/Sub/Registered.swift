@@ -11,7 +11,6 @@ import SwiftUI
 ///  Registration Observable 
 class Registered:ObservableObject {
     @Published var isRegistered:Bool? = nil
-    @Published var currentView = setView.profile
     
     func updateRegistered(success:Bool) {
         withAnimation {

@@ -34,7 +34,7 @@ struct ProfileView: View {
         
         VStack{
             if registered.isRegistered == false {
-                switch(registered.currentView){
+                switch(profileVM.currentView){
                 case setView.profile:
                     ProfileRegistration().environmentObject(profileVM)
                 case setView.car:
@@ -53,15 +53,15 @@ struct ProfileView: View {
                     Spacer()
                    
                     Button{
-                        switch(registered.currentView){
+                        switch(profileVM.currentView){
                         case setView.profile:
-                            registered.currentView = setView.car
+                            profileVM.currentView = setView.car
                         case setView.car:
-                            registered.currentView = setView.rate
+                            profileVM.currentView = setView.rate
                         case setView.location:
-                            registered.currentView = setView.rate
+                            profileVM.currentView = setView.rate
                         case setView.rate:
-                            registered.currentView = setView.fund
+                            profileVM.currentView = setView.fund
                         case setView.fund:
                             isLoading = true
                             
@@ -82,7 +82,7 @@ struct ProfileView: View {
                         }
                         
                     }label: {
-                        if registered.currentView == .fund{
+                        if profileVM.currentView == .fund{
                             HStack{
                                 if isLoading{
                                     ProgressView()
@@ -205,7 +205,7 @@ struct ProfileView: View {
                                 }
                             }, label: {
                                 Text("Send")
-                            }).disabled(profileVM.toAddress.isEmpty || profileVM.amount.isEmpty || isTransfer || profileVM.password.isEmpty)
+                            }).disabled(profileVM.toAddress.isEmpty || profileVM.amount.isEmpty || isTransfer )
                             
                         }
                         Divider()

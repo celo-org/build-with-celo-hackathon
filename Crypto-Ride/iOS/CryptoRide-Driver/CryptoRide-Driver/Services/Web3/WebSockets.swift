@@ -233,15 +233,15 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
                 }
                 
             }else{
-                // Check if new announced ride id matchies rideId
+                // Check if new announced ride id matches rideId
                 if rideId == newAnnounceRide?.rideId {
                     
                     let driverAddressRange: ClosedRange = 90...129
                     let driver = "0x"+String(arrayValue[driverAddressRange])
                     let driverEthAddress = EthereumAddress(driver)!
                     // Check if another driver as accepted the ride before us
-                    
                     if driverEthAddress.address != ContractServices.shared.getWallet().address {
+                   
                         newAnnounceRide = nil
                         tempRide = nil
                         wasAcceptedByDriver = true
