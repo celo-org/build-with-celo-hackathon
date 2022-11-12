@@ -33,7 +33,6 @@
     "bip39": "^3.0.4",
     "buffer": "6.0.3",
     "creditcard-generator": "^0.0.7",
-    "ethers": "^5.7.2",
     "events": "^3.3.0",
     "hdkey": "^2.0.1",
     "https-browserify": "~1.0.0",
@@ -66,7 +65,6 @@
     "stream-browserify": "^3.0.0",
     "tls": "^0.0.1",
     "url": "~0.11.0",
-    "web3": "^1.8.1",
     "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
