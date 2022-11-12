@@ -65,13 +65,16 @@ const CreateProposal = () => {
     connectWallet();
   },[]);
   return (
-    <div className="flex flex-col items-start mt-[30px] bg-white max-w-[700px] w-[100%] md:h-[120px] h-[100%] rounded-lg mt-[80px]">
-      <h1 className="font-work text-3xl m-2 text-slate-800">
+    <div className="flex flex-col items-start bg-white  w-full md:h-[120px] h-[100%] rounded-lg mt-[80px]">
+      <div className="w-4/5 mx-auto">
+      <h1 className="font-jost font-bold text-3xl m-2 text-black">
         Create a New Proposal
       </h1>
-      <button onClick={()=>{handleShowModal();makeStakeHolder()}} className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-bold leading-none text-white focus:outline-none bg-blue-500 border rounded hover:bg-blue-600 py-3 px-5 w-[200px] font-open m-2">
+      <button onClick={()=>{handleShowModal();makeStakeHolder()}} className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-bold leading-none text-white focus:outline-none bg-blue-500 border rounded hover:bg-blue-600 py-3 px-5 w-[200px] font-open m-2 shadow-md">
         New Proposal
       </button>
+      </div>
+      
     </div>
   );
 };
