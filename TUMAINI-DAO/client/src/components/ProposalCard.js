@@ -119,7 +119,7 @@ setNoVotes(rejectvotes);
                 {/* Accept Donation to St Lisa school for Girls  */}
                 {param}
               </h3>
-              <div className="flex flex-col md:flex-row justify-between pt-20">
+              <div className="flex flex-col md:flex-row justify-between pt-12 pb-6">
                 <div>
                   <h3>
                     <span className="font-extrabold font-jost lg:text-2xl md:text-lg sm:text-base">
@@ -138,17 +138,17 @@ setNoVotes(rejectvotes);
               </div>
               <div
                 style={toggleVote ? { display: "flex" } : { display: "none" }}
-                className="flex items-center justify-between"
+                className="flex items-center justify-between py-6 border-t-2"
               >
                 <button onClick={()=>{if(approve){
                   vote(id,approve)}
-                }} className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-bold leading-none text-white focus:outline-none bg-blue-500 border rounded hover:bg-blue-600 py-3 px-1 w-[100px] font-work ">
+                }} className="focus:ring-2 focus:ring-offset-2 focus:ring-green-700 text-sm font-bold leading-none text-white focus:outline-none bg-green-500 border rounded hover:bg-green-600 py-3 px-1 w-[150px] font-work shadow-md ">
                   Approve
                 </button>
                 <button  onClick={async()=>{if(approve){
                  
                   vote(id,!approve)}
-                }} className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-bold leading-none text-white focus:outline-none bg-blue-500 border rounded hover:bg-blue-600 py-3 px-1 w-[100px] font-work ">
+                }} className="focus:ring-2 focus:ring-offset-2 focus:ring-red-700 text-sm font-bold leading-none text-white focus:outline-none bg-red-500 border rounded hover:bg-red-600 py-3 px-1 w-[150px] font-work shadow-md ">
                   Reject
                 </button>
               </div>
