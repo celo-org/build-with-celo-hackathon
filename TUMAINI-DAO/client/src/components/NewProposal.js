@@ -79,29 +79,30 @@ const handleAddProposal = (e) => {
 }
 
   return (
-    <div className="max-w-[700px] w-[100%] bg-white rounded-lg absolute top-[80px]  text-slate-800 font-work max-h-[1300px] h-[100%] shadow-lg">
-      <form onSubmit={handleAddProposal} className="flex flex-col justify-around max-w-[650px] w-[100%] p-3 max-h-[900px] h-[100%]">
+    <div className=" w-3/6 bg-white rounded-lg absolute top-[80px]  text-slate-800 font-work h-[80%] shadow-lg">
+      <form onSubmit={handleAddProposal} className="flex flex-col justify-around mx-auto w-[100%] px-10 mt-16  h-[80%] ">
         <div className="flex items-center justify-between">
-        <h1 className="text-2xl">New Proposal</h1>
-        <h3 onClick={handleShowModal} className="text-red-400">close</h3>
+        <h1 className="text-2xl font-jost font-bold">New Proposal</h1>
+        <h3 onClick={handleShowModal} className="text-red-500 font-jost border border-red-500 rounded-md px-4 py-2 cursor-pointer hover:font-bold hover:border-2">Close</h3>
         </div>
+        <div className="flex flex-col gap-6">
         <div>
-          <label className="text-xl">proposer</label>
-          <h4 className="">{useraccount}</h4>
+          <label className="xl:text-lg lg:text-lg md:text-base sm:text-normal font-jost font-bold ">Proposer</label>
+          <h4 className="text-gray-500">{useraccount}</h4>
         </div>
         <div className="flex flex-col mt-[10px]">
-          <label className="text-xl">Proposal Title</label>
+          <label className="xl:text-lg lg:text-lg md:text-base sm:text-normal font-jost font-bold">Proposal Title</label>
           <input
-            className="max-w-[600px] w-[100%] border-2 border-slate-800 p-2 rounded"
+            className="w-[100%] border-2 border-slate-800 p-2 rounded"
             type="text"
             placeholder="Proposal Title"
             required
           />
         </div>
         <div className="flex flex-col mt-[10px]">
-          <label className="text-xl">Proposal Description</label>
+          <label className="xl:text-lg lg:text-lg md:text-base sm:text-normal font-jost font-bold">Proposal Description</label>
           <input
-            className="max-w-[600px] w-[100%] border-2 border-slate-800 p-2 rounded"
+            className=" w-[100%] border-2 border-slate-800 p-2 rounded"
             type="text"
             name="description"
             id=""
@@ -112,9 +113,9 @@ const handleAddProposal = (e) => {
           />
         </div>
         <div className="flex flex-col mt-[10px]">
-          <label className="text-xl">Target Address</label>
+          <label className="xl:text-lg lg:text-lg md:text-base sm:text-normal font-jost font-bold">Target Address</label>
           <input
-            className="max-w-[600px] w-[100%] border-2 border-slate-800 p-2 rounded"
+            className=" w-[100%] border-2 border-slate-800 p-2 rounded"
             type="text"
             name="address"
             id=""
@@ -126,9 +127,9 @@ const handleAddProposal = (e) => {
         </div>
         <div className="flex flex-col mt-[10px]">
           {" "}
-          <label className="text-xl">Value</label>
+          <label className="xl:text-lg lg:text-lg md:text-base sm:text-normal font-jost font-bold">Value</label>
           <input
-            className="max-w-[600px] w-[100%] border-2 border-slate-800 p-2 rounded"
+            className="w-[100%] border-2 border-slate-800 p-2 rounded"
             type="text"
             name="value"
             id=""
@@ -138,7 +139,10 @@ const handleAddProposal = (e) => {
                value={proposalAmount}
           />
         </div>
-        <input onClick={()=>{writeProposal()}} className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-bold leading-none text-white focus:outline-none bg-blue-500 border rounded hover:bg-blue-600 py-3 px-5 w-[200px] font-open my-2" type="submit" name="Send Transcation" />
+
+        </div>
+        
+        <input onClick={()=>{writeProposal()}} className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-bold leading-none text-white focus:outline-none bg-blue-500 border rounded hover:bg-blue-600 py-3 px-5 w-[200px] font-open my-2 shadow-lg" type="submit" name="Send Transcation" />
       </form>
     </div>
   );

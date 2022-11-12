@@ -24,7 +24,7 @@ const Home = () => {
     
           const accounts = await kit.web3.eth.getAccounts();
           kit.defaultAccount = accounts[0];
-          // setAccounts(accounts[0]);
+          setUserAccount(accounts[0]);
          // contract = new kit.web3.eth.Contract(Abi,contractAddress);
     
         } catch (error) {
@@ -46,7 +46,7 @@ const Home = () => {
         alt=""
         className="relative top-0 z-0 brightness-50 h-screen xl:h-[800px] object-cover w-screen "
       />
-      <Navbar alama={connectWallet} />
+      <Navbar alama={connectWallet} user={useraccount}/>
       <Background />
       <Minting />
     </div>

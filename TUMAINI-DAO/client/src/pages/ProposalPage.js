@@ -9,7 +9,7 @@ const ProposalPage = () => {
   const {param} = state;
   
   return (
-    <div className="flex flex-col items-center justify-around bg-indigo-50">
+    <div className="flex flex-col items-center justify-around h-screen bg-indigo-50">
       <Navbar />
       <div>
         <ProposalCard id={id} param={param} />

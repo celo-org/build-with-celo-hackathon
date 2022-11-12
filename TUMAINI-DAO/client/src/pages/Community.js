@@ -85,9 +85,9 @@ const Community = () => {
  },[]);
  
     return ( 
-        <div className="bg-indigo-50">
+        <div className="bg-indigo-50 h-screen">
             <Navbar />
-            <div  className="mt-[100px]">
+            <div  className="pt-[100px]">
             <Contribute balance={userbalance}  cUSD={cusdbalance} buyrehema={buyRehemaTokens} shareRehemaToken={shareRehemaToken}/>
             </div>
         </div>

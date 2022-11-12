@@ -101,30 +101,28 @@ setNoVotes(rejectvotes);
     
   };
   return (
-    <div className="flex flex-col bg-white text-gray-900 rounded-lg shadow-lg mt-[100px] mx-2 w-[100%]">
-      <div className="flex flex-col items-center md:flex-row md:max-w-[1200px] md:w-[100%] font-jost ">
+    <div className="flex flex-col flex-wrap p-10 bg-white text-gray-900 rounded-lg shadow-lg mt-[100px] mx-2 w-[100%]">
+      <div className="flex items-center md:flex-row md:max-w-[1200px] md:w-[100%] font-jost ">
         <div className="md:max-w-[500px] w-[100%]">
           <img
             src={process.env.PUBLIC_URL + "/planting.jpg"}
             alt=""
-            className="object-cover max-w-[600px] w-[100%] md:max-w-[600px] md:h-[100%] md:max-h-[500px] rounded-t-md md:rounded-l-md md:rounded-t-none"
+            className="object-cover max-w-[600px] w-[100%] md:max-w-[600px] md:h-[100%] md:max-h-[500px] rounded-md "
           />
         </div>
         <div className="flex flex-col">
-          <div className="md:max-w-[450px] md:w-[100%] flex justify-around py-3">
-            <div className="h-[400px] px-2 md:max-w-[400px] md:w-[100%] flex flex-col justify-around">
-              <h3 className="font-open font-bold text-gray-700 text-xl">
-                {/* Elgeyo marakwet */}
-              </h3>
-              <h1 className="font-jost text-5xl">Donation </h1>
-              <h3 className="font-open text-gray-600 text-xl">
+          <div className="md:w-[100%] flex  py-3">
+            <div className="h-[400px] px-10 md:w-[100%] flex flex-col ">
+              
+              <h1 className="font-jost  lg:text-xl md:text-lg sm:text-base lg:pt-10">Donation </h1>
+              <h3 className="font-jost text-black lg:text-4xl md:text-2xl sm:text-lg lg:font-bold pt-4">
                 {/* Accept Donation to St Lisa school for Girls  */}
                 {param}
               </h3>
-              <div className="flex flex-col md:flex-row justify-between">
+              <div className="flex flex-col md:flex-row justify-between pt-12 pb-6">
                 <div>
                   <h3>
-                    <span className="font-extrabold font-work text-2xl">
+                    <span className="font-extrabold font-jost lg:text-2xl md:text-lg sm:text-base">
                       Voting Opened
                     </span>
                   </h3>
@@ -132,7 +130,7 @@ setNoVotes(rejectvotes);
                 <div>
                   <button
                     onClick={handleToggleVote}
-                    className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-bold leading-none text-white focus:outline-none bg-blue-500 border rounded hover:bg-blue-600 py-3 px-5 w-full font-work "
+                    className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-bold leading-none text-white focus:outline-none bg-blue-500 border rounded hover:bg-blue-600 py-4 px-20 w-full font-open shadow-md "
                   >
                     Vote
                   </button>
@@ -140,29 +138,30 @@ setNoVotes(rejectvotes);
               </div>
               <div
                 style={toggleVote ? { display: "flex" } : { display: "none" }}
-                className="flex items-center justify-between"
+                className="flex items-center justify-between py-6 border-t-2"
               >
                 <button onClick={()=>{if(approve){
                   vote(id,approve)}
-                }} className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-bold leading-none text-white focus:outline-none bg-blue-500 border rounded hover:bg-blue-600 py-3 px-1 w-[100px] font-work ">
+                }} className="focus:ring-2 focus:ring-offset-2 focus:ring-green-700 text-sm font-bold leading-none text-white focus:outline-none bg-green-500 border rounded hover:bg-green-600 py-3 px-1 w-[150px] font-work shadow-md ">
                   Approve
                 </button>
                 <button  onClick={async()=>{if(approve){
                  
                   vote(id,!approve)}
-                }} className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-bold leading-none text-white focus:outline-none bg-blue-500 border rounded hover:bg-blue-600 py-3 px-1 w-[100px] font-work ">
+                }} className="focus:ring-2 focus:ring-offset-2 focus:ring-red-700 text-sm font-bold leading-none text-white focus:outline-none bg-red-500 border rounded hover:bg-red-600 py-3 px-1 w-[150px] font-work shadow-md ">
                   Reject
                 </button>
               </div>
-              <h4>1 week remaining</h4>
+              <h4 className="font-jost">1 week remaining</h4>
             </div>
           </div>
         </div>
       </div>
       <div className="flex justify-between">
         <div className="max-w-[500px] w-[100%] m-[10px]">
-          <h1 className="font-jost text-2xl">Read more information</h1>
-          <h2 className="font-open">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi delectus vel a odit harum in quam quos, nihil nam commodi! Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut veritatis, maxime deleniti assumenda nam laboriosam? Magni veritatis assumenda voluptatibus nostrum.</h2>
+          <h1 className="font-jost text-xl font-bold underline ">Read more information</h1>
+          <p className="font-open text-normal pt-10">Water scarcity in Kenya escalates when the dry season kicks in.  In the Mara river basin, water is a precious resource supporting people and nature. Unfortunately, the 395 Kilometers long river faces numerous threats affecting both water quality and the flow,   most of this is caused by human activities and climate change.
+Tackling water challenge is the first step out of poverty.  To encourage good water stewardship in the Mara River.</p>
         </div>
         <div className="max-w-[350px] w-[100%]">
           <PieChart yes={yesVotes} no={noVotes}/>
