@@ -18,7 +18,7 @@ Canada and Colombia
 
 - Jose Mendez, Cofounder and Software Developer
 - Ronald Vezga, Cofounder and Software Developer
-- Nadisky Rodriguez, Marketing and Community Manager
+- Nadisky Rodriguez, Designer and Social Media Manager
 
 #### Project Description - Run3 a Metaverse you build while you move
 
@@ -33,21 +33,31 @@ We will use alfajores testnet, for our App. We will have two main flows:
 
 -Move to Build Users can use the Earned tokens to create an NFT route, for this they can start walking and a route will be drawn while they move and it will show the tokens that need to be used, the bigger the route, the more tokens users will need, when the route is ready they can save it and they will have an NFT route, part of the RUN3 metaverse.
 
-After this, other users can select this route, use it and share "Eco stories" with the NFT route owner, for example, let's say they found some trash on the sidewalk, they clean it and share the story, then the owner can give then "Eco points", and optionally any other reward if they want using the public address of this person. RUN3 team can later review and reward the people with more "eco points" by sending to them prizes like tokens, special NFTS, etc.
-
-It's important to mention that there is one more stage that we are not including in this project called "Build to Earn" where the user can customize the route to have races, AR experiences, and offer rewards in exchange for a fee that is set by the route owner, but this is out of our scope for this hackathon. Our plan is to keep moving forward with this project after this event has finished
+After this, other users can select this route, use it and share "Eco stories" with the NFT route owner, for example, let's say they found some trash on the sidewalk, they clean it and share the story. RUN3 team can later review the story and give a reward.
 
 #### URLs
 
-List any URLs relevant to demonstrating your prototype (Will be updated soon)
+https://www.run3.app/
+https://run3.gitbook.io/run3/ (Whitepaper)
+
+Expo Go App (required to use the demo)
+https://apps.apple.com/us/app/expo-go/id982107779
+https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en_CA&gl=US&pli=1
+
+Demo Link IOS (Open from IOS phone)
+exp://u.expo.dev/update/6523ca16-5745-4a06-98c5-1b4dff5741b6
+
+Demo Link Android (Open from Android phone)
+exp://u.expo.dev/update/5ffc97fc-ddb2-431e-9188-56b983012dcd
+
+Social Media
+https://t.me/run3app
+https://twitter.com/Run3App
+https://www.instagram.com/run3app/
 
 #### Presentation
 
 List any links to your presentation or any related visuals you want to share. (Will be updated soon)
-
-#### Next Steps
-
-What do you need to do next to turn this prototype into a working solution? (Will be updated soon)
 
 #### License
 

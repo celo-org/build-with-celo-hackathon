@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { KeyboardAvoidingView, View } from 'react-native'
+import { SafeAreaView, View } from 'react-native'
 import { Button, Card, Input, Text } from '@ui-kitten/components'
 import { styles } from './style'
 import { globalStyles } from '../../utils/globalStyles'
@@ -62,40 +62,43 @@ export const BuildForm = ({
   }
 
   return (
-    <Card
-      style={styles.cardForm}
-      header={Header}
-      footer={(props: any) => (
-        <View {...props} style={[props.style, styles.footerContainer]}>
-          <Button onPress={closeForm} style={styles.footerControl} size="small" status="basic">
-            CANCEL
-          </Button>
-          <Button
-            onPress={() => {
-              buildRoute()
-            }}
-            style={[styles.footerControl, globalStyles.primaryBg]}
-            size="small"
-          >
-            ACCEPT
-          </Button>
-        </View>
-      )}
-    >
-      <Input
-        style={styles.formInput}
-        onChangeText={(e) => {
-          setTitle(e)
-        }}
-        placeholder="Title"
-      />
-      <Input
-        style={styles.formInput}
-        onChangeText={(e) => {
-          setDes(e)
-        }}
-        placeholder="Description"
-      />
-    </Card>
+    <SafeAreaView style={styles.cardForm}>
+      <Card
+        header={Header}
+        footer={(props: any) => (
+          <View {...props} style={[props.style, styles.footerContainer]}>
+            <Button onPress={closeForm} style={styles.footerControl} size="small" status="basic">
+              CANCEL
+            </Button>
+            <Button
+              onPress={() => {
+                buildRoute()
+              }}
+              style={[styles.footerControl, globalStyles.primaryBg]}
+              size="small"
+            >
+              ACCEPT
+            </Button>
+          </View>
+        )}
+      >
+        <Input
+          removeClippedSubviews={false}
+          style={styles.formInput}
+          onChangeText={(e) => {
+            setTitle(e)
+          }}
+          placeholder="Title"
+        />
+        <Input
+          removeClippedSubviews={false}
+          style={styles.formInput}
+          onChangeText={(e) => {
+            setDes(e)
+          }}
+          placeholder="Description"
+        />
+      </Card>
+    </SafeAreaView>
   )
 }
