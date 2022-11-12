@@ -1,11 +1,9 @@
-![alt text](# "HeaderImage")
+![alt text](ReadMeAssets/backdrop.png)
 
 
 # Crypto Ride
 
-Decentralized ride sharing
 
----
   * [Team](#the-motley-crüe)
   * [Project Description](#project-description)
   * [Challenges](#challenges)
@@ -19,7 +17,12 @@ Decentralized ride sharing
         * [Download & Install](#1-download-and-install)
         * [Building & Launch Simulator](#2-building-and-launch-simulator)
   * [Contract Overview](#contract-overview)
+    + [Escrow](#escrow)
+    + [Ride cancellation](#ride-cancellation)
   * [iOS Overview](#ios-overview)
+    + [Drivers locations](#drivers-locations)
+    + [Wallet](#wallet)
+    + [Handling Events](#handling-events )
   * [Licence](#licence)
 
 ---
@@ -155,7 +158,7 @@ Simply the ride has four steps from start to finish, anywhere within the ride is
 - <b>None</b>
     - Default state for all new address.
 
-- <b>Passenger Request Ride</b>
+- <b>Passenger Announced Ride</b>
 
     - Passenger requests a ride and is waiting for a driver to accept.
     - When the request is made, passenger sends price of ride which gets held by the escrow contract.
@@ -240,7 +243,7 @@ By default the iOS dapps use a pre-deployed ride manager contract on the Alfajor
 
 Depending on what network you are deploying to, your settings will be different. This readme will walk through on deploying to Alfajores Testnet.
 
-Need a wallet funded with CELO and access to the private key. 
+You will need a wallet funded with CELO and access to the private key. 
 
 1. Launch Metamask to generate a new wallet. This wallet will act as the contract owner.
 
@@ -262,9 +265,6 @@ Need a wallet funded with CELO and access to the private key.
 
         git clone -b Crypto-Ride https://github.com/MitchTODO/build-with-celo-hackathon.git
 
-   Next Install Podfiles
-
-   ***Note: This process will need to be done for both dapps***
 
 2. With the same terminal cd into driver app.
 
@@ -272,15 +272,18 @@ Need a wallet funded with CELO and access to the private key.
 
 3. Run the following command to install the Pod libraries.
 
+    ***Note: This process will need to be done for both dapps***
+
         pod install 
 
     **If your running on M1 chip use**
 
-            arch -x86_64 pod install
+        arch -x86_64 pod install
 
-4. Repeat for the passenger app.
 
 #### Building and Launch Simulator 
+
+If you are using your own ride manager contract change the address in the dapps to your ride manager address created during migration.
 
    ***Note: This process will need to be done for both dapps***
 
@@ -292,44 +295,102 @@ Need a wallet funded with CELO and access to the private key.
 
     ***Note: You might need to change your siging & Capabilities***
 
-Repeat for the passenger app.
-
 Continue to the [dapp walk through](#).
+
+---
 
 ## Contract Overview
 
-The ride manager contract inhearits three other contracts `ReputationManager`, `AdminControls` and `DriverRole`. With numerous utility contracts within.
+  The ride manager contract inherits three other contracts `ReputationManager`, `AdminControls` and `DriverRole`. With numerous utility contracts within.
 
--<b>ReputationManager: </b> Enforces a reputation system for passengers and drivers, based on different out comes of a ride. 
+  -<b>ReputationManager: </b> Enforces a reputation system for passengers and drivers, based on different out comes of a ride. 
 
--<b>AdminControls: </b> Adjustable settings within the ride manager contract. Only callable by the contract owner.
+  -<b>AdminControls: </b> Adjustable settings within the ride manager contract. Only callable by the contract owner.
 
--<b>DriverRole: </b> Registration contract for drivers.
+  -<b>DriverRole: </b> Registration contract for drivers.
 
 ### Escrow
 
-Escrow component is built into the ride share architecture of the ride manager contract. Before a passenger announces a ride, they must approve the ride price from the token contract. This in turn grants the escrow to transfer funds on behive of the passenger. Funds are held until one of two events. 
+  Escrow component is built into the ride share architecture of the ride manager contract. Before a passenger announces a ride, they must approve the ride price from the token contract that will be used as payment. This in turn grants the escrow to transfer funds on behive of the passenger. Funds are held until one of two events. 
 
-- No drivers accept the ride forcing the passenger to cancel and resubmit, in which funds are returned.
+  - No drivers accept the ride, forcing the passenger to cancel and resubmit, in which funds are returned.
 
-- Having a driver accept the ride having the escrow payout the driver upon drop off.
+  - Driver accepts and completes the ride, having the escrow payout the driver upon passenger drop off.
+
 
 
 ### Ride cancellation
 
+Ride cancellation is allowed by both partys from when the ride is announced and before passenger confirms drop off. Funds are divide based on ride state, preventing bad actors. 
 
+<b>Return Amount</b>
 
+|  Ride State      | Passenger | Driver |
+|------------------|-----------|--------|
+| Announced        | 100%      | 0%     |
+| Driver Accept    | 80%        | 20%   |
+| Passenger Pickup | 50%        | 50%     |
+| Driver DropOff   | 20%        | 80%     |
+
+As the ride progresses the potental for bad acting favors the passenger. Allowing a passenger to cancel the ride at the drop of location with the result of lower price. To further prevent this, cancellations by either party will result in a rating decrease while decreseing reputation to the indivial who cancelled.
 
 ## iOS Overview
 
+App architecture is desgin around Apple's `MapView`, views presented around the map are switch depending on different states. Core features between apps are very simular but views are different. Passenger is required to build rides and selected different aspects of the ride. While driver is design to wait and react for rides announced on the network. 
+
+
 ### Drivers locations
 
-### Wallet Type
+Googles Firebase and Realtime databases are used to orchestrate discovery and location of drivers.
+
+**Note conventional databases are used for locations services as blockchain would be to costly.**
+
+<b>Driver</b>
+
+1. When a driver is ready to listen for new rides, they will post an entry to Googles Firebase. Entry contains information related to the driver (name, car details, ethereum wallet and city). As well as a geohash used for queries by passengers.
+
+2. Driver will then start updating there current location to Googles Realtime database. This update will only occure if the driver has moved far enough away from there previous location and three seconds have elapsed. There location is mapped to there ethereum address.
+
+*Upon logout/stop driver app will delete both Firebase and Realtime entries.*
+
+<b>Passenger</b>
+
+1. Upon launch the passengers app will query Firebase with a geoHash of the passengers currently location. This query will return active local drivers. 
+
+2. Passenger app will then use the drivers ethereum address to observing changes to the Realtime database for the current location of driver. These changes driectly updates the `mapView` displaying the drivers location close to realtime. Drivers are repersented as cars on the passengers map view.
+
+**Note newly active drivers take around 10 seconds to be add to the map**
+
+*By observing deletions drivers are removed*
+
+![alt text](ReadMeAssets/locations.gif)
+
+---
+
+### Wallet
+
+Both passenger and driver apps have hot wallets designs for low amount of funds. Having the idea that you only tranfer the funds you need to make a ride then return the remaining amount back to cold storage. Users private key is saved to there Apple keychain providing a recovery mechanism for users. As of now only the driver role requires registration requiring a name, vehicle description and social profiles linked to the wallet address. 
+
+Wallet currently features two tokens `CELO` and `cUSD`.
+
+- Celo: Used to pay for the transaction cost associated with writing to the contract. 
+
+- cUSD: Used as payment for the ride. 
+
+This was need as the `web3swift` is restrictive when it comes to transaction options. Preventing `cUSD` from being used to pay transaction cost featured by the Celo Network. This will most definitely will be fix in a future update.  
+
+<img src="ReadMeAssets/profileViews.png" alt="drawing" width="400"/>
+
+---
 
 ### Handling Events 
 
+Listening to contract events is a integral part of the app. Events are received by subscribing to a web socket provider and filtered on relevance to the current user. Changes to the ride state allow for the progression and completion of a ride.
+
+When a passenger announces a ride,  driver will received an event. The event is check and if relevant to the driver, driver then has a 30 second window to view and accept the ride. If time elapses the ride will be dismissed and prop the next driver to accept the ride.
+
+![alt text](ReadMeAssets/events.gif)
 
 ## Licence
 
 Crypto Ride is licensed under the [Apache License 2.0](https://github.com/MitchTODO/build-with-celo-hackathon/blob/main/LICENSE)
- [MIT licence]()
