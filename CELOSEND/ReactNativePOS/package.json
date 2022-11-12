@@ -21,7 +21,6 @@
     "@react-navigation/native-stack": "^6.8.0",
     "@tradle/react-native-http": "2.0.1",
     "@walletconnect/client": "^1.8.0",
-    "abi-decoder": "^2.4.0",
     "assert": "2.0.0",
     "asyncstorage-down": "^4.2.0",
     "aws-iot-device-sdk": "^2.2.12",
@@ -30,7 +29,6 @@
     "bip39": "^3.0.4",
     "buffer": "6.0.3",
     "events": "^3.3.0",
-    "hdkey": "^2.0.1",
     "https-browserify": "~1.0.0",
     "path-browserify": "1.0.1",
     "react": "18.2.0",
@@ -72,9 +70,6 @@
     "metro-react-native-babel-preset": "^0.73.3",
     "react-test-renderer": "18.2.0",
     "rn-nodeify": "^10.3.0"
-  },
-  "jest": {
-    "preset": "react-native"
   },
   "react-native": {
     "crypto": "react-native-crypto",
