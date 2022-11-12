@@ -13,24 +13,20 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
  * @author Mitchell Tucker
  * @dev 
  *
- * note could add time base escrow for drivers
- * note users need to fund a security deposit
- * note need kill contract method
  */
 
 contract RideManager is ReputationManager, AdminControls, DriverRole {
 
     IERC20 _token;
 
-    event DriversForRide(bytes32 rideId,address[] drivers);
+    event DriversForRide(bytes32 rideId,address passenger,address[] drivers);
     event DriverAcceptedRide(bytes32 rideId,address driver);
     event PassengerConfirmsPickUp(bytes32 rideId);
     event DriverConfirmsDropOff(bytes32 rideId);
     event Complete(bytes32 rideId);
-
     event RideCanceled(bytes32 rideId);
  
-
+    // Ride states 
     enum RideState {
         None,
         Announced,
@@ -199,8 +195,8 @@ contract RideManager is ReputationManager, AdminControls, DriverRole {
         require(_drivers.length != 0,"No drivers selected");
 
         // Check msg.sender allowance vs ride price
-        require(_token.allowance(msg.sender, address(this)) >= _price,"Insuficient Allowance");
-        require(_token.transferFrom(msg.sender,address(this),_price),"transfer Failed");
+        require(_token.allowance(msg.sender, address(this)) >= _price,"Insufficient Allowance");
+        require(_token.transferFrom(msg.sender,address(this),_price),"Transfer Failed");
 
         // Create ride struct 
         Ride memory ride;
@@ -217,14 +213,14 @@ contract RideManager is ReputationManager, AdminControls, DriverRole {
         // proposed drivers for ride 
         proposedDrivers[rideId] = _drivers;
 
-        // ride in rides
+        // set new ride to are rideId
         rides[rideId] = ride; 
 
-        // active rides for the passenger 
+        // set active rides for the passenger 
         activeRides[msg.sender] = rideId;
         
         // Emit new ride with selected drivers
-        emit DriversForRide(rideId,_drivers);
+        emit DriversForRide(rideId,msg.sender,_drivers);
     }
 
 
