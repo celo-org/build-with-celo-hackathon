@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { SafeAreaView, View } from 'react-native'
+import { SafeAreaView, View, KeyboardAvoidingView, Platform } from 'react-native'
 import { Button, Card, Input, Text } from '@ui-kitten/components'
 import { styles } from './style'
 import { globalStyles } from '../../utils/globalStyles'
@@ -62,7 +62,7 @@ export const BuildForm = ({
   }
 
   return (
-    <SafeAreaView style={styles.cardForm}>
+    <KeyboardAvoidingView style={styles.cardForm} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <Card
         header={Header}
         footer={(props: any) => (
@@ -99,6 +99,6 @@ export const BuildForm = ({
           placeholder="Description"
         />
       </Card>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   )
 }

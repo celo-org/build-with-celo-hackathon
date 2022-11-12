@@ -100,8 +100,10 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cardForm: {
-    marginTop: Dimensions.get('window').height - 300,
-    zIndex: 2,
+    height: Dimensions.get('window').height,
+    top: 125,
+    zIndex: 5,
+    position: 'absolute',
     width: '100%',
   },
   formInput: {
