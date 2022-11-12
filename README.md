@@ -38,7 +38,7 @@ I have created various charts which will help us to understand the attestation s
 
 **Below is the sample screenshot**
 
-![img.png](img.png)
+![img.png](images/img.png)
 
 #### Identifier Dashboard
 This dashboard includes details related to particular Identifiers. We can give identifier address and it will show details like below images. Metrics included are:
@@ -50,7 +50,7 @@ This dashboard includes details related to particular Identifiers. We can give i
 - Request made by Identifier per account
 - **Line chart:** Which shows weekly attestation requests
 
-![img_1.png](img_1.png)
+![img_1.png](images/img_1.png)
 
 
 #### Issuer details Dashboard
@@ -64,7 +64,7 @@ This dashboard contains details about Issuer. Input for dashboard is Issuer addr
 - **2 Trend chart**, which shows its trend over weekly/monthly success rate
 - **Line chart,** Shows weekly and monthly success rate.
 
-![img_2.png](img_2.png)
+![img_2.png](images/img_2.png)
 
 ### URLs
 **Attestation dashboard:**
