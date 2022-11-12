@@ -75,19 +75,60 @@ module.exports = {
 
       const limit = parseInt(size, 10);
       // if filter query exists, run filter by param (maybe location)
-      if (filter === 'location' && location) {
+      if (filter === 'location' && location ) {
         // confirm that location exists, if not - pass error
-        const foundlocation = await Location.findOne({ name: location }).exec();
-        if (!foundlocation) {
-          return res.status(500).send({
-            message: `Location with name ${location} not found.`,
-          });
+        if (location === "all" ) {
+          requests = await Request.find()
+            .sort({ id: -1 })
+            .limit(limit)
+            .populate({ path: 'location', model: Location })
+            .populate({ path: 'company', model: Company })
+            .populate({ path: 'scrap_category', model: Category })
+            .populate({ path: 'collection_center', model: CollectionCenter })
+            .populate({
+              path: 'scrap_subcategory',
+              model: Category,
+              populate: { path: 'children', model: Category },
+            })
+            .exec();
+        } else {
+            const foundlocation = await Location.findOne({ name: location }).exec();
+            if (!foundlocation) {
+              return res.status(500).send({
+                message: `Location with name ${location} not found.`,
+              });
+            }
+
+            /* location exists */
+            requests = await Request.find({ location: foundlocation._id })
+            .sort({ id: -1 })
+            .limit(limit)
+            .populate({ path: 'location', model: Location })
+            .populate({ path: 'company', model: Company })
+            .populate({ path: 'scrap_category', model: Category })
+            .populate({ path: 'collection_center', model: CollectionCenter })
+            .populate({
+              path: 'scrap_subcategory',
+              model: Category,
+              populate: { path: 'children', model: Category },
+            }).exec();
         }
-        /* location exists */
-        requests = await Request.find({ location: foundlocation._id }).exec();
+        
+        
       } else if (filter === 'company' && companyId) {
         // confirm that company exists, if not - pass error
-        const foundcompany = await Company.findById(companyId).exec();
+        const foundcompany = await Company.findById(companyId)
+        .sort({ id: -1 })
+        .limit(limit)
+        .populate({ path: 'location', model: Location })
+        .populate({ path: 'company', model: Company })
+        .populate({ path: 'scrap_category', model: Category })
+        .populate({ path: 'collection_center', model: CollectionCenter })
+        .populate({
+          path: 'scrap_subcategory',
+          model: Category,
+          populate: { path: 'children', model: Category },
+        }).exec();
         if (!foundcompany) {
           return res.status(500).send({
             message: `Company with ID ${companyId} not found.`,

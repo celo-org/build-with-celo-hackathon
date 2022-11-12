@@ -277,7 +277,7 @@ const Dashboard = () => {
                                     </div>
                                     <div className='inline-flex gap-4 items-center'>
                                         <button className="text-gray-500 border-gray-400 border text-sm px-5 py-3 bg-white rounded-full">Download</button>
-                                        <Link href='/'>
+                                        <Link href='/company/offers'>
                                             <a className="text-white text-sm  px-5 py-3 bg-[#DD7D37] border border-[#DD7D37] rounded-full">View All</a>
                                         </Link>
                                         
