@@ -101,8 +101,8 @@ setNoVotes(rejectvotes);
     
   };
   return (
-    <div className="flex flex-col bg-white text-gray-900 rounded-lg shadow-lg mt-[100px] mx-2 w-[100%]">
-      <div className="flex flex-col items-center md:flex-row md:max-w-[1200px] md:w-[100%] font-jost ">
+    <div className="flex bg-white text-gray-900 rounded-lg shadow-lg mt-[100px] mx-2 w-[100%]">
+      <div className="flex items-center md:flex-row md:max-w-[1200px] md:w-[100%] font-jost ">
         <div className="md:max-w-[500px] w-[100%]">
           <img
             src={process.env.PUBLIC_URL + "/planting.jpg"}
