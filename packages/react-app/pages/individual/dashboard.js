@@ -10,8 +10,8 @@ import axios from 'axios'
 
 const Dashboard = () => {
     const [location, setLocations] = useState();
-    // const [locationName, setLocationName] = useState("all");
-    const fetchRequests = async ({ pageParam = 1, locationName = "all" }) => {
+    const [locationName, setLocationName] = useState("all");
+    const fetchRequests = async ({ pageParam = 1 }) => {
         const res = await fetch(`http://127.0.0.1:8080/api/requests?page=${pageParam}&size=6&filter=location&location=${locationName}`);
         return res.json();
     }
@@ -21,14 +21,16 @@ const Dashboard = () => {
         isLoading,
         isError,
         error,
+        isSuccess,
         data,
         fetchNextPage,
         isFetching,
         isFetchingNextPage
-    } = useInfiniteQuery(['requests'], fetchRequests, {
+    } = useInfiniteQuery(['requests', locationName], fetchRequests, {
         getNextPageParam: (lastPage, pages) => {
             return lastPage.page + 1
-        }
+        },
+        keepPreviousData: true
     })
 
     useEffect(() => {
@@ -54,6 +56,11 @@ const Dashboard = () => {
             source.cancel();
         }
     }, [])   
+
+
+    const onChange = (value) => {
+        setLocationName(value)
+      }
     
   return (
     <>
@@ -170,7 +177,7 @@ const Dashboard = () => {
                                                     >
                                                         
                                                     </select> */}
-                                                    <select  style={{'background': 'transparent'}} className="focus:outline-none h-full border-none cursor-pointer text-gray-600 w-auto py-2 "   >
+                                                    <select  style={{'background': 'transparent'}} className="focus:outline-none h-full border-none cursor-pointer text-gray-600 w-auto py-2 " onChange={(e)=>setLocationName(e.target.value)}  >
                                                         <option value="all">All</option>
                                                         {location && location.map((option) => (
                                                             <option value={option.name}>{option.name} {option.state}</option>
@@ -179,15 +186,18 @@ const Dashboard = () => {
                                                 </span>
                                         </div>
 
-                                        {isLoading || isError? 
+
+                                        {isLoading ? 
                         
                                             <div className='flex items-center justify-center mt-7 '>
                                                 <LoadingState/>
                                             </div> : 
 
-                                            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-9 gap-y-9 mt-7 '>
-                                                {data && data.pages.map(page =>
-                                                    page.data.map((request, index) => (
+                                            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-9 gap-y-9 mt-7 relative'>
+
+                                                {
+                                                data && data.pages.map(page => (
+                                                    page.data.length > 1 ? page.data.map((request, index) => (
                                                         <>
                                                             <Link href={`/individual/requests/${request.id}`} key={index}>
                                                             
@@ -233,12 +243,22 @@ const Dashboard = () => {
                                                                 </a>
                                                             </Link>
                                                         </>
-                                                    ))
-                                                )}            
+                                                    )) : 
+                                                    <div className='flex items-center justify-center flex-col gap-4 absolute top-0'>
+                                                        {/* <img src="/images/file-not-found.svg" /> */}
+                                                        <p>
+                                                            No Request from {locationName}.
+                                                        </p>
+                                                    </div>
+                                                )
+                                                    
+                                                )
+                                                
+                                                }
                                             </div>
                                         }
 
-                                            {/* {isError && <div className='flex items-center justify-center mt-7 '>
+                                            {/* {isError && isFetching&& <div className='flex items-center justify-center mt-7 '>
                                                 <LoadingState/>
                                             </div> } */}
 
