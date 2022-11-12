@@ -31,10 +31,11 @@ We have also implemented the Universal Upgradeable Proxy Standard-EIP-1822 for e
 Link to DApp: <https://succour-dao.vercel.app/>  
 Link to Figma design: <https://www.figma.com/file/nCnRlZ42Uscx3U8ETzUtVe/Hackathon-project?node-id=1%3A2>
 GitHub Repo Link: <https://github.com/Adebara123/Succour-DAO/tree/Succour-DAO>
-List any URLs relevant to demonstrating your prototype
+
 
 #### Presentation
-
+Link to Video: 
+Link to DApp: <https://succour.vercel.app/>
 List any links to your presentation or any related visuals you want to share.
 
 #### Next Steps
