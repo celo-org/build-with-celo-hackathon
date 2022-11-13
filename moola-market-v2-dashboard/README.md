@@ -56,7 +56,7 @@ Moola v2 Dashboard:
 [**Dashboard link**](https://dapplooker.com/dapp/moola-v2-120062?network=celo&type=dashboard&udid=0)
 
 #### Presentation
-See the screens added in summary of follow :point_right: [**Dashboard link**](https://dapplooker.com/dapp/moola-v2-120062?network=celo&type=dashboard&udid=0)
+See the screens added in summary of follow :point_right: [**link**](https://dapplooker.com/dapp/moola-v2-120062?network=celo&type=dashboard&udid=0)
 
 #### License
 This repository includes an [unlicensed](http://unlicense.org/) statement though you may want to [choose a different license](https://choosealicense.com/).
