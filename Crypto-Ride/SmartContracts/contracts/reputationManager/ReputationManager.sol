@@ -4,19 +4,18 @@ pragma solidity ^0.8.0;
 /**
  * @title RatingReputation
  * @author Mitchell Tucker
- * TODO make rating modifier
+ * @dev Creates and manages a rating and reputation system for addresses
  */
-
  contract ReputationManager {
-
-    mapping(address => Stat) private users;
 
     struct Stat{
         uint256 rating;         // percent based from 5 star 100% == 5
         uint256 reputation;     // points for successful drive
-        uint256 totalRating;
+        uint256 totalRating;    // Amount of ratings
         uint256 count;          // Amount of rides
     }
+
+    mapping(address => Stat) private users;
 
     event StatsChanged(address user);
 
@@ -24,7 +23,12 @@ pragma solidity ^0.8.0;
         require(_rating <= 5,"Rating cant exceed 5 stars");
         _;
     }
-
+    /**
+    * @dev setDriverWindow  
+    *
+    * @param user address of the user to return reputation
+    *
+    */
     function getReputation(address user) 
     public
     view
@@ -34,8 +38,11 @@ pragma solidity ^0.8.0;
     }
 
     /**
-    * @dev update stats
-    * 
+    * @dev update Reputation
+    * @param _user address to update reputation on
+    * @param _rating uint256 new address rating 
+    * @param _reputation uint256 amount to increase/decrease reputation
+    * @param decrease bool whether to increase or decrease reputation
     */
     function updateReputation(address _user,uint256 _rating, uint256 _reputation, bool decrease) 
     internal
