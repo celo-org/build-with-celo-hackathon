@@ -29,6 +29,7 @@ struct ProfileView: View {
     
     // Selectable tokens
     var tokens = ["cUSD","CELO"]
+    
 
     var body: some View {
         
@@ -78,6 +79,13 @@ struct ProfileView: View {
                                 isLoading = false
                                 registered.isRegistered = true
                                 profileVM.password = ""
+                                
+                                // Set driver details
+                                driver.name = profileVM.registerNewDriver.profile.name
+                                driver.car = car
+                                driver.fare = profileVM.registerNewDriver.rate.fare
+                                driver.twitter = profileVM.registerNewDriver.profile.twitterHandle
+                                driver.instagram = profileVM.registerNewDriver.profile.instagramHandle
                             }
                         }
                         
@@ -141,6 +149,7 @@ struct ProfileView: View {
                                 Button{
                                     balance.getTokenBalance(.CUSD)
                                     balance.getTokenBalance(.Celo)
+                                    driver.getReputation()
                                 }label: {
                                     Image(systemName: "arrow.clockwise.circle.fill")
                                         .resizable()

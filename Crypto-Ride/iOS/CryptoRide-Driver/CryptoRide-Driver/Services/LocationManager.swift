@@ -18,8 +18,6 @@ import FirebaseDatabase
 /// Start driver init location
 /// Keeps updated location in firebase
 ///
-/// TODO:
-///        Improve firebase clean up 
 ///
 class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
     
