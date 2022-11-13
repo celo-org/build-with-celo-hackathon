@@ -69,7 +69,7 @@ We need your support to keep it going. </h1>""",unsafe_allow_html=True)
  </h1>""",unsafe_allow_html=True)
         st.markdown(f"""<h1 style='text-align: left; font-weight:bold;color:black;font-size:12pt;'>Connecting to demo account... </h1>""",unsafe_allow_html=True)
         
-        temperature = st.slider('Donation Amount💰', min_value=1, step=1, max_value=5,value=1)
+        temperature = st.slider('Donation Amount (in CELO)💰', min_value=1, step=1, max_value=5,value=1)
         if(st.button("Donate Now")):
             web3 = Web3(Web3.HTTPProvider('https://alfajores-forno.celo-testnet.org'))
             print(web3.isConnected())
@@ -95,6 +95,7 @@ We need your support to keep it going. </h1>""",unsafe_allow_html=True)
             print(web3.eth.get_balance(account2))
             st.balloons()
             st.image("https://upload.wikimedia.org/wikipedia/commons/e/e1/Payment_Done.gif", width=300)
+            st.warning("Amount collected so far...{}".format(web3.eth.get_balance(account2)))
            
 
     
