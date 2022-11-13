@@ -1,0 +1,205 @@
+@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+*, *:after, *:before {
+  -webkit-box-sizing:border-box;
+     -moz-box-sizing:border-box;
+          box-sizing:border-box;
+  -webkit-transition:margin 200ms ease;
+     -moz-transition:margin 200ms ease;
+       -o-transition:margin 200ms ease;
+          transition:margin 200ms ease;
+  -webkit-transition:padding 200ms ease;
+     -moz-transition:padding 200ms ease;
+       -o-transition:padding 200ms ease;
+          transition:padding 200ms ease;
+}
+
+body {
+  margin:0;
+  padding:0;
+  font-family:'Open Sans', sans-serif;
+  color:#444444;
+  font-size:16px;
+}
+.container {
+  line-height:1.5em;
+  margin:auto;
+  width:95%;
+  max-width:1000px;
+}
+h1, h2 {
+  float:left;
+  font-weight:normal;
+  font-size:2em;
+}
+h2 {
+  float:right;
+  font-size:1.5em;
+}
+header:before,
+header:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+header:after {
+    clear: both;
+}
+
+header {
+    *zoom: 1;
+}
+table {
+  border-collapse:collapse;
+  border-spacing:0;
+  width:100%;
+  background:#ffffff;
+}
+
+th {
+  background:#3c7d37;
+  color:#ffffff;
+}
+
+td, th {
+  padding:0.5em 1em;
+  text-align:left;
+  vertical-align:top;
+}
+#transData tr.active td {
+  background:#ffff75;
+}
+tbody th {
+  background:#2ea879;
+}
+tbody tr:nth-child(2n-1) {
+  background:#f1fff1;
+  -webkit-transition:all 100ms ease;
+     -moz-transition:all 100ms ease;
+       -o-transition:all 100ms ease;
+          transition:all 100ms ease;
+}
+tbody tr:hover {
+    background-color:#ffffbf;
+    cursor:cell;
+}
+.date, .total {
+  width:15%;
+}
+.location {
+  width:25%;
+  text-transform:capitalize;
+}
+.description {
+  width:45%;
+}
+.fontawesome-calendar:before,
+.fontawesome-wrench:before,
+.fontawesome-money:before,
+.fontawesome-map-marker:before {
+  display:none;
+}
+
+@media screen and (max-width: 768px) {
+
+  body {font-size:18px;}
+  thead {
+    display:none;
+  }
+  tr {
+    margin:0.75em 0.25em;
+    border-top:3px solid #3c7d37;
+    -webkit-box-shadow:0px 1px 1px 0px #717171;
+       -moz-box-shadow:0px 1px 1px 0px #717171;
+            box-shadow:0px 1px 1px 0px #717171;
+  }
+  td, tr {
+    display:block;
+    position:relative;
+  }
+  tr:before {
+    content: "";
+    width:35%;
+    background:#f1fff1;
+    height:100%;
+    position:absolute;
+  }
+  tbody tr:nth-child(2n-1) {
+    background:transparent;
+  }
+  tbody tr:hover {
+    background-color:#ffffbf;
+    cursor:cell;
+  }
+  .date, .total, .location, .description {
+    width:100%;
+  }
+  .date:before, .total:before, .location:before, .description:before {
+    font-weight:bold;
+    display:block;
+    left:1em;
+    position:absolute;
+  }
+  .date:before {
+    content:"Date: ";
+  }
+  .total:before {
+    content:"Total: ";
+  }
+  .location:before {
+    content:"Location: ";
+  }
+  .description:before {
+    content:"Description: ";
+  }
+  .fontawesome-calendar,
+  .fontawesome-wrench,
+  .fontawesome-money,
+  .fontawesome-map-marker {
+    display:block;
+    padding-left:36%;
+    position:relative;
+  }
+
+}
+
+@media screen and (max-width: 600px) {
+
+  h1, h2 {
+    float:none; 
+  }
+  h2 {
+    font-size:1em;
+    margin:0;
+  }
+
+}
+
+@media screen and (max-width: 430px) {
+ 
+ tr:before {
+    width:15%;
+  }
+  .date:before, .total:before, .location:before, .description:before {
+    display:none;
+  }
+  [class*="fontawesome-"]:before {
+    font-family: 'FontAwesome', sans-serif;
+  }
+  .fontawesome-calendar:before,
+  .fontawesome-wrench:before,
+  .fontawesome-money:before,
+  .fontawesome-map-marker:before {
+    display:block;
+    left:0;
+    position:absolute;
+  }
+  .fontawesome-calendar,
+  .fontawesome-wrench,
+  .fontawesome-money,
+  .fontawesome-map-marker {
+    padding-left:16%;
+  }
+  
+  
+}

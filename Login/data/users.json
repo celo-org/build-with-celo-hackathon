@@ -1,0 +1,146 @@
+[
+    {
+        "firstName": "ADMIN1",
+        "lastName": ".",
+        "username": "ADMIN1",
+        "hash": "$2a$10$BZ/1zLIs3BB/kLUxyDNpd.xtraNeU7BKUa.1lw1Euc2M6wklIsnTq",
+        "id": 1,
+        "dateCreated": "2022-11-02T14:58:08.314Z",
+        "dateUpdated": "2022-11-02T14:58:08.314Z"
+    },
+    {
+        "firstName": "ADMIN2",
+        "lastName": ".",
+        "username": "ADMIN2",
+        "hash": "$2a$10$.n3wIg0sy.VpSScEYz2qCO2Xb3ualsYozbvyI6jKGj.IZi7GHuWkG",
+        "id": 2,
+        "dateCreated": "2022-11-02T14:58:36.871Z",
+        "dateUpdated": "2022-11-02T14:58:36.871Z"
+    },
+    {
+        "firstName": "ADMIN3",
+        "lastName": ".",
+        "username": "ADMIN3",
+        "hash": "$2a$10$tRvPJcwZusR54iwsh5zxX.rhR5rt22ZEVAvuLApCVllF72VaB4KBq",
+        "id": 3,
+        "dateCreated": "2022-11-02T14:59:11.635Z",
+        "dateUpdated": "2022-11-02T14:59:11.635Z"
+    },
+    {
+        "firstName": "MANAGEMENT1",
+        "lastName": ".",
+        "username": "MANAGEMENT1",
+        "hash": "$2a$10$ok8GhQb3axN/Zpe0DwXEzuu2ZB8A2p0baatwLgHMTbioMi1lXpV8q",
+        "id": 4,
+        "dateCreated": "2022-11-02T14:59:46.679Z",
+        "dateUpdated": "2022-11-02T14:59:46.680Z"
+    },
+    {
+        "firstName": "MANAGEMENT2",
+        "lastName": ".",
+        "username": "MANAGEMENT2",
+        "hash": "$2a$10$9aQnjHPnuCzMWFkaXqmum.7gmoK/gH0HSC5djcqDz8qnHsdo8YFmK",
+        "id": 5,
+        "dateCreated": "2022-11-02T15:00:17.448Z",
+        "dateUpdated": "2022-11-02T15:00:17.448Z"
+    },
+    {
+        "firstName": "MANAGEMENT3",
+        "lastName": ".",
+        "username": "MANAGEMENT3",
+        "hash": "$2a$10$Ff3P4GHqYaUlm6PVWOcmN.ekGl9XF7cwBUuI5T5cEy/L0uqr4lNm6",
+        "id": 6,
+        "dateCreated": "2022-11-02T15:00:53.621Z",
+        "dateUpdated": "2022-11-02T15:00:53.621Z"
+    },
+    {
+        "firstName": "NGO1",
+        "lastName": ".",
+        "username": "NGO1",
+        "hash": "$2a$10$5wBtBy/TZSaxFj3P7itSXO66fFyd1nr7/Xt2p/CUAC3dhikiWicGO",
+        "id": 7,
+        "dateCreated": "2022-11-02T15:01:45.113Z",
+        "dateUpdated": "2022-11-02T15:01:45.113Z"
+    },
+    {
+        "firstName": "NGO2",
+        "lastName": ".",
+        "username": "NGO2",
+        "hash": "$2a$10$P0DvKdz47R3u0J2pnAarM.hoSA/BE0Z4ZXHQjNzIqGmTDCb63Leha",
+        "id": 8,
+        "dateCreated": "2022-11-02T15:02:18.577Z",
+        "dateUpdated": "2022-11-02T15:02:18.577Z"
+    },
+    {
+        "firstName": "NGO3",
+        "lastName": ".",
+        "username": "NGO3",
+        "hash": "$2a$10$AzQxmM/dXba34Gcem68ztusVBGYGPvaVYg7KUlfIhEAeocehIiAsy",
+        "id": 9,
+        "dateCreated": "2022-11-02T15:03:08.066Z",
+        "dateUpdated": "2022-11-02T15:03:08.066Z"
+    },
+    {
+        "firstName": "NGO4",
+        "lastName": ".",
+        "username": "NGO4",
+        "hash": "$2a$10$/7SzRDHlzKHcROzgLoIRIeISLkM67euWMWX22FGGdcIoKV3cC/dhu",
+        "id": 10,
+        "dateCreated": "2022-11-02T15:03:36.141Z",
+        "dateUpdated": "2022-11-02T15:03:36.141Z"
+    },
+    {
+        "firstName": "NGO5",
+        "lastName": ".",
+        "username": "NGO5",
+        "hash": "$2a$10$JWyz5cmfbIkBq/nUQBGvhO7tAkUyQY26q6Rk.YQTgaepUftIOUhqa",
+        "id": 11,
+        "dateCreated": "2022-11-02T15:04:03.958Z",
+        "dateUpdated": "2022-11-02T15:04:03.958Z"
+    },
+    {
+        "firstName": "STUDENT1",
+        "lastName": ".",
+        "username": "STUDENT1",
+        "hash": "$2a$10$J.exNL9TjV1jNaOH4xATa.YBRxUfr9wvRoJYlHIWe43LY0wEzY/Vm",
+        "id": 12,
+        "dateCreated": "2022-11-02T15:04:44.305Z",
+        "dateUpdated": "2022-11-02T15:04:44.305Z"
+    },
+    {
+        "firstName": "STUDENT2",
+        "lastName": ".",
+        "username": "STUDENT2",
+        "hash": "$2a$10$rBAKHKMpGcdxV9TfzMBg/ucdtBvm2FQ8rS.FM5NIlYtnpFK93ycMO",
+        "id": 13,
+        "dateCreated": "2022-11-02T15:05:09.923Z",
+        "dateUpdated": "2022-11-02T15:05:09.923Z"
+    },
+    {
+        "firstName": "STUDENT3",
+        "lastName": ".",
+        "username": "STUDENT3",
+        "hash": "$2a$10$GSCW7A9ZmnNFLmdgrCVAVeJegdmOzz7bUEEdRpmqSmQqYC9wfg1yS",
+        "id": 14,
+        "dateCreated": "2022-11-02T15:05:55.144Z",
+        "dateUpdated": "2022-11-02T15:05:55.144Z"
+    },
+    {
+        "firstName": "STUDENT4",
+        "lastName": ".",
+        "username": "STUDENT4",
+        "hash": "$2a$10$wLDi/YweQGOCWbaUSaexTOMahSWKkyT3lvD3SYrDO5XrcE.cZ2YAy",
+        "id": 15,
+        "dateCreated": "2022-11-02T15:06:19.577Z",
+        "dateUpdated": "2022-11-02T15:06:19.577Z"
+    },
+    {
+        "firstName": "STUDENT5",
+        "lastName": ".",
+        "username": "STUDENT5",
+        "hash": "$2a$10$vcywRBWq8fc6s.W9Eq63ye76Vw/6zc.kcbettyeOyEHQ..Gxeu.X6",
+        "id": 16,
+        "dateCreated": "2022-11-02T15:06:43.898Z",
+        "dateUpdated": "2022-11-02T15:06:43.898Z"
+    }
+]

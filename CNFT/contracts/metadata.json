@@ -1,0 +1,105 @@
+{
+    "description": "AN NFT COLLECTION FOR COLLEGE EVENT FIZZ AN TRIPPY PROF.XAVIER",
+    "external_url": "http://cnft.epizy.com",
+    "image": "https://ipfs.filebase.io/ipfs/QmYzuY6avHmjAVWNwRaoGN9rHChwhhZhr9177hsTrotZKu",
+    "name": "CNFT",
+    "attributes": [
+        {
+            "trait_type": "Event_Name",
+            "value": "Rotract_FIZZ"
+        },
+        {
+            "trait_type": "Theme",
+            "value": "Psychedellic_Mask"
+        },
+        {
+            "trait_type": "CNFT-Schema",
+            "value": "908wqjiooiu8qw90iuwosj@!@(#iojhs9a9j90uqwj9qwxxxxxxxx21-0i8"
+        },
+        {
+            "trait_type": "OWNER",
+            "value": "CNFT-SOLUTIONS"
+        },
+        {
+            "trait_type": "Tax",
+            "value": "0.02%"
+        },
+        {
+            "trait_type": "TIME STAMP",
+            "value": "20:10:2022|23.00"
+        },
+        {
+            "trait_type": "Collection-Status",
+            "value": "For-sale"
+        },
+        {
+            "trait_type": "Venue",
+            "value": "ST.THOMAS,KOYAMBEDU"
+        },
+        {
+            "trait_type": "Auction-Status",
+            "value": "LIVE"
+        },
+        {
+            "trait_type": "Genre",
+            "value": "Fundraising-NFT"
+        },
+        {
+            "trait_type": "Loyalty",
+            "value": "level1"
+        },
+        {
+            "trait_type": "Lucky_Rewards_Probability",
+            "value": "4:1000"
+        },
+        {
+            "trait_type": "Base_value",
+            "value": 120
+        },
+        {
+            "trait_type": "floor_value",
+            "value": 10
+        },
+        {
+            "trait_type": "Capitation_Deposite",
+            "value": 20
+        },
+        {
+            "trait_type": "Royalty_Level",
+            "value": 3
+        },
+        {
+            "trait_type": "Designer",
+            "value": "Rotract_Member"
+        },
+        {
+            "trait_type": "Token Standard",
+            "value": "ERC-721"
+        },
+        {
+            "display_type": "boost_number",
+            "trait_type": "WINR",
+            "value": 40
+        },
+        {
+            "display_type": "boost_percentage",
+            "trait_type": "Views",
+            "value": 10
+        },
+        {
+            "display_type": "number",
+            "trait_type": "Collection",
+            "value": 2
+        },
+        {
+            "display_type": "boost_percentage",
+            "trait_type": "Trending",
+            "value": 4
+        },
+        {
+            "display_type": "boost_percentage",
+            "trait_type": "Watchlist-Volume",
+            "value": 23
+        }
+    ]
+}
