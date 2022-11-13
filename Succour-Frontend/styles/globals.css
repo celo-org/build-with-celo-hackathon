@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@100;200;300;400;500;600;700&display=swap');
+
+
+:root {
+  --color-bg: #AF4AAF;
+  --color-gradient: linear-gradient(92.59deg, #AF4AAF 6.24%, rgba(49, 7, 49, 0.8) 100%);
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Comfortaa', sans-serif;
+  background: #0E0D0D;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 5px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #AF4AAF;
+}
+
+::-webkit-scrollbar-thumb:hover {
+ background: linear-gradient(92.59deg, #AF4AAF 6.24%, rgba(49, 7, 49, 0.8) 100%);
+} */

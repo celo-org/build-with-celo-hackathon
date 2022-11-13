@@ -1,0 +1,144 @@
+
+
+.join {
+     width: 100%;
+     height: 100%;
+     background: rgba(14, 13, 13, 0.8);
+     position: fixed;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     z-index: 10;
+     
+     .wrapper {
+          width: 600px;
+          height: 600px;
+          background: #030303;
+          box-shadow: 5px 5px 50px rgba(31, 6, 46, 0.3);
+          border-radius: 20px;
+          display: flex;
+          z-index: 10;
+
+          @media (max-width: 600px) {
+               width: 414px;
+               height: 600px;
+          }
+
+          .container {
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               // flex-direction: column;
+
+               .join_content {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                    padding: 50px;
+
+                   .title {
+                    font-weight: 600;
+                    font-size: 25px;
+                    line-height: 140%;
+                    color: #FFFEFE;
+                    text-align: center;
+
+                    @media (max-width: 600px) {
+                         font-size: 24px;
+                         margin-top: 120px;
+                    }
+                   }
+
+                   .desc {
+                     font-weight: 500;
+                     font-size: 18px;
+                     line-height: 165%;
+                     text-align: center;
+                     color: #CFCFCF;
+
+                       @media (max-width: 600px) {
+                         font-size: 14px;
+                         max-width: 500px;
+                    }
+                   }
+
+                   .join_question {
+                       font-weight: 500;
+                     font-size: 18px;
+                     line-height: 165%;
+                     text-align: center;
+                     color: #CFCFCF;
+
+                       span:nth-child(odd) {
+                         color: #EB5757;
+                     }
+
+                      @media (max-width: 600px) {
+                         font-size: 14px;
+                    }
+                   }
+
+                   .checkbox_container {
+                      position: relative;
+                      display: block;
+
+                         input[type="checkbox"] {
+                         border: 1px solid #030303;
+                     }
+                   
+
+                     label {
+                           position: relative;
+                          display: inline-block;
+                          padding: 6px 10px 6px (18px + 10);
+                          cursor: pointer;
+                          color: #CFCFCF;
+                     }
+
+                   }
+
+                   .join_btn {
+                    cursor: pointer;
+                    margin-top: 40px;
+                    border: none;
+                    background: linear-gradient(92.59deg, #AF4AAF 6.24%, rgba(49, 7, 49, 0.8) 100%);
+                    border-radius: 30px;
+                    padding: 15px 100px;
+                    font-weight: 400;
+                    font-size: 18px;
+                    line-height: 165%;
+                    color: #FFFEFE;
+                    transition: all 100ms ease-out;
+
+                    &:hover {
+                         background: linear-gradient(92.59deg, #F164F1 6.24%, rgba(128, 16, 128, 0.8) 100%);
+                    }
+                    
+                      @media (max-width: 600px) {
+                         font-size: 14px;
+                         padding: 10px 100px;
+                    }
+
+                   }
+               }
+           }    
+           
+           .closeButton {
+               cursor: pointer;
+               background-image: url('../../assets/Exit\ Icon.svg');
+               background-position: 10% 0;
+               background-repeat: no-repeat;
+               background-size: contain;
+               height: 25px;
+               max-width: 40%;
+               position: absolute;
+               right: -90px;
+               padding: 0;
+               top: 30px;
+               width: 100%;
+               z-index: 1;
+           }
+             
+     }
+}

@@ -1,0 +1,30 @@
+
+
+
+.submenu {
+  max-width: 550px;
+  position: absolute;
+  list-style: none;
+  text-align: start;
+  z-index: 1000;
+  background: linear-gradient(120.83deg, #131313 0%, rgba(54, 53, 53, 0) 100%, rgba(54, 53, 53, 0) 100%);
+  border-radius: 20px;
+}
+
+.submenu li {
+    cursor: pointer;
+    border-bottom: 1px solid #804D80;
+}
+
+.submenu_item {
+     display: block;
+     width: 100%;
+     height: 100%;
+     text-decoration: none;
+     padding: 30px;
+     font-weight: 500;
+     font-size: 18px;
+     line-height: 165%;
+     color: #FFFFFF;
+     padding: 20px;
+}

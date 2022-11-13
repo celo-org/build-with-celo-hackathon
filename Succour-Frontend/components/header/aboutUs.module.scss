@@ -1,0 +1,126 @@
+.about {
+   padding-top: 120px;
+   padding-bottom: 120px;
+   position: relative;
+   background: #0E0D0D;
+
+   .wrapper {
+    margin: 0 auto;
+    max-width: calc(100% - 2.875rem);
+    width: 100%;
+
+    @media (min-width: 1024px) {
+     max-width: calc(100% - 7.5rem);
+    }
+
+    @media (min-width: 480px) {
+     max-width: calc(100% - 3.75rem);
+   }
+
+
+   .container {
+     display: flex;
+     gap: 2.875rem;
+     padding-left: 100px;
+     padding-right: 100px;
+     padding-top: 100px;
+
+      @media (max-width: 1023.98px) {
+        align-items: center;
+        flex-direction: column;
+        margin: 0 auto;
+     }
+
+     .about_content {
+            // max-width: 50%;
+            // width: 100%;
+
+          @media (max-width: 1023.98px) {
+            max-width: 100%;
+          }
+
+          .about__title {
+               font-weight: 500;
+               font-size: 40px;
+               line-height: 145%;
+               color: #CCAECC;
+               margin-bottom: 40px;
+
+               span:nth-child(odd) {
+                color: #FFFEFE;
+               }
+
+               @media (max-width: 600px) {
+                 font-size: 20px;
+                 text-align: center;
+             }
+          }
+
+          .about_desc {
+               font-weight: 300;
+               font-size: 20px;
+               line-height: 170%;
+               color: #CCAECC;
+               text-align: left;
+               max-width: 600px;
+
+              span:nth-child(odd) {
+                color: #FFFEFE;
+               }
+
+               @media(max-width: 700px) {
+                 font-size: 14px;
+                 max-width: 400px;
+                 text-align: center;
+               }
+
+               @media(max-width: 480px) {
+                    font-size: 14px;
+                    max-width: 490px;
+               }
+          }
+
+          .about_btn {
+               margin-top: 50px;
+
+               @media (max-width: 600px) {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+               }
+
+               .btn {
+                    cursor: pointer;
+                    padding: 10px 50px;
+                    background: #804D80;
+                    border-radius: 30px;
+                    font-weight: 500;
+                    font-size: 20px;
+                    line-height: 165%;
+                    color: #FFFEFE;
+                    border: none;
+                    transition: all 200ms ease-in-out;
+
+                    &:hover {
+                      background: #AA78AA;
+                      color: #FFFEFE;
+                    }
+               }
+          }
+
+     }
+
+     .about__image {  
+        max-width: 50%;
+        width: 100%;
+      
+        @media(max-width: 600px) {
+          margin: 0 auto;
+        }
+     }
+
+   }
+
+
+   }
+}

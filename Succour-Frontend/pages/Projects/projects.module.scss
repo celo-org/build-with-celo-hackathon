@@ -1,0 +1,129 @@
+
+
+.projects {
+   padding-top: 120px;
+   padding-bottom: 120px;
+   position: relative;
+   background: #0E0D0D;
+
+   .netvector_left {
+    background-image: url('../../assets/Netvector_left.svg'); 
+    background-position: 100% 0;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 900px;
+    max-width: 40%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+
+      @media (max-width: 1023.98px) {
+      background-position: right 10px top 15%;
+      height: 800px;
+    }
+   }
+
+   .netvector_right {
+    background-image: url('../../assets/Netvector_right.svg'); 
+    background-position: 100% 0;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 900px;
+    max-width: 40%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+
+       @media (max-width: 1023.98px) {
+      background-position: left 10px bottom -2%;
+      height: 800px;
+    }
+   }
+
+   .wrapper {
+    margin: 0 auto;
+    max-width: calc(100% - 2.875rem);
+    width: 100%;
+
+    @media (min-width: 1024px) {
+     max-width: calc(100% - 7.5rem);
+    }
+
+    @media (min-width: 480px) {
+     max-width: calc(100% - 3.75rem);
+   }
+
+   }
+
+   .top_container {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     padding-left: 80px;
+     padding-right: 100px;
+     padding-top: 100px;
+
+     .projects_content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      
+       .projects_title {
+        max-width: 600px;
+        font-weight: 700;
+        font-size: 45px;
+        line-height: 145%;
+        text-align: center;
+        color: #FFFEFE;
+
+        @media(max-width: 600px) {
+           font-size: 30px;
+        }
+
+       }
+
+
+       .projects_desc {
+         max-width: 750px;
+         font-weight: 300;
+         font-size: 18px;
+         line-height: 170%;
+         text-align: center;
+         color: #FFFEFE;
+
+         
+         @media(max-width: 600px) {
+           font-size: 16px;
+        }
+       }
+
+       .btn {
+          margin-top: 40px;
+          background: #804D80;
+          border: none;
+          padding: 10px 50px;
+          border-radius: 30px;
+          font-weight: 500;
+          font-size: 18px;
+          line-height: 165%;
+          color: #FFFEFE;
+          cursor: pointer;
+          transition: all 200ms ease-in;
+
+          &:hover {
+             background: #AA78AA;
+             color: #FFFEFE;
+          }
+       }
+     }
+   }
+
+
+
+   
+}

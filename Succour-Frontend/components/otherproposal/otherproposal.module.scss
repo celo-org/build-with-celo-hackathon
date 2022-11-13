@@ -1,0 +1,162 @@
+.otherproposal {
+     padding-top: 40px;
+     background: #0E0D0D;
+
+     .wrapper {
+          margin: 0 auto;
+          max-width: calc(100% - 2.875rem);
+          width: 100%;
+
+          @media (min-width: 1024px) {
+               max-width: calc(100% - 7.5rem);
+          }
+
+          @media (min-width: 480px) {
+               max-width: calc(100% - 3.75rem);
+          }
+
+          .container {
+               padding-left: 100px;
+               padding-right: 100px;
+
+               .header {
+
+                    .title {
+                         font-weight: 600;
+                         font-size: 30px;
+                         line-height: 160%;
+                         color: #EBDFEB;
+                    }
+               }
+
+
+               .otherproposal_content {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 5.1875rem;
+                    margin-top: 80px;
+                    cursor: pointer;
+
+
+                    @media (max-width: 1023.98px) {
+                         grid-template-columns: 1fr 1fr;
+                         gap: 1.5rem;
+                    }
+
+                    @media (max-width: 680px) {
+                         grid-template-columns: 1fr;
+                         gap: 1rem;
+
+                    }
+
+                    .otherproposal_item {
+                         background: linear-gradient(120.83deg, #131313 0%, rgba(54, 53, 53, 0) 100%, rgba(54, 53, 53, 0) 100%);
+                         border-radius: 10px;
+
+                         .otherproposal_text {
+                              padding: 25px;
+
+                              .item_title {
+                                   font-weight: 700;
+                                   font-size: 20px;
+                                   line-height: 165%;
+                                   color: #EBDFEB;
+
+                                   @media (max-width: 600px) {
+                                        font-size: 18px;
+                                   }
+                              }
+
+                              .item_address {
+                                   margin-top: -10px;
+                                   font-weight: 500;
+                                   font-size: 18px;
+                                   line-height: 165%;
+                                   background: linear-gradient(92.59deg, #F164F1 6.24%, rgba(128, 16, 128, 0.8) 100%);
+                                   -webkit-background-clip: text;
+                                   -webkit-text-fill-color: transparent;
+                                   background-clip: text;
+                                   text-fill-color: transparent;
+
+
+                                   @media (max-width: 600px) {
+                                        font-size: 16px;
+                                   }
+                              }
+
+                              .problem_title {
+                                   font-weight: 700;
+                                   font-size: 20px;
+                                   line-height: 165%;
+                                   color: #FFFEFE;
+
+
+                                   @media (max-width: 600px) {
+                                        font-size: 16px;
+                                   }
+                              }
+
+                              .donation_duration {
+                                   display: flex;
+
+                                   .duration_type {
+                                        font-weight: 500;
+                                        font-size: 18px;
+                                        line-height: 165%;
+                                        color: #FFFFFF;
+                                        margin-right: 50px;
+
+
+                                        @media (max-width: 600px) {
+                                             font-size: 15px;
+                                        }
+                                   }
+
+                                   .time {
+                                        font-weight: 400;
+                                        font-size: 18px;
+                                        line-height: 165%;
+                                        color: #FFFFFF;
+
+
+                                        @media (max-width: 600px) {
+                                             font-size: 15px;
+                                        }
+                                   }
+                              }
+
+                         }
+
+                    }
+
+
+               }
+
+               .viewmore_center {
+                    display: flex;
+                    justify-content: center;
+
+                    .viewmore_btn {
+                         margin-top: 50px;
+                         cursor: pointer;
+                         border: 1px solid #804D80;
+                         border-radius: 10px;
+                         padding: 10px 30px;
+                         font-weight: 500;
+                         font-size: 18px;
+                         background: transparent;
+                         line-height: 165%;
+                         color: #FFFEFE;
+                         transition: all 0.5s ease-out;
+
+                         &:hover {
+                              background: #331F33;
+                         }
+                    }
+
+
+               }
+
+          }
+     }
+}

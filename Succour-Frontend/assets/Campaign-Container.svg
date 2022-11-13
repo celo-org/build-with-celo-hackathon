@@ -1,0 +1,47 @@
+<svg width="1490" height="666" viewBox="0 0 1490 666" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_330_2579)">
+<rect width="1490" height="666" rx="40" fill="url(#paint0_linear_330_2579)"/>
+<g filter="url(#filter0_f_330_2579)">
+<circle cx="135" cy="58" r="168" fill="#2F6056"/>
+</g>
+<g filter="url(#filter1_f_330_2579)">
+<circle cy="198" r="168" fill="#264D45"/>
+</g>
+<g filter="url(#filter2_f_330_2579)">
+<circle cx="1378" cy="584" r="168" fill="#397367"/>
+</g>
+<g filter="url(#filter3_f_330_2579)">
+<circle cx="1489" cy="464" r="168" fill="#1C3933"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_f_330_2579" x="-73" y="-150" width="416" height="416" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="20" result="effect1_foregroundBlur_330_2579"/>
+</filter>
+<filter id="filter1_f_330_2579" x="-218" y="-20" width="436" height="436" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="25" result="effect1_foregroundBlur_330_2579"/>
+</filter>
+<filter id="filter2_f_330_2579" x="1170" y="376" width="416" height="416" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="20" result="effect1_foregroundBlur_330_2579"/>
+</filter>
+<filter id="filter3_f_330_2579" x="1271" y="246" width="436" height="436" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="25" result="effect1_foregroundBlur_330_2579"/>
+</filter>
+<linearGradient id="paint0_linear_330_2579" x1="0" y1="0" x2="854.934" y2="1141.6" gradientUnits="userSpaceOnUse">
+<stop stop-color="#131313"/>
+<stop offset="1" stop-color="#363535" stop-opacity="0"/>
+<stop offset="1" stop-color="#363535" stop-opacity="0"/>
+</linearGradient>
+<clipPath id="clip0_330_2579">
+<rect width="1490" height="666" rx="40" fill="white"/>
+</clipPath>
+</defs>
+</svg>

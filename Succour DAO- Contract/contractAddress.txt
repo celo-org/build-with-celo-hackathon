@@ -1,0 +1,3 @@
+token_Contract = 0x4D3742f7d4AE2Ac3619c413E75976A9c7067b70E
+Current_implementation_address= 0x704DA95fC71C67f52868C6c59CBeeAf288944De8
+Proxy_contract_address= 0x122e768c3E676dba4905959f89a7056A5053D839

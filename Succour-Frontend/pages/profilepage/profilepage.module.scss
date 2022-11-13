@@ -1,0 +1,301 @@
+.profile {
+     padding-top: 120px;
+     padding-bottom: 120px;
+     position: relative;
+     background: #0E0D0D;
+
+     .left {
+          padding-top: 60px;
+          padding-left: 110px;
+
+          .back_arrow {
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               cursor: pointer;
+               background: linear-gradient(120.83deg, #131313 0%, rgba(54, 53, 53, 0) 100%, rgba(54, 53, 53, 0) 100%);
+               border-radius: 10px;
+               width: 100px;
+               height: 40px;
+
+               .arrow {
+                    cursor: pointer;
+               }
+          }
+     }
+
+
+     .wrapper {
+          margin: 0 auto;
+          max-width: calc(100% - 2.875rem);
+          width: 100%;
+
+          @media (min-width: 1024px) {
+               max-width: calc(100% - 7.5rem);
+          }
+
+          @media (min-width: 480px) {
+               max-width: calc(100% - 3.75rem);
+          }
+
+          .container {
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               padding-left: 100px;
+               padding-right: 100px;
+
+               .top_container {
+
+                    .profile_content {
+                         margin-top: 20px;
+                         display: flex;
+                         justify-content: center;
+                         align-items: center;
+                         flex-direction: column;
+                         width: 600px;
+                         padding: 20px;
+                         background: linear-gradient(120.83deg, #131313 0%, rgba(54, 53, 53, 0) 100%, rgba(54, 53, 53, 0) 100%);
+                         border-radius: 20px;
+                         border: 1px solid #F164F1;
+
+                         @media (max-width: 1023.98px) {
+                              border-radius: none;
+                              border: none;
+                              width: 450px;
+                              background: #030303;
+                         }
+
+                         .profile_info {
+                              display: flex;
+
+                              @media (max-width: 1023.98px) {
+                                   flex-direction: column;
+                              }
+
+
+                              .name_address {
+                                   margin-right: 40px;
+
+                                   .title {
+                                        font-weight: 500;
+                                        font-size: 22px;
+                                        line-height: 36px;
+                                        color: #EBDFEB;
+                                   }
+
+                                   .id {
+                                        font-weight: 500;
+                                        font-size: 18px;
+                                        line-height: 165%;
+                                        color: #EBDFEB;
+                                   }
+                              }
+
+                              .address_info {
+
+                                   .member_address {
+                                        font-weight: 500;
+                                        font-size: 19px;
+                                        line-height: 165%;
+                                        color: #AAA9A9;
+                                   }
+
+                                   .address {
+                                        font-weight: 500;
+                                        font-size: 18px;
+                                        line-height: 165%;
+                                        color: #EBDFEB;
+
+                                   }
+
+                              }
+                         }
+
+                         .profile_vote {
+                              display: flex;
+
+                              @media (max-width: 1023.98px) {
+                                   flex-direction: column;
+                                   justify-content: center;
+                                   align-items: center;
+                              }
+
+
+                              .vote_count {
+                                   margin-right: 40px;
+
+                                   @media (max-width: 1023.98px) {
+                                        margin: 0 auto;
+                                   }
+
+
+                                   .vote_power {
+                                        font-weight: 500;
+                                        font-size: 18px;
+                                        line-height: 165%;
+                                        color: #AAA9A9;
+
+                                        span:nth-child(odd) {
+                                             font-weight: 500;
+                                             font-size: 18px;
+                                             line-height: 165%;
+                                             color: #EBDFEB;
+                                        }
+                                   }
+
+                                   .vote_percentage {
+                                        font-weight: 500;
+                                        font-size: 18px;
+                                        line-height: 165%;
+                                        color: #AAA9A9;
+
+                                        span:nth-child(odd) {
+                                             font-weight: 500;
+                                             font-size: 20px;
+                                             line-height: 165%;
+                                             color: #EBDFEB;
+                                        }
+                                   }
+                              }
+
+                              .balance_count {
+
+                                   .balance_title {
+                                        font-weight: 500;
+                                        font-size: 20px;
+                                        line-height: 165%;
+                                        color: #AAA9A9;
+                                   }
+
+                                   .balance {
+                                        font-weight: 600;
+                                        font-size: 24px;
+                                        line-height: 160%;
+                                        color: #EBDFEB;
+                                   }
+
+                                   .deposit_btn {
+                                        width: 200px;
+                                        height: 50px;
+                                        font-weight: 500;
+                                        font-size: 18px;
+                                        line-height: 165%;
+                                        color: #FFFEFE;
+                                        border-radius: 30px;
+                                        background: transparent;
+                                        border: 1px solid #AF4AAF;
+                                        cursor: pointer;
+                                        transition: all 0.5s ease-out;
+
+                                        &:hover {
+                                             background: #331F33;
+                                        }
+                                   }
+                              }
+                         }
+
+
+                         .profile_btn {
+                              margin-top: 60px;
+                              display: flex;
+
+
+                              @media (max-width: 1023.98px) {
+                                   flex-direction: column;
+                                   justify-content: center;
+                                   align-items: center;
+                              }
+
+                              .withdraw {
+                                   margin-right: 40px;
+                                   border: 3px solid #804D80;
+                                   border-radius: 30px;
+                                   width: 250px;
+                                   height: 50px;
+                                   background: transparent;
+                                   font-weight: 500;
+                                   font-size: 18px;
+                                   line-height: 165%;
+                                   color: #FFFEFE;
+                                   cursor: pointer;
+                                   transition: all 0.5s ease-out;
+
+                                   &:hover {
+                                        background: #331F33;
+                                   }
+
+                                   @media (max-width: 1023.98px) {
+                                        margin: 0 auto;
+                                   }
+                              }
+
+                              .request {
+                                   width: 250px;
+                                   height: 50px;
+                                   border: none;
+                                   background: #804D80;
+                                   border-radius: 30px;
+                                   font-weight: 500;
+                                   font-size: 18px;
+                                   line-height: 165%;
+                                   color: #FFFEFE;
+                                   cursor: pointer;
+                                   transition: all 0.5s ease-out;
+
+                                   &:hover {
+                                        background: #4C2E4C;
+                                   }
+
+                                   @media (max-width: 1023.98px) {
+                                        margin-top: 30px;
+                                   }
+
+                              }
+                         }
+
+                         .connect_btn {
+                              cursor: pointer;
+                              border: none;
+                              background: linear-gradient(92.59deg, #AF4AAF 6.24%, rgba(49, 7, 49, 0.8) 100%);
+                              border-radius: 30px;
+                              width: 200px;
+                              height: 50px;
+                              font-weight: 500;
+                              font-size: 16px;
+                              line-height: 165%;
+                              color: #FFFEFE;
+                              transition: all 100ms ease-in-out;
+
+                              &:hover {
+                                   border: 2px solid #CCAECC;
+                              }
+
+                         }
+
+                         .wrong_btn {
+                              cursor: pointer;
+                              border: none;
+                              background: linear-gradient(92.59deg, #AF4AAF 6.24%, rgba(49, 7, 49, 0.8) 100%);
+                              border-radius: 30px;
+                              width: 200px;
+                              height: 50px;
+                              font-weight: 500;
+                              font-size: 16px;
+                              line-height: 165%;
+                              color: #FFFEFE;
+                              transition: all 100ms ease-in-out;
+
+                              &:hover {
+                                   border: 2px solid #CCAECC;
+                              }
+                         }
+
+
+
+                    }
+               }
+          }
+
+     }
+}

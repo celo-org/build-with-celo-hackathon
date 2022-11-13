@@ -1,0 +1,113 @@
+
+
+.campaign {
+   padding-top: 120px;
+   padding-bottom: 120px;
+   position: relative;
+   background: #0E0D0D;
+
+     .wrapper {
+    margin: 0 auto;
+    max-width: calc(100% - 2.875rem);
+    width: 100%;
+
+    @media (min-width: 1024px) {
+     max-width: calc(100% - 7.5rem);
+    }
+
+    @media (min-width: 480px) {
+     max-width: calc(100% - 3.75rem);
+   }
+
+   .container {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     padding-left: 100px;
+     padding-right: 100px;
+     padding-top: 80px;
+
+     @media (max-width: 600px) {
+      padding-top: 0px;
+     }
+
+     .campaign__container {
+        background-image: url('../../assets/campaign_container.svg'); 
+        background-color: linear-gradient(120.83deg, #131313 0%, rgba(54, 53, 53, 0) 100%, rgba(54, 53, 53, 0) 100%);
+        background-position: bottom left 10%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 40px;
+        top: 0;
+        right: 0;
+        max-width: 900px;
+
+        // @media (max-width: 600px) {
+        //   height: 600px;
+        //   width: 400px;
+        // }
+
+      .campaign_content {
+        margin-top: 50px;
+        padding: 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+         .content {
+            // display: flex;
+            // justify-content: center;
+            // align-items: center;
+            // flex-direction: column;
+  
+            .title {
+            font-weight: 600;
+            font-size: 50px;
+            line-height: 145%;
+            color: #FFFFFF;
+            max-width: 500px;
+
+              span:nth-child(odd) {
+                color: rgba(128, 16, 128, 0.8);
+               }
+
+          @media (max-width: 600px) {
+            height: 600px;
+            width: 400px;
+            margin: 0 auto;
+            font-size: 25px;
+            text-align: center;
+         }
+
+         }
+
+         .button {
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 165%;
+            width: 150px;
+            height: 50px;
+            color: #FFFEFE;
+            text-align: center;
+            background: linear-gradient(92.59deg, #AF4AAF 6.24%, rgba(49, 7, 49, 0.8) 100%);
+            border-radius: 30px;
+            border: none;
+            margin-top: 25px;
+            transition: all 200ms ease-out;
+
+          &:hover {
+          border: 2px solid #CCAECC;
+         }
+
+         }
+         
+         }
+   }
+     }
+   
+   }
+
+}
+
+}

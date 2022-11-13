@@ -1,0 +1,274 @@
+.project {
+  padding-top: 120px;
+  padding-bottom: 120px;
+  position: relative;
+  background: #0E0D0D;
+
+  .wrapper {
+    margin: 0 auto;
+    max-width: calc(100% - 2.875rem);
+    width: 100%;
+
+    @media (min-width: 1024px) {
+      max-width: calc(100% - 7.5rem);
+    }
+
+    @media (min-width: 480px) {
+      max-width: calc(100% - 3.75rem);
+    }
+
+    .netvector_right {
+      background-image: url('../../assets/to-left-netvector.svg');
+      background-position: 100% 0;
+      background-repeat: no-repeat;
+      background-size: contain;
+      height: 900px;
+      max-width: 40%;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 100%;
+      // z-index: 1;
+
+      @media (max-width: 1023.98px) {
+        background-position: left 10px top 30%;
+        height: 870px;
+      }
+    }
+
+    .circle_right {
+      background-image: url('../../assets/to-left-filter.svg');
+      background-position: 100% 0;
+      background-repeat: no-repeat;
+      background-size: contain;
+      height: 900px;
+      max-width: 40%;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 100%;
+      // z-index: 1;
+
+      @media (max-width: 1023.98px) {
+        background-position: left 10px top 30%;
+        height: 870px;
+      }
+
+    }
+
+
+    .container {
+      display: flex;
+      padding-top: 40px;
+      padding-left: 100px;
+      padding-right: 100px;
+
+
+
+      .project_container {
+        z-index: 10;
+
+        .project_header {
+
+          .title {
+            font-weight: 500;
+            font-size: 40px;
+            line-height: 145%;
+            color: #FFFFFF;
+          }
+
+          .totheright {
+            float: right;
+
+
+            .controller_link {
+              cursor: pointer;
+              border: 2px solid #804D80;
+              border-radius: 30px;
+              padding: 10px 30px;
+              font-weight: 500;
+              font-size: 20px;
+              line-height: 165%;
+              color: #FFFEFE;
+              float: right;
+
+              @media (max-width: 600px) {
+                display: none;
+              }
+
+              &:hover {
+                background: #331F33;
+              }
+            }
+          }
+        }
+
+
+        .project_grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 5.1875rem;
+          margin-top: 70px;
+          cursor: pointer;
+
+          @media (max-width: 1023.98px) {
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+          }
+
+          @media (max-width: 600px) {
+            grid-template-columns: 1fr;
+            gap: 40px;
+          }
+
+          .project_item {
+            border-radius: 0.4375rem;
+            overflow: hidden;
+            background: linear-gradient(120.83deg, #131313 0%, rgba(54, 53, 53, 0) 100%, rgba(54, 53, 53, 0) 100%);
+            border-radius: 10px;
+            transition: all 100ms ease-in-out;
+
+            // Image styling is here ++++++++
+            .project_img {
+              height: 10rem;
+              background-size: cover;
+              background-repeat: no-repeat;
+              background-position: center center;
+              background: linear-gradient(92.59deg, #F164F1 6.24%, rgba(128, 16, 128, 0.8) 100%);
+            }
+
+            .project_text {
+              //  padding: 1.875rem 1.875rem 2.5rem 1.875rem;
+              padding: 25px;
+
+              .project_time {
+                font-weight: 300;
+                font-size: 14px;
+                line-height: 165%;
+                color: #DDC9DD;
+                margin-bottom: 20px;
+                text-align: right;
+              }
+
+              .project_titled {
+                font-weight: 600;
+                font-size: 20px;
+                line-height: 165%;
+                color: #FFFFFF;
+                margin-bottom: 20px;
+                text-align: left;
+              }
+
+              .project_desc {
+                text-align: left;
+                font-weight: 300;
+                font-size: 16px;
+                line-height: 170%;
+                color: #FFFFFF;
+                max-width: 320px;
+              }
+
+              .project_voteTiming {
+                display: flex;
+                margin-top: 30px;
+
+                @media (max-width: 1023.98px) {
+                  flex-direction: column;
+                }
+
+                .left_item {
+                  flex: 20%;
+                  align-items: center;
+
+                  .lowest {
+                    font-weight: 300;
+                    font-size: 18px;
+                    line-height: 170%;
+                    color: #AFAEAE;
+                    margin-bottom: 10px;
+
+                    @media (max-width: 1023.98px) {
+                      font-size: 14px;
+                    }
+                  }
+
+                  .ether {
+                    font-weight: 600;
+                    font-size: 18px;
+                    line-height: 165%;
+                    color: #FFFEFE;
+                  }
+                }
+
+                .right_item {
+                  flex: 10%;
+                  display: flex;
+                  align-items: center;
+
+                  @media (max-width: 1023.98px) {
+                    margin-top: 30px;
+                  }
+
+                  .button {
+                    cursor: pointer;
+                    font-weight: 500;
+                    font-size: 18px;
+                    line-height: 165%;
+                    width: 150px;
+                    height: 50px;
+                    color: #FFFEFE;
+                    text-align: center;
+                    background: linear-gradient(92.59deg, #AF4AAF 6.24%, rgba(49, 7, 49, 0.8) 100%);
+                    border-radius: 30px;
+                    border: none;
+                    transition: all 200ms ease-out;
+
+                    &:hover {
+                      border: 2px solid #CCAECC;
+                    }
+
+                    // @media (max-width: 1023.98px) {
+                    //   justify-self: center;
+                    // }
+
+                  }
+                }
+
+              }
+            }
+          }
+        }
+
+
+      }
+
+      .viewmore_center {
+        display: flex;
+        justify-content: center;
+
+        .viewmore_btn {
+          margin-top: 50px;
+          cursor: pointer;
+          border: 1px solid #804D80;
+          border-radius: 10px;
+          padding: 10px 30px;
+          font-weight: 500;
+          font-size: 18px;
+          background: transparent;
+          line-height: 165%;
+          color: #FFFEFE;
+          transition: all 0.5s ease-out;
+
+          &:hover {
+            background: #331F33;
+          }
+        }
+
+      }
+
+    }
+
+  }
+
+
+}

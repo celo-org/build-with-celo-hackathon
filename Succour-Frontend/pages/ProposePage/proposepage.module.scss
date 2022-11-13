@@ -1,0 +1,130 @@
+
+
+.page {
+   padding-top: 140px;
+   padding-bottom: 20px;
+   position: relative;
+   background: #0E0D0D;
+
+   .left {
+    padding-left: 50px;
+
+        .back_arrow {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         cursor: pointer;
+         background: linear-gradient(120.83deg, #131313 0%, rgba(54, 53, 53, 0) 100%, rgba(54, 53, 53, 0) 100%);
+          border-radius: 10px;
+          width: 100px;
+          height: 40px;
+
+       .arrow {
+          cursor: pointer;
+       }
+      }
+   }
+
+   .wrapper {
+    margin: 0 auto;
+    max-width: calc(100% - 2.875rem);
+    width: 100%;
+
+    @media (min-width: 1024px) {
+     max-width: calc(100% - 7.5rem);
+    }
+
+    @media (min-width: 480px) {
+     max-width: calc(100% - 3.75rem);
+   }
+
+   .container {
+     display: flex;
+     flex-direction: column;
+     padding-top: 30px;
+     padding-left: 100px;
+     padding-right: 100px;
+
+     .page_content {
+    
+       .page_info {
+        
+          h1 {
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 165%;
+            color: #EBDFEB;
+          }
+
+          p {
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 165%;
+            color: #EBDFEB; 
+          }
+
+      //  .status {
+      //       font-weight: 500;
+      //       font-size: 18px;
+      //       line-height: 165%;
+      //       color: #EBDFEB; 
+      //  }
+
+       }
+
+     }
+
+      .problem_details {
+        
+        .detail {
+          display: flex;
+          flex-direction: column;
+
+         .problem_title {
+          font-weight: 600;
+          font-size: 43px;
+          line-height: 145%;
+          color: #FFFFFF;
+        }
+
+        .proposal_id {
+          font-weight: 500;
+          font-size: 18px;
+          line-height: 165%;
+          color: #D4D4D4;
+          margin-bottom: 20px;
+        }
+
+        .proposal_amount {
+           font-weight: 500;
+          font-size: 20px;
+          line-height: 165%;
+           color: #FFFFFF;
+          margin-bottom: 15px;
+        }
+
+        .amount {
+          font-weight: 500;
+          font-size: 18px;
+          line-height: 165%;
+          color: #D4D4D4;
+        }
+
+      }
+
+      .problem_desc {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 165%;
+        color: #FFFFFF;
+        text-align: left;
+      }
+       
+      }
+
+
+    
+   }
+
+ }
+}
