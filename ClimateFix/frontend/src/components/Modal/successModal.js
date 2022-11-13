@@ -12,7 +12,7 @@ import CustomButton from '../CustomButton/customButton';
 import { closeModal, successIconGreen } from '../../assets/svgs/svg';
 
 function SuccessModal({
-  isOpen, onClose, message, description, handleClick, cta, testid,
+  isOpen, onClose, message, description, handleClick,
 }) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xl">

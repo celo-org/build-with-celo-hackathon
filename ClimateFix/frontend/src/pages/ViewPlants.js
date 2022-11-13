@@ -2,7 +2,7 @@ import { Box, Flex, Image, SimpleGrid, Text, useDisclosure } from "@chakra-ui/re
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import AuthNav from "../components/Navbar/AuthNav";
-import { Spinner, toaster } from "evergreen-ui";
+import { Spinner } from "evergreen-ui";
 import { db } from "../firebase";
 import { doc } from "firebase/firestore";
 import { useDocumentData } from "react-firebase-hooks/firestore";
@@ -16,7 +16,7 @@ const ViewPlants = () => {
   const [activeBtn, setActiveBtn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [data, l_, e_] = useDocumentData(doc(db, `plantTrees/${id}`));
+  const [data, l_,] = useDocumentData(doc(db, `plantTrees/${id}`));
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const liveCountdownRender = ({ hours, minutes, seconds, completed }) => {
@@ -31,12 +31,9 @@ const ViewPlants = () => {
     setIsLoading(true);
     setTimeout(() => {
       onOpen();
-      // toaster.success("Successfully minted. It will be added to your wallet shortly", {
-      //   duration: 5
-      // });
       setIsLoading(false);
     }, 5000);
-  }
+  };
 
   return (
     <Box bg="brand.lightGrey" h="100vh">

@@ -54,7 +54,7 @@ const PlantNow = () => {
       navigate("/invite-pending");
     } catch (error) {
       toaster.danger(error);
-      setLoading(false)
+      setLoading(false);
     }
   };
 
