@@ -15,6 +15,7 @@ Please [__fork this repo__](https://help.github.com/articles/fork-a-repo/) and u
 
 #### Project Description
 ### PROBLEM STATEMENT
+* Monitoring and regulating CO2 pollution is a critical responsibility to assist decision-makers in their search for a long-term solution to enhance environmental quality and population health. 
 * Because of increasing concern about global climate change and carbon emissions as a factor, many companies and organizations are pursuing ‘carbon footprint’ projects to estimate their own contributions to global climate change. 
 * Our project describes the development and use of a footprint calculator. By answering simple questions about your daily-life you can quickly estimate the amount of CO2 emissions generated within the areas of home life, what you eat, travel, as well as holiday. 
 * We describe how the tool integrates information with user-inputted data; allows users to compare their footprint with others in their community; and presents them with targeted pledges to help them reduce their impact. Based on the output from our web app, people can reduce their carbon emissions in the society.
@@ -31,7 +32,7 @@ Please [__fork this repo__](https://help.github.com/articles/fork-a-repo/) and u
 * Debugger and Emulator: Any Browser.
 
 ### Modules: 
-##1. Prediction Module 
+## 1. Prediction Module 
 #### Individual emissions => Based on survey: 
 • User just needs to input their emission details like consumption (e.g., fuel, transport, project travel, energy, material use); waste (e.g., domestic waste, electrical and electronic equipment) with the questions asked. Therefore, the graphical user interface is user friendly and straightforward. • The computation commences as soon as this data is made accessible to the model, and the needed result is produced. 
 • The server delivers the co2 equivalent outputs as a response to the request when the models give them, and these values are then presented in the User Interface. 
