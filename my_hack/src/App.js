@@ -7,7 +7,7 @@ import BigNumber from "bignumber.js"
 import Loading from './loading';
 
 const ERC20_DECIMALS = 18
-const DaoContractAddress = "0x40ee15560407fbCD4beb8cC0CC0E04563E538464"
+const DaoContractAddress = "0x8989400A5669fA73569883523427faF6027699a5"
 const cUSDContractAddress = "0x03e4CcA31f8B0264F3587e969771fE9a7f88415f"
 let kit
 
@@ -137,7 +137,7 @@ function App() {
     const to = e.target.elements[1].value;
     try {
       await contract.methods
-        .withdraw(amount, to)
+        .withdrawFunds(amount, to)
         .send({from: accounts[0]});
         notification(`Successful withdrawal!!! 🎉`);
 
