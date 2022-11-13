@@ -10,6 +10,7 @@
   * [Celo Network](#why-on-the-celo-network)
   * [Quick Start](#quick-start)
     + [Requirements](#requirements)
+    + [Video Demo](#video-demo)
     + [Contract Deployment](#1-download-and-install)
         * [Compiling](#1-compiling)
         * [Migrating](#2-migrating)
@@ -97,9 +98,8 @@ Adding [identities](https://docs.celo.org/protocol/identity) could mitigate the 
 
         - Used as payment for the ride service. 
         
-        Celo's cUSD stable token.
+        - Celo's cUSD stable token.
         
-            - cUSD
 
 
 
@@ -212,6 +212,10 @@ Simply the ride has four steps from start to finish, anywhere within the ride is
 
 ---
 
+### Video Demo
+
+The first part of the [demo video](https://youtu.be/I6XcnBkmJtY) also walk-throughs the quick start guide. 
+
 ### Contract Deployment (Optional)
 
 By default the iOS dapps use a pre-deployed ride manager contract on the Alfajores Testnet.
@@ -295,7 +299,7 @@ If you are using your own ride manager contract change the address in the dapps 
 
     ***Note: You might need to change your siging & Capabilities***
 
-Continue to the [dapp walk through](#).
+Continue to the [Dapp walk through](https://youtu.be/I6XcnBkmJtY).
 
 ---
 
@@ -313,7 +317,7 @@ Continue to the [dapp walk through](#).
 
   Escrow component is built into the ride share architecture of the ride manager contract. Before a passenger announces a ride, they must approve the ride price from the token contract that will be used as payment. This in turn grants the escrow to transfer funds on behive of the passenger. Funds are held until one of two events. 
 
-  - No drivers accept the ride, forcing the passenger to cancel and resubmit, in which funds are returned.
+  - No drivers accept the ride. Forcing the passenger to cancel and resubmit, in which funds are returned.
 
   - Driver accepts and completes the ride, having the escrow payout the driver upon passenger drop off.
 
@@ -377,7 +381,7 @@ Wallet currently features two tokens `CELO` and `cUSD`.
 
 - cUSD: Used as payment for the ride. 
 
-This was need as the `web3swift` is restrictive when it comes to transaction options. Preventing `cUSD` from being used to pay transaction cost featured by the Celo Network. This will most definitely will be fix in a future update.  
+This was need as the `web3swift` library is restrictive when it comes to transaction options. Preventing `cUSD` from being used to pay transaction cost featured by the Celo Network. This will most definitely will be fix in a future update.  
 
 <img src="ReadMeAssets/profileViews.png" alt="drawing" width="400"/>
 
@@ -385,9 +389,9 @@ This was need as the `web3swift` is restrictive when it comes to transaction opt
 
 ### Handling Events 
 
-Listening to contract events is a integral part of the app. Events are received by subscribing to a web socket provider and filtered on relevance to the current user. Changes to the ride state allow for the progression and completion of a ride.
+Listening to contract events is a integral part of the app. Events are received by subscribing to a web socket provider and filtered on relevance to the current user. Events can force changes to the ride state allow for the progression and completion of a ride.
 
-When a passenger announces a ride,  driver will received an event. The event is check and if relevant to the driver, driver then has a 30 second window to view and accept the ride. If time elapses the ride will be dismissed and prop the next driver to accept the ride.
+When a passenger announces a ride, driver will received an event. The event is check and if relevant to the driver, driver then has a 30 second window to view and accept the ride. If time elapses the ride will be dismissed and prop the next driver to accept the ride.
 
 ![alt text](ReadMeAssets/events.gif)
 
