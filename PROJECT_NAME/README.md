@@ -31,11 +31,15 @@ Please [__fork this repo__](https://help.github.com/articles/fork-a-repo/) and u
 * Debugger and Emulator: Any Browser.
 
 ### Modules: 
-## 1. Prediction Module 
-• User just needs to input their emission details like consumption (e.g., fuel, transport, project travel, energy, material use); waste (e.g., domestic waste, electrical and electronic equipment) with the questions asked. Therefore, the graphical user interface is user friendly and straightforward. 
-• The computation commences as soon as this data is made accessible to the model, and the needed result is produced. 
+##1. Prediction Module 
+#### Individual emissions => Based on survey: 
+• User just needs to input their emission details like consumption (e.g., fuel, transport, project travel, energy, material use); waste (e.g., domestic waste, electrical and electronic equipment) with the questions asked. Therefore, the graphical user interface is user friendly and straightforward. • The computation commences as soon as this data is made accessible to the model, and the needed result is produced. 
 • The server delivers the co2 equivalent outputs as a response to the request when the models give them, and these values are then presented in the User Interface. 
-• Users can download the reports of their emissions.
+• Users can download the reports of their emissions. 
+#### Overall emissions => Based on satellite image data: 
+• The ground measurements of co2 data is a bit complex solution. 
+• The satellite sensor measurement of co2 pollution is a more objective solution. 
+• User just needs to select the location for which co2 emission is to be found. •After the image processing steps, the pollution parameter co2 value is returned to the user. 
 
 ## 2. Donation Module 
 • This module involves collecting funds to protect our amazing planet by building effective solutions to big environmental challenges. 
