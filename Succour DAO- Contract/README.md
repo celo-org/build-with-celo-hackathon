@@ -34,7 +34,7 @@ GitHub Repo Link: <https://github.com/Adebara123/Succour-DAO/tree/Succour-DAO>
 
 
 #### Presentation
-Link to Video: 
+Link to Video: <https://youtu.be/tLGhcUOBEbY>
 Link to DApp: <https://succour.vercel.app/>
 List any links to your presentation or any related visuals you want to share.
 
