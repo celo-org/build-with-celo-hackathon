@@ -6,7 +6,7 @@ import 'react-native-get-random-values'
 import '@ethersproject/shims'
 // Import ethers now
 import { ethers } from 'ethers'
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, Platform, PermissionsAndroid } from 'react-native'
 import { Pedometer } from 'expo-sensors'
 import { colors, globalStyles } from '../../utils/globalStyles'
 import { AnimatedCircularProgress } from 'react-native-circular-progress'
@@ -122,6 +122,31 @@ export default function MoveToEarn() {
 
   useEffect(() => {
     subscribe()
+    if (Platform.OS === 'android') {
+      PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACTIVITY_RECOGNITION)
+        .then((result) => {
+          switch (result) {
+            case PermissionsAndroid.RESULTS.UNAVAILABLE:
+              alert('The Pedometer is not available (on this device / in this context)')
+              break
+            case PermissionsAndroid.RESULTS.DENIED:
+              alert('The permission for the pedometer has not been requested / is denied but requestable')
+              break
+            case PermissionsAndroid.RESULTS.LIMITED:
+              alert('The permission for the pedometer is limited: some actions are possible')
+              break
+            case PermissionsAndroid.RESULTS.GRANTED:
+              console.log('The permission for the pedometer is granted')
+              break
+            case PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN:
+              alert('The permission is denied and not requestable anymore')
+              break
+          }
+        })
+        .catch((error) => {
+          alert('Something went wrong, please close the app and try again')
+        })
+    }
 
     return () => {
       unsubscribe()

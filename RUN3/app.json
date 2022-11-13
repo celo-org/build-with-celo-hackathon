@@ -16,12 +16,15 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/30868dc3-7a22-491c-ae6c-955972ef189b"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "config": {
         "googleMapsApiKey": "AIzaSyAQyLN45x-8vr4l1uI0A45NC0AFtTM9hXE"
-      }
+      },
+      "bundleIdentifier": "com.josemmt.run3celo"
     },
     "android": {
       "adaptiveIcon": {
@@ -33,7 +36,9 @@
       "favicon": "./assets/favicon.png",
       "build": {
         "babel": {
-          "include": ["@ui-kitten/components"]
+          "include": [
+            "@ui-kitten/components"
+          ]
         }
       }
     },
