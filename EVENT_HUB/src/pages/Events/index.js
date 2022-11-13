@@ -1,14 +1,16 @@
 
 import EventLists from '../../components/EventLists'
 import EventForm from "../../components/EventForm";
-import {useState} from "react";
+import {useContext} from "react";
+import {FormContext} from "../../contexts/AppContext";
 
 const Events = () => {
-  const [form, setForm] = useState(false)
+  const { showEventForm, setShowEventForm } = useContext(FormContext)
+  // const [form, setForm] = useState(false)
   return (
     <div class="app-bg">
-      <button onClick={() => setForm(true)} className={'app-btn'}>Create Event</button>
-      {form && (<EventForm />)}
+      <button onClick={() => setShowEventForm(true)} className={'app-btn'}>Create Event</button>
+      {showEventForm && (<EventForm />)}
 
       <EventLists/>
     </div>

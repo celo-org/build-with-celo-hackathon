@@ -53,7 +53,6 @@ const EventForm= () => {
   const createEvent = async () => {
     setLoading(true)
     const CID = await saveToIPFS()
-    // return console.log(CID)
 
 
     let deposit = ethers.utils.parseEther(refund);
@@ -74,10 +73,12 @@ const EventForm= () => {
       })
       if (res) {
         setLoading(false)
+        setShowEventForm(false)
       }
 
     } catch (error) {
       setLoading(false)
+      setShowEventForm(false)
       console.log("😥 " + error)
       setStatus("😥 " + error.message)
     }
@@ -120,22 +121,14 @@ const EventForm= () => {
               />
             </div>
           </div>
+          <input
+            type="date"
+            required
+            value={eventDate}
+            onChange={(e) => setEventDate(e.target.value)}
+          />
+          <input type="time" required value={eventTime} onChange={(e) => setEventTime(e.target.value)}/>
 
-          <div className={styles.grid}>
-            <div className={styles.date}>
-              <label htmlFor="date" className="">Date</label>
-              <input
-                type="date"
-                required
-                value={eventDate}
-                onChange={(e) => setEventDate(e.target.value)}
-              />
-            </div>
-            <div className={styles.time}>
-              <label htmlFor="time" className="">Time</label>
-              <input type="time" required value={eventTime} onChange={(e) => setEventTime(e.target.value)}/>
-            </div>
-          </div>
 
           <div className={styles.grid}>
             <div className={styles.max}>
@@ -170,8 +163,8 @@ const EventForm= () => {
           </div>
         </div>
         <div className="">
-          <button type="button" onClick={() => showEventForm(false)}>Cancel</button>
-          <button type="button" className="">Create</button>
+          <button type="button" onClick={() => setShowEventForm(false)}>Cancel</button>
+          <button onClick={handleSubmit} type="button" className="">Create</button>
         </div>
       </form>
     // </div>

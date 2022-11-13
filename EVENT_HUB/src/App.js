@@ -39,7 +39,7 @@ const App = () => {
 
   return (
     <DrawerContext.Provider value={{drawer, setDrawer}}>
-      {/*<FormContext.Provider value={{showEventForm, setShowEventForm}}>*/}
+      <FormContext.Provider value={{showEventForm, setShowEventForm}}>
         <Router>
           <div>
             <div className={`${drawer ? 'show-drawer' : ''} drawer`}>
@@ -61,7 +61,7 @@ const App = () => {
 
           </div>
         </Router>
-      {/*</FormContext.Provider>*/}
+      </FormContext.Provider>
     </DrawerContext.Provider>
   )
 }

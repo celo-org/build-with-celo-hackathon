@@ -1,6 +1,6 @@
 
 import EventHub from '../artifacts/contracts/EventHub.sol/EventHub.json'
-export const eventHubContractAddress = '0xAC899fbd8da20A621E969e9f432C433c7638afC2'
+export const eventHubContractAddress = '0x0a0B6aD6692e8D049A9D9bFA7599b6Ab33906E20'
 
 export const contract = (kit) => {
   // const kit = await getConnectedKit()

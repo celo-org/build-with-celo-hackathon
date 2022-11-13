@@ -27,7 +27,7 @@ const AppHeader = () => {
       </div>
       {location.pathname}
       <div className={styles.connect}>
-        <button onClick={() => setShowEventForm(true)} className={`app-btn ${styles['create-event-btn']}`}>CREATE EVENT</button>
+        {/*<button onClick={() => setShowEventForm(true)} className={`app-btn ${styles['create-event-btn']}`}>CREATE EVENT</button>*/}
         {address ? <button className="app-btn">{truncate(address)}</button> : <button className="app-btn" onClick={connect}>CONNECT</button>}
       </div>
     </header>

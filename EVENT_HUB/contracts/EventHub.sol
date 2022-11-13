@@ -130,51 +130,6 @@ contract EventHub {
         // add the attendee to the claimedRSVPs list
         myEvent.claimedRSVPs.push(payable(attendee));
 
-        // sending eth back to the staker `https://solidity-by-example.org/sending-ether`
-//        (bool sent, ) = attendee.call{value: myEvent.deposit}("");
-
-        // if this fails, remove the user from the array of claimed RSVPs
-//        if (!sent) {
-//            myEvent.claimedRSVPs.pop();
-//        }
-//
-//        require(sent, "Failed to send Ether");
-//        emit ConfirmedAttendee(eventId, attendee);
-    }
-
-    function withdrawUnclaimedDeposits(string calldata eventId) external {
-        // look up event
-        CreateEvent memory myEvent = idToEvent[eventId];
-
-        // check that the paidOut boolean still equals false AKA the money hasn't already been paid out
-        require(!myEvent.paidOut, "ALREADY PAID");
-
-        // check if it's been 7 days past myEvent.eventTimestamp
-        require(block.timestamp >= (myEvent.eventTimestamp + 2 days), "TOO EARLY");
-//        require(block.timestamp >= (myEvent.eventTimestamp + 2 minutes), "TOO EARLY");
-
-        // only the event owner can withdraw
-        require(msg.sender == myEvent.eventOwner, "MUST BE EVENT OWNER");
-
-        // calculate how many people didn't claim by comparing
-        uint256 unclaimed = myEvent.confirmedRSVPs.length -
-            myEvent.claimedRSVPs.length;
-
-        uint256 payout = unclaimed * myEvent.deposit;
-
-        // mark as paid before sending to avoid reentrancy attack
-        myEvent.paidOut = true;
-
-        // send the payout to the owner
-        (bool sent, ) = msg.sender.call{value: payout}("");
-
-        // if this fails
-        if (!sent) {
-            myEvent.paidOut = false;
-        }
-
-        require(sent, "Failed to send Ether");
-//        emit DepositsPaidOut(eventId);
     }
 
     function getEventId(uint i) public view returns (string memory) {
@@ -213,7 +168,10 @@ contract EventHub {
     }
 
     function payOut(string memory eventId) public {
+
         CreateEvent storage myEvent = idToEvent[eventId];
+
+        require(block.timestamp >= (myEvent.eventTimestamp + 2 days), "TOO EARLY");
 
         uint256 absentees = myEvent.confirmedRSVPs.length - myEvent.claimedRSVPs.length;
 

@@ -128,22 +128,23 @@ const EventLists = () => {
           <span>Date: {cleanDate(event.metadata.keyvalues.dateAndTime)}</span>
           <button onClick={() => rsvp(event.ipfs_pin_hash, event.metadata.keyvalues.deposit)}>RSVP</button>
           {confirmForm && (
-            <div>
+            <div className={'conf'}>
               <input type="text" onChange={e => setAttendeeAddress(e.target.value)}/>
               <button onClick={() => confirmAttendee(event.ipfs_pin_hash)}>Confirm Attendee</button>
             </div>
-
-
           )}
           {event.metadata.keyvalues.owner === address && (
             <div>
-              <button onClick={() => setConfirmForm(true)}>Confirm Attendee</button>
-              <button onClick={() => transfer(event.ipfs_pin_hash)}>Payout</button>
+              {!confirmForm && <button style={{width: '100%'}} onClick={() => setConfirmForm(true)}>Confirm Attendee</button>}
+              <button className={'payout'} onClick={() => transfer(event.ipfs_pin_hash)}>Payout</button>
             </div>
+
           )}
           <img width="200px" src={`${ipfsGateway}/${event.ipfs_pin_hash}`} alt=""/>
         </div>
       ))}
+
+        {/*{!events.length && <h2 style={{textAlign: 'center', marginTop: '50px'}}>No event yet</h2>}*/}
 
       {loading && <div className="loader-container"><Loader/></div>}
     </div>
