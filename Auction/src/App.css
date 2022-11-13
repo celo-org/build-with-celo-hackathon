@@ -1,0 +1,12 @@
+.bi-plus-circle {
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.connect {
+  text-align: center;
+  background-color: rgb(19, 10, 10);
+  color: white;
+  height: 100vh;
+  padding-top: 50vh;
+}
