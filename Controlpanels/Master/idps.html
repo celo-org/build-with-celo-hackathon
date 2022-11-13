@@ -1,0 +1,471 @@
+<!--
+
+<tr>
+<td> <div class = title >MODEL 2</div></td>
+         </tr>
+<tr>
+<td> <div class = title >BASE VALUE PER TOKEN</div></td>
+<td colspan="1"><input type="text" id="ase" placeholder="BASE VALUE PER TOKEN"/></td>
+
+<td> <div class = title >HIKED VALUE PER TOKEN</div></td>
+<td colspan="1"><input type="text" id="ase" placeholder="BASE VALUE PER TOKEN"/></td>
+
+<td> <div class = title >TOTAL BASE VALUE</div></td>
+<td colspan="1"><input type="text" id="ase" placeholder="BASE VALUE PER TOKEN"/></td>
+
+</tr>
+<tr>
+
+<td> <div class = title >TOTAL HIKED VALUE</div></td>
+<td colspan="1"><input type="text" id="ase" placeholder="BASE VALUE PER TOKEN"/></td>
+
+ <td> <div class = title >NPO AMOUNT</div></td>
+<td colspan="1"><input type="text" id="ebase" placeholder="TOTAL BASE VALUE TO BE CALCULATED"/></td>
+
+ <td> <div class = title >HIKED NPO AMOUNT</div></td>
+<td colspan="1"><input type="text" id="ebase" placeholder="TOTAL BASE VALUE TO BE CALCULATED"/></td>
+
+</tr>
+<tr>
+
+<td><div class = title >FLOOR VALUE PER TOKEN</div></td>
+<td colspan="1"><input type="text" id="tase" placeholder="total return estimated based on actual calculation"/></td>
+
+ <td><div class = title >TOTAL FLOOR VALUE</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+<td><div class = title >BUBBLE VALUE PER TOKEN</div></td>
+<td colspan="1"><input type="text" id="tase" placeholder="total return estimated based on actual calculation"/></td>
+
+</tr>
+<tr>
+
+ <td><div class = title >TOTAL BUBBLE VALUE</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+<td><div class = title >CAPITATION PER TOKEN </div></td>
+<td colspan="1"><input type="text" id="tase" placeholder="total return estimated based on actual calculation"/></td>
+
+ <td><div class = title >TOTAL CAPITATION DEPOSITE</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+</tr>
+<tr>
+
+<td><div class = title >HIKED CAPITATION PER TOKEN </div></td>
+<td colspan="1"><input type="text" id="tase" placeholder="total return estimated based on actual calculation"/></td>
+
+ <td><div class = title >TOTAL HIKED CAPITATION DEPOSITE</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+<td><div class = title >ROYALITY LEVEL 1 PER TOKEN </div></td>
+<td colspan="1"><input type="text" id="tase" placeholder="total return estimated based on actual calculation"/></td>
+
+ <td><div class = title >TOTAL ROYALITY LEVEL 1</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+</tr>
+<tr>
+    
+ <td><div class = title >TOTAL GAS FEE</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+<td><div class = title >TOKEN ASSET VALUE</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+<td><div class = title >TOTAL TOKEN ASSET VALUE</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+</tr>    
+
+
+
+-->
+<html>
+   <head>
+      <script>
+         //function that display value
+         function dis(val)
+         {
+             document.getElementById("result").value+=val
+         }
+           
+         //function that evaluates the digit and return result
+         function solve()
+         {
+             let x = document.getElementById("result").value
+             let y = eval(x)
+             document.getElementById("result").value = y
+         }
+           //function that evaluate the base value which will be set per token
+
+         function base()
+         {var p,q,r,s,ase,tase,abase,cbase,ebase,aroy,aset,fl,tfl,tbl,tr,ts,tast,hi,jk,thi,dhi,gd,hc,thc,troy,npo;
+let k=50;
+let l=20;
+let bl=1000;
+let x=2;
+let nul=1;
+              p = Number(document.getElementById("a").value);
+              q = Number(document.getElementById("b").value);
+              r = Number(document.getElementById("g").value);
+              s = Number(document.getElementById("d").value);
+              aset = Number(document.getElementById("ast").value); 
+              aroy = Number(document.getElementById("roy").value);
+              troy=aroy*q
+              ase = ((p/q)+r+s)
+              npo=nul*p
+              gd=aset/r 
+              jk=p/q
+              hi=jk+(ha/x)
+              dhi=(ha/x)*q
+              thi=hi*q
+              fl=aset/x
+              tfl=fl*q
+              tbl=bl*q
+              tr=gd*q
+              ts=s*q
+              tast=aset*q
+              tase = (p+(q*r)+(q*s))
+              ebase = (p+(q*r)+(q*s))
+              abase =(p+(q*r)+(q*s))+(q*l)
+              cbase =(p+(q*r)+(q*s))+(q*k)
+                    
+                    hc=ha/gd
+                    thc=hc*q
+
+              document.getElementById("gd").value = gd  
+                     document.getElementById("hc").value = hc
+                            document.getElementById("thc").value = thc
+          document.getElementById("dhi").value = dhi
+document.getElementById("ase").value = ase
+document.getElementById("tase").value = tase
+document.getElementById("abase").value = abase
+  document.getElementById("thi").value = thi
+document.getElementById("ebase").value = ebase
+document.getElementById("aroy").value = aroy
+document.getElementById("troy").value = troy
+document.getElementById("aset").value = aset
+document.getElementById("fl").value = fl
+document.getElementById("tfl").value = tfl
+document.getElementById("bl").value = bl
+document.getElementById("tr").value = tr
+document.getElementById("ts").value = ts
+document.getElementById("npo").value = npo
+document.getElementById("tast").value = tast
+document.getElementById("ast").value = ast
+document.getElementById("tbl").value = tbl
+document.getElementById("hi").value = hi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         }
+           
+         //function that clear the display
+         function clr()
+         {
+
+document.getElementById("a").value = ""
+document.getElementById("b").value = ""
+document.getElementById("g").value = ""
+document.getElementById("d").value = ""
+document.getElementById("roy").value = ""
+document.getElementById("ast").value = ""
+document.getElementById("ha").value = ""
+document.getElementById("hha").value = ""
+         }
+      </script>
+      <!-- for styling -->
+      <style>
+         .title{
+         margin-bottom: 10px;
+         text-align:center;
+         width: 210px;
+         color:green;
+         border: solid black 2px;
+         }
+  
+         input[type="button"]
+         {
+         background-color:green;
+         color: black;
+         border: solid black 2px;
+         width:100%
+         }
+  
+         input[type="text"]
+         {
+         background-color:white;
+         border: solid black 2px;
+         width:100%
+         }
+      </style>
+   </head>
+   <!-- create table -->
+   <body><div class = title >leader ship funnel startup is a mindset you build your dreams otherwise somebody will hire you to build their dreams</div>
+
+      <table border="4">
+         <tr>
+<td> <div class = title >ENTER THE TOTAL WINR TO BE COLLECTED</div></td>
+<td colspan="1"><input type="text" id="a" placeholder="enter the total inr to be collected"/></td>
+<td> <div class = title >ENTER THE TOTAL NUMBER OF AUCTION PARTICIPANTS</div></td>
+<td colspan="1"><input type="text" id="b" placeholder="enter total number of auction participants"/></td>
+<td> <div class = title >ENTER THE CAPITATION DEPOSITE PER TOKEN</div></td>
+<td colspan="1"><input type="text" id="g" placeholder="enter the capitation deposite/gas fee per token"/></td>
+</tr>
+<tr>
+<td> <div class = title >ENTER THE GAS FEE PER TOKEN</div></td>
+<td colspan="1"><input type="text" id="d" placeholder="enter the total treasury amount per token"/></td>
+
+<td> <div class = title >ENTER THE ROYALITY AMOUNT PER TOKEN</div></td>
+<td colspan="1"><input type="text" id="roy" placeholder="enter the total treasury amount per token"/></td>
+
+<td> <div class = title >ENTER THE ASSET VALUE AMOUNT PER TOKEN</div></td>
+<td colspan="1"><input type="text" id="ast" placeholder="enter the total treasury amount per token"/></td>
+
+            <!-- clr() function will call clr to clear all value -->
+          
+         </tr>
+        
+
+         <tr>
+        <td><input type="button" value="CLEAR" onclick="clr()"/> </td>
+            <!-- solve function call function solve to evaluate value -->
+   <td><input type="button" value="CALCULATE" onclick="base()"/> </td>
+
+</tr>
+</table>
+
+<table border="4">
+<tr>
+<td> <div class = title >MODEL - 1</div></td>
+</tr>
+<tr>
+<td> <div class = title >BASE VALUE PER TOKEN</div></td>
+<td colspan="1"><input type="text" id="ase" placeholder="BASE VALUE PER TOKEN"/></td>
+<td> <div class = title >BASE VALUE PER TOKEN</div></td>
+<td colspan="1"><input type="text" id="tase" placeholder="BASE VALUE PER TOKEN"/></td>
+
+ <td> <div class = title >NPO AMOUNT</div></td>
+<td colspan="1"><input type="text" id="npo" placeholder="TOTAL BASE VALUE TO BE CALCULATED"/></td>
+
+</tr>
+<tr>
+ <td><div class = title >TOTAL FLOOR VALUE</div></td>
+<td colspan="1"><input type="text" id="tfl" placeholder="total return estimated on prediction using average data"/></td>
+
+<td><div class = title >BUBBLE VALUE PER TOKEN</div></td>
+<td colspan="1"><input type="text" id="bl" placeholder="total return estimated based on actual calculation"/></td>
+
+ <td><div class = title >TOTAL BUBBLE VALUE</div></td>
+<td colspan="1"><input type="text" id="tbl" placeholder="total return estimated on prediction using average data"/></td>
+</tr>
+<tr>
+<td><div class = title >CAPITATION PER TOKEN </div></td>
+<td colspan="1"><input type="text" id="gd" placeholder="total return estimated based on actual calculation"/></td>
+
+ <td><div class = title >TOTAL CAPITATION DEPOSITE</div></td>
+<td colspan="1"><input type="text" id="tr" placeholder="total return estimated on prediction using average data"/></td>
+
+ <td><div class = title >TOTAL GAS FEE</div></td>
+<td colspan="1"><input type="text" id="ts" placeholder="total return estimated on prediction using average data"/></td>
+</tr>
+<tr>
+<td><div class = title >TOKEN ASSET VALUE</div></td>
+<td colspan="1"><input type="text" id="aset" placeholder="total return estimated on prediction using average data"/></td>
+
+<td><div class = title >TOTAL TOKEN ASSET VALUE</div></td>
+<td colspan="1"><input type="text" id="tast" placeholder="total return estimated on prediction using average data"/></td>
+
+
+<td><div class = title >FLOOR VALUE PER TOKEN</div></td>
+<td colspan="1"><input type="text" id="fl" placeholder="total return estimated based on actual calculation"/></td>
+
+</tr>
+
+
+
+</table>
+
+<table border="4">
+
+
+<tr>
+<td> <div class = title >MODEL 2</div></td>
+         </tr>
+<tr>
+<td> <div class = title >BASE VALUE PER TOKEN</div></td>
+<td colspan="1"><input type="text" id="ase" placeholder="BASE VALUE PER TOKEN"/></td>
+
+<td> <div class = title >HIKED VALUE PER TOKEN</div></td>
+<td colspan="1"><input type="text" id="ase" placeholder="BASE VALUE PER TOKEN"/></td>
+
+<td> <div class = title >TOTAL BASE VALUE</div></td>
+<td colspan="1"><input type="text" id="ase" placeholder="BASE VALUE PER TOKEN"/></td>
+
+</tr>
+<tr>
+
+<td> <div class = title >TOTAL HIKED VALUE</div></td>
+<td colspan="1"><input type="text" id="ase" placeholder="BASE VALUE PER TOKEN"/></td>
+
+ <td> <div class = title >NPO AMOUNT</div></td>
+<td colspan="1"><input type="text" id="ebase" placeholder="TOTAL BASE VALUE TO BE CALCULATED"/></td>
+
+ <td> <div class = title >HIKED NPO AMOUNT</div></td>
+<td colspan="1"><input type="text" id="ebase" placeholder="TOTAL BASE VALUE TO BE CALCULATED"/></td>
+
+</tr>
+<tr>
+
+<td><div class = title >FLOOR VALUE PER TOKEN</div></td>
+<td colspan="1"><input type="text" id="tase" placeholder="total return estimated based on actual calculation"/></td>
+
+ <td><div class = title >TOTAL FLOOR VALUE</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+<td><div class = title >BUBBLE VALUE PER TOKEN</div></td>
+<td colspan="1"><input type="text" id="tase" placeholder="total return estimated based on actual calculation"/></td>
+
+</tr>
+<tr>
+
+ <td><div class = title >TOTAL BUBBLE VALUE</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+<td><div class = title >CAPITATION PER TOKEN </div></td>
+<td colspan="1"><input type="text" id="tase" placeholder="total return estimated based on actual calculation"/></td>
+
+ <td><div class = title >TOTAL CAPITATION DEPOSITE</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+</tr>
+<tr>
+
+<td><div class = title >HIKED CAPITATION PER TOKEN </div></td>
+<td colspan="1"><input type="text" id="tase" placeholder="total return estimated based on actual calculation"/></td>
+
+ <td><div class = title >TOTAL HIKED CAPITATION DEPOSITE</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+<td><div class = title >ROYALITY LEVEL 1 PER TOKEN </div></td>
+<td colspan="1"><input type="text" id="tase" placeholder="total return estimated based on actual calculation"/></td>
+
+ <td><div class = title >TOTAL ROYALITY LEVEL 1</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+</tr>
+<tr>
+    
+ <td><div class = title >TOTAL GAS FEE</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+<td><div class = title >TOKEN ASSET VALUE</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+<td><div class = title >TOTAL TOKEN ASSET VALUE</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+</tr>    
+
+
+</table>
+<table border="4">
+
+
+<tr>
+<td> <div class = title >MODEL 3</div></td>
+         </tr>
+<tr>
+<td> <div class = title >BASE VALUE PER TOKEN</div></td>
+<td colspan="1"><input type="text" id="ase" placeholder="BASE VALUE PER TOKEN"/></td>
+
+<td> <div class = title >HIKED VALUE PER TOKEN</div></td>
+<td colspan="1"><input type="text" id="ase" placeholder="BASE VALUE PER TOKEN"/></td>
+
+<td> <div class = title >TOTAL BASE VALUE</div></td>
+<td colspan="1"><input type="text" id="ase" placeholder="BASE VALUE PER TOKEN"/></td>
+
+</tr>
+<tr>
+
+<td> <div class = title >TOTAL HIKED VALUE</div></td>
+<td colspan="1"><input type="text" id="ase" placeholder="BASE VALUE PER TOKEN"/></td>
+
+ <td> <div class = title >NPO AMOUNT</div></td>
+<td colspan="1"><input type="text" id="ebase" placeholder="TOTAL BASE VALUE TO BE CALCULATED"/></td>
+
+ <td> <div class = title >HIKED NPO AMOUNT</div></td>
+<td colspan="1"><input type="text" id="ebase" placeholder="TOTAL BASE VALUE TO BE CALCULATED"/></td>
+
+</tr>
+<tr>
+
+<td><div class = title >FLOOR VALUE PER TOKEN</div></td>
+<td colspan="1"><input type="text" id="tase" placeholder="total return estimated based on actual calculation"/></td>
+
+ <td><div class = title >TOTAL FLOOR VALUE</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+<td><div class = title >BUBBLE VALUE PER TOKEN</div></td>
+<td colspan="1"><input type="text" id="tase" placeholder="total return estimated based on actual calculation"/></td>
+
+</tr>
+<tr>
+
+ <td><div class = title >TOTAL BUBBLE VALUE</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+<td><div class = title >CAPITATION PER TOKEN </div></td>
+<td colspan="1"><input type="text" id="tase" placeholder="total return estimated based on actual calculation"/></td>
+
+ <td><div class = title >TOTAL CAPITATION DEPOSITE</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+</tr>
+<tr>
+
+<td><div class = title >HIKED CAPITATION PER TOKEN </div></td>
+<td colspan="1"><input type="text" id="tase" placeholder="total return estimated based on actual calculation"/></td>
+
+ <td><div class = title >TOTAL HIKED CAPITATION DEPOSITE</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+<td><div class = title >ROYALITY LEVEL 1 PER TOKEN </div></td>
+<td colspan="1"><input type="text" id="tase" placeholder="total return estimated based on actual calculation"/></td>
+
+ <td><div class = title >TOTAL ROYALITY LEVEL 1</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+</tr>
+<tr>
+    
+ <td><div class = title >TOTAL GAS FEE</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+<td><div class = title >TOKEN ASSET VALUE</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+<td><div class = title >TOTAL TOKEN ASSET VALUE</div></td>
+<td colspan="1"><input type="text" id="abase" placeholder="total return estimated on prediction using average data"/></td>
+
+</tr>    
+
+
+</table>
+   </body>
+</html>   
