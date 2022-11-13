@@ -5,7 +5,7 @@
 ##### DeFi (ReFi)
 
 ##### Region location
-###### Indore, India
+##### Indore, India
 
 ##### Team Members
 - Hitesh, Blockchain and Data Engineer
