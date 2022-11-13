@@ -16,10 +16,11 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/30868dc3-7a22-491c-ae6c-955972ef189b"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
+      "infoPlist": {
+        "NSMotionUsageDescription": "Allow RUN3 access to your device"
+      },
       "supportsTablet": true,
       "config": {
         "googleMapsApiKey": "AIzaSyAQyLN45x-8vr4l1uI0A45NC0AFtTM9hXE"
@@ -36,9 +37,7 @@
       "favicon": "./assets/favicon.png",
       "build": {
         "babel": {
-          "include": [
-            "@ui-kitten/components"
-          ]
+          "include": ["@ui-kitten/components"]
         }
       }
     },
