@@ -5,7 +5,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
-export default function Home() {
+export default function Result() {
   let router = useRouter();
 
   const [address, setAddress] = useState("");
@@ -57,13 +57,6 @@ export default function Home() {
           <p></p>
         </div>
         <div className="flex flex-col">
-          <input
-            type="text"
-            className="border p-3"
-            placeholder="0xBHJ....e22B"
-            value={address}
-            onChange={inputHandler}
-          />
           <button
             onClick={carbonEmissionCalculator}
             className="p-4 rounded bg-black text-white mt-4"
