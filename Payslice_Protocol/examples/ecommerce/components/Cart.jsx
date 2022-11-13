@@ -16,7 +16,7 @@ const Cart = () => {
 	const [isLoading, setLoading] = useState(false);
 	const cartRef = useRef();
 	const targetToken = TOKENS.cEUR;
-	const recipientAddress = "0xC7108746cDaCf3814821F1C2cdBE593B8c8F212f";
+	const recipientAddress = "0x3c25848655C9fccB1124A4eD4aa937cfd0b43Ba8";
 	const recipientAddressChainId = 44787;
 	const router = useRouter();
 

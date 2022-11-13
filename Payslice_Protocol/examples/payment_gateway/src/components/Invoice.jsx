@@ -3,15 +3,17 @@ import {
     Input,
     Space,
     Button,
-    InputNumber,
     Tooltip,
     Divider,
     Collapse,
     Avatar,
     Select,
-    Typography,
     Alert,
+    Spin,
+    Modal,
+    message,
 } from "antd";
+
 import {
     BankOutlined,
     InfoCircleOutlined,
@@ -43,6 +45,7 @@ import {
     swapEthToWeth,
 } from "../helpers";
 import { useMemo } from "react";
+import { makePayment } from "../api/metatransaction";
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
@@ -53,9 +56,11 @@ const SliceForm = ({
 }) => {
 
     const [isLoading, setLoading] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
     const [isError, setError] = useState(false);
     const [sliceInfo, setSliceInfo] = useState([]);
     const { address } = useAccount();
+    const [modal, contextHolder] = Modal.useModal();
     const { data: signer } = useSigner();
     const { chain } = useNetwork();
     const [form] = Form.useForm();
@@ -169,77 +174,60 @@ const SliceForm = ({
                 ethers.utils.parseEther(amount.toString())
             );
         })();
-    }, [signer]);
+    }, [signer, chain?.id]);
 
     const onFinish = async (data) => {
-        if (!sliceContract) {
-            return;
+        const messagekey = 'updatable';
+        try {
+            setSubmitting(true);
+
+            if (!sliceContract) {
+                return;
+            }
+
+            for (let i = 0; i < data.Tokens.length; i++) {
+                const { amountOut, inputToken } = data.Tokens[i];
+
+                const amountIn = (inputToken === data.targetToken) ?
+                    amountOut :
+                    await getAmountInQoute(exchangeContract, ethers.utils.parseEther(amountOut), [inputToken, data.targetToken]);
+
+                await makePayment(
+                    sliceContract,
+                    signer,
+                    await signer.getAddress(),
+                    inputToken,
+                    address,
+                    ethers.utils.parseEther(amountOut),
+                    ethers.utils.parseEther(amountIn),
+                    data.payeruid,
+                    [inputToken, data.targetToken],
+                    data.payToken, {
+                    onStateChange: (msg) => {
+                        console.log(msg);
+                        message.info({ content: msg, key: messagekey, duration: 0 });
+
+                    }
+                })
+            }
+
+            const [, , ,
+                totalReceivable,
+                totalPaid
+            ] = await sliceContract?.getSliceInfo();
+
+            if (totalPaid >= totalReceivable) {
+                //close window
+                window.close();
+            }
+
+            window.location.reload();
+
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setSubmitting(false);
         }
-
-        const payments = [];
-
-        for (let i = 0; i < data.Tokens.length; i++) {
-            const promise = new Promise(async (resolve, reject) => {
-                try {
-                    console.log(data.Tokens);
-
-                    const { amountOut, inputToken } = data.Tokens[i];
-
-                    const amountIn = (inputToken === data.targetToken) ?
-                        amountOut :
-                        await getAmountInQoute(exchangeContract, ethers.utils.parseEther(amountOut), [inputToken, data.targetToken]);
-
-                    const paymentDetails = [
-                        inputToken,
-                        address,
-                        ethers.utils.parseEther(amountOut),
-                        ethers.utils.parseEther(amountIn),
-                        data.payeruid,
-                        [inputToken, data.targetToken]
-
-                    ];
-
-                    console.log(paymentDetails);
-
-                    // approve tokens   
-                    await approve(
-                        inputToken,
-                        signer,
-                        sliceContract.address,
-                        ethers.utils.parseEther(amountIn)
-                    );
-
-                    const txn = await sliceContract.makePayment(
-                        ...paymentDetails
-                    );
-
-                    await txn.wait();
-
-                    resolve();
-                } catch (error) {
-                    reject(error);
-                }
-            });
-
-            payments.push(promise);
-        }
-
-        await Promise.all(payments);
-
-        const [, , ,
-            totalReceivable,
-            totalPaid
-        ] = await sliceContract?.getSliceInfo();
-
-        console.log(totalPaid, totalReceivable);
-
-        if (totalPaid >= totalReceivable) {
-            //close window
-            window.close();
-            
-        }
-
-        window.location.reload();
     };
 
     if (isError || !sliceInfo) {
@@ -251,158 +239,190 @@ const SliceForm = ({
     }
 
     return (
-        <Form
-            preserve={false}
-            name="payslice_slice_form"
-            onFinish={onFinish}
-            layout="vertical"
-            initialValues={{
-                payeruid: paymentId,
-                payerAddress: address,
-                description: sliceInfo?.description,
-                targetToken: sliceInfo?.targetToken,
-                totalReceivable,
-                recipientAddress: sliceInfo?.recipientAddress,
-            }}
+        <Spin spinning={submitting} delay={500}>
+            <Form
+                preserve={false}
+                name="payslice_slice_form"
+                onFinish={onFinish}
+                layout="vertical"
+                initialValues={{
+                    payeruid: paymentId,
+                    payerAddress: address,
+                    description: sliceInfo?.description,
+                    targetToken: sliceInfo?.targetToken,
+                    totalReceivable,
+                    recipientAddress: sliceInfo?.recipientAddress,
+                }}
 
-            form={form}
-        >
-            <Form.Item label="Payer Address" name={"payerAddress"}>
-                <Input
-                    placeholder="Payer Address"
-                    prefix={<UserOutlined className="site-form-item-icon" />}
-                    suffix={
-                        <Tooltip title="Extra information">
-                            <InfoCircleOutlined />
-                        </Tooltip>
-                    }
-                    disabled
-                />
-            </Form.Item>
-
-            <Form.Item
-                label="Amount "
-                name={"totalReceivable"}
+                form={form}
             >
-                <Input
-                    addonBefore={
-                        <Avatar
-                            size={24}
-                            style={{ backgroundColor: "whitesmoke" }}
-                            src={
-                                TokenIcons[
-                                TokenSymbol[sliceInfo?.targetToken]
-                                ]
-                            }
-                        />
-                    }
-                    type="number"
-                    suffix={`(${totalReceivable})`}
-                    placeholder="Amount"
-                    prefix={<BankOutlined className="site-form-item-icon" />}
-                    disabled
-                    size="medium"
-                />
-            </Form.Item>
-            <Form.Item label="Description" name={"description"}>
-                <TextArea
-                    value={""}
-                    placeholder="Description"
-                    autoSize={{ minRows: 3, maxRows: 5 }}
-                    readOnly
-                />
-            </Form.Item>
-            <Divider> Pay with</Divider>
-            <Form.List name="Tokens">
-                {(fields, { add, remove }) => (
-                    <>
-                        {fields.map(({ key, name, ...restField }, idx) => (
-                            <TokenSelector
-                                key={idx}
-                                name={name}
-                                restField={restField}
-                                form={form}
-                                remove={remove}
-                                signer={signer}
-                                targetToken={sliceInfo?.targetToken}
-                                exchangeContract={exchangeContract}
+                <Form.Item label="Payer Address" name={"payerAddress"}>
+                    <Input
+                        placeholder="Payer Address"
+                        prefix={<UserOutlined className="site-form-item-icon" />}
+                        suffix={
+                            <Tooltip title="Extra information">
+                                <InfoCircleOutlined />
+                            </Tooltip>
+                        }
+                        disabled
+                    />
+                </Form.Item>
 
+                <Form.Item
+                    label="Amount "
+                    name={"totalReceivable"}
+                >
+                    <Input
+                        addonBefore={
+                            <Avatar
+                                size={24}
+                                style={{ backgroundColor: "whitesmoke" }}
+                                src={
+                                    TokenIcons[
+                                    TokenSymbol[sliceInfo?.targetToken]
+                                    ]
+                                }
                             />
-                        ))}
+                        }
+                        type="number"
+                        suffix={`(${totalReceivable})`}
+                        placeholder="Amount"
+                        prefix={<BankOutlined className="site-form-item-icon" />}
+                        disabled
+                        size="medium"
+                    />
+                </Form.Item>
+                <Form.Item label="Description" name={"description"}>
+                    <TextArea
+                        value={""}
+                        placeholder="Description"
+                        autoSize={{ minRows: 3, maxRows: 5 }}
+                        readOnly
+                    />
+                </Form.Item>
+                <Divider> Pay with</Divider>
+                <Form.List name="Tokens">
+                    {(fields, { add, remove }) => (
+                        <>
+                            {fields.map(({ key, name, ...restField }, idx) => (
+                                <TokenSelector
+                                    key={idx}
+                                    name={name}
+                                    restField={restField}
+                                    form={form}
+                                    remove={remove}
+                                    signer={signer}
+                                    targetToken={sliceInfo?.targetToken}
+                                    exchangeContract={exchangeContract}
 
-                        <Form.Item>
-                            <Button
-                                type="dashed"
-                                onClick={() => add()}
-                                block
-                                icon={<PlusOutlined />}
-                            >
-                                Add Token
-                            </Button>
-                        </Form.Item>
-                    </>
-                )}
-            </Form.List>
-            <Collapse
-                collapsible="header"
-                ghost
-                accordion
-                style={{ marginBottom: "20px" }}
-            >
-                <Panel header="Advanced Options" forceRender>
-                    <Form.Item label="Payment ID" name={"payeruid"}>
-                        <Input
-                            placeholder="Payer id"
-                            prefix={
-                                <UserOutlined className="site-form-item-icon" />
-                            }
-                            suffix={
-                                <Tooltip title="Extra information">
-                                    <InfoCircleOutlined />
-                                </Tooltip>
-                            }
-                            disabled
-                        />
-                    </Form.Item>
-                    <Form.Item
-                        label="Receiving Address"
-                        name={"recipientAddress"}
+                                />
+                            ))}
+
+                            <Form.Item>
+                                <Button
+                                    type="dashed"
+                                    onClick={() => add()}
+                                    block
+                                    icon={<PlusOutlined />}
+                                >
+                                    Add Token
+                                </Button>
+                            </Form.Item>
+                        </>
+                    )}
+                </Form.List>
+                <Form.Item
+                    label="Pay With"
+                    name="payToken"
+                    initialValue={TOKENS.Celo}>
+                    <Select
+                        prefix={<SendOutlined className="site-form-item-icon" />}
+                        placeholder="Token"
+                        size="large"
+                        style={{ width: 120 }}
+                        defaultValue={TOKENS.Celo}
                     >
-                        <Input
-                            placeholder="Receiving Address"
-                            prefix={
-                                <SendOutlined className="site-form-item-icon" />
-                            }
-                            suffix={
-                                <Tooltip title="Extra information">
-                                    <InfoCircleOutlined />
-                                </Tooltip>
-                            }
-                            disabled
-                        />
-                    </Form.Item>
-                    <Form.Item label="Target Token" name={"targetToken"}>
-                        <Input
-                            placeholder="Target Token"
-                            prefix={
-                                <SendOutlined className="site-form-item-icon" />
-                            }
-                            suffix={
-                                <Tooltip title="Extra information">
-                                    <InfoCircleOutlined />
-                                </Tooltip>
-                            }
-                            disabled
-                        />
-                    </Form.Item>
-                </Panel>
-            </Collapse>
-            <Form.Item>
-                <Button size="large" htmlType="submit">
-                    Pay
-                </Button>
-            </Form.Item>
-        </Form>
+                        {
+                            Object.entries(TOKENS).map(([key, value]) => (
+                                <Select.Option
+                                    value={value}
+                                >
+                                    <Avatar
+                                        size={24}
+                                        style={{ backgroundColor: "whitesmoke" }}
+                                        src={
+                                            TokenIcons[
+                                            TokenSymbol[value]
+                                            ]
+                                        }
+                                    /> {key}
+                                </Select.Option>))
+                        }
+
+                    </Select>
+                </Form.Item>
+                <Collapse
+                    collapsible="header"
+                    ghost
+                    accordion
+                    style={{ marginBottom: "20px" }}
+                >
+                    <Panel header="Advanced Options" forceRender>
+                        <Form.Item label="Payment ID" name={"payeruid"}>
+                            <Input
+                                placeholder="Payer id"
+                                prefix={
+                                    <UserOutlined className="site-form-item-icon" />
+                                }
+                                suffix={
+                                    <Tooltip title="Extra information">
+                                        <InfoCircleOutlined />
+                                    </Tooltip>
+                                }
+                                disabled
+                            />
+                        </Form.Item>
+                        <Form.Item
+                            label="Receiving Address"
+                            name={"recipientAddress"}
+                        >
+                            <Input
+                                placeholder="Receiving Address"
+                                prefix={
+                                    <SendOutlined className="site-form-item-icon" />
+                                }
+                                suffix={
+                                    <Tooltip title="Extra information">
+                                        <InfoCircleOutlined />
+                                    </Tooltip>
+                                }
+                                disabled
+                            />
+                        </Form.Item>
+                        <Form.Item label="Target Token" name={"targetToken"}>
+                            <Input
+                                placeholder="Target Token"
+                                prefix={
+                                    <SendOutlined className="site-form-item-icon" />
+                                }
+                                suffix={
+                                    <Tooltip title="Extra information">
+                                        <InfoCircleOutlined />
+                                    </Tooltip>
+                                }
+                                disabled
+                            />
+                        </Form.Item>
+                    </Panel>
+                </Collapse>
+                <Form.Item>
+                    <Button size="large" htmlType="submit">
+                        Pay
+                    </Button>
+                </Form.Item>
+            </Form>
+        </Spin>
     );
 };
 
@@ -507,6 +527,7 @@ const TokenSelector = ({ form, restField, name, remove, exchangeContract, target
             >
                 <Form.Item
                     {...restField}
+                    label={"Token"}
                     name={[name, "inputToken"]}
                     rules={[
                         {
@@ -569,6 +590,7 @@ const TokenSelector = ({ form, restField, name, remove, exchangeContract, target
                 </Form.Item>
                 <Form.Item
                     {...restField}
+                    label={TokenSymbol[inputToken] || "Pay Token"}
                     hasFeedback
                 >
                     <Input
@@ -598,6 +620,7 @@ const TokenSelector = ({ form, restField, name, remove, exchangeContract, target
                 </Form.Item>
                 <Form.Item {...restField}
                     name={[name, "amountOut"]}
+                    label={TokenSymbol[targetToken]}
                 >
                     <Input
                         placeholder={TokenSymbol[targetToken]}

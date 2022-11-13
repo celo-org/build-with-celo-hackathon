@@ -1,3 +1,5 @@
 node_modules/
 scaffold-eth/
+metatxn/
 *.env
+*.env.local

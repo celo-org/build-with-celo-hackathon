@@ -1,8 +1,10 @@
-import sliceAbi from "./slice.json";
-import paysliceAbi from "./payslice.json";
+import sliceAbi from "./Slice.json";
+import paysliceAbi from "./Payslice.json";
 import exchangeAbi from "./exchange.json";
 import libraryAbi from "./zuniswaplibrary.json";
-import loggerAbi from "./logger.json";
+import loggerAbi from "./Logger.json";
+import forwarderAbi from "./Forwarder.json";
+
 
 const SliceInterface = {
     address: "",
@@ -24,8 +26,14 @@ const ZuniswapV2LibraryInterface = {
     abi: libraryAbi.abi
 }
 
+const ForwarderInterface = {
+    address: forwarderAbi.address,
+    abi: forwarderAbi.abi
+}
+
 const loggerInterface = {
     address: "",
     abi: loggerAbi.abi
 }
-export {SliceInterface, ZuniswapV2LibraryInterface, PaysliceInterface, ExchangeInterface, loggerInterface}
+
+export {SliceInterface, ZuniswapV2LibraryInterface, PaysliceInterface, ExchangeInterface,ForwarderInterface, loggerInterface}

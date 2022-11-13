@@ -12,12 +12,10 @@ Team Payslice
 Defi
 
 ##### Region location
-
+Ghana, West Africa
 
 ##### Team Members
 - Nartey Kodjo-Sarso, Fullstack Dev and Solidity Dev
-- Teammate 2, role
-- Teammate 3, role
 
 #### Project Description
 The promise of blockchain technology was to create a revolutionary financial system that eliminates third-party and central control from transactions, and still guarantee trust, transparency, and true ownership. Thus the blockchain technology itself was a gateway for exchanging financial value in a relatively faster, secured, cheaper way. This was quite simple as bitcoin was perceived to be the medium for these transactions.  Today, the blockchain ecosystem has undergone several changes with newer goals and use cases identified for the technology. Also, various blockchain technology has been developed for specific use cases with each creating new assets or tokens. Further, these blockchain operate in their own silo ( without communicating with other existing blockchains, and make little attempt to make it easier for other blockchain to communicate with them). To also add up to the diverse nature is the fact that on each blockchains there are not just the native asset but also other high liquidity privately owned but open assets that have a high patronage.
@@ -59,18 +57,32 @@ Payslice Protocol seeks to develop an open permissionless protocol that abstract
 - As Payslice is a protocol and not a DApp, it can be used to power DApps that require payments or asset transfer. Thus relieving developers of DAOs, blockchain based and/or aligned E-commerce platforms, wallets, etc the headache of sophisticated payment integration, increasing the user experience in their DApps, while at the same time providing economic value to existing protocols such as REFI aligned DEXs.
 
 
+#### Summary 
+#### Current Features include
+- Payment/Transfer request
+- Bill sharing / spliting
+- Token transfer/payment
+- Cross-token transfer/payment
+- Multi-token transfer/payment
+- Meta transaction / ERC20 gas payment
+- ERC2612 permit support
 
-#### Summary
-Describe the basic functionality of your project. What are the features you were able to implement? What features would you like to implement?
+#### Features to include
+- cross chain payments
 
 #### URLs
-List any URLs relevant to demonstrating your prototype
+https://drive.google.com/file/d/1s3o0PkGs2Oi85WNgv6uAaC5FlNLzNey2/view?usp=sharing
 
 #### Presentation
-List any links to your presentation or any related visuals you want to share.
+https://docs.google.com/presentation/d/1LgEZR8YQDlJFY1g9VpFjRc6iL7MsgwmHS269zdS-1gY/edit?usp=sharing
 
 #### Next Steps
-What do you need to do next to turn this prototype into a working solution?
+- Protocol Improvements and security audit
+
+#### In the mid-term and long-term, we will 
+- Optimizing and enhancing protocol, and formal verification of smart contracts
+- Optimizing User/Developer Experience by building additional sdks, plugins, and generative dashboards
+- DAO and governance protocol for payslice protocol
 
 #### License
 This repository includes an [unlicensed](http://unlicense.org/) statement though you may want to [choose a different license](https://choosealicense.com/).

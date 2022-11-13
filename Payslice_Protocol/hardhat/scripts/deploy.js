@@ -10,34 +10,41 @@ const hre = require("hardhat");
 
 async function main() {
 
-  const sliceContract = await ethers.getContractFactory("Slice");
-  const loggerContract = await ethers.getContractFactory("Logger");
-  const paysliceContract = await ethers.getContractFactory("Payslice");
+  const forwarderContract = await ethers.getContractFactory("PaysliceForwarder");
+  // const sliceContract = await ethers.getContractFactory("SliceMetaTxn");
+  // const loggerContract = await ethers.getContractFactory("Logger");
+  // const paysliceContract = await ethers.getContractFactory("Payslice");
 
-  const deployedLogger = await loggerContract.deploy();
-  const deployedSlice = await sliceContract.deploy();
-  const deployedPayslice = await paysliceContract.deploy();
+  const deployForwarder = await forwarderContract.deploy(process.env.EXCHANGE_ADDRESS);
+  // const deployedLogger = await loggerContract.deploy();
+  // const deployedSlice = await sliceContract.deploy(deployForwarder.address);
+  // const deployedPayslice = await paysliceContract.deploy();
 
-  await deployedLogger.deployed();
-  await deployedSlice.deployed();
-  await deployedPayslice.deployed();
+   // await deployedLogger.deployed();
+  // await deployedSlice.deployed();
+  // await deployedPayslice.deployed();
+  await deployForwarder.deployed();
+  await deployForwarder.registerRelayer("0xdf69cf42e1e8cf4acfb8b09649096ecfe1cee0d7");
+ 
 
-  const txn = await deployedPayslice.initialize(
-    deployedSlice.address,
-    process.env.EXCHANGE_ADDRESS,
-    deployedLogger.address
-  );
+  // const txn = await deployedPayslice.initialize(
+  //   deployedSlice.address,
+  //   process.env.EXCHANGE_ADDRESS,
+  //   deployedLogger.address
+  // );
 
-  await txn.wait();
+  // await txn.wait();
 
+  // storeContractData(deployedSlice, "Slice");
+  // storeContractData(deployedPayslice, "Payslice");
+  // storeContractData(deployedLogger, "Logger");
+  storeContractData(deployForwarder, "PaysliceForwarder");
+  
 
-  storeContractData(deployedPayslice, "Payslice");
-  storeContractData(deployedLogger, "Logger");
-
-  console.log(`
-  logger contract at: ${deployedLogger.address} \r\n
-  slice contract at: ${deployedSlice.address}
-  `);
+  // console.log(`
+  // logger contract at: ${deployedLogger.address} \r\n
+  // slice contract at: ${deployedSlice.address}
+  // `);
 }
 
 const storeContractData = (contract, contractName) => {
@@ -59,6 +66,6 @@ const storeContractData = (contract, contractName) => {
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
 main().catch((error) => {
-  console.error(error);
+  console.error(error);``
   process.exitCode = 1;
 });
