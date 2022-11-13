@@ -12,55 +12,97 @@ from PyPDF2 import PdfFileMerger, PdfFileReader
 import numpy as np 
 import pandas as pd
 from PIL import Image
-from web3 import Web3
 import streamlit as st
+from web3 import Web3
+import netCDF4 as nc
+import math
+from streamlit_folium import folium_static
+from streamlit_folium import st_folium
+import folium
 
 st.set_page_config(
 page_title="Carbon Footprint Calculator",
 page_icon="🌎"
 )
 
-def get_base64_of_bin_file(bin_file):
-    """
-    function to read png file 
-    ----------
-    bin_file: png -> the background image in local folder
-    """
-    with open(bin_file, 'rb') as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
 
-def set_png_as_page_bg(png_file):
-    """
-    function to display png as bg
-    ----------
-    png_file: png -> the background image in local folder
-    """
-    bin_str = get_base64_of_bin_file(png_file)
-    page_bg_img = '''
+def add_bg_from_local(image_file):
+    with open(image_file, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read())
+    st.markdown(
+    f"""
     <style>
-    body {
-    background-image: url("data:image/png;base64,%s");
-    background-size: cover;
-    }
+    .stApp {{
+        background-image: url(data:image/{"jpg"};base64,{encoded_string.decode()});
+        background-size: cover
+    }}
     </style>
-    ''' % bin_str
-    
-    st.markdown(page_bg_img, unsafe_allow_html=True)
-    return
+    """,
+    unsafe_allow_html=True
+    )
+
 
 try:
     st.sidebar.markdown("<h1 style='text-align: center; color: black;'>🧭 Navigation Bar🧭</h1>", unsafe_allow_html=True)
-    nav = st.sidebar.radio("",["Home 🏡","Prediction📟","Donate 💰"])
+    nav = st.sidebar.radio("",["Home 🏡","Individual Emissions 👨‍👩‍👧‍👦","Group Emissions 🌐","Donate 💰"])
     if nav == "Home 🏡":
-      set_png_as_page_bg("back.jpg")
-      st.markdown("<h1 style ='color:#BB1D3F; text_align:center;font-family:times new roman;font-weight: bold;font-size:35pt;'>DEEP CARE 🌍❤️️ </h1>", unsafe_allow_html=True)  
-      st.markdown("<h1 style='color:black;text_align:center;font-family:times new roman;font-size:20pt;font-weight: bold;'> A CARBON FOOTPRINT CALCULATOR</h1>", unsafe_allow_html=True)
-      st.markdown("<h1 style='color:green;text-align: center;font-family:times new roman;font-size:25pt;font-weight: bold;'>Reduce your carbon footprint!</h1>", unsafe_allow_html=True)
+      add_bg_from_local("back.jpg")
+      st.markdown("<h1 style ='color:#BB1D3F;text-align: center;font-family:times new roman;font-weight: bold;font-size:32pt;'>DEEP CARE 🌍❤️️ </h1>", unsafe_allow_html=True)  
+      st.markdown("<h1 style='color:black;text-align: center;font-family:times new roman;font-size:20pt;font-weight: bold;'>A CARBON FOOTPRINT CALCULATOR</h1>", unsafe_allow_html=True)
+      st.markdown("<h1 style='color:green;text-align: center;font-family:times new roman;font-size:25pt;font-weight: bold;'>Reduce your carbon footprint!</h1>", unsafe_allow_html=True)        
+   
+    if nav == "Group Emissions 🌐":
+        st.markdown(f"""<h1 style='text-align: center; font-weight:bold;color:black;background-color:powderblue;font-size:20pt;'>Know the co2 level at your area⚠️</h1>""",unsafe_allow_html=True)
+        st.write(".")
+        fn = "oco2_LtCO2_220228_B10206Ar_220425053928s.nc4"
+        ds = nc.Dataset(fn)
+        #print(ds)
+        print(ds['xco2'])
+        print(ds['xco2'][:])
 
+        df=pd.DataFrame(columns=["Latitude","Longitude","xco2"])
+
+        df["Longitude"] = ds['longitude'][:]
+        df["Latitude"] = ds['latitude'][:]
+        df["xco2"]=ds['xco2'][:]
+
+        #Repalce inplace 
+        df.fillna(0,inplace=True)
+
+
+        m = folium.Map(location=None, width='100%', height='100%', left='0%', top='0%', position='relative', tiles='OpenStreetMap', attr=None, min_zoom=0, max_zoom=18, zoom_start=10, min_lat=- 90, max_lat=90, min_lon=- 180, max_lon=180, max_bounds=True, crs='EPSG3857', control_scale=False, prefer_canvas=False, no_touch=False, disable_3d=False, png_enabled=False, zoom_control=True)
+        m.add_child(folium.LatLngPopup())
+        map = st_folium(m)
+        try:
+
+            user_lat=map['last_clicked']['lat']
+            user_lon=map['last_clicked']['lng'] 
+
+        except:
+            st.warning("No location choosen")
+
+        if st.button("Predict"):
+            user_lat=float(user_lat)
+            user_lon=float(user_lon)
+
+            #df_first=df[(60>df['Latitude']> 59)]
+            df_first=df.loc[(df['Latitude'] >user_lat) &(df['Latitude'] < user_lat+20) & (df['Longitude']> user_lon)&(df['Longitude']< user_lon+20 ),'xco2']
+            res=df_first.mean()
+
+            if(math.isnan(res)):
+                st.error("Unable to find co2 concentration at the specified location")
+            else:
+                st.write("""<style>[data-testid="stMetricDelta"] svg {display: none;}</style>""",unsafe_allow_html=True)   
+                if(res<415):
+                    st.metric(label="Amount of CO2 (in ppm)", value=round(res,3), delta="parts per millions")
+                else:
+                    st.metric(label="Amount of CO2 (in ppm)", value=round(res,3), delta="parts per millions",delta_color="inverse")
+
+
+     
     
     if nav == "Donate 💰":
-        set_png_as_page_bg("earth.jpg")
+        add_bg_from_local("earth.jpg")
         st.markdown(f"""<h1 style='text-align: center; font-weight:bold;color:black;background-color:powderblue;font-size:20pt;'>Make a Donation </h1>""",unsafe_allow_html=True)
         st.markdown(f"""<h1 style='text-align: center; font-weight:bold;color:red;font-size:12pt;'>We believe the Footprint Calculator serves a crucial purpose in the world: to help people explore what it means to live on our one planet.
 We need your support to keep it going. </h1>""",unsafe_allow_html=True)
@@ -69,7 +111,7 @@ We need your support to keep it going. </h1>""",unsafe_allow_html=True)
  </h1>""",unsafe_allow_html=True)
         st.markdown(f"""<h1 style='text-align: left; font-weight:bold;color:black;font-size:12pt;'>Connecting to demo account... </h1>""",unsafe_allow_html=True)
         
-        temperature = st.slider('Donation Amount (in CELO)💰', min_value=1, step=1, max_value=5,value=1)
+        temperature = st.slider('Donation Amount💰', min_value=1, step=1, max_value=5,value=1)
         if(st.button("Donate Now")):
             web3 = Web3(Web3.HTTPProvider('https://alfajores-forno.celo-testnet.org'))
             print(web3.isConnected())
@@ -79,6 +121,7 @@ We need your support to keep it going. </h1>""",unsafe_allow_html=True)
 
             privatekey="153126bfe2fd9323f2d2aea5454090a4266815415d431c4c907f79d30fe29972"
             nonce=web3.eth.getTransactionCount(account1)
+
             tx={
                 'nonce': nonce,                      # transaction count
                 'to': account2,              # who to send the ETH to
@@ -93,10 +136,9 @@ We need your support to keep it going. </h1>""",unsafe_allow_html=True)
             print(web3.toHex(tx_hash))
             print(web3.eth.get_balance(account1))
             print(web3.eth.get_balance(account2))
-            st.balloons()
+            st.balloons()     
+            st.warning("Amount collected so far...{}".format(web3.eth.get_balance(account2)/pow(10,18)))
             st.image("https://upload.wikimedia.org/wikipedia/commons/e/e1/Payment_Done.gif", width=300)
-            st.warning("Amount collected so far...{}".format(web3.eth.get_balance(account2)))
-           
 
     
 
@@ -460,7 +502,7 @@ We need your support to keep it going. </h1>""",unsafe_allow_html=True)
     ##                            MAIN SCRIPT                                   ##
     ##############################################################################
     #answer_1= answer_2= answer_3= answer_4= answer_5= answer_6= answer_7= answer_8= answer_9= answer_10= answer_11=""
-    if nav == "Prediction📟":
+    if nav == "Individual Emissions 👨‍👩‍👧‍👦":
         st.markdown(f"""<h1 style='text-align: center; font-weight:bold;color:white;background-color:green;font-size:20pt;'>Let's find your carbon footprint! 😉 </h1>""",unsafe_allow_html=True)
         st.write("")
         st.image("https://i.pinimg.com/originals/7e/69/ec/7e69eca344ca1465da94d698ded08e8e.gif", width=300)
