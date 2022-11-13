@@ -14,7 +14,8 @@ export default StyleSheet.create({
     },
     stopButton: {
       position: 'absolute',
-      marginTop: 25,
+      marginTop: 24,
+      marginLeft: 128,
     },
     greyRing: {
       marginLeft: 102,
@@ -34,12 +35,12 @@ export default StyleSheet.create({
       marginTop: 10,
     },
     optionsContainer: {
-      marginTop: 120,
+      marginTop: 75,
       marginLeft: 285,
       alignContent: 'center',
     },
     exitContainer: {
-      marginTop: 100,
+      marginTop: 50,
       marginRight: 325,
       alignContent: 'center',
     },
@@ -54,7 +55,7 @@ export default StyleSheet.create({
       margin: 2,
     },
     exitIcon: {
-      marginTop: 130,
+      marginTop: 45,
       paddingLeft: 20,
     },
     flipText: {
@@ -65,7 +66,7 @@ export default StyleSheet.create({
     },
     recordButtonsContainer: {
       alignItems: 'center',
-      marginTop: 260,
+      marginTop: 250,
       marginLeft: 50,
       flexDirection: 'row',
     },

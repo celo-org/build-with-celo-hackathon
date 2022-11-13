@@ -40,13 +40,13 @@ const goToNextStep = async (navigation) => {
 const Wallet = () => {
   const connector = useWalletConnect();
   const navigation = useNavigation();
-  const { addNEFTtoWallet, changeToAlfajores, currentChainId } =
+  const { addNEFTtoWallet, changeToCorrectChain, currentChainId } =
     useChainCheck();
   const [updateCurrentUser] = useUpdateCurrentUserMutation();
 
   const connectWallet = useCallback(() => {
     try {
-      connector.connect().catch(() => { });
+      connector.connect().catch(() => {});
     } catch (err) {
       // TODO: LOG ERRORS;
     }
@@ -57,7 +57,7 @@ const Wallet = () => {
       if (connector) {
         if (
           connector.connected &&
-          connector.chainId === Constants.expoConfig.extra.chainId
+          connector.chainId === Constants.manifest.extra.chainId
         ) {
           const response = await updateCurrentUser({
             walletAddress: connector.accounts[0],
@@ -78,12 +78,12 @@ const Wallet = () => {
           }
         } else if (
           connector.connected &&
-          connector.chainId !== Constants.expoConfig.extra.chainId
+          connector.chainId !== Constants.manifest.extra.chainId
         ) {
           Alert.alert(
             'Wrong blockchain',
-            'You are not connected to the correct network. To proceed, please switch network',
-            [{ text: 'Switch', onPress: changeToAlfajores }]
+            `You are not connected to the correct network. You should be connected to ${Constants.manifest.extra.chainName}. To proceed, please switch network`,
+            [{ text: 'Switch', onPress: changeToCorrectChain }]
           );
         }
       }
@@ -104,21 +104,21 @@ const Wallet = () => {
         text="MetaMask"
         textStyle={styles.walletButtonText}
         buttonStyle={[styles.walletButton, styles.disabledButton]}
-        onPress={() => { }}
+        onPress={() => {}}
         Icon={IconComponent(metamaskImage)}
       />
       <Button
         text="Valora"
         textStyle={styles.walletButtonText}
         buttonStyle={[styles.walletButton, styles.disabledButton]}
-        onPress={() => { }}
+        onPress={() => {}}
         Icon={IconComponent(valoraImage)}
       />
       <Button
         text="Rainbow"
         textStyle={styles.walletButtonText}
         buttonStyle={[styles.walletButton, styles.disabledButton]}
-        onPress={() => { }}
+        onPress={() => {}}
         Icon={IconComponent(rainbowImage)}
       />
       <Button

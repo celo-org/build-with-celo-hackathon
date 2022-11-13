@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 import './global.ts';
-import * as Device from 'expo-device';
 
 const { registerRootComponent, scheme } = require('expo');
 
@@ -18,7 +17,7 @@ LogBox.ignoreLogs([
 // It also ensures that whether you load the app in the Expo client or in a native build,
 // the environment is set up appropriately
 registerRootComponent(withWalletConnect(App, {
-  redirectUrl: Device.osName === 'web' ? window.location.origin : `${scheme}://`,
+  redirectUrl: Platform.OS === 'web' ? window.location.origin : `${scheme}://`,
   storageOptions: {
     asyncStorage: AsyncStorage,
   },

@@ -55,32 +55,23 @@ const VideoNFT = () => {
   };
 
   if (video) {
-    const shareVideo = () => {
-      shareAsync(video.uri).then(() => {
-        setVideo(undefined);
-      });
-    };
+    navigation.navigate('CreateNFT', {
+      screen: 'EditVideo',
+      params: {
+        resource: video.uri,
+      },
+    });
+    /* if this set is not present, if you take a picture,
+       discard it and come back to the camera screen, when making any action (changing camera, flash)
+       it will return to the editing screen
+    */
+    setVideo(undefined);
 
     const saveVideo = () => {
       MediaLibrary.saveToLibraryAsync(video.uri).then(() => {
         setVideo(undefined);
       });
     };
-
-    return (
-      <SafeAreaView style={styles.container}>
-        <Video
-          style={styles.video}
-          source={{ uri: video.uri }}
-          useNativeControls
-          resizeMode="contain"
-          isLooping
-        />
-        <Button title="Share" onPress={shareVideo} />
-        <Button title="Save" onPress={saveVideo} />
-        <Button title="Discard" onPress={() => setVideo(undefined)} />
-      </SafeAreaView>
-    );
   }
 
   const goToGallery = () => {

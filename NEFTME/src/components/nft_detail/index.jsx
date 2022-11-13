@@ -54,7 +54,7 @@ const NFTDetail = () => {
   const [offerModalVisible, setOfferModalVisible] = useState(false);
   const [chosenUser, setChosenUser] = useState({});
   const [chosenEventInfo, setChosenEventInfo] = useState({});
-  const constant = Constants.expoConfig.extra;
+  const constant = Constants.manifest.extra;
 
   const [activity, setActivity] = useState([
     {
@@ -128,7 +128,7 @@ const NFTDetail = () => {
   useEffect(() => {
     const fetchData = async () => {
       const { neftmeErc721Address, neftmeViewContractAddress } =
-        Constants.expoConfig.extra;
+        Constants.manifest.extra;
       const contractMethods = await getContractMethods(neftmeErc721Address);
       const viewContractMethods = await getContractMethods(
         neftmeViewContractAddress
@@ -184,7 +184,7 @@ const NFTDetail = () => {
             />
             <View style={styles.tokenomicsContainer}>
               <Tokenomics tokenId={nftData.tokenId} />
-              {nftDetails.data[4] === connector.accounts[0] && (
+              {nftDetails.data[4] !== connector.accounts[0] && (
                 <View style={styles.tokenomicsCard}>
                   <Stake tokenId={nftData.tokenId} owner={nftDetails.data[4]} />
                   <Unstake tokenId={nftData.tokenId} />
@@ -237,21 +237,21 @@ const NFTDetail = () => {
             {
               // Activity
               selectedCategory === categories[2].id &&
-              activity.map((eventObject) => (
-                <ActivityItem
-                  key={eventObject.id}
-                  activityInfo={eventObject.eventInfo}
-                  type={eventObject.eventName}
-                  blockNumber={eventObject.blockNumber}
-                  // TODO mudar la dentro para redux
-                  owner={nftDetails.data[4]}
-                  offerModalVisible={offerModalVisible}
-                  setOfferModalVisible={setOfferModalVisible}
-                  setChosenEventInfo={setChosenEventInfo}
-                  setChosenUser={setChosenUser}
-                  activity={activity}
-                />
-              ))
+                activity.map((eventObject) => (
+                  <ActivityItem
+                    key={eventObject.id}
+                    activityInfo={eventObject.eventInfo}
+                    type={eventObject.eventName}
+                    blockNumber={eventObject.blockNumber}
+                    // TODO mudar la dentro para redux
+                    owner={nftDetails.data[4]}
+                    offerModalVisible={offerModalVisible}
+                    setOfferModalVisible={setOfferModalVisible}
+                    setChosenEventInfo={setChosenEventInfo}
+                    setChosenUser={setChosenUser}
+                    activity={activity}
+                  />
+                ))
             }
             {
               // Colection

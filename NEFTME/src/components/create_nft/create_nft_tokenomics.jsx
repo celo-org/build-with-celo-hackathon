@@ -1,8 +1,8 @@
-import { CommonActions, useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { useWalletConnect } from '@walletconnect/react-native-dapp';
 import React, { useState } from 'react';
-import { Alert, ScrollView, Text, View } from 'react-native';
-import { Button, CustomTextInput, Loading } from '@library';
+import { Alert, ScrollView, Text, View, Image } from 'react-native';
+import { Button, Loading, CustomTextInput } from '@library';
 import Slider from '@react-native-community/slider';
 import { useSmartContract } from '@hooks';
 import { mintNFT } from '@services/nft';
@@ -25,10 +25,11 @@ const CreateNFTTokenomics = () => {
         description: route.params.nft.description,
         communityPercentage,
         resource: route.params.nft.resource,
+        resource_type: route.params.nft.resource_type,
       };
 
       const contractMethods = await getContractMethods(
-        Constants.expoConfig.extra.neftmeErc721Address
+        Constants.manifest.extra.neftmeErc721Address
       );
       const mintedNFT = await mintNFT(
         contractMethods,
@@ -38,16 +39,7 @@ const CreateNFTTokenomics = () => {
       setIsLoading(false);
       if (mintedNFT?.success === true) {
         Alert.alert('NFT Minted', 'Your NFT was successfully minted', [
-          {
-            text: 'OK', onPress: () => {
-              navigation.dispatch(CommonActions.reset({
-                index: 0,
-                routes: [{
-                  name: 'Home',
-                }],
-              }));
-            },
-          },
+          { text: 'OK', onPress: () => navigation.navigate('Home') },
         ]);
       } else {
         Alert.alert('Error', 'Something went wrong. Please try again');
@@ -61,6 +53,12 @@ const CreateNFTTokenomics = () => {
   return (
     <View style={styles.container}>
       <Header showNext={false} onPress={null} step={3} />
+      <View style={styles.imageContainer}>
+        <Image
+          source={{ uri: route.params.nft.resource }}
+          style={styles.image}
+        />
+      </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.formContainer}>
           <View style={styles.sliderContainer}>
@@ -87,7 +85,7 @@ const CreateNFTTokenomics = () => {
               />
             </View>
           </View>
-          <Button text="Mint NFT" onPress={onMintNFTPress} textStyle={{}} />
+          <Button text="Create NFT" onPress={onMintNFTPress} textStyle={{}} />
         </View>
       </ScrollView>
       <Loading visible={isLoading} />

@@ -1,7 +1,6 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import CustomTextInput from './custom_text_input';
 
 const styles = StyleSheet.create({
@@ -10,16 +9,28 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
+  image: {
+    height: 50,
+    width: 80,
+  },
 });
 
 const InputField = ({
-  labelName, value, containerStyle, inputPlaceholder, inputStyle,
-  onFieldChange, keyboardType, ...rest
+  labelName,
+  value,
+  containerStyle,
+  inputPlaceholder,
+  inputStyle,
+  resource,
+  onFieldChange,
+  keyboardType,
+  ...rest
 }) => (
   <View style={containerStyle}>
     <Text style={styles.label}>{labelName}</Text>
     <CustomTextInput
       value={value}
+      resource={resource}
       onChangeText={onFieldChange}
       inputPlaceholder={inputPlaceholder}
       inputStyle={inputStyle}
@@ -39,6 +50,7 @@ InputField.defaultProps = {
 InputField.propTypes = {
   labelName: PropTypes.string.isRequired,
   value: PropTypes.string,
+  resource: PropTypes.string,
   keyboardType: PropTypes.string,
   inputPlaceholder: PropTypes.string.isRequired,
   onFieldChange: PropTypes.func.isRequired,

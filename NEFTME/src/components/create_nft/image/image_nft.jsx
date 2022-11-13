@@ -7,17 +7,17 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import { Camera, CameraType, FlashMode } from 'expo-camera';
+import { AutoFocus, Camera, CameraType, FlashMode } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import PhotoTakeIcon from '@assets/icons/photo_nft_start.svg';
 import GreyRingIcon from '@assets/icons/video_photo_nft_grey_ring.svg';
 import GalleryIcon from '@assets/icons/galery.svg';
 import { useNavigation } from '@react-navigation/native';
+import { manipulateAsync, FlipType, SaveFormat } from 'expo-image-manipulator';
 import styles from '../image_video_shared/photo_video_styles';
 import CameraOptions from '../image_video_shared/camera_options';
 
 const ImageNFT = () => {
-  const [nft, setNft] = useState(null);
   const cameraRef = useRef();
   const [type, setType] = useState(CameraType.back);
   const [flash, setFlash] = useState(FlashMode.off);
@@ -32,30 +32,40 @@ const ImageNFT = () => {
     requestPermissions();
   });
 
-  const takePicture = () => {
+  const takePicture = async () => {
     const options = {
       quality: '1080p',
+      isImageMirror: false,
     };
 
-    cameraRef.current.takePictureAsync(options).then((newImage) => {
-      setImage(newImage);
+    cameraRef.current.takePictureAsync(options).then(async (newImage) => {
+      // TODO - This is very heavy in processing but at time of writing expo
+      // has a bug that auto mirrors front facing images
+      if (type === CameraType.front) {
+        const editedImage = await manipulateAsync(
+          newImage.uri,
+          [{ rotate: 180 }, { flip: FlipType.Vertical }],
+          { compress: 1, format: SaveFormat.PNG }
+        );
+        setImage(editedImage);
+      } else {
+        setImage(newImage);
+      }
     });
   };
 
   if (image) {
-    const saveVideo = () => {
-      MediaLibrary.saveToLibraryAsync(image.uri).then(() => {
-        setImage(undefined);
-      });
-    };
-
-    return (
-      <SafeAreaView style={styles.container}>
-        <Image style={styles.video} source={{ uri: image.uri }} />
-        <Button title="Save" onPress={saveVideo} />
-        <Button title="Discard" onPress={() => setImage(undefined)} />
-      </SafeAreaView>
-    );
+    navigation.navigate('CreateNFT', {
+      screen: 'EditImage',
+      params: {
+        resource: image.uri,
+      },
+    });
+    /* if this set is not present, if you take a picture,
+       discard it and come back to the camera screen, when making any action (changing camera, flash)
+       it will return to the editing screen
+    */
+    setImage(undefined);
   }
 
   const goToGallery = () => {
@@ -70,6 +80,7 @@ const ImageNFT = () => {
       ref={cameraRef}
       type={type}
       flashMode={flash}
+      autoFocus={AutoFocus.on}
     >
       <View>
         <CameraOptions flash={flash} setFlash={setFlash} setType={setType} />

@@ -36,11 +36,22 @@ export default StyleSheet.create({
     height: 40,
   },
   percentageInput: {
-    width: '18%',
-    textAlign: 'center',
-    paddingVertical: 16,
+    width: '1%',
+    textAlign: 'auto',
+    paddingVertical: 0,
     marginTop: 0,
     paddingRight: 0,
     paddingLeft: 0,
+  },
+  image: {
+    marginTop: 20,
+    marginHorizontal: 20,
+    width: 330,
+    height: 200,
+    borderRadius: 16
+  },
+  imageContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

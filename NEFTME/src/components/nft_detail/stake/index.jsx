@@ -20,17 +20,13 @@ const Stake = ({ tokenId, owner }) => {
   const connector = useWalletConnect();
   const { getContractMethods } = useSmartContract();
   const { data: currentUser } = useGetCurrentUserQuery();
-  const userStakedAmount = useSelector((state) =>
-    selectNFTUserStakedAmount(state, tokenId)
-  );
+  const userStakedAmount = useSelector((state) => selectNFTUserStakedAmount(state, tokenId));
 
   const getNEFTBalance = async () => {
     const contractMethods = await getContractMethods(
-      Constants.expoConfig.extra.neftmeErc20NEFTAddress
+      Constants.manifest.extra.neftmeErc20NEFTAddress,
     );
-    contractMethods
-      .balanceOf(connector.accounts[0])
-      .call()
+    contractMethods.balanceOf(connector.accounts[0]).call()
       .then((balance) => {
         setNeftBalance(balance * 10 ** -18);
         setIsLoading(false);
@@ -47,22 +43,19 @@ const Stake = ({ tokenId, owner }) => {
       <Button
         buttonStyle={[
           styles.stakeButton,
-          userStakedAmount === 0 &&
-            owner.toLowerCase() === currentUser.walletAddress.toLowerCase()
-            ? { flex: 1 }
-            : {},
+          userStakedAmount === 0
+            && owner.toLowerCase() === currentUser.walletAddress.toLowerCase()
+            ? { flex: 1 } : {},
         ]}
         onPress={() => setStakeModalVisible(true)}
-        text="Invest"
+        text="Stake $NEFT"
         textStyle={styles.stakeText}
       />
       <StakeModal
         actionModalVisible={stakeModalVisible}
-        inputSubTitle={`Available: ${abbreviateNumber(
-          neftBalance.toFixed(2)
-        )} $NEFT`}
+        inputSubTitle={`Available: ${abbreviateNumber(neftBalance.toFixed(2))} $NEFT`}
         isLoading={isLoading}
-        modalTitle="How much $NEFT do you want to invest?"
+        modalTitle="How much $NEFT do you want to stake?"
         neftBalance={neftBalance}
         setActionModalVisible={setStakeModalVisible}
         showPercentages

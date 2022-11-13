@@ -67,7 +67,6 @@ export const fetchNFTByTokenID = createAsyncThunk(
   },
 );
 
-
 // Selectors
 export const selectNFTs = (state) => state.nfts;
 

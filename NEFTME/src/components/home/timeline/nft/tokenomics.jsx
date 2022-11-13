@@ -17,7 +17,7 @@ const Tokenomics = ({ tokenId }) => {
   useEffect(() => {
     const fetch = async () => {
       const contractMethods = await getContractMethods(
-        Constants.expoConfig.extra.neftmeViewContractAddress
+        Constants.manifest.extra.neftmeViewContractAddress,
       );
       dispatch(fetchNFTDetails({ tokenId, contractMethods }));
     };
@@ -30,11 +30,9 @@ const Tokenomics = ({ tokenId }) => {
       <View style={styles.stakedContainer}>
         <TokenIcon width={34} height={34} />
         <View>
-          <Text style={styles.stakedStyle}>Invested</Text>
+          <Text style={styles.stakedStyle}>staked</Text>
           <Text style={styles.neftsAmountStyle}>
-            {nftDetails?.data
-              ? abbreviateNumber(nftDetails.data[1] * 10 ** -18, true)
-              : 0}
+            {nftDetails?.data ? abbreviateNumber(nftDetails.data[1] * 10 ** -18, true) : 0}
           </Text>
         </View>
       </View>
@@ -42,13 +40,12 @@ const Tokenomics = ({ tokenId }) => {
       <View style={styles.supportersContainer}>
         <Text style={styles.economicDetails}>
           <Text style={styles.fontWeight700}>
-            {`${nftDetails?.data?.[2] ? Number(nftDetails.data[2]) / 1000 : 0
-              }% `}
+            {`${nftDetails?.data?.[2] ? Number(nftDetails.data[2]) / 1000 : 0}% `}
           </Text>
           <Text>goes to</Text>
         </Text>
         <Text style={[styles.economicDetails, styles.fontWeight700]}>
-          {`${nftDetails?.data?.[3] || 0} investors`}
+          {`${nftDetails?.data?.[3] || 0} supporters`}
         </Text>
       </View>
     </View>

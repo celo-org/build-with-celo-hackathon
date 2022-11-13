@@ -5,10 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useGetCurrentUserQuery } from '@features/current_user';
 import { Button } from '@library';
 import {
-  getCreatedNfts,
-  getNftDetails,
-  getOwnedNfts,
-  getStakedNfts,
+  getCreatedNfts, getNftDetails, getOwnedNfts, getStakedNfts,
 } from '@services/user_nfts';
 import { useSmartContract } from '@hooks';
 import Constants from 'expo-constants';
@@ -45,40 +42,33 @@ const CreatorProfile = () => {
     const fetchData = async () => {
       if (currentUser?.walletAddress) {
         const viewContractMethods = await getContractMethods(
-          Constants.expoConfig.extra.neftmeViewContractAddress
+          Constants.manifest.extra.neftmeViewContractAddress,
         );
-        getCreatedNfts(viewContractMethods, currentUser.walletAddress).then(
-          (created) =>
-            setNftsData((prevData) => ({
-              ...prevData,
-              created,
-            }))
-        );
-        getOwnedNfts(viewContractMethods, currentUser.walletAddress).then(
-          (owned) =>
-            setNftsData((prevData) => ({
-              ...prevData,
-              owned,
-            }))
-        );
+        getCreatedNfts(viewContractMethods, currentUser.walletAddress)
+          .then((created) => setNftsData((prevData) => ({
+            ...prevData,
+            created,
+          })));
+        getOwnedNfts(viewContractMethods, currentUser.walletAddress)
+          .then((owned) => setNftsData((prevData) => ({
+            ...prevData,
+            owned,
+          })));
         const contractMethods = await getContractMethods(
-          Constants.expoConfig.extra.neftmeErc721Address
+          Constants.manifest.extra.neftmeErc721Address,
         );
-        getStakedNfts(contractMethods, currentUser.walletAddress).then(
-          async (supporting) => {
+        getStakedNfts(contractMethods, currentUser.walletAddress)
+          .then(async (supporting) => {
             if (supporting.length > 0) {
-              const nftsSupporting = await Promise.all(
-                supporting.map(async (tokenId) =>
-                  getNftDetails(viewContractMethods, tokenId)
-                )
-              );
+              const nftsSupporting = await Promise.all(supporting.map(async (tokenId) => (
+                getNftDetails(viewContractMethods, tokenId)
+              )));
               setNftsData((prevData) => ({
                 ...prevData,
                 supporting: nftsSupporting,
               }));
             }
-          }
-        );
+          });
       }
     };
     fetchData();

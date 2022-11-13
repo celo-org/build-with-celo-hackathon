@@ -4,7 +4,7 @@ import WalletConnectProvider from '@walletconnect/web3-provider';
 import Constants from 'expo-constants';
 import Web3 from 'web3';
 
-const configs = Constants.expoConfig.extra;
+const configs = Constants.manifest.extra;
 
 const useChainCheck = () => {
   const connector = useWalletConnect();
@@ -18,7 +18,7 @@ const useChainCheck = () => {
     qrcode: false,
   });
 
-  async function changeToAlfajores() {
+  async function changeToCorrectChain() {
     await provider.enable();
 
     const web3 = new Web3(provider);
@@ -52,7 +52,7 @@ const useChainCheck = () => {
             from: connector.accounts[0],
           });
         } catch (addError) {
-          // handle "add" error
+        // handle "add" error
         }
       }
     }
@@ -68,19 +68,19 @@ const useChainCheck = () => {
         params: {
           type: 'ERC20',
           options: {
-            address: Constants.expoConfig.extra.neftmeErc20NEFTAddress,
+            address: Constants.manifest.extra.neftmeErc20NEFTAddress,
             symbol: 'NEFT',
             decimals: 18,
-            image: Constants.expoConfig.extra.neftTokenImageUrl,
+            image: Constants.manifest.extra.neftTokenImageUrl,
           },
         },
       });
     } catch (err) {
-      // LOG Errors
+    // LOG Errors
     }
   }
 
-  return { changeToAlfajores, currentChainId, addNEFTtoWallet };
+  return { changeToCorrectChain, currentChainId, addNEFTtoWallet };
 };
 
 export default useChainCheck;

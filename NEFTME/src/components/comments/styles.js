@@ -1,11 +1,10 @@
-import { StyleSheet } from 'react-native';
-import * as Device from 'expo-device';
+import { Platform, StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   commentModal: {
     justifyContent: 'flex-end',
     margin: 0,
-    paddingTop: Device.osName === 'iOS' ? 70 : 0,
+    paddingTop: Platform.OS === 'ios' ? 70 : 0,
   },
   actionModalView: {
     backgroundColor: '#2B2F3A',

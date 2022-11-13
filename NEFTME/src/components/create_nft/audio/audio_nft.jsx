@@ -34,29 +34,29 @@ const styles = StyleSheet.create({
   },
   recordButtonsContainer: {
     alignItems: 'center',
-    marginTop: 150,
+    marginTop: 135,
   },
   videoStartButton: {
     position: 'absolute',
     alignItems: 'center',
-    marginHorizontal: 110,
-    marginTop: 230,
+    marginHorizontal: 108,
+    marginTop: 233,
   },
   greyRing: {
-    marginHorizontal: 102,
-    marginTop: 222,
+    marginHorizontal: 100,
+    marginTop: 225,
   },
   microphone: {
     position: 'absolute',
     alignItems: 'center',
-    marginHorizontal: 128,
-    marginTop: 238,
+    marginHorizontal: 126,
+    marginTop: 242,
   },
   stopButton: {
     position: 'absolute',
     alignItems: 'center',
-    marginHorizontal: 127,
-    marginTop: 245,
+    marginHorizontal: 125,
+    marginTop: 250,
   },
 });
 

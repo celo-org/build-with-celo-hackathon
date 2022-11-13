@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {
   KeyboardAvoidingView,
   Modal,
+  Platform,
   Pressable,
   Text,
   TouchableOpacity,
@@ -10,7 +11,6 @@ import {
   View,
   Alert,
 } from 'react-native';
-import * as Device from 'expo-device';
 import { Button, Loading, ProfileImage } from '@library';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { useSmartContract } from '@hooks';
@@ -22,16 +22,11 @@ import { fetchNFTDetails } from '@features/on_chain/nft';
 import styles from './offer_modal_styles';
 
 const OfferModal = ({
-  offerModalVisible,
-  setOfferModalVisible,
-  chosenEventInfo,
-  chosenUser,
-  tokenId,
+  offerModalVisible, setOfferModalVisible, chosenEventInfo, chosenUser, tokenId,
 }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const navigateToProfile = () =>
-    navigation.navigate('CreatorProfile', { username: chosenUser.username });
+  const navigateToProfile = () => navigation.navigate('CreatorProfile', { username: chosenUser.username });
   const amount = chosenEventInfo.amount * 10 ** -18;
   const { getContractMethods } = useSmartContract();
   const { data: currentUser } = useGetCurrentUserQuery();
@@ -42,7 +37,7 @@ const OfferModal = ({
   const acceptOrDeclineOffer = async (isAccept) => {
     // contrato de NFT para executar lógica
     const contractMethods = await getContractMethods(
-      Constants.expoConfig.extra.neftmeErc721Address
+      Constants.manifest.extra.neftmeErc721Address,
     );
     // Para esta fase dos contratos temos de fazer assim
     // Primeiro fazer get bids e depois encontrar o index da bid que tem o address
@@ -50,9 +45,7 @@ const OfferModal = ({
     // Necessita de ser melhorado na próxima iteração com a PREXIs
     try {
       const bidList = await contractMethods.getBids(0).call();
-      const bidIndex = bidList?.findIndex(
-        (element) => element[0] === chosenUser.walletAddress
-      );
+      const bidIndex = bidList?.findIndex((element) => element[0] === chosenUser.walletAddress);
 
       if (isAccept) {
         if (!transactionApproved) {
@@ -61,57 +54,42 @@ const OfferModal = ({
         }
         setIsLoading(true);
 
-        await contractMethods
-          .acceptBidERC20(tokenId, bidIndex)
-          .send({ from: currentUser.walletAddress })
-          .then((response) => {
-            if (response?.status) {
-              setIsLoading(false);
-              Alert.alert('Success!', 'The bid was successfully accepted!', [
-                {
-                  text: 'Ok',
-                  onPress: async () => {
-                    const viewContractMethods = await getContractMethods(
-                      Constants.expoConfig.extra.neftmeViewContractAddress
-                    );
-                    const baseParams = {
-                      contractMethods,
-                      tokenId,
-                      forceRefresh: true,
-                    };
-                    dispatch(
-                      fetchNFTDetails({
-                        ...baseParams,
-                        contractMethods: viewContractMethods,
-                      })
-                    );
-                    setOfferModalVisible(false);
-                  },
-                },
-              ]);
-              setTransactionApproved(true);
-            }
-          });
+        await contractMethods.acceptBidERC20(tokenId, bidIndex).send(
+          { from: currentUser.walletAddress },
+        ).then((response) => {
+          if (response?.status) {
+            setIsLoading(false);
+            Alert.alert('Success!', 'The bid was successfully accepted!', [{
+              text: 'Ok',
+              onPress: async () => {
+                const viewContractMethods = await getContractMethods(
+                  Constants.manifest.extra.neftmeViewContractAddress,
+                );
+                const baseParams = { contractMethods, tokenId, forceRefresh: true };
+                dispatch(fetchNFTDetails({ ...baseParams, contractMethods: viewContractMethods }));
+                setOfferModalVisible(false);
+              },
+            }]);
+            setTransactionApproved(true);
+          }
+        });
       } else {
         // TODO, isto não está correto! Este método só pode ser chamado por
         // quem fez a oferta, não quem a recebeu
         // É necessário novo método na chain para quem recebe oferta, a recusar
-        contractMethods
-          .cancelBidERC20(tokenId, bidIndex)
-          .send({ from: currentUser.walletAddress })
-          .then((response) => {
-            if (response?.status) {
-              setIsLoading(false);
-              Alert.alert('Success!', 'The bid was successfully declined!', [
-                {
-                  text: 'Ok',
-                  onPress: async () => {
-                    setOfferModalVisible(false);
-                  },
-                },
-              ]);
-            }
-          });
+        contractMethods.cancelBidERC20(tokenId, bidIndex).send(
+          { from: currentUser.walletAddress },
+        ).then((response) => {
+          if (response?.status) {
+            setIsLoading(false);
+            Alert.alert('Success!', 'The bid was successfully declined!', [{
+              text: 'Ok',
+              onPress: async () => {
+                setOfferModalVisible(false);
+              },
+            }]);
+          }
+        });
       }
     } catch (err) {
       setIsLoading(false);
@@ -124,29 +102,25 @@ const OfferModal = ({
       if (transactionApproved) return;
 
       const contractMethods = await getContractMethods(
-        Constants.expoConfig.extra.neftmeErc721Address
+        Constants.manifest.extra.neftmeErc721Address,
       );
-      contractMethods
-        .approve(chosenUser?.walletAddress, tokenId)
-        .send({ from: currentUser.walletAddress })
-        .then((response) => {
-          if (response?.status) {
-            Alert.alert('Transaction approved, you can now accept the offer!');
-            setTransactionApproved(true);
-          }
-        })
-        .catch(() => {
-          Alert.alert('Something went wrong, please try again');
-        });
+      contractMethods.approve(chosenUser?.walletAddress, tokenId).send(
+        { from: currentUser.walletAddress },
+      ).then((response) => {
+        if (response?.status) {
+          Alert.alert('Transaction approved, you can now accept the offer!');
+          setTransactionApproved(true);
+        }
+      }).catch(() => {
+        Alert.alert('Something went wrong, please try again');
+      });
     } catch (err) {
       Alert.alert('Something went wrong, please try again');
     }
   };
 
   return (
-    <GestureRecognizer
-      onSwipeDown={() => setOfferModalVisible((prevValue) => !prevValue)}
-    >
+    <GestureRecognizer onSwipeDown={() => setOfferModalVisible((prevValue) => !prevValue)}>
       <Modal
         animationType="slide"
         transparent
@@ -160,7 +134,7 @@ const OfferModal = ({
           onPressOut={() => setOfferModalVisible((prevValue) => !prevValue)}
         >
           <KeyboardAvoidingView
-            behavior={Device.osName === 'iOS' ? 'padding' : 'height'}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={styles.container}
           >
             <View style={styles.topBar} />
@@ -178,9 +152,7 @@ const OfferModal = ({
                     </Pressable>
                     <View>
                       <Text style={styles.description}>Made Offer</Text>
-                      <Text style={styles.description}>
-                        {amount.toLocaleString()}
-                      </Text>
+                      <Text style={styles.description}>{amount.toLocaleString()}</Text>
                     </View>
                   </View>
                   <View style={styles.approveAcceptRow}>
@@ -188,11 +160,7 @@ const OfferModal = ({
                       buttonStyle={[
                         styles.acceptDenyContainer,
                         styles.acceptButton,
-                        {
-                          backgroundColor: transactionApproved
-                            ? '#41414A'
-                            : 'rgba(105, 210, 88, 1)',
-                        },
+                        { backgroundColor: transactionApproved ? '#41414A' : 'rgba(105, 210, 88, 1)' },
                       ]}
                       primary={!transactionApproved}
                       onPress={approveOffer}
@@ -204,11 +172,7 @@ const OfferModal = ({
                       buttonStyle={[
                         styles.acceptDenyContainer,
                         styles.acceptButton,
-                        {
-                          backgroundColor: transactionApproved
-                            ? 'rgba(105, 210, 88, 1)'
-                            : '#41414A',
-                        },
+                        { backgroundColor: transactionApproved ? 'rgba(105, 210, 88, 1)' : '#41414A' },
                       ]}
                       primary={transactionApproved}
                       onPress={() => acceptOrDeclineOffer(true)}

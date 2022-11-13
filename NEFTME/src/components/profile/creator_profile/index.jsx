@@ -4,10 +4,7 @@ import { withMainScrollView } from '@hocs';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { followUser, unfollowUser, getUserByUsername } from '@services/user';
 import {
-  getCreatedNfts,
-  getNftDetails,
-  getOwnedNfts,
-  getStakedNfts,
+  getCreatedNfts, getNftDetails, getOwnedNfts, getStakedNfts,
 } from '@services/user_nfts';
 import { useSmartContract } from '@hooks';
 import Constants from 'expo-constants';
@@ -46,39 +43,33 @@ const CreatorProfile = () => {
         }
 
         const viewContractMethods = await getContractMethods(
-          Constants.expoConfig.extra.neftmeViewContractAddress
+          Constants.manifest.extra.neftmeViewContractAddress,
         );
-        getCreatedNfts(viewContractMethods, data.walletAddress).then(
-          (created) =>
-            setNftsData((prevData) => ({
-              ...prevData,
-              created,
-            }))
-        );
-        getOwnedNfts(viewContractMethods, data.walletAddress).then((owned) =>
-          setNftsData((prevData) => ({
+        getCreatedNfts(viewContractMethods, data.walletAddress)
+          .then((created) => setNftsData((prevData) => ({
+            ...prevData,
+            created,
+          })));
+        getOwnedNfts(viewContractMethods, data.walletAddress)
+          .then((owned) => setNftsData((prevData) => ({
             ...prevData,
             owned,
-          }))
-        );
+          })));
         const contractMethods = await getContractMethods(
-          Constants.expoConfig.extra.neftmeErc721Address
+          Constants.manifest.extra.neftmeErc721Address,
         );
-        getStakedNfts(contractMethods, data.walletAddress).then(
-          async (supporting) => {
+        getStakedNfts(contractMethods, data.walletAddress)
+          .then(async (supporting) => {
             if (supporting.length > 0) {
-              const nftsSupporting = await Promise.all(
-                supporting.map(async (tokenId) =>
-                  getNftDetails(viewContractMethods, tokenId)
-                )
-              );
+              const nftsSupporting = await Promise.all(supporting.map(async (tokenId) => (
+                getNftDetails(viewContractMethods, tokenId)
+              )));
               setNftsData((prevData) => ({
                 ...prevData,
                 supporting: nftsSupporting,
               }));
             }
-          }
-        );
+          });
       }
     };
     fetchData();
@@ -89,8 +80,7 @@ const CreatorProfile = () => {
   const onFollow = async () => {
     setIsLoading(true);
     const res = profileData.isCurrentUserFollowing
-      ? await unfollowUser(profileData.id)
-      : await followUser(profileData.id);
+      ? await unfollowUser(profileData.id) : await followUser(profileData.id);
     if (res) {
       // TODO: When in redux store,
       // Invalidate cache of user id profile (creator and featured profile)
@@ -118,17 +108,8 @@ const CreatorProfile = () => {
         totalSharedFollowers={profileData.totalSharedFollowers}
       />
       <View style={styles.buttonsContainer}>
-        <Button
-          text={profileData.isCurrentUserFollowing ? 'Unfollow' : 'Follow'}
-          buttonStyle={styles.followButton}
-          onPress={onFollow}
-        />
-        <Button
-          text="Message"
-          primary={false}
-          buttonStyle={styles.messageButton}
-          onPress={() => Alert.alert('Available soon!')}
-        />
+        <Button text={profileData.isCurrentUserFollowing ? 'Unfollow' : 'Follow'} buttonStyle={styles.followButton} onPress={onFollow} />
+        <Button text="Message" primary={false} buttonStyle={styles.messageButton} onPress={() => Alert.alert('Available soon!')} />
       </View>
       <Stats userWalletAddress={profileData.walletAddress} />
       <NftsList name={profileData.name} nfts={nftsData} />

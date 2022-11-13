@@ -7,18 +7,11 @@ import { Button } from '@library';
 import { convertToETH18 } from '@utils/nft';
 import { useWalletConnect } from '@walletconnect/react-native-dapp';
 import { useSmartContract } from '@hooks';
-import {
-  fetchNFTDetails,
-  fetchStakers,
-  fetchUserStakes,
-} from '@features/on_chain/nft';
+import { fetchNFTDetails, fetchStakers, fetchUserStakes } from '@features/on_chain/nft';
 import styles from './styles';
 
 const ActionButtons = ({
-  tokenId,
-  setIsLoading,
-  setUnstakeModalVisible,
-  tokensToUnstake,
+  tokenId, setIsLoading, setUnstakeModalVisible, tokensToUnstake,
 }) => {
   const connector = useWalletConnect();
   const { getContractMethods } = useSmartContract();
@@ -29,43 +22,28 @@ const ActionButtons = ({
       if (tokensToUnstake > 0) {
         setIsLoading(true);
         const contractMethods = await getContractMethods(
-          Constants.expoConfig.extra.neftmeErc721Address
+          Constants.manifest.extra.neftmeErc721Address,
         );
 
-        contractMethods
-          .unstake(Number(tokenId), convertToETH18(tokensToUnstake))
-          .send({ from: connector.accounts[0] })
+        contractMethods.unstake(
+          Number(tokenId),
+          convertToETH18(tokensToUnstake),
+        ).send({ from: connector.accounts[0] })
           .then(() => {
             setIsLoading(false);
-            Alert.alert('Success!', 'Your $NEFT were successfully unstaked', [
-              {
-                text: 'Ok',
-                onPress: async () => {
-                  const viewContractMethods = await getContractMethods(
-                    Constants.expoConfig.extra.neftmeViewContractAddress
-                  );
-                  const baseParams = {
-                    contractMethods,
-                    tokenId,
-                    forceRefresh: true,
-                  };
-                  dispatch(
-                    fetchNFTDetails({
-                      ...baseParams,
-                      contractMethods: viewContractMethods,
-                    })
-                  );
-                  dispatch(fetchStakers({ ...baseParams }));
-                  dispatch(
-                    fetchUserStakes({
-                      ...baseParams,
-                      account: connector.accounts[0],
-                    })
-                  );
-                  setUnstakeModalVisible(false);
-                },
+            Alert.alert('Success!', 'Your $NEFT were successfully unstaked', [{
+              text: 'Ok',
+              onPress: async () => {
+                const viewContractMethods = await getContractMethods(
+                  Constants.manifest.extra.neftmeViewContractAddress,
+                );
+                const baseParams = { contractMethods, tokenId, forceRefresh: true };
+                dispatch(fetchNFTDetails({ ...baseParams, contractMethods: viewContractMethods }));
+                dispatch(fetchStakers({ ...baseParams }));
+                dispatch(fetchUserStakes({ ...baseParams, account: connector.accounts[0] }));
+                setUnstakeModalVisible(false);
               },
-            ]);
+            }]);
           })
           .catch(() => {
             setIsLoading(false);

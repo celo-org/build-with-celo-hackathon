@@ -1,5 +1,6 @@
+/* eslint-disable max-len */
 import React from 'react';
-import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Linking, StyleSheet, View } from 'react-native';
 import PropTypes from 'prop-types';
 import FacebookIcon from '@assets/icons/facebook.svg';
 import InstagramIcon from '@assets/icons/instagram.svg';
@@ -16,8 +17,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const getLink = (links, socialNetwork) =>
-  links.find((l) => l.indexOf(socialNetwork) >= 0);
+const getLink = (links, socialNetwork) => links.find((l) => l.indexOf(socialNetwork) >= 0);
 
 const SocialLinks = ({ socialMediaLinks }) => {
   if (!socialMediaLinks) return null;
@@ -27,21 +27,9 @@ const SocialLinks = ({ socialMediaLinks }) => {
   const twitterLink = getLink(socialMediaLinks, 'twitter');
   return (
     <View style={styles.container}>
-      {facebookLink ? (
-        <TouchableOpacity onPress={() => Linking.openURL(facebookLink)}>
-          <FacebookIcon width={20} height={20} />
-        </TouchableOpacity>
-      ) : null}
-      {instagramLink ? (
-        <TouchableOpacity onPress={() => Linking.openURL(instagramLink)}>
-          <InstagramIcon width={20} height={20} style={styles.marginLeft8} />
-        </TouchableOpacity>
-      ) : null}
-      {twitterLink ? (
-        <TouchableOpacity onPress={() => Linking.openURL(twitterLink)}>
-          <TwitterIcon width={20} height={20} style={styles.marginLeft8} />
-        </TouchableOpacity>
-      ) : null}
+      {facebookLink ? <FacebookIcon width={20} height={20} onPress={() => Linking.openURL(facebookLink)} /> : null}
+      {instagramLink ? <InstagramIcon width={20} height={20} style={styles.marginLeft8} onPress={() => Linking.openURL(instagramLink)} /> : null}
+      {twitterLink ? <TwitterIcon width={20} height={20} style={styles.marginLeft8} onPress={() => Linking.openURL(twitterLink)} /> : null}
     </View>
   );
 };

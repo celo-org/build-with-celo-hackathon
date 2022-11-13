@@ -51,7 +51,7 @@ const CameraOptions = (props) => {
   return (
     <View style={styles.topContainer}>
       <TouchableOpacity style={styles.exitIcon} onPress={() => goToFeed()}>
-        <ExitXIcon />
+        <ExitXIcon style={styles.exitIcon} />
       </TouchableOpacity>
       <View style={styles.optionsContainer}>
         <TouchableOpacity

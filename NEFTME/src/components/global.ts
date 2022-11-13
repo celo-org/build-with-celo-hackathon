@@ -1,6 +1,5 @@
 /* eslint-disable global-require */
-import { LogBox } from 'react-native';
-import * as Device from 'expo-device';
+import { Platform, LogBox } from 'react-native';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 
@@ -18,7 +17,7 @@ if (typeof global.self === 'undefined') {
   global.self = global;
 }
 
-if (Device.osName !== 'web') {
+if (Platform.OS !== 'web') {
   require('react-native-get-random-values');
   LogBox.ignoreLogs([
     "Warning: The provided value 'ms-stream' is not a valid 'responseType'.",

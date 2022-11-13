@@ -21,3 +21,10 @@ export const abbreviateNumber = (number, isDecimals) => {
   // format number and add suffix
   return `${isDecimals ? scaled.toFixed(1) : scaled}${suffix}`;
 };
+
+// eslint-disable-next-line import/prefer-default-export
+export const removeDecimals = (number) => {
+
+  return Math.trunc(number)
+};
+

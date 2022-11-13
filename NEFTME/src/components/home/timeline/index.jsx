@@ -12,8 +12,8 @@ const Timeline = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchAllNFTs({ forceRefresh: true }));
-  }, [dispatch]);
+    dispatch(fetchAllNFTs());
+  }, []);
 
   useEffect(() => {
     if (nftsStore?.status === 'succeeded') {
