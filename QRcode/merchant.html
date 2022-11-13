@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>MERCHANT Crypto User Card</title>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Merriweather+Sans:700i'><link rel="stylesheet" href="./merchant.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!-- user donation card -->
+<div class="card-wrap" id="card">
+ 
+ <!-- user info -->
+ <header class="card-user">
+  <div class="card-user-hero" :style="'background-image: url(' + userInfo.hero + ')'"></div>
+  <div class="card-user-row">
+   <div class="card-user-avatar">
+    <img :src="userInfo.avatar" :alt="userInfo.name" />
+   </div>
+   <div class="card-user-details">
+    <div class="card-user-name">{{ userInfo.name }}</div>
+    <div class="card-user-info">{{ userInfo.info }}</div>
+   </div>
+   <div class="card-user-cta">
+    <a :href="userInfo.website" target="_blank">CNFT wallet</a>
+   </div>
+ </header>
+ 
+ <!-- tabs -->
+ <main class="tabs-wrap">
+  <!-- tab buttons -->
+  <nav class="tabs-nav">
+   <button v-for="w in walletsList" :key="w.symbol" :class="{ 'active': w.active }" @click="selectWallet( w.symbol )">{{ w.symbol }}</button>
+  </nav>
+  <!-- tab content -->
+  <section class="tabs-info">
+   <!-- qr image -->
+   <div class="tabs-info-row">
+
+    <div class="tabs-info-details">
+     <div class="tabs-info-title">Donate {{ wallet.name }}</div>
+     <div class="tabs-info-warn">Send only {{ wallet.name }} ({{ wallet.symbol }}) to this deposit address. Sending any other coin or token to this address may result in the loss of your donation, Thanks!</div>
+    </div>    <div class="tabs-info-qr">
+     <img :src="getQrImage()" :alt="wallet.name" />
+    </div>
+
+   </div>
+   <!-- address input -->
+   <div class="tabs-info-input">
+    <span>Address</span>
+    <input type="text" :value="wallet.address" />
+    <button type="button" @click="copyText( wallet.address )">
+     <span v-if="wallet.copied">✔ Copied</span>
+     <span v-else>✚ Copy</span>
+    </button>
+   </div>
+   <!-- coin stats -->
+   <div class="tabs-info-stats">
+    <div>
+     <span class="txt-label">Price WINR</span> <br />
+     <span class="txt-num">${{ stats.price | toMoney( 2 ) }}</span>
+    </div>
+    <div>
+     <span class="txt-label">Market Cap</span> <br />
+     <span class="txt-num">{{ stats.cap | toMoney( 0 ) }}</span>
+    </div>
+    <div>
+     <span class="txt-label">Supply</span> <br />
+     <span class="txt-num">{{ stats.supply | toMoney( 0 ) }}</span>
+    </div>
+   </div>
+  </section>
+ </main>
+
+</div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js'></script><script  src="./merchant.js"></script>
+
+</body>
+</html>
