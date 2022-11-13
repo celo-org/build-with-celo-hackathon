@@ -116,7 +116,6 @@ contract DAO {
     address public admin;
 
 // contract address for cusd
-    //address internal cUsdTokenAddress = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
     address internal cUsdTokenAddress = 0x03e4CcA31f8B0264F3587e969771fE9a7f88415f;
 
     constructor(
@@ -129,7 +128,7 @@ contract DAO {
             "quorum must be between 0 and 100"
         );
         contributionEnd = block.timestamp + contributionTime * 1 days;
-        voteTime = _voteTime * 1 hours;
+        voteTime = _voteTime * 3 minutes;
         quorum = _quorum;
         admin = msg.sender;
     }
@@ -218,6 +217,7 @@ contract DAO {
             "cannot execute proposal with votes # below quorum"
         );
         _transferFunds(proposal.amount, proposal.recipient);
+        proposals[proposalId].executed == true;
     }
 
     function withdrawFunds(uint256 amount, address payable to)
