@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sustain/common/utils/media_query.dart';
 
+import '../widgets/carbon_citizen_view.dart';
+
 class ChartView extends StatelessWidget {
   const ChartView({super.key});
 
@@ -14,7 +16,9 @@ class ChartView extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 50),
+                const SizedBox(height: 20),
+                const ChartViewAppBar(),
+                const SizedBox(height: 20),
                 Text.rich(
                   TextSpan(
                     children: <InlineSpan>[
@@ -123,10 +127,10 @@ class ChartView extends StatelessWidget {
                         ),
                         Positioned(
                           right: -50,
-                          top: -30,
+                          top: -60,
                           child: Container(
-                            width: SizeData.screenWidth * 0.3,
-                            height: SizeData.screenWidth * 0.3,
+                            width: SizeData.screenWidth * 0.4,
+                            height: SizeData.screenWidth * 0.4,
                             decoration: BoxDecoration(
                               color: Theme.of(context).primaryColor,
                               shape: BoxShape.circle,

@@ -37,17 +37,18 @@ class AppTheme {
         color: Colors.black,
       ),
       toolbarTextStyle: TextTheme(
-              headline1: GoogleFonts.openSans(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600))
-          .bodyText2,
+        headline1: GoogleFonts.openSans(
+          color: Colors.black,
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+        ),
+      ).bodyText2,
       titleTextStyle: TextTheme(
-              headline1: GoogleFonts.openSans(
-                  color: const Color.fromRGBO(255, 0, 92, 1),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600))
-          .headline6,
+        headline1: GoogleFonts.openSans(
+            color: const Color.fromRGBO(255, 0, 92, 1),
+            fontSize: 20,
+            fontWeight: FontWeight.w600),
+      ).headline6,
     ),
 
     // main colors
