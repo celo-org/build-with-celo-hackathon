@@ -7,7 +7,7 @@ Please [__fork this repo__](https://help.github.com/articles/fork-a-repo/) and u
 
 ---
 
-    ![cashout demo video](https://user-images.githubusercontent.com/50701251/201548674-c36c3e00-3e6f-452f-b066-7aae5b2b215b.mp4)
+https://user-images.githubusercontent.com/50701251/201548674-c36c3e00-3e6f-452f-b066-7aae5b2b215b.mp4
 
 ---
 
