@@ -29,10 +29,18 @@ We intend to transform the Sarau into a complete event platform using NFT as a t
 - Live demo: https://sarau.xyz
 
 #### Presentation
-- Presentation: https://docs.google.com/presentation/d/1Gak3oNVWG-hhJI7RvKZtU5xXyJ8fSDSu/edit#slide=id.p1
+- Presentation: https://docs.google.com/presentation/d/1dM7jSX7DiSvPxkKjEHc4yGKG9fMvgSBtZ3gqTP0eyh0/edit#slide=id.g159a344e7e1_0_10
+- Video: https://youtu.be/MaNPwQCCjwE
 
 #### Next Steps
 The purpose of the hackathon has already been achieved which is to distribute digital souvenirs with NFTs.
+
+After the end of the hackathon we will update the platform to allow:
+
+- purchase and sale of tickets;
+- event access control;
+- access control to telegram groups;
+- access control to discord groups;
 
 #### License
 This repository includes an [MIT](https://github.com/sarau-xyz/build-with-celo-hackathon/blob/sarau/Sarau/LICENSE).
