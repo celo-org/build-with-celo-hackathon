@@ -18,7 +18,7 @@ const SignUp = () => {
   const [location, setLocation] = useState('');
   const [password, setPassword] = useState('');
   const [typeUser, setTypeUser] = useState('');
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {

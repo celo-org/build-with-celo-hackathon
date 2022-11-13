@@ -28,13 +28,12 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 const UploadVideo = () => {
   const navigate = useNavigate();
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const [vidUrl, setVidUrl] = useState(null);
   const [imgurl, setImgUrl] = useState(null);
   const [progresspercent, setProgresspercent] = useState(0);
   const [filePath, setFilePath] = useState("");
   const [imagePath, setImagePath] = useState("");
-  const [name, setName] = useState("");
   const [myTrees, setMyTrees] = useState([]);
   const [imgProgressPercent, setImgProgressPercent] = useState(0);
 
@@ -42,9 +41,7 @@ const UploadVideo = () => {
     try {
       const q = query(collection(db, "users"), where("uid", "==", user?.uid));
       const doc = await getDocs(q);
-      console.log(doc);
       const data = doc.docs[0].data();
-      setName(data.name);
     } catch (error) {
       toaster.danger("An error occured while fetching user data");
     }
