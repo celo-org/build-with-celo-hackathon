@@ -6,6 +6,7 @@ import EventHub from '../../artifacts/contracts/EventHub.sol/EventHub.json'
 import { cleanDate, eventHubContractAddress } from '../../utils'
 import Loader from '../Loader'
 
+
 import styles from './EventLists.module.css'
 
 const EventLists = () => {
@@ -18,12 +19,8 @@ const EventLists = () => {
   const [events, setEvents] = useState([])
   const [status, setStatus] = useState('')
   const [eventPage, setEventPage] = useState(false)
-
-  const getBalance = async () => {
-    const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
-    const res = await eventHubContract.methods.getBalance().call()
-    console.log(res)
-  }
+  const [confirmForm, setConfirmForm] = useState(false)
+  const [attendeeAddress, setAttendeeAddress] = useState('')
 
   const rsvp = async (eventId, deposit) => {
 
@@ -32,7 +29,6 @@ const EventLists = () => {
         //TODO make function modular.
         const stableToken = await kit.contracts.getStableToken()
         const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
-        // const res = await eventHubContract.methods.createNewRSVP(eventId).call()
         const res = await eventHubContract.methods.createNewRSVP(eventId).send({
           from: address,
           feeCurrency: stableToken.address,
@@ -59,37 +55,20 @@ const EventLists = () => {
     }
   }
 
-  const confirm = async (eventId) => {
-    const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
-    const txHash = await eventHubContract.methods.getConfirmedRSVPs(eventId).call()
-    console.log(txHash)
-
-  }
-
   const confirmAttendee = async (eventId) => {
 
     try {
       const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
 
-      const txHash = await eventHubContract.methods.confirmAttendee(eventId, '0x01a3f5cB1BCf260d12A2466cE075398aAB8cA610').send({
-        // const txHash = await eventHubContract.methods.confirmAttendee(eventId, '0x9Edd3fb21e1BC3dBE3c5BCf8AB8044c706AAEA9C').send({
+      const txHash = await eventHubContract.methods.confirmAttendee(eventId, attendeeAddress).send({
         from: address,
         gasLimit: '210000'
       })
-      // const txHash = await eventHubContract.methods.confirmAttendee(eventId, address).send({from: address})
-      // const txHash = await eventHubContract.methods.getEventLength().call()
       console.log('gg ', txHash)
     } catch (e) {
       setStatus(e.message)
     }
 
-  }
-
-  const test = async eventId => {
-    const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
-    const txHash = await eventHubContract.methods.getEvent(eventId).call()
-    // const txHash = await eventHubContract.methods.withdrawUnclaimedDeposits(eventId).call()
-    console.log(txHash)
   }
 
   const transfer = async eventId => {
@@ -140,6 +119,7 @@ const EventLists = () => {
   return (
 
       <div className={`${styles['event-container']}`}>
+
       {!loading && events.length && events.map(event => (
         <div  className={eventPage ? styles['page-event-item'] : styles['event-item']}>
           <h4>{event.metadata.keyvalues.name}</h4>
@@ -147,6 +127,20 @@ const EventLists = () => {
           <span>Capacity: {event.metadata.keyvalues.capacity}</span>
           <span>Date: {cleanDate(event.metadata.keyvalues.dateAndTime)}</span>
           <button onClick={() => rsvp(event.ipfs_pin_hash, event.metadata.keyvalues.deposit)}>RSVP</button>
+          {confirmForm && (
+            <div>
+              <input type="text" onChange={e => setAttendeeAddress(e.target.value)}/>
+              <button onClick={() => confirmAttendee(event.ipfs_pin_hash)}>Confirm Attendee</button>
+            </div>
+
+
+          )}
+          {event.metadata.keyvalues.owner === address && (
+            <div>
+              <button onClick={() => setConfirmForm(true)}>Confirm Attendee</button>
+              <button onClick={() => transfer(event.ipfs_pin_hash)}>Payout</button>
+            </div>
+          )}
           <img width="200px" src={`${ipfsGateway}/${event.ipfs_pin_hash}`} alt=""/>
         </div>
       ))}

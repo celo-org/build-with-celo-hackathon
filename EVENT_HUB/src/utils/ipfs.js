@@ -47,7 +47,8 @@ export const addToIPFS = async (
       "dateAndTime": "${dateAndTime}",
       "timestamp": "${timestamp}",
       "capacity": "${capacity}",
-      "link": "${link}"
+      "link": "${link}",
+      "owner": "${owner}"
     }
   }`)
 

@@ -4,7 +4,7 @@ import { DrawerContext, FormContext } from './contexts/AppContext'
 import AppHeader from './components/layout/Header'
 import Home from './pages/Home'
 import Events from './pages/Events'
-import EventForm from './components/EventForm'
+// import EventForm from './components/EventForm'
 import { CeloProvider, Alfajores, NetworkNames } from '@celo/react-celo'
 import '@celo/react-celo/lib/styles.css'
 import './app.css'
@@ -39,7 +39,7 @@ const App = () => {
 
   return (
     <DrawerContext.Provider value={{drawer, setDrawer}}>
-      <FormContext.Provider value={{showEventForm, setShowEventForm}}>
+      {/*<FormContext.Provider value={{showEventForm, setShowEventForm}}>*/}
         <Router>
           <div>
             <div className={`${drawer ? 'show-drawer' : ''} drawer`}>
@@ -53,7 +53,7 @@ const App = () => {
               </div>
             </div>
             <AppHeader/>
-            <EventForm/>
+            {/*<EventForm/>*/}
             <Routes>
               <Route path="/" element={<Home/>}/>
               <Route path="/events" element={<Events/>}/>
@@ -61,7 +61,7 @@ const App = () => {
 
           </div>
         </Router>
-      </FormContext.Provider>
+      {/*</FormContext.Provider>*/}
     </DrawerContext.Provider>
   )
 }

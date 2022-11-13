@@ -150,7 +150,7 @@ contract EventHub {
         require(!myEvent.paidOut, "ALREADY PAID");
 
         // check if it's been 7 days past myEvent.eventTimestamp
-//        require(block.timestamp >= (myEvent.eventTimestamp + 7 days), "TOO EARLY");
+        require(block.timestamp >= (myEvent.eventTimestamp + 2 days), "TOO EARLY");
 //        require(block.timestamp >= (myEvent.eventTimestamp + 2 minutes), "TOO EARLY");
 
         // only the event owner can withdraw

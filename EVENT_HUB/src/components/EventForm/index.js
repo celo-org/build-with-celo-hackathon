@@ -31,10 +31,7 @@ const EventForm= () => {
       await createEvent()
     } else {
       console.log(kit.connection)
-      // const res = await connect()
-      // if (res) {
-      //   await createEvent()
-      // }
+
     }
 
   }
@@ -49,7 +46,7 @@ const EventForm= () => {
       maxCapacity,
       eventLink,
       eventFile,
-      '123'
+      address
     )
   }
 
@@ -105,7 +102,7 @@ const EventForm= () => {
 
 
   return (
-    <div className={`app-bg ${styles.container} ${showEventForm ? '' : styles['hide-form']}`} onClick={reset}>
+    // <div className={`app-bg ${styles.container} ${showEventForm ? '' : styles['hide-form']}`} onClick={reset}>
       <form id="form" onSubmit={handleSubmit} className={styles.form}>
         <h4>{status}</h4>
         <h4>{loading ? 'loading ...' :  ''}</h4>
@@ -173,11 +170,11 @@ const EventForm= () => {
           </div>
         </div>
         <div className="">
-          <button type="button" onClick={reset}>Cancel</button>
+          <button type="button" onClick={() => showEventForm(false)}>Cancel</button>
           <button type="button" className="">Create</button>
         </div>
       </form>
-    </div>
+    // </div>
   )
 }
 
