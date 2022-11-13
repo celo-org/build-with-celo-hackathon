@@ -1,21 +1,23 @@
-import { Box, Flex, Image, SimpleGrid, Text } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { Box, Flex, Image, SimpleGrid, Text, useDisclosure } from "@chakra-ui/react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import AuthNav from "../components/Navbar/AuthNav";
-import { Spinner, toaster } from "evergreen-ui";
-import { auth, db } from "../firebase";
+import { Spinner } from "evergreen-ui";
+import { db } from "../firebase";
 import { doc } from "firebase/firestore";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import CustomButton from "../components/CustomButton/customButton";
 import Countdown from "react-countdown";
 import moment from "moment";
+import SuccessModal from "../components/Modal/successModal";
 
 const ViewPlants = () => {
   const { id } = useParams();
   const [activeBtn, setActiveBtn] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [data, l_, e_] = useDocumentData(doc(db, `plantTrees/${id}`));
+  const [data, l_,] = useDocumentData(doc(db, `plantTrees/${id}`));
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const liveCountdownRender = ({ hours, minutes, seconds, completed }) => {
     if (completed) {
@@ -23,6 +25,14 @@ const ViewPlants = () => {
       } else {
         return <span>{hours}:{minutes}:{seconds}</span>;
       }
+  };
+
+  const handleMint = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      onOpen();
+      setIsLoading(false);
+    }, 5000);
   };
 
   return (
@@ -156,7 +166,8 @@ const ViewPlants = () => {
                         color="brand.white"
                         hoverColor="brand.white"
                         hoverBg="brand.lightGreen"
-                        onClick={() => toaster.success("Coming soon")}
+                        onClick={handleMint}
+                        isLoading={isLoading}
                       >
                         <Text fontWeight="medium">Mint tree</Text>
                       </CustomButton>
@@ -200,6 +211,16 @@ const ViewPlants = () => {
           </SimpleGrid>
         </Box>
       </Box>
+
+      <SuccessModal
+        isOpen={isOpen}
+        onClose={onClose}
+        description="Kindly check your wallet within 24 hours"
+        message="Minted Successfully!"
+        cta="Save Content"
+        testid="modal-open"
+        handleClick={onClose}
+      />
     </Box>
   );
 };
