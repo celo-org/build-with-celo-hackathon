@@ -11,6 +11,7 @@ import axios from 'axios'
 const Dashboard = () => {
     const [location, setLocations] = useState();
     const [locationName, setLocationName] = useState("all");
+    const [searchvalue, setSearchValue] = useState('');
     const fetchRequests = async ({ pageParam = 1 }) => {
         const res = await fetch(`http://127.0.0.1:8080/api/requests?page=${pageParam}&size=6&filter=location&location=${locationName}`);
         return res.json();
@@ -30,7 +31,7 @@ const Dashboard = () => {
         getNextPageParam: (lastPage, pages) => {
             return lastPage.page + 1
         },
-        keepPreviousData: true
+        keepPreviousData: true,
     })
 
     useEffect(() => {

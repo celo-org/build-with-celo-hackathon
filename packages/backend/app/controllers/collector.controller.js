@@ -5,6 +5,21 @@ const Location = db.locations;
 const Collectors = db.collectors;
 
 module.exports = {
+  login: async (req, res) => {
+    try {
+      const { email } = req.body;
+      const user = await Collectors.findOne({ email });
+      if (!user)
+        return res.json({ msg: "Incorrect Email", status: false });
+      // const isPasswordValid = await bcrypt.compare(password, user.password);
+      // if (!isPasswordValid)
+      //   return res.json({ msg: "Incorrect Username or Password", status: false });
+      // delete user.password;
+      return res.json({ status: true, user });
+    } catch (ex) {
+      next(ex);
+    }
+  },
   getOneCollector: async (req, res) => {
     const { id } = req.params;
     try {

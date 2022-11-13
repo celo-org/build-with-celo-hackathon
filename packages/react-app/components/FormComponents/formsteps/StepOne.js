@@ -95,7 +95,7 @@ const StepOne = ({handleClick, currentStep, steps, data}) => {
                         <div className="flex-1 w-full col-span-2">
                             <span className="text-gray-700 font-base mb-3">Dropoff Center</span>
                             <div className="w-full px-4 py-4 mt-2 text-[#6B7280] bg-gray-100   focus:border-gray-300 rounded-md focus:outline-none flex items-start text-sm h-24">
-                                <span>Polyethylene Terephthalate (PET)</span>
+                                <span> {data && data?.collection_center?.title}  </span>
                                 
                             </div>
                             

@@ -1,7 +1,13 @@
 import React from 'react'
+import { useState } from 'react'
 import DropdownIcon from '../../Icons/DropdownIcon'
 
 const StepThree = ({handleClick, currentStep, steps}) => {
+    const [showDetails, setShowDetails] = useState();
+
+    const handleShowRequest = () =>{
+        setShowDetails(!showDetails)
+    }
   return (
     <>
         <div className='fade-in'>
@@ -38,14 +44,48 @@ const StepThree = ({handleClick, currentStep, steps}) => {
                 <div>
                     
                     <div className="dropdown relative grow mb-4 w-full border-b pb-8 border-gray-300">
-                        <button className="w-full bg-gray-100 h-12 focus:outline-none active:outline-none  flex items-center justify-between border-0 border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease" type="button" >
+                        <button className="w-full bg-gray-100 h-12 focus:outline-none active:outline-none  flex items-center justify-between border-0 border-gray-300 focus:border-gray-400 active:border-gray-400 px-4 py-3 mt-2 rounded-lg transition duration-300 ease" type="button" onClick={handleShowRequest}>
                             <span className="pointer-events-none flex items-center gap-2 text-[#6B7280]">
                                 Show Request Details  
                             </span>
-                            <span className="pointer-events-none ">
-                                <DropdownIcon />
+                            <span className={`pointer-events-none transition duration-200  ease-linear `}>
+                                <DropdownIcon showDetails={showDetails}/>
                             </span>
                         </button>
+
+                        <div className={`absolute border bg-white cat-menu large-dropdown px-3 shadow-md rounded-md w-full h-40 max-w-full overflow-y-auto scrollbar-change fade-in z-10 ${showDetails ? 'show' : ''}`}>
+                                                
+                                        
+                            <div className=" py-4 divide-y">
+                            
+                                <button className="flex items-center py-3 px-2 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
+                                    <div className="flex items-center justify-center gap-2 pr-2">
+                                        <img src="/images/plastics.svg" className='h-8 w-8'/>
+                                    </div>
+                                    <div className="flex grow flex-col justify-center items-start text-left">
+                                            <p className="text-gray-700 font-normal text-base">Plastics</p>
+                                    </div>
+                                </button>
+                                <button className="flex items-center py-3 px-2 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
+                                    <div className="flex items-center justify-center gap-2 pr-2">
+                                        <img src="/images/steel-square.svg" className='h-8 w-8'/>
+                                    </div>
+                                    <div className="flex grow flex-col justify-center items-start text-left">
+                                            <p className="text-gray-700 font-normal text-base">Metals</p>
+                                    </div>
+                                </button>
+                                <button className="flex items-center py-3 px-2 hover:bg-gray-100 text-sm justify-between bg-white border-0 rounded-lg w-full " type="button">
+                                    <div className="flex items-center justify-center gap-2 pr-2">
+                                        <img src="/images/tyre.svg" className='h-8 w-8'/>
+                                    </div>
+                                    <div className="flex grow flex-col justify-center items-start text-left">
+                                            <p className="text-gray-700 font-normal text-base">Rubber</p>
+                                    </div>
+                                </button> 
+                            
+                            </div>
+
+                        </div>
 
                     
                     </div>
