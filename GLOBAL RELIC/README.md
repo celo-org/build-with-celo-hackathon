@@ -73,9 +73,16 @@ What features would you like to implement?
 
 List any URLs relevant to demonstrating your prototype
 
+Figma Link: https://www.figma.com/file/4PtO5dlMxGOpB5RoEUNoI2/RELIC-MAIN?node-id=23%3A145
+Relic Web:
+Relic USSD:
+
 #### Presentation
 
 List any links to your presentation or any related visuals you want to share.
+
+Pitch Deck: https://docs.google.com/presentation/d/1zt-cUSM8h-W02mt10iPz8Lu8xOW7FgTtsnlqEWTBt4Q/edit#slide=id.g17a9491a21c_0_79
+Video Demo: 
 
 #### Next Steps
 
