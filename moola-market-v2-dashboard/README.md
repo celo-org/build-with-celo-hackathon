@@ -46,7 +46,7 @@ Belows are the various charts which are added in th dashboard to view moola mark
 - Current Variable Borrow by Token
 - Current Stable Borrow by Token
 
-**Screens of Dashboard:**
+**Dashboard Screens:**
 ![moola-v2-dashboard-screen-1.png](images/moola-v2-dashboard-screen-1.png)
 ![moola-v2-dashboard-screen-2.png](images/moola-v2-dashboard-screen-2.png)
 ![moola-v2-dashboard-screen-3.png](images/moola-v2-dashboard-screen-3.png)
