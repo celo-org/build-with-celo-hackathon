@@ -132,7 +132,7 @@ const Navbar = () => {
           </div>
         </div>
 <div className="flex md:hidden">
-          <div className="ml-4">  <li><a href='http://localhost:3001'><Image src={images.exchange} alt="logo" width={40} height={40} style={{borderRadius:30}}  /></a></li> </div></div>
+          <div className="ml-4">  <li><a href='http://localhost:3002'><Image src={images.exchange} alt="logo" width={40} height={40} style={{borderRadius:30}}  /></a></li> </div></div>
       </div>
 
       <div className="hidden md:flex ml-2">
@@ -164,7 +164,7 @@ const Navbar = () => {
             <MenuItems active={active} setActive={setActive} isMobile setIsOpen={setIsOpen} />
           </div>
           <div className="p-4 border-t dark:border-nft-black-1 border-nft-gray-1">
-      <li><a href='http://localhost:3001'> <Image src={images.exchange} alt="logo" width={400} height={200} style={{borderTopLeftRadius:30,borderBottomRightRadius:30}}  /></a></li>
+      <li><a href='http://localhost:3002'> <Image src={images.exchange} alt="logo" width={400} height={200} style={{borderTopLeftRadius:30,borderBottomRightRadius:30}}  /></a></li>
            </div>  
         <div className="p-4 border-t dark:border-nft-black-1 border-nft-gray-1">
             <ButtonGroup router={router} setActive={setActive} setIsOpen={setIsOpen} />
