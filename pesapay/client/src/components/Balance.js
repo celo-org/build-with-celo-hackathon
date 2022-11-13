@@ -2,7 +2,6 @@ import React, { useState } from "react"
 //import { formatUnits, parseUnits } from "ethers/lib/utils";
 import { ethers } from "ethers"
 import styles from "../styles"
-import { getBalance } from "../utils/depositFunction"
 
 const Balance = () => {
   const [bal, setbal] = useState("")
@@ -12,8 +11,8 @@ const Balance = () => {
     const address = await window.ethereum.request({
       method: "eth_requestAccounts",
     })
-
-    let balance = await getBalance(provider, address)
+    const signer = provider.getSigner()
+    let balance = await provider.getBalance(signer.getAddress())
     // we use the code below to convert the balance from wei to eth
     balance = ethers.utils.formatEther(balance)
     console.log(balance)
@@ -28,7 +27,6 @@ const Balance = () => {
         {bal ? (
           <>
             <span className={styles.balanceBold}>Balance:{bal} </span>
-            {/* {getBalance("0x0FaF8Dbb2a7820E34D943aAc81D8Aef9A6e9d0B1") ?? parseUnits("0")} */}
           </>
         ) : (
           ""

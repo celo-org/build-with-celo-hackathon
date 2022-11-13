@@ -5,6 +5,7 @@ import addresses from "../contracts/addresses.json"
 import minimalForwarderAbi from "../contracts/minimalForwarder.json"
 import cashOutAbi from "../contracts/cashOut.json"
 import tokenAbi from "../contracts/token.json"
+import axios from "axios"
 const sdk = require("redstone-sdk")
 const protocol = require("redstone-protocol")
 const {
@@ -15,10 +16,9 @@ export async function approve(amount) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const signer = provider.getSigner()
   const token = createInstance(addresses.Token, tokenAbi, signer)
-   const tx = await token.approve(addresses.CashOut, amount)
-   //console.log(tx)
-   return tx
-
+  const tx = await token.approve(addresses.CashOut, amount)
+  //console.log(tx)
+  return tx
 }
 export async function getBalance(provider, address) {
   const token = createInstance(
@@ -30,7 +30,13 @@ export async function getBalance(provider, address) {
   return tx
 }
 
-async function sendMetaTx(amount, phoneNumber, provider,intocurrency,currency) {
+async function sendMetaTx(
+  amount,
+  phoneNumber,
+  provider,
+  intocurrency,
+  currency
+) {
   const CELO_CASHOUT_WEBHOOK_URL =
     "https://api.defender.openzeppelin.com/autotasks/d577e57d-844f-4015-8f24-0fe85882b0a9/runs/webhook/e43ccace-89ee-47fe-ba09-47f0b0e551bc/U4w1pfp45eZ6iXNah9mSY3"
   const url = CELO_CASHOUT_WEBHOOK_URL
@@ -61,8 +67,8 @@ async function sendMetaTx(amount, phoneNumber, provider,intocurrency,currency) {
     convertStringToBytes32("CUSD")
   )
   //console.log(minAmount)
-  const signer = provider.getSigner();
-  const from = await signer.getAddress();
+  const signer = provider.getSigner()
+  const from = await signer.getAddress()
   if (amount < minAmount) throw new Error(" amount less than minAmount")
   const allowance = await token.allowance(from, cashOut.address)
   if (amount < allowance) throw new Error(`Insufficient Allowance`)
@@ -99,31 +105,38 @@ async function sendMetaTx(amount, phoneNumber, provider,intocurrency,currency) {
     method: "POST",
     body: JSON.stringify(request),
     headers: { "Content-Type": "application/json" },
-  }).then(async (res) => {
-    try {
-      console.log(res)
-    } catch (error) {
-      console.log(error)
-    }
   })
-  .catch((error) => console.log(error))
-  .finally(() => console.log("done"))
+    .then(async (res) => {
+      try {
+        if (res.status !== 200) throw new Error("error in transaction")
+        // transaction to intiate payment of fiat funds
+        const config = { headers: { "Content-Type": "application/json" } }
+        const { data } = await axios.post(
+          "/api/cashout",
+          request.params,
+          config
+        )
+        console.log(data)
+      } catch (error) {
+        console.log(error)
+      }
+    })
+    .catch((error) => console.log(error))
+    .finally(() => console.log("done"))
 }
-export async function depositToken(amount, phoneNumber,provider,intocurrency,currency) {
+export async function depositToken(
+  amount,
+  phoneNumber,
+  provider,
+  intocurrency,
+  currency
+) {
   if (!amount) throw new Error(`amount cannot be empty`)
   if (!phoneNumber) throw new Error(`phoneNumber cannot be empty`)
   if (!window.ethereum) throw new Error(`User wallet not found`)
-  const tokenAddress = addresses.Token
   await window.ethereum.enable()
-  //const provider = new ethers.providers.Web3Provider(window.ethereum)
-  //const userProvider = new ethers.providers.Web3Provider(window.ethereum)
   const userNetwork = await provider.getNetwork()
-  //console.log(userNetwork.chainId)
-  // this is where prompt the chain
   if (userNetwork.chainId !== 44787)
-    throw new Error(`Please switch to chain for signing`)
-
-  //const signer = provider.getSigner()
-  //const from = await signer.getAddress()
-  return sendMetaTx(amount, phoneNumber, provider,intocurrency,currency)
+    throw new Error(`Please switch to celo alfajores network`)
+  return sendMetaTx(amount, phoneNumber, provider, intocurrency, currency)
 }

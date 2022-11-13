@@ -1,29 +1,43 @@
 const mongoose = require(`mongoose`)
 const Schema = mongoose.Schema
 
-const cashoutSchema = new Schema({
-  fiatType: {
-    required: true,
-    type: String,
-    enum: [`NGN`, `GHS`, `KES`, `UGX`],
+const cashoutSchema = new Schema(
+  {
+    account_bank: {
+      required: true,
+      type: String,
+      enum: [`MPS`],
+    },
+    amount: {
+      required: true,
+      type: Number,
+    },
+    currency: {
+      required: true,
+      type: String,
+    },
+    reference: {
+      required: true,
+      type: String,
+    },
+    debit_currency: {
+      required: true,
+      type: String,
+      enum: [`UGX`],
+    },
+    beneficiary_name: {
+      required: true,
+      type: String,
+      enum: [`cashout`],
+    },
+
+    callback_url: {
+      require: true,
+      type: String,
+      enum: [`https://webhook.site/865479d1-cf68-48b0-b26f-b0d33c0936b4`],
+    },
   },
-  cryptoType: {
-    required: true,
-    type: String,
-    enum: [`cUSD`],
-  },
-  cryptoAmount: {
-    required: true,
-    type: String,
-  },
-  phoneNumber: {
-    required: true,
-    type: String,
-  },
-  country: {
-    require: true,
-    type: String,
-    enum: [`NG`, `GH`, "KE", `UG`],
-  },
-})
-module.exports = mongoose.model(`cashout`, cashoutSchema)
+  { timestamps: true }
+)
+
+module.exports = mongoose.model(`Cashout`, cashoutSchema)

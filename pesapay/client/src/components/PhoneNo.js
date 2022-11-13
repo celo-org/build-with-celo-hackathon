@@ -1,37 +1,36 @@
-import React,{useState} from "react";
-import styles from "../styles";
-import { chevronDown } from "../assets";
-const PhoneNo = ({value,onChange,phoneprefix}) => {
-   
+import React from "react"
+import styles from "../styles"
+import { chevronDown } from "../assets"
+const PhoneNo = ({ value, onChange, phoneprefix }) => {
   return (
     <div className={styles.amountContainer}>
-
-        <div className="relative" >
+      <div className='relative'>
         <label className={styles.currencyButton}>
           {"Phone No"}
           <img
             src={chevronDown}
-            alt="cheveron-down"
+            alt='cheveron-down'
             className={`w-4 h-4 object-contain ml-2 rotate-90`}
           />
           {phoneprefix}
-        </label >
-        </div>
+        </label>
+      </div>
 
-      <input 
+      <input
         value={value}
-        dir="rtl"
+        dir='rtl'
         disabled={false}
-        onChange={(e) => typeof onChange === "function" && onChange(e.target.value)}
+        onChange={(e) =>
+          typeof onChange === "function" && onChange(e.target.value)
+        }
         className={`${styles.amountInput}`}
-        type="tel"
-        maxLength="9"
-        minLength="9"
-        placeholder="Enter Phone No" 
+        type='tel'
+        maxLength='9'
+        minLength='9'
+        placeholder='Enter Phone No'
       />
-
     </div>
-  );
-};
+  )
+}
 
-export default PhoneNo;
+export default PhoneNo
