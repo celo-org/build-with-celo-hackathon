@@ -1,0 +1,45 @@
+{
+  "name": "nft_marketplace",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
+    "@material-ui/styles": "^4.11.5",
+    "@mui/icons-material": "^5.10.9",
+    "@nomiclabs/hardhat-ethers": "^2.0.5",
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "@openzeppelin/contracts": "^4.5.0",
+    "axios": "^0.26.0",
+    "embla-carousel-autoplay": "^7.0.4",
+    "embla-carousel-react": "^7.0.4",
+    "ethers": "^5.5.4",
+    "hardhat": "^2.9.0",
+    "ipfs-http-client": "^56.0.1",
+    "next": "12.1.0",
+    "next-themes": "^0.1.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-dropzone": "^12.0.4",
+    "react-slick": "^0.29.0",
+    "web3modal": "^1.9.5"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.2",
+    "eslint": "^8.10.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-next": "12.1.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.29.3",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "postcss": "^8.4.7",
+    "tailwindcss": "^3.0.23"
+  }
+}
