@@ -5,7 +5,7 @@ Please [__fork this repo__](https://help.github.com/articles/fork-a-repo/) and u
 
 ## Project Name: TRI-DAO
 
-### Team name: TEAM TYRA
+### Team name: TEAM COVALENT 
 
 #### Hackathon Track: DAO / ReFi
 
