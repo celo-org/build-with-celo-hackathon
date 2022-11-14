@@ -1,0 +1,1046 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2BBF3A5F4368EAFC0B13F337 /* Pods_CryptoRide_DriverTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7236A3BFB4FC237F26321A8 /* Pods_CryptoRide_DriverTests.framework */; };
+		300FCC85290F7107005F3536 /* Ride.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCC84290F7107005F3536 /* Ride.swift */; };
+		300FCC8A290F8AFD005F3536 /* ProgressState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCC89290F8AFD005F3536 /* ProgressState.swift */; };
+		300FCC8C290F8B4B005F3536 /* Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCC8B290F8B4B005F3536 /* Registration.swift */; };
+		300FCC8E290F8CEC005F3536 /* ListingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCC8D290F8CEC005F3536 /* ListingState.swift */; };
+		300FCC90290F93D3005F3536 /* LogDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCC8F290F93D3005F3536 /* LogDecoder.swift */; };
+		300FCC9229101C91005F3536 /* inRideState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCC9129101C91005F3536 /* inRideState.swift */; };
+		300FCC95291032CE005F3536 /* showToPickUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCC94291032CE005F3536 /* showToPickUp.swift */; };
+		300FCC97291037E3005F3536 /* OpenMaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCC96291037E3005F3536 /* OpenMaps.swift */; };
+		300FCC9929103DBD005F3536 /* showToDropOff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCC9829103DBD005F3536 /* showToDropOff.swift */; };
+		300FCCA529104784005F3536 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCA429104784005F3536 /* RatingView.swift */; };
+		300FCCA7291050F3005F3536 /* showPassengerDropOff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCA6291050F3005F3536 /* showPassengerDropOff.swift */; };
+		300FCCA9291070E9005F3536 /* RideCanceled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCA8291070E9005F3536 /* RideCanceled.swift */; };
+		300FCCAD2910C87C005F3536 /* Registered.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCAC2910C87C005F3536 /* Registered.swift */; };
+		300FCCB12910D560005F3536 /* Balance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCB02910D560005F3536 /* Balance.swift */; };
+		300FCCB32910DAF7005F3536 /* Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCB22910DAF7005F3536 /* Driver.swift */; };
+		300FCCB72910E841005F3536 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCB62910E841005F3536 /* Settings.swift */; };
+		300FCCB92910ED09005F3536 /* RideComplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCB82910ED09005F3536 /* RideComplete.swift */; };
+		30A2401A29171FCD0040E8AA /* ErrorFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A2401929171FCD0040E8AA /* ErrorFilter.swift */; };
+		30A24023291AECFA0040E8AA /* LocationRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A24022291AECF90040E8AA /* LocationRegistration.swift */; };
+		30A24027291C64D80040E8AA /* NBRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A24026291C64D80040E8AA /* NBRatingView.swift */; };
+		30A6EC062905A3C6007830FB /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC052905A3C6007830FB /* LoginView.swift */; };
+		30A6EC082905A60D007830FB /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC072905A60D007830FB /* LoginViewModel.swift */; };
+		30A6EC0C2905A872007830FB /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC0B2905A872007830FB /* Credentials.swift */; };
+		30A6EC0E2905AB20007830FB /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC0D2905AB20007830FB /* Authentication.swift */; };
+		30A6EC1129064D49007830FB /* ProfileRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC1029064D49007830FB /* ProfileRegistration.swift */; };
+		30A6EC1329064D8E007830FB /* CarRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC1229064D8E007830FB /* CarRegistration.swift */; };
+		30A6EC1529064DE0007830FB /* RateRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC1429064DE0007830FB /* RateRegistration.swift */; };
+		30A6EC172906556C007830FB /* FundRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC162906556C007830FB /* FundRegistration.swift */; };
+		30A6EC19290662A8007830FB /* SendRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC18290662A8007830FB /* SendRegistration.swift */; };
+		30A6EC1B29071DA0007830FB /* WebSockets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC1A29071DA0007830FB /* WebSockets.swift */; };
+		30A6EC1D29071DD0007830FB /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC1C29071DD0007830FB /* Events.swift */; };
+		30A6EC1F29090161007830FB /* RideService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC1E29090161007830FB /* RideService.swift */; };
+		30A6EC35290CA8C1007830FB /* ContractCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC34290CA8C1007830FB /* ContractCoordinates.swift */; };
+		30A6EC39290CB4B7007830FB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC38290CB4B7007830FB /* Constants.swift */; };
+		30CAE5BC29033B2B001271FB /* CryptoRide_DriverApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAE5BB29033B2B001271FB /* CryptoRide_DriverApp.swift */; };
+		30CAE5BE29033B2B001271FB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAE5BD29033B2B001271FB /* ContentView.swift */; };
+		30CAE5C029033B2C001271FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30CAE5BF29033B2C001271FB /* Assets.xcassets */; };
+		30CAE5C329033B2C001271FB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30CAE5C229033B2C001271FB /* Preview Assets.xcassets */; };
+		30CAE5CD29033B2C001271FB /* CryptoRide_DriverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAE5CC29033B2C001271FB /* CryptoRide_DriverTests.swift */; };
+		30CAE5D729033B2C001271FB /* CryptoRide_DriverUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAE5D629033B2C001271FB /* CryptoRide_DriverUITests.swift */; };
+		30CAE5D929033B2C001271FB /* CryptoRide_DriverUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAE5D829033B2C001271FB /* CryptoRide_DriverUITestsLaunchTests.swift */; };
+		30CAE5EE29033BD2001271FB /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAE5ED29033BD2001271FB /* Address.swift */; };
+		30CAE5F029033BD8001271FB /* Abi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAE5EF29033BD8001271FB /* Abi.swift */; };
+		30CAE5F229033BE1001271FB /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAE5F129033BE1001271FB /* Network.swift */; };
+		30CAE5F429033BEF001271FB /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAE5F329033BEF001271FB /* Wallet.swift */; };
+		30CAE5F629033BF8001271FB /* Methods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAE5F529033BF8001271FB /* Methods.swift */; };
+		30CAE5F829033C02001271FB /* Contracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAE5F729033C02001271FB /* Contracts.swift */; };
+		30CAE5FB29033C1C001271FB /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAE5FA29033C1C001271FB /* MapView.swift */; };
+		30CAE5FD29033C2C001271FB /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAE5FC29033C2C001271FB /* LocationManager.swift */; };
+		30CAE5FF29033C3A001271FB /* WalletServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAE5FE29033C3A001271FB /* WalletServices.swift */; };
+		30CAE60129033DB4001271FB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30CAE60029033DB3001271FB /* GoogleService-Info.plist */; };
+		30CAE60929034D02001271FB /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAE60829034D02001271FB /* ProfileView.swift */; };
+		30CAE60B29034D10001271FB /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAE60A29034D10001271FB /* ProfileViewModel.swift */; };
+		30CAE60D29034E61001271FB /* ContractServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAE60C29034E61001271FB /* ContractServices.swift */; };
+		30CAE60F29034F78001271FB /* ContractError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAE60E29034F78001271FB /* ContractError.swift */; };
+		32CF38A552359D3D0F6925B5 /* Pods_CryptoRide_Driver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E5329013EE159D0BFE34C95 /* Pods_CryptoRide_Driver.framework */; };
+		764837037DF522F6AE089AF1 /* Pods_CryptoRide_Driver_CryptoRide_DriverUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C44A7FF3DA9CDB625B07BD /* Pods_CryptoRide_Driver_CryptoRide_DriverUITests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		30CAE5C929033B2C001271FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 30CAE5B029033B2B001271FB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 30CAE5B729033B2B001271FB;
+			remoteInfo = "CryptoRide-Driver";
+		};
+		30CAE5D329033B2C001271FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 30CAE5B029033B2B001271FB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 30CAE5B729033B2B001271FB;
+			remoteInfo = "CryptoRide-Driver";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1607254953683559F0AA7E19 /* Pods-CryptoRide-Driver-CryptoRide-DriverUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoRide-Driver-CryptoRide-DriverUITests.debug.xcconfig"; path = "Target Support Files/Pods-CryptoRide-Driver-CryptoRide-DriverUITests/Pods-CryptoRide-Driver-CryptoRide-DriverUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		300FCC84290F7107005F3536 /* Ride.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ride.swift; sourceTree = "<group>"; };
+		300FCC89290F8AFD005F3536 /* ProgressState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressState.swift; sourceTree = "<group>"; };
+		300FCC8B290F8B4B005F3536 /* Registration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Registration.swift; sourceTree = "<group>"; };
+		300FCC8D290F8CEC005F3536 /* ListingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingState.swift; sourceTree = "<group>"; };
+		300FCC8F290F93D3005F3536 /* LogDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDecoder.swift; sourceTree = "<group>"; };
+		300FCC9129101C91005F3536 /* inRideState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = inRideState.swift; sourceTree = "<group>"; };
+		300FCC94291032CE005F3536 /* showToPickUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = showToPickUp.swift; sourceTree = "<group>"; };
+		300FCC96291037E3005F3536 /* OpenMaps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMaps.swift; sourceTree = "<group>"; };
+		300FCC9829103DBD005F3536 /* showToDropOff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = showToDropOff.swift; sourceTree = "<group>"; };
+		300FCCA429104784005F3536 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
+		300FCCA6291050F3005F3536 /* showPassengerDropOff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = showPassengerDropOff.swift; sourceTree = "<group>"; };
+		300FCCA8291070E9005F3536 /* RideCanceled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideCanceled.swift; sourceTree = "<group>"; };
+		300FCCAC2910C87C005F3536 /* Registered.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Registered.swift; sourceTree = "<group>"; };
+		300FCCB02910D560005F3536 /* Balance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Balance.swift; sourceTree = "<group>"; };
+		300FCCB22910DAF7005F3536 /* Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Driver.swift; sourceTree = "<group>"; };
+		300FCCB62910E841005F3536 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		300FCCB82910ED09005F3536 /* RideComplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideComplete.swift; sourceTree = "<group>"; };
+		30A2401929171FCD0040E8AA /* ErrorFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorFilter.swift; sourceTree = "<group>"; };
+		30A24022291AECF90040E8AA /* LocationRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRegistration.swift; sourceTree = "<group>"; };
+		30A24026291C64D80040E8AA /* NBRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NBRatingView.swift; path = Profile/NBRatingView.swift; sourceTree = "<group>"; };
+		30A6EC052905A3C6007830FB /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		30A6EC072905A60D007830FB /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		30A6EC0B2905A872007830FB /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
+		30A6EC0D2905AB20007830FB /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
+		30A6EC1029064D49007830FB /* ProfileRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRegistration.swift; sourceTree = "<group>"; };
+		30A6EC1229064D8E007830FB /* CarRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarRegistration.swift; sourceTree = "<group>"; };
+		30A6EC1429064DE0007830FB /* RateRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateRegistration.swift; sourceTree = "<group>"; };
+		30A6EC162906556C007830FB /* FundRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FundRegistration.swift; sourceTree = "<group>"; };
+		30A6EC18290662A8007830FB /* SendRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendRegistration.swift; sourceTree = "<group>"; };
+		30A6EC1A29071DA0007830FB /* WebSockets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSockets.swift; sourceTree = "<group>"; };
+		30A6EC1C29071DD0007830FB /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
+		30A6EC1E29090161007830FB /* RideService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideService.swift; sourceTree = "<group>"; };
+		30A6EC34290CA8C1007830FB /* ContractCoordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractCoordinates.swift; sourceTree = "<group>"; };
+		30A6EC38290CB4B7007830FB /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		30CAE5B829033B2B001271FB /* CryptoRide-Driver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CryptoRide-Driver.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		30CAE5BB29033B2B001271FB /* CryptoRide_DriverApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoRide_DriverApp.swift; sourceTree = "<group>"; };
+		30CAE5BD29033B2B001271FB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		30CAE5BF29033B2C001271FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		30CAE5C229033B2C001271FB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		30CAE5C829033B2C001271FB /* CryptoRide-DriverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CryptoRide-DriverTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		30CAE5CC29033B2C001271FB /* CryptoRide_DriverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoRide_DriverTests.swift; sourceTree = "<group>"; };
+		30CAE5D229033B2C001271FB /* CryptoRide-DriverUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CryptoRide-DriverUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		30CAE5D629033B2C001271FB /* CryptoRide_DriverUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoRide_DriverUITests.swift; sourceTree = "<group>"; };
+		30CAE5D829033B2C001271FB /* CryptoRide_DriverUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoRide_DriverUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		30CAE5ED29033BD2001271FB /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		30CAE5EF29033BD8001271FB /* Abi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Abi.swift; sourceTree = "<group>"; };
+		30CAE5F129033BE1001271FB /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		30CAE5F329033BEF001271FB /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
+		30CAE5F529033BF8001271FB /* Methods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Methods.swift; sourceTree = "<group>"; };
+		30CAE5F729033C02001271FB /* Contracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contracts.swift; sourceTree = "<group>"; };
+		30CAE5FA29033C1C001271FB /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		30CAE5FC29033C2C001271FB /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		30CAE5FE29033C3A001271FB /* WalletServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletServices.swift; sourceTree = "<group>"; };
+		30CAE60029033DB3001271FB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		30CAE602290340EE001271FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		30CAE60829034D02001271FB /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		30CAE60A29034D10001271FB /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		30CAE60C29034E61001271FB /* ContractServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractServices.swift; sourceTree = "<group>"; };
+		30CAE60E29034F78001271FB /* ContractError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractError.swift; sourceTree = "<group>"; };
+		4E5329013EE159D0BFE34C95 /* Pods_CryptoRide_Driver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoRide_Driver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		54C44A7FF3DA9CDB625B07BD /* Pods_CryptoRide_Driver_CryptoRide_DriverUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoRide_Driver_CryptoRide_DriverUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7236A3BFB4FC237F26321A8 /* Pods_CryptoRide_DriverTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoRide_DriverTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF55A1EF44F90185E283729E /* Pods-CryptoRide-Driver-CryptoRide-DriverUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoRide-Driver-CryptoRide-DriverUITests.release.xcconfig"; path = "Target Support Files/Pods-CryptoRide-Driver-CryptoRide-DriverUITests/Pods-CryptoRide-Driver-CryptoRide-DriverUITests.release.xcconfig"; sourceTree = "<group>"; };
+		E1436D98323A0E300D6545EB /* Pods-CryptoRide-Driver.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoRide-Driver.release.xcconfig"; path = "Target Support Files/Pods-CryptoRide-Driver/Pods-CryptoRide-Driver.release.xcconfig"; sourceTree = "<group>"; };
+		E81F491D23ACFA8467E57573 /* Pods-CryptoRide-DriverTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoRide-DriverTests.debug.xcconfig"; path = "Target Support Files/Pods-CryptoRide-DriverTests/Pods-CryptoRide-DriverTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E917A10D001E517D9FC8C789 /* Pods-CryptoRide-Driver.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoRide-Driver.debug.xcconfig"; path = "Target Support Files/Pods-CryptoRide-Driver/Pods-CryptoRide-Driver.debug.xcconfig"; sourceTree = "<group>"; };
+		EAFBC686382D631263319A60 /* Pods-CryptoRide-DriverTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoRide-DriverTests.release.xcconfig"; path = "Target Support Files/Pods-CryptoRide-DriverTests/Pods-CryptoRide-DriverTests.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		30CAE5B529033B2B001271FB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32CF38A552359D3D0F6925B5 /* Pods_CryptoRide_Driver.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30CAE5C529033B2C001271FB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BBF3A5F4368EAFC0B13F337 /* Pods_CryptoRide_DriverTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30CAE5CF29033B2C001271FB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				764837037DF522F6AE089AF1 /* Pods_CryptoRide_Driver_CryptoRide_DriverUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		300FCC86290F8A7F005F3536 /* DriverViews */ = {
+			isa = PBXGroup;
+			children = (
+				300FCC89290F8AFD005F3536 /* ProgressState.swift */,
+				300FCC8D290F8CEC005F3536 /* ListingState.swift */,
+				300FCC9129101C91005F3536 /* inRideState.swift */,
+				300FCC93291032A3005F3536 /* subInRideViews */,
+			);
+			path = DriverViews;
+			sourceTree = "<group>";
+		};
+		300FCC93291032A3005F3536 /* subInRideViews */ = {
+			isa = PBXGroup;
+			children = (
+				300FCC94291032CE005F3536 /* showToPickUp.swift */,
+				300FCC96291037E3005F3536 /* OpenMaps.swift */,
+				300FCC9829103DBD005F3536 /* showToDropOff.swift */,
+				300FCCA429104784005F3536 /* RatingView.swift */,
+				300FCCA6291050F3005F3536 /* showPassengerDropOff.swift */,
+				300FCCA8291070E9005F3536 /* RideCanceled.swift */,
+				300FCCB82910ED09005F3536 /* RideComplete.swift */,
+			);
+			path = subInRideViews;
+			sourceTree = "<group>";
+		};
+		300FCCB42910DC83005F3536 /* Web3 */ = {
+			isa = PBXGroup;
+			children = (
+				30A6EC1A29071DA0007830FB /* WebSockets.swift */,
+				30CAE60C29034E61001271FB /* ContractServices.swift */,
+				30CAE5FE29033C3A001271FB /* WalletServices.swift */,
+			);
+			path = Web3;
+			sourceTree = "<group>";
+		};
+		300FCCB52910DC97005F3536 /* Sub */ = {
+			isa = PBXGroup;
+			children = (
+				300FCCAC2910C87C005F3536 /* Registered.swift */,
+				300FCCB02910D560005F3536 /* Balance.swift */,
+				300FCCB22910DAF7005F3536 /* Driver.swift */,
+			);
+			path = Sub;
+			sourceTree = "<group>";
+		};
+		30A6EC042905A3B2007830FB /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				30A6EC052905A3C6007830FB /* LoginView.swift */,
+				30A6EC072905A60D007830FB /* LoginViewModel.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		30A6EC0F29064D13007830FB /* Registration */ = {
+			isa = PBXGroup;
+			children = (
+				30A6EC1029064D49007830FB /* ProfileRegistration.swift */,
+				30A6EC1229064D8E007830FB /* CarRegistration.swift */,
+				30A6EC1429064DE0007830FB /* RateRegistration.swift */,
+				30A6EC162906556C007830FB /* FundRegistration.swift */,
+				30A6EC18290662A8007830FB /* SendRegistration.swift */,
+				30A24022291AECF90040E8AA /* LocationRegistration.swift */,
+			);
+			path = Registration;
+			sourceTree = "<group>";
+		};
+		30A6EC33290CA8B1007830FB /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				30A6EC34290CA8C1007830FB /* ContractCoordinates.swift */,
+				30A6EC38290CB4B7007830FB /* Constants.swift */,
+				300FCC8F290F93D3005F3536 /* LogDecoder.swift */,
+				30A2401929171FCD0040E8AA /* ErrorFilter.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		30CAE5AF29033B2B001271FB = {
+			isa = PBXGroup;
+			children = (
+				30CAE5BA29033B2B001271FB /* CryptoRide-Driver */,
+				30CAE5CB29033B2C001271FB /* CryptoRide-DriverTests */,
+				30CAE5D529033B2C001271FB /* CryptoRide-DriverUITests */,
+				30CAE5B929033B2B001271FB /* Products */,
+				65F6737198E45FAC3EE5D0CA /* Pods */,
+				F476EA0FCD876006B2CED9C5 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		30CAE5B929033B2B001271FB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				30CAE5B829033B2B001271FB /* CryptoRide-Driver.app */,
+				30CAE5C829033B2C001271FB /* CryptoRide-DriverTests.xctest */,
+				30CAE5D229033B2C001271FB /* CryptoRide-DriverUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		30CAE5BA29033B2B001271FB /* CryptoRide-Driver */ = {
+			isa = PBXGroup;
+			children = (
+				30A6EC33290CA8B1007830FB /* Utils */,
+				30CAE602290340EE001271FB /* Info.plist */,
+				30CAE60029033DB3001271FB /* GoogleService-Info.plist */,
+				30CAE5EA29033B9F001271FB /* Contract */,
+				30CAE61029034F7E001271FB /* Modules */,
+				30CAE5EB29033BA7001271FB /* Views */,
+				30CAE5EC29033BAC001271FB /* Services */,
+				30CAE5BD29033B2B001271FB /* ContentView.swift */,
+				30CAE5BF29033B2C001271FB /* Assets.xcassets */,
+				30CAE5C129033B2C001271FB /* Preview Content */,
+				30A6EC0D2905AB20007830FB /* Authentication.swift */,
+				30CAE5BB29033B2B001271FB /* CryptoRide_DriverApp.swift */,
+			);
+			path = "CryptoRide-Driver";
+			sourceTree = "<group>";
+		};
+		30CAE5C129033B2C001271FB /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				30CAE5C229033B2C001271FB /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		30CAE5CB29033B2C001271FB /* CryptoRide-DriverTests */ = {
+			isa = PBXGroup;
+			children = (
+				30CAE5CC29033B2C001271FB /* CryptoRide_DriverTests.swift */,
+			);
+			path = "CryptoRide-DriverTests";
+			sourceTree = "<group>";
+		};
+		30CAE5D529033B2C001271FB /* CryptoRide-DriverUITests */ = {
+			isa = PBXGroup;
+			children = (
+				30CAE5D629033B2C001271FB /* CryptoRide_DriverUITests.swift */,
+				30CAE5D829033B2C001271FB /* CryptoRide_DriverUITestsLaunchTests.swift */,
+			);
+			path = "CryptoRide-DriverUITests";
+			sourceTree = "<group>";
+		};
+		30CAE5EA29033B9F001271FB /* Contract */ = {
+			isa = PBXGroup;
+			children = (
+				30CAE5ED29033BD2001271FB /* Address.swift */,
+				30CAE5EF29033BD8001271FB /* Abi.swift */,
+				30CAE5F129033BE1001271FB /* Network.swift */,
+				30CAE5F329033BEF001271FB /* Wallet.swift */,
+				30CAE5F529033BF8001271FB /* Methods.swift */,
+				30CAE5F729033C02001271FB /* Contracts.swift */,
+				30A6EC1C29071DD0007830FB /* Events.swift */,
+			);
+			path = Contract;
+			sourceTree = "<group>";
+		};
+		30CAE5EB29033BA7001271FB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				300FCC86290F8A7F005F3536 /* DriverViews */,
+				30A6EC042905A3B2007830FB /* Login */,
+				30CAE60729034CF4001271FB /* Profile */,
+				30CAE5F929033C0F001271FB /* Map */,
+				300FCCB62910E841005F3536 /* Settings.swift */,
+				30A24026291C64D80040E8AA /* NBRatingView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		30CAE5EC29033BAC001271FB /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				300FCCB52910DC97005F3536 /* Sub */,
+				300FCCB42910DC83005F3536 /* Web3 */,
+				30CAE5FC29033C2C001271FB /* LocationManager.swift */,
+				30A6EC1E29090161007830FB /* RideService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		30CAE5F929033C0F001271FB /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				30CAE5FA29033C1C001271FB /* MapView.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		30CAE60729034CF4001271FB /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				300FCC8B290F8B4B005F3536 /* Registration.swift */,
+				30A6EC0F29064D13007830FB /* Registration */,
+				30CAE60829034D02001271FB /* ProfileView.swift */,
+				30CAE60A29034D10001271FB /* ProfileViewModel.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		30CAE61029034F7E001271FB /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				30CAE60E29034F78001271FB /* ContractError.swift */,
+				30A6EC0B2905A872007830FB /* Credentials.swift */,
+				300FCC84290F7107005F3536 /* Ride.swift */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		65F6737198E45FAC3EE5D0CA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E917A10D001E517D9FC8C789 /* Pods-CryptoRide-Driver.debug.xcconfig */,
+				E1436D98323A0E300D6545EB /* Pods-CryptoRide-Driver.release.xcconfig */,
+				1607254953683559F0AA7E19 /* Pods-CryptoRide-Driver-CryptoRide-DriverUITests.debug.xcconfig */,
+				AF55A1EF44F90185E283729E /* Pods-CryptoRide-Driver-CryptoRide-DriverUITests.release.xcconfig */,
+				E81F491D23ACFA8467E57573 /* Pods-CryptoRide-DriverTests.debug.xcconfig */,
+				EAFBC686382D631263319A60 /* Pods-CryptoRide-DriverTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		F476EA0FCD876006B2CED9C5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4E5329013EE159D0BFE34C95 /* Pods_CryptoRide_Driver.framework */,
+				54C44A7FF3DA9CDB625B07BD /* Pods_CryptoRide_Driver_CryptoRide_DriverUITests.framework */,
+				A7236A3BFB4FC237F26321A8 /* Pods_CryptoRide_DriverTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		30CAE5B729033B2B001271FB /* CryptoRide-Driver */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 30CAE5DC29033B2C001271FB /* Build configuration list for PBXNativeTarget "CryptoRide-Driver" */;
+			buildPhases = (
+				A28DBCBFC87C6458BD2180C8 /* [CP] Check Pods Manifest.lock */,
+				30CAE5B429033B2B001271FB /* Sources */,
+				30CAE5B529033B2B001271FB /* Frameworks */,
+				30CAE5B629033B2B001271FB /* Resources */,
+				B9591B32B964A5A33F47ABB0 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "CryptoRide-Driver";
+			productName = "CryptoRide-Driver";
+			productReference = 30CAE5B829033B2B001271FB /* CryptoRide-Driver.app */;
+			productType = "com.apple.product-type.application";
+		};
+		30CAE5C729033B2C001271FB /* CryptoRide-DriverTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 30CAE5DF29033B2C001271FB /* Build configuration list for PBXNativeTarget "CryptoRide-DriverTests" */;
+			buildPhases = (
+				6790C05D5804B8057C1BCDC1 /* [CP] Check Pods Manifest.lock */,
+				30CAE5C429033B2C001271FB /* Sources */,
+				30CAE5C529033B2C001271FB /* Frameworks */,
+				30CAE5C629033B2C001271FB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				30CAE5CA29033B2C001271FB /* PBXTargetDependency */,
+			);
+			name = "CryptoRide-DriverTests";
+			productName = "CryptoRide-DriverTests";
+			productReference = 30CAE5C829033B2C001271FB /* CryptoRide-DriverTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		30CAE5D129033B2C001271FB /* CryptoRide-DriverUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 30CAE5E229033B2C001271FB /* Build configuration list for PBXNativeTarget "CryptoRide-DriverUITests" */;
+			buildPhases = (
+				DCD3D887020E44D3C5601A95 /* [CP] Check Pods Manifest.lock */,
+				30CAE5CE29033B2C001271FB /* Sources */,
+				30CAE5CF29033B2C001271FB /* Frameworks */,
+				30CAE5D029033B2C001271FB /* Resources */,
+				4F2EF9A5C953CDF6306CDDE2 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				30CAE5D429033B2C001271FB /* PBXTargetDependency */,
+			);
+			name = "CryptoRide-DriverUITests";
+			productName = "CryptoRide-DriverUITests";
+			productReference = 30CAE5D229033B2C001271FB /* CryptoRide-DriverUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		30CAE5B029033B2B001271FB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1340;
+				LastUpgradeCheck = 1340;
+				TargetAttributes = {
+					30CAE5B729033B2B001271FB = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
+					30CAE5C729033B2C001271FB = {
+						CreatedOnToolsVersion = 13.4.1;
+						TestTargetID = 30CAE5B729033B2B001271FB;
+					};
+					30CAE5D129033B2C001271FB = {
+						CreatedOnToolsVersion = 13.4.1;
+						TestTargetID = 30CAE5B729033B2B001271FB;
+					};
+				};
+			};
+			buildConfigurationList = 30CAE5B329033B2B001271FB /* Build configuration list for PBXProject "CryptoRide-Driver" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 30CAE5AF29033B2B001271FB;
+			productRefGroup = 30CAE5B929033B2B001271FB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				30CAE5B729033B2B001271FB /* CryptoRide-Driver */,
+				30CAE5C729033B2C001271FB /* CryptoRide-DriverTests */,
+				30CAE5D129033B2C001271FB /* CryptoRide-DriverUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		30CAE5B629033B2B001271FB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30CAE5C329033B2C001271FB /* Preview Assets.xcassets in Resources */,
+				30CAE5C029033B2C001271FB /* Assets.xcassets in Resources */,
+				30CAE60129033DB4001271FB /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30CAE5C629033B2C001271FB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30CAE5D029033B2C001271FB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4F2EF9A5C953CDF6306CDDE2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CryptoRide-Driver-CryptoRide-DriverUITests/Pods-CryptoRide-Driver-CryptoRide-DriverUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CryptoRide-Driver-CryptoRide-DriverUITests/Pods-CryptoRide-Driver-CryptoRide-DriverUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CryptoRide-Driver-CryptoRide-DriverUITests/Pods-CryptoRide-Driver-CryptoRide-DriverUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6790C05D5804B8057C1BCDC1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CryptoRide-DriverTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A28DBCBFC87C6458BD2180C8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CryptoRide-Driver-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B9591B32B964A5A33F47ABB0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CryptoRide-Driver/Pods-CryptoRide-Driver-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CryptoRide-Driver/Pods-CryptoRide-Driver-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CryptoRide-Driver/Pods-CryptoRide-Driver-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DCD3D887020E44D3C5601A95 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CryptoRide-Driver-CryptoRide-DriverUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		30CAE5B429033B2B001271FB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				300FCC95291032CE005F3536 /* showToPickUp.swift in Sources */,
+				30CAE5FF29033C3A001271FB /* WalletServices.swift in Sources */,
+				300FCC8C290F8B4B005F3536 /* Registration.swift in Sources */,
+				30CAE60929034D02001271FB /* ProfileView.swift in Sources */,
+				300FCC97291037E3005F3536 /* OpenMaps.swift in Sources */,
+				300FCC9929103DBD005F3536 /* showToDropOff.swift in Sources */,
+				30A6EC0C2905A872007830FB /* Credentials.swift in Sources */,
+				30CAE5F429033BEF001271FB /* Wallet.swift in Sources */,
+				300FCCB72910E841005F3536 /* Settings.swift in Sources */,
+				30A24023291AECFA0040E8AA /* LocationRegistration.swift in Sources */,
+				30CAE60D29034E61001271FB /* ContractServices.swift in Sources */,
+				30A6EC39290CB4B7007830FB /* Constants.swift in Sources */,
+				30CAE5F629033BF8001271FB /* Methods.swift in Sources */,
+				300FCCA529104784005F3536 /* RatingView.swift in Sources */,
+				30A6EC1D29071DD0007830FB /* Events.swift in Sources */,
+				30CAE5FD29033C2C001271FB /* LocationManager.swift in Sources */,
+				30CAE60F29034F78001271FB /* ContractError.swift in Sources */,
+				30A6EC1F29090161007830FB /* RideService.swift in Sources */,
+				30CAE5F229033BE1001271FB /* Network.swift in Sources */,
+				30A6EC1329064D8E007830FB /* CarRegistration.swift in Sources */,
+				30A6EC1129064D49007830FB /* ProfileRegistration.swift in Sources */,
+				30A6EC082905A60D007830FB /* LoginViewModel.swift in Sources */,
+				30CAE60B29034D10001271FB /* ProfileViewModel.swift in Sources */,
+				300FCC90290F93D3005F3536 /* LogDecoder.swift in Sources */,
+				30CAE5F829033C02001271FB /* Contracts.swift in Sources */,
+				300FCCA9291070E9005F3536 /* RideCanceled.swift in Sources */,
+				300FCCA7291050F3005F3536 /* showPassengerDropOff.swift in Sources */,
+				300FCCB32910DAF7005F3536 /* Driver.swift in Sources */,
+				30A6EC1529064DE0007830FB /* RateRegistration.swift in Sources */,
+				30A6EC062905A3C6007830FB /* LoginView.swift in Sources */,
+				30CAE5F029033BD8001271FB /* Abi.swift in Sources */,
+				300FCC8A290F8AFD005F3536 /* ProgressState.swift in Sources */,
+				30A6EC1B29071DA0007830FB /* WebSockets.swift in Sources */,
+				30A6EC35290CA8C1007830FB /* ContractCoordinates.swift in Sources */,
+				30A24027291C64D80040E8AA /* NBRatingView.swift in Sources */,
+				30A6EC172906556C007830FB /* FundRegistration.swift in Sources */,
+				30A2401A29171FCD0040E8AA /* ErrorFilter.swift in Sources */,
+				30A6EC0E2905AB20007830FB /* Authentication.swift in Sources */,
+				30CAE5EE29033BD2001271FB /* Address.swift in Sources */,
+				30CAE5BE29033B2B001271FB /* ContentView.swift in Sources */,
+				300FCCAD2910C87C005F3536 /* Registered.swift in Sources */,
+				30A6EC19290662A8007830FB /* SendRegistration.swift in Sources */,
+				300FCC9229101C91005F3536 /* inRideState.swift in Sources */,
+				300FCCB92910ED09005F3536 /* RideComplete.swift in Sources */,
+				300FCC8E290F8CEC005F3536 /* ListingState.swift in Sources */,
+				300FCC85290F7107005F3536 /* Ride.swift in Sources */,
+				30CAE5FB29033C1C001271FB /* MapView.swift in Sources */,
+				300FCCB12910D560005F3536 /* Balance.swift in Sources */,
+				30CAE5BC29033B2B001271FB /* CryptoRide_DriverApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30CAE5C429033B2C001271FB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30CAE5CD29033B2C001271FB /* CryptoRide_DriverTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30CAE5CE29033B2C001271FB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30CAE5D729033B2C001271FB /* CryptoRide_DriverUITests.swift in Sources */,
+				30CAE5D929033B2C001271FB /* CryptoRide_DriverUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		30CAE5CA29033B2C001271FB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 30CAE5B729033B2B001271FB /* CryptoRide-Driver */;
+			targetProxy = 30CAE5C929033B2C001271FB /* PBXContainerItemProxy */;
+		};
+		30CAE5D429033B2C001271FB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 30CAE5B729033B2B001271FB /* CryptoRide-Driver */;
+			targetProxy = 30CAE5D329033B2C001271FB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		30CAE5DA29033B2C001271FB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		30CAE5DB29033B2C001271FB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		30CAE5DD29033B2C001271FB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E917A10D001E517D9FC8C789 /* Pods-CryptoRide-Driver.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CryptoRide-Driver/Preview Content\"";
+				DEVELOPMENT_TEAM = XUYDZSBQ86;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "CryptoRide-Driver/Info.plist";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Need location to find passengers";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Need location to find passengers";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "MOT.CryptoRide-Driver";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		30CAE5DE29033B2C001271FB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E1436D98323A0E300D6545EB /* Pods-CryptoRide-Driver.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CryptoRide-Driver/Preview Content\"";
+				DEVELOPMENT_TEAM = XUYDZSBQ86;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "CryptoRide-Driver/Info.plist";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Need location to find passengers";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Need location to find passengers";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "MOT.CryptoRide-Driver";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		30CAE5E029033B2C001271FB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E81F491D23ACFA8467E57573 /* Pods-CryptoRide-DriverTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XUYDZSBQ86;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "MOT.CryptoRide-DriverTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CryptoRide-Driver.app/CryptoRide-Driver";
+			};
+			name = Debug;
+		};
+		30CAE5E129033B2C001271FB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EAFBC686382D631263319A60 /* Pods-CryptoRide-DriverTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XUYDZSBQ86;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "MOT.CryptoRide-DriverTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CryptoRide-Driver.app/CryptoRide-Driver";
+			};
+			name = Release;
+		};
+		30CAE5E329033B2C001271FB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1607254953683559F0AA7E19 /* Pods-CryptoRide-Driver-CryptoRide-DriverUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XUYDZSBQ86;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "MOT.CryptoRide-DriverUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "CryptoRide-Driver";
+			};
+			name = Debug;
+		};
+		30CAE5E429033B2C001271FB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AF55A1EF44F90185E283729E /* Pods-CryptoRide-Driver-CryptoRide-DriverUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XUYDZSBQ86;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "MOT.CryptoRide-DriverUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "CryptoRide-Driver";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		30CAE5B329033B2B001271FB /* Build configuration list for PBXProject "CryptoRide-Driver" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				30CAE5DA29033B2C001271FB /* Debug */,
+				30CAE5DB29033B2C001271FB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		30CAE5DC29033B2C001271FB /* Build configuration list for PBXNativeTarget "CryptoRide-Driver" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				30CAE5DD29033B2C001271FB /* Debug */,
+				30CAE5DE29033B2C001271FB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		30CAE5DF29033B2C001271FB /* Build configuration list for PBXNativeTarget "CryptoRide-DriverTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				30CAE5E029033B2C001271FB /* Debug */,
+				30CAE5E129033B2C001271FB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		30CAE5E229033B2C001271FB /* Build configuration list for PBXNativeTarget "CryptoRide-DriverUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				30CAE5E329033B2C001271FB /* Debug */,
+				30CAE5E429033B2C001271FB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 30CAE5B029033B2B001271FB /* Project object */;
+}
