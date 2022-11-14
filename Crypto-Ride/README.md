@@ -141,7 +141,7 @@ The most basic functionality of this project is just a smart contract with an ap
 - Location tracking for active drivers.
 - Handling of ride cancellations.
 - Passenger and Driver rating & reputation.
-- Driver & passenger identities. (Using [Celo's Identity Protocol](https://docs.celo.org/protocol/identity))
+- Driver identities.
 
 <b>Additional features could be added making the experance more familiar to existing ride sharing. </b>
 
