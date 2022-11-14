@@ -30,6 +30,7 @@ contract AMA_SponsorEscrow {
         // Locked up funds
         Asset currency; // Asset type: CELO, cUSD, Green token
         uint256 funds; // in wei
+        uint256 committed;
         uint256 fees; // platform fees
         State escrowState; // Status for escrow transaction
         uint256 settlementTime; // epoch time
@@ -83,6 +84,7 @@ contract AMA_SponsorEscrow {
         newEscrow.currency = Asset.NCT;
         newEscrow.fees = value / 100 * 15; // service fee of 15%
         newEscrow.funds = value - newEscrow.fees; // Lock up funds
+        newEscrow.committed = newEscrow.funds; // total before depleated by faucet
 
         // Front end should have allowance and approve _value via Web3
         uint256 treeBalance = ToucanNCT.balanceOf(msg.sender);

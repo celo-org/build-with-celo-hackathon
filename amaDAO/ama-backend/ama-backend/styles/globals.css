@@ -1,11 +1,15 @@
-* {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   font-family: 'Fira Sans Condensed', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+} */
 
 body {
   margin: 0;
@@ -16,16 +20,21 @@ body {
   overflow: hidden;
 }
 
+#page-app {
+  background-color: #FFF;
+}
+
+
 a {
   text-decoration: none;
   color: #739CFB;
 }
-
+/* 
 .container {
   justify-content: center;
   text-align: center;
   height: 95vh;
-}
+} */
 
 .d-flex {
   display: flex;

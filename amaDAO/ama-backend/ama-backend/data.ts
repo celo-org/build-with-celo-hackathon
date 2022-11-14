@@ -1,3 +1,15 @@
+export const sponsorList = 
+  { 
+    "0x0000000000000000000000000000000000000000":
+    "Annonomous",
+    "0xCe763560eBE4B0865E6c84941ca233Fd95dF5b44": 
+    "cLabs",
+    "0x586E9582C5cff8692A1A56e65e5C92F6F4366B3c":
+    "Celo Foundation"
+  };
+
+
+
 export const people = [
   {
     id: '1',

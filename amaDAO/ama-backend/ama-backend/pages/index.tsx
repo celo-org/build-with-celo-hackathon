@@ -10,7 +10,7 @@ import useSWR from 'swr'
 import PersonComponent from '../components/Person'
 import { Person } from '../interfaces'
 
-
+declare let window:any;
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
@@ -25,6 +25,7 @@ export default function Index() {
 
   const [client, setclient] = useState({
     isConnected: false,
+    address: undefined
   });
 
   const checkConnection = async () => {
@@ -40,6 +41,7 @@ export default function Index() {
       } else {
         setclient({
           isConnected: false,
+          address: undefined
         });
       }
     } else {
@@ -76,17 +78,11 @@ export default function Index() {
 
   return (
     <div>
-      <h1>Sponsors</h1>
-      {/* <ul>
-        {data.map((p: Person) => (
-          <PersonComponent key={p.id} person={p} />
-        ))}
-      </ul> */}
 
       {/* Navbar */}
       <nav className="fren-nav d-flex">
         <div>
-          <h3><Link href="/sponsor">Sponsor</Link></h3>
+          <h3><Link href="/sponsor">Sponsors</Link></h3>
         </div>
         <div className="d-flex" style={{ marginLeft: "auto" }}>
           <div>
@@ -110,8 +106,8 @@ export default function Index() {
       </nav>
       {/* Navbar end */}
 
-      <section className="container d-flex">
-        <main>
+      <section className="container">
+        <main className="p-20 place-content-center">
           <h1 className="main-title">ama Timer App 🚀</h1>
 
           <p className="main-desc">

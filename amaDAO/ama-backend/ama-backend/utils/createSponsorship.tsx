@@ -3,7 +3,10 @@ import { ethers } from "ethers";
 import amaAbi from "../ama.abi.json";
 import logger from '../utils/logger';
 
-const contractAddr = "0x47856ec2f682E534Ce4184FaA1655976F3310069"; // AMA Escrow Contract
+declare let window:any;
+
+const contractAddr = process.env.CONTRACT;
+//"0x47856ec2f682E534Ce4184FaA1655976F3310069"; // AMA Escrow Contract
 //https://explorer.celo.org/alfajores/address/0x47856ec2f682E534Ce4184FaA1655976F3310069/transactions
 
 
