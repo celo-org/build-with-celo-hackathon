@@ -34,9 +34,10 @@ EcoConstruct is a platform built on decentralized Celo Composer platform to mana
 EcoConstruct addresses the primary issues in building a transparent ReFi platform by Unification of Supplier Payments and Wages and Tracking and Minimizing the disposal of pollutants.
 
 The use cases we have implemented on the centralized Celo de-centralized platform:
-
-Unified Payments with Celo
-Pollution compliance and Waste Disposal Auditing
+<ul>
+<li>Unified Payments with Celo
+<li>Pollution compliance and Waste Disposal Auditing\
+  </ul>
 We choose Cielo platform as it is a simple and elegant platform for next generation web3 applications
 
 The technology layer is as follows:
