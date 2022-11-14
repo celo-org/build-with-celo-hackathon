@@ -6,6 +6,8 @@ import {
   Image,
   TouchableOpacity,
   StyleSheet,
+  ScrollView,
+  ScrollViewProps,
 } from "react-native";
 import {
   DrawerContentScrollView,
@@ -18,7 +20,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Switch, useTheme, Drawer, TouchableRipple } from "react-native-paper";
 import { AuthContext } from "./context";
 
-const CustomDrawer = (props) => {
+const CustomDrawer = (props: JSX.IntrinsicAttributes & ScrollViewProps & { children: React.ReactNode; } & React.RefAttributes<ScrollView>) => {
   const navigation = useNavigation();
 
   const paperTheme = useTheme();

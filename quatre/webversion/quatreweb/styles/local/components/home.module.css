@@ -1,0 +1,38 @@
+@media all and (min-width: 0px) {
+    .sectionContent {
+        font: 1.25rem/1.8rem var(--roboto);
+    }
+    .darkMode{
+        background: var(--dark-mode1);
+        color: var(--white);
+        transition: 0.2s ease-in-out;
+        z-index: 0;
+    }
+    
+    .darkMode, .darkMode h2{
+        color: var(--white);
+        transition: 0.2s ease-in-out;
+    }
+    .lightMode{
+        background: var(--white);
+        color: var(--black);
+        transition: 0.2s ease-in-out;
+        z-index: 0;
+    }
+ 
+    .lightMode h2{
+        color: var(--black);
+        /* color: var(--white); */
+        transition: 0.2s ease-in-out;
+    }
+
+}
+
+
+
+
+/* div
+section
+article
+h1
+p */

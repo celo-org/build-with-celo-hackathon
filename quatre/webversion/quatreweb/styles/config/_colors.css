@@ -1,0 +1,26 @@
+/* color file */
+:root{
+    --black: #000000;
+    --black2: #1F2348;
+    --grey: #F3F3F3;
+    --transparent-grey: rgba(243, 243, 243, 0.8);
+    --dark-mode1: #1D1B1B;
+    --dark-mode2:#262929;
+    --transparent-dark-mode1:rgba(29, 27, 27, 0.8);
+    --transparent-dark-mode2:rgba(38, 41, 41, 0.8);
+    --white: #FFFFFF;
+    --orange: #F7931A;
+    --transparent-orange: rgba(247, 147, 26, 0.9);
+    --transparent-white: rgba(255, 255, 255, 0.4);
+    --deep-fir-green: #002A0E;
+    --transparent-deep-fir-green: rgba(0, 42, 14, 0.4);
+    --plantation-green: #266150;
+    --shadow-green: #A3C9BE;
+    --granny-apple: #D1F3DC;
+    --grey-green: #E6F0EE;
+    --dark-grey: #455A64;
+    --persian-green: #009C86;
+    --navy-blue: #001E49;
+    --lighter-black: #262929;
+    --greyish-white: #C4C4C4;
+}

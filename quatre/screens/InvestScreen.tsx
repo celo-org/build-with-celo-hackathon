@@ -7,7 +7,6 @@ const InvestScreen = () => {
     <ScrollView>
       <SafeAreaView>
           <Header/>
-          
       </SafeAreaView>
     </ScrollView>
   )
@@ -15,4 +14,4 @@ const InvestScreen = () => {
 
 export default InvestScreen
 
-const styles = StyleSheet.create({})
+// const styles = StyleSheet.create({})

@@ -1,0 +1,116 @@
+.overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: rgb(0, 0, 0, 0.7);
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  user-select: none;
+}
+
+.modal {
+  position: absolute;
+  background: rgb(244, 244, 244);
+  margin-left: 6em;
+  width: 330px;
+  height: 30vh;
+  left: 35%;
+  top: 20%;
+  transform: translate(-50%);
+  -webkit-transform: translate(-50%);
+  -moz-transform: translate(-50%);
+  -ms-transform: translate(-50%);
+  -o-transform: translate(-50%);
+  border-radius: 0.5em;
+}
+.authenticate {
+  position: relative;
+  display: flex;
+  right: 3em;
+  gap: 3em;
+  background: none;
+
+}
+.h1 {
+  position: relative;
+  bottom: 2em;
+  left: 1em;
+  color: green;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 2em;
+}
+.close{
+  position: relative;
+  bottom: 0.8em;
+  /* right: 1em; */
+  color: black;
+  font-size: 0.5em;
+  font-weight: 400;
+  width: 4em;
+  height: 2.2em;
+  border-radius: 0.4em;
+}
+.close:hover {
+  background-color: rgba(114, 110, 110, 0.233);
+  transition: 0.2s ease-in-out;
+  z-index: 1;
+}
+
+.account {
+  height: 42px;
+  padding: 0 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  border-radius: 12px;
+  background-color: rgb(244, 244, 244);
+  cursor: pointer;
+}
+
+.text {
+  color: #21BF96;
+}
+
+.connector {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px 5px;
+  cursor: pointer;
+} 
+.icon {
+  align-Self: center;
+  fill: rgb(40, 13, 95);
+  flex-shrink: 0;
+  margin-Bottom: 1em;
+  height: 35px;
+}
+.modalpop{
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 20px;
+    border: 0.2em solid var(--dark-mode2);
+    position: absolute;
+    top: 25%;
+    left: 35%;
+    background: var(--dark-mode2);
+}
