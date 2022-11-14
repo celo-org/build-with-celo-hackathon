@@ -1,0 +1,241 @@
+@media all and (min-width: 0px){
+  .sectionContainer{
+    width: 100%
+  }
+}
+@media all and (min-width: 768px){
+    
+}   
+@media all and (min-width: 1024px){
+
+}
+@media all and (min-width: 1440px){
+     
+}
+/* Light and dark mode */
+.darkMode{
+  background: var(--dark-mode1);
+  color: var(--white);
+  transition: 0.2s ease-in-out;
+  z-index: 0;
+}
+.darkMode a{
+  color: var(--white);
+}
+.lightMode{ 
+  background: var(--dark-mode1);
+  /* background: var(--white); */
+  color: var(--white);
+  transition: 0.2s ease-in-out;
+  z-index: 0;
+}
+.lightMode a {
+  color: var(--black);
+  /* color: var(--white); */
+}
+.jPool{
+  font-size: 20px;
+  font-size: x-large;
+  font-weight: 500;
+  border: 25px;
+}
+.type {
+  border-radius: 6px;
+  background: rgba(189, 174, 174, 0.651);
+}
+.createButton {
+  padding-bottom: 13px;
+}
+.createButton li {
+  border-radius: 12px;
+  box-shadow: 0 0.5rem 1.2rem rgb(189 197 209 / 60%);
+}
+
+.overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: rgb(0, 0, 0, 0.7);
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  user-select: none;
+}
+
+.modal {
+  position: absolute;
+  box-shadow: 0 0.5rem 1.2rem rgba(255, 255, 255, 0.829);
+  background: rgba(19, 17, 17, 0.911);
+  margin-left: 9em;
+  width: fit-content;
+  height: fit-content;
+  left: 35%;
+  top: 10%;
+  transform: translate(-50%);
+  -webkit-transform: translate(-50%);
+  -moz-transform: translate(-50%);
+  -ms-transform: translate(-50%);
+  -o-transform: translate(-50%);
+  border-radius: 0.5em;
+}
+
+.title h3{
+  color: var(--orange);
+  font-weight: 600;
+}
+.header {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 1.6em;
+}
+.close{
+  color: rgba(145, 133, 133, 0.829);
+  font-size: 0.5em;
+  position: relative;
+  bottom: 0.37em;
+  font-weight: 500;
+  width: 4em;
+  height: 3em;
+  border-radius: 0.5em;
+}
+.close:hover {
+  background: rgba(97, 90, 90, 0.466);
+  transition: 0.2s ease-in-out;
+  z-index: 1;
+}
+
+.account {
+  height: 42px;
+  padding: 0 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  border-radius: 12px;
+  background-color: rgb(244, 244, 244);
+  cursor: pointer;
+}
+
+.text {
+  color: #21BF96;
+}
+
+.connector {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px 5px;
+  cursor: pointer;
+}
+.bodyStyle {
+  padding: 0.5em;
+  font-size: 17px;
+  font-weight: 500;
+}
+.type {
+  background: rgba(206, 198, 198, 0.226);
+  border: none;
+  color: #21BF96;
+}
+.type:hover {
+  background-color: transparent;
+  transition: 0.2s ease-in-out;
+  z-index: 1;
+}
+
+.overlay1 {
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: rgb(0, 0, 0, 0.7);
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+}
+
+.modal1 {
+  position: absolute;
+  box-shadow: 0 0.5rem 1.2rem rgba(255, 255, 255, 0.829);
+  background: rgba(19, 17, 17, 0.911);
+  margin-left: 9em;
+  width: fit-content;
+  height: 30%;
+  left: 35%;
+  top: 30%;
+  transform: translate(-50%);
+  -webkit-transform: translate(-50%);
+  -moz-transform: translate(-50%);
+  -ms-transform: translate(-50%);
+  -o-transform: translate(-50%);
+  border-radius: 0.5em;
+}
+
+.header1 {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 1.6em;
+}
+
+.bodyStyle1 {
+  padding: 0.5em;
+  font-size: 17px;
+  font-weight: 500;
+}
+.input {
+  width: 90%;
+  margin-left: 0.7em;
+  /* margin-right: 1em; */
+  height: 32px;
+  border-radius: 0.4em;
+  padding: 0.4em;
+  background: rgba(189, 174, 174, 0.651);
+  margin-right: auto;
+}
+.enterButton{
+  /* 'text-white border-2 w-16 border-orange-500' */
+  border: 0.1em solid rgba(189, 174, 174, 0.651);
+  color: white;
+  width: 20%;
+  border-radius: 0.4em;
+  background: rgba(235, 228, 228, 0.651);
+}
+.enterButton:hover{
+  background: transparent;
+  transition: 0.2s ease-in-out;
+  z-index: 0;
+}
+.display {
+  margin-left: 1em;
+}
+
+.reset {
+  position: absolute;
+  left: 4em;
+  bottom: 0;
+  color: var(--orange);
+}
+.reset:hover{
+  color: var(--orange);
+  /* background: rgba(206, 198, 198, 0.226); */
+  transition: 0.2s ease-in-out;
+  z-index: inherit;
+}
