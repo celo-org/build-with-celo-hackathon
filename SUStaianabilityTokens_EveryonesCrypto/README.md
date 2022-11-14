@@ -36,11 +36,5 @@ https://youtube.com/playlist?list=PLi6LaqPTG8nZ1y17BvBlvLYjX__5BuRZ3
 #### System design
 ![System design](SUST_system_design.png)
 
-#### Next Steps
--	SUST ERC20 token. To reward regenerative behaviour, we need to design and implement the ERC20 token that can be exchanged for airdrop distributions. 
--	Transaction batching. By batching number of transactions into a single transaction, user saves gas fee instead of congesting Celo network with multiple transactions.
--	Oracles. While verifying user’s receipt information, Celo network needs to connect to an external data source (e.g., Walmart API) to retrieve number of bags used.
--	Near-zero transaction services. To attract greater number of users, the transactions fee should be near-zero. Like the Celo onboarding service Komenci, we may need a service that pays for the transactions on behalf of the user.
-
 #### License
 This repository includes an [unlicensed](http://unlicense.org/) statement though you may want to [choose a different license](https://choosealicense.com/).
