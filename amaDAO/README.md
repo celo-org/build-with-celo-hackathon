@@ -73,7 +73,21 @@ The app will be developed in Flutter and made available across the app stores on
 
 #### URLs
 
+*Hacker Earth*
 https://build-with-celo.hackerearth.com/challenges/hackathon/celo-hackathon/dashboard/d7ab6fc/idea/draft/work3-a-regen-protocol-for-hours-worked/
+
+*GitHub*
+https://github.com/oespn/amaDAO-build-with-celo-hackathon
+
+*Sponsor Site*
+Note: Sponsorships will be added by our team.  However, you can view existing sponsorships, the escrows and badges here:
+
+https://ama-dao-refi-work.vercel.app/
+
+
+![amaDAO-Timer-Site-Demo](https://user-images.githubusercontent.com/42083185/201580041-8b4b2322-6886-4e92-bae5-8eb2729c5a4f.gif)
+
+
 
 
 #### Presentation
