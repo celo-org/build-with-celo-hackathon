@@ -278,7 +278,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(onPressed: (){
               walletController.userFaucet(0, 4);
             },
-                child: Text("UserFoset")),
+                child: Text("UserFoucet")),
             _seedsWidget(),
             SizedBox(height: 30,),
             CircularCountDownTimer(

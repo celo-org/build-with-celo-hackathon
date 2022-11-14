@@ -69,7 +69,7 @@ class _PlantingPageState extends State<PlantingPage> {
                   margin: EdgeInsets.only(top: 30),
                   child: SizedBox(
                       width: 300,
-                      child: Image.asset('images/rectangle.png')),
+                      child: Image.asset('images/dirt.png')),
                 ),
                 Container(
                     margin: EdgeInsets.only(bottom: 30),
@@ -82,8 +82,8 @@ class _PlantingPageState extends State<PlantingPage> {
               color: Color(0xFFD8D8D8),
               child: Column(
                 children: [
-                  Text("Text Sponcor"),
-                  Image.network("file:///home/venkey/Downloads/navigation-design-graph-top-level.png")
+                  Text("Your Sponsor"),
+                  Image.asset("images/sponsor.png")
 
                 ],
 

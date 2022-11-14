@@ -108,12 +108,13 @@ export default function Index() {
 
       <section className="container">
         <main className="p-20 place-content-center">
-          <h1 className="main-title">ama Timer App 🚀</h1>
-
+          <h1 className="main-title">amaDAO<br/>Work Timer 🌳 🕓</h1>
+          
           <p className="main-desc">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem
-            suscipit perferendis tempore <br /> eveniet id pariatur error
+            We're making Knowledge Work Carbon Neutral <br />
+            When you use our timer, your sponsor will offset carbon generated from your work. 
           </p>
+
 
           {/* ---- */}
           <p>
@@ -123,13 +124,13 @@ export default function Index() {
               <>
                 <br />
                 <h2>You're connected ✅</h2>
-                <button
+                {/* <button
                   onClick={signMessage}
                   type="button"
                   className="btn sign-btn"
                 >
                   Sign Message
-                </button>
+                </button> */}
                 <button
                   onClick={createSponsorship}
                   type="button"

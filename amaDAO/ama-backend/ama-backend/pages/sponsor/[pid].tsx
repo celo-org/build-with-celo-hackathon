@@ -58,7 +58,10 @@ export default function SponsorPage() {
     setDomain(window?.location?.origin);
   })
 
-  const usageScript = `<img src='${domain}/badge/${query.pid}'/> `;
+  const badgeView = `${domain}/badge/${query.pid}`;
+
+  const usageScript = `<img src='${badgeView}'/> `;
+
 
 
   //const queryId: string = query.id;
@@ -100,9 +103,14 @@ export default function SponsorPage() {
       </div>
       <div className="p-20 flex flex-row">
 
-        <div className="w-1/2"> <Image src={badgeExample} alt="example badge" width={320} height={131}/></div>
+        <div className="w-1/2"> 
+          <p>Your verifiable badge:</p>  
+          <a href={badgeView} target={`_none`}>
+            <Image src={badgeExample} alt="example badge" width={320} height={131}/>
+          </a>
+        </div>
         <div className="w-1/2">
-          <p>Embed your badge on your site:</p>
+          <p>Embed it on your site:</p>
           <div>
           <textarea id="your-html" value={usageScript} className="text-black" rows={3}>
           </textarea>
@@ -113,7 +121,8 @@ export default function SponsorPage() {
 
     </div>
 
-    {/* Fix font for this to load Dynamially <html dangerouslySetInnerHTML={{__html: badge }}/> */}
+    {/* Fix font for this to load Dynamially */}
+    {/* <html dangerouslySetInnerHTML={{__html: badge }}/>  */}
     </>    
   )
 }
