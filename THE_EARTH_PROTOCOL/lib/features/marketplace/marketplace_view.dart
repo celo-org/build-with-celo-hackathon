@@ -26,7 +26,9 @@ class MarketPlaceView extends StatelessWidget {
                   ],
                 ),
               ),
-            )
+            ),
+
+            
           ],
         ),
       ),

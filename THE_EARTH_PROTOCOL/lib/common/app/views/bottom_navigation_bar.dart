@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sustain/features/chart/views/chart_view.dart';
+import 'package:sustain/features/home/views/home_view.dart';
 import 'package:sustain/features/pledge/views/pledge_view.dart';
 
 import '../../../features/marketplace/marketplace_view.dart';
@@ -18,7 +19,7 @@ class _BottomNavState extends State<BottomNav> {
     ChartView(),
     MarketPlaceView(),
     PledgeView(),
-    PledgeView(),
+    HomeView(),
     PledgeView(),
   ];
 
