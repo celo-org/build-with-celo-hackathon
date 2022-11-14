@@ -2,6 +2,9 @@ import React, {useRef, useState} from "react"
 import { Modal, Form, Button, Alert } from "react-bootstrap"
 import { StyleSheet, css } from 'aphrodite'
 import { DOCTOR, PHARMACIST, INSURER } from "../../constants"
+import { useCelo } from '@celo/react-celo';
+import Telemed from "../../telemed.json"
+
 
 export default function FormModal(props){
   const userAccount = useRef()
@@ -12,9 +15,7 @@ export default function FormModal(props){
   const [errorAddress, setErrorAddress] = useState("")
   const [amount, setAmount] = useState(0)
 
-  const accountAddress = localStorage.getItem("address")
-  console.log(accountAddress)
-
+  const { address, kit } = useCelo();
 
 const styles = StyleSheet.create({
   error: {
@@ -36,6 +37,15 @@ const handleAmountChange = e =>{
   setAmount(e.target.value)
   console.log(amount)
 }
+  
+  const handleContractTransfer = async () => {
+    const telemedContract = new kit.connection.web3.eth.Contract(Telemed.abi, Telemed.address)
+    const txHash = await telemedContract.methods.sendMessage(walletAddress, message).send({
+      from: address,
+      gasLimit: '210000'
+    })
+    console.log(txHash)
+  }
 
   const handleTransfer = async () => {
   //  const appOptin = await optin(getAddress)
@@ -53,10 +63,12 @@ const handleAmountChange = e =>{
     else if(message !=="" || walletAddress.length === 32){
       setErrorMessage("")
       setErrorAddress("")
-      if (accountAddress === INSURER) {
+      if (address === INSURER) {
         // contract call code here
+        handleContractTransfer()
       }else{
         // contract call code here
+        handleContractTransfer()
       }
       props.onHide()
       // console.log(callApp)
@@ -95,7 +107,7 @@ const handleAmountChange = e =>{
               />
               <label className={css(styles.error)}>{errorAddress}</label>
             </Form.Group>
-            { accountAddress === INSURER ? <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            { address === INSURER ? <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Amount</Form.Label>
               <Form.Control
                 type="number"

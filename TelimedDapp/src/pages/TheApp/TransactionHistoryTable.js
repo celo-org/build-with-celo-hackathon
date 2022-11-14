@@ -4,6 +4,8 @@ import { StyleSheet, css } from 'aphrodite'
 import { Buffer } from 'buffer';
 import axios from "axios"
 import emptyImage from "../../assets/img/empty.svg"
+import { useCelo } from '@celo/react-celo';
+import Telemed from "../../telemed.json"
 
 const styles = StyleSheet.create({
   table: {
@@ -23,17 +25,28 @@ const styles = StyleSheet.create({
 })
 
 export default function TransactionHistoryTable({currentItems}) {
-  // const url = "https://indexer.testnet.algoexplorerapi.io/v2/transactions?limit=50&address=IQ7UESMB2RHOGCBXJP5S3KZUDLTSGSTKLPSS4DDFZHVXNYAZRBFYV4EWRM&sort=desc"
-  const url = "https://indexer.testnet.algoexplorerapi.io/v2/transactions?limit=50&address="
-  const address = localStorage.getItem("address")
+  const { address, kit } = useCelo()
   const [transactions, setTransactions] = useState([])  
 
-  const getTransactionHistory = async () => {
-   const response = await axios.get(`${url}${address}&sort=desc`)
-   const data = response.data.transactions
-   setTransactions(data)
-   localStorage.setItem("transactions", data)
+  const messages = []
+
+  const getMessages = async () => {
+    try {
+       const telemedContract = new kit.connection.web3.eth.Contract(Telemed.abi, Telemed.address)
+      const messageCount = await telemedContract.methods.getMessageLength().call()
+      console.log(messageCount)
+      // for (let i = 0; i < messageCount.length; i++){
+      //   const messageIndex = await telemedContract.methods.getMessageIndex(i).call()
+      //   messages.push(messageIndex)
+      // }
+      // console.log(messages)
+      // setTransactions(messages)
+      // localStorage.setItem("transactions", messages)
+    } catch (err) {
+      console.log(err)
+    } 
   }
+ 
 
   const base64ToString =(str) =>{
     if(str == null){
@@ -44,7 +57,7 @@ export default function TransactionHistoryTable({currentItems}) {
   }
 
   useEffect(() =>{
-    getTransactionHistory()
+    getMessages()
   }, [])
 
   return(
@@ -64,22 +77,13 @@ export default function TransactionHistoryTable({currentItems}) {
             </thead>
             <tbody>
               
-            {transactions.map((txn, index) =>
-              txn.hasOwnProperty('inner-txns') ?
-              txn['inner-txns'].map(item => {
-                if (item.hasOwnProperty('payment-transaction')) {
-                  return <tr key={index}  className={css(styles.table)}>
-                  <td> <a href={`https://testnet.algoexplorer.io/tx/${txn.id}`} target="_blank" rel="noreferrer">{txn.id === null ? null : `${txn.id.substring(0,40)}...`}</a></td>
-                  <td>{txn['confirmed-round']}</td>
-                  <td>{base64ToString(txn.note)}</td>
-                  <td>{txn.sender === null ? null : `${txn.sender.substring(0,20)}...`}</td>    
-                  <td>{item['payment-transaction']['receiver'] === null ? null 
-                  : `${item['payment-transaction']['receiver'].substring(0,20)}...`}</td>          
+              {transactions.map((txn, index) =>
+                <tr key={index}  className={css(styles.table)}>
+                  {/* <td> <a href={`https://explorer.celo.org/alfajores/tx/${txn.id}/internal-transactions/`} target="_blank" rel="noreferrer">{txn.id === null ? null : `${txn.id.substring(0,40)}...`}</a></td>
+                  <td>{txn['confirmed-round']}</td> */}
+                  <td>{base64ToString(txn.message)}</td>
+                  <td>{txn.to === null ? null : `${txn.to.substring(0,20)}...`}</td>                       
                   </tr> 
-                } else {
-                  return null
-                }
-              }) : null
                            
             )}
             </tbody>

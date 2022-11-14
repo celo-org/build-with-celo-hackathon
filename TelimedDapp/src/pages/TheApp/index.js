@@ -9,6 +9,7 @@ import { StyleSheet, css } from 'aphrodite'
 import  { DOCTOR, PHARMACIST, INSURER } from "../../constants"
 import connectImage from "../../assets/img/connect.svg"
 import PaginatedItems from './PaginateItems'
+import { useCelo } from '@celo/react-celo';
 
 const styles = StyleSheet.create({
   btn: {
@@ -29,9 +30,10 @@ const TheApp = () => {
   let location = useLocation()
   const [showModal, setShowModal] = useState(false)
   const handleClose = () => {setShowModal(false)}
-  const accountAddress = localStorage.getItem("address")
-  console.log(accountAddress)
+  // const address = localStorage.getItem("address")
+  // console.log(accountAddress)
   const transactions = localStorage.getItem("transactions")
+   const { address } = useCelo();
 
   const doctor = DOCTOR
   const pharmacist = PHARMACIST
@@ -60,16 +62,16 @@ const TheApp = () => {
 
         <div>
           {    
-             accountAddress === doctor ?
+             address === doctor ?
             <Button className={css(styles.btn)} variant="info" onClick={() => setShowModal(true)}>
             Doctor
-           </Button> : accountAddress === pharmacist ?
+           </Button> : address === pharmacist ?
             <Button className={css(styles.btn)} onClick={() => setShowModal(true)}>
             Pharmacist
-            </Button> : accountAddress === insurer ?
+            </Button> : address === insurer ?
             <Button className={css(styles.btn)} variant="success" onClick={() => setShowModal(true)}>
               Insurer
-            </Button> :  accountAddress  ?
+            </Button> :  address  ?
             <div>
               <Button className={css(styles.btn)} variant="warning" onClick={() => setShowModal(true)}>
               Patient
@@ -78,20 +80,20 @@ const TheApp = () => {
            : <div></div> 
           }
       
-          {(showModal  && accountAddress !== doctor )  && (showModal  && accountAddress !== pharmacist ) && (showModal  && accountAddress !== insurer ) ?  
+          {(showModal  && address !== doctor )  && (showModal  && address !== pharmacist ) && (showModal  && address !== insurer ) ?  
           <FormModal show={showModal} buttonText="Consult a doctor" onHide= {() => handleClose()} /> :
           <FormModal show={showModal} buttonText="Submit" onHide= {() => handleClose()} />    
           }   
 
         </div>
-        {accountAddress === null ? 
+        {address === null ? 
           <div>
             <img className={css(styles.empty)} src={connectImage} alt="connect" /> 
             <h3 className={css(styles.emptyText)}>Please connect your wallet to get started</h3>
           </div> 
             :
             <div id="container">
-              {/* <TransactionHistoryTable/>  */}
+              <TransactionHistoryTable/> 
               {/* <PaginatedItems currentItems={2}/> */}
             </div>
         }
