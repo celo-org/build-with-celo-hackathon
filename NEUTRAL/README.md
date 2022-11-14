@@ -1,15 +1,10 @@
-# ⚡ Hackathon Project Template ⚡
-
-_This is a sample submission repository.
-Please [**fork this repo**](https://help.github.com/articles/fork-a-repo/) and use this as a starting point for your hackathon project._
-
 ## NEUTRAL - Offset your crypto transactions
 
 ### Team web3000
 
 #### DeFi
 
-##### APAC
+##### Region - APAC
 
 ##### Team Members
 
@@ -17,11 +12,18 @@ Please [**fork this repo**](https://help.github.com/articles/fork-a-repo/) and u
 
 #### Project Description
 
-Provide a clear statement of the challenges/issues/problems/gaps your project engages as well as a brief, high-level description of how your project engages the areas you've identified. What is the value of your approach? Who are the intended users?
+Offset your transactions on blockchain and be a carbon neutral.
 
 #### Summary
 
-Describe the basic functionality of your project. What are the features you were able to implement? What features would you like to implement?
+Transactions occuring on blockchain envolves emission of CO2 in the environment. It's our moral responsibility to
+offset the carbon we emitted into the atmosphere.
+
+**Neutral** helps you to make yourself carbon neutral.
+
+- Connect Wallet or enter address manually.
+- Click on calculate button to calculate your carbon emission.
+- See how neutral you are and offset remaining carbon using Toucon protocol.
 
 #### URLs
 
@@ -33,7 +35,8 @@ List any links to your presentation or any related visuals you want to share.
 
 #### Next Steps
 
-What do you need to do next to turn this prototype into a working solution?
+- Implement Toucon protocol
+- Add transactions from majority of the EVM chains and non-EVM chains.
 
 #### License
 
