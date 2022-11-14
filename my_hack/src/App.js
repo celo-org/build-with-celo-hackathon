@@ -7,7 +7,7 @@ import BigNumber from "bignumber.js"
 import Loading from './loading';
 
 const ERC20_DECIMALS = 18
-const DaoContractAddress = "0x8989400A5669fA73569883523427faF6027699a5"
+const DaoContractAddress = "0x8dd8610292CE79A5BEA1A7253849063e289e22d2"
 const cUSDContractAddress = "0x03e4CcA31f8B0264F3587e969771fE9a7f88415f"
 let kit
 
