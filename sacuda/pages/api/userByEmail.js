@@ -10,7 +10,6 @@ export default async function emailHandler (req, res) {
   console.log('req:'+reqemail)
       try {
         const data = await Sacuda.findOne({ email: reqemail })
-        //res.body
         res.status(200).json({ success: true, data })
       } catch (error) {
         res.status(400).json({ success: false })

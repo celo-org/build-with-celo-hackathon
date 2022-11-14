@@ -1,17 +1,21 @@
-import { useState } from "react";
+import { useState, mutate } from "react";
 import Head from 'next/head';
 import { Text, Box, Icon, Button, Heading, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Input, SimpleGrid, Link, FormControl, FormLabel, FormHelperText, FormErrorMessage } from "@chakra-ui/react";
 import { FiEye, FiUser } from "react-icons/fi";
 import { Table } from "react-chakra-pagination";
 import { useForm } from 'react-hook-form'
 import { useSession, signIn, signOff } from "next-auth/react";
-import { useAccount } from 'wagmi';
+import { useAccount, useConnect, useContract, useContractRead, useContractWrite, useNetwork, useWaitForTransaction, usePrepareContractWrite } from 'wagmi';
+import { ethers } from "ethers";
+import tokenContract from "../../contracts/abi/metadata.json";
 import styles from '../styles/home.module.scss';
 import '@rainbow-me/rainbowkit/styles.css';
 
 const url = "http://localhost:3000/api/getUsers";
 
 export default function admin({users}) {
+
+    const CONTRACT_ADDRESS = "0x34422efA66294820a0bb169294c28a880B9a88bf";
     
     const { isConnected } = useAccount();
     const { status, data: session } = useSession({
@@ -21,11 +25,51 @@ export default function admin({users}) {
     }
     })
 
+    const [bWalletSta, setBWalletSta] = useState();
+    const [bNameSta, setBNameSta] = useState();
     const [page, setPage] = useState(1);
     const [modalValue, setModalValue] = useState([])
     const [isOpen,setIsOpen] = useState(false)
     const [buttonState,setButtonState] =useState()
 
+    // const {
+    //     data: mintData,
+    //     write: mintToken,
+    //     isLoading: isMintLoading,
+    //     isSuccess: isMintStarted,
+    //     error: mintError,
+    //   } = useContractWrite({
+    //     address: CONTRACT_ADDRESS,
+    //     abi: tokenContract.output.abi,
+    //     functionName: "mint",
+    //   });
+
+    const { config, error } = usePrepareContractWrite({
+          address: CONTRACT_ADDRESS,
+          abi: tokenContract.abi,
+          functionName: 'mint',
+          args: [
+            modalValue.wallet,
+            false,
+            modalValue.bname
+          ]
+        });
+
+    const { write } = useContractWrite(config);
+
+
+    //   const mintSACSwob = async () => {
+    //     console.log(bWalletSta)
+    //     console.log(bNameSta)
+    //     await mintToken({
+    //       args: [
+    //         bWalletSta,
+    //         false,
+    //         bNameSta,
+    //       ],
+    //     });
+    //   };
+    
     function onClose(){
         setIsOpen(false)
       }
@@ -34,6 +78,8 @@ export default function admin({users}) {
         setIsOpen(true)
         setModalValue(user)
         console.log({user})
+        setBWalletSta(user.wallet)
+        setBNameSta(user.bname)
      }
 
     const {
@@ -52,6 +98,7 @@ export default function admin({users}) {
         const prof = JSON.parse(preProf);
 
         const finalValues = { ...values, ...prof}
+        await write?.()
         try {
             const res = await fetch(`/api/updateProfile/${reqemail}`, {
             method: "PUT",
@@ -66,8 +113,9 @@ export default function admin({users}) {
             }
 
             const { data } = await res.json();
-            mutate(`/api/updateProfile/${reqemail}`, data, false);
-            router.push("/");
+            //mutate(`/api/updateProfile/${reqemail}`, data, false);
+            //router.push("/");
+            onClose()
         } catch (error) {
             console.log(error);
         }
@@ -246,13 +294,13 @@ export default function admin({users}) {
             </SimpleGrid>
             </ModalBody>
             <ModalFooter>
-                <Button colorScheme="blue" mr={3} onClick={onClose}>
+                <Button colorScheme="cyan" mr={3} onClick={onClose}>
                     Close
                 </Button>
                 <Button type="submit" colorScheme="red" mr={3} onClick={() => (setButtonState(2))}>
                     Disapprove
                 </Button>
-                <Button type="submit" colorScheme="green" mr={3} onClick={() => (setButtonState(1))}>
+                <Button type="submit" colorScheme="blue" mr={3} onClick={() => (setButtonState(1))}>
                     Approve
                 </Button>
             </ModalFooter>
