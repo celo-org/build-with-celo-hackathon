@@ -191,4 +191,14 @@ This repository includes an [unlicensed](http://unlicense.org/) statement though
   Successfully generated React context!
 ```
 
+
+
 On the frontend, we have used React library to build thee web app, React-Native with Expo-cli for the Mobile version.
+
+
+
+
+![celo4](https://user-images.githubusercontent.com/35783747/201605163-38613f4e-54a6-4459-927d-5e7d453a25f2.PNG)
+![celo3](https://user-images.githubusercontent.com/35783747/201605172-9c001c39-0faa-4978-80a7-ff291765a5e6.PNG)
+![celo2](https://user-images.githubusercontent.com/35783747/201605175-317f3dd2-1924-4689-a15a-9667afe43cc9.PNG)
+![celo1](https://user-images.githubusercontent.com/35783747/201605239-aae51d66-ee7f-4c96-96d8-317b32dc5c17.PNG)
