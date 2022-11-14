@@ -10,8 +10,8 @@
 
 ##### Team Members
 - Nathan Challen - Fullstack / Blockchain 
-- Marisol Challen - Operations / Research
-- Dat Tran - Mobile Dev
+- Venkatesh Lingampally - Mobile Dev
+- Benji Chimex - Widget Dev 
 
 ## Project Description
 
@@ -77,8 +77,10 @@ https://build-with-celo.hackerearth.com/challenges/hackathon/celo-hackathon/dash
 
 
 #### Presentation
-Links to our presentation will be added at a later date.
 
+[![Presso video](https://img.youtube.com/vi/2rpQVP5QLfk/maxresdefault.jpg)](http://www.youtube.com/watch?v=2rpQVP5QLfk "Refi Work on Celo")
+
+https://youtu.be/2rpQVP5QLfk
 
 ### Week Ending: 30 Sept 22
 
@@ -112,11 +114,12 @@ Links to our presentation will be added at a later date.
 - [x] SVG generator backend for Widget - https://github.com/celo-org/build-with-celo-hackathon/commit/f24d80d6d56a2352e0630c425d4fc509b3895b07
 - [x] Deploy to Alfajores from hardhat - https://github.com/celo-org/build-with-celo-hackathon/commit/93a4f5b3e6cb676d67ccffc7d3e72ae3ae819bd4
 
+### Week Ending: 14 Nov 22
 
-This week we plan to complete the following:
-- [ ] Improve Test cases coverage for Token 
-- [ ] Improve Test cases coverage for Sponsor Contract
-- [ ] Attempt connection from dApp to contract.
+- [x] App faucet - https://github.com/oespn/amaDAO-build-with-celo-hackathon/commit/d292d88904c7d447a8de3bdef51a7bed8fccc678
+- [x] Integrated Toucan - https://github.com/oespn/amaDAO-build-with-celo-hackathon/commit/dd9d27f323af396484e1228e8defface092b6272
+- [x] Front-end for widgets  - https://github.com/oespn/amaDAO-build-with-celo-hackathon/commit/2fda09a4ab34bf180f99e67d7a5e3710f0e32172
+- [x] Traversal of sponsorships - https://github.com/oespn/amaDAO-build-with-celo-hackathon/commit/9fd0c9ddfd2e8ea6cba46239d1e0b2e3836efd4d
 
 
 
