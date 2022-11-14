@@ -30,7 +30,7 @@ async function main() {
     .then((f) => f.deployed())
   await cashout.addAllowedToken(token.address)
   writeFileSync(
-    "deployCashoutx.json",
+    "deployCashout.json",
     JSON.stringify(
       {
         MinimalForwarder: forwarder.address,

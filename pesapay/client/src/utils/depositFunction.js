@@ -22,7 +22,7 @@ export async function approve(amount) {
 }
 export async function getBalance(provider, address) {
   const token = createInstance(
-    "0x91A794303F6A1D18Ae03ec689983568D76121E00",
+    "0x91A794303F6A1D18Ae03ec689983568D76121E00", //tokenAddress of coin deployed for this project
     tokenAbi,
     provider
   )
