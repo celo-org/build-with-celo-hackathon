@@ -18,6 +18,8 @@ import LastPageIcon from '@mui/icons-material/LastPage';
 import { PoolListContent, SinglePool } from "../../propsTypes";
 import utilities from "../../custom/utils"
 import { useCelo } from "@celo/react-celo";
+import BigNumber from "bignumber.js";
+import { sendtransaction } from "../../runContract";
 
 interface BandTableProps {
   count: number;
@@ -50,6 +52,7 @@ function TablePaginationActions(props: BandTableProps) {
   const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
   };
+
 
   return (
     <Box sx={{ flexShrink: 0, ml: 2.5 }}>
@@ -126,11 +129,67 @@ function generateRowdata (pool: PoolListContent, callback:Function) {
   )
 }
 
+const ZERO_ADDR = `0x${"0".repeat(40)}`;
+
+const MOCK_POOlLIST = [
+  {
+    uints: {
+      mode: 0,
+      quorum: BigNumber(0),
+      selector: BigNumber(0),
+      ccr: BigNumber(0),
+      duration: BigNumber(0),
+      0: 0,
+      1: BigNumber(0),
+      2: BigNumber(0),
+      3: BigNumber(0),
+      4: BigNumber(0),
+    },
+    uint256s: {
+      unit: BigNumber(0),
+      receivable: BigNumber(0),
+      currentPool: BigNumber(0),
+      0: BigNumber(0),
+      1: BigNumber(0),
+      2: BigNumber(0),
+    },
+    addrs: { asset: ZERO_ADDR, lastPaid: ZERO_ADDR, 0: ZERO_ADDR, 1: ZERO_ADDR,},
+    mems: [ZERO_ADDR],
+    allGh: BigNumber(0),
+    0: {
+      mode: 0,
+      quorum: BigNumber(0),
+      selector: BigNumber(0),
+      ccr: BigNumber(0),
+      duration: BigNumber(0),
+      0: 0,
+      1: BigNumber(0),
+      2: BigNumber(0),
+      3: BigNumber(0),
+      4: BigNumber(0),
+    },
+    1: {
+      unit: BigNumber(0),
+      receivable: BigNumber(0),
+      currentPool: BigNumber(0),
+      0: BigNumber(0),
+      1: BigNumber(0),
+      2: BigNumber(0),
+    },
+    2: { asset: ZERO_ADDR, lastPaid: ZERO_ADDR, 0: ZERO_ADDR, 1: ZERO_ADDR },
+    3: [ZERO_ADDR],
+    4: BigNumber(0),
+  },
+]
 
 
 export default function BandTable() {
   const [page, setPage] = React.useState(0);
+  const [poolList, setPoolList] = React.useState(MOCK_POOlLIST) 
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const { sendTransaction} = sendtransaction();
+
+  const row = generateRowdata(poolList, );
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
