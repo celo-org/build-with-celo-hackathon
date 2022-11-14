@@ -4,12 +4,15 @@ import styles from "../styles/Home.module.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useAccount } from "wagmi";
 
 export default function Home() {
   let router = useRouter();
 
   const [address, setAddress] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { addressC, isConnected } = useAccount();
 
   // set address value in input
   const inputHandler = (e) => {
@@ -31,11 +34,24 @@ export default function Home() {
       )
       .then((res) => {
         setIsLoading(false);
+        const resArray = res.data.result;
+        var totalGas = 0;
+
+        resArray.forEach((transaction) => {
+          totalGas += parseInt(transaction.gasUsed);
+        });
+
+        const totalCo2 = totalGas * (0.00033624 / 243305822);
+        console.log(totalCo2);
+
         router.push({
           pathname: "/result",
-          state: { address: address, count: res.data.result.length },
+          query: {
+            address: addressC ? addressC : address,
+            totalCo2: totalCo2,
+            percentage: 10,
+          },
         });
-        return console.log(res.data.result.length);
       });
   };
 
@@ -57,6 +73,8 @@ export default function Home() {
           <p></p>
         </div>
         <div className="flex flex-col">
+          <ConnectButton />
+          <p className="my-4">OR</p>
           <input
             type="text"
             className="border p-3"
@@ -64,6 +82,7 @@ export default function Home() {
             value={address}
             onChange={inputHandler}
           />
+
           <button
             onClick={carbonEmissionCalculator}
             className="p-4 rounded bg-black text-white mt-4"
@@ -72,7 +91,7 @@ export default function Home() {
           </button>
         </div>
         <div className="text-sm font-semibold mb-10">
-          Build on <span className="text-green-500">Celo &amp; Toucan</span>
+          Build with <span className="text-green-500">Celo &amp; Toucan</span>
         </div>
       </main>
     </div>
