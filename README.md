@@ -1,169 +1,276 @@
-# ⚡ Build with Celo Hackathon ⚡ 
+<!-- TABLE OF CONTENTS -->
 
-Build with Celo Hackathon is a three (3) phase hackathon event focused on Regenerative Finance (#ReFi) within DAOs, NFTs, Gaming (GameFi), Social Impact (SocialFI) and developer tooling/infrastructure on the Celo platform.
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
 
-## Hackathon Facilitation
-Celo selected Hackerearth to facilitate the hackathon expereince. To learn more information about the Build on Celo hackathon event and register, navigate to Hackerearth Build on Celo hackathon site: [link](https://build-with-celo.hackerearth.com/)
+<!-- ABOUT THE PROJECT -->
 
-## Hackathon Tracks: 
+## About The Project
 
- - __DAO Track:__ 
-    - Build decentralized web applications facilitating DAOs within ReFi, ReFi DAO Tools, and ReFi DAO Infrastructure.
- - __NFT, Gaming and Creator Track:__ 
- 	- Build an application incorporating ReFi, ReFi creators tools, and ReFi creators infrastructure
- - __Social Impact Track:__ 
- 	- Build a decentralized web applications focused on social impact within ReFi, Social impact ReFi Tools, and Social impact ReFi Infrastructure
+EcoConstruct is a platform built on decentralized Celo Composer platform to manage the hazardous material and Transparent payments in Construction Industry. In Construction Industry multiple kinds of Waste being mean aged in a most inappropriate way, because of lack of transparency in selecting proper suppliers audits in payments of the Disposal charges.
 
-## Timeline
+EcoConstruct addresses the primary issues in building a transparent ReFi platform by Unification of Supplier Payments and Wages and Tracking and Minimizing the disposal of pollutants.
 
-#### Github commit schedule:
+The use cases we have implemented on the centralized Celo de-centralized platform:
+<ul>
+<li>Unified Payments with Celo
+<li>Pollution compliance and Waste Disposal Auditing\
+  </ul>
+We choose Cielo platform as it is a simple and elegant platform for next generation web3 applications
 
-- 9/26 - Idea submission open until 9/26
+The technology layer is as follows:
+<ul>
+<li>We built contracts With Solidity to create the forms.
+<li>All the business logic is powered by Google cloud services and Functions 3, Connected to a existing supplier Master database running on Mongodb.
+<li>We have taken MetaMask and testnet to add a few coins, So that our company has a starting Point for payments and tracking.
+<li>Code is pushed to Github after we have done the initial pull for Celo hackathon.
+  
+  </ul>
+Our vision is to envisage how a Newer technology like web3 can coexist with existing web2 and Cloud Technologies and web3. In summary we are ensuring that using Cielo the Construction industry can be more audited , transparent and make planet Greener.
 
-- 9/19 - Fork this repo
-- 9/23 - Change README
-- 9/30 - At least 3 commits
-- 10/7 - At least 3 commits
-- 10/14 - At least 3 commits
-- 10/21 - At least 3 commits
-- 10/28 - At least 3 commits
-- 11/4 - At least 3 commits
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-Three (3) phase hackathon event starting August 26th, 2022.
-### Phase 1: Idea
- - Hackathon Phase 1 Kick-off - August 26th, 2022
- - Project Idea Submissions Due - September 26, 2022
- - Idea Submissions Evaluated on rolling basis
- 
-### Phase 2: Hack/build MVP
- - Hackathon Phase 2 Kick off - September 19th, 2022
- - Project Submissions Due - November 6th, 2022
- - Evaluations - November 7th - December 4th, 2022
- 
-### Phase 3: Iterate & Pitch with Celo
- - Hackathon Phase 3 Kick off - TBD 
- 
-## Process
-**Hackathon participants will need to:**
+## Built With
 
- 1. [Fork this repo](#hackathon-repo-process)
- 2. Utilize [HackerEarth](https://build-with-celo.hackerearth.com/) to:
-	 - Manage and collaborate with your team
-	 - Submit your project for final evaluation
+Celo Composer is built on Celo to make it simple to build dApps using a variety of front-end frameworks.
 
-## Hackathon Repo Process
+- [Celo](https://celo.org/)
+- [Solidity](https://docs.soliditylang.org/en/v0.8.15/)
+- [Next.js](https://nextjs.org/)
+- [React.js](https://reactjs.org/)
+- [Material UI](https://mui.com/)
+- [React Native](https://reactnative.dev/)
+- [Flutter](https://docs.flutter.dev/)
 
- 1. Fork this repo
-    - Press the Fork button
- 2. Create project branch
- 3. Make your changes within new branch!
-	 - Copy the folder named **Project_Name**
-	 - Rename the copied folder with your project name
-	 - Modify project details within your project folder **Readme.md**
-		- Project Name
-		- Brief Description
-		- Team members & roles
-		- Hackathon track
-		- Project details
-			- Demonstartion video _(*Phase 2 & 3, Required)_
-			- Requirements _(*Phase 2 & 3, Required)_
-			- Instructions to build & test _(*Phase 2 & 3, Required)_
+<p align="right">(<a href="#top">back to top</a>)</p>
 
- 4. Add, commit, and push the changes
-	 - Add the files you've changed and commit them with a descriptive message.
- 5. Submit your pull request _(*Phase 2 & 3, Required)_
-    -  Submit to the maintainers for approval. Head over to the original repositories Pull Requests tab, you should see an automatic suggestion from GitHub to create a pull request from your new branch.
-    -  Utilize your project name as the title for your initial pull Requests
-    -  Provide a brief project description within the pull request comment
+<!-- GETTING STARTED -->
 
-***Congrats, your officially a Build with Celo Hackathon participant!***
+## Getting Started
 
+To build your dApp, you'll need to install the dependencies, create a new project, and run the following commands:
 
-## Developer tools and resources
+## Prerequisites
 
-This section contains information about some of the key tools and resources that will help developers start building applications on Celo.
+- Node
 
-For a comprehensive list of resources and information, review [Celo Docs.](https://docs.celo.org/)
+## How to use Celo Composer
 
-### QUICK START GUIDES
+The easiest way to get started with Celo Composer is using `@celo/celo-composer`. This is a CLI tool enables you to quickly start building dApps on Celo for multiple frameworks including React, React Native (w/o Expo), Flutter and Angular. You can create the dApp using default Composer templates provided by Celo. To get started, use the following command:
 
-View the [Developer Code Examples page](https://docs.celo.org/developer#quickstart) to get started using the Celo SDKs with guided coding exercises.
+```bash
+npx @celo/celo-composer create
+```
 
-### Tutorials
-- [Tutorial - Celo Developer Blog](https://docs.celo.org/blog)
+#### Output
 
-### TOOLS
+![Output-1](./images/readme/image-1.png)
 
-#### Boilerplates
-- [celo-composer](https://github.com/celo-org/celo-composer#celo-composer)
-	- Celo Composer allows you to quickly build, deploy, and iterate on decentralized applications using Celo. It provides a number of frameworks, examples, and Celo specific functionality to help you get started with your next dApp.
+- Select the framework you like and please enter.
 
-#### SDKs
+![Output-2](./images/readme/image-2.png)
 
--   [ContractKit](https://docs.celo.org/developer/contractkit#what-is-contractkit)
-	-   Javascript package of Celo blockchain utilities
-	-   Manage connections to the Celo blockchain, accounts, send transactions, interact with smart contracts, etc.
-	-   A set of wrappers around the core protocol smart contracts to easily connect with contracts related to governance, validators, on-chain exchange, etc.
-	-   Includes [web3.js](https://web3js.readthedocs.io/en/v1.2.4/)
--   [Celo Ethers.js Wrapper](https://github.com/celo-tools/celo-ethers-wrapper) (experimental)
-	-   A minimal wrapper to make [ethers.js](https://docs.ethers.io/v5/) compatible with the Celo network
--   [use-react](https://github.com/celo-org/react-celo)
-	- The easiest way to access Celo in your React applications 🔥. react-celo is a React hook for managing access to Celo with a built-in headless modal system for connecting to your users wallet of choice.
-	- Now your DApp can be made available to everyone in the Celo ecosystem, from Valora users to self custodied Ledger users.
-	- By default react-celo is styled so that you can drop it into your application and go, however it's fully customisable so you can maintain a consistent UX throughout your application.
--   [DappKit](https://docs.celo.org/developer-guide/dappkit)
-	-   Easily connect to the [Valora](http://valoraapp.com/) wallet with your React Native mobile application
-	-   Valora manages user account, private keys and transaction signing, so you can focus on building your dapp
-	-   Learn more and see the code with the [Dappkit truffle box](https://github.com/critesjosh/celo-dappkit)
--   [Python SDK](https://github.com/blaize-tech/celo-sdk-py)
--   [Java SDK](https://github.com/blaize-tech/celo-sdk-java)
-	- [Android with Java SDK](https://github.com/bcamacho/celo-android-java-sdk-test-example)
-- [iOS SDK](https://github.com/heymateag/celoiossdk)
+- Enter the project name and the starter project will the create in present working directory.
 
+### Get testnet funds and install dependencies
 
+```sh
+cd hardhat
+yarn install
+npx hardhat create-account # prints a private key + account
+```
 
-#### Infrastructure
+1. Create `packages/hardhat/.env` and paste the line containing the private key into it, so it looks something like this:
 
--   [Valora](https://valoraapp.com/) provides a clean, intuitive UI where users can send transactions and interact with smart contracts
--   [Forno](https://stackedit.io/developer-guide/forno)
--   Node access service so you can connect your dapp to the Celo blockchain without having to run node infrastructure
--   [ODIS](https://stackedit.io/developer-resources/contractkit/odis.md)
--   Oblivious decentralized identity service
--   Lightweight identity layer that makes it easy to send cryptocurrency to a phone number
--   Blockscout block explorers
--   [Alfajores testnet](http://alfajores-blockscout.celo-testnet.org/) & [mainnet](http://explorer.celo.org/)
--   [Stats.celo.org](http://stats.celo.org/) to check network activity and health
+`PRIVATE_KEY="0xba28d5cea192f121db5f1dd7f501532170bb7bb984c4d3747df3e251e529f77d"`
 
+2. Fund the account from the faucet [here](https://celo.org/developers/faucet). Once the account is funded, deploy the contracts with:
 
-#### Networks
+```sh
+yarn deploy
+```
 
--   [Alfajores Testnet](https://docs.celo.org/getting-started/alfajores-testnet)
--   [Faucet](https://celo.org/developers/faucet) for free testnet CELO and cUSD
--   [Forno](https://docs.celo.org/developer-guide/forno) supports connections to alfajores
--   Requires Alfajores Celo wallet for mobile device testing (please request, support@clabs.co)
--   [Baklava testnet](https://docs.celo.org/getting-started/baklava-testnet) for validators and testing protocol changes
+## Supported Frameworks
 
+### <u>React</u>
 
-#### Ethereum Tools
+- Creating examples and experiment with React for your libraries and components.
+- Start the dApp with `yarn dev`/`npm run dev` and you are good to go.
+- Support for Website and Progressive Web Application.
+- Works with all major crypto wallet.
 
--   Similarities between Celo and Ethereum means you can use many of the most popular Ethereum developer tools.
--   Celo supports the EVM, so tools for writing smart contracts in Solidity (or any language that compiles to EVM bytecode) are compatible with Celo
--   ERC20, NFT (ERC721) and other smart contract interface standards are supported, see [Celo for Ethereum Developers](https://docs.celo.org/developer-guide/celo-for-eth-devs)
-- [Truffle](https://www.trufflesuite.com/)
-- [OpenZeppelin](https://openzeppelin.com/)
-- [Remix](https://remix.ethereum.org/)
+Check here to learn more about [Celo Composer - React](./packages/react-app/README.md)
 
-#### Ongoing projects
+### <u>React Native</u>
 
--   [Community projects](https://docs.celo.org/developer-guide/celo-dapp-gallery)
--   [Grant recipients](https://celo.org/experience/grants/directory)
+- You don't need to configure anything. A reasonably good configuration of both development and production builds is handled for you so you can focus on writing code.
+- Support for Android and IOS.
+- Works with [Expo](https://expo.dev/) and without Expo.
+- Working example app - The included example app shows how this all works together.
+- Easy to use and always updated with latest dependencies.
 
-#### Web wallets
-  -  [celowallet.app](https://celowallet.app/)
-  -  [Celo Terminal](https://github.com/zviadm/celoterminal/)
+Check here to learn more about [Celo Composer - React Native](./packages/react-native-app/README.md)
 
+### <u>Flutter</u>
 
-#### Community
+- One command to get started - Type `flutter run` to start development in your mobile phone.
+- Works with all major mobile crypto wallets.
+- Support for Android, IOS (Web, Windows, and Linux coming soon).
+- Working example app - The included example app shows how this all works together.
+- Easy to use and always updated with latest dependencies.
 
--   Join our [Discord](https://chat.celo.org/)
--   [Discourse Forum](https://forum.celo.org/)
+Check here to learn more about [Celo Composer - Flutter](./packages/flutter-app/README.md)
+
+### <u>Angular</u>
+
+- Creating examples and experiment with Angular for your libraries and components.
+- Easy to setup and use.
+
+Check here to learn more about [Celo Composer - Angular](./packages/angular-app/README.md)
+
+## Review
+
+- Edit smart contracts in `packages/hardhat/contracts`.
+- Edit deployment scripts in `packages/hardhat/deploy`.
+- Edit frontend in `packages/react-app/pages/index.tsx`.
+- Open <http://localhost:3000> to see the app.
+
+You can run `yarn deploy --reset` to force re-deploy your contracts to your local development chain.
+
+## Deploy Your DApp
+
+This repo comes with a `netlify.toml` file that makes it easy to deploy your front end using [Netlify](https://www.netlify.com/). The `toml` file contains instructions for Netlify to build and serve the site, so all you need to do is create an account and connect your GitHub repo to Netlify.
+
+## Developing with local devchain
+
+You can [import account account keys](https://metamask.zendesk.com/hc/en-us/articles/360015489331-How-to-import-an-Account) for the local development chain into Metamask. To print the private keys of the local chain accounts `cd /packages/hardhat` and run
+
+```shell
+npx hardhat devchain-keys
+```
+
+If you are working on a local development blockchain, you may see errors about `the tx doesn't have the correct nonce.` This is because wallets often cache the account nonce to reduce the number of RPC calls and can get out of sync when you restart your development chain. You can [reset the account nonce in Metamask](https://metamask.zendesk.com/hc/en-us/articles/360015488891-How-to-reset-your-account) by going to `Settings > Advanced > Reset Account`. This will clear the tx history and force Metamask to query the appropriate nonce from your development chain.
+
+**Note:** You can get a local copy of mainnet by forking with Ganache. Learn more about [forking mainnet with Ganache here.](https://trufflesuite.com/blog/introducing-ganache-7/index.html#1-zero-config-mainnet-forking)
+
+## React library choices
+
+The example UI in `packages/react-app` uses the [Next.js](https://nextjs.org/) React framework, and [react-celo](https://www.npmjs.com/package/@celo/react-celo) Celo library to get you started with building a responsive, web3 DApp quickly. Feel free to use it as a reference and use whatever web3 packages you are familiar with.
+
+## The Graph
+
+**Using the Graph is not a requirement for building a web3 application. It is more of a convenience for when your application is reading a lot of data from a blockchain.**
+
+Its suggested to only adding support for the Graph when you need it, avoid premature optimization.
+
+The `/packages/subgraphs` directory includes an example subgraph for reading data from the example `Storage.sol` contract. The Graph is a blockchain data indexing service that makes it easier to read data from EVM blockchains. You can read more about how the Graph works and how to use it in the [README here](/packages/subgraphs/README.md).
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- USAGE EXAMPLES -->
+
+## 🔭 Learning Solidity
+
+📕 Read the docs: <https://docs.soliditylang.org>
+
+- [Primitive Data Types](https://solidity-by-example.org/primitives/)
+- [Mappings](https://solidity-by-example.org/mapping/)
+- [Structs](https://solidity-by-example.org/structs/)
+- [Modifiers](https://solidity-by-example.org/function-modifier/)
+- [Events](https://solidity-by-example.org/events/)
+- [Inheritance](https://solidity-by-example.org/inheritance/)
+- [Payable](https://solidity-by-example.org/payable/)
+- [Fallback](https://solidity-by-example.org/fallback/)
+
+📧 Learn the [Solidity globals and units](https://solidity.readthedocs.io/en/v0.6.6/units-and-global-variables.html)
+
+## Support
+
+Join the Celo Discord server at <https://chat.celo.org>. Reach out on the dedicated repo channel [here](https://discord.com/channels/600834479145353243/941003424298856448).
+
+<!-- ROADMAP -->
+
+## Roadmap
+
+See the [open issues](https://github.com/celo-org/celo-composer/issues) for a full list of proposed features (and known issues).
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- CONTRIBUTING -->
+
+## Contributing
+
+As a contributor, you can add your own dApp to this repository and include it as a tab for others to access. Follow the steps below and reference existing files for additional details to help you get started.
+
+If you decide to try this out and find something confusing, consider opening an pull request to make things more clear for the next developer that comes through. If you improve the user interface or create new components that you think might be useful for other developers, consider opening a PR.
+
+We will happily compensate you for contributions. Anywhere between 5 and 50 cUSD (or more) depending on the work. This is dependent on the work that is done and is ultimately up to the discretion of the Celo Foundation developer relations team.
+
+You can view the associated bounty on Gitcoin [here](https://gitcoin.co/issue/celo-org/celo-progressive-dapp-starter/17/100028587).
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+### How to Contribute a new dApp
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
+
+- Create a new smart contract in `packages/hardhat/contracts`.
+- Add a new deployment script within `packages/hardhat/deploy/00-deploy.js` using the name of your smart contract.
+- Deploy your Smart Contract from within packages/hardhat using `yarn deploy`
+- Add a new component named `ContractName.tsx` to `packages/react-app/components` to create front end of your dApp.
+- Export component using `packages/react-app/components/index.tsx` using `export * from './ContractName`
+- Import component to `packages/react-app/pages/index.tsx` by adding contract to `import { ContractName } from "@/components";`
+- Add tab within tabs component in `packages/react-app/pages/index.tsx` and replace # with tab number.
+
+```jsx
+<Tab label="Contract Label" {...a11yProps(#)} />
+```
+
+- Add tab panel to page replacing `#` with tab number and `ContractName` with your smart contract name
+
+```jsx
+<TabPanel value={value} index={#}>
+    <GreeterContract contractData={contracts?.ContractName} />
+</TabPanel>
+```
+
+You should now be able to view your new dApp from [http://localhost:3000](http://localhost:3000).
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## License
+
+Distributed under the MIT License. See `LICENSE.txt` for more information.
+
+<!-- CONTACT -->
+## Contact
+
+- [@CeloDevs](https://twitter.com/CeloDevs)
+- [Discord](https://discord.com/invite/6yWMkgM)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
