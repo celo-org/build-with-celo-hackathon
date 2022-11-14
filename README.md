@@ -3,7 +3,7 @@
 
 ## Project Name: amaDAO - Regenerative protocol for 'work'
 ### Team name: amaDAO
-#### Hackathon Track: DAO
+#### Hackathon Track: DAO, ReFi
 
 ##### Region: Queensland, Australia.
 
