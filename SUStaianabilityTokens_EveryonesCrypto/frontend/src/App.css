@@ -1,0 +1,7 @@
+.app {
+  text-align: center;
+  display: grid;
+  justify-content: center;
+  gap: 32px;
+  padding: 32px;
+}
