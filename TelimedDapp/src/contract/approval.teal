@@ -1,0 +1,259 @@
+#pragma version 6
+txn ApplicationID
+int 0
+==
+bnz main_l20
+txn OnCompletion
+int NoOp
+==
+bnz main_l9
+txn OnCompletion
+int UpdateApplication
+==
+bnz main_l8
+txn OnCompletion
+int DeleteApplication
+==
+bnz main_l7
+txn OnCompletion
+int OptIn
+==
+txn OnCompletion
+int CloseOut
+==
+||
+bnz main_l6
+err
+main_l6:
+int 0
+return
+main_l7:
+txn Sender
+byte "Creator"
+app_global_get
+==
+return
+main_l8:
+txn Sender
+byte "Creator"
+app_global_get
+==
+return
+main_l9:
+txna ApplicationArgs 0
+byte "payment"
+==
+bnz main_l19
+txna ApplicationArgs 0
+byte "patient"
+==
+bnz main_l18
+txna ApplicationArgs 0
+byte "doctor"
+==
+bnz main_l17
+txna ApplicationArgs 0
+byte "pharmacist"
+==
+bnz main_l16
+txna ApplicationArgs 0
+byte "insurer"
+==
+bnz main_l15
+err
+main_l15:
+txn Sender
+byte "Insurer"
+app_global_get
+==
+assert
+txna Accounts 3
+balance
+txn Sender
+min_balance
+-
+int 0
+>
+assert
+global GroupSize
+int 2
+==
+assert
+txn NumAppArgs
+int 2
+==
+assert
+gtxn 0 TypeEnum
+int pay
+==
+assert
+gtxn 0 Receiver
+global CurrentApplicationAddress
+==
+assert
+itxn_begin
+int pay
+itxn_field TypeEnum
+txna Accounts 1
+itxn_field Receiver
+txna ApplicationArgs 1
+btoi
+itxn_field Amount
+int 0
+itxn_field Fee
+itxn_submit
+int 1
+return
+int 1
+return
+main_l16:
+txn Sender
+byte "Pharmacist"
+app_global_get
+==
+assert
+global GroupSize
+int 2
+==
+assert
+txn NumAppArgs
+int 2
+==
+assert
+gtxn 0 TypeEnum
+int pay
+==
+assert
+gtxn 0 Receiver
+global CurrentApplicationAddress
+==
+assert
+itxn_begin
+int pay
+itxn_field TypeEnum
+txna Accounts 1
+itxn_field Receiver
+txna ApplicationArgs 1
+btoi
+itxn_field Amount
+int 0
+itxn_field Fee
+itxn_submit
+int 1
+return
+int 1
+return
+main_l17:
+txn Sender
+byte "Doctor"
+app_global_get
+==
+assert
+global GroupSize
+int 2
+==
+assert
+txn NumAppArgs
+int 2
+==
+assert
+gtxn 0 TypeEnum
+int pay
+==
+assert
+gtxn 0 Receiver
+global CurrentApplicationAddress
+==
+assert
+itxn_begin
+int pay
+itxn_field TypeEnum
+txna Accounts 1
+itxn_field Receiver
+txna ApplicationArgs 1
+btoi
+itxn_field Amount
+int 0
+itxn_field Fee
+itxn_submit
+int 1
+return
+int 1
+return
+main_l18:
+global GroupSize
+int 2
+==
+assert
+txn NumAppArgs
+int 2
+==
+assert
+gtxn 0 TypeEnum
+int pay
+==
+assert
+gtxn 0 Receiver
+global CurrentApplicationAddress
+==
+assert
+itxn_begin
+int pay
+itxn_field TypeEnum
+txna Accounts 1
+itxn_field Receiver
+txna ApplicationArgs 1
+btoi
+itxn_field Amount
+int 0
+itxn_field Fee
+itxn_submit
+int 1
+return
+int 1
+return
+main_l19:
+global GroupSize
+int 2
+==
+assert
+txn NumAppArgs
+int 2
+==
+assert
+gtxn 0 TypeEnum
+int pay
+==
+assert
+gtxn 0 Receiver
+global CurrentApplicationAddress
+==
+assert
+itxn_begin
+int pay
+itxn_field TypeEnum
+txna Accounts 1
+itxn_field Receiver
+txna ApplicationArgs 1
+btoi
+itxn_field Amount
+int 0
+itxn_field Fee
+itxn_submit
+int 1
+return
+main_l20:
+byte "Creator"
+txn Sender
+app_global_put
+byte "Doctor"
+txna Accounts 1
+app_global_put
+byte "Pharmacist"
+txna Accounts 2
+app_global_put
+byte "Insurer"
+txna Accounts 3
+app_global_put
+int 1
+return
