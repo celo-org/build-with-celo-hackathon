@@ -1,0 +1,2 @@
+import "./greeter";
+import "./ama";
