@@ -108,11 +108,7 @@ const FinanceScreen = () => {
   ///////////////////////////////////////////////////////////////////////////////
 	const { styles } = useContext(ThemeContext);
 	const connector = useWalletConnect();
-	const [greeterValue, setGreeterValue] = useState();
-	const [greetingInput, setGreetingInput] = useState("");
 	const [contractLink, setContractLink] = useState("");
-	const [settingGreeting, setSettingPool] = useState(false);
-	const [gettingGreeting, setGettingGreeting] = useState(false);
 
 	useEffect(() => {
 		if (digesuAddress) {
