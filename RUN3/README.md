@@ -39,16 +39,17 @@ After this, other users can select this route, use it and share "Eco stories" wi
 
 https://www.run3.app/
 https://run3.gitbook.io/run3/ (Whitepaper)
+https://www.figma.com/file/pwjACbY7eJM5g5OFGFNSG6/RUN3
 
 Expo Go App (required to use the demo)
 https://apps.apple.com/us/app/expo-go/id982107779
 https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en_CA&gl=US&pli=1
 
 Demo Link IOS (Open from IOS phone)
-exp://u.expo.dev/update/6523ca16-5745-4a06-98c5-1b4dff5741b6
+exp://u.expo.dev/update/c797435c-d3b8-4a34-b1ec-08b422490512
 
 Demo Link Android (Open from Android phone)
-exp://u.expo.dev/update/5ffc97fc-ddb2-431e-9188-56b983012dcd
+exp://u.expo.dev/update/ad73ffe4-ebb9-4090-84be-f617acd43431
 
 Social Media
 https://t.me/run3app
@@ -57,7 +58,9 @@ https://www.instagram.com/run3app/
 
 #### Presentation
 
-List any links to your presentation or any related visuals you want to share. (Will be updated soon)
+http://surl.li/drobc
+
+http://surl.li/drobm
 
 #### License
 
