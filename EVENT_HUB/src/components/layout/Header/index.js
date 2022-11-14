@@ -23,7 +23,7 @@ const AppHeader = () => {
 
   useEffect(() => {
     setDrawer(false)
-  }, [location])
+  }, [location, setDrawer])
 
   return (
     <header className={`app-pd app-bg ${styles.header}`}>
