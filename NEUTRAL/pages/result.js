@@ -7,13 +7,89 @@ import { useRouter } from "next/router";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
+import {
+  usePrepareContractWrite,
+  useContractWrite,
+  useWaitForTransaction,
+} from "wagmi";
+
+function Offseter() {
+  const { config } = usePrepareContractWrite({
+    address: "0xabC4BeB282141169A6F8F00f1395001dE39c3Fc9",
+    abi: [
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "_address",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "_carbonToBeAdded",
+            type: "uint256",
+          },
+        ],
+        name: "updateCarbonOffset",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "_address",
+            type: "address",
+          },
+        ],
+        name: "viewCarbonOffset",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+    ],
+    functionName: "mint",
+  });
+  const { data, write } = useContractWrite(config);
+
+  const { isLoading, isSuccess } = useWaitForTransaction({
+    hash: data?.hash,
+  });
+
+  return (
+    <div>
+      <button
+        disabled={!write || isLoading}
+        onClick={() => write()}
+        className="p-4 rounded bg-black text-white mt-8"
+      >
+        {isLoading ? "Offsetting..." : "Become Carbon Neutral"}
+      </button>
+      {isSuccess && (
+        <div>
+          Successfully minted your NFT!
+          <div>
+            <a href={`https://etherscan.io/tx/${data?.hash}`}>Etherscan</a>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Result(props) {
   let { query } = useRouter();
 
   const percentage = 10; // parseInt(props.state.percentage);
 
   const [address, setAddress] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [color, setColor] = useState("green");
 
   // set address value in input
@@ -90,12 +166,15 @@ export default function Result(props) {
               })}
             />
           </div>
-          <button
-            onClick={carbonOffsetHandler}
+
+          {/* <button
+            onClick={() => write()}
             className="p-4 rounded bg-black text-white mt-8"
           >
             {isLoading ? "Offsetting..." : "Become Carbon Neutral"}
-          </button>
+          </button> */}
+
+          <Offseter />
         </div>
         <div className="text-sm font-semibold mb-10">
           Build with <span className="text-green-500">Celo &amp; Toucan</span>
