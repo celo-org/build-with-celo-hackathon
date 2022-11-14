@@ -13,7 +13,7 @@ const EventLists = () => {
   const ipfsGateway = 'https://gateway.pinata.cloud/ipfs'
 
   const location = useLocation()
-  const { address, connect, kit } = useCelo()
+  const { address, kit } = useCelo()
 
   const [loading, setLoading] = useState(false)
   const [events, setEvents] = useState([])
