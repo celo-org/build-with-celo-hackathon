@@ -1,22 +1,11 @@
 import * as React from "react";
 import Head from "next/head";
 // import styles from "../styles/local/components/write.module.css";
-import ActionAlerts from "../components/custom/ActionAlert";
-import BandTable from "../components/Finance/Page";
+import BandTable from "../components/Finance";
 import Invest from "../components/Invest";
 import Digdao from "../components/DigDao";
 import HomePage from "../components/HomePage";
-// import Button from "@mui/material/Button";
-// import Container  from "@mui/material/Container";
-// import { CeloProvider, Alfajores, NetworkNames, SupportedProviders } from "@celo/react-celo";
 import Layout from "../components/layout/Layout";
-
-// interface MyAppPro {
-//   lightMode:boolean;
-//   currentPageRef:number;
-//   routePage:(x:number) => {};
-//   setmessage:(x:string) => {};
-// }
 
 export default function Home(): React.ReactElement {
   const [message, setMessage] = React.useState("");
@@ -24,11 +13,6 @@ export default function Home(): React.ReactElement {
   const [lightMode, setMode] = React.useState(true);
 
   const toggleMode = () => setMode(!lightMode);
-
-  // React.useEffect(() => {
-  //   setPage(0);
-  //   setMode(true);
-  // }, []);
 
   const routePage = (index: number) => setPage(index);
   const setmessage = (value: string) => setMessage(value);
