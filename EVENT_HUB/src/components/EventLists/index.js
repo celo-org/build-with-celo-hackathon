@@ -37,18 +37,7 @@ const EventLists = () => {
         })
         console.log(res)
       } else {
-        const result = await connect()
-        if (result) {
-          const stableToken = await kit.contracts.getStableToken()
-          const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
-          const res = await eventHubContract.methods.createNewRSVP(eventId).send({
-            from: address,
-            feeCurrency: stableToken.address,
-            gasLimit: '210000',
-            value: deposit
-          })
-          console.log(res)
-        }
+        // Prompt user to connect
       }
     } catch (e) {
       console.log(e.message)
@@ -58,15 +47,20 @@ const EventLists = () => {
   const confirmAttendee = async (eventId) => {
 
     try {
+      setLoading(true)
       const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
 
       const txHash = await eventHubContract.methods.confirmAttendee(eventId, attendeeAddress).send({
         from: address,
         gasLimit: '210000'
       })
-      console.log('gg ', txHash)
+      if (txHash) {
+        setConfirmForm(false)
+        setLoading(false)
+      }
     } catch (e) {
       setStatus(e.message)
+      console.log(e.message)
     }
 
   }
@@ -119,19 +113,13 @@ const EventLists = () => {
 
       <div className={`${styles['event-container']}`}>
         {status && <p>{status}</p>}
-      {!loading && events.length && events.map(event => (
-        <div  className={eventPage ? styles['page-event-item'] : styles['event-item']}>
+      {!loading && events.length && events.map((event, i) => (
+        <div className={eventPage ? styles['page-event-item'] : styles['event-item']} key={i}>
           <h4>{event.metadata.keyvalues.name}</h4>
-          <span>Refundable Deposit: {kit.connection.web3.utils.fromWei(event.metadata.keyvalues.deposit, 'ether')} cUSD</span>
-          <span>Capacity: {event.metadata.keyvalues.capacity}</span>
-          <span>Date: {cleanDate(event.metadata.keyvalues.dateAndTime)}</span>
-          <button onClick={() => rsvp(event.ipfs_pin_hash, event.metadata.keyvalues.deposit)}>RSVP</button>
-          {confirmForm && (
-            <div className={'conf'}>
-              <input type="text" onChange={e => setAttendeeAddress(e.target.value)}/>
-              <button onClick={() => confirmAttendee(event.ipfs_pin_hash)}>Confirm Attendee</button>
-            </div>
-          )}
+          <span className={styles.blk}>Refundable Deposit: {kit.connection.web3.utils.fromWei(event.metadata.keyvalues.deposit, 'ether')} cUSD</span>
+          <span className={styles.blk}>Capacity: {event.metadata.keyvalues.capacity}</span>
+          <span className={styles.blk}>Date: {cleanDate(event.metadata.keyvalues.dateAndTime)}</span>
+          <button className={styles['rsvp-btn']} onClick={() => rsvp(event.ipfs_pin_hash, event.metadata.keyvalues.deposit)}>RSVP</button>
           {event.metadata.keyvalues.owner === address && (
             <div>
               {!confirmForm && <button style={{width: '100%'}} onClick={() => setConfirmForm(true)}>Confirm Attendee</button>}
@@ -140,6 +128,17 @@ const EventLists = () => {
 
           )}
           <img width="200px" src={`${ipfsGateway}/${event.ipfs_pin_hash}`} alt=""/>
+
+          <div className={`${styles['confirm-form']} ${confirmForm && styles['show-confirm-form']}`}>
+            <span className={`close-btn ${styles.cb}`} onClick={() => setConfirmForm(false)}>&#x2715;</span>
+
+            <div className={styles.conf}>
+              <input type="text" onChange={e => setAttendeeAddress(e.target.value)}/>
+              <button style={{width: '100%'}} onClick={() => confirmAttendee(event.ipfs_pin_hash)}>
+                {loading ? 'Confirming ...' : 'Confirm Attendee'}
+              </button>
+            </div>
+          </div>
         </div>
       ))}
       {loading && <div className="loader-container"><Loader/></div>}

@@ -72,6 +72,7 @@ const EventForm= ({ eventForm }) => {
       if (res) {
         setLoading(false)
         eventForm(false)
+        window.location.reload()
       }
 
     } catch (error) {
@@ -104,7 +105,6 @@ const EventForm= ({ eventForm }) => {
     <div className={`app-bg ${styles.container} `}>
       <form id="form" onSubmit={handleSubmit} className={styles.form}>
         <h4>{status}</h4>
-        <h4>{loading ? 'loading ...' :  ''}</h4>
         <div className="">
           <div className="">
             <label htmlFor="eventname" className="">
@@ -142,9 +142,7 @@ const EventForm= ({ eventForm }) => {
             <div className={styles.deposit}>
               <label className="">Refundable deposit</label>
               <input
-                type="number"
-                min="0"
-                inputMode="decimal"
+                type="text"
                 placeholder="0.00"
                 value={refund}
                 onChange={(e) => setRefund(e.target.value)}
@@ -162,7 +160,9 @@ const EventForm= ({ eventForm }) => {
         </div>
         <div className={styles['form-btns']}>
           <button type="button" onClick={reset}>Cancel</button>
-          <button type="submit" className={styles['create-btn']}>Create</button>
+          <button type="submit" className={styles['create-btn']}>
+            {loading ? 'loading ...' : 'Create'}
+          </button>
         </div>
       </form>
      </div>

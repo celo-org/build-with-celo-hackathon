@@ -141,17 +141,8 @@ input, textarea {
 }
 
 .payout {
-    background: #fefefe !important;
-    border: 3px solid #fefefe !important;
     width: 100%;
     color: black;
 }
 
-.conf {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 50px;
-    justify-content: space-between;
-    align-items: center;
-}
 

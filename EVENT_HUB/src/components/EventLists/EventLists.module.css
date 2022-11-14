@@ -7,8 +7,8 @@
 }
 
 .event-item, .page-event-item {
-    display: grid;
-    justify-content: center;
+        /*display: grid;*/
+        /*justify-content: center;*/
     margin: 20px;
     font-size: 0.9em;
     border-radius: 8px;
@@ -64,6 +64,46 @@
 
 .event-item img, .page-event-item img{
     max-height: 150px;
+}
+
+.rsvp-btn {
+    display: block;
+    width: 100%;
+}
+
+.cb {
+    color: #adaaaa;
+}
+
+.blk {
+    display: block;
+}
+
+.confirm-form {
+    display: none;
+}
+
+.show-confirm-form {
+    height: 100vh;
+    display: block;
+    background: rgba(187, 184, 184, 0.22);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.conf {
+    align-items: center;
+    width: 200px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    padding: 20px;
+    border-radius: 8px;
+    background: #f2f3f6;
 }
 
 @media (max-width: 1024px) {
