@@ -149,8 +149,12 @@ We are indeed committed to this project owing to a lot of work we have input. Wi
 ## About the Dapp
 We have so far:
 - Written the smart contracts for our token,
-- Written a few tests,
+- Written a few tests for the token. began with main contract testing.
 - Build the frontend both desktop and mobile.
+- Tests can be found in cd quatre/backend/hardhat-ts/test
+- `npx hardhat compile`
+- `npx hardhat deploy --network alfajores` deploys to the celo testnet
+- `npx hardhat test` or use yarn
 
 ## DApp
 From the directory : `quatre-digesu-on-celo-hackathon`
