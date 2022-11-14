@@ -1,0 +1,109 @@
+  .item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    font-family: roboto sans-serif;
+    font-size: 14px;
+    color: var(--orange);
+    background: none;
+    border: none;
+    background-color: transparent;
+  }
+  .item:hover {
+    background: none;
+    background: rgba(68, 55, 55, 0.549);
+    transition: 0.2s ease-in-out;
+
+  }
+  .title {
+    margin-left: 5px;
+    display: flex;
+    padding: 1em;
+  }
+  .title:hover {
+    color: var(--orange);
+    background: rgba(255, 255, 255, 0.288);
+    transition: 0.2s ease-in-out;
+    width: fit-content;
+  }
+  .container {
+    border: 0.1em rgba(59, 91, 92, 0.2);
+    border-radius: 0.4em;
+  }
+
+  .mainMenu {
+    height: 30em;
+    overflow-y: auto;
+    background: rgba(11, 14, 14, 0.9);
+    box-shadow: 0 0 0.3rem 0.3rem var(--grey);
+    border-radius: 0.4em;
+  
+  }
+
+.overlay {
+  position: absolute;
+  flex-direction: column;
+  top: 8em;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: center;
+}
+.modal {
+  background: rgb(107, 94, 94);
+  width:fit-content;
+  max-width: 40em;
+  height: fit-content;
+  border-radius: 1em;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1.5em 1.5em 1.5em;
+  z-index: 1;
+  box-shadow: 0 0.5rem 1.2rem rgba(156, 150, 150, 0.3);
+}
+.header {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 2em;
+}
+.close{
+  color: black;
+  font-size: 0.5em;
+  position: relative;
+  bottom: 0.5em;
+  /* right: 2em; */
+  font-weight: 400;
+  width: 4em;
+  height:2em;
+  background: transparent;
+  /* border: 0.1em solid var(--orange); */
+  border-radius: 1em;
+}
+.close:hover {
+  background-color: var(--orange);
+  transition: 0.2s ease-in-out;
+  z-index: 1;
+}
+.select {
+  border-left: 0.1em solid rgba(106, 119, 119, 0.397);
+  height: 5.7em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 4em;
+}
+
+.item {
+  border: 0.1em solid rgba(56, 50, 50, 0.349);
+  background: rgba(56, 50, 50, 0.4);
+  border-radius: 0.4em;
+  padding: 3em;
+  /* overflow: auto; */
+}
+.textDiv{
+  height: 30em;
+  overflow-y: auto;
+  padding-bottom: 1em;
+}

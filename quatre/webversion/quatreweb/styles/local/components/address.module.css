@@ -1,0 +1,14 @@
+/* a {
+  
+} */
+.disabled:hover,
+.disabled:focus {
+  background: #06f;
+}
+
+.disabled {
+  pointer-events: none;
+}
+.pointer {
+  cursor: pointer;
+}

@@ -1,0 +1,159 @@
+@media all and (min-width: 0px){
+    .sectionContainer{
+        padding: 1.25rem 0;
+    }
+    .socials {
+        display: flex;
+        align-items: center;
+        margin: auto 0;
+    }
+    .socials img{
+        margin: auto 0.1rem;
+        width: 20px;
+    }
+    .hideLogo2{
+      display: none;
+    }
+    .sectionContent ul {
+      margin: 3.25rem 0;
+    }
+    .sectionContent ul li:first-child {
+      font: 1.125em/1.8rem var(--roboto);
+      font-weight: 700;
+    }
+    .sectionContent ul li {
+      font: 1.125rem/1.8rem var(--roboto);
+      font-weight: 300;
+      margin: 8px 0;
+    }
+    .sectionContent ul li a, .subscribeBtn a{
+      text-decoration: none;
+    }
+    .inputWrapper{
+      position: relative;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      overflow-x: scroll;
+      width: 95%;
+      z-index: 1;
+      margin: 2rem 0
+    }
+    .inputWrapper::-webkit-scrollbar {
+      display: none;
+    }
+    .form::placeholder{
+      padding-left: 1.5rem;
+      width: 400px;
+      font: 0.813rem/0.938rem var(--roboto);
+      color: var(--white);
+    }
+    .form{
+      height: 40px;
+      max-width: 156px;
+      min-width: 156px;
+      border-radius: 5px 0 0 5px;
+      outline: none;
+      border: none;
+      background: var(--black);
+      color: var(--white)
+    }
+    .inputWrapper form input[type=email]:focus{
+      font: 0.813rem/0.938rem var(--roboto);
+      color: var(--white);
+      padding-left: 0.02rem;
+    }
+    .subscribeBtn{
+    background: var(--orange);
+      transition: 0.2s ease-in-out;
+      outline: none;
+      display: flex;
+      flex-direction: row;
+      height: 40px;
+      min-width: 85px;
+      max-width: 108px;
+      justify-content: center;
+      align-items: center;
+      border: none;
+      border-radius:0 5px 5px 0;  
+    }
+    .sectionContent div p{
+      font: 0.75rem/1rem var(--roboto);
+      font-weight: 300;
+      color: var(--shadow-green);
+      margin: 0;
+    }
+   .sectionContent div p span{
+      display: none;
+   }
+}
+@media all and (min-width: 375px){
+  .sectionContent div p{
+    font: 1.125rem/1.8rem var(--roboto);
+    font-weight: 300;
+    color: var(--shadow-green);
+  }
+}
+@media all and (min-width: 768px){
+  .sectionContent nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .sectionContent div p span{
+    display: flex;
+  }
+  .hideLogo1{
+    display: none;
+  }
+  .hideLogo2{
+    display: block;
+  }
+  .inputWrapper{
+    overflow-x: hidden;
+    width: 100%;
+    margin: 2rem 0
+  }
+}   
+@media all and (min-width: 1024px){
+  .socials img{
+    margin: auto 0.75rem auto 0;
+    width: auto;
+  }
+}
+@media all and (min-width: 1440px){
+  .sectionContainer{
+    padding: 3rem 0;
+  }
+  .subscribeBtn{
+      font: 1rem/1.6rem var(--roboto);
+    }
+}
+
+/* Light and dark mode */
+.darkMode{
+  background: var(--black);
+  color: var(--white);
+  transition: 0.2s ease-in-out;
+  z-index: 0;
+}
+.darkMode a {
+  color: var(--white)
+}
+
+.darkMode .form{
+  border: 1px solid var(--dark-mode2)
+}
+.lightMode{ 
+  background: var(--deep-fir-green);
+  /* background-image: url("/images/bg-pattern1.svg"); */
+  color: var(--grey);
+  transition: 0.2s ease-in-out;
+  z-index: 0;
+}
+.lightMode a {
+  color: var(--white)
+}
+.lightMode a:hover, .darkMode a:hover{
+  color: var(--granny-apple)
+}
