@@ -52,12 +52,23 @@ const App = () => {
                 ) : (
                   <Loader title='Please connect your wallet' />
                 )}
-                <ToastContainer hideProgressBar={true} />
               </div>
               <div className='blue_gradient' />
             </div>
           </div>
         </div>
+        <ToastContainer
+          position='top-left'
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable
+          pauseOnHover
+          theme='dark'
+        />
       </div>
     </div>
   )

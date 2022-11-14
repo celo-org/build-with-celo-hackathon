@@ -6,6 +6,7 @@ import minimalForwarderAbi from "../contracts/minimalForwarder.json"
 import cashOutAbi from "../contracts/cashOut.json"
 import tokenAbi from "../contracts/token.json"
 import axios from "axios"
+import { toast } from "react-toastify"
 const sdk = require("redstone-sdk")
 const protocol = require("redstone-protocol")
 const {
@@ -101,6 +102,7 @@ async function sendMetaTx(
     },
     params
   )
+  toast.success("Token Deposited")
   return fetch(url, {
     method: "POST",
     body: JSON.stringify(request),
@@ -122,7 +124,7 @@ async function sendMetaTx(
       }
     })
     .catch((error) => console.log(error))
-    .finally(() => console.log("done"))
+    .finally(() => toast.success("Transaction Successfull"))
 }
 export async function depositToken(
   amount,
