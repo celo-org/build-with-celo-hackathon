@@ -21,13 +21,13 @@ To aligning with Celo’s mission of bringing the benefits of digital assets to 
 For example, let us take the example of using reusable bags or avoiding plastic bags usage while shopping. Users who exercise this sustainability behaviour will be issued a specific ERC20 token, called SUStainability Token (SUST), on Celo platform. SUST holders are given preference when new crypto projects are launched and opt to distribute their tokens out to the greater population through airdrops. Higher the number of token holdings higher the priority during the airdrops. 
 
 #### How to run the project
-Step 1 : Clone the repo
-Step 2 : Make sure you have Node installed
-Step 3 : Open the terminal and navigate to the "frontend" folder
-Step 4 : run the command "npm install"
-Step 5 : run the command "npm start"
-Step 6 : Open a web browser and type localhost:3000 and enter
-Step 7 : Have fun with the UI
+- Step 1 : Clone the repo
+- Step 2 : Make sure you have Node installed
+- Step 3 : Open the terminal and navigate to the "frontend" folder
+- Step 4 : run the command "npm install"
+- Step 5 : run the command "npm start"
+- Step 6 : Open a web browser and type localhost:3000 and enter
+- Step 7 : Have fun with the UI
 
 #### URLs
 Check this video for the sample execution of the project: 
