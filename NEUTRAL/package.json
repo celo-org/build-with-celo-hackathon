@@ -1,0 +1,32 @@
+{
+  "name": "neutral",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@celo/contractkit": "^2.3.0",
+    "@celo/rainbowkit-celo": "^0.2.2",
+    "@rainbow-me/rainbowkit": "^0.7.4",
+    "axios": "^1.1.3",
+    "ethers": "^5.7.2",
+    "next": "13.0.3",
+    "react": "18.2.0",
+    "react-circular-progressbar": "^2.1.0",
+    "react-dom": "18.2.0",
+    "use-debounce": "^8.0.4",
+    "wagmi": "^0.7.15"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.13",
+    "eslint": "8.27.0",
+    "eslint-config-next": "13.0.3",
+    "hardhat": "^2.12.2",
+    "postcss": "^8.4.19",
+    "tailwindcss": "^3.2.4"
+  }
+}
