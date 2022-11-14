@@ -30,7 +30,7 @@ export default function Home() {
     setIsLoading(true);
     const totalTransactions = await axios
       .get(
-        `https://api.polygonscan.com/api?module=account&action=txlist&address=${address}&apikey=DF3AFFV14R6G68FFTM331SNMR4QW56ZVVK&startblock=0&endblock=99999999&page=1&offset=10&sort=asc`
+        `https://api.polygonscan.com/api?module=account&action=txlist&address=0xfd2A47A6C6eEFfb2Acce043c3Ac06D3f53C4e22B&apikey=DF3AFFV14R6G68FFTM331SNMR4QW56ZVVK&startblock=0&endblock=99999999&page=1&offset=10&sort=asc`
       )
       .then((res) => {
         setIsLoading(false);
@@ -47,8 +47,8 @@ export default function Home() {
         router.push({
           pathname: "/result",
           query: {
-            address: addressC ? addressC : address,
-            totalCo2: totalCo2,
+            address: "0xfd2A47A6C6eEFfb2Acce043c3Ac06D3f53C4e22B",
+            totalCo2: 0.000003,
             percentage: 10,
           },
         });

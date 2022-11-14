@@ -20,6 +20,10 @@ export function SendTransaction() {
     });
   }
 
+  useEffect(() => {
+    setTimeout(() => redirectToResult(), 15000);
+  });
+
   const { config } = usePrepareContractWrite({
     address: "0x1Da87eA2610CAF5192804407EeeA840C670bF0E1",
     abi: [
@@ -63,11 +67,6 @@ export function SendTransaction() {
     hash: data?.hash,
   });
 
-  useEffect(() => {
-    console.log("called");
-    redirectToResult();
-  }, isSuccess);
-
   return (
     <div>
       <button
@@ -77,6 +76,8 @@ export function SendTransaction() {
       >
         {isLoading ? "Retiring..." : "Retire Carbon"}
       </button>
+
+      {isSuccess && redirectToResult}
     </div>
   );
 }
