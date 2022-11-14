@@ -34,7 +34,8 @@ The TRI-DAO:
 List any URLs relevant to demonstrating your prototype
 
 #### Presentation
-List any links to your presentation or any related visuals you want to share.
+List any links to your presentation or any related visuals you want to share. 
+[DEMO VIDEO https://youtu.be/_in5COgZn2A)
 
 #### Next Steps
 What do you need to do next to turn this prototype into a working solution?
