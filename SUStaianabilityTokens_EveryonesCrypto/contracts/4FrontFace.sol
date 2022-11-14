@@ -6,7 +6,6 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-import "./EthPrice.sol";
 /************************************** INTERFACES **************************************/
 interface RolesI {
     function isSuperAdmin(address account) external view returns(bool);
@@ -19,20 +18,19 @@ interface SUSTokenFactoryI {
     function mintSUST(address, uint256) external;
 }
 
-interface EthPriceI {
-    function ethPriceUSD() external view returns (uint); 
+interface BandOracleI {
+    function getPrice() external view returns (uint256);
 }
 
 contract FrontFace is Pausable, AccessControl {
     address private tokenFactoryAddress;
     address private rolesSC;
-    address private ethPriceAddress;
+    address private bandOracleAddress;
 
-    constructor (address _rolesContractAddress,  address _tokenFactoryAddress, address _ethPriceAddress) {
+    constructor (address _rolesContractAddress,  address _tokenFactoryAddress, address _bandOracleAddress) {
         tokenFactoryAddress = _tokenFactoryAddress;
         rolesSC  = _rolesContractAddress;
-        ethPriceAddress = _ethPriceAddress;
-
+        bandOracleAddress = _bandOracleAddress;
     }
 
 //----------------------- SET ADDRESS FUNCTIONS -----------------------//
@@ -47,18 +45,12 @@ contract FrontFace is Pausable, AccessControl {
         require(_rolesSC != address(0), "Account: Zero or Invalid address!");
         rolesSC = _rolesSC;
     }
-
-    function setEthPriceContractAddress(address _ethPriceAddress) public  whenNotPaused{
-        require(RolesI(rolesSC).isAddressManager(msg.sender), "Access Denied: Caller is NOT Super Admin!");
-        require(_ethPriceAddress != address(0), "Account: Zero or Invalid address!");
-        ethPriceAddress = _ethPriceAddress;
-    }
     
 //----------------------- SEND RECEIPT FUNCTION -----------------------//
     function sendReceipt(uint receiptNum) public whenNotPaused {
         require(receiptNum != 0, "Input Error: Receipt number is zero or invalid!");
-        require(EthPriceI(ethPriceAddress).ethPriceUSD() != 0, "ETH price is ZERO!");
-        SUSTokenFactoryI(tokenFactoryAddress).mintSUST(msg.sender, 10);
+        require(BandOracleI(bandOracleAddress).getPrice() != 0, "CELO/USD price is ZERO!");
+        SUSTokenFactoryI(tokenFactoryAddress).mintSUST(msg.sender, 10 * (10 ** 18));
     }
 
     function killContract() public whenNotPaused{

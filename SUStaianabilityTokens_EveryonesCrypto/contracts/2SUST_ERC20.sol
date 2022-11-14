@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.4;
+pragma solidity >=0.8.0;
 
-import "@openzeppelin/contracts@4.7.3/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts@4.7.3/token/ERC20/extensions/ERC20Burnable.sol";
-import "@openzeppelin/contracts@4.7.3/security/Pausable.sol";
-import "@openzeppelin/contracts@4.7.3/access/AccessControl.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
 
 interface RolesI {
     function isSuperAdmin(address account) external view returns(bool);
