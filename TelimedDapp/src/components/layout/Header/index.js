@@ -1,6 +1,3 @@
-/*global AlgoSigner*/
-
-import React, {useEffect, useState, useRef} from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { HashLink } from 'react-router-hash-link'
 import logo from '../../../assets/img/logo.png'

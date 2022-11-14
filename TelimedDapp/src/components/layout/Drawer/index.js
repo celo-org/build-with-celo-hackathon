@@ -2,7 +2,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { AppDrawer } from './Drawer.styles'
 import Button from 'react-bootstrap/Button'
-import React, {useState} from "react";
+import React from "react";
 import { HashLink } from 'react-router-hash-link'
 import { useCelo } from '@celo/react-celo';
 
@@ -23,7 +23,6 @@ const Drawer = ({ appLinks }) => {
         <li><Link to="/">Home</Link></li>
         {appLinks.map((link, i) => <li key={i}>
           <HashLink smooth to={link.link}>{link.title}</HashLink>
-          {/*<Link to={link.link}>{link.title}</Link>*/}
         </li>)}
         {location.pathname !== '/app' && <Button onClick={launchApp}>
           Launch App
