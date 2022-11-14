@@ -14,29 +14,29 @@ Hackathon track
 
 The earth protocol is an open suite of consumer and business products that will help combat climate change, the flagship product is an app called Sustain, a consumer-based application that helps individuals with a range of tools and opportunities to reduce their carbon footprint hence helping slow down climate change.
 
-The Sustain app helps incentivize users for building sustainbale habits and actively contirbuting to fight against climate change. It will use Refi to help form a cycle to achieve net zero emissions in most regions. The earth protocol will implement a smart contract that will help regulate and facilitate the voluntary carbon market.
+The Sustain app helps incentivize users to build sustainable habits and actively contribute to fighting against climate change. It will use Refi to help form a cycle to achieve net zero emissions in most regions. The earth protocol will implement a smart contract to help regulate and facilitate the voluntary carbon market.
 
-It will also have a lot of other focus areas like collaborations with other protocols for enhancing user experience as well as focus on research and development for better usecases for industries.
+It will also have a lot of other focus areas like collaborations with other protocols for enhancing the user experience as well as a focus on research and development for better use cases for industries.
 
-The Earth protocol will incorporate core concepts of Refi, NFTs and DAOs to build an ecosystem of tools and solutinos focued on solving climate change using Celo's carbon negative blockchain.
+The Earth protocol will incorporate core concepts of Refi, NFTs, and DAOs to build an ecosystem of tools and solutions focused on solving climate change using Celo's carbon-negative blockchain.
 
-Raodmap
+Roadmap
 
 Phase 1
 
-- Move supply chain of products on chain
+- Move the supply chain of products on the chain
 - Build more features into the MVP
-- Research more into buidling other technoclogial integrations
+- Research more into building other technological integrations
 
 Phase 2
 
-- Colloborate with Plastiks and Flywallet to integrate their services.
+- Collaborate with Plastiks and Flywallet to integrate their services.
 - Build community and DAO for incentivizing contributions
 
 Phase 3
 
 - Take part in Celo Camp
-- Iterate, build and perfefct the product
+- Iterate, build and perfect the product
 - Launch to market
 
 <pre>
