@@ -29,7 +29,23 @@
 
 ## About The Project
 
-Celo Composer allows you to quickly build, deploy, and iterate on decentralized applications using Celo. It provides a number of frameworks, examples, and Celo specific functionality to help you get started with your next dApp.
+EcoConstruct is a platform built on decentralized Celo Composer platform to manage the hazardous material and Transparent payments in Construction Industry. In Construction Industry multiple kinds of Waste being mean aged in a most inappropriate way, because of lack of transparency in selecting proper suppliers audits in payments of the Disposal charges.
+
+EcoConstruct addresses the primary issues in building a transparent ReFi platform by Unification of Supplier Payments and Wages and Tracking and Minimizing the disposal of pollutants.
+
+The use cases we have implemented on the centralized Celo de-centralized platform:
+
+Unified Payments with Celo
+Pollution compliance and Waste Disposal Auditing
+We choose Cielo platform as it is a simple and elegant platform for next generation web3 applications
+
+The technology layer is as follows:
+
+We built contracts With Solidity to create the forms.
+All the business logic is powered by Google cloud services and Functions 3, Connected to a existing supplier Master database running on Mongodb.
+We have taken MetaMask and testnet to add a few coins, So that our company has a starting Point for payments and tracking.
+Code is pushed to Github after we have done the initial pull for Celo hackathon.
+Our vision is to envisage how a Newer technology like web3 can coexist with existing web2 and Cloud Technologies and web3. In summary we are ensuring that using Cielo the Construction industry can be more audited , transparent and make planet Greener.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
