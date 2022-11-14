@@ -233,7 +233,7 @@ var KTAppInboxCompose = function () {
         previewNode.parentNode.removeChild(previewNode);
 
         var myDropzone = new Dropzone(id, { // Make the whole body a dropzone
-            url: "https://preview.keenthemes.com/api/dropzone/void.php", // Set the url for your upload script location
+            url: "https://preview.ringnance.com/api/dropzone/void.php", // Set the url for your upload script location
             parallelUploads: 20,
             maxFilesize: 1, // Max filesize in MB
             previewTemplate: previewTemplate,
