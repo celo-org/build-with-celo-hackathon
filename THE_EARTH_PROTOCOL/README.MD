@@ -5,6 +5,7 @@ The Earth Protocol aims to become the world's largest consumer product and tooli
 ### Team members
 
 Sameer Kashyap - Full stack developer
+Charith Bhat - Flutter developer
 
 Hackathon track
 
