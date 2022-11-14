@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { useRouter } from "next/router";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -15,8 +15,9 @@ import {
 
 export default function Result(props) {
   let { query } = useRouter();
+  const router = useRouter();
 
-  const [percentage, setPercentage] = useState(10); // parseInt(props.state.percentage);
+  const [percentage, setPercentage] = useState(query.percentage); // parseInt(props.state.percentage);
 
   const [address, setAddress] = useState("");
   const [color, setColor] = useState("green");
@@ -44,6 +45,10 @@ export default function Result(props) {
       setColor("orange");
     }
   });
+
+  // useEffect(() => {
+  //   setPercentage(query.percentage);
+  // }, percentage);
 
   // calculate total carbbon emmision
 
@@ -102,12 +107,15 @@ export default function Result(props) {
           >
             {isLoading ? "Offsetting..." : "Become Carbon Neutral"}
           </button> */}
-          <p className="text-center">
-            Total CO2 emitted: <br />
-            {query.totalCo2} kg
-          </p>
+          {query.totalCo2 && (
+            <p className="text-center">
+              Total CO2 emitted: <br />
+              {query.totalCo2} kg
+            </p>
+          )}
+
           <button
-            onClick={() => setPercentage(100)}
+            onClick={() => router.push("/select")}
             className="p-4 rounded bg-black text-white mt-8"
           >
             Become Carbon Neutral
