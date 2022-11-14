@@ -47,7 +47,7 @@ input, textarea {
     display: block;
 }
 
-#form input[type="text"], #form input[type="date"], #form input[type="email"], #form input[type="file"], #form input[type="number"], #form input[type="time"], #form input[type="tel"], #form input[type="url"], #form textarea, #form button[type="submit"] { font:400 12px/16px "Open Sans", Helvetica, Arial, sans-serif; }
+#form input[type="text"], #form input[type="date"], #form input[type="email"], #form input[type="file"], #form input[type="number"], #form input[type="time"], #form input[type="tel"], #form input[type="url"], #form textarea, #form button[type="submit"], #form button[type="button"] { font:400 12px/16px "Open Sans", Helvetica, Arial, sans-serif; }
 
 #form {
     background:#F9F9F9;
@@ -68,13 +68,6 @@ input, textarea {
     font-size:13px;
 }
 
-fieldset {
-    border: medium none !important;
-    margin: 0 0 10px;
-    min-width: 100%;
-    padding: 0;
-    width: 100%;
-}
 
 #form input[type="text"], #form input[type="date"], #form input[type="file"], #form input[type="email"], #form input[type="number"], #form input[type="time"], #form input[type="tel"], #form input[type="url"], #form textarea {
     width:100%;
@@ -97,19 +90,20 @@ fieldset {
     resize:none;
 }
 
-#form button[type="button"] {
+#form button {
     cursor:pointer;
     width:100%;
     border:none;
-    background:#0CF;
+    background: #969592;
     color:#FFF;
     margin:0 0 5px;
     padding:10px;
     font-size:15px;
 }
 
+
 #form button[type="submit"]:hover {
-    background:#09C;
+    background:#f8f7f5;
     -webkit-transition:background 0.3s ease-in-out;
     -moz-transition:background 0.3s ease-in-out;
     transition:background-color 0.3s ease-in-out;

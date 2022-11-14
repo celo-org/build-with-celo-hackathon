@@ -8,6 +8,7 @@
     left: 0;
     position: absolute;
     z-index: 99999;
+    transition: .5s;
 }
 
 .form {
@@ -31,4 +32,14 @@
     gap:30px;
     justify-content: space-evenly;
     align-items: center;
+}
+
+.form-btns {
+    display: flex;
+    justify-content: space-between;
+}
+
+.create-btn {
+    background: darkgoldenrod !important;
+    margin-left: 10px !important;
 }

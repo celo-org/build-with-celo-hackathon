@@ -1,4 +1,5 @@
 require("@nomicfoundation/hardhat-toolbox");
+require("dotenv").config()
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -7,7 +8,7 @@ module.exports = {
   networks: {
     alfajores: {
       url: "https://alfajores-forno.celo-testnet.org",
-      accounts: ['c98941859bb9d1141e6387ded62ec039b74ee0d1759c383a5774b233da5bb4bf'],
+      accounts: [process.env.REACT_APP_PRIVATE_KEY],
       chainId: 44787
     }
   },

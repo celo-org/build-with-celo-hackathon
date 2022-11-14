@@ -1,10 +1,9 @@
 import { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import { DrawerContext, FormContext } from './contexts/AppContext'
+import { Routes, Route, Link, useNavigate } from 'react-router-dom'
+import { DrawerContext } from './contexts/AppContext'
 import AppHeader from './components/layout/Header'
 import Home from './pages/Home'
 import Events from './pages/Events'
-// import EventForm from './components/EventForm'
 import { CeloProvider, Alfajores, NetworkNames } from '@celo/react-celo'
 import '@celo/react-celo/lib/styles.css'
 import './app.css'
@@ -24,7 +23,7 @@ const WrappedApp = () => {
       dapp={{
         name: 'Event Hub',
         description: 'My awesome description',
-        url: 'https://example.com',
+        url: 'https://bwceventhub.netlify.app',
       }}
     >
       <App />
@@ -34,34 +33,35 @@ const WrappedApp = () => {
 
 const App = () => {
 
+  const navigate = useNavigate()
+
   const [drawer, setDrawer] = useState(false)
-  const [showEventForm, setShowEventForm] = useState(false)
+
+  const showEventForm = () => {
+    navigate('/events', {
+      state: { showForm: true }
+    })
+  }
 
   return (
     <DrawerContext.Provider value={{drawer, setDrawer}}>
-      <FormContext.Provider value={{showEventForm, setShowEventForm}}>
-        <Router>
-          <div>
-            <div className={`${drawer ? 'show-drawer' : ''} drawer`}>
-              <div className="drawer-links">
-                <h1 className={`app-name app-name-drawer`}>Event Hub</h1>
-                <Link to='/'>Home</Link>
-                <Link to='/events'>Events</Link>
-                <Link to='/rsvps'>RSVPs</Link>
-                <button className="app-btn app-create-event-btn">Create Event</button>
-                <span className="close-btn" onClick={() => setDrawer(false)}>&#x2715;</span>
-              </div>
-            </div>
-            <AppHeader/>
-            {/*<EventForm/>*/}
-            <Routes>
-              <Route path="/" element={<Home/>}/>
-              <Route path="/events" element={<Events/>}/>
-            </Routes>
-
+      <div>
+        <div className={`${drawer ? 'show-drawer' : ''} drawer`}>
+          <div className="drawer-links">
+            <h1 className={`app-name app-name-drawer`}>Event Hub</h1>
+            <Link to='/'>Home</Link>
+            <Link to='/events'>Events</Link>
+            <Link to='/rsvps'>RSVPs</Link>
+            <button onClick={showEventForm} className="app-btn app-create-event-btn">Create Event</button>
+            <span className="close-btn" onClick={() => setDrawer(false)}>&#x2715;</span>
           </div>
-        </Router>
-      </FormContext.Provider>
+        </div>
+        <AppHeader/>
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+          <Route path="/events" element={<Events/>}/>
+        </Routes>
+      </div>
     </DrawerContext.Provider>
   )
 }

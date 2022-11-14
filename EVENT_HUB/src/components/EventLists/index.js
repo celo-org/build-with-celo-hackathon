@@ -73,7 +73,6 @@ const EventLists = () => {
 
   const transfer = async eventId => {
     const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
-    // const txHash = await eventHubContract.methods.withdrawUnclaimedDeposits(eventId).call()
     const txHash = await eventHubContract.methods.payOut(eventId).send({
       from: address,
       gasLimit: '210000'
@@ -119,7 +118,7 @@ const EventLists = () => {
   return (
 
       <div className={`${styles['event-container']}`}>
-
+        {status && <p>{status}</p>}
       {!loading && events.length && events.map(event => (
         <div  className={eventPage ? styles['page-event-item'] : styles['event-item']}>
           <h4>{event.metadata.keyvalues.name}</h4>
@@ -143,9 +142,6 @@ const EventLists = () => {
           <img width="200px" src={`${ipfsGateway}/${event.ipfs_pin_hash}`} alt=""/>
         </div>
       ))}
-
-        {/*{!events.length && <h2 style={{textAlign: 'center', marginTop: '50px'}}>No event yet</h2>}*/}
-
       {loading && <div className="loader-container"><Loader/></div>}
     </div>
 

@@ -3,7 +3,7 @@
     display: grid;
     grid-template-columns: 25% 25% 25%;
     justify-content: center;
-    position: relative;
+    /*position: relative;*/
 }
 
 .event-item, .page-event-item {
@@ -70,7 +70,6 @@
     .event-container {
         display: block;
         justify-content: center;
-        position: relative;
     }
 }
 

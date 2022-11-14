@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useCelo } from '@celo/react-celo'
-import { FormContext } from '../../contexts/AppContext'
 import { ethers } from 'ethers'
 import { eventHubContractAddress } from '../../utils'
 import { addToIPFS } from '../../utils/ipfs'
@@ -8,8 +7,7 @@ import EventHub from '../../artifacts/contracts/EventHub.sol/EventHub.json'
 
 import styles from './EventForm.module.css'
 
-const EventForm= () => {
-  const { showEventForm, setShowEventForm } = useContext(FormContext)
+const EventForm= ({ eventForm }) => {
 
   const { address, kit } = useCelo()
 
@@ -73,12 +71,12 @@ const EventForm= () => {
       })
       if (res) {
         setLoading(false)
-        setShowEventForm(false)
+        eventForm(false)
       }
 
     } catch (error) {
       setLoading(false)
-      setShowEventForm(false)
+      eventForm(false)
       console.log("😥 " + error)
       setStatus("😥 " + error.message)
     }
@@ -94,7 +92,7 @@ const EventForm= () => {
   }
 
   const reset = () => {
-    setShowEventForm(false)
+    eventForm(false)
   }
 
   useEffect(() => {
@@ -103,7 +101,7 @@ const EventForm= () => {
 
 
   return (
-    // <div className={`app-bg ${styles.container} ${showEventForm ? '' : styles['hide-form']}`} onClick={reset}>
+    <div className={`app-bg ${styles.container} `}>
       <form id="form" onSubmit={handleSubmit} className={styles.form}>
         <h4>{status}</h4>
         <h4>{loading ? 'loading ...' :  ''}</h4>
@@ -162,12 +160,12 @@ const EventForm= () => {
             <textarea rows={2} value={eventDescription} onChange={(e) => setEventDescription(e.target.value)}/>
           </div>
         </div>
-        <div className="">
-          <button type="button" onClick={() => setShowEventForm(false)}>Cancel</button>
-          <button onClick={handleSubmit} type="button" className="">Create</button>
+        <div className={styles['form-btns']}>
+          <button type="button" onClick={reset}>Cancel</button>
+          <button type="submit" className={styles['create-btn']}>Create</button>
         </div>
       </form>
-    // </div>
+     </div>
   )
 }
 

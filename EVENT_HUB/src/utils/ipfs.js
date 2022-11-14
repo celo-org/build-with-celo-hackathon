@@ -1,6 +1,5 @@
 import axios  from 'axios'
 
-
 export const eventList = async () => {
 
   const url = `https://api.pinata.cloud/data/pinList?status=pinned`
