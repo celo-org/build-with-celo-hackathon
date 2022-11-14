@@ -124,7 +124,9 @@ export default function MoveToEarn() {
   useEffect(() => {
     subscribe()
 
+    // Unfortunately, this does not work as it should, is not asking for Android permission :/
     if (Platform.OS === 'android') {
+      alert('Pedometer in Android might not work, sorry for the inconvenience :( ')
       Pedometer.requestPermissionsAsync()
         .then((result) => {
           if (result.granted) {
