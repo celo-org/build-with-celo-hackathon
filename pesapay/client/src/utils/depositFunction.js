@@ -7,11 +7,9 @@ import cashOutAbi from "../contracts/cashOut.json"
 import tokenAbi from "../contracts/token.json"
 import axios from "axios"
 import { toast } from "react-toastify"
-const sdk = require("redstone-sdk")
-const protocol = require("redstone-protocol")
-const {
-  convertStringToBytes32,
-} = require("redstone-protocol/dist/src/common/utils")
+import sdk from "redstone-sdk"
+import protocol from "redstone-protocol"
+import convertStringToBytes32 from "redstone-protocol/dist/src/common/utils"
 
 export async function approve(amount) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
