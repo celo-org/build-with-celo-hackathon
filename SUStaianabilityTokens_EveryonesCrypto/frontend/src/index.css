@@ -1,0 +1,70 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: hsl(210, 4%, 4%);
+  color: hsl(210, 4%, 80%);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+button {
+  background-color: hsl(226, 80%, 50%);
+  color: white;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: all 100ms ease-out;
+  text-transform: capitalize;
+  font-size: 14px;
+}
+button:hover {
+  background-color: hsl(226, 80%, 55%);
+}
+
+.account {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center
+
+}
+.account__address {
+  background-color: hsl(210, 4%, 12%);
+  padding: 8px 12px;
+  border-radius: 2px;
+  margin: 0;
+}
+
+.form {
+  display: grid;
+  gap: 16px;
+}
+
+input {
+  background-color: hsl(210, 4%, 12%);
+  padding: 12px;
+  border: 1px solid hsl(0, 0%, 24%);
+ color: hsl(210, 4%, 80%);
+ font-size: 16px;
+}
+input:focus {
+  outline: 1px solid hsl(226, 80%, 55%);
+}
+
+.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorPrimary.MuiInputBase-formControl {
+  color: white;
+}
+
+label#demo-simple-select-label {
+  color: white;
+}
+
+div#demo-simple-select {
+  border: 1px solid white;
+}
