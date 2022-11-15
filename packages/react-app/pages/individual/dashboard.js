@@ -7,6 +7,7 @@ import UserLayout from '../../components/UserLayout/Layout'
 import { useQuery, useInfiniteQuery } from 'react-query'
 import LoadingState from '../../components/LoadingState'
 import axios from 'axios'
+import { Toaster } from 'react-hot-toast'
 
 const Dashboard = () => {
     const [location, setLocations] = useState();
@@ -65,6 +66,7 @@ const Dashboard = () => {
     
   return (
     <>
+    <Toaster/>
         <UserLayout>
                 <section>
                     <div className='container mx-auto px-6'>
@@ -181,7 +183,7 @@ const Dashboard = () => {
                                                     <select  style={{'background': 'transparent'}} className="focus:outline-none h-full border-none cursor-pointer text-gray-600 w-auto py-2 " onChange={(e)=>setLocationName(e.target.value)}  >
                                                         <option value="all">All</option>
                                                         {location && location.map((option) => (
-                                                            <option value={option.name}>{option.name} {option.state}</option>
+                                                            <option value={option.name} key={option.id}>{option.name} {option.state}</option>
                                                         ))}
                                                     </select>
                                                 </span>
@@ -200,7 +202,7 @@ const Dashboard = () => {
                                                 data && data.pages.map(page => (
                                                     page.data.length > 1 ? page.data.map((request, index) => (
                                                         <>
-                                                            <Link href={`/individual/requests/${request.id}`} key={index}>
+                                                            <Link href={`/individual/requests/${request.id}`}>
                                                             
                                                                 <a key={index}>
 

@@ -1,9 +1,13 @@
 import Link from 'next/link'
-import React, { useState } from 'react'
-import {useRouter, useEffect} from 'next/router'
+import React, { useEffect, useState } from 'react'
+import {useRouter} from 'next/router'
 import toast, { Toaster } from 'react-hot-toast';
+import Loader from '../components/Icons/Loader';
+import axios from 'axios';
 
 const SignUp = () => {
+    const [loading, setLoading] = useState("")
+
     const currentYear = new Date().getFullYear();
 
     const router = useRouter();
@@ -11,11 +15,19 @@ const SignUp = () => {
         name: '',
         email: '',
         phonenumber: '',
-        address: '',
+        wallet_address: '',
     });
 
     const [error, setError] = useState(null);
+    const user = localStorage.getItem('user');
+
     
+    useEffect(() => {
+        
+    if (user) {
+        router.push('/individual/dashboard')
+    }
+    }, [])
 
     const toastOptions = {
         duration: 8000,
@@ -40,8 +52,8 @@ const SignUp = () => {
     }
 
     const handleValidation = () =>{
-        const {name, email, phonenumber, address } = inputs;
-        if ((name === "") && (email === "") && (phonenumber === "") && (address === "") ){
+        const {name, email, phonenumber, wallet_address } = inputs;
+        if ((name === "") && (email === "") && (phonenumber === "") && (wallet_address === "") ){
             toast.error('Fill in all required fields', toastOptions);
             return false;
         }else if (name === ""){
@@ -56,7 +68,7 @@ const SignUp = () => {
         }else if(phonenumber === "" ){
             toast.error('Phone Number is required', toastOptions);
             return false;
-        }else if(address === "" ){
+        }else if(wallet_address === "" ){
             toast.error('Address is required', toastOptions);
             return false;
         }
@@ -66,36 +78,43 @@ const SignUp = () => {
 
     const handleSubmit = async (e) =>{
         e.preventDefault();
-        
-        
+        setLoading(true)
+
         if(handleValidation()){
             try {
-                const {name, email, phonenumber, address } = inputs;
 
-                // const data = await axios.post(registerRoute, {
-                //     username, 
-                //     email,
-                //     password
-                // });
+                const {name, email, phonenumber, wallet_address } = inputs;
 
-                // if(data.data.status === false) {
-                //     toast.error(data.data.msg, toastOptions);
-                // }
-                // if(data.data.status === true) {
-                //     router.push("/login");
-                // }
-                console.log(inputs);
+                const res = await axios.post("http://127.0.0.1:8080/api/collectors/auth/register", {
+                    name, email, phonenumber, wallet_address
+                })
+
+                if(res.data.status === false) {
+                    toast.error(res.data.msg, toastOptions);
+                    setTimeout(()=>{
+                        setLoading(false)
+                        
+                    }, 4000)
+                }else {
+                    setLoading(false)
+                    
+                    router.push("/login");
+                    
+                }
             } catch(err){
-                toast.error(err, toastOptions);
+                // toast.error(err, toastOptions);
+                console.log(err)
 
             }
         }
         
     }
 
-    // useEffect(() => {
-    //     router.prefetch('/login')
-    // }, [])
+    useEffect(() => {
+        router.prefetch('/login')
+    }, [])
+
+
     
 
   return (
@@ -138,12 +157,13 @@ const SignUp = () => {
                         </div>
 
                         <div className="mb-6 w-full">
-                            <label className="text-gray-700 font-medium mb-3" htmlFor="address">Address<span>*</span></label>
-                            <input id="address" type="text" className="block w-full h-12 px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 focus:border-gray-300 rounded-md focus:outline-none transition duration-150 ease-in-out" name="address" autoComplete="off" onChange={handleChange}/>
+                            <label className="text-gray-700 font-medium mb-3" htmlFor="wallet_address">Address<span>*</span></label>
+                            <input id="wallet_address" type="text" className="block w-full h-12 px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 focus:border-gray-300 rounded-md focus:outline-none transition duration-150 ease-in-out" name="wallet_address" autoComplete="off" onChange={handleChange}/>
                         </div>
             
                         <button type="submit" className="inline-block px-7 py-3 text-white font-medium text-sm leading-snug uppercase rounded-full shadow-md bg-[#DD7D37] hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out w-full" onClick={handleSubmit}>
-                            Create Account
+                            
+                            {loading === true ? (<Loader/>): 'Create Account'}
                         </button>
                 
                         

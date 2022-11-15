@@ -8,7 +8,9 @@ import { Alfajores, CeloProvider } from "@celo/react-celo";
 import { AppProps } from "next/app";
 import { CustomThemeProvider } from "@/contexts/userTheme";
 import { Provider } from "react-redux"
-import store from "@/state/index"
+// import store from "@/state/index"
+import store from "@/state/store"
+
 import AppUpdater from "@/state/app/updater"
 import {QueryClientProvider, QueryClient} from 'react-query'
 

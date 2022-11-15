@@ -1,11 +1,32 @@
 import React from 'react'
 import Layout from '../components/layout/Layout';
-
+import { useQuery, useInfiniteQuery } from 'react-query'
+import LoadingState from '../components/LoadingState'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Link from 'next/link';
 // import 'react-tabs/style/react-tabs.css';
 
 const Home = () => {
+
+    const fetchRequests = async ({ pageParam = 1 }) => {
+        const res = await fetch(`http://127.0.0.1:8080/api/requests?page=${pageParam}&size=9`);
+        return res.json();
+    }
+
+    const {
+        isLoading,
+        isError,
+        error,
+        data,
+        fetchNextPage,
+        isFetching,
+        isFetchingNextPage
+    } = useInfiniteQuery(['requests'], fetchRequests, {
+        getNextPageParam: (lastPage, pages) => {
+            return lastPage.page + 1
+        }
+    })
+
   return (
     <>
         <Layout>

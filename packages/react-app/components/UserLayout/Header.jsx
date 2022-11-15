@@ -1,10 +1,11 @@
 import Link from 'next/link'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import DropdownIcon from '../Icons/DropdownIcon'
 import NotificationIcon from '../Icons/NotificationIcon'
 import {useRouter} from 'next/router'
 import SettingsIcon from '../Icons/SettingsIcon'
 import ExpandMoreHorizontal from '../Icons/ExpandMoreHorizontal'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Header = () => {
     const [showMobile, setShowMobile] = useState()
@@ -18,6 +19,31 @@ const Header = () => {
     const ToggleUserMenu = () =>{
         setShowUserMenu(!showUserMenu);
     }
+
+    const user = localStorage.getItem('user')
+
+
+    const handleLogout = (e) =>{
+        e.preventDefault();
+        localStorage.removeItem('user')
+        
+        router.push('/login')
+        // window.location.reload();
+    }
+
+    useEffect(()=>{
+        if(!user){
+            router.push('/login')
+        }
+    }, [])
+
+    // const { currentUser } = useSelector((state) => state.user)
+    // const dispatch = useDispatch()
+    
+  
+    // automatically authenticate user if token is found
+
+
   return (
     <>
 
@@ -75,6 +101,7 @@ const Header = () => {
                                 <div className=' relative' >
                                     <button className='flex items-center gap-2 bg-gray-100 py-3 px-5 rounded-full' onClick={ToggleUserMenu}>
                                         <div className="flex items-start justify-start flex-col">
+                                            {/* <span className="text-sm">{currentUser && currentUser.user.name}</span> */}
                                             <span className="text-sm">0x346932...gq382nk</span>
                                         </div>
                                         <ExpandMoreHorizontal/>
@@ -85,7 +112,7 @@ const Header = () => {
                                     <div className={`absolute user-menu ${showUserMenu ? 'show' : ''} dropdown-menu large-dropdown shadow-md rounded-md w-full border-0 fade-in transition duration-300 ease bg-white`} >
                                         
                                             <div className=" py-2">
-                                                <button className="flex items-center py-2 px-4 text-sm justify-start bg-white border-0 w-full hover:bg-gray-100 ">
+                                                <button className="flex items-center py-2 px-4 text-sm justify-start bg-white border-0 w-full hover:bg-gray-100 " onClick={(e)=>handleLogout(e)}>
                                                     <span className="mr-3">
 
                                                         

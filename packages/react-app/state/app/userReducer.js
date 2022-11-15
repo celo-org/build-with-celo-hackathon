@@ -1,19 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { useRouter } from "next/router";
 import toast, { Toaster } from 'react-hot-toast';
+
+
+
 const userReducer = createSlice({
-    name:"user",
+    name:'user',
     initialState: {
         currentUser: null,
-        isFetching: false,
-        error: false
+        loading: false,
+        error: null,
+        success: false,
     },
-    reducer: {
+    reducers: {
         loginStart:(state)=>{
-            state.isFetching = true
+            state.loading=true
         },
-        loginSuccess:(state, action) =>{
-            state.isFetching=false;
-            state.currentUser=action.payload;
+        loginSuccess:(state, {payload}) =>{
+            state.loading=false;
+            state.currentUser=payload;
             toast.success('Logged in successfully', {
                 duration: 4000,
                 position: 'top-center',
@@ -30,10 +35,27 @@ const userReducer = createSlice({
                   'aria-live': 'polite',
                 },
             });
+
         },
-        loginFailure:(state)=>{
-            state.isFetching=false;
-            state.error = true;
+        loginFailure:(state, {payload})=>{
+            state.loading=false;
+            state.error = payload;
+            toast.error('Failed to Login', {
+                duration: 4000,
+                position: 'top-center',
+                style: {},
+                className: '',
+                icon: '👏',
+                iconTheme: {
+                  primary: '#000',
+                  secondary: '#fff',
+                },
+                
+                ariaProps: {
+                  role: 'status',
+                  'aria-live': 'polite',
+                },
+            });
         },
         logout:(state)=>{
             state.currentUser= null;

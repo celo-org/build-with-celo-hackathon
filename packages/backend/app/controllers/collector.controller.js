@@ -5,17 +5,40 @@ const Location = db.locations;
 const Collectors = db.collectors;
 
 module.exports = {
+  register: async (req, res) => {
+    try {
+
+      const { name, email, phone, wallet_address } = req.body;
+      let location = "6367f57ad6f4b58b9dfc61f1";
+      const usercheck = await Collectors.findOne({ email }).populate({ path: 'location', model: Location });
+      if (usercheck)
+        return res.json({ msg: "Email already exists", status: false });
+
+      const locationcheck = await Location.findById(location);
+      if (!locationcheck)
+        return res.json({ msg: "Location does not exist", status: false });
+
+      let user = new Collectors({
+        name,
+        email,
+        phone,
+        wallet_address,
+        location
+      });
+      // Save request in the database
+      user = user.save(user);
+      return res.send({ status: true, data: user, msg: "Successfully registered" });
+    } catch (ex) {
+      next(ex);
+    }
+  },
   login: async (req, res) => {
     try {
       const { email } = req.body;
-      const user = await Collectors.findOne({ email });
+      const user = await Collectors.findOne({ email }).populate({ path: 'location', model: Location });
       if (!user)
         return res.json({ msg: "Incorrect Email", status: false });
-      // const isPasswordValid = await bcrypt.compare(password, user.password);
-      // if (!isPasswordValid)
-      //   return res.json({ msg: "Incorrect Username or Password", status: false });
-      // delete user.password;
-      return res.json({ status: true, user });
+      return res.json({ status: true, user, msg: "Logged In Successfully" });
     } catch (ex) {
       next(ex);
     }
