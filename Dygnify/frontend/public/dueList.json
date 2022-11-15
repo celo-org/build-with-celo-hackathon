@@ -1,0 +1,54 @@
+[
+  {
+    "id": 1,
+    "opportunity_name": "Opportunity 7",
+    "loan_type": "Bullet Loan",
+    "loan_amount": 150000,
+    "principal_amount": 900,
+    "interest_amount": 100,
+    "repayment_date": "30-08-2022",
+    "loan_tenure": 360,
+    "loan_interest": 15,
+    "payment_frequency": 45,
+    "capital_loss": 10
+  },
+  {
+    "id": 2,
+    "opportunity_name": "Opportunity 7",
+    "loan_type": "Bullet Loan",
+    "loan_amount": 150000,
+    "principal_amount": 900,
+    "interest_amount": 100,
+    "repayment_date": "30-09-2022",
+    "loan_tenure": 360,
+    "loan_interest": 15,
+    "payment_frequency": 45,
+    "capital_loss": 10
+  },
+  {
+    "id": 3,
+    "opportunity_name": "Opportunity 8",
+    "loan_type": "Term Loan",
+    "loan_amount": 420000,
+    "principal_amount": 2000,
+    "interest_amount": 400,
+    "repayment_date": "05-09-2022",
+    "loan_tenure": 540,
+    "loan_interest": 14,
+    "payment_frequency": 30,
+    "capital_loss": 8
+  },
+  {
+    "id": 4,
+    "opportunity_name": "Opportunity 8",
+    "loan_type": "Term Loan",
+    "loan_amount": 420000,
+    "principal_amount": 2000,
+    "interest_amount": 400,
+    "repayment_date": "05-10-2022",
+    "loan_tenure": 540,
+    "loan_interest": 14,
+    "payment_frequency": 30,
+    "capital_loss": 8
+  }
+]

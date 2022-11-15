@@ -1,0 +1,67 @@
+{
+    "posts": [
+        {
+            "capital_loss": "17",
+            "collateral_documents": {
+                "lastModified": 1656599949439,
+                "name": "assessmentee-com-test-score-2022-06-30-16-38-50.pdf",
+                "size": 10369,
+                "type": "application/pdf",
+                "webkitRelativePath": ""
+            },
+            "loan_amount": "5",
+            "loan_interest": "12",
+            "loan_purpose": "awd af",
+            "loan_tenure": "5",
+            "loan_type": "silver"
+        }
+    ],
+    "company": [
+        {
+            "opportunities": [
+                {
+                    "id": 1,
+                    "img": "/assets/supply-chain.png",
+                    "company_name": "ABC Finance Private Limited",
+                    "company_details": "ABC is a company operating in Southern India that provides invoice factoring services, which involves buying a business's unpaid invoices at a discount. ABC was founded in 20XX and has operations in southern states of Karnataka, Tamil Nadu, Andhra Pradesh, Telangana, and has since originated over $30 Mn in loans to over 10 millions borrowers. This opportunity will consist of tranches of a secured non convertible debenture with a maturity of 24 months backed by a portfolio of loans made to customers.",
+                    "opportunity_name": "Supply Chain Finance",
+                    "loan_amount": 5987197,
+                    "loan_interest": 10.45,
+                    "loan_tenure": 24,
+                    "asset_type": "Short term credit by financing receivables",
+                    "assets": 32,
+                    "average_financing_fee": 13.10,
+                    "available_liquidity": 560000
+                },
+                {
+                    "id": 2,
+                    "img": "/assets/woman-riding-a-motorbike.png",
+                    "company_name": "Thunder Private Limited",
+                    "company_details": "Thunder Private Limited is a company operating in Southern India that provides invoice factoring services, which involves buying a business's unpaid invoices at a discount. ABC was founded in 20XX and has operations in southern states of Karnataka, Tamil Nadu, Andhra Pradesh, Telangana, and has since originated over $30 Mn in loans to over 10 millions borrowers. This opportunity will consist of tranches of a secured non convertible debenture with a maturity of 24 months backed by a portfolio of loans made to customers.",
+                    "opportunity_name": "EVs : New-age delivery partners",
+                    "loan_amount": 4652977,
+                    "loan_interest": 12.15,
+                    "loan_tenure": 24,
+                    "asset_type": "EV Loans to women generating income as delivery partners",
+                    "assets": 32,
+                    "average_financing_fee": 13.10,
+                    "available_liquidity": 560000
+                },
+                {
+                    "id": 3,
+                    "img": "/assets/planet-earth.png",
+                    "company_name": "Excel Finance Private Limited",
+                    "company_details": "Excel Finance is a company operating in Southern India that provides invoice factoring services, which involves buying a business's unpaid invoices at a discount. ABC was founded in 20XX and has operations in southern states of Karnataka, Tamil Nadu, Andhra Pradesh, Telangana, and has since originated over $30 Mn in loans to over 10 millions borrowers. This opportunity will consist of tranches of a secured non convertible debenture with a maturity of 24 months backed by a portfolio of loans made to customers.",
+                    "opportunity_name": "Green Business with Pink hearts",
+                    "loan_amount": 5952577,
+                    "loan_interest": 10.21,
+                    "loan_tenure": 24,
+                    "asset_type": "EV Loans to women generating income as delivery partners",
+                    "assets": 32,
+                    "average_financing_fee": 13.10,
+                    "available_liquidity": 560000
+                }
+            ]
+        }
+    ]
+}

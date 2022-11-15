@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "opportunity_name": "Opportunity 7",
+    "loan_type": "Bullet Loan",
+    "loan_amount": 150000,
+    "repayment_amount": 900,
+    "repayment_date": "30-07-2022",
+    "loan_tenure": 360,
+    "loan_interest": 15,
+    "payment_frequency": 45,
+    "capital_loss": 10
+  }
+]

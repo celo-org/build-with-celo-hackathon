@@ -1,0 +1,10 @@
+[
+    {
+        "id": 1,
+        "opportunity_name": "Opportunity 20",
+        "opportunity_owner": "Alpha Tech",
+        "invest_amount": 250000,
+        "loan_interest": 18,
+        "available_withdrawal": 100000
+    }
+]

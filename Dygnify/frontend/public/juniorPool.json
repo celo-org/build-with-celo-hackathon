@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "opportunity_name": "Opportunity 11",
+        "opportunity_owner": "ABC Tech",
+        "invest_amount": 150000,
+        "loan_interest": 12,
+        "available_withdrawal": 50000
+    },
+    {
+        "id": 2,
+        "opportunity_name": "Opportunity 12",
+        "opportunity_owner": "XYZ InfoTech",
+        "invest_amount": 420000,
+        "loan_interest": 15,
+        "available_withdrawal": 150000
+    }
+]
