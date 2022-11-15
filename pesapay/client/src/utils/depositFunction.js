@@ -9,7 +9,7 @@ import axios from "axios"
 import { toast } from "react-toastify"
 import sdk from "redstone-sdk"
 import protocol from "redstone-protocol"
-import convertStringToBytes32 from "redstone-protocol/dist/src/common/utils"
+import {convertStringToBytes32} from "redstone-protocol/dist/src/common/utils"
 
 export async function approve(amount) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
