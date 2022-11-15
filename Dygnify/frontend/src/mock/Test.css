@@ -1,0 +1,29 @@
+body {
+  background-color: rgb(249, 249, 249);
+}
+
+.graph {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+}
+
+.fle {
+  margin: 0 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.dai {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.heading {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
