@@ -1,0 +1,50 @@
+.invest{
+    color: rgba(0,0,0,.85);
+    border:5px solid rgba(0,0,0,.85);
+}
+
+.borrow{
+    color: rgba(0,0,0,.85);
+    border:5px solid rgba(0,0,0,.85);
+}
+
+.invest:hover{
+    background-color: #7165e3;
+    cursor : pointer;
+    color: white;
+    border:5px solid #7165e3;
+}
+
+.borrow:hover{
+    background-color: #7165e3;
+    cursor : pointer;
+    color: white;
+    border:5px solid #7165e3;
+}
+
+
+/* .invest:hover{
+    color: rgba(0,0,0,.85);
+    border:5px solid rgba(0,0,0,.85);
+    background-color: white;
+}
+
+.borrow:hover{
+    color: rgba(0,0,0,.85);
+    border:5px solid rgba(0,0,0,.85);
+    background-color: white;
+}
+
+.invest{
+    background-color: #7165e3;
+    cursor : pointer;
+    color: white;
+    border:5px solid #7165e3;
+}
+
+.borrow{
+    background-color: #7165e3;
+    cursor : pointer;
+    color: white;
+    border:5px solid #7165e3;
+} */

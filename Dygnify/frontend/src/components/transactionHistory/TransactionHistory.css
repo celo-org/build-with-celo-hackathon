@@ -1,0 +1,12 @@
+.flex {
+  margin: 20px 20px;
+  margin-bottom: 5px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.flex-date {
+  margin: 20px 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
