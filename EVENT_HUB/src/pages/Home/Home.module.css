@@ -1,0 +1,44 @@
+.container {
+
+}
+
+.hero {
+  margin-top: -80px;
+}
+
+.usp {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding-top: 200px;
+  padding-bottom: 200px;
+  color: #fefefe;
+}
+
+.usp img {
+  width: 100%;
+}
+
+.usp-txt h2{
+  font-size: 4rem;
+}
+
+.usp-txt p{
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.events {
+  padding-bottom: 200px;
+}
+
+.events h1 {
+  margin: 0 0 50px 0;
+  text-align: center;
+  color: #fefefe;
+}
+
+.button-container-div {
+  text-align: center;
+  margin-top: 50px;
+}

@@ -1,0 +1,148 @@
+.drawer {
+    height: 0;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    z-index: 999;
+    transition: 0.5s;
+    background: darkgoldenrod;
+    overflow-y: hidden;
+}
+
+.drawer-links {
+    display: grid;
+    padding-left: 100px;
+    padding-top: 60px;
+}
+
+.drawer-links a {
+    margin-bottom: 30px;
+    font-size: 3rem;
+    font-weight: 500;
+    color: #fefefe;
+}
+
+.show-drawer {
+    height: 100vh;
+}
+
+.app-name-drawer {
+    font-size: 5rem;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: left;
+    color: #000;
+}
+
+.close-btn {
+    font-weight: 700;
+    font-size: 3rem;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    cursor: pointer;
+}
+
+input, textarea {
+    display: block;
+}
+
+#form input[type="text"], #form input[type="date"], #form input[type="email"], #form input[type="file"], #form input[type="number"], #form input[type="time"], #form input[type="tel"], #form input[type="url"], #form textarea, #form button[type="submit"], #form button[type="button"] { font:400 12px/16px "Open Sans", Helvetica, Arial, sans-serif; }
+
+#form {
+    background:#F9F9F9;
+    padding:25px;
+    margin:50px 0;
+}
+
+#form h3 {
+    color: #F96;
+    display: block;
+    font-size: 30px;
+    font-weight: 400;
+}
+
+#form h4 {
+    margin:5px 0 15px;
+    display:block;
+    font-size:13px;
+}
+
+
+#form input[type="text"], #form input[type="date"], #form input[type="file"], #form input[type="email"], #form input[type="number"], #form input[type="time"], #form input[type="tel"], #form input[type="url"], #form textarea {
+    width:100%;
+    border:1px solid #CCC;
+    background:#FFF;
+    margin:0 0 5px;
+    padding:10px;
+}
+
+#form input[type="text"]:hover, #form input[type="email"]:hover, #form input[type="tel"]:hover, #form input[type="url"]:hover, #form textarea:hover {
+    -webkit-transition:border-color 0.3s ease-in-out;
+    -moz-transition:border-color 0.3s ease-in-out;
+    transition:border-color 0.3s ease-in-out;
+    border:1px solid #AAA;
+}
+
+#form textarea {
+    height:100px;
+    max-width:100%;
+    resize:none;
+}
+
+#form button {
+    cursor:pointer;
+    width:100%;
+    border:none;
+    background: #969592;
+    color:#FFF;
+    margin:0 0 5px;
+    padding:10px;
+    font-size:15px;
+}
+
+
+#form button[type="submit"]:hover {
+    background:#f8f7f5;
+    -webkit-transition:background 0.3s ease-in-out;
+    -moz-transition:background 0.3s ease-in-out;
+    transition:background-color 0.3s ease-in-out;
+}
+
+#form button[type="submit"]:active { box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.5); }
+
+#form input:focus, #form textarea:focus {
+    outline:0;
+    border:1px solid #999;
+}
+::-webkit-input-placeholder {
+    color:#888;
+}
+:-moz-placeholder {
+    color:#888;
+}
+::-moz-placeholder {
+    color:#888;
+}
+:-ms-input-placeholder {
+    color:#888;
+}
+
+.app-create-event-btn {
+    width: 200px;
+}
+
+.loader-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.payout {
+    width: 100%;
+    color: black;
+}
+
+
