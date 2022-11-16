@@ -171,7 +171,7 @@ contract EventHub {
 
         CreateEvent storage myEvent = idToEvent[eventId];
 
-        require(block.timestamp >= (myEvent.eventTimestamp + 5 minutes), "TOO EARLY");
+        require(block.timestamp >= (myEvent.eventTimestamp + 5 minutes * 1 days), "TOO EARLY");
 
         uint256 absentees = myEvent.confirmedRSVPs.length - myEvent.claimedRSVPs.length;
 
