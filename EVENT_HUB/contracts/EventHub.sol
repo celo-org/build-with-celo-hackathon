@@ -163,15 +163,16 @@ contract EventHub {
         return myEvent.confirmedRSVPs;
     }
 
-    function getBalance() public view returns (uint256) {
-        return address(this).balance;
+    function getTime() public view returns (uint256) {
+//        return address(this).balance;
+        return block.timestamp;
     }
 
     function payOut(string memory eventId) public {
 
         CreateEvent storage myEvent = idToEvent[eventId];
 
-        require(block.timestamp >= (myEvent.eventTimestamp + 5 minutes * 1 days), "TOO EARLY");
+//        require(block.timestamp >= (myEvent.eventTimestamp + 5 minutes * 1 days), "TOO EARLY");
 
         uint256 absentees = myEvent.confirmedRSVPs.length - myEvent.claimedRSVPs.length;
 
