@@ -74,6 +74,12 @@ const EventLists = () => {
     console.log(txHash)
   }
 
+  // const getEvent = async eventId => {
+  //   const eventHubContract = new kit.connection.web3.eth.Contract(EventHub.abi, eventHubContractAddress)
+  //   const txHash = await eventHubContract.methods.getTime().call()
+  //   console.log(txHash)
+  // }
+
   useEffect( () => {
     async function eventList () {
 
@@ -120,6 +126,7 @@ const EventLists = () => {
           <span className={styles.blk}>Capacity: {event.metadata.keyvalues.capacity}</span>
           <span className={styles.blk}>Date: {cleanDate(event.metadata.keyvalues.dateAndTime)}</span>
           <button className={styles['rsvp-btn']} onClick={() => rsvp(event.ipfs_pin_hash, event.metadata.keyvalues.deposit)}>RSVP</button>
+          {/*<button className={styles['rsvp-btn']} onClick={() => getEvent(event.ipfs_pin_hash)}>Get Event</button>*/}
           {event.metadata.keyvalues.owner === address && (
             <div>
               {!confirmForm && <button style={{width: '100%'}} onClick={() => setConfirmForm(true)}>Confirm Attendee</button>}
