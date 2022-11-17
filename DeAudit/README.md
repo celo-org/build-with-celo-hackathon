@@ -49,6 +49,7 @@ https://github.com/barbarayler/build-with-celo-hackathon/tree/main/DeAudit
 https://www.youtube.com/watch?v=Fosu92LztMg
 
 Smart contract on alfajores testnet
+
 https://alfajores.celoscan.io/address/0xcced1b12ee130430d745b26bdb0ee228e50b0754
 
 #### Next Steps
