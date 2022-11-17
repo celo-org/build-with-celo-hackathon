@@ -26,6 +26,12 @@ https://github.com/safedefi/build-with-celo-hackathon/tree/main/Credly
 
 #### Presentation
 
+On Celo Testnet
+
+https://alfajores.celoscan.io/address/0x257fcd17b4b22cba4ef5eec5e73ce07b3d706e07
+
+On Youtube
+
 https://www.youtube.com/watch?v=KERlY93Lyns
 
 #### Next Steps
