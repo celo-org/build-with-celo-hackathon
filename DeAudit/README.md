@@ -48,6 +48,9 @@ https://github.com/barbarayler/build-with-celo-hackathon/tree/main/DeAudit
 #### Presentation
 https://www.youtube.com/watch?v=Fosu92LztMg
 
+Smart contract on alfajores testnet
+https://alfajores.celoscan.io/address/0xcced1b12ee130430d745b26bdb0ee228e50b0754
+
 #### Next Steps
 This is a proof of idea, we've planned a lot of changes, upgrades and improvements to DeAudit.
 1.	If the no bugs reported is the pool that won, an NFT is created with the amount of money that was liquidated and the ENS of people on the jury.
