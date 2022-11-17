@@ -1,0 +1,17 @@
+{
+  "name": "test-discord",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "12.5.3",
+    "dotenv": "^16.0.1",
+    "firebase": "^9.9.2"
+  }
+}
