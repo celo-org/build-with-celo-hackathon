@@ -75,4 +75,5 @@ export default NextAuth({
   ],
   adapter: MongoDBAdapter(clientPromise),
   events: { createUser: sendWelcomeEmail },
+  secret: process.env.NEXTAUTH_SECRET
 });
