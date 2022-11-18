@@ -11,7 +11,7 @@ import styles from '../styles/home.module.scss';
 import '@rainbow-me/rainbowkit/styles.css';
 import { mutate } from "swr";
 
-export default function wobRegistration1() {
+export default function WobRegistration1() {
 
     const router = useRouter();
     const { isConnected } = useAccount();

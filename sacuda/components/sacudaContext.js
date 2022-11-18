@@ -26,6 +26,6 @@ export function SacudaProvider ({children}) {
     );
   }
 
- export function sacudaContext() {
+ export function SacudaContext() {
     return useContext(AppContext);
  }

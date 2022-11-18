@@ -12,7 +12,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 
 const url = "http://localhost:3000/api/getUsers";
 
-export default function admin({users}) {
+export default function Admin({users}) {
 
     const CONTRACT_ADDRESS="0x34422efA66294820a0bb169294c28a880B9a88bf";
     

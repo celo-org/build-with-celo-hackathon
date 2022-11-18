@@ -9,7 +9,7 @@ import { useAccount } from 'wagmi';
 import styles from '../styles/home.module.scss';
 import '@rainbow-me/rainbowkit/styles.css';
 
-export default function selectionPage() {
+export default function SelectionPage() {
 
     const router = useRouter();
     const { isConnected } = useAccount();
