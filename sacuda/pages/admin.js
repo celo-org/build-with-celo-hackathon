@@ -186,7 +186,7 @@ export default function Admin({users}) {
 
         if (isConnected) {
             if(uMail===session.user.email) {
-                if (uProfile === 3) {
+                if (uProfile === 1) {
         return (
             <>
             <main className={styles.lists}>
