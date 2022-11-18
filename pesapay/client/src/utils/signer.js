@@ -1,4 +1,4 @@
-import ethSigUtil from "@metamask/eth-sig-util"
+const ethSigUtil = require("@metamask/eth-sig-util")
 
 const EIP712Domain = [
   { name: "name", type: "string" },
@@ -55,16 +55,22 @@ async function buildRequest(forwarder, input) {
   return { value: 0, gas: 1e6, nonce, ...input }
 }
 
-export async function buildTypedData(forwarder, request) {
+async function buildTypedData(forwarder, request) {
   const chainId = await forwarder.provider.getNetwork().then((n) => n.chainId)
   const typeData = getMetaTxTypeData(chainId, forwarder.address)
   return { ...typeData, message: request }
 }
 
-export async function signMetaTxRequest(signer, forwarder, input, other) {
+async function signMetaTxRequest(signer, forwarder, input, other) {
   const request = await buildRequest(forwarder, input)
   const toSign = await buildTypedData(forwarder, request)
   const signature = await signTypedData(signer, input.from, toSign)
   const params = JSON.parse(JSON.stringify(other))
   return { signature, request, params }
+}
+
+module.exports = {
+  signMetaTxRequest,
+  buildRequest,
+  buildTypedData,
 }

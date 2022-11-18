@@ -19,7 +19,7 @@ input[type="number"] {
 .gradient_btn {
   background: linear-gradient(
     103.91deg,
-    #ffcf00 21.01%,
+    #9b51e0 21.01%,
     rgba(48, 129, 237, 0.8) 100%
   );
 }
@@ -32,7 +32,7 @@ input[type="number"] {
   height: 123px;
   border-radius: 50%;
 
-  background: #ffcf00;
+  background: #fb37ff;
   filter: blur(200px);
 }
 
@@ -44,8 +44,11 @@ input[type="number"] {
   height: 123px;
   border-radius: 50%;
 
-  background: #35D07F;
+  background: #18b2de;
   filter: blur(200px);
+}
+
+.Toastify__toast-container--top-left{ top: 5em;
 }
 
 .gradient-border {
@@ -54,6 +57,6 @@ input[type="number"] {
     #ffcf00 1.7%,
     rgba(155, 111, 238, 0) 27.12%,
     rgba(123, 127, 234, 0) 61.28%,
-    #35D07F 99.52%
+    #35D07F  99.52%
   );
 }

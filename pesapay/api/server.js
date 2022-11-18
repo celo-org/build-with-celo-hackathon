@@ -8,9 +8,7 @@ require("colors")
 require("dotenv").config({ path: __dirname + "/.env" })
 connectDB()
 const app = express()
-app.use("/posts", (req, res) => {
-  console.log("this is a middleware running")
-})
+app.use(express.json())
 app.use(cors())
 app.get("/", (req, res) => {
   res.send("this is the home page")
@@ -20,6 +18,7 @@ if (process.env.NODE_ENV === "development") {
 }
 //implementation of routing
 app.use("/api", require("./routes/cashoutRoute"))
+
 app.use(errorHandler)
 app.use(notFound)
 const PORT = process.env.PORT || 5000

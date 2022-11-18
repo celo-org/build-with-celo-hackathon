@@ -4,7 +4,6 @@ import { useOnClickOutside } from "../utils"
 import styles from "../styles"
 import tokens from "../utils/tokenname.json"
 import { handlePriceFeed } from "../utils/pricefeed"
-
 const AmountIn = ({ value, onChange, onChain, inUsd, onToken, taddress }) => {
   const [showList, setShowList] = useState(false)
   const [activeToken, setActiveToken] = useState("Select")
@@ -20,15 +19,6 @@ const AmountIn = ({ value, onChange, onChain, inUsd, onToken, taddress }) => {
     setShowList(!showList)
   }
 
-  // const x=async()=>{
-  //   const y = await chainid();
-  //   console.log(y)
-  // }
-
-  // useEffect(() => {
-  //   chainid()
-  // }, [activeChainId]);
-  // console.log(activeChainId);
   return (
     <div className={styles.amountContainer}>
       <input
@@ -67,7 +57,8 @@ const AmountIn = ({ value, onChange, onChain, inUsd, onToken, taddress }) => {
                     setActiveToken(tokenName)
                     onToken(tokenName)
                     taddress(add)
-                    if (typeof onSelect === "function") onChain(activeChainId)
+                    onChain(activeChainId)
+                    if (typeof onSelect === "function");
                     if (
                       pricefeed === "0x9ae96129ed8FE0C707D6eeBa7b90bB1e139e543e"
                     ) {
@@ -83,12 +74,6 @@ const AmountIn = ({ value, onChange, onChain, inUsd, onToken, taddress }) => {
                       inUsd(z)
                       console.log(z)
                     }
-
-                    // if(parseInt((window.ethereum.chainId),16) != chainid){
-                    //   handleNetworkSwitch(chainid)
-                    //  setActiveToken(tokenName);
-                    // }else{setActiveToken((tokenName))}
-
                     setShowList(false)
                   }}
                 >

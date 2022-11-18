@@ -8,6 +8,10 @@ const cashoutSchema = new Schema(
       type: String,
       enum: [`MPS`],
     },
+    account_number: {
+      required: true,
+      type: Number,
+    },
     amount: {
       required: true,
       type: Number,
@@ -30,7 +34,6 @@ const cashoutSchema = new Schema(
       type: String,
       enum: [`cashout`],
     },
-
     callback_url: {
       require: true,
       type: String,

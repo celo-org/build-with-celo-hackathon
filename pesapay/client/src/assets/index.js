@@ -1,5 +1,5 @@
 import chevronDown from "./chevron-down.svg";
-import ethereumLogo from "./ethereumLogo.png";
-import uniswapLogo from "./uniswapLogo.png";
-
-export { chevronDown, ethereumLogo, uniswapLogo };
+import Logo from "./logo.png";
+import bell from "./bell-icons.png";
+import clogo from "./clogo.png";
+export { chevronDown,  Logo,bell,clogo };

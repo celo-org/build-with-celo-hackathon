@@ -43,6 +43,7 @@ export const Alfajores: Chain = {
   getExplorerAddressLink: getAddressLink(alfajoresExplorerUrl),
   getExplorerTransactionLink: getTransactionLink(alfajoresExplorerUrl),
 }
+
 const networks = {
   Celo,
   Alfajores,
