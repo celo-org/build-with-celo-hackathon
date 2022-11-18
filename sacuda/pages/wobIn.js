@@ -8,7 +8,7 @@ import { ConnectButton} from "@rainbow-me/rainbowkit";
 import styles from '../styles/home.module.scss';
 import '@rainbow-me/rainbowkit/styles.css';
 
-export default function selectionPage() {
+export default function SelectionPage() {
 
 
     const { data: session, status } = useSession({
