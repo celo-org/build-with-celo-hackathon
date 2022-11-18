@@ -72,7 +72,7 @@ const Exchange = () => {
     try {
       await depositToken(amt, phoneNo, library, intocurrency, currency)
     } catch (error) {
-      notify(error.message)
+      toast.error(error.message)
     }
   }
   const onNetworkHandler = (value) => {
