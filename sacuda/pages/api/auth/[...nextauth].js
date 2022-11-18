@@ -36,7 +36,7 @@ const sendVerificationRequest = async ({ identifier, url }) => {
       }),
     });
   } catch (err) {
-    console.log(`❌ No se pudo enviar el link a (${identifier})`);
+    console.log(`❌ No se pudo enviar el link a (${identifier})`+err);
   }
 };
 
