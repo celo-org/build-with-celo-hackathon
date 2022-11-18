@@ -25,7 +25,7 @@ DAO's vs Traditional Organisations
 
 
 |                        | Traditional              | DAO |
-| -----------  ----------| ----------- -------------| ----------- |
+| -----------------------| -------------------------| ----------- |
 | Permission             | Granted by State         | Permissionless |
 | Assets                 | Custodied by Banks       | Crypto |
 |Property Rights         | Enforced by Police       | Tracked on Blockchain |
@@ -47,7 +47,7 @@ Follow the Readme.md in the respective folder for installation instructions.
 #### URLs
 Download the Previous Version of this App from Play Store (new version coming soon) -> [Play Store Link](https://play.google.com/store/apps/details?id=com.app.equistart)
 
-Demo App (New) -> [APK](https://drive.google.com/file/d/1LvkUhvC86YYecpzMNLLasAQ79MGVRocc/view?usp=shar
+Demo Android App (New) -> [APK](https://drive.google.com/file/d/1LvkUhvC86YYecpzMNLLasAQ79MGVRocc/view?usp=shar
 
 How to use our prototype DApp -> [Youtube](https://youtu.be/oBbx7qXQ
 
