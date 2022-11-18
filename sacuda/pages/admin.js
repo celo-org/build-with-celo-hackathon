@@ -9,7 +9,7 @@ import { useAccount, useConnect, useContract, useContractRead, useContractWrite,
 import styles from '../styles/home.module.scss';
 import '@rainbow-me/rainbowkit/styles.css';
 
-const url = "http://localhost:3000/api/getUsers";
+const url = "https://sacuda.ordinar.io/api/getUsers";
 
 export default function Admin({users}) {
 
