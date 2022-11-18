@@ -1,5 +1,5 @@
 import { FaMagic } from 'react-icons/fa';
-import { sacudaContext } from '../../components/sacudaContext';
+import { SacudaContext } from '../../components/sacudaContext';
 import React, { useEffect, useState} from 'react';
 import { Text, Heading } from '@chakra-ui/react';
 import { useSession, signIn, signOut } from "next-auth/react";
@@ -21,7 +21,7 @@ const WalletConnect = () => {
     }
   })
 
-  const {uMail,setUMail} = sacudaContext ()
+  const {uMail,setUMail} = SacudaContext ()
   const {uData,setUData} = useState({})
 
   useEffect(() => {

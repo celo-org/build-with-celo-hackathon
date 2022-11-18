@@ -6,7 +6,6 @@ import { Table } from "react-chakra-pagination";
 import { useForm } from 'react-hook-form'
 import { useSession, signIn, signOff } from "next-auth/react";
 import { useAccount, useConnect, useContract, useContractRead, useContractWrite, useNetwork, useWaitForTransaction, usePrepareContractWrite } from 'wagmi';
-import tokenContract from "../../contracts/abi/metadata.json";
 import styles from '../styles/home.module.scss';
 import '@rainbow-me/rainbowkit/styles.css';
 
@@ -16,31 +15,7 @@ export default function Admin({users}) {
 
     const CONTRACT_ADDRESS="0x34422efA66294820a0bb169294c28a880B9a88bf";
     
-    const sacudaAbi = [
-        {
-            type:"function",
-            stateMutability:"nonpayable",
-            outputs:[],
-            name:"mint",
-            inputs:[
-                {
-                    type:"address",
-                    name:"_user",
-                    internalType:"address"
-                },
-                {
-                    type:"bool",
-                    name:"_isEnhancer",
-                    internalType:"bool"
-                },
-                {
-                    type:"string",
-                    name:"_name",
-                    internalType:"string"
-                }
-            ]
-        }
-    ]
+    const sacudaAbi = [{"type":"constructor","stateMutability":"nonpayable","inputs":[]},{"type":"error","name":"NotAPercentage","inputs":[]},{"type":"event","name":"Approval","inputs":[{"type":"address","name":"owner","internalType":"address","indexed":true},{"type":"address","name":"approved","internalType":"address","indexed":true},{"type":"uint256","name":"tokenId","internalType":"uint256","indexed":true}],"anonymous":false},{"type":"event","name":"ApprovalForAll","inputs":[{"type":"address","name":"owner","internalType":"address","indexed":true},{"type":"address","name":"operator","internalType":"address","indexed":true},{"type":"bool","name":"approved","internalType":"bool","indexed":false}],"anonymous":false},{"type":"event","name":"NameUpdated","inputs":[{"type":"uint256","name":"tokenId","internalType":"uint256","indexed":true},{"type":"string","name":"newName","internalType":"string","indexed":false}],"anonymous":false},{"type":"event","name":"RoleAdminChanged","inputs":[{"type":"bytes32","name":"role","internalType":"bytes32","indexed":true},{"type":"bytes32","name":"previousAdminRole","internalType":"bytes32","indexed":true},{"type":"bytes32","name":"newAdminRole","internalType":"bytes32","indexed":true}],"anonymous":false},{"type":"event","name":"RoleGranted","inputs":[{"type":"bytes32","name":"role","internalType":"bytes32","indexed":true},{"type":"address","name":"account","internalType":"address","indexed":true},{"type":"address","name":"sender","internalType":"address","indexed":true}],"anonymous":false},{"type":"event","name":"RoleRevoked","inputs":[{"type":"bytes32","name":"role","internalType":"bytes32","indexed":true},{"type":"address","name":"account","internalType":"address","indexed":true},{"type":"address","name":"sender","internalType":"address","indexed":true}],"anonymous":false},{"type":"event","name":"Transfer","inputs":[{"type":"address","name":"from","internalType":"address","indexed":true},{"type":"address","name":"to","internalType":"address","indexed":true},{"type":"uint256","name":"tokenId","internalType":"uint256","indexed":true}],"anonymous":false},{"type":"event","name":"UserReportUpdated","inputs":[{"type":"uint256","name":"tokenId","internalType":"uint256","indexed":true},{"type":"uint8","name":"paymentHistory","internalType":"uint8","indexed":false},{"type":"uint8","name":"amountOwed","internalType":"uint8","indexed":false},{"type":"uint8","name":"creditLength","internalType":"uint8","indexed":false},{"type":"uint8","name":"creditMix","internalType":"uint8","indexed":false},{"type":"uint8","name":"newCredit","internalType":"uint8","indexed":false}],"anonymous":false},{"type":"event","name":"WeightsUpdated","inputs":[{"type":"uint8","name":"paymentHistory","internalType":"uint8","indexed":false},{"type":"uint8","name":"amountOwed","internalType":"uint8","indexed":false},{"type":"uint8","name":"creditLength","internalType":"uint8","indexed":false},{"type":"uint8","name":"creditMix","internalType":"uint8","indexed":false},{"type":"uint8","name":"newCredit","internalType":"uint8","indexed":false}],"anonymous":false},{"type":"function","stateMutability":"view","outputs":[{"type":"bytes32","name":"","internalType":"bytes32"}],"name":"ADMIN_ROLE","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"bytes32","name":"","internalType":"bytes32"}],"name":"CLERK_ROLE","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"bytes32","name":"","internalType":"bytes32"}],"name":"DEFAULT_ADMIN_ROLE","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"bytes32","name":"","internalType":"bytes32"}],"name":"ENHANCER_ROLE","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"bytes32","name":"","internalType":"bytes32"}],"name":"WOB_ROLE","inputs":[]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"addAdmin","inputs":[{"type":"address","name":"user","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"addClerk","inputs":[{"type":"address","name":"user","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint8","name":"","internalType":"uint8"}],"name":"amountOwedWeight","inputs":[]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"approve","inputs":[{"type":"address","name":"to","internalType":"address"},{"type":"uint256","name":"tokenId","internalType":"uint256"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"balanceOf","inputs":[{"type":"address","name":"owner","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"burn","inputs":[{"type":"uint256","name":"tokenId","internalType":"uint256"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint8","name":"","internalType":"uint8"}],"name":"creditLengthWeight","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint8","name":"","internalType":"uint8"}],"name":"creditMixWeight","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"address"}],"name":"getApproved","inputs":[{"type":"uint256","name":"tokenId","internalType":"uint256"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"bytes32","name":"","internalType":"bytes32"}],"name":"getRoleAdmin","inputs":[{"type":"bytes32","name":"role","internalType":"bytes32"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"grantRole","inputs":[{"type":"bytes32","name":"role","internalType":"bytes32"},{"type":"address","name":"account","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"bool","name":"","internalType":"bool"}],"name":"hasRole","inputs":[{"type":"bytes32","name":"role","internalType":"bytes32"},{"type":"address","name":"account","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"bool","name":"","internalType":"bool"}],"name":"isApprovedForAll","inputs":[{"type":"address","name":"owner","internalType":"address"},{"type":"address","name":"operator","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"mint","inputs":[{"type":"address","name":"_user","internalType":"address"},{"type":"bool","name":"_isEnhancer","internalType":"bool"},{"type":"string","name":"_name","internalType":"string"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"string","name":"","internalType":"string"}],"name":"name","inputs":[{"type":"uint256","name":"","internalType":"uint256"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"string","name":"","internalType":"string"}],"name":"name","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint8","name":"","internalType":"uint8"}],"name":"newCreditWeight","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"nftId","inputs":[{"type":"address","name":"","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"address"}],"name":"ownerOf","inputs":[{"type":"uint256","name":"tokenId","internalType":"uint256"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint8","name":"","internalType":"uint8"}],"name":"paymentHistoryWeight","inputs":[]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"removeAdmin","inputs":[{"type":"address","name":"user","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"removeClerk","inputs":[{"type":"address","name":"user","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"renounceRole","inputs":[{"type":"bytes32","name":"role","internalType":"bytes32"},{"type":"address","name":"account","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint8","name":"paymentHistory","internalType":"uint8"},{"type":"uint8","name":"amountOwed","internalType":"uint8"},{"type":"uint8","name":"creditLength","internalType":"uint8"},{"type":"uint8","name":"creditMix","internalType":"uint8"},{"type":"uint8","name":"newCredit","internalType":"uint8"}],"name":"report","inputs":[{"type":"uint256","name":"","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"revokeRole","inputs":[{"type":"bytes32","name":"role","internalType":"bytes32"},{"type":"address","name":"account","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"safeTransferFrom","inputs":[{"type":"address","name":"from","internalType":"address"},{"type":"address","name":"to","internalType":"address"},{"type":"uint256","name":"tokenId","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"safeTransferFrom","inputs":[{"type":"address","name":"from","internalType":"address"},{"type":"address","name":"to","internalType":"address"},{"type":"uint256","name":"tokenId","internalType":"uint256"},{"type":"bytes","name":"data","internalType":"bytes"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"score","inputs":[{"type":"uint256","name":"_tokenId","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"setApprovalForAll","inputs":[{"type":"address","name":"operator","internalType":"address"},{"type":"bool","name":"approved","internalType":"bool"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"bool","name":"","internalType":"bool"}],"name":"supportsInterface","inputs":[{"type":"bytes4","name":"interfaceId","internalType":"bytes4"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"string","name":"","internalType":"string"}],"name":"symbol","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"string","name":"","internalType":"string"}],"name":"tokenURI","inputs":[{"type":"uint256","name":"tokenId","internalType":"uint256"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"totalSupply","inputs":[]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"transferFrom","inputs":[{"type":"address","name":"from","internalType":"address"},{"type":"address","name":"to","internalType":"address"},{"type":"uint256","name":"tokenId","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"updateName","inputs":[{"type":"uint256","name":"tokenId","internalType":"uint256"},{"type":"string","name":"_name","internalType":"string"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"updateReport","inputs":[{"type":"uint256","name":"_tokenId","internalType":"uint256"},{"type":"bytes","name":"data","internalType":"bytes"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"updateWeights","inputs":[{"type":"bytes","name":"data","internalType":"bytes"}]}]
 
     const { isConnected } = useAccount();
     const { status, data: session } = useSession({
@@ -57,17 +32,6 @@ export default function Admin({users}) {
     const [isOpen,setIsOpen] = useState(false)
     const [buttonState,setButtonState] =useState()
 
-    // const {
-    //     data: mintData,
-    //     write: mintToken,
-    //     isLoading: isMintLoading,
-    //     isSuccess: isMintStarted,
-    //     error: mintError,
-    //   } = useContractWrite({
-    //     address: CONTRACT_ADDRESS,
-    //     abi: tokenContract.output.abi,
-    //     functionName: "mint",
-    //   });
 
     const { config, error } = usePrepareContractWrite({
           address: CONTRACT_ADDRESS,
@@ -82,29 +46,16 @@ export default function Admin({users}) {
 
     const { data, isLoading, isSuccess, write } = useContractWrite(config);
 
-
-    //   const mintSACSwob = async () => {
-    //     console.log(bWalletSta)
-    //     console.log(bNameSta)
-    //     await mintToken({
-    //       args: [
-    //         bWalletSta,
-    //         false,
-    //         bNameSta,
-    //       ],
-    //     });
-    //   };
     
     function onClose(){
         setIsOpen(false)
       }
 
     function handleEditClick({user}){
-        setIsOpen(true)
-        setModalValue(user)
-        console.log({user})
         setBWalletSta(user.wallet)
         setBNameSta(user.bname)
+        setIsOpen(true)
+        setModalValue(user)
      }
 
     const {
@@ -115,36 +66,37 @@ export default function Admin({users}) {
 
 
     const onSubmit = async (values) => {
-        console.log(bWalletSta)
-        console.log(bNameSta)
+
         if (buttonState === 1) {
         console.log('regmail:'+modalValue.email)
+        console.log(bWalletSta)
+        console.log(bNameSta)
         const reqemail = modalValue.email;
         const preProf = `{"profile": 2}`;
         const prof = JSON.parse(preProf);
 
         const finalValues = { ...values, ...prof}
         await write()
-        try {
-            const res = await fetch(`/api/updateProfile/${reqemail}`, {
-            method: "PUT",
-            headers: {
-                "Content-type": "application/json",
-            },
-            body: JSON.stringify(finalValues)
+        // try {
+        //     const res = await fetch(`/api/updateProfile/${reqemail}`, {
+        //     method: "PUT",
+        //     headers: {
+        //         "Content-type": "application/json",
+        //     },
+        //     body: JSON.stringify(finalValues)
 
-            });
-            if (!res.ok) {
-            throw new Error(res.status);
-            }
+        //     });
+        //     if (!res.ok) {
+        //     throw new Error(res.status);
+        //     }
 
-            const { data } = await res.json();
-            //mutate(`/api/updateProfile/${reqemail}`, data, false);
-            //router.push("/");
-            onClose()
-        } catch (error) {
-            console.log(error);
-        }
+        //     const { data } = await res.json();
+        //     //mutate(`/api/updateProfile/${reqemail}`, data, false);
+        //     //router.push("/");
+        //     onClose()
+        // } catch (error) {
+        //     console.log(error);
+        // }
         };
     
         if (buttonState === 2) {
@@ -326,7 +278,7 @@ export default function Admin({users}) {
                 <Button type="submit" colorScheme="red" mr={3} onClick={() => (setButtonState(2))}>
                     Disapprove
                 </Button>
-                <Button type="submit" colorScheme="blue" mr={3} onClick={() => (setButtonState(1))}>
+                <Button type="submit" colorScheme="green" mr={3} disabled={!write} onClick={() => (setButtonState(1))}>
                     Approve
                 </Button>
             </ModalFooter>

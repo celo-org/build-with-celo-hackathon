@@ -15,7 +15,7 @@ const NftViewer = () => {
 
     return (
         <>
-            {data?.toNumber() == 0 ?
+            {data?.toNumber() == 0 || data?.toNumber() == undefined  ?
                 <>No NFT yet</>
                 :
                 <>

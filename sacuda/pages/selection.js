@@ -1,5 +1,5 @@
 import { FaMagic } from 'react-icons/fa';
-import { sacudaContext } from '../components/sacudaContext';
+import { SacudaContext } from '../components/sacudaContext';
 import React from 'react';
 import { Text, Heading, Button } from '@chakra-ui/react';
 import { useSession, signIn, signOff } from "next-auth/react";
@@ -20,8 +20,8 @@ export default function SelectionPage() {
     }
     })
 
-    const {uMail,setUMail} = sacudaContext();  
-    const {uProfile, setUProfile} = sacudaContext();
+    const {uMail,setUMail} = SacudaContext();  
+    const {uProfile, setUProfile} = SacudaContext();
 
     const adminRedirect = () => {
         router.push('/admin') };

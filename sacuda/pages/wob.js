@@ -1,5 +1,5 @@
 import { FaMagic } from 'react-icons/fa';
-import { sacudaContext } from '../components/sacudaContext';
+import { SacudaContext } from '../components/sacudaContext';
 import React from 'react';
 import { Text, Heading, Input, Button, FormErrorMessage, FormLabel, FormControl, FormHelperText } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form'
@@ -22,8 +22,8 @@ export default function WobRegistration1() {
     }
     })
 
-    const {uMail,setUMail} = sacudaContext();
-    const {uProfile, setUProfile} = sacudaContext();
+    const {uMail,setUMail} = SacudaContext();
+    const {uProfile, setUProfile} = SacudaContext();
 
     const wobDashRedirect = () => {
         router.push('/wobDash') };
