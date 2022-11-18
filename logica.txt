@@ -1,0 +1,8 @@
+1)Login: Se toman datos de WOB o POTENTIATORS y se los taguea
+2)Cada actor (Owners, WOBs, Potentiators) tienen su propio dashboard
+2.a) Dash de Owners: Filtra por WOBs o Potentiators, a las WOBs les asigna el scoring o desaprueba. A los Potentiators, aprueba o desaprueba.
+2.b) Dash de WOBs: Ve status de su aplicacion (En revision Financiera/ Financiera Aprobada /Desaprobada -- En revision de Scoring / Con scoring suficiente (Credito aprobado con monto) / Con scoring insuficiente (Necesita aprobacion de comunidad, tiene N tiempo para conseguirlo)
+2.c) Dash de potentiators: Ve lista de WOBs a quienes puede recomendar. Puede recomendar hasta N WOBs.
+3.a) WOB Finantial health check: La hacen los owners desde su dashboard. El analisis es off-chain. Si se aprueba, se les dropea un NFT que demuestra su participacion con scorings (inicial 0) y pasan a siguiente etapa, sino tienen que volver a aplicar nuevamente
+3.b) Aprobacion de potentiators: Los owners aprueban o desaprueban la participacion de los potentiators (Si se aprueba, se les dropea un NFT que demuestra su participacion, los potentiators pueden recomendar a WOBs inscriptas)
+4) WOB Bussiness check and scoring: Sucede off-chain, si el scoring es adecuado el credito es aprobado. Si el scoring no es adecuado, se puede incrementar a traves del voto de Potentiators. Si luego de N tiempo no tienen el puntaje adecuado, tienen que volver a aplicar (por ahora. En el futuro quizás los potentiators pueden ayudar a conseguir objetivos para aumentar el scoring)

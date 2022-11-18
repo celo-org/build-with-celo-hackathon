@@ -1,0 +1,44 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  animation-name: mount;
+  animation-duration: 1000ms;
+
+  background-color: rgba(255, 255, 255, 0.466);
+  backdrop-filter: blur(9px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  h1 {
+    font-size: 1.6rem;
+    margin-top: 1rem;
+    color: black;
+  }
+
+  p {
+    margin-top: 1.2rem;
+    font-weight: 500;
+    font-size: 1.1rem;
+    max-width: 400px;
+    text-align: center;
+    line-height: 1.8rem;
+    color: #444;
+  }
+}
+
+@keyframes mount {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

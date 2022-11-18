@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  sacuda:
+    build: .
+    ports:
+      - "3000:3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=front-gtw"
+      - "traefik.http.routers.${HTTP_SUBDOMAIN}-http.rule=Host(`${HTTP_SUBDOMAIN}.${DOMAIN}`)"
+      - "traefik.http.routers.${HTTP_SUBDOMAIN}-http.middlewares=https-redirect@file"
+      - "traefik.http.routers.${HTTP_SUBDOMAIN}-http.entrypoints=http"
+      - "traefik.http.routers.${HTTP_SUBDOMAIN}-https.rule=Host(`${HTTP_SUBDOMAIN}.${DOMAIN}`)"
+      - "traefik.http.routers.${HTTP_SUBDOMAIN}-https.entrypoints=https"
+      - "traefik.http.routers.${HTTP_SUBDOMAIN}-https.service=${HTTP_SUBDOMAIN}-https"
+      - "traefik.http.services.${HTTP_SUBDOMAIN}-https.loadbalancer.server.port=80"
+      - "traefik.http.routers.${HTTP_SUBDOMAIN}-https.middlewares=security@file, compression@file"
+      - "traefik.http.routers.${HTTP_SUBDOMAIN}-https.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.${HTTP_SUBDOMAIN}-https.tls=true"
+    networks:
+      - frontend
+
+networks:
+  frontend:
+    name: front-gtw
