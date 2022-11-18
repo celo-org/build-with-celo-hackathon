@@ -125,26 +125,26 @@ export default function admin({users}) {
 
         const finalValues = { ...values, ...prof}
         await write()
-        // try {
-        //     const res = await fetch(`/api/updateProfile/${reqemail}`, {
-        //     method: "PUT",
-        //     headers: {
-        //         "Content-type": "application/json",
-        //     },
-        //     body: JSON.stringify(finalValues)
+        try {
+            const res = await fetch(`/api/updateProfile/${reqemail}`, {
+            method: "PUT",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify(finalValues)
 
-        //     });
-        //     if (!res.ok) {
-        //     throw new Error(res.status);
-        //     }
+            });
+            if (!res.ok) {
+            throw new Error(res.status);
+            }
 
-        //     const { data } = await res.json();
-        //     //mutate(`/api/updateProfile/${reqemail}`, data, false);
-        //     //router.push("/");
-        //     onClose()
-        // } catch (error) {
-        //     console.log(error);
-        // }
+            const { data } = await res.json();
+            //mutate(`/api/updateProfile/${reqemail}`, data, false);
+            //router.push("/");
+            onClose()
+        } catch (error) {
+            console.log(error);
+        }
         };
     
         if (buttonState === 2) {
