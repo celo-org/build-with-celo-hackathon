@@ -1,4 +1,4 @@
-import { useState, mutate } from "react";
+import { useState } from "react";
 import Head from 'next/head';
 import { Text, Box, Icon, Button, Heading, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Input, SimpleGrid, Link, FormControl, FormLabel, FormHelperText, FormErrorMessage } from "@chakra-ui/react";
 import { FiEye, FiUser } from "react-icons/fi";
@@ -77,26 +77,26 @@ export default function Admin({users}) {
 
         const finalValues = { ...values, ...prof}
         await write()
-        // try {
-        //     const res = await fetch(`/api/updateProfile/${reqemail}`, {
-        //     method: "PUT",
-        //     headers: {
-        //         "Content-type": "application/json",
-        //     },
-        //     body: JSON.stringify(finalValues)
+        try {
+            const res = await fetch(`/api/updateProfile/${reqemail}`, {
+            method: "PUT",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify(finalValues)
 
-        //     });
-        //     if (!res.ok) {
-        //     throw new Error(res.status);
-        //     }
+            });
+            if (!res.ok) {
+            throw new Error(res.status);
+            }
 
-        //     const { data } = await res.json();
-        //     //mutate(`/api/updateProfile/${reqemail}`, data, false);
-        //     //router.push("/");
-        //     onClose()
-        // } catch (error) {
-        //     console.log(error);
-        // }
+            const { data } = await res.json();
+            //mutate(`/api/updateProfile/${reqemail}`, data, false);
+            //router.push("/");
+            onClose()
+        } catch (error) {
+            console.log(error);
+        }
         };
     
         if (buttonState === 2) {
@@ -120,8 +120,8 @@ export default function Admin({users}) {
                 }
 
                 const { data } = await res.json();
-                mutate(`/api/updateProfile/${reqemail}`, data, false);
-                router.push("/");
+                // mutate(`/api/updateProfile/${reqemail}`, data, false);
+                // router.push("/");
             } catch (error) {
                 console.log(error);
             }

@@ -8,7 +8,7 @@ import { ConnectButton} from "@rainbow-me/rainbowkit";
 import styles from '../styles/home.module.scss';
 import '@rainbow-me/rainbowkit/styles.css';
 
-export default function SelectionPage() {
+export default function WobInPage() {
 
 
     const { data: session, status } = useSession({
@@ -78,7 +78,7 @@ export default function SelectionPage() {
                     marginTop='1%'
                     marginBottom='1%'
                 >
-                    Bla bla bla 
+                    Under construction
                 </Text>
                 <ConnectButton />
                 </main>
