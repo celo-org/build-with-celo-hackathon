@@ -26,7 +26,7 @@ export default function SelectionPage() {
     const adminRedirect = () => {
         router.push('/admin') };
     const wobRedirect = () => {
-        router.push('/wob') };
+        router.push('/contract-test') };
     const potRedirect = () => {
         router.push('/pot') };
     const walletRedirect= () => {
@@ -43,7 +43,6 @@ export default function SelectionPage() {
         });
         const resdata = await res.json();
         setUProfile(resdata.data.profile)
-        console.log('prof:'+uProfile)
         };
 
     if (status === "loading") {
@@ -86,45 +85,9 @@ export default function SelectionPage() {
                         </main>
                     )
                 case 1:
-                    return(
-                        <main className={styles.container}>
-                            
-                                <Head>
-                                <title>Sacuda | A finantial revolution!</title>
-                                </Head>
-                                <Heading as={'h1'}>
-                                    Welcome Admin!
-                                </Heading>
-                                <Text 
-                                    as={'h2'}
-                                    marginTop='1%'
-                                    marginBottom='1%'
-                                >
-                                    This is under construction
-                                </Text>
-                        </main>
-                    )
+                    adminRedirect();
                 case 2:
-                    return(
-                        <main className={styles.container}>
-                            
-                                <Head>
-                                <title>Sacuda | A finantial revolution!</title>
-                                </Head>
-                                <Heading as={'h1'}>
-                                    Welcome Women of Bussiness!
-                                </Heading>
-                                <Text 
-                                    as={'h2'}
-                                    marginTop='1%'
-                                    marginBottom='1%'
-                                >
-                                    This is under construction
-                                </Text>
-                        </main>
-                        
-                    )
-                    
+                    wobRedirect()                  
                 case 3:
                     return(
                         <main className={styles.container}>
