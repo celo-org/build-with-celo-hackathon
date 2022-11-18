@@ -6,7 +6,6 @@ import { Table } from "react-chakra-pagination";
 import { useForm } from 'react-hook-form'
 import { useSession, signIn, signOff } from "next-auth/react";
 import { useAccount, useConnect, useContract, useContractRead, useContractWrite, useNetwork, useWaitForTransaction, usePrepareContractWrite } from 'wagmi';
-import { ethers } from "ethers";
 import tokenContract from "../../contracts/abi/metadata.json";
 import styles from '../styles/home.module.scss';
 import '@rainbow-me/rainbowkit/styles.css';
@@ -15,8 +14,34 @@ const url = "http://localhost:3000/api/getUsers";
 
 export default function admin({users}) {
 
-    const CONTRACT_ADDRESS = "0x34422efA66294820a0bb169294c28a880B9a88bf";
+    const CONTRACT_ADDRESS="0x34422efA66294820a0bb169294c28a880B9a88bf";
     
+    const sacudaAbi = [
+        {
+            type:"function",
+            stateMutability:"nonpayable",
+            outputs:[],
+            name:"mint",
+            inputs:[
+                {
+                    type:"address",
+                    name:"_user",
+                    internalType:"address"
+                },
+                {
+                    type:"bool",
+                    name:"_isEnhancer",
+                    internalType:"bool"
+                },
+                {
+                    type:"string",
+                    name:"_name",
+                    internalType:"string"
+                }
+            ]
+        }
+    ]
+
     const { isConnected } = useAccount();
     const { status, data: session } = useSession({
     required: true,
@@ -25,8 +50,8 @@ export default function admin({users}) {
     }
     })
 
-    const [bWalletSta, setBWalletSta] = useState();
-    const [bNameSta, setBNameSta] = useState();
+    const [bWalletSta, setBWalletSta] = useState("0x000000000000000000000000000000000000dEaD");
+    const [bNameSta, setBNameSta] = useState("none");
     const [page, setPage] = useState(1);
     const [modalValue, setModalValue] = useState([])
     const [isOpen,setIsOpen] = useState(false)
@@ -46,16 +71,16 @@ export default function admin({users}) {
 
     const { config, error } = usePrepareContractWrite({
           address: CONTRACT_ADDRESS,
-          abi: tokenContract.abi,
+          abi: sacudaAbi,
           functionName: 'mint',
           args: [
-            modalValue.wallet,
+            bWalletSta,
             false,
-            modalValue.bname
+            bNameSta
           ]
         });
 
-    const { write } = useContractWrite(config);
+    const { data, isLoading, isSuccess, write } = useContractWrite(config);
 
 
     //   const mintSACSwob = async () => {
@@ -90,7 +115,8 @@ export default function admin({users}) {
 
 
     const onSubmit = async (values) => {
-
+        console.log(bWalletSta)
+        console.log(bNameSta)
         if (buttonState === 1) {
         console.log('regmail:'+modalValue.email)
         const reqemail = modalValue.email;
@@ -98,27 +124,27 @@ export default function admin({users}) {
         const prof = JSON.parse(preProf);
 
         const finalValues = { ...values, ...prof}
-        await write?.()
-        try {
-            const res = await fetch(`/api/updateProfile/${reqemail}`, {
-            method: "PUT",
-            headers: {
-                "Content-type": "application/json",
-            },
-            body: JSON.stringify(finalValues)
+        await write()
+        // try {
+        //     const res = await fetch(`/api/updateProfile/${reqemail}`, {
+        //     method: "PUT",
+        //     headers: {
+        //         "Content-type": "application/json",
+        //     },
+        //     body: JSON.stringify(finalValues)
 
-            });
-            if (!res.ok) {
-            throw new Error(res.status);
-            }
+        //     });
+        //     if (!res.ok) {
+        //     throw new Error(res.status);
+        //     }
 
-            const { data } = await res.json();
-            //mutate(`/api/updateProfile/${reqemail}`, data, false);
-            //router.push("/");
-            onClose()
-        } catch (error) {
-            console.log(error);
-        }
+        //     const { data } = await res.json();
+        //     //mutate(`/api/updateProfile/${reqemail}`, data, false);
+        //     //router.push("/");
+        //     onClose()
+        // } catch (error) {
+        //     console.log(error);
+        // }
         };
     
         if (buttonState === 2) {
