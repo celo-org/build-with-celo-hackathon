@@ -1,0 +1,70 @@
+{
+	"id": "2eaaf441314e04e3e5885a37aea3249d",
+	"_format": "hh-sol-build-info-1",
+	"solcVersion": "0.4.26",
+	"solcLongVersion": "0.4.26+commit.4563c3fc",
+	"input": {
+		"language": "Solidity",
+		"sources": {
+			"contracts/CloneFactory.sol": {
+				"content": ""
+			}
+		},
+		"settings": {
+			"optimizer": {
+				"enabled": true,
+				"runs": 200
+			},
+			"outputSelection": {
+				"*": {
+					"": [
+						"ast"
+					],
+					"*": [
+						"abi",
+						"metadata",
+						"devdoc",
+						"userdoc",
+						"storageLayout",
+						"evm.legacyAssembly",
+						"evm.bytecode",
+						"evm.deployedBytecode",
+						"evm.methodIdentifiers",
+						"evm.gasEstimates",
+						"evm.assembly"
+					]
+				}
+			}
+		}
+	},
+	"output": {
+		"contracts": {},
+		"errors": [
+			{
+				"component": "general",
+				"formattedMessage": "contracts/CloneFactory.sol:1:1: Warning: Source file does not specify required compiler version!Consider adding \"pragma solidity ^0.4.26;\"\n\n^\n",
+				"message": "Source file does not specify required compiler version!Consider adding \"pragma solidity ^0.4.26;\"",
+				"severity": "warning",
+				"sourceLocation": {
+					"end": 0,
+					"file": "contracts/CloneFactory.sol",
+					"start": 0
+				},
+				"type": "Warning"
+			}
+		],
+		"sources": {
+			"contracts/CloneFactory.sol": {
+				"ast": {
+					"absolutePath": "contracts/CloneFactory.sol",
+					"exportedSymbols": {},
+					"id": 1,
+					"nodeType": "SourceUnit",
+					"nodes": [],
+					"src": "0:0:0"
+				},
+				"id": 0
+			}
+		}
+	}
+}

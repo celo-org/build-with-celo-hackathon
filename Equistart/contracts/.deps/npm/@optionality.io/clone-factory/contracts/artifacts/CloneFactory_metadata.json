@@ -1,0 +1,36 @@
+{
+	"compiler": {
+		"version": "0.4.26+commit.4563c3fc"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"methods": {}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			".deps/npm/@optionality.io/clone-factory/contracts/CloneFactory.sol": "CloneFactory"
+		},
+		"evmVersion": "byzantium",
+		"libraries": {},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		".deps/npm/@optionality.io/clone-factory/contracts/CloneFactory.sol": {
+			"keccak256": "0x6b7034420253542ae3235cb08e01dbe105eb6ec5c889dacfea0d2266f9a0bec6",
+			"urls": [
+				"bzzr://e213e28603899c591a3e1099014fe34b7a96cd69925d2a6e838806f81af8daff"
+			]
+		}
+	},
+	"version": 1
+}

@@ -1,0 +1,53 @@
+TODO: 
+
+Proposal Screen: 
+
+Proposal Id: copy to clip
+Proposal State (refer Proposal States mentioned below)
+Description
+About: 
+	creator
+    started Date/Time (block)
+	ending date/time (block)
+Vote Result —> count using Events
+Option To Vote: For, Against, Abstain.
+Option to queue after quorum (If state is 4, anyone can queue)
+Option to Execute after time elapsed. (If state is 5, anyone can execute).
+
+
+
+
+
+Refer to ./contracts/test/MyGovernor.test.js for more technical understanding of Proposal Lifecycle.
+
+
+
+
+Proposal State:
+0: Pending (yellow)
+1: Active (green)
+2: Cancelled (red)
+3: Defeated (red)
+4: Succeded (green)
+5: Queued (yellow)
+6: Expired (red)
+7: Executed (green)
+
+
+services: 
+start Date/ End Date from block  (swastik)
+Vote RESULT: count events 
+Vote services
+Queue Services
+Execute services
+
+
+Create Proposal Screen
+Option to send tokens from treasury as proposal input.
+
+inputs: 
+token address (must check treasury balance).
+receivers address
+amount
+description
+

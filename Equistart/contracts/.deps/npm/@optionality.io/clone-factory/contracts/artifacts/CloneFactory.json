@@ -1,0 +1,59 @@
+{
+	"deploy": {
+		"VM:-": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"main:1": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"ropsten:3": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"rinkeby:4": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"kovan:42": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"goerli:5": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"Custom": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		}
+	},
+	"data": {
+		"bytecode": {
+			"linkReferences": {},
+			"object": "6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a7230582034da41f103b39233ae7d8f7e4dc3af563f4cc53b5cd8bc2b8a6c24451ecadc560029",
+			"opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH1 0xF JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x35 DUP1 PUSH1 0x1D PUSH1 0x0 CODECOPY PUSH1 0x0 RETURN STOP PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT STOP LOG1 PUSH6 0x627A7A723058 KECCAK256 CALLVALUE 0xda COINBASE CALL SUB 0xb3 SWAP3 CALLER 0xae PUSH30 0x8F7E4DC3AF563F4CC53B5CD8BC2B8A6C24451ECADC560029000000000000 ",
+			"sourceMap": "1192:1094:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1192:1094:0;;;;;;;"
+		},
+		"deployedBytecode": {
+			"linkReferences": {},
+			"object": "6080604052600080fd00a165627a7a7230582034da41f103b39233ae7d8f7e4dc3af563f4cc53b5cd8bc2b8a6c24451ecadc560029",
+			"opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT STOP LOG1 PUSH6 0x627A7A723058 KECCAK256 CALLVALUE 0xda COINBASE CALL SUB 0xb3 SWAP3 CALLER 0xae PUSH30 0x8F7E4DC3AF563F4CC53B5CD8BC2B8A6C24451ECADC560029000000000000 ",
+			"sourceMap": "1192:1094:0:-;;;;;"
+		},
+		"gasEstimates": {
+			"creation": {
+				"codeDepositCost": "10600",
+				"executionCost": "66",
+				"totalCost": "10666"
+			},
+			"internal": {
+				"createClone(address)": "infinite",
+				"isClone(address,address)": "infinite"
+			}
+		},
+		"methodIdentifiers": {}
+	},
+	"abi": []
+}
