@@ -1,0 +1,5 @@
+freeze = update-index --assume-unchanged
+thaw = update-index --no-assume-unchanged
+
+git freeze src/database/db.json
+git thaw src/database/db.json
