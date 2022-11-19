@@ -1,0 +1,25 @@
+
+TODO: Governor contract setup:
+
+1. Function to automatically deploy a governor with timelock and token.
+GovernorFactory should be admin 
+Set DAO as proposer in timlock, anyone can execute.
+
+2. Start with frontend, and automate hasRole functions.
+
+3. Transfer funds to governor timelock (ERC20 - our token and also ETH)
+
+3. Complete Proposal Lifecycle frontend.
+proposal list screen
+create proposal screen
+proposal vote screen.
+queue and execution screen.
+
+
+TODO: After MVP
+
+1. Crowdsale Extensions - IDO launchpads
+2. Trasury Management - Crowdsale -- DAO
+3. Liquidity Pools - AMM
+
+crowdsale: option to delete a created sale.
