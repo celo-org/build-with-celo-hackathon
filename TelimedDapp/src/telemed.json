@@ -1,0 +1,107 @@
+{
+  "address": "0x830738018c56f1B9607B0e4B886A7c9e46B71f53",
+  "abi": [
+    {
+      "type": "function",
+      "name": "getMessageIndex",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "i"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "tuple",
+          "components": [
+            {
+              "type": "address",
+              "name": "walletAddress"
+            },
+            {
+              "type": "string",
+              "name": "message"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getMessageLength",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "sendMessage",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
+          "name": "to"
+        },
+        {
+          "type": "string",
+          "name": "message"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "userList",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "address",
+          "name": "walletAddress"
+        },
+        {
+          "type": "string",
+          "name": "message"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "users",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "address",
+          "name": "walletAddress"
+        },
+        {
+          "type": "string",
+          "name": "message"
+        }
+      ]
+    }
+  ]
+}
