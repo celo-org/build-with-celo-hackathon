@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "opportunity_name": "Opportunity 5",
+    "loan_type": "Bullet Loan",
+    "loan_amount": 150000,
+    "loan_tenure": 360,
+    "loan_interest": 15,
+    "payment_frequency": 45,
+    "capital_loss": 10
+  },
+
+  {
+    "id": 2,
+    "opportunity_name": "Opportunity 6",
+    "loan_type": "Term Loan",
+    "loan_amount": 420000,
+    "loan_tenure": 540,
+    "loan_interest": 14,
+    "payment_frequency": 30,
+    "capital_loss": 8
+  }
+]

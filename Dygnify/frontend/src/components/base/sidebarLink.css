@@ -1,0 +1,25 @@
+.link {
+  display: flex;
+  cursor: pointer;
+  border-radius: 30px;
+  padding: 6px 0px;
+}
+
+.link:hover {
+  background-color: #e8f5fe;
+  color: #50b7f5;
+  transition: color 100ms ease-out;
+}
+
+.link > h2 {
+  padding-left: 8px;
+  font-weight: 700;
+  font-size: 20px;
+  margin-right: 20px;
+  align-self: center;
+}
+
+.link .icon {
+  align-self: center;
+  padding-left: 1rem;
+}

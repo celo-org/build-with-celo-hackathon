@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "loan_type": "Bullet Loan",
+    "loan_amount": 150000,
+    "loan_tenure": 360,
+    "loan_interest": 15,
+    "payment_frequency": 45,
+    "capital_loss": 10
+  },
+  {
+    "id": 2,
+    "loan_type": "Bullet Loan",
+    "loan_amount": 420000,
+    "loan_tenure": 540,
+    "loan_interest": 14,
+    "payment_frequency": 30,
+    "capital_loss": 8
+  },
+  {
+    "id": 3,
+    "loan_type": "Term Loan",
+    "loan_amount": 500000,
+    "loan_tenure": 180,
+    "loan_interest": 12,
+    "payment_frequency": 60,
+    "capital_loss": 12
+  },
+  {
+    "id": 4,
+    "loan_type": "Term Loan",
+    "loan_amount": 120000,
+    "loan_tenure": 210,
+    "loan_interest": 11,
+    "payment_frequency": 30,
+    "capital_loss": 13
+  },
+  {
+    "id": 5,
+    "loan_type": "Bullet Loan",
+    "loan_amount": 180000,
+    "loan_tenure": 360,
+    "loan_interest": 13,
+    "payment_frequency": 45,
+    "capital_loss": 15
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "id": 1,
+  "img": "/assets/supply-chain.png",
+  "company_name": "ABC Finance Private Limited",
+  "company_details": "ABC is a company operating in Southern India that provides invoice factoring services, which involves buying a business's unpaid invoices at a discount. ABC was founded in 20XX and has operations in southern states of Karnataka, Tamil Nadu, Andhra Pradesh, Telangana, and has since originated over $30 Mn in loans to over 10 millions borrowers. This opportunity will consist of tranches of a secured non convertible debenture with a maturity of 24 months backed by a portfolio of loans made to customers.",
+  "opportunity_name": "Supply Chain Finance",
+  "loan_amount": 5987197,
+  "loan_interest": 10.45,
+  "loan_tenure": 24,
+  "asset_type": "Short term credit by financing receivables",
+  "assets": 32,
+  "average_financing_fee": 13.1,
+  "available_liquidity": 560000
+}

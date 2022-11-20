@@ -1,0 +1,83 @@
+.box {
+  display: flex;
+  flex-direction: row;
+}
+
+.charts {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1rem;
+}
+
+@media screen and (max-width: 1000px) {
+  .charts {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+.right {
+  width: 100%;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.txn {
+  box-shadow: 0px 0px 9px 0px rgba(76, 78, 97, 0.9);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 70px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  padding: 10px;
+  padding-bottom: 2rem;
+  border-radius: 12px;
+  padding-top: 30px;
+}
+
+.txn hr {
+  border: none;
+  width: 200px;
+  height: 1.5px;
+  background: gray;
+  margin-bottom: 1rem;
+}
+
+.txn .data {
+  box-shadow: 0px 0px 9px 0px rgba(76, 78, 97, 0.9);
+  border-radius: 12px;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.txn p:not(:first-child) {
+  padding-bottom: 1rem;
+}
+
+.wrapper {
+  width: 200px;
+}
+
+/* .bottom h2 {
+  padding-bottom: 1.5rem;
+} */
+
+/* .details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 20px;
+} */
+
+/* .details hr {
+  border: none;
+  height: 1.5px;
+  background: gray;
+  width: 250px;
+} */

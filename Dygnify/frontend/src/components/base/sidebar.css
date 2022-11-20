@@ -1,0 +1,24 @@
+.sidebar {
+  padding: 0;
+  margin: 0;
+  float: left;
+  width: 200px;
+  min-width: 200px;
+  padding: 20px 20px;
+  /* height: 100ch; */
+  height: 100vh;
+  overflow-y: hidden;
+  /* box-shadow: 0 0 6px rgb(226, 230, 233); */
+  box-shadow: 0px 0px 9px 0px rgba(76, 78, 97, 0.5);
+
+}
+
+
+.logo {
+  padding-left: 1rem;
+  padding-bottom: 20px;
+}
+
+.logo img {
+  width: 120px;
+}

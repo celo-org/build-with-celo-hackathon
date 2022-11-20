@@ -1,0 +1,16 @@
+.hov:hover {
+  transform: scale(1.01);
+  box-shadow: rgb(0 0 0 / 24%) 0px 2px 6px;
+  transition: all 100ms linear 0s;
+}
+.content {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+/* img {
+  width: 40px;
+  height: 40px;
+} */
