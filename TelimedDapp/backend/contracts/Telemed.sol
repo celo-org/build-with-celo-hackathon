@@ -1,25 +1,41 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.17;
 
 // Uncomment this line to use console.log
 // import "hardhat/console.sol";
 
 contract Telemed {
+    uint public blockNumber;
+    bytes32 public blockHashNow;
+    bytes32 public blockHashPrevious;
 
     struct User {
-        address walletAddress;
+        address from;
+        address to;
         string message;
+        uint blockNumber;
+        bytes32 blockHashNow;
     }
 
-    mapping(address => User) public users;
+    event MessageEvent(
+        address from,
+        address to,
+        string message,
+        uint blockNumber,
+        bytes32 blockHashNow
+    );
+    
     User[] public userList;
 
     function sendMessage(address to, string memory message) public {
-        User memory user = User(to, message);
+        blockNumber = block.number;
+        blockHashNow = blockhash(blockNumber);
+        User memory user = User(msg.sender, to, message, blockNumber, blockHashNow);
         userList.push(user);
+        emit MessageEvent(msg.sender, to, message, blockNumber, blockHashNow);
     }
 
-    function getMessageLength() public view returns(uint256){
+     function getMessageLength() public view returns(uint256){
         return userList.length;
     }
 
