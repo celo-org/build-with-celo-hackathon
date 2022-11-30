@@ -1,5 +1,5 @@
 import ethSigUtil from "@metamask/eth-sig-util"
-import { ethers } from "ethers"
+
 
 const EIP712Domain = [
   { name: "name", type: "string" },
