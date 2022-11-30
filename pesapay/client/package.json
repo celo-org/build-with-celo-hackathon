@@ -27,7 +27,7 @@
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.1",
-    "redstone-protocol": "^1.0.2",
+    "redstone-protocol": "^1.0.3",
     "redstone-sdk": "^1.0.4",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4",
