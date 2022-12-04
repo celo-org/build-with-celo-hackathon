@@ -29,7 +29,7 @@ The project only supports **CUSD** token type forexample this [token](https://al
 ### PesaPay Team
 
 1. [Elias Hezron](eliashezron23@gmail.com) solidity engineer and Project Lead
-2. [Sash solidity](tedwasachin123@gmail.com) frontend engineer and UI designer
+
 
 #### Hackathon Track
 
