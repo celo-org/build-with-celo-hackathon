@@ -1,0 +1,13 @@
+{
+  "relayer": {
+    "relayerId": "d0393713-a05d-47e5-9aba-2253b82663d1",
+    "name": "cashoutTxRelayer",
+    "address": "0x79572a46c95b1ae2ce6ccd521253db4ce441d9d0",
+    "network": "alfajores",
+    "createdAt": "2022-11-04T12:12:06.800Z",
+    "paused": false,
+    "policies": {},
+    "minBalance": "100000000000000000",
+    "pendingTxCost": "0"
+  }
+}

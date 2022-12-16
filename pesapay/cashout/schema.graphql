@@ -1,0 +1,17 @@
+type Deposit @entity {
+  id: ID!
+  tokenDeposited: Token!
+  depositor: User!
+  amount: BigInt!
+  createdAtTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type User @entity {
+  id: ID!
+  deposits: [Deposit!] @derivedFrom(field: "depositor")
+}
+
+type Token @entity {
+  id: ID!
+  tokenDeposited: [Deposit!] @derivedFrom(field: "tokenDeposited")
+}

@@ -1,169 +1,116 @@
-# ⚡ Build with Celo Hackathon ⚡ 
+<!--
+# ⚡ Hackathon Project Template
+_This is a sample submission repository.
+Please [__fork this repo__](https://help.github.com/articles/fork-a-repo/) and use this as a starting point for your hackathon project._ -->
 
-Build with Celo Hackathon is a three (3) phase hackathon event focused on Regenerative Finance (#ReFi) within DAOs, NFTs, Gaming (GameFi), Social Impact (SocialFI) and developer tooling/infrastructure on the Celo platform.
+# ⚡ CASHOUT ⚡
 
-## Hackathon Facilitation
-Celo selected Hackerearth to facilitate the hackathon expereince. To learn more information about the Build on Celo hackathon event and register, navigate to Hackerearth Build on Celo hackathon site: [link](https://build-with-celo.hackerearth.com/)
+---
 
-## Hackathon Tracks: 
+https://user-images.githubusercontent.com/50701251/201548674-c36c3e00-3e6f-452f-b066-7aae5b2b215b.mp4
 
- - __DAO Track:__ 
-    - Build decentralized web applications facilitating DAOs within ReFi, ReFi DAO Tools, and ReFi DAO Infrastructure.
- - __NFT, Gaming and Creator Track:__ 
- 	- Build an application incorporating ReFi, ReFi creators tools, and ReFi creators infrastructure
- - __Social Impact Track:__ 
- 	- Build a decentralized web applications focused on social impact within ReFi, Social impact ReFi Tools, and Social impact ReFi Infrastructure
+---
 
-## Timeline
+**Cashout** is a crypto [off-ramping](https://www.babypips.com/crypto/learn/what-are-fiat-on-ramps-and-off-ramps) solution for [Sub-Saharan Africa](https://en.wikipedia.org/wiki/Sub-Saharan_Africa) .We have built an easily interactable website to allow users to cashout their crypto currency for their local fiat currency instantly.
 
-#### Github commit schedule:
+Cashout also has is also developing an API as a Service platform that provices an API to allow other developers connect to their site for easily offramping crypto to the end users.
 
-- 9/26 - Idea submission open until 9/26
+with the increased adoption of cryptocurrency in subsaharan africa as per this [chainalysis report](https://blog.chainalysis.com/reports/sub-saharan-africa-cryptocurrency-geography-report-2022-preview/#:~:text=Sub%2Dsaharan%20Africa%20accounts%20for,growth%20over%20the%20year%20prior.) that also indicates that 80% of micro crypto payment transactions **(transactions less that $1000)** happens in subsaharan Africa.
+This provides an opportunity and market for an offramping solution as our daily lives still heavily revolve around fait currency for payment of goods and services.
 
-- 9/19 - Fork this repo
-- 9/23 - Change README
-- 9/30 - At least 3 commits
-- 10/7 - At least 3 commits
-- 10/14 - At least 3 commits
-- 10/21 - At least 3 commits
-- 10/28 - At least 3 commits
-- 11/4 - At least 3 commits
+The project leverages the power of the celo blockchain and smart contracts to allow users deposit funds into the [cashout smartcontract](https://alfajores.celoscan.io/address/0xdD01c2DcAf4f1899d36987A8bc7E856d48efe1D2#code) built on the alfajores celo network, Upon confirmation of the transaction. It Intiates the [flutterwave payment aggregator](developer.flutterwave.com) to make a fiat mobile money payment to the account number/phone number provided.
 
-Three (3) phase hackathon event starting August 26th, 2022.
-### Phase 1: Idea
- - Hackathon Phase 1 Kick-off - August 26th, 2022
- - Project Idea Submissions Due - September 26, 2022
- - Idea Submissions Evaluated on rolling basis
- 
-### Phase 2: Hack/build MVP
- - Hackathon Phase 2 Kick off - September 19th, 2022
- - Project Submissions Due - November 6th, 2022
- - Evaluations - November 7th - December 4th, 2022
- 
-### Phase 3: Iterate & Pitch with Celo
- - Hackathon Phase 3 Kick off - TBD 
- 
-## Process
-**Hackathon participants will need to:**
+Flutterwave was chosen as a payment aggregator because it gives us access to the entire sub-saharan africa countries and currencies and thus was the most scalable payment aggregator we could use. It also charges a 1% fee on transactions allowing us to also charge and extra 1% - 1.5% fee. At 2% - 2.5% we are the cheapest available crypto off-ramping solution available in the market currently.
 
- 1. [Fork this repo](#hackathon-repo-process)
- 2. Utilize [HackerEarth](https://build-with-celo.hackerearth.com/) to:
-	 - Manage and collaborate with your team
-	 - Submit your project for final evaluation
+To provide Liquidity, Cashout hopes to raise capital for the initial fiat liquidity, After the first couple of transactions, The deposited crypto funds can then be withdrawn and liquidated from exchanges or otherwise then re-employed to the fiat account that is debited for making fiat payments. This way, the project iwill be self-sustaining.
 
-## Hackathon Repo Process
+The project only supports **CUSD** token type forexample this [token](https://alfajores.celoscan.io/address/0x91A794303F6A1D18Ae03ec689983568D76121E00#code) used for the demo project transactions. the rationale behind this is so as to have a more predictable price pattern and also its safer this way. Its also presumed on the basis that if people expect the value of an asset to go up, They will most probally choose to hoard it and so stable coins would be the best crypto currency they would offramp. We are open to intergrating other tokens in the future.
 
- 1. Fork this repo
-    - Press the Fork button
- 2. Create project branch
- 3. Make your changes within new branch!
-	 - Copy the folder named **Project_Name**
-	 - Rename the copied folder with your project name
-	 - Modify project details within your project folder **Readme.md**
-		- Project Name
-		- Brief Description
-		- Team members & roles
-		- Hackathon track
-		- Project details
-			- Demonstartion video _(*Phase 2 & 3, Required)_
-			- Requirements _(*Phase 2 & 3, Required)_
-			- Instructions to build & test _(*Phase 2 & 3, Required)_
+### PesaPay Team
 
- 4. Add, commit, and push the changes
-	 - Add the files you've changed and commit them with a descriptive message.
- 5. Submit your pull request _(*Phase 2 & 3, Required)_
-    -  Submit to the maintainers for approval. Head over to the original repositories Pull Requests tab, you should see an automatic suggestion from GitHub to create a pull request from your new branch.
-    -  Utilize your project name as the title for your initial pull Requests
-    -  Provide a brief project description within the pull request comment
-
-***Congrats, your officially a Build with Celo Hackathon participant!***
+1. [Elias Hezron](eliashezron23@gmail.com) solidity engineer and Project Lead
 
 
-## Developer tools and resources
+#### Hackathon Track
 
-This section contains information about some of the key tools and resources that will help developers start building applications on Celo.
+DEFI
 
-For a comprehensive list of resources and information, review [Celo Docs.](https://docs.celo.org/)
+##### Region location
 
-### QUICK START GUIDES
+Kampala - Uganda, AFRICA
 
-View the [Developer Code Examples page](https://docs.celo.org/developer#quickstart) to get started using the Celo SDKs with guided coding exercises.
+### Bounty Technologies Used
 
-### Tutorials
-- [Tutorial - Celo Developer Blog](https://docs.celo.org/blog)
+1. [Lava rpc Nodes](https://lavanet.xyz/)
+   :lava rpc nodes were used for rpc connection to the celo blockchain both on the backend hardhat file [here](https://github.com/eliashezron/pesapay/blob/9229828c017765de6ea9dca2351fed7a49ba7b22/pesapay/hardhat/hardhat.config.js#L31) and the frontend react application file [here](https://github.com/eliashezron/pesapay/blob/9229828c017765de6ea9dca2351fed7a49ba7b22/pesapay/client/src/config.js#L9)
+2. [Redstone](https://app.redstone.finance/)
+   :Redstone price feeds was implemented in the smart contracts [here](https://github.com/eliashezron/pesapay/blob/9229828c017765de6ea9dca2351fed7a49ba7b22/pesapay/hardhat/contracts/CashOut.sol#L57) to limit users to only deposit amounts greater than the equivalent of 10USD. Aswell ass in the frontend [here](https://github.com/eliashezron/pesapay/blob/9229828c017765de6ea9dca2351fed7a49ba7b22/pesapay/client/src/utils/depositFunction.js#L10) this is mainly because we don't want users transacting less as it gives us a better economic model that way.
+3. [the graph protocol ](https://thegraph.com/en/)
+   :the graph protocol was used to monitor the depositToken contract events emitted everytime a transaction is successfull. we then querry the graph to confirm that a transaction is reflected before we can make the fiat payment. here is our [subgraph](https://thegraph.com/hosted-service/subgraph/eliashezron/cashout)
+4. [dapplooker](https://dapplooker.com/)
+   : we used Dapplooker to visualise the data of our subgraph to monitor ttransaction and analytics. have a look at our [dapplooker schema](https://analytics.dapplooker.com/browse/2/schema/cashout)
 
-### TOOLS
+### Other Technologies Used
 
-#### Boilerplates
-- [celo-composer](https://github.com/celo-org/celo-composer#celo-composer)
-	- Celo Composer allows you to quickly build, deploy, and iterate on decentralized applications using Celo. It provides a number of frameworks, examples, and Celo specific functionality to help you get started with your next dApp.
+1. [fait connect specification](https://github.com/fiatconnect/specification)
+   after carefull detailed analysis of the fiat connect specifiaction, we modified our the solution our specific use case but yet still implement the tenets the makers of fiat connect aim to implement.
 
-#### SDKs
+- **Auth** we did not implement the [eip4316](https://eips.ethereum.org/EIPS/eip-4361) as suggested in the specification for sessioning of the user. We also did not implemented protected routes as we did not find it neccessary. However we implemented [eip2771](https://eips.ethereum.org/EIPS/eip-2771) and openZeppelin [defender](https://docs.openzeppelin.com/defender/) to monitor `nouces`, `chainId` and all other [eip1271](https://eips.ethereum.org/EIPS/eip-1271) validation criteria.
+- **quoteOut** here we implement a combination of [redstone pricefeeds](https://app.redstone.finance/#/app/tokens) and [exchange rate price Apis](https://api.exchangerate-api.com/v4/latest/USD) to get the fiat price equivalents of the crypto prices
+- **KYC** We do understand that importance of KYC as a regulatory prerequiste, however we also know that many people do not love it and thus we implemented a solution that would allow us send money without the strict requirement of KYC, Flutterwave does a KYC of the business or the entity but then can allow you send your money to different mobile money accounts without the strict requirement of KYC. however, for future implementation. we shall surely do a KYC
 
--   [ContractKit](https://docs.celo.org/developer/contractkit#what-is-contractkit)
-	-   Javascript package of Celo blockchain utilities
-	-   Manage connections to the Celo blockchain, accounts, send transactions, interact with smart contracts, etc.
-	-   A set of wrappers around the core protocol smart contracts to easily connect with contracts related to governance, validators, on-chain exchange, etc.
-	-   Includes [web3.js](https://web3js.readthedocs.io/en/v1.2.4/)
--   [Celo Ethers.js Wrapper](https://github.com/celo-tools/celo-ethers-wrapper) (experimental)
-	-   A minimal wrapper to make [ethers.js](https://docs.ethers.io/v5/) compatible with the Celo network
--   [use-react](https://github.com/celo-org/react-celo)
-	- The easiest way to access Celo in your React applications 🔥. react-celo is a React hook for managing access to Celo with a built-in headless modal system for connecting to your users wallet of choice.
-	- Now your DApp can be made available to everyone in the Celo ecosystem, from Valora users to self custodied Ledger users.
-	- By default react-celo is styled so that you can drop it into your application and go, however it's fully customisable so you can maintain a consistent UX throughout your application.
--   [DappKit](https://docs.celo.org/developer-guide/dappkit)
-	-   Easily connect to the [Valora](http://valoraapp.com/) wallet with your React Native mobile application
-	-   Valora manages user account, private keys and transaction signing, so you can focus on building your dapp
-	-   Learn more and see the code with the [Dappkit truffle box](https://github.com/critesjosh/celo-dappkit)
--   [Python SDK](https://github.com/blaize-tech/celo-sdk-py)
--   [Java SDK](https://github.com/blaize-tech/celo-sdk-java)
-	- [Android with Java SDK](https://github.com/bcamacho/celo-android-java-sdk-test-example)
-- [iOS SDK](https://github.com/heymateag/celoiossdk)
+2. [useDapps](https://usedapp-docs.netlify.app/docs/) we implemented useDapps as rapid framework for Dapp development. we added custom [celo network configurations](https://github.com/eliashezron/pesapay/blob/pesapay/pesapay/client/src/utils/celoChain.js) so as to use it on the celo blockchain aswell. I have also made a [PR](https://github.com/TrueFiEng/useDApp/pull/1017) to the [repo](https://github.com/TrueFiEng/useDApp) that has been approved and will be added to the default config in the next version.
 
+### Project Description
 
+currently, the only available mechanisms for cashing out include Binance's peer to peer trading. however this does not support celo tokens of CUSD and OTP trading which is expensive interms of finding a merchant and the actual fee/charge at 5-10% of the actual price.
+Cashout will operate and a meer charge of 2% - 2.5% which is the lowest in the market, and with our web-based UI system and simply implementable API we are easily intergrateable to any platform or wallet making it instant and convenient.
 
-#### Infrastructure
+Cashout was built with Celo social Impact in such as its [impact market](https://www.impactmarket.com/) top easily allow the end user, who receives celo's CUSD token to be able, inwallet cashout their UBI to mobile money that they can then use to purchase goods and services.
 
--   [Valora](https://valoraapp.com/) provides a clean, intuitive UI where users can send transactions and interact with smart contracts
--   [Forno](https://stackedit.io/developer-guide/forno)
--   Node access service so you can connect your dapp to the Celo blockchain without having to run node infrastructure
--   [ODIS](https://stackedit.io/developer-resources/contractkit/odis.md)
--   Oblivious decentralized identity service
--   Lightweight identity layer that makes it easy to send cryptocurrency to a phone number
--   Blockscout block explorers
--   [Alfajores testnet](http://alfajores-blockscout.celo-testnet.org/) & [mainnet](http://explorer.celo.org/)
--   [Stats.celo.org](http://stats.celo.org/) to check network activity and health
+The intended users of the platform is the general public, Impact markets, corporations, international remitances of cryto currency and NGOs providing relief through crypto currency.
 
+### usecases of cashout
 
-#### Networks
+these are the core reasons and motivations behind the cashout project.
 
--   [Alfajores Testnet](https://docs.celo.org/getting-started/alfajores-testnet)
--   [Faucet](https://celo.org/developers/faucet) for free testnet CELO and cUSD
--   [Forno](https://docs.celo.org/developer-guide/forno) supports connections to alfajores
--   Requires Alfajores Celo wallet for mobile device testing (please request, support@clabs.co)
--   [Baklava testnet](https://docs.celo.org/getting-started/baklava-testnet) for validators and testing protocol changes
+1. Social Impact projects
+   Cashout hopes to intergrate with impact markets projects that provide Universal basic income to locals in the subsaharan region allowing the end beneficiaries be able to easily cashout the crypto they recieve to fiat inform of mobile money to their cellphones
 
+2. crypto Remittance
+   With the increased adoption of crypto currency all over the world, we are seeing increasing cases of remittances to subsaharan africa inform of crypto currency. this also was a tenet of the bitcoin founder satoshi Nakamoto. Cashout wants to enable this reality to allow the end users to simply convert their crypto for fiat
 
-#### Ethereum Tools
+3. Crytopayments.
+   One of the major hinderance to the adoption of cryptocurrency as a form of payment is the complexity involved to liquidate your crypto for fiat. Cashouit hopes to solve this by allowing the user to easily connect their wallet and liquidate their cryto currency. And with the API being rapidily developed, cashout would allow companies and bussiness simply intergrate this solutions in their products.
 
--   Similarities between Celo and Ethereum means you can use many of the most popular Ethereum developer tools.
--   Celo supports the EVM, so tools for writing smart contracts in Solidity (or any language that compiles to EVM bytecode) are compatible with Celo
--   ERC20, NFT (ERC721) and other smart contract interface standards are supported, see [Celo for Ethereum Developers](https://docs.celo.org/developer-guide/celo-for-eth-devs)
-- [Truffle](https://www.trufflesuite.com/)
-- [OpenZeppelin](https://openzeppelin.com/)
-- [Remix](https://remix.ethereum.org/)
+#### Summary
 
-#### Ongoing projects
+Main feature of offRamping has been successfull implementend as implemented in the demo
 
--   [Community projects](https://docs.celo.org/developer-guide/celo-dapp-gallery)
--   [Grant recipients](https://celo.org/experience/grants/directory)
+#### here is our it works
 
-#### Web wallets
-  -  [celowallet.app](https://celowallet.app/)
-  -  [Celo Terminal](https://github.com/zviadm/celoterminal/)
+The user connects their wallet to the web based UI, selects a the country they are from and the token they want to trade. inputs their mobile money number where funds should be sent and initaites the transaction.
+After ERC20 approval of the allowance. the user signs an EIP712 type message containing all the details of the transaction. We implemented cashless transactions to make the transaction cheaper on the users and also as an incentive for user onboarding.
 
+The transaction is transmitted to the relayer through the EIP2771 [context](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/metatx/ERC2771Context.sol) contract and the [forwarder](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/metatx/MinimalForwarder.sol) contract that verifies the trasaction and executes the transaction on behalf of the user. The gasfees are relayed to an [relayer](https://docs.openzeppelin.com/defender/relay) hotwallet hosted on [openZeppelin Defender](https://defender.openzeppelin.com/).We make a post request to a webHook url is connected to openzeppelin defender [autotask](https://docs.openzeppelin.com/defender/autotasks) to Automate the transaction.
+Upon confirmation of the the transaction, A mobile money payment is then intiated to transfer funds to the user and a react toastify notification sent notifying the user on the progress of the transaction.
 
-#### Community
+For the API, the developer transmits the parameters to the API and then it works as descriped above.
 
--   Join our [Discord](https://chat.celo.org/)
--   [Discourse Forum](https://forum.celo.org/)
+#### URLs
+
+List any URLs relevant to demonstrating your prototype
+
+#### Presentation
+
+Here is the [presentation Demo Video](https://drive.google.com/file/d/1Oxmd0XB62XxKfqRDfVnKJB2LBil7fog4/view)
+
+Here is the [Presentation Slides](https://docs.google.com/presentation/d/1Hxm5nsoAFjukMo-_meXa7dIzfZdzAFGb7fy7pRkg1cY/edit?usp=sharing)
+
+#### Next Steps
+
+Further development of the API to make it market reading.
+
+#### License
+
+This repository includes an [unlicensed](http://unlicense.org/) statement though you may want to [choose a different license](https://choosealicense.com/).

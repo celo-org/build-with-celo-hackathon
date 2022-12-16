@@ -1,0 +1,48 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: CashOut
+    network: celo-alfajores
+    source:
+      address: "0xdD01c2DcAf4f1899d36987A8bc7E856d48efe1D2"
+      abi: CashOut
+      startBlock: 14446760
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Deposit
+        - Token
+        - User
+          # - FundsWithdrawn
+          # - OwnershipTransferred
+          # - Paused
+          # - TokenFundsDeposited
+          # - TokenFundsWithdrawn
+          # - UniqueTokenAdded
+          # - Unpaused
+          # - contractTokenBalanceAdjusted
+      abis:
+        - name: CashOut
+          file: ./abis/CashOut.json
+      eventHandlers:
+        # - event: FundsWithdrawn(indexed address,uint256)
+        #   handler: handleFundsWithdrawn
+        # - event: OwnershipTransferred(indexed address,indexed address)
+        #   handler: handleOwnershipTransferred
+        # - event: Paused(address)
+        #   handler: handlePaused
+        - event: TokenFundsDeposited(indexed address,indexed address,uint256)
+          handler: handleTokenFundsDeposited
+        # - event: TokenFundsWithdrawn(indexed address,indexed address,uint256)
+        #   handler: handleTokenFundsWithdrawn
+        # - event: UniqueTokenAdded(indexed address)
+        #   handler: handleUniqueTokenAdded
+        # - event: Unpaused(address)
+        #   handler: handleUnpaused
+        # - event: contractTokenBalanceAdjusted(indexed address,uint256)
+        #   handler: handlecontractTokenBalanceAdjusted
+      file: ./src/cash-out.ts

@@ -1,0 +1,26 @@
+specVersion: 0.0.4
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: CashOut
+    network: celo-alfajores
+    source:
+      address: "0xdD01c2DcAf4f1899d36987A8bc7E856d48efe1D2"
+      abi: CashOut
+      startBlock: 14446760
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Deposit
+        - Token
+        - User
+      abis:
+        - name: CashOut
+          file: CashOut\abis\CashOut.json
+      eventHandlers:
+        - event: TokenFundsDeposited(indexed address,indexed address,uint256)
+          handler: handleTokenFundsDeposited
+      file: CashOut\CashOut.wasm
