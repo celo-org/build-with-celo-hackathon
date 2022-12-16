@@ -19,7 +19,7 @@ export async function approve(amount) {
   const signer = provider.getSigner()
   const token = createInstance(addresses.Token, tokenAbi, signer)
   const tx = await token.approve(addresses.CashOut, amount)
-  tx.wait(1)
+  tx.wait(5)
   return tx
 }
 
