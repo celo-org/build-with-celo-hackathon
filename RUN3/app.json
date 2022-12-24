@@ -23,7 +23,7 @@
       },
       "supportsTablet": true,
       "config": {
-        "googleMapsApiKey": "AIzaSyAQyLN45x-8vr4l1uI0A45NC0AFtTM9hXE"
+        "googleMapsApiKey": ""
       },
       "bundleIdentifier": "com.josemmt.run3celo"
     },
