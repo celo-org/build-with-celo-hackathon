@@ -1,0 +1,53 @@
+{
+  "expo": {
+    "name": "run3-celo",
+    "slug": "run3-celo",
+    "version": "1.0.0",
+    "scheme": "openloginexposdkexampleexpo",
+    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/30868dc3-7a22-491c-ae6c-955972ef189b"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "infoPlist": {
+        "NSMotionUsageDescription": "Allow RUN3 access to your device"
+      },
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": ""
+      },
+      "bundleIdentifier": "com.josemmt.run3celo"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "build": {
+        "babel": {
+          "include": ["@ui-kitten/components"]
+        }
+      }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "30868dc3-7a22-491c-ae6c-955972ef189b"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    }
+  }
+}
