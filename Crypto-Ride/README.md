@@ -381,7 +381,7 @@ Wallet currently features two tokens `CELO` and `cUSD`.
 
 - cUSD: Used as payment for the ride. 
 
-This was need as the `web3swift` library is restrictive when it comes to transaction options. Preventing `cUSD` from being used to pay transaction cost featured by the Celo Network. This will most definitely will be fix in a future update.  
+This was needed as the `web3swift` library is restrictive when it comes to transaction options. Preventing `cUSD` from being used to pay transaction cost featured by the Celo Network. This will most definitely will be fix in a future update.  
 
 <img src="ReadMeAssets/profileViews.png" alt="drawing" width="400"/>
 
