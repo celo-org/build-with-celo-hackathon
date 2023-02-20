@@ -143,7 +143,7 @@ The most basic functionality of this project is just a smart contract with an ap
 - Passenger and Driver rating & reputation.
 - Driver identities.
 
-<b>Additional features could be added making the experance more familiar to existing ride sharing. </b>
+<b>Additional features could be added making the experience more familiar to existing ride sharing. </b>
 
 - Driver rewards for good reputation
 - Direct messaging between passenger and driver
