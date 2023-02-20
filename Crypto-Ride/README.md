@@ -363,7 +363,7 @@ Googles Firebase and Realtime databases are used to orchestrate discovery and lo
 
 2. Passenger app will then use the drivers ethereum address to observing changes to the Realtime database for the current location of driver. These changes driectly updates the `mapView` displaying the drivers location close to realtime. Drivers are repersented as cars on the passengers map view.
 
-**Note newly active drivers take around 10 seconds to be add to the map**
+**Note newly active drivers take around 10 seconds to be add to the passengers map**
 
 *By observing deletions drivers are removed*
 
