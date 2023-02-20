@@ -1,0 +1,1075 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3003AB7C2912F4470045D3CC /* Reputation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3003AB7B2912F4470045D3CC /* Reputation.swift */; };
+		3003AB7E2913063F0045D3CC /* Coordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3003AB7D2913063F0045D3CC /* Coordinates.swift */; };
+		3003AB8029130C5F0045D3CC /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3003AB7F29130C5F0045D3CC /* Settings.swift */; };
+		300FCCBB2911A1F9005F3536 /* Ride.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCBA2911A1F9005F3536 /* Ride.swift */; };
+		300FCCBF2911A2D2005F3536 /* Balance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCBE2911A2D2005F3536 /* Balance.swift */; };
+		300FCCC12911A5E6005F3536 /* MainBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCC02911A5E6005F3536 /* MainBuilder.swift */; };
+		300FCCC42911A82E005F3536 /* MainBuilderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCC32911A82E005F3536 /* MainBuilderViewModel.swift */; };
+		300FCCC62911B2F0005F3536 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCC52911B2F0005F3536 /* RatingView.swift */; };
+		300FCCCD2911C87B005F3536 /* InRide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCCC2911C87B005F3536 /* InRide.swift */; };
+		300FCCCF2911DE29005F3536 /* AnnouncedRideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCCE2911DE29005F3536 /* AnnouncedRideView.swift */; };
+		300FCCD129122C2C005F3536 /* PassengerPickUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCD029122C2C005F3536 /* PassengerPickUp.swift */; };
+		300FCCD32912321E005F3536 /* DriverDropOff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCD22912321E005F3536 /* DriverDropOff.swift */; };
+		300FCCD5291233C2005F3536 /* PassengerDropOff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCD4291233C2005F3536 /* PassengerDropOff.swift */; };
+		300FCCD82912362D005F3536 /* BindRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCD72912362D005F3536 /* BindRatingView.swift */; };
+		300FCCDA29123AA0005F3536 /* Complete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCD929123AA0005F3536 /* Complete.swift */; };
+		300FCCDC29123E08005F3536 /* Canceled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300FCCDB29123E08005F3536 /* Canceled.swift */; };
+		3038106928FA166100D3DC0D /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3038106828FA166100D3DC0D /* Wallet.swift */; };
+		3038106B28FA36BE00D3DC0D /* Methods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3038106A28FA36BE00D3DC0D /* Methods.swift */; };
+		30A17AB828F8D23A00635D7D /* ContractServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A17AB728F8D23A00635D7D /* ContractServices.swift */; };
+		30A17ABA28F8D78F00635D7D /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A17AB928F8D78F00635D7D /* Address.swift */; };
+		30A17ABC28F8DFEA00635D7D /* Abi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A17ABB28F8DFEA00635D7D /* Abi.swift */; };
+		30A17ABE28F8E37800635D7D /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A17ABD28F8E37800635D7D /* Network.swift */; };
+		30A2401C29180F0A0040E8AA /* ErrorFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A2401B29180F0A0040E8AA /* ErrorFilter.swift */; };
+		30A2401E29180F750040E8AA /* LogDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A2401D29180F750040E8AA /* LogDecoder.swift */; };
+		30A6EC212909D75D007830FB /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC202909D75D007830FB /* Events.swift */; };
+		30A6EC232909D80E007830FB /* WebSockets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC222909D80E007830FB /* WebSockets.swift */; };
+		30A6EC25290C9352007830FB /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC24290C9352007830FB /* Credentials.swift */; };
+		30A6EC28290C939D007830FB /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC27290C939D007830FB /* LoginView.swift */; };
+		30A6EC2A290C93A8007830FB /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC29290C93A8007830FB /* LoginViewModel.swift */; };
+		30A6EC2C290C93BD007830FB /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC2B290C93BD007830FB /* Authentication.swift */; };
+		30A6EC32290CA5A3007830FB /* ContractCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC31290CA5A3007830FB /* ContractCoordinates.swift */; };
+		30A6EC37290CB45A007830FB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC36290CB45A007830FB /* Constants.swift */; };
+		30A6EC3D290D91CD007830FB /* CarAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A6EC3C290D91CC007830FB /* CarAnnotation.swift */; };
+		30AA5AAF28D2D8E400EEB7A4 /* CryptoRide_PassengerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AAE28D2D8E400EEB7A4 /* CryptoRide_PassengerApp.swift */; };
+		30AA5AB128D2D8E400EEB7A4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AB028D2D8E400EEB7A4 /* ContentView.swift */; };
+		30AA5AB328D2D8E600EEB7A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30AA5AB228D2D8E600EEB7A4 /* Assets.xcassets */; };
+		30AA5AB628D2D8E600EEB7A4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30AA5AB528D2D8E600EEB7A4 /* Preview Assets.xcassets */; };
+		30AA5AC028D2D8E600EEB7A4 /* CryptoRide_PassengerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5ABF28D2D8E600EEB7A4 /* CryptoRide_PassengerTests.swift */; };
+		30AA5ACA28D2D8E600EEB7A4 /* CryptoRide_PassengerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AC928D2D8E600EEB7A4 /* CryptoRide_PassengerUITests.swift */; };
+		30AA5ACC28D2D8E600EEB7A4 /* CryptoRide_PassengerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5ACB28D2D8E600EEB7A4 /* CryptoRide_PassengerUITestsLaunchTests.swift */; };
+		30AA5AD928D2D9E700EEB7A4 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AD828D2D9E700EEB7A4 /* MapView.swift */; };
+		30AA5ADF28D2DB6D00EEB7A4 /* Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5ADE28D2DB6D00EEB7A4 /* Driver.swift */; };
+		30AA5AE128D2DE0300EEB7A4 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AE028D2DE0300EEB7A4 /* LocationManager.swift */; };
+		30AA5AE628D2E72000EEB7A4 /* RideService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AE528D2E72000EEB7A4 /* RideService.swift */; };
+		30AA5AEC28D2ECB700EEB7A4 /* RideLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AEB28D2ECB700EEB7A4 /* RideLocation.swift */; };
+		30AA5AEE28D2ECDE00EEB7A4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30AA5AED28D2ECDE00EEB7A4 /* GoogleService-Info.plist */; };
+		30AA5AF228D2F89E00EEB7A4 /* SelectDrivers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AF128D2F89E00EEB7A4 /* SelectDrivers.swift */; };
+		30AA5AF428D2FB3100EEB7A4 /* RideOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AF328D2FB3100EEB7A4 /* RideOverView.swift */; };
+		30AA5AF628D2FBC500EEB7A4 /* BroadCastRide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA5AF528D2FBC500EEB7A4 /* BroadCastRide.swift */; };
+		30D850B328FDBD6C00E59D4B /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D850B228FDBD6C00E59D4B /* ProfileView.swift */; };
+		30D850B528FDBD9300E59D4B /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D850B428FDBD9300E59D4B /* ProfileViewModel.swift */; };
+		30D850BE28FDDBDD00E59D4B /* WalletServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D850BD28FDDBDD00E59D4B /* WalletServices.swift */; };
+		30D850C428FDEC3D00E59D4B /* Contracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D850C328FDEC3D00E59D4B /* Contracts.swift */; };
+		30D850C928FDF09800E59D4B /* ContractError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D850C828FDF09800E59D4B /* ContractError.swift */; };
+		30D850D128FE3D6A00E59D4B /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 30D850D028FE3D6A00E59D4B /* CodeScanner */; };
+		633EC892D24778C3951B3AE4 /* Pods_CryptoRide_Passenger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D95C567DFA76A6468F9264B /* Pods_CryptoRide_Passenger.framework */; };
+		7789EF5E044AB5E6FAC1EA73 /* Pods_CryptoRide_PassengerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 344A2674698B4CE95AC73BA0 /* Pods_CryptoRide_PassengerTests.framework */; };
+		C0EE6FFB56DD06273B6133AC /* Pods_CryptoRide_Passenger_CryptoRide_PassengerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0598EE24A3F3677FF4F0377D /* Pods_CryptoRide_Passenger_CryptoRide_PassengerUITests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		30AA5ABC28D2D8E600EEB7A4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 30AA5AA328D2D8E400EEB7A4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 30AA5AAA28D2D8E400EEB7A4;
+			remoteInfo = "CryptoRide-Passenger";
+		};
+		30AA5AC628D2D8E600EEB7A4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 30AA5AA328D2D8E400EEB7A4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 30AA5AAA28D2D8E400EEB7A4;
+			remoteInfo = "CryptoRide-Passenger";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0598EE24A3F3677FF4F0377D /* Pods_CryptoRide_Passenger_CryptoRide_PassengerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoRide_Passenger_CryptoRide_PassengerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		119B3D71CAC8B63AC854B3D8 /* Pods-CryptoRide-Passenger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoRide-Passenger.release.xcconfig"; path = "Target Support Files/Pods-CryptoRide-Passenger/Pods-CryptoRide-Passenger.release.xcconfig"; sourceTree = "<group>"; };
+		20AD939A0F6EB1DB2B94D037 /* Pods-CryptoRide-PassengerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoRide-PassengerTests.debug.xcconfig"; path = "Target Support Files/Pods-CryptoRide-PassengerTests/Pods-CryptoRide-PassengerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		3003AB7B2912F4470045D3CC /* Reputation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reputation.swift; sourceTree = "<group>"; };
+		3003AB7D2913063F0045D3CC /* Coordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinates.swift; sourceTree = "<group>"; };
+		3003AB7F29130C5F0045D3CC /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		300FCCBA2911A1F9005F3536 /* Ride.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ride.swift; sourceTree = "<group>"; };
+		300FCCBE2911A2D2005F3536 /* Balance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Balance.swift; sourceTree = "<group>"; };
+		300FCCC02911A5E6005F3536 /* MainBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBuilder.swift; sourceTree = "<group>"; };
+		300FCCC32911A82E005F3536 /* MainBuilderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBuilderViewModel.swift; sourceTree = "<group>"; };
+		300FCCC52911B2F0005F3536 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
+		300FCCCC2911C87B005F3536 /* InRide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InRide.swift; sourceTree = "<group>"; };
+		300FCCCE2911DE29005F3536 /* AnnouncedRideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncedRideView.swift; sourceTree = "<group>"; };
+		300FCCD029122C2C005F3536 /* PassengerPickUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassengerPickUp.swift; sourceTree = "<group>"; };
+		300FCCD22912321E005F3536 /* DriverDropOff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverDropOff.swift; sourceTree = "<group>"; };
+		300FCCD4291233C2005F3536 /* PassengerDropOff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassengerDropOff.swift; sourceTree = "<group>"; };
+		300FCCD72912362D005F3536 /* BindRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindRatingView.swift; sourceTree = "<group>"; };
+		300FCCD929123AA0005F3536 /* Complete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Complete.swift; sourceTree = "<group>"; };
+		300FCCDB29123E08005F3536 /* Canceled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canceled.swift; sourceTree = "<group>"; };
+		3038106828FA166100D3DC0D /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
+		3038106A28FA36BE00D3DC0D /* Methods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Methods.swift; sourceTree = "<group>"; };
+		30A17AB728F8D23A00635D7D /* ContractServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractServices.swift; sourceTree = "<group>"; };
+		30A17AB928F8D78F00635D7D /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		30A17ABB28F8DFEA00635D7D /* Abi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Abi.swift; sourceTree = "<group>"; };
+		30A17ABD28F8E37800635D7D /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		30A2401B29180F0A0040E8AA /* ErrorFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorFilter.swift; sourceTree = "<group>"; };
+		30A2401D29180F750040E8AA /* LogDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDecoder.swift; sourceTree = "<group>"; };
+		30A6EC202909D75D007830FB /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
+		30A6EC222909D80E007830FB /* WebSockets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSockets.swift; sourceTree = "<group>"; };
+		30A6EC24290C9352007830FB /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
+		30A6EC27290C939D007830FB /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		30A6EC29290C93A8007830FB /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		30A6EC2B290C93BD007830FB /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
+		30A6EC31290CA5A3007830FB /* ContractCoordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractCoordinates.swift; sourceTree = "<group>"; };
+		30A6EC36290CB45A007830FB /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		30A6EC3C290D91CC007830FB /* CarAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarAnnotation.swift; sourceTree = "<group>"; };
+		30AA5AAB28D2D8E400EEB7A4 /* CryptoRide-Passenger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CryptoRide-Passenger.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		30AA5AAE28D2D8E400EEB7A4 /* CryptoRide_PassengerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoRide_PassengerApp.swift; sourceTree = "<group>"; };
+		30AA5AB028D2D8E400EEB7A4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		30AA5AB228D2D8E600EEB7A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		30AA5AB528D2D8E600EEB7A4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		30AA5ABB28D2D8E600EEB7A4 /* CryptoRide-PassengerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CryptoRide-PassengerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		30AA5ABF28D2D8E600EEB7A4 /* CryptoRide_PassengerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoRide_PassengerTests.swift; sourceTree = "<group>"; };
+		30AA5AC528D2D8E600EEB7A4 /* CryptoRide-PassengerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CryptoRide-PassengerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		30AA5AC928D2D8E600EEB7A4 /* CryptoRide_PassengerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoRide_PassengerUITests.swift; sourceTree = "<group>"; };
+		30AA5ACB28D2D8E600EEB7A4 /* CryptoRide_PassengerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoRide_PassengerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		30AA5AD828D2D9E700EEB7A4 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		30AA5ADE28D2DB6D00EEB7A4 /* Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Driver.swift; sourceTree = "<group>"; };
+		30AA5AE028D2DE0300EEB7A4 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		30AA5AE528D2E72000EEB7A4 /* RideService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideService.swift; sourceTree = "<group>"; };
+		30AA5AEB28D2ECB700EEB7A4 /* RideLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RideLocation.swift; sourceTree = "<group>"; };
+		30AA5AED28D2ECDE00EEB7A4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		30AA5AF128D2F89E00EEB7A4 /* SelectDrivers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDrivers.swift; sourceTree = "<group>"; };
+		30AA5AF328D2FB3100EEB7A4 /* RideOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideOverView.swift; sourceTree = "<group>"; };
+		30AA5AF528D2FBC500EEB7A4 /* BroadCastRide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadCastRide.swift; sourceTree = "<group>"; };
+		30D850B228FDBD6C00E59D4B /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		30D850B428FDBD9300E59D4B /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		30D850BD28FDDBDD00E59D4B /* WalletServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletServices.swift; sourceTree = "<group>"; };
+		30D850C328FDEC3D00E59D4B /* Contracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contracts.swift; sourceTree = "<group>"; };
+		30D850C828FDF09800E59D4B /* ContractError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractError.swift; sourceTree = "<group>"; };
+		344A2674698B4CE95AC73BA0 /* Pods_CryptoRide_PassengerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoRide_PassengerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D95C567DFA76A6468F9264B /* Pods_CryptoRide_Passenger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoRide_Passenger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		500CF8A75F5A8816BC05BEEA /* Pods-CryptoRide-PassengerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoRide-PassengerTests.release.xcconfig"; path = "Target Support Files/Pods-CryptoRide-PassengerTests/Pods-CryptoRide-PassengerTests.release.xcconfig"; sourceTree = "<group>"; };
+		C39E64821DE79160DF2052ED /* Pods-CryptoRide-Passenger-CryptoRide-PassengerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoRide-Passenger-CryptoRide-PassengerUITests.release.xcconfig"; path = "Target Support Files/Pods-CryptoRide-Passenger-CryptoRide-PassengerUITests/Pods-CryptoRide-Passenger-CryptoRide-PassengerUITests.release.xcconfig"; sourceTree = "<group>"; };
+		D1C15032A53F59972EB348AD /* Pods-CryptoRide-Passenger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoRide-Passenger.debug.xcconfig"; path = "Target Support Files/Pods-CryptoRide-Passenger/Pods-CryptoRide-Passenger.debug.xcconfig"; sourceTree = "<group>"; };
+		FAA75613301B9520DC5A4CC8 /* Pods-CryptoRide-Passenger-CryptoRide-PassengerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoRide-Passenger-CryptoRide-PassengerUITests.debug.xcconfig"; path = "Target Support Files/Pods-CryptoRide-Passenger-CryptoRide-PassengerUITests/Pods-CryptoRide-Passenger-CryptoRide-PassengerUITests.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		30AA5AA828D2D8E400EEB7A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30D850D128FE3D6A00E59D4B /* CodeScanner in Frameworks */,
+				633EC892D24778C3951B3AE4 /* Pods_CryptoRide_Passenger.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30AA5AB828D2D8E600EEB7A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7789EF5E044AB5E6FAC1EA73 /* Pods_CryptoRide_PassengerTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30AA5AC228D2D8E600EEB7A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C0EE6FFB56DD06273B6133AC /* Pods_CryptoRide_Passenger_CryptoRide_PassengerUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		300FCCBC2911A2B4005F3536 /* Sub */ = {
+			isa = PBXGroup;
+			children = (
+				300FCCBE2911A2D2005F3536 /* Balance.swift */,
+				3003AB7B2912F4470045D3CC /* Reputation.swift */,
+			);
+			path = Sub;
+			sourceTree = "<group>";
+		};
+		300FCCBD2911A2BA005F3536 /* Web3 */ = {
+			isa = PBXGroup;
+			children = (
+				30A17AB728F8D23A00635D7D /* ContractServices.swift */,
+				30D850BD28FDDBDD00E59D4B /* WalletServices.swift */,
+				30A6EC222909D80E007830FB /* WebSockets.swift */,
+			);
+			path = Web3;
+			sourceTree = "<group>";
+		};
+		300FCCC22911A811005F3536 /* SubBuilders */ = {
+			isa = PBXGroup;
+			children = (
+				30AA5AF128D2F89E00EEB7A4 /* SelectDrivers.swift */,
+				30AA5AF328D2FB3100EEB7A4 /* RideOverView.swift */,
+				30AA5AEB28D2ECB700EEB7A4 /* RideLocation.swift */,
+				30AA5AF528D2FBC500EEB7A4 /* BroadCastRide.swift */,
+			);
+			path = SubBuilders;
+			sourceTree = "<group>";
+		};
+		300FCCC92911C779005F3536 /* InRideViews */ = {
+			isa = PBXGroup;
+			children = (
+				300FCCCC2911C87B005F3536 /* InRide.swift */,
+				300FCCCE2911DE29005F3536 /* AnnouncedRideView.swift */,
+				300FCCD029122C2C005F3536 /* PassengerPickUp.swift */,
+				300FCCD22912321E005F3536 /* DriverDropOff.swift */,
+				300FCCD4291233C2005F3536 /* PassengerDropOff.swift */,
+				300FCCD929123AA0005F3536 /* Complete.swift */,
+				300FCCDB29123E08005F3536 /* Canceled.swift */,
+			);
+			path = InRideViews;
+			sourceTree = "<group>";
+		};
+		300FCCD62912360F005F3536 /* Rating */ = {
+			isa = PBXGroup;
+			children = (
+				300FCCC52911B2F0005F3536 /* RatingView.swift */,
+				300FCCD72912362D005F3536 /* BindRatingView.swift */,
+			);
+			path = Rating;
+			sourceTree = "<group>";
+		};
+		30A17AB628F8D1F700635D7D /* Contract */ = {
+			isa = PBXGroup;
+			children = (
+				30A17AB928F8D78F00635D7D /* Address.swift */,
+				30A17ABB28F8DFEA00635D7D /* Abi.swift */,
+				30A17ABD28F8E37800635D7D /* Network.swift */,
+				3038106828FA166100D3DC0D /* Wallet.swift */,
+				3038106A28FA36BE00D3DC0D /* Methods.swift */,
+				30D850C328FDEC3D00E59D4B /* Contracts.swift */,
+				30A6EC202909D75D007830FB /* Events.swift */,
+			);
+			path = Contract;
+			sourceTree = "<group>";
+		};
+		30A6EC26290C9386007830FB /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				30A6EC27290C939D007830FB /* LoginView.swift */,
+				30A6EC29290C93A8007830FB /* LoginViewModel.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		30A6EC30290CA590007830FB /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				30A6EC31290CA5A3007830FB /* ContractCoordinates.swift */,
+				30A6EC36290CB45A007830FB /* Constants.swift */,
+				30A2401B29180F0A0040E8AA /* ErrorFilter.swift */,
+				30A2401D29180F750040E8AA /* LogDecoder.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		30A6EC3B290D91AF007830FB /* Annotations */ = {
+			isa = PBXGroup;
+			children = (
+				30A6EC3C290D91CC007830FB /* CarAnnotation.swift */,
+			);
+			path = Annotations;
+			sourceTree = "<group>";
+		};
+		30AA5AA228D2D8E400EEB7A4 = {
+			isa = PBXGroup;
+			children = (
+				30AA5AAD28D2D8E400EEB7A4 /* CryptoRide-Passenger */,
+				30AA5ABE28D2D8E600EEB7A4 /* CryptoRide-PassengerTests */,
+				30AA5AC828D2D8E600EEB7A4 /* CryptoRide-PassengerUITests */,
+				30AA5AAC28D2D8E400EEB7A4 /* Products */,
+				67B42C160993BA63C384F7B4 /* Pods */,
+				7D95C1E6D0224AC28915F36B /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		30AA5AAC28D2D8E400EEB7A4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				30AA5AAB28D2D8E400EEB7A4 /* CryptoRide-Passenger.app */,
+				30AA5ABB28D2D8E600EEB7A4 /* CryptoRide-PassengerTests.xctest */,
+				30AA5AC528D2D8E600EEB7A4 /* CryptoRide-PassengerUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		30AA5AAD28D2D8E400EEB7A4 /* CryptoRide-Passenger */ = {
+			isa = PBXGroup;
+			children = (
+				30A6EC30290CA590007830FB /* Utils */,
+				30A17AB628F8D1F700635D7D /* Contract */,
+				30AA5AE428D2E2C500EEB7A4 /* Views */,
+				30AA5ADD28D2DB4600EEB7A4 /* Modules */,
+				30AA5ADA28D2DA7600EEB7A4 /* Services */,
+				30AA5AAE28D2D8E400EEB7A4 /* CryptoRide_PassengerApp.swift */,
+				30AA5AD828D2D9E700EEB7A4 /* MapView.swift */,
+				30AA5AB028D2D8E400EEB7A4 /* ContentView.swift */,
+				30AA5AB228D2D8E600EEB7A4 /* Assets.xcassets */,
+				30AA5AED28D2ECDE00EEB7A4 /* GoogleService-Info.plist */,
+				30AA5AB428D2D8E600EEB7A4 /* Preview Content */,
+				30A6EC2B290C93BD007830FB /* Authentication.swift */,
+			);
+			path = "CryptoRide-Passenger";
+			sourceTree = "<group>";
+		};
+		30AA5AB428D2D8E600EEB7A4 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				30AA5AB528D2D8E600EEB7A4 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		30AA5ABE28D2D8E600EEB7A4 /* CryptoRide-PassengerTests */ = {
+			isa = PBXGroup;
+			children = (
+				30AA5ABF28D2D8E600EEB7A4 /* CryptoRide_PassengerTests.swift */,
+			);
+			path = "CryptoRide-PassengerTests";
+			sourceTree = "<group>";
+		};
+		30AA5AC828D2D8E600EEB7A4 /* CryptoRide-PassengerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				30AA5AC928D2D8E600EEB7A4 /* CryptoRide_PassengerUITests.swift */,
+				30AA5ACB28D2D8E600EEB7A4 /* CryptoRide_PassengerUITestsLaunchTests.swift */,
+			);
+			path = "CryptoRide-PassengerUITests";
+			sourceTree = "<group>";
+		};
+		30AA5ADA28D2DA7600EEB7A4 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				300FCCBC2911A2B4005F3536 /* Sub */,
+				300FCCBD2911A2BA005F3536 /* Web3 */,
+				30AA5AE528D2E72000EEB7A4 /* RideService.swift */,
+				30AA5AE028D2DE0300EEB7A4 /* LocationManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		30AA5ADD28D2DB4600EEB7A4 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				30AA5ADE28D2DB6D00EEB7A4 /* Driver.swift */,
+				30D850C828FDF09800E59D4B /* ContractError.swift */,
+				30A6EC24290C9352007830FB /* Credentials.swift */,
+				300FCCBA2911A1F9005F3536 /* Ride.swift */,
+				3003AB7D2913063F0045D3CC /* Coordinates.swift */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		30AA5AE428D2E2C500EEB7A4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				300FCCC92911C779005F3536 /* InRideViews */,
+				30A6EC3B290D91AF007830FB /* Annotations */,
+				30A6EC26290C9386007830FB /* Login */,
+				30D850D228FF262E00E59D4B /* RideBuilder */,
+				30D850B128FDBD1F00E59D4B /* Profile */,
+				3003AB7F29130C5F0045D3CC /* Settings.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		30D850B128FDBD1F00E59D4B /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				30D850B228FDBD6C00E59D4B /* ProfileView.swift */,
+				30D850B428FDBD9300E59D4B /* ProfileViewModel.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		30D850D228FF262E00E59D4B /* RideBuilder */ = {
+			isa = PBXGroup;
+			children = (
+				300FCCD62912360F005F3536 /* Rating */,
+				300FCCC22911A811005F3536 /* SubBuilders */,
+				300FCCC02911A5E6005F3536 /* MainBuilder.swift */,
+				300FCCC32911A82E005F3536 /* MainBuilderViewModel.swift */,
+			);
+			path = RideBuilder;
+			sourceTree = "<group>";
+		};
+		67B42C160993BA63C384F7B4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D1C15032A53F59972EB348AD /* Pods-CryptoRide-Passenger.debug.xcconfig */,
+				119B3D71CAC8B63AC854B3D8 /* Pods-CryptoRide-Passenger.release.xcconfig */,
+				FAA75613301B9520DC5A4CC8 /* Pods-CryptoRide-Passenger-CryptoRide-PassengerUITests.debug.xcconfig */,
+				C39E64821DE79160DF2052ED /* Pods-CryptoRide-Passenger-CryptoRide-PassengerUITests.release.xcconfig */,
+				20AD939A0F6EB1DB2B94D037 /* Pods-CryptoRide-PassengerTests.debug.xcconfig */,
+				500CF8A75F5A8816BC05BEEA /* Pods-CryptoRide-PassengerTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		7D95C1E6D0224AC28915F36B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4D95C567DFA76A6468F9264B /* Pods_CryptoRide_Passenger.framework */,
+				0598EE24A3F3677FF4F0377D /* Pods_CryptoRide_Passenger_CryptoRide_PassengerUITests.framework */,
+				344A2674698B4CE95AC73BA0 /* Pods_CryptoRide_PassengerTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		30AA5AAA28D2D8E400EEB7A4 /* CryptoRide-Passenger */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 30AA5ACF28D2D8E600EEB7A4 /* Build configuration list for PBXNativeTarget "CryptoRide-Passenger" */;
+			buildPhases = (
+				31803EAC34FB334110359F5F /* [CP] Check Pods Manifest.lock */,
+				30AA5AA728D2D8E400EEB7A4 /* Sources */,
+				30AA5AA828D2D8E400EEB7A4 /* Frameworks */,
+				30AA5AA928D2D8E400EEB7A4 /* Resources */,
+				FF001D79EA99C8B15F83B01C /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "CryptoRide-Passenger";
+			packageProductDependencies = (
+				30D850D028FE3D6A00E59D4B /* CodeScanner */,
+			);
+			productName = "CryptoRide-Passenger";
+			productReference = 30AA5AAB28D2D8E400EEB7A4 /* CryptoRide-Passenger.app */;
+			productType = "com.apple.product-type.application";
+		};
+		30AA5ABA28D2D8E600EEB7A4 /* CryptoRide-PassengerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 30AA5AD228D2D8E600EEB7A4 /* Build configuration list for PBXNativeTarget "CryptoRide-PassengerTests" */;
+			buildPhases = (
+				B04399BEF54B37A04127E5E1 /* [CP] Check Pods Manifest.lock */,
+				30AA5AB728D2D8E600EEB7A4 /* Sources */,
+				30AA5AB828D2D8E600EEB7A4 /* Frameworks */,
+				30AA5AB928D2D8E600EEB7A4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				30AA5ABD28D2D8E600EEB7A4 /* PBXTargetDependency */,
+			);
+			name = "CryptoRide-PassengerTests";
+			productName = "CryptoRide-PassengerTests";
+			productReference = 30AA5ABB28D2D8E600EEB7A4 /* CryptoRide-PassengerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		30AA5AC428D2D8E600EEB7A4 /* CryptoRide-PassengerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 30AA5AD528D2D8E600EEB7A4 /* Build configuration list for PBXNativeTarget "CryptoRide-PassengerUITests" */;
+			buildPhases = (
+				27904EA05E929146530400A1 /* [CP] Check Pods Manifest.lock */,
+				30AA5AC128D2D8E600EEB7A4 /* Sources */,
+				30AA5AC228D2D8E600EEB7A4 /* Frameworks */,
+				30AA5AC328D2D8E600EEB7A4 /* Resources */,
+				2320671B9DDE305D70C14540 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				30AA5AC728D2D8E600EEB7A4 /* PBXTargetDependency */,
+			);
+			name = "CryptoRide-PassengerUITests";
+			productName = "CryptoRide-PassengerUITests";
+			productReference = 30AA5AC528D2D8E600EEB7A4 /* CryptoRide-PassengerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		30AA5AA328D2D8E400EEB7A4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1340;
+				LastUpgradeCheck = 1340;
+				TargetAttributes = {
+					30AA5AAA28D2D8E400EEB7A4 = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
+					30AA5ABA28D2D8E600EEB7A4 = {
+						CreatedOnToolsVersion = 13.4.1;
+						TestTargetID = 30AA5AAA28D2D8E400EEB7A4;
+					};
+					30AA5AC428D2D8E600EEB7A4 = {
+						CreatedOnToolsVersion = 13.4.1;
+						TestTargetID = 30AA5AAA28D2D8E400EEB7A4;
+					};
+				};
+			};
+			buildConfigurationList = 30AA5AA628D2D8E400EEB7A4 /* Build configuration list for PBXProject "CryptoRide-Passenger" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 30AA5AA228D2D8E400EEB7A4;
+			packageReferences = (
+				30D850CF28FE3D6A00E59D4B /* XCRemoteSwiftPackageReference "CodeScanner" */,
+			);
+			productRefGroup = 30AA5AAC28D2D8E400EEB7A4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				30AA5AAA28D2D8E400EEB7A4 /* CryptoRide-Passenger */,
+				30AA5ABA28D2D8E600EEB7A4 /* CryptoRide-PassengerTests */,
+				30AA5AC428D2D8E600EEB7A4 /* CryptoRide-PassengerUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		30AA5AA928D2D8E400EEB7A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30AA5AB628D2D8E600EEB7A4 /* Preview Assets.xcassets in Resources */,
+				30AA5AB328D2D8E600EEB7A4 /* Assets.xcassets in Resources */,
+				30AA5AEE28D2ECDE00EEB7A4 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30AA5AB928D2D8E600EEB7A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30AA5AC328D2D8E600EEB7A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2320671B9DDE305D70C14540 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CryptoRide-Passenger-CryptoRide-PassengerUITests/Pods-CryptoRide-Passenger-CryptoRide-PassengerUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CryptoRide-Passenger-CryptoRide-PassengerUITests/Pods-CryptoRide-Passenger-CryptoRide-PassengerUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CryptoRide-Passenger-CryptoRide-PassengerUITests/Pods-CryptoRide-Passenger-CryptoRide-PassengerUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		27904EA05E929146530400A1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CryptoRide-Passenger-CryptoRide-PassengerUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		31803EAC34FB334110359F5F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CryptoRide-Passenger-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B04399BEF54B37A04127E5E1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CryptoRide-PassengerTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FF001D79EA99C8B15F83B01C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CryptoRide-Passenger/Pods-CryptoRide-Passenger-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CryptoRide-Passenger/Pods-CryptoRide-Passenger-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CryptoRide-Passenger/Pods-CryptoRide-Passenger-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		30AA5AA728D2D8E400EEB7A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30A6EC212909D75D007830FB /* Events.swift in Sources */,
+				300FCCBB2911A1F9005F3536 /* Ride.swift in Sources */,
+				300FCCCF2911DE29005F3536 /* AnnouncedRideView.swift in Sources */,
+				30A6EC28290C939D007830FB /* LoginView.swift in Sources */,
+				3003AB7E2913063F0045D3CC /* Coordinates.swift in Sources */,
+				3003AB7C2912F4470045D3CC /* Reputation.swift in Sources */,
+				30AA5ADF28D2DB6D00EEB7A4 /* Driver.swift in Sources */,
+				30AA5AF228D2F89E00EEB7A4 /* SelectDrivers.swift in Sources */,
+				300FCCD82912362D005F3536 /* BindRatingView.swift in Sources */,
+				30A17ABE28F8E37800635D7D /* Network.swift in Sources */,
+				30A6EC2C290C93BD007830FB /* Authentication.swift in Sources */,
+				30A6EC232909D80E007830FB /* WebSockets.swift in Sources */,
+				30AA5AEC28D2ECB700EEB7A4 /* RideLocation.swift in Sources */,
+				30A17ABC28F8DFEA00635D7D /* Abi.swift in Sources */,
+				30A6EC3D290D91CD007830FB /* CarAnnotation.swift in Sources */,
+				300FCCD129122C2C005F3536 /* PassengerPickUp.swift in Sources */,
+				30A6EC2A290C93A8007830FB /* LoginViewModel.swift in Sources */,
+				30A2401E29180F750040E8AA /* LogDecoder.swift in Sources */,
+				300FCCDC29123E08005F3536 /* Canceled.swift in Sources */,
+				30AA5AE628D2E72000EEB7A4 /* RideService.swift in Sources */,
+				30D850C928FDF09800E59D4B /* ContractError.swift in Sources */,
+				30A17AB828F8D23A00635D7D /* ContractServices.swift in Sources */,
+				300FCCDA29123AA0005F3536 /* Complete.swift in Sources */,
+				30A6EC32290CA5A3007830FB /* ContractCoordinates.swift in Sources */,
+				30A6EC25290C9352007830FB /* Credentials.swift in Sources */,
+				30A17ABA28F8D78F00635D7D /* Address.swift in Sources */,
+				30AA5AF628D2FBC500EEB7A4 /* BroadCastRide.swift in Sources */,
+				3038106B28FA36BE00D3DC0D /* Methods.swift in Sources */,
+				300FCCD5291233C2005F3536 /* PassengerDropOff.swift in Sources */,
+				30D850C428FDEC3D00E59D4B /* Contracts.swift in Sources */,
+				30AA5AB128D2D8E400EEB7A4 /* ContentView.swift in Sources */,
+				300FCCC12911A5E6005F3536 /* MainBuilder.swift in Sources */,
+				300FCCC42911A82E005F3536 /* MainBuilderViewModel.swift in Sources */,
+				30AA5AE128D2DE0300EEB7A4 /* LocationManager.swift in Sources */,
+				30A6EC37290CB45A007830FB /* Constants.swift in Sources */,
+				300FCCBF2911A2D2005F3536 /* Balance.swift in Sources */,
+				300FCCCD2911C87B005F3536 /* InRide.swift in Sources */,
+				30D850B528FDBD9300E59D4B /* ProfileViewModel.swift in Sources */,
+				300FCCD32912321E005F3536 /* DriverDropOff.swift in Sources */,
+				30AA5AD928D2D9E700EEB7A4 /* MapView.swift in Sources */,
+				30AA5AF428D2FB3100EEB7A4 /* RideOverView.swift in Sources */,
+				30A2401C29180F0A0040E8AA /* ErrorFilter.swift in Sources */,
+				3003AB8029130C5F0045D3CC /* Settings.swift in Sources */,
+				30D850BE28FDDBDD00E59D4B /* WalletServices.swift in Sources */,
+				30D850B328FDBD6C00E59D4B /* ProfileView.swift in Sources */,
+				3038106928FA166100D3DC0D /* Wallet.swift in Sources */,
+				300FCCC62911B2F0005F3536 /* RatingView.swift in Sources */,
+				30AA5AAF28D2D8E400EEB7A4 /* CryptoRide_PassengerApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30AA5AB728D2D8E600EEB7A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30AA5AC028D2D8E600EEB7A4 /* CryptoRide_PassengerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30AA5AC128D2D8E600EEB7A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30AA5ACC28D2D8E600EEB7A4 /* CryptoRide_PassengerUITestsLaunchTests.swift in Sources */,
+				30AA5ACA28D2D8E600EEB7A4 /* CryptoRide_PassengerUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		30AA5ABD28D2D8E600EEB7A4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 30AA5AAA28D2D8E400EEB7A4 /* CryptoRide-Passenger */;
+			targetProxy = 30AA5ABC28D2D8E600EEB7A4 /* PBXContainerItemProxy */;
+		};
+		30AA5AC728D2D8E600EEB7A4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 30AA5AAA28D2D8E400EEB7A4 /* CryptoRide-Passenger */;
+			targetProxy = 30AA5AC628D2D8E600EEB7A4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		30AA5ACD28D2D8E600EEB7A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		30AA5ACE28D2D8E600EEB7A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		30AA5AD028D2D8E600EEB7A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1C15032A53F59972EB348AD /* Pods-CryptoRide-Passenger.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CryptoRide-Passenger/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Need location to find drivers";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Need location to find drivers";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Need location to find drivers";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "MOT.CryptoRide-Passenger";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		30AA5AD128D2D8E600EEB7A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 119B3D71CAC8B63AC854B3D8 /* Pods-CryptoRide-Passenger.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CryptoRide-Passenger/Preview Content\"";
+				DEVELOPMENT_TEAM = XUYDZSBQ86;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Need location to find drivers";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Need location to find drivers";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Need location to find drivers";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "MOT.CryptoRide-Passenger";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		30AA5AD328D2D8E600EEB7A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 20AD939A0F6EB1DB2B94D037 /* Pods-CryptoRide-PassengerTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XUYDZSBQ86;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "MOT.CryptoRide-PassengerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CryptoRide-Passenger.app/CryptoRide-Passenger";
+			};
+			name = Debug;
+		};
+		30AA5AD428D2D8E600EEB7A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 500CF8A75F5A8816BC05BEEA /* Pods-CryptoRide-PassengerTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XUYDZSBQ86;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "MOT.CryptoRide-PassengerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CryptoRide-Passenger.app/CryptoRide-Passenger";
+			};
+			name = Release;
+		};
+		30AA5AD628D2D8E600EEB7A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FAA75613301B9520DC5A4CC8 /* Pods-CryptoRide-Passenger-CryptoRide-PassengerUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XUYDZSBQ86;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "MOT.CryptoRide-PassengerUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "CryptoRide-Passenger";
+			};
+			name = Debug;
+		};
+		30AA5AD728D2D8E600EEB7A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C39E64821DE79160DF2052ED /* Pods-CryptoRide-Passenger-CryptoRide-PassengerUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XUYDZSBQ86;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "MOT.CryptoRide-PassengerUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "CryptoRide-Passenger";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		30AA5AA628D2D8E400EEB7A4 /* Build configuration list for PBXProject "CryptoRide-Passenger" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				30AA5ACD28D2D8E600EEB7A4 /* Debug */,
+				30AA5ACE28D2D8E600EEB7A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		30AA5ACF28D2D8E600EEB7A4 /* Build configuration list for PBXNativeTarget "CryptoRide-Passenger" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				30AA5AD028D2D8E600EEB7A4 /* Debug */,
+				30AA5AD128D2D8E600EEB7A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		30AA5AD228D2D8E600EEB7A4 /* Build configuration list for PBXNativeTarget "CryptoRide-PassengerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				30AA5AD328D2D8E600EEB7A4 /* Debug */,
+				30AA5AD428D2D8E600EEB7A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		30AA5AD528D2D8E600EEB7A4 /* Build configuration list for PBXNativeTarget "CryptoRide-PassengerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				30AA5AD628D2D8E600EEB7A4 /* Debug */,
+				30AA5AD728D2D8E600EEB7A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		30D850CF28FE3D6A00E59D4B /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/CodeScanner";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		30D850D028FE3D6A00E59D4B /* CodeScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 30D850CF28FE3D6A00E59D4B /* XCRemoteSwiftPackageReference "CodeScanner" */;
+			productName = CodeScanner;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 30AA5AA328D2D8E400EEB7A4 /* Project object */;
+}
