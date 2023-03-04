@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import Link from 'next/link';
@@ -6,7 +7,7 @@ import CELO from '../../../utils/CELO_HACK.json';
 
 function FirstPage() {
 
-  const deployAddress = "0x813B8a84A802aAdA2A873a8cbcAa703BEE9f68C4"
+  const deployAddress = "0xb44D65bfD8971043cf6B04c0dCe3C7ec246ca4Eb"
 
   const [donate, setDonate] = useState(false)
   const [resque, setResque] = useState(false)
@@ -57,11 +58,11 @@ function FirstPage() {
 
         const chainid = await window.ethereum.request({ method: 'eth_chainId' })
   
-        if(chainid !== '0xaef3') {
+        if(chainid !== '0xfa2') {
   
           await window.ethereum.request({   // This gives alert Incorrect network!, switch into Alfajores
             method: 'wallet_switchEthereumChain',
-            params: [{ chainId: '0xaef3' }],
+            params: [{ chainId: '0xfa2' }],
           })
         }
   
@@ -92,6 +93,7 @@ function FirstPage() {
       <div className={styles.page}>
         <div className={styles.top}>
           <div className={styles.logoBox}>
+            {/* <img src="/images2/fow.png" alt="/" className='w-full h-full mt-auto' /> */}
             <img src="/images2/fow.png" alt="/" className='w-full h-full mt-auto' />
           </div>
         </div>

@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import GroupsIcon from '@mui/icons-material/Groups';
@@ -55,7 +57,7 @@ export const getStaticProps: GetStaticProps = async(contex) => {
 
 function DonationInfo(props: any) {
 
-  const deployAddress = "0x813B8a84A802aAdA2A873a8cbcAa703BEE9f68C4"
+  const deployAddress = "0xb44D65bfD8971043cf6B04c0dCe3C7ec246ca4Eb"
 
   
 

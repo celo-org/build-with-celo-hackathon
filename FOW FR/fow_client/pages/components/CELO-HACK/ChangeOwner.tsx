@@ -6,7 +6,7 @@ import CELO from '../../../utils/CELO_HACK.json';
 
 function ChangeOwner() {
 
-  const deployAddress = "0x813B8a84A802aAdA2A873a8cbcAa703BEE9f68C4"
+  const deployAddress = "0xb44D65bfD8971043cf6B04c0dCe3C7ec246ca4Eb"
 
   const [ownerAddr, setOwnerAddr] = useState('')
   const [click, setClick] = useState(false)

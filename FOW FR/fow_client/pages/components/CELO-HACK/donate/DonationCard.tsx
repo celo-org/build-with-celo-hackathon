@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import DonationInfo from './DonationInfo';

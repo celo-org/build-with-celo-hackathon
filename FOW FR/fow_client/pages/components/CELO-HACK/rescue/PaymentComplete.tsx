@@ -1,9 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/alt-text */
 import React from 'react'
 import Button from '@mui/material/Button';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-
-
 
 function PaymentComplete() {
 

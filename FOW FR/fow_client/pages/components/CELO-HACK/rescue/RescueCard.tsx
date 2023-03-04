@@ -1,8 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import RescueInfo from './RescueInfo';
 import { GetStaticProps } from 'next';
-
 
 export const getStaticProps: GetStaticProps = async(contex) => {
 

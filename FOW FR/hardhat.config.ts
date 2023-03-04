@@ -21,6 +21,11 @@ const config: HardhatUserConfig = {
       url: "https://forno.celo.org",
       accounts: [PRIVATE_KEY],
       chainId: 42220,
+    },
+    fantom: {
+      url: "https://rpc.testnet.fantom.network",
+      accounts: [PRIVATE_KEY],
+      chainId: 4002
     }
   }
 };
