@@ -1,5 +1,4 @@
 
-## Rooted Club
 ### AgroforestDAO
 #### Hackathon Track
 
