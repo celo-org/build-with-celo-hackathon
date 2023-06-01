@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@celo/rainbowkit-celo": "^1.0.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.12",
+    "@rainbow-me/rainbowkit": "^1.0.1",
     "axios": "^0.27.2",
     "dotenv": "^16.0.3",
     "ethers": "^5.7.2",
@@ -20,7 +22,9 @@
     "fs": "^0.0.1-security",
     "next": "13.0.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "viem": "^0.3.43",
+    "wagmi": "^1.0.9"
   },
   "devDependencies": {
     "@types/node": "18.11.9",

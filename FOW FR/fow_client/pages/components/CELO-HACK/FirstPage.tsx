@@ -4,6 +4,23 @@ import { Button } from '@mui/material';
 import Link from 'next/link';
 import { ethers } from 'ethers';
 import CELO from '../../../utils/CELO_HACK.json';
+import '@rainbow-me/rainbowkit/styles.css';
+import {
+  getDefaultWallets,
+  RainbowKitProvider,
+} from '@rainbow-me/rainbowkit';
+import { configureChains, createConfig, WagmiConfig } from 'wagmi';
+import { celo, celoAlfajores } from 'wagmi/chains';
+import { alchemyProvider } from 'wagmi/providers/alchemy';
+import { publicProvider } from 'wagmi/providers/public';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
+import celoGroups from "@celo/rainbowkit-celo/lists"
+import { Alfajores, Celo, Cannoli } from "@celo/rainbowkit-celo/chains";
+import "@rainbow-me/rainbowkit/styles.css";
+import { useAccount, useConnect, useEnsName } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+
 
 function FirstPage() {
 
@@ -26,17 +43,55 @@ function FirstPage() {
   }
 
 
+
+  // const { chains, publicClient } = configureChains(
+  //   [celo, celoAlfajores],
+  //   [
+  //     alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY || "undefined" }),
+  //     publicProvider()
+  //   ]
+  // );
+  // const { connectors } = getDefaultWallets({
+  //   appName: 'My RainbowKit App',
+  //   projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+  //   chains
+  // });
+  // const wagmiConfig = createConfig({
+  //   autoConnect: true,
+  //   connectors,
+  //   publicClient
+  // })
+
+
+  const projectId = process.env.NEXT_PUBLIC_PROJECT_ID || "undefined" // get one at https://cloud.walletconnect.com/app
+
+  const { chains, publicClient } = configureChains(
+    [Alfajores, Celo, Cannoli],
+    [jsonRpcProvider({ rpc: (chain) => ({ http: chain.rpcUrls.default.http[0] }) })]
+    );
+
+  const connectors = celoGroups({chains, projectId, appName: typeof document === "object" && document.title || "FOW FARM"})
+
+  const wagmiConfig = createConfig({
+    autoConnect: true,
+    connectors,
+    publicClient: publicClient,
+  });
+
+
   const check = async () => {
     try {
       if(typeof window !== 'undefined') {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
-        const contract = new ethers.Contract(deployAddress, CELO.abi, signer)
+        // const contract = new ethers.Contract(deployAddress, CELO.abi, signer)
   
-        const owner = await contract.owner()
+        // const owner = await contract.owner()
+
         const current = await signer.getAddress()
+        console.log(current)
   
-        setOwnerAddr(owner)
+        // setOwnerAddr(owner)
         setCurrentAddr(current)
       }
 
@@ -45,31 +100,33 @@ function FirstPage() {
     }
   }
 
-  useEffect(() => {
-    window.ethereum.on('accountsChanged', () => {
-      window.location.replace('/')
-    })
-    check()
-  }, [])
+  // useEffect(() => {
+  //   window.ethereum.on('accountsChanged', () => {
+  //     window.location.replace('/')
+  //   })
+  //   check()
+  // }, [])
 
   const connectWallet = async () => {
     try {
-      if(typeof window !== 'undefined') {
+      // if(typeof window !== 'undefined') {
 
-        const chainid = await window.ethereum.request({ method: 'eth_chainId' })
+      //   const chainid = await window.ethereum.request({ method: 'eth_chainId' })
+
+      //   console.log(chainid)
   
-        if(chainid !== '0xfa2') {
+        // if(chainid !== '0xfa2') {
   
-          await window.ethereum.request({   // This gives alert Incorrect network!, switch into Alfajores
-            method: 'wallet_switchEthereumChain',
-            params: [{ chainId: '0xfa2' }],
-          })
-        }
+        //   await window.ethereum.request({   // This gives alert Incorrect network!, switch into Alfajores
+        //     method: 'wallet_switchEthereumChain',
+        //     params: [{ chainId: '0xfa2' }],
+        //   })
+        // }
   
-        window.ethereum.request({ method: 'eth_requestAccounts' });
+      //   window.ethereum.request({ method: 'eth_requestAccounts' });
         
-        setClick(true)
-      }
+      //   setClick(true)
+      // }
 
 
     } catch (error) {
@@ -90,6 +147,8 @@ function FirstPage() {
 
   return (
     <div className="flex justify-center items-center">
+      <WagmiConfig config={wagmiConfig}>
+      <RainbowKitProvider chains={chains}>
       <div className={styles.page}>
         <div className={styles.top}>
           <div className={styles.logoBox}>
@@ -166,9 +225,11 @@ function FirstPage() {
 
             ?
 
-            <Button variant='contained' className='w-9/12 bg-sky-700'>
-              <span className='capitalize' onClick={connectWallet}>Connect Wallet</span>
-            </Button> 
+            // <Button variant='contained' className='w-9/12 bg-sky-700'>
+            //   <span className='capitalize' onClick={connectWallet}>Connect Wallet</span>
+            // </Button> 
+
+            <ConnectButton />
 
             :
 
@@ -208,10 +269,16 @@ function FirstPage() {
 
           }
 
+          <div className="">
+            <span onClick={check}>Hii</span>
+          </div>
+
           <div className={styles.bigbtn}>
           </div>
         </div>
       </div>
+      </RainbowKitProvider>
+    </WagmiConfig>
     </div>
   )
 }
@@ -219,5 +286,3 @@ function FirstPage() {
 export default FirstPage
 
 
-
-//afCFgG2xkaAgIap6X2VGCWE5a6ws0nt7
