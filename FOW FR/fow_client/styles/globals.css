@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    /* @apply bg-[#C7D0EF] tracking-wide */
+    @apply bg-[#ffffff] tracking-wide
+  }
+}
