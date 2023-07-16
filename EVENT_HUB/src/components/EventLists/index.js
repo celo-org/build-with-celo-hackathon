@@ -80,40 +80,40 @@ const EventLists = () => {
   //   console.log(txHash)
   // }
 
-  // useEffect( () => {
-  //   async function eventList () {
+  useEffect( () => {
+    async function eventList () {
 
-  //     setLoading(true)
+      setLoading(true)
 
-  //     const url = `https://api.pinata.cloud/data/pinList?status=pinned`
-  //     const res = await axios
-  //       .get(url, {
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           'Authorization': `Bearer ${process.env.REACT_APP_PINATA_JWT}`
-  //         }
-  //       })
-  //       .then(function (response) {
-  //         return response.data.rows
-  //       })
-  //       .catch(function (error) {
-  //         console.log(error)
-  //         setLoading(false)
-  //       })
+      const url = `https://api.pinata.cloud/data/pinList?status=pinned`
+      const res = await axios
+        .get(url, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.REACT_APP_PINATA_JWT}`
+          }
+        })
+        .then(function (response) {
+          return response.data.rows
+        })
+        .catch(function (error) {
+          console.log(error)
+          setLoading(false)
+        })
 
-  //     if (res) {
-  //       setLoading(false)
-  //       setEvents(res)
-  //     }
+      if (res) {
+        setLoading(false)
+        setEvents(res)
+      }
 
-  //   }
-  //   eventList()
+    }
+    //eventList()
 
-  //   if (location.pathname === '/events') {
-  //     setEventPage(true)
-  //   }
+    if (location.pathname === '/events') {
+      setEventPage(true)
+    }
 
-  // }, [location])
+  }, [location])
 
   return (
 
