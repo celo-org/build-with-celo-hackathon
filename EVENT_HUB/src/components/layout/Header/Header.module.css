@@ -1,0 +1,31 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.menu-icon {
+  height: 30px;
+  display: grid;
+  cursor: pointer;
+}
+
+.menu-icon div {
+  height: 2px;
+  width: 30px;
+  background: #fefefe;
+}
+
+.create-event-btn {
+  margin-right: 12px;
+  color: darkgoldenrod;
+  border: 3px solid darkgoldenrod;
+}
+
+@media (max-width: 600px) {
+  .create-event-btn {
+    display: none;
+  }
+}
